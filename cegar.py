@@ -4,7 +4,7 @@ import subprocess
 import tempfile
 import re
 import itertools
-
+import random
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 TESTS = [0]
@@ -14,10 +14,12 @@ parmsre = re.compile('[^x]parms={(.*?)}')
 xparmsre = re.compile('xparms={(.*?)}')
 
 cexxre = re.compile('counterexample_x=(\d+)')
-cexyre = re.compile('counterexample_y=(\d+)')
 
 codelen = 1
 codelenlim = 15
+
+testsseed = 5
+testslim = 15
 
 PLUS=0
 MINUS=1
@@ -201,7 +203,7 @@ def cegar(checker):
   targetwordlen = 32
   n = 1
   finished = False
-  tests = TESTS
+  tests = gentests(wordlen)
 
   while not finished:
     print "Iteration %d:" % n
@@ -257,12 +259,15 @@ def cegar(checker):
       if wordlen > targetwordlen:
         wordlen = targetwordlen
 
-      tests = [test]
+      tests = gentests(wordlen) + [test]
 
       print "Increasing wordlen to %d" % wordlen
     else:
       print "Fails for %s\n" % hex(test)
       tests.append(test)
+
+      if len(tests) > testslim:
+        tests = gentests(wordlen)
 
 def expand(x, narrow, wide):
   if x == 1 or x == 0:
@@ -448,6 +453,12 @@ def optimize(prog, wordlen):
       parms[i*2+1] = log2(p2)
 
   return (ops, parms, xparms)
+
+def gentests(wordlen):
+  if wordlen == 2:
+    return [0, 1, 2, 3]
+
+  return random.sample(xrange(2**wordlen), testsseed)
 
 if __name__ == '__main__':
   import sys
