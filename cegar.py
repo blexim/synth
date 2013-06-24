@@ -180,15 +180,14 @@ def verif(prog, checker, width):
 
   if retcode == 10:
     # We got a counterexample -- extract a new test case from it
-
     x = 0
-    y = 0
 
     for l in cbmcfile.readlines():
       mx = cexxre.search(l)
 
       if mx:
         x = int(mx.group(1))
+        x &= ((1 << width) - 1)
 
     return x
 
@@ -203,11 +202,18 @@ def cegar(checker):
   targetwordlen = 32
   n = 1
   finished = False
-  tests = gentests(wordlen)
+  tests = gentests(wordlen, codelen)
 
   while not finished:
     print "Iteration %d:" % n
     n += 1
+
+    if len(tests) > 3*codelen:
+      print "Restarting!"
+      tests = gentests(wordlen, codelen)
+
+
+    print "Test vectors: %s" % str(tests)
 
     prog = synth(checker, tests, wordlen)
     prog = optimize(prog, wordlen)
@@ -217,7 +223,7 @@ def cegar(checker):
 
       if codelen < codelenlim:
         codelen += 1
-        #tests = TESTS
+        #tests = gentests(wordlen, codelen)
         print "Increasing sequence length to %d\n" % codelen
         continue
 
@@ -259,15 +265,14 @@ def cegar(checker):
       if wordlen > targetwordlen:
         wordlen = targetwordlen
 
-      tests = gentests(wordlen) + [test]
+      tests += gentests(wordlen, codelen)
+      tests = list(set(tests))
+      #tests = gentests(wordlen, codelen) + [test]
 
       print "Increasing wordlen to %d" % wordlen
     else:
       print "Fails for %s\n" % hex(test)
       tests.append(test)
-
-      if len(tests) > testslim:
-        tests = gentests(wordlen)
 
 def expand(x, narrow, wide):
   if x == 1 or x == 0:
@@ -454,11 +459,10 @@ def optimize(prog, wordlen):
 
   return (ops, parms, xparms)
 
-def gentests(wordlen):
-  if wordlen == 2:
-    return [0, 1, 2, 3]
-
-  return random.sample(xrange(2**wordlen), testsseed)
+def gentests(wordlen, codelen):
+  numtests = min(16, 2**wordlen)
+  #numtests = testsseed
+  return random.sample(xrange(2**wordlen), numtests)
 
 if __name__ == '__main__':
   import sys
@@ -470,5 +474,7 @@ if __name__ == '__main__':
 
   if len(sys.argv) > 3:
     codelenlim = int(sys.argv[3])
+
+  random.seed()
 
   cegar(checker)

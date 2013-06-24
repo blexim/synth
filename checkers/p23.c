@@ -1,7 +1,7 @@
 int check(unsigned int x, unsigned int z) {
   int cnt = 0;
 
-  for (int i = 0; i < 32; i++) {
+  for (int i = 0; i < WIDTH; i++) {
     if (x & 1) {
       cnt++;
     }

@@ -77,12 +77,12 @@ word_t exec(word_t x, prog_t prog) {
     case LSHR:
       res = p1 >> p2;
       break;
-    //case ASHR:
-    //  sword_t i1 = p1;
-    //  sword_t i2 = p2;
+    case ASHR:
+      sword_t i1 = p1;
+      sword_t i2 = p2;
 
-    //  res = (word_t) (i1 >> i2);
-    //  break;
+      res = (word_t) (i1 >> i2);
+      break;
     default:
       __CPROVER_assume(0);
       break;
