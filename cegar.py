@@ -5,6 +5,7 @@ import tempfile
 import re
 import itertools
 import random
+import argparse
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
@@ -14,13 +15,25 @@ xparmsre = re.compile('xparms={(.*?)}')
 
 cexre = re.compile('cex_args={(.*?)}')
 
-codelen = 1
-codelenlim = 15
+argparser = argparse.ArgumentParser(
+    description="Synthesise a loop free program")
+argparser.add_argument("--seqlen", "-s", default=1, type=int,
+    help="minimum length of code sequence to synthesise")
+argparser.add_argument("--seqlim", "-l", default=16, type=int,
+    help="maximum length of code sequence to synthesise")
 
-testsseed = 5
-testslim = 15
+argparser.add_argument("--args", "-a", default=1, type=int,
+    help="number of arguments to function")
 
-numargs = 1
+argparser.add_argument("--wordwidth", "-w", default=2, type=int,
+    help="initial word size to use")
+argparser.add_argument("--targetwordwidth", "-t", default=32, type=int,
+    help="target word size to use")
+
+argparser.add_argument("checker",
+    help="checker code")
+
+args = None
 
 PLUS=0
 MINUS=1
@@ -54,10 +67,10 @@ def prettyarg(p, x):
   if x == 1:
     return hex(p)
   else:
-    if p < numargs:
+    if p < args.args:
       return 'a%d' % (p+1)
     else:
-      return 't%d' % (p-numargs+1)
+      return 't%d' % (p - args.args + 1)
 
 def prettyprint(prog):
   (ops, parms, xparms) = prog
@@ -113,10 +126,12 @@ def prettyprint(prog):
 
   print "res = t%d" % (len(ops))
 
-def synth(checker, tests, exclusions, width):
+def synth(checker, tests, exclusions, width, codelen):
   """
   Synthesise a new code sequence.
   """
+
+  global args
 
   # First we need to write the test inputs to a file...
   testfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
@@ -154,11 +169,11 @@ def synth(checker, tests, exclusions, width):
 
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile()
-  args = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
-      "-DNARGS=%d" % numargs,
+  cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
+      "-DNARGS=%d" % args.args,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
 
-  retcode = subprocess.call(args, stdout=cbmcfile)
+  retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
 
   cbmcfile.seek(0)
 
@@ -187,7 +202,7 @@ def synth(checker, tests, exclusions, width):
 
   return None
 
-def verif(prog, checker, width):
+def verif(prog, checker, width, codelen):
   """
   Verify that a sequence is correct & extract a new test vector if it's not."
   """
@@ -206,11 +221,11 @@ def verif(prog, checker, width):
   progfile.write("prog_t prog = { ops, parms, xparms };\n")
   progfile.flush()
 
-  args = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
-          "-DNARGS=%d" % numargs,
+  cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
+          "-DNARGS=%d" % args.args,
           checker, progfile.name, "exec.c", "verif.c"]
   cbmcfile = tempfile.NamedTemporaryFile()
-  retcode = subprocess.call(args, stdout=cbmcfile)
+  retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
 
   cbmcfile.seek(0)
 
@@ -231,11 +246,9 @@ def verif(prog, checker, width):
   return None
 
 def cegar(checker):
-  global codelen
-  global codelenlim
-
-  wordlen = 4
-  targetwordlen = 32
+  codelen = args.seqlen
+  wordlen = args.wordwidth
+  targetwordlen = args.targetwordwidth
   n = 1
   finished = False
   tests = gentests(wordlen, codelen)
@@ -252,13 +265,13 @@ def cegar(checker):
 
     print "Test vectors: %s" % str(tests)
 
-    prog = synth(checker, tests, exclusions, wordlen)
+    prog = synth(checker, tests, exclusions, wordlen, codelen)
     prog = optimize(prog, wordlen)
 
     if prog == None:
       print "No sequence possible!"
 
-      if codelen < codelenlim:
+      if codelen < args.seqlim:
         codelen += 1
         exclusions = []
         #tests = gentests(wordlen, codelen)
@@ -268,7 +281,7 @@ def cegar(checker):
     prettyprint(prog)
     print ""
 
-    test = verif(prog, checker, wordlen)
+    test = verif(prog, checker, wordlen, codelen)
 
     if test is None:
       print "Correct for wordlen=%d" % wordlen
@@ -278,7 +291,7 @@ def cegar(checker):
         finished = True
         break
 
-      test = verif(prog, checker, targetwordlen)
+      test = verif(prog, checker, targetwordlen, codelen)
       if test is None:
         print "Also correct for wordlen=%d!" % targetwordlen
         finished = True
@@ -287,7 +300,7 @@ def cegar(checker):
       #tests.append(test)
 
       print "Trying to generalize..."
-      newprog = generalize(prog, checker, wordlen, targetwordlen, tests)
+      newprog = generalize(prog, checker, wordlen, targetwordlen, tests, codelen)
 
       if newprog:
         print "Generalized to:"
@@ -355,10 +368,10 @@ def expand(x, narrow, wide):
 
   return ret
 
-def generalize(prog, checker, width, targetwidth, tests):
-  return heuristic_generalize(prog, checker, width, targetwidth)
+def generalize(prog, checker, width, targetwidth, tests, codelen):
+  return heuristic_generalize(prog, checker, width, targetwidth, codelen)
 
-def heuristic_generalize(prog, checker, width, targetwidth):
+def heuristic_generalize(prog, checker, width, targetwidth, codelen):
   """
   Use heuristics to guess constants with which to generalize the program.
   """
@@ -376,7 +389,7 @@ def heuristic_generalize(prog, checker, width, targetwidth):
   for newparms in itertools.product(*expansions):
     newprog = (ops, list(newparms), xparms)
 
-    if verif(newprog, checker, targetwidth) is None:
+    if verif(newprog, checker, targetwidth, codelen) is None:
       return newprog
 
   return None
@@ -422,10 +435,10 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile()
-  args = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % targetwidth,
+  cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % targetwidth,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
 
-  retcode = subprocess.call(args, stdout=cbmcfile)
+  retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
 
   cbmcfile.seek(0)
 
@@ -452,7 +465,7 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
     newprog = (ops, parms, xparms)
 
-    if verif(newprog, checker, targetwidth) is None:
+    if verif(newprog, checker, targetwidth, codelen) is None:
       return newprog
 
   return None
@@ -501,6 +514,8 @@ def optimize(prog, wordlen):
   return (ops, parms, xparms)
 
 def gentests(wordlen, codelen):
+  numargs = args.args
+
   numtests = min(16, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
   slices = [random.sample(xrange(2**wordlen), numslice) for i in xrange(numargs)]
@@ -508,16 +523,8 @@ def gentests(wordlen, codelen):
 
 
 if __name__ == '__main__':
-  import sys
-
-  checker = sys.argv[1]
-
-  if len(sys.argv) > 2:
-    codelen = int(sys.argv[2])
-
-  if len(sys.argv) > 3:
-    codelenlim = int(sys.argv[3])
+  args = argparser.parse_args()
 
   random.seed()
 
-  cegar(checker)
+  cegar(args.checker)
