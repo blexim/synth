@@ -11,6 +11,18 @@ import sys
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
+HEADER = '\033[95m'
+OKBLUE = '\033[94m'
+OKGREEN = '\033[92m'
+WARNING = '\033[93m'
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+BOLD = "\033[1m"
+UP = "\033[1A"
+
+RED = "\033[31m"
+
+
 opsre = re.compile('ops={(.*?)}')
 parmsre = re.compile('[^x]parms={(.*?)}')
 xparmsre = re.compile('xparms={(.*?)}')
@@ -267,10 +279,21 @@ def cegar(checker):
   starttime = time.time()
 
   while not finished:
-    print "Iteration [%d] sequence [%d/%d] width [%d/%d] excluded [%d/%d] tests [%d]     \r" % (
-        n, codelen, args.seqlim, wordlen, targetwordlen, len(exclusions),
-        args.exclude, len(tests)),
-    sys.stdout.flush()
+    if not args.verbose:
+      endtime = time.time()
+      elapsed = endtime-starttime
+
+      print ("Iteration: " + BOLD + RED + "%d" + ENDC) % n
+      print ("Code sequence length: " + BOLD + RED + "%d/%d" + ENDC) % (codelen,
+          args.seqlim)
+      print ("Word width: " + BOLD + RED + "%d/%d" + ENDC) % (wordlen,
+          targetwordlen)
+      print ("Excluded sequences: " + BOLD + RED + "%d/%d" + ENDC) % (
+          len(exclusions), args.exclude)
+      print ("Test vectors: " + BOLD + RED + "%d" + ENDC) % len(tests)
+      print ("Elapsed time: " + BOLD + RED + "%.02fs" + ENDC) % elapsed
+      print UP*7 + "\r"
+      sys.stdout.flush()
 
     n += 1
 
@@ -363,7 +386,8 @@ def cegar(checker):
   endtime = time.time()
   elapsed = endtime-starttime
 
-  print "\nFinished in %0.2fs\n" % elapsed
+  print "\n"*6
+  print "Finished in %0.2fs\n" % elapsed
   prettyprint(prog)
 
 def expand(x, narrow, wide):
