@@ -30,6 +30,9 @@ argparser.add_argument("--wordwidth", "-w", default=2, type=int,
 argparser.add_argument("--targetwordwidth", "-t", default=32, type=int,
     help="target word size to use")
 
+argparser.add_argument("--exclude", "-e", default=0, type=int,
+    help="maximum number of sequences to exclude")
+
 argparser.add_argument("checker",
     help="code check the function we synthesise")
 
@@ -159,7 +162,7 @@ def synth(checker, tests, exclusions, width, codelen):
       testfile.write("prog.ops[%d] == %d " % (i, ops[i]))
       testfile.write("&& prog.parms[%d] == %d && prog.parms[%d] == %d" %
           (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
-      testfile.write("&& prog.xparms[%d] == %d && prog.parms[%d] == %d" %
+      testfile.write("&& prog.xparms[%d] == %d && prog.xparms[%d] == %d" %
           (2*i, xparms[2*i], 2*i+1, xparms[2*i+1]))
 
     testfile.write("));\n")
@@ -311,19 +314,20 @@ def cegar(checker):
 
       print "Couldn't generalize :-("
 
-      #exclusions.append(prog)
+      if len(exclusions) < args.exclude:
+        print "Excluding current sequence"
+        exclusions.append(prog)
+      else:
+        exclusions = []
+        wordlen *= 2
 
-      wordlen *= 2
+        if wordlen > targetwordlen:
+          wordlen = targetwordlen
 
-      if wordlen > targetwordlen:
-        wordlen = targetwordlen
+        tests = gentests(wordlen, codelen)
+        tests = list(set(tests))
 
-      #tests += gentests(wordlen, codelen)
-      #tests = gentests(wordlen, codelen) + [test]
-      tests = gentests(wordlen, codelen)
-      tests = list(set(tests))
-
-      print "Increasing wordlen to %d" % wordlen
+        print "Increasing wordlen to %d" % wordlen
     else:
       print "Fails for %s\n" % str(test)
       tests.append(test)
