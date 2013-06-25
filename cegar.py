@@ -30,7 +30,7 @@ argparser.add_argument("--wordwidth", "-w", default=2, type=int,
 argparser.add_argument("--targetwordwidth", "-t", default=32, type=int,
     help="target word size to use")
 
-argparser.add_argument("--exclude", "-e", default=0, type=int,
+argparser.add_argument("--exclude", "-e", default=2, type=int,
     help="maximum number of sequences to exclude")
 
 argparser.add_argument("checker",
