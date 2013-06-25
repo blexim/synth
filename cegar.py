@@ -7,6 +7,7 @@ import itertools
 import random
 import argparse
 import time
+import sys
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
@@ -266,9 +267,10 @@ def cegar(checker):
   starttime = time.time()
 
   while not finished:
-    print "Iteration [%d] sequence [%d/%d] width [%d/%d] excluded [%d/%d] tests [%d]" % (
+    print "Iteration [%d] sequence [%d/%d] width [%d/%d] excluded [%d/%d] tests [%d]     \r" % (
         n, codelen, args.seqlim, wordlen, targetwordlen, len(exclusions),
-        args.exclude, len(tests))
+        args.exclude, len(tests)),
+    sys.stdout.flush()
 
     n += 1
 
@@ -361,7 +363,7 @@ def cegar(checker):
   endtime = time.time()
   elapsed = endtime-starttime
 
-  print "Finished in %0.2fs\n" % elapsed
+  print "\nFinished in %0.2fs\n" % elapsed
   prettyprint(prog)
 
 def expand(x, narrow, wide):
