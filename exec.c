@@ -32,7 +32,7 @@ word_t parm(word_t A[], unsigned int i, prog_t prog) {
 word_t exec(word_t args[NARGS], prog_t prog) {
   word_t A[SZ+NARGS];
   op_t op;
-  word_t p1, p2, res;
+  word_t p1, p2, res, result;
   unsigned int i;
 
   for (i = 0; i < NARGS; i++) {
@@ -125,5 +125,7 @@ word_t exec(word_t args[NARGS], prog_t prog) {
     A[i+NARGS] = res;
   }
 
-  return A[SZ+NARGS-1];
+  result = A[SZ+NARGS-1];
+
+  return result;
 }
