@@ -6,6 +6,7 @@ import re
 import itertools
 import random
 import argparse
+import time
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
@@ -262,66 +263,82 @@ def cegar(checker):
   finished = False
   tests = gentests(wordlen, codelen)
   exclusions = []
+  starttime = time.time()
 
   while not finished:
-    print "Iteration %d:" % n
+    print "Iteration [%d] sequence [%d/%d] width [%d/%d] excluded [%d/%d] tests [%d]" % (
+        n, codelen, args.seqlim, wordlen, targetwordlen, len(exclusions),
+        args.exclude, len(tests))
+
     n += 1
 
     if len(tests) > 3*codelen and False:
-      print "Restarting!"
       tests = gentests(wordlen, codelen)
 
 
-    print "Test vectors: %s" % str(tests)
+    if args.verbose > 1:
+      print "Test vectors: %s" % str(tests)
 
     prog = synth(checker, tests, exclusions, wordlen, codelen)
     prog = optimize(prog, wordlen)
 
     if prog == None:
-      print "No sequence possible!"
+      if args.verbose > 0:
+        print "No sequence possible!"
 
       if codelen < args.seqlim:
         codelen += 1
         exclusions = []
         #tests = gentests(wordlen, codelen)
-        print "Increasing sequence length to %d\n" % codelen
+
+        if args.verbose > 0:
+          print "Increasing sequence length to %d\n" % codelen
         continue
 
-    prettyprint(prog)
-    print ""
+    if args.verbose > 0:
+      prettyprint(prog)
 
     test = verif(prog, checker, wordlen, codelen)
 
     if test is None:
-      print "Correct for wordlen=%d" % wordlen
+      if args.verbose > 0:
+        print "Correct for wordlen=%d" % wordlen
 
       if wordlen == targetwordlen:
-        print "Done!"
         finished = True
         break
 
       test = verif(prog, checker, targetwordlen, codelen)
       if test is None:
-        print "Also correct for wordlen=%d!" % targetwordlen
+        if args.verbose > 0:
+          print "Also correct for wordlen=%d!" % targetwordlen
+
         finished = True
         break
 
       #tests.append(test)
 
-      print "Trying to generalize..."
+      if args.verbose > 0:
+        print "Trying to generalize..."
+
       newprog = generalize(prog, checker, wordlen, targetwordlen, tests, codelen)
 
       if newprog:
-        print "Generalized to:"
-        prettyprint(newprog)
+        if args.verbose > 1:
+          print "Generalized!"
+
+        prog = newprog
+
         finished = True
-        print "\nDone!"
         break
 
-      print "Couldn't generalize :-("
+      if args.verbose > 0:
+        print "Couldn't generalize :-("
 
       if len(exclusions) < args.exclude:
-        print "Excluding current sequence"
+        if args.verbose > 0:
+          print "Excluding current sequence"
+
         exclusions.append(prog)
       else:
         exclusions = []
@@ -333,10 +350,19 @@ def cegar(checker):
         tests = gentests(wordlen, codelen)
         tests = list(set(tests))
 
-        print "Increasing wordlen to %d" % wordlen
+        if args.verbose > 0:
+          print "Increasing wordlen to %d" % wordlen
     else:
-      print "Fails for %s\n" % str(test)
+      if args.verbose > 0:
+        print "Fails for %s\n" % str(test)
+
       tests.append(test)
+
+  endtime = time.time()
+  elapsed = endtime-starttime
+
+  print "Finished in %0.2fs\n" % elapsed
+  prettyprint(prog)
 
 def expand(x, narrow, wide):
   if x == 1 or x == 0:
