@@ -31,7 +31,7 @@ argparser.add_argument("--targetwordwidth", "-t", default=32, type=int,
     help="target word size to use")
 
 argparser.add_argument("checker",
-    help="checker code")
+    help="code check the function we synthesise")
 
 args = None
 
