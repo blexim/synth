@@ -19,7 +19,7 @@ argparser = argparse.ArgumentParser(
     description="Synthesise a loop free program")
 argparser.add_argument("--seqlen", "-s", default=1, type=int,
     help="minimum length of code sequence to synthesise")
-argparser.add_argument("--seqlim", "-l", default=16, type=int,
+argparser.add_argument("--seqlim", "-S", default=16, type=int,
     help="maximum length of code sequence to synthesise")
 
 argparser.add_argument("--args", "-a", default=1, type=int,
@@ -27,11 +27,14 @@ argparser.add_argument("--args", "-a", default=1, type=int,
 
 argparser.add_argument("--wordwidth", "-w", default=2, type=int,
     help="initial word size to use")
-argparser.add_argument("--targetwordwidth", "-t", default=32, type=int,
+argparser.add_argument("--targetwordwidth", "-W", default=32, type=int,
     help="target word size to use")
 
 argparser.add_argument("--exclude", "-e", default=2, type=int,
     help="maximum number of sequences to exclude")
+
+argparser.add_argument("--tests", "-t", default=16, type=int,
+    help="number of test vectors to generat")
 
 argparser.add_argument("checker",
     help="code check the function we synthesise")
@@ -519,12 +522,12 @@ def optimize(prog, wordlen):
 
 def gentests(wordlen, codelen):
   numargs = args.args
-
-  numtests = min(16, 2**(wordlen * numargs))
+  numtests = min(args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
-  slices = [random.sample(xrange(2**wordlen), numslice) for i in xrange(numargs)]
-  return list(itertools.product(*slices))
 
+  slices = [random.sample(xrange(2**wordlen), numslice) for i in xrange(numargs)]
+
+  return list(itertools.product(*slices))
 
 if __name__ == '__main__':
   args = argparser.parse_args()
