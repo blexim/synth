@@ -36,6 +36,9 @@ argparser.add_argument("--exclude", "-e", default=2, type=int,
 argparser.add_argument("--tests", "-t", default=16, type=int,
     help="number of test vectors to generat")
 
+argparser.add_argument("--verbose", "-v", action='count',
+    help="increase verbosity")
+
 argparser.add_argument("checker",
     help="code check the function we synthesise")
 
