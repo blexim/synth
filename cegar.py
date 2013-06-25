@@ -7,19 +7,20 @@ import itertools
 import random
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
-TESTS = [0]
 
 opsre = re.compile('ops={(.*?)}')
 parmsre = re.compile('[^x]parms={(.*?)}')
 xparmsre = re.compile('xparms={(.*?)}')
 
-cexxre = re.compile('counterexample_x=(\d+)')
+cexre = re.compile('cex_args={(.*?)}')
 
 codelen = 1
 codelenlim = 15
 
 testsseed = 5
 testslim = 15
+
+numargs = 1
 
 PLUS=0
 MINUS=1
@@ -33,6 +34,10 @@ NOT=8
 SHL=9
 LSHR=10
 ASHR=11
+LE=12
+LT=13
+GE=14
+GT=15
 
 def parse(s):
   ret = []
@@ -49,10 +54,10 @@ def prettyarg(p, x):
   if x == 1:
     return hex(p)
   else:
-    if p == 0:
-      return 'x'
+    if p < numargs:
+      return 'a%d' % (p+1)
     else:
-      return 't%d' % p
+      return 't%d' % (p-numargs+1)
 
 def prettyprint(prog):
   (ops, parms, xparms) = prog
@@ -93,6 +98,14 @@ def prettyprint(prog):
       rhs = "%s >> %s" % (a1, a2)
     elif opcode == ASHR:
       rhs = "%s >>> %s" % (a1, a2)
+    elif opcode == LE:
+      rhs = "%s <= %s" % (a1, a2)
+    elif opcode == LT:
+      rhs = "%s < %s" % (a1, a2)
+    elif opcode == GE:
+      rhs = "%s >= %s" % (a1, a2)
+    elif opcode == GT:
+      rhs = "%s > %s" % (a1, a2)
 
     print "t%d = %s" % (i+1, rhs)
 
@@ -100,7 +113,7 @@ def prettyprint(prog):
 
   print "res = t%d" % (len(ops))
 
-def synth(checker, tests, width):
+def synth(checker, tests, exclusions, width):
   """
   Synthesise a new code sequence.
   """
@@ -110,9 +123,31 @@ def synth(checker, tests, width):
 
   testfile.write("#include \"synth.h\"\n\n")
   testfile.write("void tests(prog_t prog) {\n")
+  testfile.write("  word_t input[NARGS];\n\n");
 
-  for x in tests:
-    testfile.write("  test(%d, prog);\n" % x)
+  for x in sorted(tests):
+    for i in xrange(len(x)):
+      testfile.write("  input[%d] = %d;\n" % (i, x[i]))
+
+    testfile.write("  test(input, prog);\n\n")
+
+  # Now we're going to list each of the programs we
+  # already know are wrong...
+
+  for (ops, parms, xparms) in exclusions:
+    testfile.write("  __CPROVER_assume(!(")
+
+    for i in xrange(len(ops)):
+      if i != 0:
+        testfile.write(" && ")
+
+      testfile.write("prog.ops[%d] == %d " % (i, ops[i]))
+      testfile.write("&& prog.parms[%d] == %d && prog.parms[%d] == %d" %
+          (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
+      testfile.write("&& prog.xparms[%d] == %d && prog.parms[%d] == %d" %
+          (2*i, xparms[2*i], 2*i+1, xparms[2*i+1]))
+
+    testfile.write("));\n")
 
   testfile.write("}\n")
   testfile.flush()
@@ -120,6 +155,7 @@ def synth(checker, tests, width):
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile()
   args = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
+      "-DNARGS=%d" % numargs,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
 
   retcode = subprocess.call(args, stdout=cbmcfile)
@@ -171,6 +207,7 @@ def verif(prog, checker, width):
   progfile.flush()
 
   args = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
+          "-DNARGS=%d" % numargs,
           checker, progfile.name, "exec.c", "verif.c"]
   cbmcfile = tempfile.NamedTemporaryFile()
   retcode = subprocess.call(args, stdout=cbmcfile)
@@ -183,11 +220,10 @@ def verif(prog, checker, width):
     x = 0
 
     for l in cbmcfile.readlines():
-      mx = cexxre.search(l)
+      mx = cexre.search(l)
 
       if mx:
-        x = int(mx.group(1))
-        x &= ((1 << width) - 1)
+        x = tuple(parse(mx.group(1)))
 
     return x
 
@@ -198,24 +234,25 @@ def cegar(checker):
   global codelen
   global codelenlim
 
-  wordlen = 2
+  wordlen = 4
   targetwordlen = 32
   n = 1
   finished = False
   tests = gentests(wordlen, codelen)
+  exclusions = []
 
   while not finished:
     print "Iteration %d:" % n
     n += 1
 
-    if len(tests) > 3*codelen:
+    if len(tests) > 3*codelen and False:
       print "Restarting!"
       tests = gentests(wordlen, codelen)
 
 
     print "Test vectors: %s" % str(tests)
 
-    prog = synth(checker, tests, wordlen)
+    prog = synth(checker, tests, exclusions, wordlen)
     prog = optimize(prog, wordlen)
 
     if prog == None:
@@ -223,6 +260,7 @@ def cegar(checker):
 
       if codelen < codelenlim:
         codelen += 1
+        exclusions = []
         #tests = gentests(wordlen, codelen)
         print "Increasing sequence length to %d\n" % codelen
         continue
@@ -246,7 +284,7 @@ def cegar(checker):
         finished = True
         break
 
-      tests.append(test)
+      #tests.append(test)
 
       print "Trying to generalize..."
       newprog = generalize(prog, checker, wordlen, targetwordlen, tests)
@@ -260,18 +298,21 @@ def cegar(checker):
 
       print "Couldn't generalize :-("
 
+      #exclusions.append(prog)
+
       wordlen *= 2
 
       if wordlen > targetwordlen:
         wordlen = targetwordlen
 
-      tests += gentests(wordlen, codelen)
-      tests = list(set(tests))
+      #tests += gentests(wordlen, codelen)
       #tests = gentests(wordlen, codelen) + [test]
+      tests = gentests(wordlen, codelen)
+      tests = list(set(tests))
 
       print "Increasing wordlen to %d" % wordlen
     else:
-      print "Fails for %s\n" % hex(test)
+      print "Fails for %s\n" % str(test)
       tests.append(test)
 
 def expand(x, narrow, wide):
@@ -460,9 +501,11 @@ def optimize(prog, wordlen):
   return (ops, parms, xparms)
 
 def gentests(wordlen, codelen):
-  numtests = min(16, 2**wordlen)
-  #numtests = testsseed
-  return random.sample(xrange(2**wordlen), numtests)
+  numtests = min(16, 2**(wordlen * numargs))
+  numslice = int(numtests**(1.0/numargs))
+  slices = [random.sample(xrange(2**wordlen), numslice) for i in xrange(numargs)]
+  return list(itertools.product(*slices))
+
 
 if __name__ == '__main__':
   import sys

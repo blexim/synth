@@ -1,7 +1,9 @@
 #include "synth.h"
 
-void test(word_t x, prog_t prog) {
-  __CPROVER_assume(check(x, exec(x, prog)));
+void test(word_t args[NARGS], prog_t prog) {
+  word_t res = exec(args, prog);
+
+  __CPROVER_assume(check(args, res));
 }
 
 int main(void) {
@@ -18,9 +20,9 @@ int main(void) {
   for (int i = 0; i < SZ; i++) {
     __CPROVER_assume(ops[i] <= MAXOPCODE);
 
-    __CPROVER_assume((xparms[i*2] == 0) && (parms[i*2] < (i+1)));
+    __CPROVER_assume((xparms[i*2] == 0) && (parms[i*2] < (i+NARGS)));
     //__CPROVER_assume(xparms[i*2] || (parms[i*2] < (i+1)));
-    __CPROVER_assume(xparms[i*2+1] || (parms[i*2+1] < (i+1)));
+    __CPROVER_assume(xparms[i*2+1] || (parms[i*2+1] < (i+NARGS)));
   }
 
   tests(prog);

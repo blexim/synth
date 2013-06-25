@@ -12,6 +12,10 @@
 #define SHL 9
 #define LSHR 10
 #define ASHR 11
+#define LE 12
+#define LT 13
+#define GE 14
+#define GT 15
 
 #define ARG 0
 #define CONST 1
@@ -25,13 +29,15 @@ word_t parm(word_t A[], unsigned int i, prog_t prog) {
   }
 }
 
-word_t exec(word_t x, prog_t prog) {
-  word_t A[SZ+1];
+word_t exec(word_t args[NARGS], prog_t prog) {
+  word_t A[SZ+NARGS];
   op_t op;
   word_t p1, p2, res;
   unsigned int i;
 
-  A[0] = x;
+  for (i = 0; i < NARGS; i++) {
+    A[i] = args[i];
+  }
 
   for (i = 0; i < SZ; i++) {
     op = prog.ops[i];
@@ -83,13 +89,41 @@ word_t exec(word_t x, prog_t prog) {
 
       res = (word_t) (i1 >> i2);
       break;
+    case LE:
+      if (p1 <= p2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+    case LT:
+      if (p1 < p2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+    case GE:
+      if (p1 >= p2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+    case GT:
+      if (p1 > p2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
     default:
       __CPROVER_assume(0);
       break;
     }
 
-    A[i+1] = res;
+    A[i+NARGS] = res;
   }
 
-  return A[SZ];
+  return A[SZ+NARGS-1];
 }

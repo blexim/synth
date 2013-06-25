@@ -3,8 +3,8 @@
 extern prog_t prog;
 
 unsigned int main(void) {
-  word_t counterexample_x;
-  word_t counterexample_z = exec(counterexample_x, prog);
+  word_t cex_args[NARGS];
+  word_t res = exec(cex_args, prog);
 
-  assert(check(counterexample_x, counterexample_z));
+  assert(check(cex_args, res));
 }

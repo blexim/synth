@@ -8,7 +8,11 @@
  #define WIDTH 32
 #endif
 
-const int MAXOPCODE = 11;
+#ifndef NARGS
+ #define NARGS 1
+#endif
+
+const int MAXOPCODE = 15;
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 4
@@ -26,10 +30,10 @@ typedef struct prog {
   bit_t *xparms;
 } prog_t;
 
-word_t exec(word_t, prog_t prog);
-void test(word_t x, prog_t prog);
+word_t exec(word_t args[NARGS], prog_t prog);
+void test(word_t args[NARGS], prog_t prog);
 
-int check(word_t x, word_t z);
+int check(word_t args[NARGS], word_t z);
 void tests(prog_t prog);
 
 #endif // SYNTH_H
