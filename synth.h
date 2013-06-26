@@ -36,4 +36,6 @@ void test(word_t args[NARGS], prog_t prog);
 int check(word_t args[NARGS], word_t z);
 void tests(prog_t prog);
 
+void hint(prog_t prog);
+
 #endif // SYNTH_H

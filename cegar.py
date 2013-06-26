@@ -48,10 +48,13 @@ argparser.add_argument("--exclude", "-e", default=2, type=int,
     help="maximum number of sequences to exclude")
 
 argparser.add_argument("--tests", "-t", default=16, type=int,
-    help="number of test vectors to generat")
+    help="number of test vectors to generate")
 
 argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
+
+argparser.add_argument("--hint", default=None, type=str,
+    help="hints to use for synthesis")
 
 argparser.add_argument("checker",
     help="code check the function we synthesise")
@@ -196,6 +199,9 @@ def synth(checker, tests, exclusions, width, codelen):
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
       "-DNARGS=%d" % args.args,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
+
+  if args.hint:
+    cbmcargs += ["-DHINT", args.hint]
 
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
 
