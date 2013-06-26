@@ -163,7 +163,8 @@ def synth(checker, tests, exclusions, width, codelen):
   testfile.write("void tests(prog_t prog) {\n")
   testfile.write("  word_t input[NARGS];\n\n");
 
-  for x in sorted(tests):
+  random.shuffle(tests)
+  for x in tests:
     for i in xrange(len(x)):
       testfile.write("  input[%d] = %d;\n" % (i, x[i]))
 
@@ -367,7 +368,7 @@ def cegar(checker):
         exclusions.append(prog)
       else:
         exclusions = []
-        wordlen *= 2
+        wordlen += 1
 
         if wordlen > targetwordlen:
           wordlen = targetwordlen
@@ -580,7 +581,7 @@ def gentests(wordlen, codelen):
   numtests = min(args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
 
-  slices = [random.sample(xrange(2**wordlen), numslice) for i in xrange(numargs)]
+  slices = [random.sample(xrange(2**(wordlen-1) - 1), numslice) for i in xrange(numargs)]
 
   return list(itertools.product(*slices))
 
