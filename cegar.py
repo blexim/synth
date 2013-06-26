@@ -587,7 +587,7 @@ def gentests(wordlen, codelen):
   numtests = min(args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
 
-  slices = [random.sample(xrange(2**(wordlen-1) - 1), numslice) for i in xrange(numargs)]
+  slices = [random.sample(xrange(2**(wordlen)), numslice) for i in xrange(numargs)]
 
   return list(itertools.product(*slices))
 
