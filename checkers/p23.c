@@ -1,5 +1,8 @@
-int check(unsigned int x, unsigned int z) {
-  int cnt = 0;
+#include "synth.h"
+
+int check(word_t args[NARGS], word_t z) {
+  word_t x = args[0];
+  word_t cnt = 0;
 
   for (int i = 0; i < WIDTH; i++) {
     if (x & 1) {
