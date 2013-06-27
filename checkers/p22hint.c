@@ -1,6 +1,7 @@
 #include "synth.h"
 
 void hint(prog_t prog) {
+  /*
   __CPROVER_assume(prog.ops[0] == 10);
   __CPROVER_assume(prog.ops[1] == 7);
   __CPROVER_assume(prog.ops[2] == 10);
@@ -9,6 +10,7 @@ void hint(prog_t prog) {
   __CPROVER_assume(prog.ops[5] == 2);
   __CPROVER_assume(prog.ops[6] == 10);
   __CPROVER_assume(prog.ops[7] == 5);
+  */
 
   __CPROVER_assume(prog.parms[0] == 0);
   __CPROVER_assume(prog.parms[1] == 1);

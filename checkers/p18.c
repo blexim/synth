@@ -2,17 +2,20 @@
 
 int check(word_t args[NARGS], word_t z) {
   word_t x = args[0];
-  word_t res;
 
-  if (x == 0) {
-    return !z;
-  } else {
-    word_t q = ((x+1) & x);
-
-    if (q == x) {
-      return !!z;
-    } else {
-      return !z;
+  for (int i = 0; i < WIDTH; i++) {
+    if (x == 0) {
+      return z == 0;
     }
+
+    if (x == 1) {
+      return z == 1;
+    } else if (x & 1) {
+      return z == 0;
+    }
+
+    x >>= 1;
   }
+
+  return 0;
 }
