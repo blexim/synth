@@ -25,9 +25,9 @@ typedef unsigned __CPROVER_bitvector[OPLEN] op_t;
 typedef unsigned __CPROVER_bitvector[1] bit_t;
 
 typedef struct prog {
-  op_t *ops;
-  word_t *parms;
-  bit_t *xparms;
+  op_t ops[SZ];
+  word_t parms[SZ*2];
+  bit_t xparms[SZ*2];
 } prog_t;
 
 word_t exec(word_t args[NARGS], prog_t prog);
@@ -37,5 +37,6 @@ int check(word_t args[NARGS], word_t z);
 void tests(prog_t prog);
 
 void hint(prog_t prog);
+void exclude(prog_t prog);
 
 #endif // SYNTH_H

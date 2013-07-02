@@ -202,7 +202,8 @@ def synth(checker, tests, exclusions, width, codelen):
   cbmcfile = tempfile.NamedTemporaryFile()
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
       "-DNARGS=%d" % args.args,
-      "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
+      "--slice-formula", checker, testfile.name, "synth.c", "exec.c",
+      "exclude.c"]
 
   if args.hint:
     cbmcargs += ["-DHINT", args.hint]
@@ -241,18 +242,19 @@ def verif(prog, checker, width, codelen):
   Verify that a sequence is correct & extract a new test vector if it's not."
   """
 
-  progfile = tempfile.NamedTemporaryFile(suffix='.c')
+  progfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
 
   (ops, parms, xparms) = prog
 
   progfile.write("#include \"synth.h\"\n\n")
-  progfile.write("op_t ops[] = { %s };\n" %
+  progfile.write("prog_t prog = {\n")
+  progfile.write("  { %s },\n" %
       ', '.join(str(s) for s in ops))
-  progfile.write("word_t parms[] = { %s };\n" %
+  progfile.write("  { %s },\n" %
       ', '.join(str(p) for p in parms))
-  progfile.write("bit_t xparms[] = { %s };\n" %
+  progfile.write("  { %s }\n" %
       ', '.join(str(x) for x in xparms))
-  progfile.write("prog_t prog = { ops, parms, xparms };\n")
+  progfile.write("};")
   progfile.flush()
 
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
