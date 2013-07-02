@@ -47,6 +47,10 @@ argparser.add_argument("--targetwordwidth", "-W", default=32, type=int,
 argparser.add_argument("--exclude", "-e", default=2, type=int,
     help="maximum number of sequences to exclude")
 
+argparser.add_argument("--exhaustive", "-E", default=False,
+    action="store_const", const=True,
+    help="exhaustively search for all sequences")
+
 argparser.add_argument("--tests", "-t", default=16, type=int,
     help="number of test vectors to generate")
 
@@ -280,12 +284,18 @@ def cegar(checker):
   wordlen = args.wordwidth
   targetwordlen = args.targetwordwidth
   n = 1
-  finished = False
   tests = gentests(wordlen, codelen)
   exclusions = []
+  correct = []
   starttime = time.time()
+  seqlim = args.seqlim
 
-  while not finished:
+  if args.exhaustive:
+    numsearch = -1
+  else:
+    numsearch = 1
+
+  while codelen <= seqlim and len(correct) != numsearch:
     if not args.verbose:
       endtime = time.time()
       elapsed = endtime-starttime
@@ -299,8 +309,17 @@ def cegar(checker):
           len(exclusions), args.exclude)
       print ("Test vectors: " + BOLD + RED + "%d" + ENDC) % len(tests)
       print ("Elapsed time: " + BOLD + RED + "%.02fs" + ENDC) % elapsed
+
+      if args.exhaustive:
+        print ("Correct sequences: " + BOLD + RED + "%d" + ENDC) %(
+            len(correct))
+        print UP*2 + "\r"
+
       print UP*7 + "\r"
       sys.stdout.flush()
+
+    if args.verbose > 0:
+      print correct
 
     n += 1
 
@@ -311,21 +330,21 @@ def cegar(checker):
     if args.verbose > 1:
       print "Test vectors: %s" % str(tests)
 
-    prog = synth(checker, tests, exclusions, wordlen, codelen)
-    prog = optimize(prog, wordlen)
+    prog = synth(checker, tests, exclusions+correct, wordlen, codelen)
+    #prog = optimize(prog, wordlen)
 
     if prog == None:
       if args.verbose > 0:
         print "No sequence possible!"
 
-      if codelen < args.seqlim:
-        codelen += 1
-        exclusions = []
-        #tests = gentests(wordlen, codelen)
+      codelen += 1
+      exclusions = []
+      #tests = gentests(wordlen, codelen)
 
-        if args.verbose > 0:
-          print "Increasing sequence length to %d\n" % codelen
-        continue
+      if args.verbose > 0:
+        print "Increasing sequence length to %d\n" % codelen
+
+      continue
 
     if args.verbose > 0:
       prettyprint(prog)
@@ -337,16 +356,16 @@ def cegar(checker):
         print "Correct for wordlen=%d" % wordlen
 
       if wordlen == targetwordlen:
-        finished = True
-        break
+        correct.append(prog)
+        continue
 
       test = verif(prog, checker, targetwordlen, codelen)
       if test is None:
         if args.verbose > 0:
           print "Also correct for wordlen=%d!" % targetwordlen
 
-        finished = True
-        break
+        correct.append(prog)
+        continue
 
       #tests.append(test)
 
@@ -360,9 +379,8 @@ def cegar(checker):
           print "Generalized!"
 
         prog = newprog
-
-        finished = True
-        break
+        correct.append(prog)
+        continue
 
       if args.verbose > 0:
         print "Couldn't generalize :-("
@@ -395,7 +413,10 @@ def cegar(checker):
 
   print "\n"*6
   print "Finished in %0.2fs\n" % elapsed
-  prettyprint(prog)
+  
+  for prog in correct:
+    prettyprint(prog)
+    print ""
 
 def expand(x, narrow, wide):
   if x == 1 or x == 0:
@@ -587,7 +608,15 @@ def gentests(wordlen, codelen):
   numtests = min(args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
 
-  slices = [random.sample(xrange(2**(wordlen)), numslice) for i in xrange(numargs)]
+  maxneg = 0x80000000
+  maxpos = 0x7fffffff
+
+  vecs = [1, 0, -1, maxneg, maxpos, maxneg+1, maxpos-1, 0x01234567,
+      0x89abcdef, -2, 2, -3, 3, -64, 64, -5, -31415]
+
+  slices = [random.sample(vecs, numslice) for i in xrange(numargs)]
+
+  slices = [[0] for i in xrange(numargs)]
 
   return list(itertools.product(*slices))
 
