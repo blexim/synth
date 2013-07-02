@@ -378,8 +378,10 @@ def cegar(checker):
         if args.verbose > 1:
           print "Generalized!"
 
+        exclusions.append(prog)
+        correct.append(newprog)
+
         prog = newprog
-        correct.append(prog)
         continue
 
       if args.verbose > 0:
@@ -419,22 +421,23 @@ def cegar(checker):
     print ""
 
 def expand(x, narrow, wide):
-  if x == 1 or x == 0:
-    return [x]
-
-  if x == (1 << narrow):
-    return [x, 1 << wide]
-
-  if x == narrow:
-    return [x, wide]
-
-  if x == narrow-1:
-    return [x, wide-1]
-
-  if x == narrow+1:
-    return [x, wide+1]
+  if args and args.verbose > 1:
+    print "Expanding %x from %d to %d bits" % (x, narrow, wide)
 
   ret = [x]
+
+  if x == (1 << narrow):
+    ret.append(1 << wide)
+
+  if x == narrow:
+    ret.append(wide)
+
+  if x == narrow-1:
+    ret.append(wide-1)
+
+  if x == narrow+1:
+    ret.append(wide+1)
+
   ret.append(x << (wide-narrow))
 
   y = x
@@ -456,7 +459,10 @@ def expand(x, narrow, wide):
 
   ret.append(y)
 
-  return ret
+  if args and args.verbose > 1:
+    print "Expanded to %s" % str(ret)
+
+  return list(set(ret))
 
 def generalize(prog, checker, width, targetwidth, tests, codelen):
   return heuristic_generalize(prog, checker, width, targetwidth, codelen)
