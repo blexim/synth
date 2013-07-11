@@ -39,7 +39,7 @@ argparser.add_argument("--seqlim", "-S", default=16, type=int,
 argparser.add_argument("--args", "-a", default=1, type=int,
     help="number of arguments to function")
 
-argparser.add_argument("--wordwidth", "-w", default=2, type=int,
+argparser.add_argument("--wordwidth", "-w", default=3, type=int,
     help="initial word size to use")
 argparser.add_argument("--targetwordwidth", "-W", default=32, type=int,
     help="target word size to use")
@@ -167,7 +167,7 @@ def synth(checker, tests, exclusions, width, codelen):
   testfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
 
   testfile.write("#include \"synth.h\"\n\n")
-  testfile.write("void tests(prog_t prog) {\n")
+  testfile.write("void tests(prog_t *prog) {\n")
   testfile.write("  word_t input[NARGS];\n\n");
 
   random.shuffle(tests)
@@ -187,10 +187,10 @@ def synth(checker, tests, exclusions, width, codelen):
       if i != 0:
         testfile.write(" && ")
 
-      testfile.write("prog.ops[%d] == %d " % (i, ops[i]))
-      testfile.write("&& prog.parms[%d] == %d && prog.parms[%d] == %d" %
+      testfile.write("prog->ops[%d] == %d " % (i, ops[i]))
+      testfile.write("&& prog->parms[%d] == %d && prog->parms[%d] == %d" %
           (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
-      testfile.write("&& prog.xparms[%d] == %d && prog.xparms[%d] == %d" %
+      testfile.write("&& prog->xparms[%d] == %d && prog->xparms[%d] == %d" %
           (2*i, xparms[2*i], 2*i+1, xparms[2*i+1]))
 
     testfile.write("));\n")
@@ -333,7 +333,7 @@ def cegar(checker):
       print "Test vectors: %s" % str(tests)
 
     prog = synth(checker, tests, exclusions+correct, wordlen, codelen)
-    #prog = optimize(prog, wordlen)
+    prog = optimize(prog, wordlen)
 
     if prog == None:
       if args.verbose > 0:
@@ -624,7 +624,7 @@ def gentests(wordlen, codelen):
 
   slices = [random.sample(vecs, numslice) for i in xrange(numargs)]
 
-  slices = [[0] for i in xrange(numargs)]
+  #slices = [[0] for i in xrange(numargs)]
 
   return list(itertools.product(*slices))
 

@@ -30,13 +30,13 @@ typedef struct prog {
   bit_t xparms[SZ*2];
 } prog_t;
 
-word_t exec(word_t args[NARGS], prog_t prog);
-void test(word_t args[NARGS], prog_t prog);
+word_t exec(word_t args[NARGS], prog_t *prog);
+void test(word_t args[NARGS], prog_t *prog);
 
 int check(word_t args[NARGS], word_t z);
-void tests(prog_t prog);
+void tests(prog_t *prog);
 
-void hint(prog_t prog);
-void exclude(prog_t prog);
+void hint(prog_t *prog);
+void exclude(prog_t *prog);
 
 #endif // SYNTH_H
