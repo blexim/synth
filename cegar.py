@@ -9,7 +9,7 @@ import argparse
 import time
 import sys
 
-CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
+CBMC = "/home/matt/cbmc-core/cbmc-svn/trunk/src/cbmc/cbmc"
 
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
