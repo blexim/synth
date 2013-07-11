@@ -20,16 +20,16 @@
 #define ARG 0
 #define CONST 1
 
-word_t parm(word_t A[], unsigned int i, prog_t prog) {
-  if (prog.xparms[i] == 1) {
-    return prog.parms[i];
+word_t parm(word_t A[], unsigned int i, prog_t *prog) {
+  if (prog->xparms[i] == 1) {
+    return prog->parms[i];
   } else {
-    word_t idx = prog.parms[i];
+    word_t idx = prog->parms[i];
     return A[idx];
   }
 }
 
-word_t exec(word_t args[NARGS], prog_t prog) {
+word_t exec(word_t args[NARGS], prog_t *prog) {
   word_t A[SZ+NARGS];
   op_t op;
   word_t p1, p2, res, result;
@@ -40,7 +40,7 @@ word_t exec(word_t args[NARGS], prog_t prog) {
   }
 
   for (i = 0; i < SZ; i++) {
-    op = prog.ops[i];
+    op = prog->ops[i];
     p1 = parm(A, 2*i, prog);
     p2 = parm(A, 2*i + 1, prog);
 

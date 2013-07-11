@@ -37,10 +37,10 @@ int exclude_1(op_t op, word_t p1, word_t p2, bit_t x1, bit_t x2) {
   return 0;
 }
 
-void exclude(prog_t prog) {
+void exclude(prog_t *prog) {
   for (unsigned int i = 0; i < SZ; i++) {
-    __CPROVER_assume(!exclude_1(prog.ops[i],
-          prog.parms[i*2], prog.parms[i*2+1],
-          prog.xparms[i*2], prog.xparms[i*2+1]));
+    __CPROVER_assume(!exclude_1(prog->ops[i],
+          prog->parms[i*2], prog->parms[i*2+1],
+          prog->xparms[i*2], prog->xparms[i*2+1]));
   }
 }

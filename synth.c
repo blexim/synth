@@ -1,6 +1,5 @@
 #include "synth.h"
-
-void test(word_t args[NARGS], prog_t prog) {
+void test(word_t args[NARGS], prog_t *prog) {
   word_t res = exec(args, prog);
 
   __CPROVER_assume(check(args, res));
@@ -16,12 +15,14 @@ int main(void) {
   }
 
 #ifdef HINT
-  hint(prog);
+  hint(&prog);
 #endif
 
-  exclude(prog);
+#ifdef EXCLUDE
+  exclude(&prog);
+#endif
 
-  tests(prog);
+  tests(&prog);
 
   assert(0);
 }
