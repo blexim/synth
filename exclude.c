@@ -1,37 +1,52 @@
 #include "synth.h"
-
-typedef struct prog1 {
-  op_t ops[1];
-  word_t parms[2];
-  bit_t xparms[2];
-} prog1_t;
-
-prog1_t excludes1[] = {
-  { {0}, {0, 0}, {0, 1} },
-  { {1}, {0, 0}, {0, 1} },
-  { {2}, {0, 1}, {0, 1} },
-  { {3}, {0, 1}, {0, 1} },
-  { {5}, {0, 0}, {0, 0} },
-  { {5}, {0, 0xffffffff & ((1 << SZ) -1)}, {0, 1} },
-  { {6}, {0, 0}, {0, 0} },
-  { {6}, {0, 0}, {0, 1} },
-  { {7}, {0, 0}, {0, 1} },
-  { {9}, {0, 0}, {0, 1} },
-  { {10}, {0, 0}, {0, 1} },
-  { {11}, {0, 0}, {0, 1} }
-};
+#include "exec.h"
 
 int exclude_1(op_t op, word_t p1, word_t p2, bit_t x1, bit_t x2) {
-  for (int i = 0; i < sizeof(excludes1); i++) {
-    for (int j = 0; j < 1; j++) {
-      if (excludes1[i].ops[j] == op &&
-          excludes1[i].parms[j*2] == p1 &&
-          excludes1[i].parms[j*2+1] == p2 &&
-          excludes1[i].xparms[j*2] == x1 &&
-          excludes1[i].xparms[j*2+1] == x2) {
-        return 1;
-      }
+  // First exclude anything with 2 const operands...
+  if (x1 == CONST && x2 == CONST) {
+    return 1;
+  }
+
+  // Exclude any unary ops with a const operand...
+  if (op == NEG || op == NOT) {
+    if (x1 == CONST) {
+      return 1;
     }
+  }
+
+  // Break symmetry: for any commutative op with 1 reg and 1 const operand,
+  // put the reg first.  If both operands are reg, put the smaller one first.
+  if (op == PLUS ||
+      op == MINUS ||
+      op == MUL ||
+      op == AND ||
+      op == OR ||
+      op == XOR) {
+    if (x1 != x2) {
+      // We have 1 reg and 1 const.  Exclude instructions that have a const first.
+      return x1 == CONST;
+    } else if (x1 == ARG && x2 == ARG) {
+      // We have 2 reg.  Exclude anything where the 1st reg is the larger.
+      return p1 > p2;
+    }
+  }
+
+  // Exclude nops.
+  if ((op == PLUS || op == MINUS || op == OR || op == XOR ||
+        op == SHL || op == LSHR || op == ASHR) &&
+      x2 == CONST && p2 == 0) {
+    return 1;
+  }
+
+  // More nops.
+  if ((op == MUL || op == DIV) && 
+      x2 == CONST && p2 == 1) {
+    return 1;
+  }
+
+  // More nops.
+  if (op == AND && x2 == CONST && p2 == ((word_t) -1)) {
+    return 1;
   }
 
   return 0;
