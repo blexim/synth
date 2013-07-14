@@ -5,10 +5,10 @@
 
 int check(word_t args[NARGS], word_t z) {
   float *xp = (float *) &args[0];
-  float x = *xp;
+  float x = (float) args[0];
 
   float *yp = (float *) &z;
-  float y = *yp;
+  float y = (float) z;
 
   if (!isnormal(x)) {
     return 1;
@@ -22,8 +22,8 @@ int check(word_t args[NARGS], word_t z) {
     return 1;
   }
 
-  //float v = x*(1.5f - (x * 0.5f * y*y));
-  float v = y;
+  float v = x*(1.5f - (x * 0.5f * y*y));
+  //float v = y;
   float w = v*v;
   float q = 1.0 / w;
 
@@ -39,15 +39,9 @@ int check(word_t args[NARGS], word_t z) {
     abserr = q - x;
   }
 
-  if (abserr < ERRLIM) {
-    return 1;
-  } else {
-    return 0;
-  }
+  float relerr = abserr / x;
 
-  float err = abserr / x;
-
-  if (err < ERRLIM) {
+  if (relerr < ERRLIM) {
     return 1;
   } else {
     return 0;
