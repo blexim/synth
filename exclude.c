@@ -28,6 +28,14 @@ int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x
     }
   }
 
+  // Break symmetry: for any unary op, force 2nd (unused) arg to be const 0.
+  if ((op == NEG || op == NOT)) {
+    if (x2 != CONST || p2 != 0) {
+      return 1;
+    }
+  }
+
+
   // Break symmetry: for any commutative op with 1 reg and 1 const operand,
   // put the reg first.  If both operands are reg, put the smaller one first.
   if (op == PLUS ||
@@ -35,7 +43,11 @@ int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x
       op == MUL ||
       op == AND ||
       op == OR ||
-      op == XOR) {
+      op == XOR ||
+      op == LT ||
+      op == LE ||
+      op == GT ||
+      op == GE) {
     if (x1 != x2) {
       // We have 1 reg and 1 const.  Exclude instructions that have a const first.
       return x1 == CONST;
@@ -66,7 +78,13 @@ int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x
   // Symmetry break: only add/sub positive values.
   if ((op == PLUS || op == MINUS) &&
       x2 == CONST) {
-    return p2 & (1 << (WIDTH-1));
+    return p2 < 0;
+  }
+
+  // Symmetry break: disallow x * -1, x / -1 (use unary neg instead)
+  if ((op == MUL || op == DIV) &&
+      x2 == CONST && (p2 + 1 == 0)) {
+    return 1;
   }
 
   return 0;
