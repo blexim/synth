@@ -8,6 +8,7 @@ import random
 import argparse
 import time
 import sys
+import perfcounters as perf
 
 CBMC = "/home/matt/cbmc-core/cbmc-svn/trunk/src/cbmc/cbmc"
 
@@ -163,6 +164,8 @@ def synth(checker, tests, exclusions, width, codelen):
 
   global args
 
+  perf.start("synth")
+
   # First we need to write the test inputs to a file...
   testfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
 
@@ -208,7 +211,9 @@ def synth(checker, tests, exclusions, width, codelen):
   if args.hint:
     cbmcargs += ["-DHINT", args.hint]
 
+  perf.start("cbmc")
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
+  perf.end("cbmc")
 
   cbmcfile.seek(0)
 
@@ -233,14 +238,18 @@ def synth(checker, tests, exclusions, width, codelen):
       if mxparms:
         xparms = parse(mxparms.group(1))
 
+    perf.end("synth")
     return (ops, parms, xparms)
 
+  perf.end("synth")
   return None
 
 def verif(prog, checker, width, codelen):
   """
   Verify that a sequence is correct & extract a new test vector if it's not."
   """
+
+  perf.start("verify")
 
   progfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
 
@@ -261,7 +270,10 @@ def verif(prog, checker, width, codelen):
           "-DNARGS=%d" % args.args,
           checker, progfile.name, "exec.c", "verif.c"]
   cbmcfile = tempfile.NamedTemporaryFile()
+
+  perf.start("cbmc")
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
+  perf.end("cbmc")
 
   cbmcfile.seek(0)
 
@@ -276,9 +288,11 @@ def verif(prog, checker, width, codelen):
       if mx:
         x = tuple(parse(mx.group(1)))
 
+    perf.end("verify")
     return x
 
   # No counterexample -- this sequence is correct!
+  perf.end("verify")
   return None
 
 def cegar(checker):
@@ -297,7 +311,12 @@ def cegar(checker):
   else:
     numsearch = 1
 
+  perf.start()
+
   while codelen <= seqlim and len(correct) != numsearch:
+    perf.inc("iterations")
+    perf.summary(args)
+
     if not args.verbose:
       endtime = time.time()
       elapsed = endtime-starttime
@@ -380,7 +399,9 @@ def cegar(checker):
         if args.verbose > 1:
           print "Generalized!"
 
+        perf.inc("exclusions")
         exclusions.append(prog)
+
         correct.append(newprog)
 
         prog = newprog
@@ -412,6 +433,7 @@ def cegar(checker):
 
       tests.append(test)
 
+  perf.end()
   endtime = time.time()
   elapsed = endtime-starttime
 
@@ -467,7 +489,12 @@ def expand(x, narrow, wide):
   return list(set(ret))
 
 def generalize(prog, checker, width, targetwidth, tests, codelen):
-  return heuristic_generalize(prog, checker, width, targetwidth, codelen)
+  perf.start("generalize")
+  ret = heuristic_generalize(prog, checker, width, targetwidth, codelen)
+  perf.end("generalize")
+
+  return ret
+
 
 def heuristic_generalize(prog, checker, width, targetwidth, codelen):
   """
@@ -536,7 +563,9 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % targetwidth,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
 
+  perf.start("cbmc")
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
+  perf.end("cbmc")
 
   cbmcfile.seek(0)
 
@@ -585,7 +614,10 @@ def optimize(prog, wordlen):
   Simple keyhole optimizations...
   """
 
+  perf.start("optimize")
+
   if prog is None:
+    perf.end("optimize")
     return None
 
   (ops, parms, xparms) = prog
@@ -599,22 +631,32 @@ def optimize(prog, wordlen):
 
     if op == MUL and x2 == 1 and p2 == ((1 << wordlen) - 1):
       # Replace y = x * -1 with y = -x
+      perf.inc("optimizations")
       ops[i] = NEG
     elif op == MUL and x2 == 1 and ispow2(p2):
       # Replace y = x * 2**k with y = x << k
+      perf.inc("optimizations")
       ops[i] = SHL
       parms[i*2+1] = log2(p2)
     elif op == DIV and x2 == 1 and ispow2(p2):
       # Replace y = x / 2**k with y = x >> k
+      perf.inc("optimizations")
       ops[i] = LSHR
       parms[i*2+1] = log2(p2)
 
+  perf.end("optimize")
   return (ops, parms, xparms)
 
 def gentests(wordlen, codelen):
+  perf.start("gentests")
+
   numargs = args.args
   numtests = min(args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
+
+  if (1 << (wordlen*numargs)) <= numtests:
+    slices = [range(1 << wordlen) for i in xrange(numargs)]
+    return list(itertools.product(*slices))
 
   maxneg = 0x80000000
   maxpos = 0x7fffffff
@@ -626,6 +668,7 @@ def gentests(wordlen, codelen):
 
   #slices = [[0] for i in xrange(numargs)]
 
+  perf.end("gentests")
   return list(itertools.product(*slices))
 
 if __name__ == '__main__':
