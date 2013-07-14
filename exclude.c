@@ -1,7 +1,7 @@
 #include "synth.h"
 #include "exec.h"
 
-int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x2) {
+int exclude_1(unsigned int idx, op_t op, bit_t x1, word_t p1, bit_t x2, word_t p2) {
   // Exclude anything with an invalid opcode...
   if (op > MAXOPCODE) {
     return 1;
@@ -39,7 +39,6 @@ int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x
   // Break symmetry: for any commutative op with 1 reg and 1 const operand,
   // put the reg first.  If both operands are reg, put the smaller one first.
   if (op == PLUS ||
-      op == MINUS ||
       op == MUL ||
       op == AND ||
       op == OR ||
@@ -48,12 +47,12 @@ int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x
       op == LE ||
       op == GT ||
       op == GE) {
-    if (x1 != x2) {
+    if (x1 != x2 && x1 == CONST) {
       // We have 1 reg and 1 const.  Exclude instructions that have a const first.
-      return x1 == CONST;
-    } else if (x1 == ARG && x2 == ARG) {
+      return 1;
+    } else if (x1 == ARG && x2 == ARG && p1 > p2) {
       // We have 2 reg.  Exclude anything where the 1st reg is the larger.
-      return p1 > p2;
+      return 1;
     }
   }
 
@@ -75,10 +74,19 @@ int exclude_1(unsigned int idx, op_t op, word_t p1, word_t p2, bit_t x1, bit_t x
     return 1;
   }
 
+  // More nops.
+  if ((op == AND || op == OR) &&
+      x1 == ARG && x2 == ARG &&
+      p1 == p2) {
+    return 1;
+  }
+
   // Symmetry break: only add/sub positive values.
   if ((op == PLUS || op == MINUS) &&
       x2 == CONST) {
-    return p2 < 0;
+    if (p2 & (1 << (WIDTH - 1))) {
+      return 1;
+    }
   }
 
   // Symmetry break: disallow x * -1, x / -1 (use unary neg instead)
@@ -102,17 +110,36 @@ int exclude_2(unsigned int idx,
       op1 == op2) {
     return 1;
   }
+
+  // Exclude sequences like:
+  //
+  // t1 = PLUS R C
+  // t2 = MINUS t1 C
+  if (x21 == ARG && p21 == (idx + NARGS) && 
+      x12 == CONST && x22 == CONST) {
+    if (op1 == PLUS || op1 == MINUS) {
+      if (op2 == PLUS || op2 == MINUS) {
+        return 1;
+      }
+    }
+  }
 }
 
 void exclude(prog_t *prog) {
   unsigned int i;
 
   for (i = 0; i < SZ; i++) {
+    op_t op;
+    bit_t x1, x2;
+    word_t p1, p2;
+
+    op = prog->ops[i];
+    x1 = prog->xparms[i*2];
+    x2 = prog->xparms[i*2+1];
+    p1 = prog->parms[i*2];
+    p2 = prog->parms[i*2+1];
     
-    __CPROVER_assume(!exclude_1(i,
-          prog->ops[i],
-          prog->parms[i*2], prog->parms[i*2+1],
-          prog->xparms[i*2], prog->xparms[i*2+1]));
+    __CPROVER_assume(!exclude_1(i, op, x1, p1, x2, p2));
   }
 
   for (i = 0; i < SZ-1; i++) {
