@@ -126,7 +126,7 @@ int exclude_2(unsigned int idx,
 }
 
 void exclude(prog_t *prog) {
-  unsigned int i;
+  unsigned int i, j;
 
   for (i = 0; i < SZ; i++) {
     op_t op;
@@ -148,19 +148,25 @@ void exclude(prog_t *prog) {
     word_t p11, p12, p21, p22;
 
     op1 = prog->ops[i];
-    op2 = prog->ops[i+1];
-
     x11 = prog->xparms[i*2];
     x12 = prog->xparms[i*2+1];
-    x21 = prog->xparms[i*2+2];
-    x22 = prog->xparms[i*2+3];
-
     p11 = prog->parms[i*2];
     p12 = prog->parms[i*2+1];
-    p21 = prog->parms[i*2+2];
-    p22 = prog->parms[i*2+3];
 
-    __CPROVER_assume(!exclude_2(i,
-          op1, x11, p11, x12, p12, op2, x21, p21, x22, p22));
+    for (j = i+1; j < SZ; j++) {
+      op2 = prog->ops[i+1];
+
+      x21 = prog->xparms[i*2+2];
+      x22 = prog->xparms[i*2+3];
+
+      p21 = prog->parms[i*2+2];
+      p22 = prog->parms[i*2+3];
+
+      if ((x21 == ARG && p21 == (i + NARGS)) ||
+          (x22 == ARG && p22 == (i + NARGS))) {
+        __CPROVER_assume(!exclude_2(i,
+              op1, x11, p11, x12, p12, op2, x21, p21, x22, p22));
+      }
+    }
   }
 }
