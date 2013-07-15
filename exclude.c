@@ -3,42 +3,25 @@
 
 int exclude_1(unsigned int idx, op_t op, bit_t x1, word_t p1, bit_t x2, word_t p2) {
   // Exclude anything with an invalid opcode...
-  if (op > MAXOPCODE) {
-    return 1;
-  }
+  __CPROVER_assume(op <= MAXOPCODE);
 
   // Exclude anything referring to an unitialised register...
-  if (x1 == ARG && p1 >= (idx + NARGS)) {
-    return 1;
-  }
+  __CPROVER_assume(!(x1 == ARG && p1 >= (idx + NARGS)));
 
-  if (x2 == ARG && p2 >= (idx + NARGS)) {
-    return 1;
-  }
+  __CPROVER_assume(!(x2 == ARG && p2 >= (idx + NARGS)));
 
   // Exclude anything with 2 const operands...
-  if (x1 == CONST && x2 == CONST) {
-    return 1;
-  }
+  __CPROVER_assume(!(x1 == CONST && x2 == CONST));
 
   // Exclude any unary ops with a const operand...
-  if (op == NEG || op == NOT) {
-    if (x1 == CONST) {
-      return 1;
-    }
-  }
+  __CPROVER_assume(!((op == NEG || op == NOT) && x1 == CONST));
 
   // Break symmetry: for any unary op, force 2nd (unused) arg to be const 0.
-  if ((op == NEG || op == NOT)) {
-    if (x2 != CONST || p2 != 0) {
-      return 1;
-    }
-  }
-
+  __CPROVER_assume(!((op == NEG || op == NOT) && (x2 == CONST && p2 == 0)));
 
   // Break symmetry: for any commutative op with 1 reg and 1 const operand,
   // put the reg first.  If both operands are reg, put the smaller one first.
-  if (op == PLUS ||
+  __CPROVER_assume(!((op == PLUS ||
       op == MUL ||
       op == AND ||
       op == OR ||
@@ -46,56 +29,44 @@ int exclude_1(unsigned int idx, op_t op, bit_t x1, word_t p1, bit_t x2, word_t p
       op == LT ||
       op == LE ||
       op == GT ||
-      op == GE) {
-    if (x1 != x2 && x1 == CONST) {
-      // We have 1 reg and 1 const.  Exclude instructions that have a const first.
-      return 1;
-    } else if (x1 == ARG && x2 == ARG && p1 > p2) {
-      // We have 2 reg.  Exclude anything where the 1st reg is the larger.
-      return 1;
-    }
-  }
+      op == GE) && 
+    x1 == CONST && x2 == CONST));
+
+  __CPROVER_assume(!((op == PLUS ||
+      op == MUL ||
+      op == AND ||
+      op == OR ||
+      op == XOR ||
+      op == LT ||
+      op == LE ||
+      op == GT ||
+      op == GE) && 
+    x1 == ARG && x2 == ARG && p1 > p2));
 
   // Exclude nops.
-  if ((op == PLUS || op == MINUS || op == OR || op == XOR ||
+  __CPROVER_assume(!((op == PLUS || op == MINUS || op == OR || op == XOR ||
         op == SHL || op == LSHR || op == ASHR) &&
-      x2 == CONST && p2 == 0) {
-    return 1;
-  }
+      x2 == CONST && p2 == 0));
+
+  // More nops. 
+  __CPROVER_assume(!((op == MUL || op == DIV) && 
+      x2 == CONST && p2 == 1)); 
 
   // More nops.
-  if ((op == MUL || op == DIV) && 
-      x2 == CONST && p2 == 1) {
-    return 1;
-  }
+  __CPROVER_assume(!(op == AND && x2 == CONST && p2 == ((word_t) -1)));
 
   // More nops.
-  if (op == AND && x2 == CONST && p2 == ((word_t) -1)) {
-    return 1;
-  }
-
-  // More nops.
-  if ((op == AND || op == OR) &&
+  __CPROVER_assume(!((op == AND || op == OR) &&
       x1 == ARG && x2 == ARG &&
-      p1 == p2) {
-    return 1;
-  }
+      p1 == p2));
 
   // Symmetry break: only add/sub positive values.
-  if ((op == PLUS || op == MINUS) &&
-      x2 == CONST) {
-    if (p2 & (1 << (WIDTH - 1))) {
-      return 1;
-    }
-  }
+  __CPROVER_assume(!((op == PLUS || op == MINUS) &&
+      x2 == CONST && (p2 & (1 << (WIDTH - 1)))));
 
   // Symmetry break: disallow x * -1, x / -1 (use unary neg instead)
-  if ((op == MUL || op == DIV) &&
-      x2 == CONST && (p2 + 1 == 0)) {
-    return 1;
-  }
-
-  return 0;
+  __CPROVER_assume(!((op == MUL || op == DIV) &&
+      x2 == CONST && (p2 + 1 == 0)));
 }
 
 int exclude_2(unsigned int idx,
@@ -139,7 +110,7 @@ void exclude(prog_t *prog) {
     p1 = prog->parms[i*2];
     p2 = prog->parms[i*2+1];
     
-    __CPROVER_assume(!exclude_1(i, op, x1, p1, x2, p2));
+    exclude_1(i, op, x1, p1, x2, p2);
   }
 
   for (i = 0; i < SZ-1; i++) {
