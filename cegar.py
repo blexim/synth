@@ -205,8 +205,7 @@ def synth(checker, tests, exclusions, width, codelen):
   cbmcfile = tempfile.NamedTemporaryFile()
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
       "-DNARGS=%d" % args.args,
-      "--slice-formula", checker, testfile.name, "synth.c", "exec.c",
-      "exclude.c"]
+      "--slice-formula", checker, testfile.name, "synth.c", "exec.c", "exclude.c"]
 
   if args.hint:
     cbmcargs += ["-DHINT", args.hint]
@@ -663,6 +662,8 @@ def gentests(wordlen, codelen):
 
   vecs = [1, 0, -1, maxneg, maxpos, maxneg+1, maxpos-1, 0x01234567,
       0x89abcdef, -2, 2, -3, 3, -64, 64, -5, -31415]
+
+  vecs = xrange(2**wordlen)
 
   slices = [random.sample(vecs, numslice) for i in xrange(numargs)]
 
