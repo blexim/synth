@@ -15,8 +15,6 @@
 #define ASHR 11
 #define LE 12
 #define LT 13
-#define GE 14
-#define GT 15
 
 #define ARG 0
 #define CONST 1

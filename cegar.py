@@ -10,7 +10,7 @@ import time
 import sys
 import perfcounters as perf
 
-CBMC = "/home/matt/cbmc-core/cbmc-svn/trunk/src/cbmc/cbmc"
+CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
@@ -25,8 +25,8 @@ RED = "\033[31m"
 
 
 opsre = re.compile('ops={(.*?)}')
-parmsre = re.compile('[^x]parms={(.*?)}')
-xparmsre = re.compile('xparms={(.*?)}')
+parmsre = re.compile('params={(.*?)}')
+constsre = re.compile('consts={(.*?)}')
 
 cexre = re.compile('cex_args={(.*?)}')
 
@@ -39,6 +39,9 @@ argparser.add_argument("--seqlim", "-S", default=16, type=int,
 
 argparser.add_argument("--args", "-a", default=1, type=int,
     help="number of arguments to function")
+
+argparser.add_argument("--consts", "-c", default=-1, type=int,
+    help="number of constants to synthesize")
 
 argparser.add_argument("--wordwidth", "-w", default=3, type=int,
     help="initial word size to use")
@@ -80,8 +83,15 @@ LSHR=10
 ASHR=11
 LE=12
 LT=13
-GE=14
-GT=15
+
+def log2(x):
+  i = 0
+
+  while x > 1:
+    x >>= 1
+    i += 1
+
+  return i
 
 def parse(s):
   ret = []
@@ -94,17 +104,21 @@ def parse(s):
 
   return ret
 
-def prettyarg(p, x):
-  if x == 1:
-    return hex(p)
+def prettyarg(p, consts):
+  if p < len(consts):
+    return hex(consts[p])
   else:
+    p -= len(consts)
+
     if p < args.args:
       return 'a%d' % (p+1)
     else:
       return 't%d' % (p - args.args + 1)
 
 def prettyprint(prog):
-  (ops, parms, xparms) = prog
+  (ops, parms, consts) = prog
+
+  print prog
 
   i = 0
 
@@ -112,11 +126,9 @@ def prettyprint(prog):
     opcode = ops[i]
     p1 = parms[2*i]
     p2 = parms[2*i + 1]
-    x1 = xparms[2*i]
-    x2 = xparms[2*i + 1]
 
-    a1 = prettyarg(p1, x1)
-    a2 = prettyarg(p2, x2)
+    a1 = prettyarg(p1, consts)
+    a2 = prettyarg(p2, consts)
 
     if opcode == PLUS:
       rhs = "%s + %s" % (a1, a2)
@@ -183,7 +195,7 @@ def synth(checker, tests, exclusions, width, codelen):
   # Now we're going to list each of the programs we
   # already know are wrong...
 
-  for (ops, parms, xparms) in exclusions:
+  for (ops, parms, consts) in exclusions:
     testfile.write("  __CPROVER_assume(!(")
 
     for i in xrange(len(ops)):
@@ -191,21 +203,32 @@ def synth(checker, tests, exclusions, width, codelen):
         testfile.write(" && ")
 
       testfile.write("prog->ops[%d] == %d " % (i, ops[i]))
-      testfile.write("&& prog->parms[%d] == %d && prog->parms[%d] == %d" %
+      testfile.write("&& prog->params[%d] == %d && prog->params[%d] == %d" %
           (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
-      testfile.write("&& prog->xparms[%d] == %d && prog->xparms[%d] == %d" %
-          (2*i, xparms[2*i], 2*i+1, xparms[2*i+1]))
+
+    for i in xrange(len(consts)):
+      testfile.write("&& prog->consts[%d] == %d" %
+          (i, consts[i]))
 
     testfile.write("));\n")
 
   testfile.write("}\n")
   testfile.flush()
 
+  if args.consts < 0:
+    nconsts = codelen
+  else:
+    nconsts = args.consts
+
+  pwidth = log2(codelen + nconsts + args.args)
+
   # OK cool, now let's run CBMC
-  cbmcfile = tempfile.NamedTemporaryFile()
+  cbmcfile = tempfile.NamedTemporaryFile(delete=False)
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
-      "-DNARGS=%d" % args.args,
-      "--slice-formula", checker, testfile.name, "synth.c", "exec.c", "exclude.c"]
+      "-DNARGS=%d" % args.args, "-DPARAMS=%d" % (codelen + nconsts + args.args),
+      "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
+      "--slice-formula", checker, testfile.name, "synth.c", "exec.c",
+      "exclude.c"]
 
   if args.hint:
     cbmcargs += ["-DHINT", args.hint]
@@ -218,7 +241,7 @@ def synth(checker, tests, exclusions, width, codelen):
 
   ops = None
   parms = None
-  xparms = None
+  consts = []
 
   if retcode == 10:
     # A counterexample was found -- extract the code sequence from it!
@@ -226,7 +249,7 @@ def synth(checker, tests, exclusions, width, codelen):
     for l in cbmcfile.readlines():
       mops = opsre.search(l)
       mparms = parmsre.search(l)
-      mxparms = xparmsre.search(l)
+      mconsts = constsre.search(l)
 
       if mops:
         ops = parse(mops.group(1))
@@ -234,11 +257,11 @@ def synth(checker, tests, exclusions, width, codelen):
       if mparms:
         parms = parse(mparms.group(1))
 
-      if mxparms:
-        xparms = parse(mxparms.group(1))
+      if mconsts:
+        consts = parse(mconsts.group(1))
 
     perf.end("synth")
-    return (ops, parms, xparms)
+    return (ops, parms, consts)
 
   perf.end("synth")
   return None
@@ -252,7 +275,7 @@ def verif(prog, checker, width, codelen):
 
   progfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
 
-  (ops, parms, xparms) = prog
+  (ops, parms, consts) = prog
 
   progfile.write("#include \"synth.h\"\n\n")
   progfile.write("prog_t prog = {\n")
@@ -261,12 +284,20 @@ def verif(prog, checker, width, codelen):
   progfile.write("  { %s },\n" %
       ', '.join(str(p) for p in parms))
   progfile.write("  { %s }\n" %
-      ', '.join(str(x) for x in xparms))
+      ', '.join(str(x) for x in consts))
   progfile.write("};")
   progfile.flush()
 
+  if args.consts < 0:
+    nconsts = codelen
+  else:
+    nconsts = args.consts
+
+  pwidth = log2(codelen + nconsts + args.args)
+
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
-          "-DNARGS=%d" % args.args,
+          "-DNARGS=%d" % args.args, "-DPARAMS=%d" % (codelen + nconsts +args.args),
+          "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
           checker, progfile.name, "exec.c", "verif.c"]
   cbmcfile = tempfile.NamedTemporaryFile()
 
@@ -328,6 +359,7 @@ def cegar(checker):
       print ("Excluded sequences: " + BOLD + RED + "%d/%d" + ENDC) % (
           len(exclusions), args.exclude)
       print ("Test vectors: " + BOLD + RED + "%d" + ENDC) % len(tests)
+      print ("Constants: " + BOLD + RED + "%d" + ENDC) % (args.consts)
       print ("Elapsed time: " + BOLD + RED + "%.02fs" + ENDC) % elapsed
 
       if args.exhaustive:
@@ -335,7 +367,7 @@ def cegar(checker):
             len(correct))
         print UP*2 + "\r"
 
-      print UP*7 + "\r"
+      print UP*8 + "\r"
       sys.stdout.flush()
 
     if args.verbose > 0:
@@ -351,7 +383,7 @@ def cegar(checker):
       print "Test vectors: %s" % str(tests)
 
     prog = synth(checker, tests, exclusions+correct, wordlen, codelen)
-    prog = optimize(prog, wordlen)
+    #prog = optimize(prog, wordlen)
 
     if prog == None:
       if args.verbose > 0:
@@ -500,18 +532,18 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
   Use heuristics to guess constants with which to generalize the program.
   """
 
-  (ops, parms, xparms) = prog
+  (ops, parms, consts) = prog
   expansions = []
 
-  for i in xrange(len(parms)):
-    if xparms[i] == 0:
-      expansions.append([parms[i]])
-    else:
-      expanded = expand(parms[i], width, targetwidth)
-      expansions.append(expanded)
+  for i in xrange(len(consts)):
+    expanded = expand(consts[i], width, targetwidth)
+    expansions.append(expanded)
 
-  for newparms in itertools.product(*expansions):
-    newprog = (ops, list(newparms), xparms)
+  for newconsts in itertools.product(*expansions):
+    newprog = (ops, parms, list(newconsts))
+
+    if args.verbose > 1:
+      print "Trying %s" % (str(newprog))
 
     if verif(newprog, checker, targetwidth, codelen) is None:
       return newprog
@@ -527,7 +559,7 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
   # Our basic technique is to find constants in the program and try to
   # extend them to a wider wordsize...
 
-  (ops, parms, xparms) = prog
+  (ops, parms, consts) = prog
 
   # First we need to write the test inputs to a file...
   testfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
@@ -538,17 +570,17 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
   for i in xrange(len(ops)):
     testfile.write("  __CPROVER_assume(prog.ops[%d] == %d);\n" % (i, ops[i]))
 
-    testfile.write("  __CPROVER_assume(prog.xparms[%d] == %d);\n" %
-        (2*i, xparms[2*i]))
-    testfile.write("  __CPROVER_assume(prog.xparms[%d] == %d);\n" %
-        (2*i + 1, xparms[2*i + 1]))
+    testfile.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
+        (2*i, consts[2*i]))
+    testfile.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
+        (2*i + 1, consts[2*i + 1]))
 
-    if xparms[2*i] == 0:
-      testfile.write("  __CPROVER_assume(prog.parms[%d] == %d);\n" %
+    if consts[2*i] == 0:
+      testfile.write("  __CPROVER_assume(prog.params[%d] == %d);\n" %
           (2*i, parms[2*i]))
 
-    if xparms[2*i+1] == 0:
-      testfile.write("  __CPROVER_assume(prog.parms[%d] == %d);\n" %
+    if consts[2*i+1] == 0:
+      testfile.write("  __CPROVER_assume(prog.params[%d] == %d);\n" %
           (2*i+1, parms[2*i+1]))
 
   for t in tests:
@@ -560,6 +592,7 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile()
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % targetwidth,
+      "-DPARAMS=%d" % (2*codelen + args.args),
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
 
   perf.start("cbmc")
@@ -570,7 +603,7 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
   ops = None
   parms = None
-  xparms = None
+  consts = None
 
   if retcode == 10:
     # A counterexample was found -- extract the code sequence from it!
@@ -578,7 +611,7 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
     for l in cbmcfile.readlines():
       mops = opsre.search(l)
       mparms = parmsre.search(l)
-      mxparms = xparmsre.search(l)
+      mconsts = constsre.search(l)
 
       if mops:
         ops = parse(mops.group(1))
@@ -586,10 +619,10 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
       if mparms:
         parms = parse(mparms.group(1))
 
-      if mxparms:
-        xparms = parse(mxparms.group(1))
+      if mconsts:
+        consts = parse(mconsts.group(1))
 
-    newprog = (ops, parms, xparms)
+    newprog = (ops, parms, consts)
 
     if verif(newprog, checker, targetwidth, codelen) is None:
       return newprog
@@ -598,15 +631,6 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
 def ispow2(x):
   return x != 0 and ((x & (x-1)) == 0)
-
-def log2(x):
-  ret = -1
-
-  while x:
-    ret += 1
-    x >>= 1
-
-  return ret
 
 def optimize(prog, wordlen):
   """
@@ -619,14 +643,14 @@ def optimize(prog, wordlen):
     perf.end("optimize")
     return None
 
-  (ops, parms, xparms) = prog
+  (ops, parms, consts) = prog
 
   for i in xrange(len(ops)):
     op = ops[i]
     p1 = parms[i*2]
     p2 = parms[i*2+1]
-    x1 = xparms[i*2]
-    x2 = xparms[i*2+1]
+    x1 = consts[i*2]
+    x2 = consts[i*2+1]
 
     if op == MUL and x2 == 1 and p2 == ((1 << wordlen) - 1):
       # Replace y = x * -1 with y = -x
@@ -644,7 +668,7 @@ def optimize(prog, wordlen):
       parms[i*2+1] = log2(p2)
 
   perf.end("optimize")
-  return (ops, parms, xparms)
+  return (ops, parms, consts)
 
 def gentests(wordlen, codelen):
   perf.start("gentests")
