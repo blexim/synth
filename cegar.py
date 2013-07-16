@@ -86,12 +86,16 @@ LT=13
 
 def log2(x):
   i = 0
+  extra = 0
 
   while x > 1:
+    if x & 1:
+      extra = 1
+
     x >>= 1
     i += 1
 
-  return i
+  return i+extra
 
 def parse(s):
   ret = []
@@ -220,7 +224,7 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile(delete=False)
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
-      "-DNARGS=%d" % args.args, "-DPARAMS=%d" % (codelen + nconsts + args.args),
+      "-DNARGS=%d" % args.args,
       "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c",
       "exclude.c"]
@@ -286,7 +290,7 @@ def verif(prog, checker, width, codelen, nconsts):
   pwidth = log2(codelen + nconsts + args.args)
 
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
-          "-DNARGS=%d" % args.args, "-DPARAMS=%d" % (codelen + nconsts +args.args),
+          "-DNARGS=%d" % args.args,
           "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
           checker, progfile.name, "exec.c", "verif.c"]
   cbmcfile = tempfile.NamedTemporaryFile()
@@ -547,7 +551,7 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
     if args.verbose > 1:
       print "Trying %s" % (str(newprog))
 
-    if verif(newprog, checker, targetwidth, codelen) is None:
+    if verif(newprog, checker, targetwidth, codelen, len(consts)) is None:
       return newprog
 
   return None
@@ -594,7 +598,6 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile()
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % targetwidth,
-      "-DPARAMS=%d" % (2*codelen + args.args),
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
 
   perf.start("cbmc")
