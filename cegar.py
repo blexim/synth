@@ -169,7 +169,7 @@ def prettyprint(prog):
 
   print "res = t%d" % (len(ops))
 
-def synth(checker, tests, exclusions, width, codelen):
+def synth(checker, tests, exclusions, width, codelen, nconsts):
   """
   Synthesise a new code sequence.
   """
@@ -214,11 +214,6 @@ def synth(checker, tests, exclusions, width, codelen):
 
   testfile.write("}\n")
   testfile.flush()
-
-  if args.consts < 0:
-    nconsts = codelen
-  else:
-    nconsts = args.consts
 
   pwidth = log2(codelen + nconsts + args.args)
 
@@ -266,7 +261,7 @@ def synth(checker, tests, exclusions, width, codelen):
   perf.end("synth")
   return None
 
-def verif(prog, checker, width, codelen):
+def verif(prog, checker, width, codelen, nconsts):
   """
   Verify that a sequence is correct & extract a new test vector if it's not."
   """
@@ -287,11 +282,6 @@ def verif(prog, checker, width, codelen):
       ', '.join(str(x) for x in consts))
   progfile.write("};")
   progfile.flush()
-
-  if args.consts < 0:
-    nconsts = codelen
-  else:
-    nconsts = args.consts
 
   pwidth = log2(codelen + nconsts + args.args)
 
@@ -335,6 +325,10 @@ def cegar(checker):
   correct = []
   starttime = time.time()
   seqlim = args.seqlim
+  nconsts = 0
+
+  if args.consts >= 0:
+    nconsts = args.consts
 
   if args.exhaustive:
     numsearch = -1
@@ -359,7 +353,7 @@ def cegar(checker):
       print ("Excluded sequences: " + BOLD + RED + "%d/%d" + ENDC) % (
           len(exclusions), args.exclude)
       print ("Test vectors: " + BOLD + RED + "%d" + ENDC) % len(tests)
-      print ("Constants: " + BOLD + RED + "%d" + ENDC) % (args.consts)
+      print ("Constants: " + BOLD + RED + "%d" + ENDC) % nconsts
       print ("Elapsed time: " + BOLD + RED + "%.02fs" + ENDC) % elapsed
 
       if args.exhaustive:
@@ -382,18 +376,26 @@ def cegar(checker):
     if args.verbose > 1:
       print "Test vectors: %s" % str(tests)
 
-    prog = synth(checker, tests, exclusions+correct, wordlen, codelen)
+    prog = synth(checker, tests, exclusions+correct, wordlen, codelen, nconsts)
     #prog = optimize(prog, wordlen)
 
     if prog == None:
       if args.verbose > 0:
         print "No sequence possible!"
 
-      codelen += 1
+      if args.consts < 0 and nconsts < codelen:
+        nconsts += 1
+      else:
+        codelen += 1
+
+        if args.consts < 0:
+          nconsts = 0
+
       exclusions = []
       #tests = gentests(wordlen, codelen)
 
       if args.verbose > 0:
+        print "Increasing constants to %d\n" % nconsts
         print "Increasing sequence length to %d\n" % codelen
 
       continue
@@ -401,7 +403,7 @@ def cegar(checker):
     if args.verbose > 0:
       prettyprint(prog)
 
-    test = verif(prog, checker, wordlen, codelen)
+    test = verif(prog, checker, wordlen, codelen, nconsts)
 
     if test is None:
       if args.verbose > 0:
@@ -411,7 +413,7 @@ def cegar(checker):
         correct.append(prog)
         continue
 
-      test = verif(prog, checker, targetwordlen, codelen)
+      test = verif(prog, checker, targetwordlen, codelen, nconsts)
       if test is None:
         if args.verbose > 0:
           print "Also correct for wordlen=%d!" % targetwordlen
