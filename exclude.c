@@ -104,7 +104,7 @@ int exclude_2(unsigned int idx,
 }
 
 void exclude(prog_t *prog) {
-  unsigned int i, j;
+  int i, j;
 
   for (i = 0; i < SZ; i++) {
     op_t op;
@@ -115,6 +115,11 @@ void exclude(prog_t *prog) {
     p2 = prog->params[i*2+1];
     
     exclude_1(i, op, p1, p2, prog->consts);
+  }
+
+  // Constants must be odered & no duplicates.
+  for (i = 0; i < CONSTS-1; i++) {
+    __CPROVER_assume(prog->consts[i] < prog->consts[i+1]);
   }
 
 #if 0
