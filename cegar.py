@@ -219,7 +219,8 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
   testfile.write("}\n")
   testfile.flush()
 
-  pwidth = log2(codelen + nconsts + args.args)
+  pwidth = log2(codelen + nconsts + args.args - 1)
+  pwidth = max(pwidth, 1)
 
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile(delete=False)
@@ -287,7 +288,8 @@ def verif(prog, checker, width, codelen, nconsts):
   progfile.write("};")
   progfile.flush()
 
-  pwidth = log2(codelen + nconsts + args.args)
+  pwidth = log2(codelen + nconsts + args.args - 1)
+  pwidth = max(pwidth, 1)
 
   cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
           "-DNARGS=%d" % args.args,
@@ -342,6 +344,8 @@ def cegar(checker):
   perf.start()
 
   while codelen <= seqlim and len(correct) != numsearch:
+    sys.stdout.flush()
+
     perf.inc("iterations")
     perf.summary(args)
 
