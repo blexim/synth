@@ -18,8 +18,12 @@ int check(word_t args[NARGS], word_t z) {
     return 1;
   }
 
-  if (x >= 1.0) {
+  if (x >= 100.0) {
     return 1;
+  }
+
+  if (y <= 0.0) {
+    return 0;
   }
 
   float v = x*(1.5f - (x * 0.5f * y*y));
