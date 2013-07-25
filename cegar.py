@@ -60,9 +60,6 @@ argparser.add_argument("--tests", "-t", default=16, type=int,
 argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
 
-argparser.add_argument("--hint", default=None, type=str,
-    help="hints to use for synthesis")
-
 argparser.add_argument("checker",
     help="code check the function we synthesise")
 
@@ -226,9 +223,6 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
       "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
       "--slice-formula", checker, testfile.name, "synth.c", "exec.c",
       "exclude.c"]
-
-  if args.hint:
-    cbmcargs += ["-DHINT", args.hint]
 
   perf.start("cbmc")
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
