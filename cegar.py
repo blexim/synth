@@ -11,8 +11,6 @@ import perfcounters as perf
 import cbmc
 import args
 
-CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
-
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
 OKGREEN = '\033[92m'
@@ -250,49 +248,29 @@ def verif(prog, checker, width, codelen, nconsts):
 
   perf.start("verify")
 
-  progfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
+  bmc = cbmc.cbmc(codelen, width, nconsts, checker, "exec.c", "verif.c")
 
   (ops, parms, consts) = prog
 
-  progfile.write("#include \"synth.h\"\n\n")
-  progfile.write("prog_t prog = {\n")
-  progfile.write("  { %s },\n" %
-      ', '.join(str(s) for s in ops))
-  progfile.write("  { %s },\n" %
-      ', '.join(str(p) for p in parms))
-  progfile.write("  { %s }\n" %
-      ', '.join(str(x) for x in consts))
-  progfile.write("};")
-  progfile.flush()
+  bmc.write(r"""
+#include "synth.h"
 
-  pwidth = log2(codelen + nconsts + args.args.args - 1)
-  pwidth = max(pwidth, 1)
+prog_t prog = {
+  { %s },
+  { %s },
+  { %s },
+};
+""" % (", ".join(str(o) for o in ops),
+       ", ".join(str(p) for p in parms),
+       ", ".join(str(c) for c in consts)))
 
-  cbmcargs = [CBMC,
-      "-Iinterpreter",
-      "-DSZ=%d" % codelen,
-      "-DWIDTH=%d" % width,
-      "-DNARGS=%d" % args.args.args,
-      "-DCONSTS=%d" % nconsts,
-      "-DPWIDTH=%d" % pwidth,
-      checker,
-      progfile.name,
-      "interpreter/exec.c",
-      "interpreter/verif.c"]
-  cbmcfile = tempfile.NamedTemporaryFile()
-
-  perf.start("cbmc")
-  retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
-  perf.end("cbmc")
-
-  cbmcfile.seek(0)
-
+  (retcode, output) = bmc.run()
 
   if retcode == 10:
     # We got a counterexample -- extract a new test case from it
     x = 0
 
-    for l in cbmcfile.readlines():
+    for l in output:
       mx = cexre.search(l)
 
       if mx:
