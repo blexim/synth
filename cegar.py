@@ -59,7 +59,7 @@ args.argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
 
 args.argparser.add_argument("checker",
-    help="code check the function we synthesise")
+    help="code to check the function we synthesise")
 
 PLUS=0
 MINUS=1
