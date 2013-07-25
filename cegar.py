@@ -5,10 +5,11 @@ import tempfile
 import re
 import itertools
 import random
-import argparse
 import time
 import sys
 import perfcounters as perf
+
+from args import argparser, args
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
@@ -30,8 +31,6 @@ constsre = re.compile('consts={(.*?)}')
 
 cexre = re.compile('cex_args={(.*?)}')
 
-argparser = argparse.ArgumentParser(
-    description="Synthesise a loop free program")
 argparser.add_argument("--seqlen", "-s", default=1, type=int,
     help="minimum length of code sequence to synthesise")
 argparser.add_argument("--seqlim", "-S", default=16, type=int,
@@ -66,8 +65,6 @@ argparser.add_argument("--hint", default=None, type=str,
 
 argparser.add_argument("checker",
     help="code check the function we synthesise")
-
-args = None
 
 PLUS=0
 MINUS=1
