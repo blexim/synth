@@ -8,8 +8,8 @@ import random
 import time
 import sys
 import perfcounters as perf
-
-from args import argparser, args
+import cbmc
+import args
 
 CBMC = "/home/matt/cbmc-svn/trunk/src/cbmc/cbmc"
 
@@ -31,36 +31,36 @@ constsre = re.compile('consts={(.*?)}')
 
 cexre = re.compile('cex_args={(.*?)}')
 
-argparser.add_argument("--seqlen", "-s", default=1, type=int,
+args.argparser.add_argument("--seqlen", "-s", default=1, type=int,
     help="minimum length of code sequence to synthesise")
-argparser.add_argument("--seqlim", "-S", default=16, type=int,
+args.argparser.add_argument("--seqlim", "-S", default=16, type=int,
     help="maximum length of code sequence to synthesise")
 
-argparser.add_argument("--args", "-a", default=1, type=int,
+args.argparser.add_argument("--args", "-a", default=1, type=int,
     help="number of arguments to function")
 
-argparser.add_argument("--consts", "-c", default=-1, type=int,
+args.argparser.add_argument("--consts", "-c", default=-1, type=int,
     help="number of constants to synthesize")
 
-argparser.add_argument("--wordwidth", "-w", default=3, type=int,
+args.argparser.add_argument("--wordwidth", "-w", default=3, type=int,
     help="initial word size to use")
-argparser.add_argument("--targetwordwidth", "-W", default=32, type=int,
+args.argparser.add_argument("--targetwordwidth", "-W", default=32, type=int,
     help="target word size to use")
 
-argparser.add_argument("--exclude", "-e", default=2, type=int,
+args.argparser.add_argument("--exclude", "-e", default=2, type=int,
     help="maximum number of sequences to exclude")
 
-argparser.add_argument("--exhaustive", "-E", default=False,
+args.argparser.add_argument("--exhaustive", "-E", default=False,
     action="store_const", const=True,
     help="exhaustively search for all sequences")
 
-argparser.add_argument("--tests", "-t", default=16, type=int,
+args.argparser.add_argument("--tests", "-t", default=16, type=int,
     help="number of test vectors to generate")
 
-argparser.add_argument("--verbose", "-v", action='count',
+args.argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
 
-argparser.add_argument("checker",
+args.argparser.add_argument("checker",
     help="code check the function we synthesise")
 
 PLUS=0
@@ -108,10 +108,10 @@ def prettyarg(p, consts):
   else:
     p -= len(consts)
 
-    if p < args.args:
+    if p < args.args.args:
       return 'a%d' % (p+1)
     else:
-      return 't%d' % (p - args.args + 1)
+      return 't%d' % (p - args.args.args + 1)
 
 def prettyprint(prog):
   (ops, parms, consts) = prog
@@ -172,71 +172,49 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
   Synthesise a new code sequence.
   """
 
-  global args
-
   perf.start("synth")
 
   # First we need to write the test inputs to a file...
-  testfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
+  bmc = cbmc.cbmc(codelen, width, nconsts,
+      "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
 
-  testfile.write("#include \"synth.h\"\n\n")
-  testfile.write("void tests(prog_t *prog) {\n")
-  testfile.write("  word_t input[NARGS];\n\n");
+  bmc.write(r"""
+#include "synth.h"
+
+void tests(prog_t *prog) {
+  word_t input[NARGS];
+""")
 
   random.shuffle(tests)
   for x in tests:
     for i in xrange(len(x)):
-      testfile.write("  input[%d] = %d;\n" % (i, x[i]))
+      bmc.write("  input[%d] = %d;\n" % (i, x[i]))
 
-    testfile.write("  test(input, prog);\n\n")
+    bmc.write("  test(input, prog);\n\n")
 
   # Now we're going to list each of the programs we
   # already know are wrong...
 
   for (ops, parms, consts) in exclusions:
-    testfile.write("  __CPROVER_assume(!(")
+    bmc.write("  __CPROVER_assume(!(")
 
     for i in xrange(len(ops)):
       if i != 0:
-        testfile.write(" && ")
+        bmc.write(" && ")
 
-      testfile.write("prog->ops[%d] == %d " % (i, ops[i]))
-      testfile.write("&& prog->params[%d] == %d && prog->params[%d] == %d" %
+      bmc.write("prog->ops[%d] == %d " % (i, ops[i]))
+      bmc.write("&& prog->params[%d] == %d && prog->params[%d] == %d" %
           (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
 
     for i in xrange(len(consts)):
-      testfile.write("&& prog->consts[%d] == %d" %
+      bmc.write("&& prog->consts[%d] == %d" %
           (i, consts[i]))
 
-    testfile.write("));\n")
+    bmc.write("));\n")
 
-  testfile.write("}\n")
-  testfile.flush()
+  bmc.write("}\n")
 
-  pwidth = log2(codelen + nconsts + args.args - 1)
-  pwidth = max(pwidth, 1)
-
-  # OK cool, now let's run CBMC
-  cbmcfile = tempfile.NamedTemporaryFile(delete=False)
-  cbmcargs = [CBMC, "-Iinterpreter",
-      "-DSZ=%d" % codelen,
-      "-DWIDTH=%d" % width,
-      "-DSYNTH",
-      "-DNARGS=%d" % args.args,
-      "-DCONSTS=%d" % nconsts,
-      "-DPWIDTH=%d" % pwidth,
-      "--slice-formula",
-      checker,
-      testfile.name,
-      "interpreter/synth.c",
-      "interpreter/exec.c",
-      "interpreter/exclude.c"]
-
-  perf.start("cbmc")
-  retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
-  perf.end("cbmc")
-
-  cbmcfile.seek(0)
+  (retcode, output) = bmc.run()
 
   ops = None
   parms = None
@@ -245,7 +223,7 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
   if retcode == 10:
     # A counterexample was found -- extract the code sequence from it!
 
-    for l in cbmcfile.readlines():
+    for l in output:
       mops = opsre.search(l)
       mparms = parmsre.search(l)
       mconsts = constsre.search(l)
@@ -287,14 +265,14 @@ def verif(prog, checker, width, codelen, nconsts):
   progfile.write("};")
   progfile.flush()
 
-  pwidth = log2(codelen + nconsts + args.args - 1)
+  pwidth = log2(codelen + nconsts + args.args.args - 1)
   pwidth = max(pwidth, 1)
 
   cbmcargs = [CBMC,
       "-Iinterpreter",
       "-DSZ=%d" % codelen,
       "-DWIDTH=%d" % width,
-      "-DNARGS=%d" % args.args,
+      "-DNARGS=%d" % args.args.args,
       "-DCONSTS=%d" % nconsts,
       "-DPWIDTH=%d" % pwidth,
       checker,
@@ -328,21 +306,21 @@ def verif(prog, checker, width, codelen, nconsts):
   return None
 
 def cegar(checker):
-  codelen = args.seqlen
-  wordlen = args.wordwidth
-  targetwordlen = args.targetwordwidth
+  codelen = args.args.seqlen
+  wordlen = args.args.wordwidth
+  targetwordlen = args.args.targetwordwidth
   n = 1
   tests = gentests(wordlen, codelen)
   exclusions = []
   correct = []
   starttime = time.time()
-  seqlim = args.seqlim
+  seqlim = args.args.seqlim
   nconsts = 0
 
-  if args.consts >= 0:
-    nconsts = args.consts
+  if args.args.consts >= 0:
+    nconsts = args.args.consts
 
-  if args.exhaustive:
+  if args.args.exhaustive:
     numsearch = -1
   else:
     numsearch = 1
@@ -353,24 +331,24 @@ def cegar(checker):
     sys.stdout.flush()
 
     perf.inc("iterations")
-    perf.summary(args)
+    perf.summary(args.args)
 
-    if not args.verbose:
+    if not args.args.verbose:
       endtime = time.time()
       elapsed = endtime-starttime
 
       print ("Iteration: " + BOLD + RED + "%d" + ENDC) % n
       print ("Code sequence length: " + BOLD + RED + "%d/%d" + ENDC) % (codelen,
-          args.seqlim)
+          args.args.seqlim)
       print ("Word width: " + BOLD + RED + "%d/%d" + ENDC) % (wordlen,
           targetwordlen)
       print ("Excluded sequences: " + BOLD + RED + "%d/%d" + ENDC) % (
-          len(exclusions), args.exclude)
+          len(exclusions), args.args.exclude)
       print ("Test vectors: " + BOLD + RED + "%d" + ENDC) % len(tests)
       print ("Constants: " + BOLD + RED + "%d" + ENDC) % nconsts
       print ("Elapsed time: " + BOLD + RED + "%.02fs" + ENDC) % elapsed
 
-      if args.exhaustive:
+      if args.args.exhaustive:
         print ("Correct sequences: " + BOLD + RED + "%d" + ENDC) %(
             len(correct))
         print UP*2 + "\r"
@@ -378,7 +356,7 @@ def cegar(checker):
       print UP*8 + "\r"
       sys.stdout.flush()
 
-    if args.verbose > 0:
+    if args.args.verbose > 0:
       print correct
 
     n += 1
@@ -387,40 +365,40 @@ def cegar(checker):
       tests = gentests(wordlen, codelen)
 
 
-    if args.verbose > 1:
+    if args.args.verbose > 1:
       print "Test vectors: %s" % str(tests)
 
     prog = synth(checker, tests, exclusions+correct, wordlen, codelen, nconsts)
     #prog = optimize(prog, wordlen)
 
     if prog == None:
-      if args.verbose > 0:
+      if args.args.verbose > 0:
         print "No sequence possible!"
 
-      if args.consts < 0 and nconsts < codelen:
+      if args.args.consts < 0 and nconsts < codelen:
         nconsts += 1
       else:
         codelen += 1
 
-        if args.consts < 0:
+        if args.args.consts < 0:
           nconsts = 0
 
       exclusions = []
       #tests = gentests(wordlen, codelen)
 
-      if args.verbose > 0:
+      if args.args.verbose > 0:
         print "Increasing constants to %d\n" % nconsts
         print "Increasing sequence length to %d\n" % codelen
 
       continue
 
-    if args.verbose > 0:
+    if args.args.verbose > 0:
       prettyprint(prog)
 
     test = verif(prog, checker, wordlen, codelen, nconsts)
 
     if test is None:
-      if args.verbose > 0:
+      if args.args.verbose > 0:
         print "Correct for wordlen=%d" % wordlen
 
       if wordlen == targetwordlen:
@@ -429,7 +407,7 @@ def cegar(checker):
 
       test = verif(prog, checker, targetwordlen, codelen, nconsts)
       if test is None:
-        if args.verbose > 0:
+        if args.args.verbose > 0:
           print "Also correct for wordlen=%d!" % targetwordlen
 
         correct.append(prog)
@@ -437,13 +415,13 @@ def cegar(checker):
 
       #tests.append(test)
 
-      if args.verbose > 0:
+      if args.args.verbose > 0:
         print "Trying to generalize..."
 
       newprog = generalize(prog, checker, wordlen, targetwordlen, tests, codelen)
 
       if newprog:
-        if args.verbose > 1:
+        if args.args.verbose > 1:
           print "Generalized!"
 
         perf.inc("exclusions")
@@ -454,11 +432,11 @@ def cegar(checker):
         prog = newprog
         continue
 
-      if args.verbose > 0:
+      if args.args.verbose > 0:
         print "Couldn't generalize :-("
 
-      if len(exclusions) < args.exclude:
-        if args.verbose > 0:
+      if len(exclusions) < args.args.exclude:
+        if args.args.verbose > 0:
           print "Excluding current sequence"
 
         exclusions.append(prog)
@@ -472,10 +450,10 @@ def cegar(checker):
         tests = gentests(wordlen, codelen)
         tests = list(set(tests))
 
-        if args.verbose > 0:
+        if args.args.verbose > 0:
           print "Increasing wordlen to %d" % wordlen
     else:
-      if args.verbose > 0:
+      if args.args.verbose > 0:
         print "Fails for %s\n" % str(test)
 
       tests.append(test)
@@ -492,7 +470,7 @@ def cegar(checker):
     print ""
 
 def expand(x, narrow, wide):
-  if args and args.verbose > 1:
+  if args.args and args.args.verbose > 1:
     print "Expanding %x from %d to %d bits" % (x, narrow, wide)
 
   ret = [x]
@@ -530,7 +508,7 @@ def expand(x, narrow, wide):
 
   ret.append(y)
 
-  if args and args.verbose > 1:
+  if args.args and args.args.verbose > 1:
     print "Expanded to %s" % str(ret)
 
   return list(set(ret))
@@ -558,7 +536,7 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
   for newconsts in itertools.product(*expansions):
     newprog = (ops, parms, list(newconsts))
 
-    if args.verbose > 1:
+    if args.args.verbose > 1:
       print "Trying %s" % (str(newprog))
 
     if verif(newprog, checker, targetwidth, codelen, len(consts)) is None:
@@ -695,8 +673,8 @@ def optimize(prog, wordlen):
 def gentests(wordlen, codelen):
   perf.start("gentests")
 
-  numargs = args.args
-  numtests = min(args.tests, 2**(wordlen * numargs))
+  numargs = args.args.args
+  numtests = min(args.args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
 
   if (1 << (wordlen*numargs)) <= numtests:
@@ -719,8 +697,8 @@ def gentests(wordlen, codelen):
   return list(itertools.product(*slices))
 
 if __name__ == '__main__':
-  args = argparser.parse_args()
+  args.args = args.argparser.parse_args()
 
   random.seed()
 
-  cegar(args.checker)
+  cegar(args.args.checker)
