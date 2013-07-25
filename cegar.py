@@ -218,11 +218,19 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
 
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile(delete=False)
-  cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width, "-DSYNTH",
+  cbmcargs = [CBMC, "-Iinterpreter",
+      "-DSZ=%d" % codelen,
+      "-DWIDTH=%d" % width,
+      "-DSYNTH",
       "-DNARGS=%d" % args.args,
-      "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
-      "--slice-formula", checker, testfile.name, "synth.c", "exec.c",
-      "exclude.c"]
+      "-DCONSTS=%d" % nconsts,
+      "-DPWIDTH=%d" % pwidth,
+      "--slice-formula",
+      checker,
+      testfile.name,
+      "interpreter/synth.c",
+      "interpreter/exec.c",
+      "interpreter/exclude.c"]
 
   perf.start("cbmc")
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
@@ -282,10 +290,17 @@ def verif(prog, checker, width, codelen, nconsts):
   pwidth = log2(codelen + nconsts + args.args - 1)
   pwidth = max(pwidth, 1)
 
-  cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % width,
-          "-DNARGS=%d" % args.args,
-          "-DCONSTS=%d" % nconsts, "-DPWIDTH=%d" % pwidth,
-          checker, progfile.name, "exec.c", "verif.c"]
+  cbmcargs = [CBMC,
+      "-Iinterpreter",
+      "-DSZ=%d" % codelen,
+      "-DWIDTH=%d" % width,
+      "-DNARGS=%d" % args.args,
+      "-DCONSTS=%d" % nconsts,
+      "-DPWIDTH=%d" % pwidth,
+      checker,
+      progfile.name,
+      "interpreter/exec.c",
+      "interpreter/verif.c"]
   cbmcfile = tempfile.NamedTemporaryFile()
 
   perf.start("cbmc")
@@ -592,8 +607,15 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
   # OK cool, now let's run CBMC
   cbmcfile = tempfile.NamedTemporaryFile()
-  cbmcargs = [CBMC, "-I.", "-DSZ=%d" % codelen, "-DWIDTH=%d" % targetwidth,
-      "--slice-formula", checker, testfile.name, "synth.c", "exec.c"]
+  cbmcargs = [CBMC,
+      "-Iinterpreter",
+      "-DSZ=%d" % codelen,
+      "-DWIDTH=%d" % targetwidth,
+      "--slice-formula",
+      checker,
+      testfile.name,
+      "interpreter/synth.c",
+      "interpreter/exec.c"]
 
   perf.start("cbmc")
   retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
