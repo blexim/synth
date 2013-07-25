@@ -7,15 +7,15 @@ import args
 import os
 
 args.argparser.add_argument("--cbmc", default="cbmc", type=str,
-    help="Path to CBMC")
+    help="path to CBMC")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
-    type=str, help="Path to interpreter")
+    type=str, help="path to interpreter")
 args.argparser.add_argument("--keeptemps", "-k", default=False,
     action="store_const", const=True,
-    help="Keep temporary files")
+    help="keep temporary files")
 args.argparser.add_argument("--noslice", default=False,
     action="store_const", const=True,
-    help="Do not slice formula")
+    help="do not slice formula")
 
 def log2(x):
   i = 0
