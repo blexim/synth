@@ -47,7 +47,7 @@ class Prog(object):
   params = []
   consts = []
 
-  def __init__(self, ops=None, params=None, consts=None):
+  def __init__(self, ops=[], params=[], consts=[]):
     self.ops = ops
     self.params = params
     self.consts = consts
