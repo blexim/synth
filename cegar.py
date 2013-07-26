@@ -59,19 +59,6 @@ args.argparser.add_argument("--verbose", "-v", action='count',
 args.argparser.add_argument("checker",
     help="code to check the function we synthesise")
 
-def log2(x):
-  i = 0
-  extra = 0
-
-  while x > 1:
-    if x & 1:
-      extra = 1
-
-    x >>= 1
-    i += 1
-
-  return i+extra
-
 def synth(checker, tests, exclusions, width, codelen, nconsts):
   """
   Synthesise a new code sequence.
