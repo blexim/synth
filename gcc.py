@@ -72,6 +72,8 @@ class Gcc(object):
     extra = [fixc(f) for f in extra]
     self.gccargs += extra
 
+    self.gccargs += ["-lm"]
+
     self.write = self.scratchfile.write
 
   def run(self):
@@ -81,7 +83,7 @@ class Gcc(object):
     perf.start("gcc")
 
     with open(os.devnull, "w") as fnull:
-      retcode = subprocess.call(self.gccargs, stdout=fnull, stderr=fnull)
+      retcode = subprocess.call(self.gccargs, stderr=fnull, stdout=fnull)
 
     perf.end("gcc")
 
