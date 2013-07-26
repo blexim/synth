@@ -78,10 +78,10 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
 
   perf.start("synth")
 
-  # First we need to write the test inputs to a file...
   bmc = cbmc.cbmc(codelen, width, nconsts,
       "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
 
+  # Write the test inputs...
   bmc.write(r"""
 #include "synth.h"
 
@@ -406,78 +406,6 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
       print "Trying %s" % (str(newprog))
 
     if verif(newprog, checker, targetwidth, codelen) is None:
-      return newprog
-
-  return None
-
-def sat_generalize(prog, checker, width, targetwidth, tests):
-  """
-  Try to generalize a program which is correct for a word width < the
-  width we want, to a program which is correct for the full width.
-  """
-
-  # Our basic technique is to find constants in the program and try to
-  # extend them to a wider wordsize...
-
-  (ops, parms, consts) = prog
-
-  bmc = cbmc.cbmc(codelen, targetwidth, len(consts), checker, "synth.c", "exec.c")
-
-  bmc.write(r"""
-#include "synth.h"
-
-void tests(prog_t prog) {
-""")
-
-  for i in xrange(len(ops)):
-    bmc.write("  __CPROVER_assume(prog.ops[%d] == %d);\n" % (i, ops[i]))
-
-    bmc.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
-        (2*i, consts[2*i]))
-    bmc.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
-        (2*i + 1, consts[2*i + 1]))
-
-    if consts[2*i] == 0:
-      bmc.write("  __CPROVER_assume(prog.params[%d] == %d);\n" %
-          (2*i, parms[2*i]))
-
-    if consts[2*i+1] == 0:
-      testfile.write("  __CPROVER_assume(prog.params[%d] == %d);\n" %
-          (2*i+1, parms[2*i+1]))
-
-  for t in tests:
-    testfile.write("  test(%d, prog);\n" % t)
-
-  testfile.write("}\n")
-  testfile.flush()
-
-  # OK cool, now let's run CBMC
-  cbmcfile = tempfile.NamedTemporaryFile()
-  cbmcargs = [CBMC,
-      "-Iinterpreter",
-      "-DSZ=%d" % codelen,
-      "-DWIDTH=%d" % targetwidth,
-      "--slice-formula",
-      checker,
-      testfile.name,
-      "interpreter/synth.c",
-      "interpreter/exec.c"]
-
-  perf.start("cbmc")
-  retcode = subprocess.call(cbmcargs, stdout=cbmcfile)
-  perf.end("cbmc")
-
-  cbmcfile.seek(0)
-
-  newprog = None
-
-  if retcode == 10:
-    # A counterexample was found -- extract the code sequence from it!
-    newprog = Prog()
-    newprog.parse(output)
-
-    if verif(newprog, checker, targetwidth, codelen) is None:
-      # The generalized program is correct!
       return newprog
 
   return None
