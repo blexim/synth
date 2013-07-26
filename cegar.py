@@ -11,6 +11,7 @@ import perfcounters as perf
 import cbmc
 import args
 
+from cbmc import Cbmc
 from prog import Prog, str2ints
 
 HEADER = '\033[95m'
@@ -78,7 +79,7 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
 
   perf.start("synth")
 
-  bmc = cbmc.cbmc(codelen, width, nconsts,
+  bmc = Cbmc(codelen, width, nconsts,
       "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
 
   # Write the test inputs...
@@ -137,7 +138,7 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  bmc = cbmc.cbmc(codelen, width, len(prog.consts),
+  bmc = Cbmc(codelen, width, len(prog.consts),
       checker, "exec.c", "verif.c")
 
   bmc.write(r"""

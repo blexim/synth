@@ -30,7 +30,7 @@ def log2(x):
 
   return i+extra
 
-class cbmc(object):
+class Cbmc(object):
   cbmcargs = []
   scratchfile = None
 
