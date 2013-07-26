@@ -10,6 +10,7 @@ import sys
 import perfcounters as perf
 import cbmc
 import args
+from prog import Prog
 
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
@@ -371,7 +372,9 @@ def cegar(checker):
       continue
 
     if args.args.verbose > 0:
-      prettyprint(prog)
+      p = Prog(prog)
+      print str(p)
+      #prettyprint(prog)
 
     test = verif(prog, checker, wordlen, codelen, nconsts)
 
@@ -444,7 +447,9 @@ def cegar(checker):
   print "Finished in %0.2fs\n" % elapsed
   
   for prog in correct:
-    prettyprint(prog)
+    p = Prog(*prog)
+    print str(p)
+    #prettyprint(prog)
     print ""
 
 def expand(x, narrow, wide):
