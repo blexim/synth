@@ -234,7 +234,6 @@ def cegar(checker):
       print "Test vectors: %s" % str(tests)
 
     prog = synth(checker, tests, exclusions+correct, wordlen, codelen, nconsts)
-    #prog = optimize(prog, wordlen)
 
     if prog == None:
       if args.args.verbose > 0:
@@ -412,44 +411,6 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
 
 def ispow2(x):
   return x != 0 and ((x & (x-1)) == 0)
-
-def optimize(prog, wordlen):
-  """
-  Simple keyhole optimizations...
-  """
-
-  perf.start("optimize")
-
-  if prog is None:
-    perf.end("optimize")
-    return None
-
-  (ops, parms, consts) = prog
-
-  for i in xrange(len(ops)):
-    op = ops[i]
-    p1 = parms[i*2]
-    p2 = parms[i*2+1]
-    x1 = consts[i*2]
-    x2 = consts[i*2+1]
-
-    if op == MUL and x2 == 1 and p2 == ((1 << wordlen) - 1):
-      # Replace y = x * -1 with y = -x
-      perf.inc("optimizations")
-      ops[i] = NEG
-    elif op == MUL and x2 == 1 and ispow2(p2):
-      # Replace y = x * 2**k with y = x << k
-      perf.inc("optimizations")
-      ops[i] = SHL
-      parms[i*2+1] = log2(p2)
-    elif op == DIV and x2 == 1 and ispow2(p2):
-      # Replace y = x / 2**k with y = x >> k
-      perf.inc("optimizations")
-      ops[i] = LSHR
-      parms[i*2+1] = log2(p2)
-
-  perf.end("optimize")
-  return (ops, parms, consts)
 
 def gentests(wordlen, codelen):
   perf.start("gentests")
