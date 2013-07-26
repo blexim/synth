@@ -31,6 +31,9 @@ unops = {
 def str2ints(s):
   ret = []
 
+  if not s:
+    return []
+
   for w in s.split(','):
     w = w.strip()
     w = w.replace('u', '')
@@ -87,7 +90,7 @@ class Prog(object):
         strinsts.append("t%d = %s %s %s" % (idx, self.strarg(p1), binops[op],
           self.strarg(p2)))
       elif op in unops:
-        strinsts.append("t%d = %s %s" % (idx, unops[op], self.strarg(p1)))
+        strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1)))
       else:
         raise "Couldn't parse instruction: (%d, %d, %d)" % (op, p1, p2)
 

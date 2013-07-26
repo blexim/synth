@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-#define SEARCH
+#ifndef SEARCH
+ #define SEARCH
+#endif
 
 #include "synth.h"
 #include "exec.h"
@@ -130,7 +132,9 @@ int main(void) {
 
     if (ok) {
       print_prog(&prog);
-      break;
+      return 10;
     }
   } while (next_prog(&prog));
+
+  return 0;
 }

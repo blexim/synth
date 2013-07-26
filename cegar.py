@@ -12,6 +12,7 @@ import cbmc
 import args
 
 from cbmc import Cbmc
+from gcc import Gcc
 from prog import Prog, str2ints
 
 HEADER = '\033[95m'
@@ -68,6 +69,9 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
 
   bmc = Cbmc(codelen, width, nconsts,
       "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
+
+  bmc = Gcc(codelen, width, nconsts,
+      "-DSEARCH", "exec.c", "exclude.c", "searchprog.c", checker)
 
   # Write the test inputs...
   bmc.write(r"""
