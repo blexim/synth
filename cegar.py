@@ -87,7 +87,11 @@ void tests(prog_t *prog) {
   # Now we're going to list each of the programs we
   # already know are wrong...
 
-  for (ops, parms, consts) in exclusions:
+  for prog in exclusions:
+    ops = prog.ops
+    parms = prog.params
+    consts = prog.consts
+
     bmc.write("  __CPROVER_assume(!(")
 
     for i in xrange(len(ops)):
