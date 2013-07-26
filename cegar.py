@@ -24,11 +24,6 @@ UP = "\033[1A"
 
 RED = "\033[31m"
 
-
-opsre = re.compile('ops={(.*?)}')
-parmsre = re.compile('params={(.*?)}')
-constsre = re.compile('consts={(.*?)}')
-
 cexre = re.compile('cex_args={(.*?)}')
 
 args.argparser.add_argument("--seqlen", "-s", default=1, type=int,
@@ -63,21 +58,6 @@ args.argparser.add_argument("--verbose", "-v", action='count',
 args.argparser.add_argument("checker",
     help="code to check the function we synthesise")
 
-PLUS=0
-MINUS=1
-MUL=2
-DIV=3
-NEG=4
-AND=5
-OR=6
-XOR=7
-NOT=8
-SHL=9
-LSHR=10
-ASHR=11
-LE=12
-LT=13
-
 def log2(x):
   i = 0
   extra = 0
@@ -90,82 +70,6 @@ def log2(x):
     i += 1
 
   return i+extra
-
-def parse(s):
-  ret = []
-
-  for w in s.split(','):
-    w = w.strip()
-    w = w.replace('u', '')
-
-    ret.append(int(w))
-
-  return ret
-
-def prettyarg(p, consts):
-  if p < len(consts):
-    return hex(consts[p])
-  else:
-    p -= len(consts)
-
-    if p < args.args.args:
-      return 'a%d' % (p+1)
-    else:
-      return 't%d' % (p - args.args.args + 1)
-
-def prettyprint(prog):
-  (ops, parms, consts) = prog
-
-  print prog
-
-  i = 0
-
-  while i < len(ops):
-    opcode = ops[i]
-    p1 = parms[2*i]
-    p2 = parms[2*i + 1]
-
-    a1 = prettyarg(p1, consts)
-    a2 = prettyarg(p2, consts)
-
-    if opcode == PLUS:
-      rhs = "%s + %s" % (a1, a2)
-    elif opcode == MINUS:
-      rhs = "%s - %s" % (a1, a2)
-    elif opcode == MUL:
-      rhs = "%s * %s" % (a1, a2)
-    elif opcode == DIV:
-      rhs = "%s / %s" % (a1, a2)
-    elif opcode == NEG:
-      rhs = "-%s" % a1
-    elif opcode == AND:
-      rhs = "%s & %s" % (a1, a2)
-    elif opcode == OR:
-      rhs = "%s | %s" % (a1, a2)
-    elif opcode == XOR:
-      rhs = "%s ^ %s" % (a1, a2)
-    elif opcode == NOT:
-      rhs = "~%s" % a1
-    elif opcode == SHL:
-      rhs = "%s << %s" % (a1, a2)
-    elif opcode == LSHR:
-      rhs = "%s >> %s" % (a1, a2)
-    elif opcode == ASHR:
-      rhs = "%s >>> %s" % (a1, a2)
-    elif opcode == LE:
-      rhs = "%s <= %s" % (a1, a2)
-    elif opcode == LT:
-      rhs = "%s < %s" % (a1, a2)
-    elif opcode == GE:
-      rhs = "%s >= %s" % (a1, a2)
-    elif opcode == GT:
-      rhs = "%s > %s" % (a1, a2)
-
-    print "t%d = %s" % (i+1, rhs)
-
-    i += 1
-
-  print "res = t%d" % (len(ops))
 
 def synth(checker, tests, exclusions, width, codelen, nconsts):
   """
