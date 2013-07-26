@@ -28,7 +28,7 @@ unops = {
     5: "~"
 }
 
-def parse(s):
+def str2ints(s):
   ret = []
 
   for w in s.split(','):
@@ -41,13 +41,28 @@ def parse(s):
 
 class Prog(object):
   ops = []
-  consts = []
   params = []
+  consts = []
 
-  def __init__(self, ops, params, consts):
+  def __init__(self, ops=None, params=None, consts=None):
     self.ops = ops
-    self.consts = consts
     self.params = params
+    self.consts = consts
+
+  def parse(self, output):
+    for l in output:
+      mops = opsre.search(l)
+      mparams = parmsre.search(l)
+      mconsts = constsre.search(l)
+
+      if mops:
+        self.ops = str2ints(mops.group(1))
+
+      if mparams:
+        self.params = str2ints(mparams.group(1))
+
+      if mconsts:
+        self.consts = str2ints(mconsts.group(1))
 
   def strarg(self, p):
     if p < len(self.consts):

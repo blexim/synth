@@ -10,7 +10,8 @@ import sys
 import perfcounters as perf
 import cbmc
 import args
-from prog import Prog
+
+from prog import Prog, str2ints
 
 HEADER = '\033[95m'
 OKBLUE = '\033[94m'
@@ -215,43 +216,25 @@ void tests(prog_t *prog) {
 
   (retcode, output) = bmc.run()
 
-  ops = None
-  parms = None
-  consts = []
+  prog = None
 
   if retcode == 10:
     # A counterexample was found -- extract the code sequence from it!
-
-    for l in output:
-      mops = opsre.search(l)
-      mparms = parmsre.search(l)
-      mconsts = constsre.search(l)
-
-      if mops:
-        ops = parse(mops.group(1))
-
-      if mparms:
-        parms = parse(mparms.group(1))
-
-      if mconsts:
-        consts = parse(mconsts.group(1))
-
-    perf.end("synth")
-    return (ops, parms, consts)
+    prog = Prog()
+    prog.parse(output)
 
   perf.end("synth")
-  return None
+  return prog
 
-def verif(prog, checker, width, codelen, nconsts):
+def verif(prog, checker, width, codelen):
   """
   Verify that a sequence is correct & extract a new test vector if it's not."
   """
 
   perf.start("verify")
 
-  bmc = cbmc.cbmc(codelen, width, nconsts, checker, "exec.c", "verif.c")
-
-  (ops, parms, consts) = prog
+  bmc = cbmc.cbmc(codelen, width, len(prog.consts),
+      checker, "exec.c", "verif.c")
 
   bmc.write(r"""
 #include "synth.h"
@@ -261,28 +244,27 @@ prog_t prog = {
   { %s },
   { %s },
 };
-""" % (", ".join(str(o) for o in ops),
-       ", ".join(str(p) for p in parms),
-       ", ".join(str(c) for c in consts)))
+""" % (", ".join(str(o) for o in prog.ops),
+       ", ".join(str(p) for p in prog.params),
+       ", ".join(str(c) for c in prog.consts)))
 
   (retcode, output) = bmc.run()
 
+  cex = None
+
   if retcode == 10:
     # We got a counterexample -- extract a new test case from it
-    x = 0
-
     for l in output:
       mx = cexre.search(l)
 
       if mx:
-        x = tuple(parse(mx.group(1)))
+        cex = tuple(str2ints(mx.group(1)))
+  else:
+    # No counterexample -- this sequence is correct!
+    pass
 
-    perf.end("verify")
-    return x
-
-  # No counterexample -- this sequence is correct!
   perf.end("verify")
-  return None
+  return cex
 
 def cegar(checker):
   codelen = args.args.seqlen
@@ -372,11 +354,10 @@ def cegar(checker):
       continue
 
     if args.args.verbose > 0:
-      p = Prog(prog)
-      print str(p)
+      print str(prog)
       #prettyprint(prog)
 
-    test = verif(prog, checker, wordlen, codelen, nconsts)
+    test = verif(prog, checker, wordlen, codelen)
 
     if test is None:
       if args.args.verbose > 0:
@@ -386,7 +367,7 @@ def cegar(checker):
         correct.append(prog)
         continue
 
-      test = verif(prog, checker, targetwordlen, codelen, nconsts)
+      test = verif(prog, checker, targetwordlen, codelen)
       if test is None:
         if args.args.verbose > 0:
           print "Also correct for wordlen=%d!" % targetwordlen
@@ -447,8 +428,7 @@ def cegar(checker):
   print "Finished in %0.2fs\n" % elapsed
   
   for prog in correct:
-    p = Prog(*prog)
-    print str(p)
+    print str(prog)
     #prettyprint(prog)
     print ""
 
@@ -509,20 +489,19 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
   Use heuristics to guess constants with which to generalize the program.
   """
 
-  (ops, parms, consts) = prog
   expansions = []
 
-  for i in xrange(len(consts)):
-    expanded = expand(consts[i], width, targetwidth)
+  for i in xrange(len(prog.consts)):
+    expanded = expand(prog.consts[i], width, targetwidth)
     expansions.append(expanded)
 
   for newconsts in itertools.product(*expansions):
-    newprog = (ops, parms, list(newconsts))
+    newprog = Prog(prog.ops, prog.params, list(newconsts))
 
     if args.args.verbose > 1:
       print "Trying %s" % (str(newprog))
 
-    if verif(newprog, checker, targetwidth, codelen, len(consts)) is None:
+    if verif(newprog, checker, targetwidth, codelen) is None:
       return newprog
 
   return None
@@ -538,22 +517,24 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
   (ops, parms, consts) = prog
 
-  # First we need to write the test inputs to a file...
-  testfile = tempfile.NamedTemporaryFile(suffix='.c', delete=False)
+  bmc = cbmc.cbmc(codelen, targetwidth, len(consts), checker, "synth.c", "exec.c")
 
-  testfile.write("#include \"synth.h\"\n\n")
-  testfile.write("void tests(prog_t prog) {\n")
+  bmc.write(r"""
+#include "synth.h"
+
+void tests(prog_t prog) {
+""")
 
   for i in xrange(len(ops)):
-    testfile.write("  __CPROVER_assume(prog.ops[%d] == %d);\n" % (i, ops[i]))
+    bmc.write("  __CPROVER_assume(prog.ops[%d] == %d);\n" % (i, ops[i]))
 
-    testfile.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
+    bmc.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
         (2*i, consts[2*i]))
-    testfile.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
+    bmc.write("  __CPROVER_assume(prog.consts[%d] == %d);\n" %
         (2*i + 1, consts[2*i + 1]))
 
     if consts[2*i] == 0:
-      testfile.write("  __CPROVER_assume(prog.params[%d] == %d);\n" %
+      bmc.write("  __CPROVER_assume(prog.params[%d] == %d);\n" %
           (2*i, parms[2*i]))
 
     if consts[2*i+1] == 0:
@@ -584,30 +565,15 @@ def sat_generalize(prog, checker, width, targetwidth, tests):
 
   cbmcfile.seek(0)
 
-  ops = None
-  parms = None
-  consts = None
+  newprog = None
 
   if retcode == 10:
     # A counterexample was found -- extract the code sequence from it!
-
-    for l in cbmcfile.readlines():
-      mops = opsre.search(l)
-      mparms = parmsre.search(l)
-      mconsts = constsre.search(l)
-
-      if mops:
-        ops = parse(mops.group(1))
-
-      if mparms:
-        parms = parse(mparms.group(1))
-
-      if mconsts:
-        consts = parse(mconsts.group(1))
-
-    newprog = (ops, parms, consts)
+    newprog = Prog()
+    newprog.parse(output)
 
     if verif(newprog, checker, targetwidth, codelen) is None:
+      # The generalized program is correct!
       return newprog
 
   return None
