@@ -12,7 +12,7 @@ int main(void) {
   hint(&prog);
 #endif
 
-  exclude(&prog);
+  __CPROVER_assume(!exclude(&prog));
 
   tests(&prog);
 

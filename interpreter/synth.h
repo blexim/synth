@@ -21,18 +21,27 @@
  #define PWIDTH WIDTH
 #endif
 
-const int MAXOPCODE = 13;
+#define MAXOPCODE 13
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 4
 
 
-typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
-typedef __CPROVER_bitvector[WIDTH] sword_t;
+#ifndef SEARCH
+  typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
+  typedef __CPROVER_bitvector[WIDTH] sword_t;
 
-typedef unsigned __CPROVER_bitvector[PWIDTH] param_t;
-typedef unsigned __CPROVER_bitvector[OPLEN] op_t;
-typedef unsigned __CPROVER_bitvector[1] bit_t;
+  typedef unsigned __CPROVER_bitvector[PWIDTH] param_t;
+  typedef unsigned __CPROVER_bitvector[OPLEN] op_t;
+  typedef unsigned __CPROVER_bitvector[1] bit_t;
+#else
+  typedef unsigned int word_t;
+  typedef int sword_t;
+
+  typedef unsigned int param_t;
+  typedef unsigned int op_t;
+  typedef unsigned int bit_t;
+#endif
 
 typedef struct prog {
   op_t ops[SZ];
@@ -47,6 +56,6 @@ int check(word_t args[NARGS], word_t z);
 void tests(prog_t *prog);
 
 void hint(prog_t *prog);
-void exclude(prog_t *prog);
+int exclude(prog_t *prog);
 
 #endif // SYNTH_H

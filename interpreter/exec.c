@@ -5,6 +5,7 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
   op_t op;
   param_t a1, a2;
   word_t p1, p2, res, result;
+  sword_t i1, i2;
   word_t A[SZ + NARGS + CONSTS];
 
   unsigned int i;
@@ -25,6 +26,9 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
     p1 = A[a1];
     p2 = A[a2];
 
+    i1 = p1;
+    i2 = p2;
+
     switch(op) {
     case PLUS:
       res = p1 + p2;
@@ -38,6 +42,10 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
     case DIV:
 #ifdef SYNTH
       __CPROVER_assume(p2 != 0);
+#elif defined(SEARCH)
+      if (p2 == 0) {
+        break;
+      }
 #else
       assert(p2 != 0);
 #endif
@@ -65,9 +73,6 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
       res = p1 >> p2;
       break;
     case ASHR:
-      sword_t i1 = p1;
-      sword_t i2 = p2;
-
       res = (word_t) (i1 >> i2);
       break;
     case LE:
@@ -85,7 +90,9 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
       }
       break;
     default:
+#ifndef SEARCH
       __CPROVER_assume(0);
+#endif
       break;
     }
 
