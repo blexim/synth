@@ -49,6 +49,8 @@ typedef struct prog {
   word_t consts[CONSTS];
 } prog_t;
 
+extern prog_t prog;
+
 word_t exec(word_t args[NARGS], prog_t *prog);
 void test(word_t args[NARGS], prog_t *prog);
 

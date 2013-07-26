@@ -79,7 +79,10 @@ class Gcc(object):
     self.ofile.close()
 
     perf.start("gcc")
-    retcode = subprocess.call(self.gccargs, stdout=None, stderr=None)
+
+    with open(os.devnull, "w") as fnull:
+      retcode = subprocess.call(self.gccargs, stdout=fnull, stderr=fnull)
+
     perf.end("gcc")
 
     outputfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)

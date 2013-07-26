@@ -54,6 +54,13 @@ args.argparser.add_argument("--exhaustive", "-E", default=False,
 args.argparser.add_argument("--tests", "-t", default=16, type=int,
     help="number of test vectors to generate")
 
+args.argparser.add_argument("--synth-explicit", "-x", default=False,
+    action="store_const", const=True,
+    help="synthesise program via explicit search")
+args.argparser.add_argument("--verif-explicit", "-X", default=False,
+    action="store_const", const=True,
+    help="verify program via explicit search")
+
 args.argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
 
@@ -67,11 +74,13 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
 
   perf.start("synth")
 
-  bmc = Cbmc(codelen, width, nconsts,
-      "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
+  if args.args.synth_explicit:
+    bmc = Gcc(codelen, width, nconsts,
+        "-DSEARCH", "exec.c", "exclude.c", "searchprog.c", checker)
+  else:
+    bmc = Cbmc(codelen, width, nconsts,
+        "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
 
-  bmc = Gcc(codelen, width, nconsts,
-      "-DSEARCH", "exec.c", "exclude.c", "searchprog.c", checker)
 
   # Write the test inputs...
   bmc.write(r"""
@@ -133,8 +142,13 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  bmc = Cbmc(codelen, width, len(prog.consts),
-      checker, "exec.c", "verif.c")
+  if args.args.verif_explicit:
+    bmc = Gcc(codelen, width, len(prog.consts),
+        "-DSEARCH", checker, "exec.c", "verifprog.c")
+  else:
+    bmc = Cbmc(codelen, width, len(prog.consts),
+        checker, "exec.c", "verif.c")
+
 
   bmc.write(r"""
 #include "synth.h"
