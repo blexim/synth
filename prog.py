@@ -25,7 +25,7 @@ binops = {
 
 unops = {
     4: "-",
-    5: "~"
+    8: "~"
 }
 
 def str2ints(s):
@@ -92,6 +92,7 @@ class Prog(object):
       elif op in unops:
         strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1)))
       else:
-        raise "Couldn't parse instruction: (%d, %d, %d)" % (op, p1, p2)
+        raise Exception("Couldn't parse instruction: (%d, %d, %d)" %
+            (op, p1, p2))
 
     return '\n'.join(strinsts)

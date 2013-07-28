@@ -5,6 +5,10 @@
 
 int exclude_1(unsigned int idx, op_t op, param_t p1, param_t p2,
     word_t consts[CONSTS]) {
+  word_t c = consts[p1];
+  sword_t s1 = (sword_t) consts[p1];
+  sword_t s2 = (sword_t) consts[p2];
+
   // Exclude anything with an invalid opcode...
   if (op > MAXOPCODE) {
     return 1;
@@ -31,7 +35,7 @@ int exclude_1(unsigned int idx, op_t op, param_t p1, param_t p2,
     }
 
     // Break symmetry: force 2nd (unused) arg to be #0
-    if (p2 != 0) {
+    if (p2 != (param_t) 0) {
       return 1;
     }
   }
@@ -52,26 +56,26 @@ int exclude_1(unsigned int idx, op_t op, param_t p1, param_t p2,
   // Exclude nops.
   if ((op == PLUS || op == MINUS || op == OR || op == XOR ||
         op == SHL || op == LSHR || op == ASHR) && ISCONST(p1)) {
-    if (consts[p1] == 0) {
+    if (c == (word_t) 0) {
       return 1;
     }
   }
 
   // More nops. 
   if ((op == MUL || op == DIV) && ISCONST(p1)) {
-    if (consts[p1] == 1) {
+    if (c == (word_t) 1) {
       return 1;
     }
 
     // While we're here, let's not multiply or divide by 0 either.
-    if (consts[p1] == 0) {
+    if (c == (word_t) 0) {
       return 1;
     }
   }
 
   // More nops.
   if (op == AND && ISCONST(p1)) {
-    if (consts[p1] == (word_t) -1) {
+    if (c == (word_t) -1) {
       return 1;
     }
   }
@@ -85,24 +89,20 @@ int exclude_1(unsigned int idx, op_t op, param_t p1, param_t p2,
 
   // Symmetry break: only add/sub positive values.
   if (op == PLUS && ISCONST(p1)) {
-    sword_t c = consts[p1];
-
-    if (c <= 0) {
+    if (s1 <= (sword_t) 0) {
       return 1;
     }
   }
 
   if (op == MINUS && ISCONST(p2)) {
-    sword_t c = consts[p2];
-
-    if (c <= 0) {
+    if (s2 <= (sword_t) 0) {
       return 1;
     }
   }
 
   // Symmetry break: disallow x * -1, x / -1 (use unary neg instead)
   if ((op == MUL || op == DIV) && ISCONST(p1)) {
-    if (consts[p1] == (word_t) -1) {
+    if (c == (word_t) -1) {
       return 1;
     }
   }

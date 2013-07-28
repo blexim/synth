@@ -6,16 +6,16 @@ import perfcounters as perf
 import args
 import os
 
-args.argparser.add_argument("--cbmc", default="cbmc", type=str,
-    help="path to CBMC")
-args.argparser.add_argument("--interpreter", "-I", default="interpreter",
-    type=str, help="path to interpreter")
-args.argparser.add_argument("--keeptemps", "-k", default=False,
-    action="store_const", const=True,
-    help="keep temporary files")
-args.argparser.add_argument("--noslice", default=False,
-    action="store_const", const=True,
-    help="do not slice formula")
+#args.argparser.add_argument("--cbmc", default="cbmc", type=str,
+#    help="path to CBMC")
+#args.argparser.add_argument("--interpreter", "-I", default="interpreter",
+#    type=str, help="path to interpreter")
+#args.argparser.add_argument("--keeptemps", "-k", default=False,
+#    action="store_const", const=True,
+#    help="keep temporary files")
+#args.argparser.add_argument("--noslice", default=False,
+#    action="store_const", const=True,
+#    help="do not slice formula")
 
 def log2(x):
   i = 0

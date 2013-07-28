@@ -43,6 +43,13 @@
   typedef unsigned int bit_t;
 #endif
 
+#ifdef SEARCH
+  #define __CPROVER_assume(x) do {\
+    if (!(x)) execok = 0; \
+  } while(0)
+#endif
+
+
 typedef struct prog {
   op_t ops[SZ];
   param_t params[SZ*2];
@@ -50,6 +57,7 @@ typedef struct prog {
 } prog_t;
 
 extern prog_t prog;
+extern int execok;
 
 word_t exec(word_t args[NARGS], prog_t *prog);
 void test(word_t args[NARGS], prog_t *prog);

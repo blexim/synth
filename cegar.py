@@ -8,11 +8,11 @@ import random
 import time
 import sys
 import perfcounters as perf
-import cbmc
 import args
 
 from cbmc import Cbmc
 from gcc import Gcc
+from checker import Checker
 from prog import Prog, str2ints
 
 HEADER = '\033[95m'
@@ -67,7 +67,7 @@ args.argparser.add_argument("--verbose", "-v", action='count',
 args.argparser.add_argument("checker",
     help="code to check the function we synthesise")
 
-def synth(checker, tests, exclusions, width, codelen, nconsts):
+def synth(tests, exclusions, width, codelen, nconsts):
   """
   Synthesise a new code sequence.
   """
@@ -76,10 +76,12 @@ def synth(checker, tests, exclusions, width, codelen, nconsts):
 
   if args.args.synth_explicit:
     bmc = Gcc(codelen, width, nconsts,
-        "-DSEARCH", "exec.c", "exclude.c", "searchprog.c", checker)
+        "-DSEARCH", "exec.c", "exclude.c", "searchprog.c")
   else:
     bmc = Cbmc(codelen, width, nconsts,
-        "-DSYNTH", "synth.c", "exec.c", "exclude.c", checker)
+        "-DSYNTH", "synth.c", "exec.c", "exclude.c")
+
+  bmc = Checker(codelen, width, nconsts)
 
 
   # Write the test inputs...
@@ -148,6 +150,8 @@ def verif(prog, checker, width, codelen):
   else:
     bmc = Cbmc(codelen, width, len(prog.consts),
         checker, "exec.c", "verif.c")
+
+  bmc = Checker(codelen, width, len(prog.consts), True)
 
 
   bmc.write(r"""
@@ -243,7 +247,7 @@ def cegar(checker):
     if args.args.verbose > 1:
       print "Test vectors: %s" % str(tests)
 
-    prog = synth(checker, tests, exclusions+correct, wordlen, codelen, nconsts)
+    prog = synth(tests, exclusions+correct, wordlen, codelen, nconsts)
 
     if prog == None:
       if args.args.verbose > 0:
