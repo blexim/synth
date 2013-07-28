@@ -7,6 +7,8 @@
 #include "synth.h"
 #include "exec.h"
 
+extern int execok;
+
 #define WORDMASK ((1 << WIDTH) - 1)
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
@@ -34,14 +36,14 @@ void init_args(word_t args[NARGS]) {
   int i;
 
   for (i = 0; i < NARGS; i++) {
-    args[i];
+    args[i] = 0;
   }
 }
 
 void print_args(word_t args[NARGS]) {
   int i;
 
-  printf("x={");
+  printf("cex_args={");
 
   for (i = 0; i < NARGS; i++) {
     if (i != 0) {
@@ -62,7 +64,7 @@ int main(void) {
   do {
     word_t res = exec(args, &prog);
 
-    if (!check(args, res)) {
+    if (!execok || !check(args, res)) {
       print_args(args);
       return 10;
     }
