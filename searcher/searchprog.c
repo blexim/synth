@@ -11,6 +11,8 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
+extern int execok;
+
 // Generate the lexicographically next highest program.
 //
 // Return 0 if the new program is all 0's (i.e. we have
@@ -109,6 +111,11 @@ int ok;
 void test(word_t args[NARGS], prog_t *prog) {
   word_t res = exec(args, prog);
   res &= WORDMASK;
+
+  if (!execok) {
+    ok = 0;
+    return;
+  }
 
   int valid = check(args, res);
 

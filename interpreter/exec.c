@@ -1,6 +1,8 @@
 #include "synth.h"
 #include "exec.h"
 
+int execok;
+
 word_t exec(word_t args[NARGS], prog_t *prog) {
   op_t op;
   param_t a1, a2;
@@ -17,6 +19,8 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
   for (i = 0; i < NARGS; i++) {
     A[CONSTS + i] = args[i];
   }
+
+  execok = 1;
 
   for (i = 0; i < SZ; i++) {
     op = prog->ops[i];
@@ -44,7 +48,8 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
       __CPROVER_assume(p2 != 0);
 #elif defined(SEARCH)
       if (p2 == 0) {
-        break;
+        execok = 0;
+        return 0;
       }
 #else
       assert(p2 != 0);
