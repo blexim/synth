@@ -84,6 +84,7 @@ class Gcc(object):
 
     with open(os.devnull, "w") as fnull:
       retcode = subprocess.call(self.gccargs, stderr=fnull, stdout=fnull)
+      #retcode = subprocess.call(self.gccargs)
 
     perf.end("gcc")
 
