@@ -405,21 +405,25 @@ def gentests(wordlen, codelen):
   numtests = min(args.args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
 
+  # See if we can exhaust the state space...
   if (1 << (wordlen*numargs)) <= numtests:
     slices = [range(1 << wordlen) for i in xrange(numargs)]
     return list(itertools.product(*slices))
 
-  maxneg = 0x80000000
-  maxpos = 0x7fffffff
+  # This is fairly arbitrary...  Above 2^30, we're too big to fit
+  # in a python int, so we're just going to randomly generate test
+  # vectors & rely on the fact that our state space is large enough
+  # that we're unlikely to generate the same vector twice.
+  if wordlen < 30:
+    vecs = xrange(2**wordlen)
+    slices = [random.sample(vecs, numslice) for i in xrange(numargs)]
+  else:
+    slices = []
 
-  vecs = [1, 0, -1, maxneg, maxpos, maxneg+1, maxpos-1, 0x01234567,
-      0x89abcdef, -2, 2, -3, 3, -64, 64, -5, -31415]
-
-  vecs = xrange(2**wordlen)
-
-  slices = [random.sample(vecs, numslice) for i in xrange(numargs)]
-
-  #slices = [[0] for i in xrange(numargs)]
+    for i in xrange(numargs):
+      thisslice = [random.randint(0, (2**wordlen) - 1)
+                    for j in xrange(numslice)]
+      slices.append(thisslice)
 
   return list(itertools.product(*slices))
 
