@@ -27,5 +27,13 @@ def end(key="_"):
   (start, x) = timers[key][-1]
   timers[key][-1] = (start, time.time())
 
-def summary(args):
-  pass
+def summary():
+  print "Perf counters:"
+  print counters
+
+  print "Perf timers:"
+
+  for (key, times) in timers.iteritems():
+    total = sum(end - start for (start, end) in times)
+    print "%s: %.02fs" % (key, total)
+

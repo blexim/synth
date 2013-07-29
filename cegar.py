@@ -10,8 +10,6 @@ import sys
 import perfcounters as perf
 import args
 
-from cbmc import Cbmc
-from gcc import Gcc
 from checker import Checker
 from prog import Prog, str2ints
 
@@ -44,7 +42,7 @@ args.argparser.add_argument("--wordwidth", "-w", default=3, type=int,
 args.argparser.add_argument("--targetwordwidth", "-W", default=32, type=int,
     help="target word size to use")
 
-args.argparser.add_argument("--exclude", "-e", default=2, type=int,
+args.argparser.add_argument("--exclude", "-e", default=1, type=int,
     help="maximum number of sequences to exclude")
 
 args.argparser.add_argument("--exhaustive", "-E", default=False,
@@ -53,13 +51,6 @@ args.argparser.add_argument("--exhaustive", "-E", default=False,
 
 args.argparser.add_argument("--tests", "-t", default=16, type=int,
     help="number of test vectors to generate")
-
-args.argparser.add_argument("--synth-explicit", "-x", default=False,
-    action="store_const", const=True,
-    help="synthesise program via explicit search")
-args.argparser.add_argument("--verif-explicit", "-X", default=False,
-    action="store_const", const=True,
-    help="verify program via explicit search")
 
 args.argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
@@ -73,13 +64,6 @@ def synth(tests, exclusions, width, codelen, nconsts):
   """
 
   perf.start("synth")
-
-  if args.args.synth_explicit:
-    bmc = Gcc(codelen, width, nconsts,
-        "-DSEARCH", "exec.c", "exclude.c", "searchprog.c")
-  else:
-    bmc = Cbmc(codelen, width, nconsts,
-        "-DSYNTH", "synth.c", "exec.c", "exclude.c")
 
   bmc = Checker(codelen, width, nconsts)
 
@@ -144,13 +128,6 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  if args.args.verif_explicit:
-    bmc = Gcc(codelen, width, len(prog.consts),
-        "-DSEARCH", checker, "exec.c", "verifprog.c")
-  else:
-    bmc = Cbmc(codelen, width, len(prog.consts),
-        checker, "exec.c", "verif.c")
-
   bmc = Checker(codelen, width, len(prog.consts), True)
 
 
@@ -210,7 +187,6 @@ def cegar(checker):
     sys.stdout.flush()
 
     perf.inc("iterations")
-    perf.summary(args.args)
 
     if not args.args.verbose:
       endtime = time.time()
@@ -303,9 +279,6 @@ def cegar(checker):
         if args.args.verbose > 1:
           print "Generalized!"
 
-        perf.inc("exclusions")
-        exclusions.append(prog)
-
         correct.append(newprog)
 
         prog = newprog
@@ -318,6 +291,7 @@ def cegar(checker):
         if args.args.verbose > 0:
           print "Excluding current sequence"
 
+        perf.inc("exclusions")
         exclusions.append(prog)
       else:
         exclusions = []
@@ -427,8 +401,6 @@ def ispow2(x):
   return x != 0 and ((x & (x-1)) == 0)
 
 def gentests(wordlen, codelen):
-  perf.start("gentests")
-
   numargs = args.args.args
   numtests = min(args.args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
@@ -449,7 +421,6 @@ def gentests(wordlen, codelen):
 
   #slices = [[0] for i in xrange(numargs)]
 
-  perf.end("gentests")
   return list(itertools.product(*slices))
 
 if __name__ == '__main__':
@@ -458,3 +429,5 @@ if __name__ == '__main__':
   random.seed()
 
   cegar(args.args.checker)
+
+  perf.summary()
