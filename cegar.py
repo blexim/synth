@@ -430,4 +430,5 @@ if __name__ == '__main__':
 
   cegar(args.args.checker)
 
-  perf.summary()
+  if args.args.verbose > 0:
+    perf.summary()
