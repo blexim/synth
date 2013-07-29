@@ -9,8 +9,12 @@ import signal
 
 args.argparser.add_argument("--cbmc", default="cbmc", type=str,
     help="path to CBMC")
+args.argparser.add_argument("--gcc", default="gcc", type=str,
+    help="path to GCC")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
     type=str, help="path to interpreter")
+args.argparser.add_argument("--searcher", default="searcher",
+    type=str, help="path to searcher")
 args.argparser.add_argument("--keeptemps", "-k", default=False,
     action="store_const", const=True,
     help="keep temporary files")
@@ -119,7 +123,6 @@ class Checker(object):
           print "Fastest checker: %s" % checker
       else:
         os.killpg(proc.pid, signal.SIGKILL)
-        proc.communicate()
         proc.wait()
 
     if args.args.strategy in ("explicit", "hybrid") and not args.args.keeptemps:
