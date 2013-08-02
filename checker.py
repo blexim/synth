@@ -65,14 +65,14 @@ class Checker(object):
 
     if verif:
       self.cbmcargs = [args.args.cbmc,
-          os.path.join(args.args.interpreter, "verif.c")] + genericargs
+          os.path.join("cbmc", "verif.c")] + genericargs
       self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99",
-          os.path.join(args.args.searcher, "verif.c")] + genericargs
+          os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
-          os.path.join(args.args.interpreter, "synth.c")] + genericargs
+          os.path.join("cbmc", "synth.c")] + genericargs
       self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99",
-          os.path.join(args.args.searcher, "synth.c")] + genericargs
+          os.path.join("explicit", "synth.c")] + genericargs
 
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
