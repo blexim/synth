@@ -2,11 +2,21 @@
 
 #include <math.h>
 
+union uf {
+  word_t w;
+  fword_t f;
+};
+
 int check(word_t args[NARGS], word_t z) {
   word_t x = args[0];
 
-  float f = *((float *) &x);
-  float g = *((float *) &z);
+  union uf uf;
+
+  uf.w = x;
+  fword_t f = uf.f;
+
+  uf.w = z;
+  fword_t g = uf.f;
 
   if (!isnormal(f)) {
     return 1;

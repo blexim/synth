@@ -1,7 +1,7 @@
 #include "synth.h"
 #include <math.h>
 
-#define ERRLIM 0.01
+#define ERRLIM 0.1
 
 union ia {
   word_t i;
@@ -21,7 +21,7 @@ int check(word_t args[NARGS], word_t z) {
     return 1;
   }
 
-  if (x <= 0.0) {
+  if (x <= 0.1) {
     return 1;
   }
 
@@ -33,8 +33,7 @@ int check(word_t args[NARGS], word_t z) {
     return 0;
   }
 
-  float v = x*(1.5f - (x * 0.5f * y*y));
-  //float v = y;
+  float v = y*(1.5f - (x * 0.5f * y*y));
   float res = v*v*x;
 
   if ((res >= 1.0 - ERRLIM) && (res <= 1.0 + ERRLIM)) {

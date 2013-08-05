@@ -23,6 +23,12 @@ args.argparser.add_argument("--noslice", default=False,
     help="do not slice formula")
 args.argparser.add_argument("--strategy", choices=["hybrid", "explicit", "cbmc"],
     default="hybrid", help="the synthesis strategy")
+args.argparser.add_argument("--synth-strategy",
+    choices=["default", "hybrid", "explicit", "cbmc"], default="default",
+    help="the synthesis strategy")
+args.argparser.add_argument("--verif-strategy",
+    choices=["default", "hybrid", "explicit", "cbmc"], default="default",
+    help="the synthesis strategy")
 
 def log2(x):
   i = 0
@@ -46,6 +52,9 @@ class Checker(object):
     nargs = args.args.args
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
+    ewidth = width/4
+    mwidth = width - ewidth - 1
+    self.verif = verif
 
     self.scratchfile = tempfile.NamedTemporaryFile(suffix=".c",
         delete=not args.args.keeptemps)
@@ -54,6 +63,7 @@ class Checker(object):
         "-I%s" % args.args.interpreter,
         "-DSZ=%d" % sz,
         "-DWIDTH=%d" % width,
+        "-DMWIDTH=%d" % mwidth,
         "-DNARGS=%d" % nargs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
@@ -85,13 +95,26 @@ class Checker(object):
     perf.start("checker")
     procs = []
 
-    if args.args.strategy in ("cbmc", "hybrid"):
+    strategy = None
+
+    if self.verif:
+      if args.args.verif_strategy == "default":
+        strategy = args.args.strategy
+      else:
+        strategy = args.args.verif_strategy
+    else:
+      if args.args.synth_strategy == "default":
+        strategy = args.args.strategy
+      else:
+        strategy = args.args.synth_strategy
+
+    if strategy in ("cbmc", "hybrid"):
       cbmcfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
       cbmcproc = subprocess.Popen(self.cbmcargs, stdout=cbmcfile,
           preexec_fn=os.setpgrp)
       procs.append((cbmcproc, cbmcfile, "cbmc"))
 
-    if args.args.strategy in ("explicit", "hybrid"):
+    if strategy in ("explicit", "hybrid"):
       ofile = tempfile.NamedTemporaryFile(delete=False)
       self.gccargs += ["-o", ofile.name, "-lm"]
 

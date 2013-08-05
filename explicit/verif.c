@@ -65,6 +65,7 @@ int main(void) {
     word_t res = exec(args, &prog);
 
     if (!execok || !check(args, res)) {
+      printf("%x -> %x (%d/%d)\n", args[0], res, check(args, res), execok);
       print_args(args);
       return 10;
     }

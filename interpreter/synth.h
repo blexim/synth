@@ -8,6 +8,10 @@
  #define WIDTH 32
 #endif
 
+#ifndef MWIDTH
+ #define MWIDTH 23
+#endif
+
 #ifndef NARGS
  #define NARGS 1
 #endif
@@ -30,6 +34,8 @@
 #ifndef SEARCH
   typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
   typedef __CPROVER_bitvector[WIDTH] sword_t;
+  typedef __CPROVER_floatbv[WIDTH][MWIDTH] fword_t;
+  //typedef float fword_t;
 
   typedef unsigned __CPROVER_bitvector[PWIDTH] param_t;
   typedef unsigned __CPROVER_bitvector[OPLEN] op_t;
@@ -37,6 +43,7 @@
 #else
   typedef unsigned int word_t;
   typedef int sword_t;
+  typedef float fword_t;
 
   typedef unsigned int param_t;
   typedef unsigned int op_t;
