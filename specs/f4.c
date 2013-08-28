@@ -1,6 +1,10 @@
 #include "synth.h"
 #include <math.h>
 
+/*
+ * Calculate square root.
+ */
+
 #define ERRLIM 0.9
 
 union uf {

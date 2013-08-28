@@ -1,6 +1,8 @@
 #include "synth.h"
 #include "exec.h"
 
+#include <math.h>
+
 int execok;
 
 word_t exec(word_t args[NARGS], prog_t *prog) {
@@ -8,7 +10,9 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
   param_t a1, a2;
   word_t p1, p2, res, result;
   sword_t i1, i2;
+  fword_t f1, f2;
   word_t A[SZ + NARGS + CONSTS];
+  fi_t fi;
 
   unsigned int i;
 
@@ -32,6 +36,12 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
 
     i1 = p1;
     i2 = p2;
+
+    fi.x = p1;
+    f1 = fi.f;
+
+    fi.x = p2;
+    f2 = fi.f;
 
     switch(op) {
     case PLUS:
@@ -94,6 +104,49 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
         res = 0;
       }
       break;
+    case SLE:
+      if (i1 <= i2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+    case SLT:
+      if (i1 < i2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+#ifdef FLOAT
+    case FPLUS:
+      fi.f = f1 + f2;
+      res = fi.x;
+      break;
+    case FMINUS:
+      fi.f = f1 - f2;
+      res = fi.x;
+      break;
+    case FMUL:
+      fi.f = f1 * f2;
+      res = fi.x;
+      break;
+    case FDIV:
+#ifdef SYNTH
+      __CPROVER_assume(fpclassify(f2) != FP_ZERO);
+#elif defined(SEARCH)
+      if (fpclassify(f2) == FP_ZERO) {
+        execok = 0;
+        return 0;
+      }
+#else
+      assert(fpclassify(f2) != FP_ZERO);
+#endif
+      fi.f = f1 / f2;
+      res = fi.x;
+      break;
+#endif // FLOAT
+
     default:
 #ifndef SEARCH
       __CPROVER_assume(0);

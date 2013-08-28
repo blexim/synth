@@ -25,10 +25,12 @@
  #define PWIDTH WIDTH
 #endif
 
-#define MAXOPCODE 13
+#define MAXOPCODE 19
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
-#define OPLEN 4
+#define OPLEN 5
+
+#define FLOAT
 
 
 #ifndef SEARCH
@@ -62,6 +64,11 @@ typedef struct prog {
   param_t params[SZ*2];
   word_t consts[CONSTS];
 } prog_t;
+
+typedef union fi {
+  word_t x;
+  fword_t f;
+} fi_t;
 
 extern prog_t prog;
 extern int execok;
