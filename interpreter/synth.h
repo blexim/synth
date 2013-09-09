@@ -34,8 +34,8 @@
 #ifndef SEARCH
   typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
   typedef __CPROVER_bitvector[WIDTH] sword_t;
-  typedef __CPROVER_floatbv[WIDTH][MWIDTH] fword_t;
-  //typedef float fword_t;
+  //typedef __CPROVER_floatbv[WIDTH][MWIDTH] fword_t;
+  typedef float fword_t;
 
   typedef unsigned __CPROVER_bitvector[PWIDTH] param_t;
   typedef unsigned __CPROVER_bitvector[OPLEN] op_t;

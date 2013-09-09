@@ -139,7 +139,6 @@ class Checker(object):
     for (proc, outfile, checker) in procs:
       if proc.pid == finished:
         retfile = outfile
-        proc.wait()
         perf.inc(checker)
 
         if args.args.verbose > 0:
