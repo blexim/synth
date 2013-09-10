@@ -25,7 +25,7 @@
  #define PWIDTH WIDTH
 #endif
 
-#define MAXOPCODE 13
+#define MAXOPCODE 16
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 4
@@ -59,7 +59,7 @@
 
 typedef struct prog {
   op_t ops[SZ];
-  param_t params[SZ*2];
+  param_t params[SZ];
   word_t consts[CONSTS];
 } prog_t;
 

@@ -8,24 +8,24 @@ opsre = re.compile('ops={(.*?)}')
 parmsre = re.compile('params={(.*?)}')
 constsre = re.compile('consts={(.*?)}')
 
-binops = {
+ops = {
     0: "+",
     1: "-",
     2: "*",
     3: "/",
+    4: "unary -",
     5: "&",
     6: "|",
     7: "^",
+    8: "~",
     9: "<<",
     10: ">>",
     11: ">>>",
     12: "<=",
-    13: "<"
-}
-
-unops = {
-    4: "-",
-    8: "~"
+    13: "<",
+    14: "PUSH",
+    15: "DUP",
+    16: "SWAP"
 }
 
 def str2ints(s):
@@ -68,29 +68,22 @@ class Prog(object):
         self.consts = str2ints(mconsts.group(1))
 
   def strarg(self, p):
-    if p < len(self.consts):
-      return hex(self.consts[p])
+    if p < args.args.args:
+      return 'a%d' % (p+1)
+    elif p < args.args.args + len(self.consts):
+      return hex(self.consts[p - args.args.args])
     else:
-      p -= len(self.consts)
-
-      if p < args.args.args:
-        return 'a%d' % (p+1)
-      else:
-        return 't%d' % (p - args.args.args + 1)
+      print "ERROR"
 
   def __str__(self):
-    # List comprehension trickery to generate a list like:
-    # [(op0, param0, param1, 1), (op1, param2, param3, 2), ... ]
-    insts = zip(self.ops, self.params[::2], self.params[1::2],
-        xrange(1, len(self.ops) + 1))
+    insts = zip(self.ops, self.params, xrange(1, len(self.ops) + 1))
     strinsts = []
 
-    for (op, p1, p2, idx) in insts:
-      if op in binops:
-        strinsts.append("t%d = %s %s %s" % (idx, self.strarg(p1), binops[op],
-          self.strarg(p2)))
-      elif op in unops:
-        strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1)))
+    for (op, p, idx) in insts:
+      if op == 14:
+        strinsts.append("PUSH %s" % (self.strarg(p)))
+      elif op in ops:
+        strinsts.append(ops[op])
       else:
         raise Exception("Couldn't parse instruction: (%d, %d, %d)" %
             (op, p1, p2))

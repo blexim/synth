@@ -3,47 +3,49 @@
 
 int execok;
 
+#define push(x) (stack[sp++] = (x))
+
+#define pop(x) (stack[--sp])
+
 word_t exec(word_t args[NARGS], prog_t *prog) {
   op_t op;
-  param_t a1, a2;
+  param_t a;
   word_t p1, p2, res, result;
   sword_t i1, i2;
-  word_t A[SZ + NARGS + CONSTS];
+  word_t stack[SZ+NARGS];
+  int sp = 0;
 
   unsigned int i;
 
-  for (i = 0; i < CONSTS; i++) {
-    A[i] = prog->consts[i];
-  }
+  execok = 1;
 
   for (i = 0; i < NARGS; i++) {
-    A[CONSTS + i] = args[i];
+    push(args[i]);
   }
-
-  execok = 1;
 
   for (i = 0; i < SZ; i++) {
     op = prog->ops[i];
-    a1 = prog->params[2*i];
-    a2 = prog->params[2*i + 1];
-
-    p1 = A[a1];
-    p2 = A[a2];
-
-    i1 = p1;
-    i2 = p2;
+    a = prog->params[i];
 
     switch(op) {
     case PLUS:
-      res = p1 + p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 + p2);
       break;
     case MINUS:
-      res = p1 - p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 - p2);
       break;
     case MUL:
-      res = p1 * p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 * p2);
       break;
     case DIV:
+      p1 = pop();
+      p2 = pop();
 #ifdef SYNTH
       __CPROVER_assume(p2 != 0);
 #elif defined(SEARCH)
@@ -54,57 +56,92 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
 #else
       assert(p2 != 0);
 #endif
-      res = p1 / p2;
+      push(p1 / p2);
       break;
     case NEG:
-      res = -p1;
+      p1 = pop();
+      push(-p1);
       break;
     case AND:
-      res = p1 & p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 & p2);
       break;
     case OR:
-      res = p1 | p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 | p2);
       break;
     case XOR:
-      res = p1 ^ p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 ^ p2);
       break;
     case NOT:
-      res = ~p1;
+      p1 = pop();
+      push(~p1);
       break;
     case SHL:
-      res = p1 << p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 << p2);
       break;
     case LSHR:
-      res = p1 >> p2;
+      p1 = pop();
+      p2 = pop();
+      push(p1 >> p2);
       break;
     case ASHR:
-      res = (word_t) (i1 >> i2);
+      i1 = pop();
+      i2 = pop();
+      push((word_t) (i1 >> i2));
       break;
     case LE:
+      p1 = pop();
+      p2 = pop();
+
       if (p1 <= p2) {
-        res = 1;
+        push(1);
       } else {
-        res = 0;
+        push(0);
       }
       break;
     case LT:
+      p1 = pop();
+      p2 = pop();
+
       if (p1 < p2) {
-        res = 1;
+        push(1);
       } else {
-        res = 0;
+        push(0);
       }
       break;
+    case PUSH:
+      if (a < NARGS) {
+        push(args[a]);
+      } else {
+        push(prog->consts[a - NARGS]);
+      }
+      break;
+    case DUP:
+      p1 = pop();
+      push(p1);
+      push(p1);
+      break;
+    case SWAP:
+      p1 = pop();
+      p2 = pop();
+      push(p1);
+      push(p2);
     default:
 #ifndef SEARCH
       __CPROVER_assume(0);
 #endif
       break;
     }
-
-    A[NARGS + CONSTS + i] = res;
   }
 
-  result = A[NARGS + CONSTS + SZ - 1];
+  result = pop();
 
   return result;
 }

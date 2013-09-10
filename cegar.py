@@ -98,8 +98,8 @@ void tests(prog_t *prog) {
         bmc.write(" && ")
 
       bmc.write("prog->ops[%d] == %d " % (i, ops[i]))
-      bmc.write("&& prog->params[%d] == %d && prog->params[%d] == %d" %
-          (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
+      bmc.write("&& prog->params[%d] == %d" %
+          (i, parms[i]))
 
     for i in xrange(len(consts)):
       bmc.write("&& prog->consts[%d] == %d" %
@@ -229,7 +229,7 @@ def cegar(checker):
       if args.args.verbose > 0:
         print "No sequence possible!"
 
-      if args.args.consts < 0 and nconsts < codelen:
+      if args.args.consts < 0 and nconsts < (codelen / 2):
         nconsts += 1
       else:
         codelen += 1

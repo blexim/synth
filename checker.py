@@ -50,7 +50,7 @@ class Checker(object):
 
   def __init__(self, sz, width, consts, verif=False):
     nargs = args.args.args
-    pwidth = log2(sz + consts + nargs - 1)
+    pwidth = log2(consts + nargs)
     pwidth = max(pwidth, 1)
     ewidth = width/4
     mwidth = width - ewidth - 1

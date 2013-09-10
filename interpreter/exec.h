@@ -15,9 +15,8 @@
 #define ASHR 11
 #define LE 12
 #define LT 13
-
-#define ARG 0
-#define CONST 1
-
+#define PUSH 14
+#define DUP 15
+#define SWAP 16
 
 #endif // EXEC_H

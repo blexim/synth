@@ -29,7 +29,7 @@ int next_prog(prog_t *prog) {
     }
   }
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ; i++) {
     prog->params[i]++;
     prog->params[i] &= PMASK;
 
@@ -61,7 +61,7 @@ void init_prog(prog_t *prog) {
     prog->ops[i] = 0;
   }
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ; i++) {
     prog->params[i] = 0;
   }
 }
@@ -83,7 +83,7 @@ void print_prog(prog_t *prog) {
 
   printf("params={");
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ; i++) {
     if (i != 0) {
       printf(", ");
     }
