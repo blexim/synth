@@ -27,14 +27,14 @@ int exclude(prog_t *prog) {
       stacksize++;
       break;
     case DUP:
-      if (stacksize == 0) {
+      if (stacksize < 1) {
         return 1;
       }
       stacksize++;
       break;
     case NEG:
     case NOT:
-      if (stacksize == 0) {
+      if (stacksize < 1) {
         return 1;
       }
       break;
