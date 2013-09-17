@@ -40,6 +40,8 @@ int exclude_1(unsigned int idx, op_t op, param_t p1, param_t p2,
     }
   }
 
+  return 0;
+
   // Break symmetry: for any commutative op, put the smaller operand first.
   // This also means that if an instruction has a const operand, it's the first
   // one.

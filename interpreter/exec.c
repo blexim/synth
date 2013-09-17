@@ -1,21 +1,18 @@
 #include "synth.h"
 #include "exec.h"
 
-int execok;
+#include <math.h>
 
-typedef union {
-  word_t i;
-  fword_t f;
-} fi_t;
+int execok;
 
 word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;
   param_t a1, a2;
   word_t p1, p2, res;
   sword_t i1, i2;
+  fword_t f1, f2;
   word_t A[SZ + NARGS + CONSTS];
   fi_t fi;
-  fword_t f1, f2;
 
   unsigned int i;
 
@@ -40,15 +37,11 @@ word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     i1 = p1;
     i2 = p2;
 
-    fi.i = p1;
+    fi.x = p1;
     f1 = fi.f;
 
-    fi.i = p2;
+    fi.x = p2;
     f2 = fi.f;
-
-    if (op != FPLUS && op != FMINUS) {
-      __CPROVER_assume(0);
-    }
 
     switch(op) {
     case PLUS:
@@ -111,24 +104,49 @@ word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
         res = 0;
       }
       break;
+    case SLE:
+      if (i1 <= i2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+    case SLT:
+      if (i1 < i2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
 #ifdef FLOAT
     case FPLUS:
       fi.f = f1 + f2;
-      res = fi.i;
+      res = fi.x;
       break;
     case FMINUS:
       fi.f = f1 - f2;
-      res = fi.i;
+      res = fi.x;
       break;
     case FMUL:
       fi.f = f1 * f2;
-      res = fi.i;
+      res = fi.x;
       break;
-    //case FDIV:
-    //  fi.f = f1 / f2;
-    //  res = fi.i;
-    //  break;
+    case FDIV:
+#ifdef SYNTH
+      __CPROVER_assume(fpclassify(f2) != FP_ZERO);
+#elif defined(SEARCH)
+      if (fpclassify(f2) == FP_ZERO) {
+        execok = 0;
+        return 0;
+      }
+#else
+      assert(fpclassify(f2) != FP_ZERO);
 #endif
+      fi.f = f1 / f2;
+      res = fi.x;
+      break;
+#endif // FLOAT
+
     default:
 #ifndef SEARCH
       __CPROVER_assume(0);

@@ -92,6 +92,7 @@ class Checker(object):
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
 
+    print self.cbmcargs
 
     self.write = self.scratchfile.write
 
