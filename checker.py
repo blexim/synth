@@ -50,6 +50,7 @@ class Checker(object):
 
   def __init__(self, sz, width, consts, verif=False):
     nargs = args.args.args
+    nres = args.args.res
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
     ewidth = width/4
@@ -65,6 +66,7 @@ class Checker(object):
         "-DWIDTH=%d" % width,
         "-DMWIDTH=%d" % mwidth,
         "-DNARGS=%d" % nargs,
+        "-DNRES=%d" % nres,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
         os.path.join(args.args.interpreter, "exec.c"),
@@ -72,6 +74,9 @@ class Checker(object):
         self.scratchfile.name,
         args.args.checker
       ]
+
+    if args.args.float:
+      genericargs.insert(0, "-DFLOAT")
 
     if verif:
       self.cbmcargs = [args.args.cbmc,

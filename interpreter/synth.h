@@ -16,6 +16,10 @@
  #define NARGS 1
 #endif
 
+#ifndef NRES
+ #define NRES 1
+#endif
+
 #ifndef CONSTS
  #define CONSTS SZ
 #endif
@@ -25,10 +29,10 @@
  #define PWIDTH WIDTH
 #endif
 
-#define MAXOPCODE 13
+#define MAXOPCODE 16
 
-// This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
-#define OPLEN 4
+// This has to be the smallest integer such that 2**(OPLEN) > MAXOPCODE
+#define OPLEN 5
 
 
 #ifndef SEARCH
@@ -66,10 +70,10 @@ typedef struct prog {
 extern prog_t prog;
 extern int execok;
 
-word_t exec(word_t args[NARGS], prog_t *prog);
-void test(word_t args[NARGS], prog_t *prog);
+void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]);
+void test(prog_t *prog, word_t args[NARGS]);
 
-int check(word_t args[NARGS], word_t z);
+int check(word_t args[NARGS], word_t res[NRES]);
 void tests(prog_t *prog);
 
 void hint(prog_t *prog);

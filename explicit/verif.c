@@ -58,11 +58,12 @@ void print_args(word_t args[NARGS]) {
 
 int main(void) {
   word_t args[NARGS];
+  word_t res[NRES];
 
   init_args(args);
 
   do {
-    word_t res = exec(args, &prog);
+    exec(&prog, args, res);
 
     if (!execok || !check(args, res)) {
       printf("%x -> %x (%d/%d)\n", args[0], res, check(args, res), execok);

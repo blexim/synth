@@ -33,6 +33,13 @@ args.argparser.add_argument("--seqlim", "-S", default=16, type=int,
 
 args.argparser.add_argument("--args", "-a", default=1, type=int,
     help="number of arguments to function")
+args.argparser.add_argument("--res", "-r", default=1, type=int,
+    help="number of returns")
+
+args.argparser.add_argument("--float", "-f", default=False, action="store_const",
+    const=True,
+    help="Synthesize floating point programs")
+
 
 args.argparser.add_argument("--consts", "-c", default=-1, type=int,
     help="number of constants to synthesize")
@@ -81,7 +88,7 @@ void tests(prog_t *prog) {
     for i in xrange(len(x)):
       bmc.write("  input[%d] = %d;\n" % (i, x[i]))
 
-    bmc.write("  test(input, prog);\n\n")
+    bmc.write("  test(prog, input);\n\n")
 
   # Now we're going to list each of the programs we
   # already know are wrong...

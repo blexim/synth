@@ -1,6 +1,8 @@
 #include "synth.h"
-void test(word_t args[NARGS], prog_t *prog) {
-  word_t res = exec(args, prog);
+void test(prog_t *prog, word_t args[NARGS]) {
+  word_t res[NRES];
+
+  exec(prog, args, res);
 
   __CPROVER_assume(check(args, res));
 }

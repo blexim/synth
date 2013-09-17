@@ -3,12 +3,19 @@
 
 int execok;
 
-word_t exec(word_t args[NARGS], prog_t *prog) {
+typedef union {
+  word_t i;
+  fword_t f;
+} fi_t;
+
+word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;
   param_t a1, a2;
-  word_t p1, p2, res, result;
+  word_t p1, p2, res;
   sword_t i1, i2;
   word_t A[SZ + NARGS + CONSTS];
+  fi_t fi;
+  fword_t f1, f2;
 
   unsigned int i;
 
@@ -32,6 +39,16 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
 
     i1 = p1;
     i2 = p2;
+
+    fi.i = p1;
+    f1 = fi.f;
+
+    fi.i = p2;
+    f2 = fi.f;
+
+    if (op != FPLUS && op != FMINUS) {
+      __CPROVER_assume(0);
+    }
 
     switch(op) {
     case PLUS:
@@ -94,6 +111,24 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
         res = 0;
       }
       break;
+#ifdef FLOAT
+    case FPLUS:
+      fi.f = f1 + f2;
+      res = fi.i;
+      break;
+    case FMINUS:
+      fi.f = f1 - f2;
+      res = fi.i;
+      break;
+    case FMUL:
+      fi.f = f1 * f2;
+      res = fi.i;
+      break;
+    //case FDIV:
+    //  fi.f = f1 / f2;
+    //  res = fi.i;
+    //  break;
+#endif
     default:
 #ifndef SEARCH
       __CPROVER_assume(0);
@@ -104,7 +139,7 @@ word_t exec(word_t args[NARGS], prog_t *prog) {
     A[NARGS + CONSTS + i] = res;
   }
 
-  result = A[NARGS + CONSTS + SZ - 1];
-
-  return result;
+  for (i = 0; i < NRES; i++) {
+    results[i] = A[NARGS + CONSTS + SZ - NRES + i];
+  }
 }

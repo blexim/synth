@@ -15,6 +15,10 @@
 #define ASHR 11
 #define LE 12
 #define LT 13
+#define FPLUS 14
+#define FMINUS 15
+#define FMUL 16
+#define FDIV 17
 
 #define ARG 0
 #define CONST 1

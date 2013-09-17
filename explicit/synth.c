@@ -108,9 +108,15 @@ void print_prog(prog_t *prog) {
 
 int ok;
 
-void test(word_t args[NARGS], prog_t *prog) {
-  word_t res = exec(args, prog);
-  res &= WORDMASK;
+void test(prog_t *prog, word_t args[NARGS]) {
+  int i;
+  word_t res[NRES];
+
+  exec(prog, args, res);
+
+  for (i = 0; i < NRES; i++) {
+    res[i] &= WORDMASK;
+  }
 
   if (!execok) {
     ok = 0;
