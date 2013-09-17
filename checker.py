@@ -81,7 +81,7 @@ class Checker(object):
     if verif:
       self.cbmcargs = [args.args.cbmc,
           os.path.join("cbmc", "verif.c")] + genericargs
-      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99",
+      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
           os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
@@ -91,8 +91,6 @@ class Checker(object):
 
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
-
-    print self.cbmcargs
 
     self.write = self.scratchfile.write
 
@@ -121,7 +119,8 @@ class Checker(object):
       procs.append((cbmcproc, cbmcfile, "cbmc"))
 
     if strategy in ("explicit", "hybrid"):
-      ofile = tempfile.NamedTemporaryFile(delete=False)
+      ofile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
+                                         dir="ofiles")
       self.gccargs += ["-o", ofile.name, "-lm"]
 
       ofile.close()

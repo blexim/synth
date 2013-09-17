@@ -5,7 +5,7 @@
 
 int execok;
 
-word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
+void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;
   param_t a1, a2;
   word_t p1, p2, res;
@@ -59,7 +59,7 @@ word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
 #elif defined(SEARCH)
       if (p2 == 0) {
         execok = 0;
-        return 0;
+        return;
       }
 #else
       assert(p2 != 0);
@@ -137,7 +137,7 @@ word_t exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
 #elif defined(SEARCH)
       if (fpclassify(f2) == FP_ZERO) {
         execok = 0;
-        return 0;
+        return;
       }
 #else
       assert(fpclassify(f2) != FP_ZERO);

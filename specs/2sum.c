@@ -1,21 +1,16 @@
 #include "synth.h"
 #include <math.h>
 
-typedef union {
-  word_t i;
-  fword_t f;
-} fi_t;
-
 int check(word_t args[2], word_t res[2]) {
   fi_t fi;
 
-  fi.i = args[0];
+  fi.x = args[0];
   fword_t a = fi.f;
 
-  fi.i = args[1];
+  fi.x = args[1];
   fword_t b = fi.f;
 
-  if (!isnormal(a) || !isnormal(b)) {
+  if (!isnormal(a) || !isnormal(b) || !isnormal(a + b)) {
     return 1;
   }
 
@@ -33,10 +28,10 @@ int check(word_t args[2], word_t res[2]) {
   fword_t da = a - a2;
   fword_t t = da + db;
 
-  fi.i = res[0];
+  fi.x = res[0];
   fword_t rs = fi.f;
 
-  fi.i = res[1];
+  fi.x = res[1];
   fword_t rt = fi.f;
 
   if (s == rs && t == rt) {
