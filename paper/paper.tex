@@ -1,0 +1,333 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass[a4paper]{llncs}
+%
+
+\usepackage{listings}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata, shapes}
+
+
+%\usepackage{makeidx}  % allows for indexgeneration
+%
+\title{{\sc Kalashnikov}: Fully Automatic Loop Free Program Synthesis by Bounded Model Checking}
+\author{Matt Lewis}
+\institute{Oxford University}
+
+\newenvironment{keywords}{
+       \list{}{\advance\topsep by0.35cm\relax\small
+       \leftmargin=0cm
+       \labelwidth=0.35cm
+       \listparindent=0.35cm
+       \itemindent\listparindent
+       \rightmargin\leftmargin}\item[\hskip\labelsep
+                                     \bfseries Keywords:]}
+     {\endlist}
+
+
+\begin{document}
+%
+\maketitle
+%
+\pagestyle{headings}  % switches on printing of running heads
+
+\abstract
+We present a method for synthesizing loop free programs using a combination of
+bounded model checking and explicit enumeration.  The user provides a specification
+in plain C and is not required to interact further with the synthesis processs.
+In particular the user need not tell the synthesizer which program components to
+use.
+
+We demonstrate the effectiveness of our method by synthesizing several tricky
+bitvector programs and a selection of floating point programs.
+
+
+\begin{keywords}
+ Program synthesis, bitvectors, bounded model checking, CBMC,
+ floating point.
+\end{keywords}
+
+\section{Introduction}
+
+\section{Related Work}
+
+\section{Basic Synthesis Algorithm}
+
+\subsection{The Abstract Algorithm}
+
+Our task is to find a program which satisfies some specifcation.  We can formalize this
+notion as follows: fix an input set $I$ and an output set $O$.  Specifications $\sigma$
+are then relations and programs $P$ are computable functions:
+
+$$ \sigma \subseteq I \times O $$
+$$ P : I \rightarrow O$$
+
+The synthesis problem is then to determine the validity of the following formula, and
+to find a witness $P$ if the following second-order formula is valid:
+
+$$\exists P . \forall x \in I . \sigma(x, P(x))$$
+
+Depending on the logic needed to express this formula the synthesis problem may
+be decidable, semi-decidable or undecidable.  For many interesting logics, checking
+the validity of a second order formula, such as the synthesis formula, is undecidable.
+Even for logics in which the problem is decidable, the quantifier alternation means that
+we do not have efficient decision procedures to verify our formula, although efficient
+methods may exist for solving problems with only one quantifier.  In particular
+if we are working in the logic of propositional satisfiability, we have SAT solvers
+which are efficient-in-practice at solving queries with a single quantifier.
+The corresponding problem with one level of quantifier alternation (2-QBF) is
+complete for $NP^{NP}$, and current 2-QBF solvers are much less efficient than SAT solvers.
+
+When the first-order fragment of the logic is efficiently decidable and $P$ can be
+expressed as a ground term of the logic, we can use a refinement loop to check the
+validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
+Fig.~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
+components: {\sc synth} and {\sc verif}.  We track a finite (small) set of inputs
+and {\sc synth} synthesizes a candidate program which is correct on just those inputs.
+{\sc Verif} then tries to verify the candidate program by searching for an input on
+which the candidate program does not satisfy the specification.  If no such input
+can be found, the candidate program is correct.  Otherwise, the new input is added
+to the set of inputs we must check in {\sc synth}.  If the input set is finite, this
+procedure is guaranteed to terminate.
+
+\begin{figure}
+ \centering
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
+ semithick, initial text=]
+
+  \matrix[nodes={draw, fill=none, scale=1, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
+          row sep=2cm, column sep=4cm] {
+   \node (synth) {Synthesize};
+   &
+   \node (verif) {Verify}; \\
+   \node[draw=none] {};
+   &
+   \node[ellipse] (done) {Done}; \\
+  };
+
+   \path
+    (synth) edge [bend left] node {Candidate program} (verif)
+    (verif) edge [bend left] node {Counterexample input} (synth)
+    (verif) edge node {Valid} (done);
+ \end{tikzpicture}
+
+ \label{fig:abstract-refinement}
+ \caption{Abstract synthesis refinement loop}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{minipage}{0.9\textwidth}
+ \begin{lstlisting}[mathescape,language=C]
+function synth(inputs) {
+  $(i_1, \ldots, i_N)$ = inputs
+  query := $\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$
+  result := decide(query)
+  
+  if (result.satisfiable) {
+    return result.model
+  } else {
+    return unsatisfiable
+  }
+}
+
+function verif(P) {
+  query := $\exists x . \lnot \sigma(x, P(x))$
+  result := decide(query)
+  
+  if (result.satisfiable) {
+    return result.model
+  } else {
+    return valid
+  }
+}
+
+function refinement_loop() {
+  inputs := $\emptyset$
+
+  while (true) {
+    candidate := synth(inputs)
+
+    if (candidate = unsatisfiable) {
+      return unsatisfiable
+    }
+
+    res := verif(candidate)
+
+    if (res = valid) {
+      return candidate
+    } else {
+      inputs := inputs $\cup$ res
+    }
+  }
+ \end{lstlisting}
+ \end{minipage}
+
+ \label{fig:abstract-refinement-code}
+ \caption{Abstract refinement algorithm}
+\end{figure}
+
+\subsection{The Concrete Algorithm for Bitvector Programs}
+
+One area in which program synthesis can shine is in producing very small,
+intricate programs that manipulate bitvectors.  An example of such a program
+is shown in Fig.~\ref{fig:bitvector-program}.  This program takes a machine word
+as input and clears every bit except for the least significant bit that was set.
+Even though this program is extremely short, it is fairly difficult for a human
+to see what it does.  It is even more difficult for a human to come up with such
+minimal code -- a natural solution for this problem might be to use a loop which
+iterates over all of the bits in the word.  The program is so concise because it
+takes advantage of the low level details of the machine, such as the fact that
+signed integers are stored in two's complement form.
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\linewidth}
+ \begin{lstlisting}[language=C]
+int isolate_lsb(int x) {
+  return x & -x;
+}
+ \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+ 
+Example:
+
+\hrule
+
+\begin{tabular}{llcccccccc}
+ x       & = & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+ -x      & = & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 \\
+ x \& -x & = & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+\end{tabular}
+\end{minipage}
+
+ \label{fig:bitvector-program}
+ \caption{A tricky bitvector program}
+\end{figure}
+
+To synthesize tricky bitvector programs like this, it is natural for us to work
+in the logic of quantifer free propositional formulae and to use a SAT solver as
+the decision procedure.  However, we propose a slightly different tack, which is
+to use a decidable fragment of C as our underlying logic.  The fragment we use
+has the following restrictions:
+
+\begin{itemize}
+ \item All loops and recursive function calls must terminate after a constant number
+ of iterations.  This constant must be statically inferrable.
+ \item Arrays must all be statically allocated with a constant size.
+\end{itemize}
+
+Other than this any C constructs can be used, which still leaves a very expressive
+language with the nice property that safety is decidable using a single query to a
+bounded model checker.  We will refer to this fragment as C-.  To instantiate the
+abstract synthesis algorithm in C- we must express $I, O, \sigma$ and $P$ in C-,
+then ensure that we can express the validity of the synthesis formula as a safety
+property of the resulting C- program.
+
+Our encoding is the following:
+
+\begin{itemize}
+ \item $I$ is the type \verb|int[N]|.
+ \item $O$ is the type \verb|int[M]|.
+ \item $\sigma$ is a function with signature
+ \verb|int check(int in[N], int out[M])|. This function is the only component supplied
+ by the user.
+ \item $P$ is written in a simple RISC language $\mathcal{L}$.  Programs in $\mathcal{L}$
+ have the type \verb|prog_t|.
+ \item We supply an interpreter for $\mathcal{L}$ which is written in C-.  The signature
+ of this interpreter is \\
+ \verb|void exec(prog_t p, int in[N], int out[M])|.
+\end{itemize}
+
+\begin{figure}
+\centering
+\begin{minipage}{0.65\textwidth}
+\setlength{\tabcolsep}{16pt}
+Integer arithmetic instructions:
+
+\begin{tabular}{lll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| \\
+ \verb|div a b| & \verb|neg a|
+\end{tabular}
+\bigskip
+
+Bitwise logical and shift instructions:
+
+\begin{tabular}{lll}
+ \verb|and  a b| & \verb|or   a b| & \verb|xor  a b| \\
+ \verb|ashr a b| & \verb|lshr a b| & \verb|not  a|
+\end{tabular}
+\bigskip
+
+Unsigned and signed comparison instructions:
+
+\begin{tabular}{lll}
+ \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
+ \verb|slt a b|
+\end{tabular}
+\end{minipage}
+
+ \label{fig:l-language}
+ \caption{The language $\mathcal{L}$}
+\end{figure}
+
+We must now express the {\sc synth} and {\sc verif} formulae as safety properties
+of C- programs, which is shown in Fig.~\ref{fig:c-synthverif}.
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\textwidth}
+\begin{lstlisting}[language=C]
+void synth() {
+  prog_t p = nondet();
+  int in[N], out[M];
+  
+  in = test1;
+  exec(p, in, out);
+  assume(check(in, out));
+  
+  ...
+  
+  in = testN;
+  exec(p, in, out);
+  assume(check(in, out));
+  
+  assert(0);
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\begin{lstlisting}[language=C]
+void verif(prog_t p) {
+  int in[N] = nondet();
+  int out[M];
+  
+  exec(p, in, out);
+  assert(check(in, out));
+}
+\end{lstlisting}
+\end{minipage}
+
+ \label{fig:c-synthverif}
+ \caption{The {\sc synth} and {\sc verif} formulae expressed as a C- program}
+\end{figure}
+
+
+
+\section{Optimizations}
+
+\subsection{Successful}
+\subsection{Unsuccessful}
+
+\section{Floating Point}
+
+\section{Experimental Results}
+
+\section{Conclusion}
+
+\end{document}
