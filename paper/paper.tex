@@ -353,8 +353,13 @@ constants.  If we have synthesized a program for a machine with $k$-bit words,
 the constants in the program will be $k$ bits wide.  To generalize the program
 to a $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit
 wide numbers from $k$-bit ones.  We have several strategies for this and
-just try each in turn.  To generalize a number $x$ we use the following
-rules:
+just try each in turn.  In the following, a subscript $n$ on a value means that
+the value is an $n$-bit word.  The dot operator $a_l \cdot b_m$ denotes
+concatenation, resulting in an $(l+m)$-bit wide word.  A superscript on a value
+means duplication, so $a_l^m$ means concatenating together $m$ copies of the $l$-bit
+word $a$, resulting in an $(lm)$-bit wide word.
+
+To generalize a number $x$ we use the following rules:
 
 \begin{itemize}
  \item If $x = k_k$, generalize to $n_n$.
