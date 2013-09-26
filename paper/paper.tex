@@ -471,8 +471,49 @@ By contrast a stack machine interpreter has a stack as its central data structur
 It is natural to implement this as an array, but the array's contents are accessed
 in an unpredictable, non-uniform manner as the stack pointer increases and decreases
 over the lifetime of the program.  This leads to a \emph{larger} SAT
-isntance and drastically slows down the operation of the solver.
+instance and drastically slows down the operation of the solver.
 
+\begin{figure}
+\begin{tikzpicture}{node distance=2cm, auto}
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+
+ \node [decision] (synthsucc) {{\sc Synth} succeeds?};
+
+ \node [decision, below of=synthsucc, node distance=2.5cm] (verif) {{\sc Verif} succeeds?};
+ \node [decision, right of=verif] (ck) {$c < k$?};
+
+ \node [block, below of=verif, node distance=2.5cm]   (done) {Done!};
+ \node [decision, left of=done] (verifw) {{\sc Verif} succeeds for small words?};
+
+ \node [block, below of=ck, node distance=2.5cm] (incc) {$c := c+1$};
+ \node [block, right of=incc, node distance=2cm] (inck) {$c := 0$\\ $k := k+1$};
+
+ \node [block, below of=verifw, node distance=2.5cm] (incw) {$w := w+1$};
+ \node [block, left of=incw, node distance=2cm] (iterate) {Loop to {\sc synth}};
+
+ \path [line] (synthsucc) -- node [left] {Yes} (verif);
+ \path [line] (synthsucc) -| node [above, near start] {No} (ck);
+
+ \path [line] (verif) -- node [left] {Yes} (done);
+ \path [line] (verif) -| node [above, near start] {No} (verifw);
+
+ \path [line] (ck) -- node [left] {Yes} (incc);
+ \path [line] (ck) -| node  [above, near start]  {No}(inck);
+
+ \path [line] (verifw) -- node [right] {Yes} (incw);
+ \path [line] (verifw) -| node [above, near start] {No} (iterate);
+\end{tikzpicture}
+
+    
+\label{fig:paramsflow}
+ \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
+\end{figure}
 
 \section{Floating Point}
 
