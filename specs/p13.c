@@ -1,18 +1,19 @@
 #include "synth.h"
 
-int check(word_t args[NARGS], word_t z) {
+int check(word_t args[NARGS], word_t res[NRES]) {
   word_t x = args[0];
   sword_t q = x;
   sword_t zero = 0;
-  word_t res;
+  word_t expected;
+  word_t z = res[0];
 
   if (q == zero) {
-    res = 0;
+    expected = 0;
   } else if (q < 0) {
-    res = -1;
+    expected = -1;
   } else {
-    res = 1;
+    expected = 1;
   }
 
-  return res == z;
+  return expected == z;
 }
