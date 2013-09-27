@@ -112,32 +112,40 @@ class Checker(object):
       else:
         strategy = args.args.synth_strategy
 
-    if strategy in ("cbmc", "hybrid"):
-      cbmcfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
-      cbmcproc = subprocess.Popen(self.cbmcargs, stdout=cbmcfile,
-          preexec_fn=os.setpgrp)
-      procs.append((cbmcproc, cbmcfile, "cbmc"))
+    try:
+      if strategy in ("cbmc", "hybrid"):
+        cbmcfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
+        cbmcproc = subprocess.Popen(self.cbmcargs, stdout=cbmcfile,
+            preexec_fn=os.setpgrp)
+        procs.append((cbmcproc, cbmcfile, "cbmc"))
 
-    if strategy in ("explicit", "hybrid"):
-      ofile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
+      if strategy in ("explicit", "hybrid"):
+        ofile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
                                          dir="ofiles")
-      self.gccargs += ["-o", ofile.name, "-lm"]
+        self.gccargs += ["-o", ofile.name, "-lm"]
 
-      ofile.close()
+        ofile.close()
 
-      if args.args.verbose > 1:
-        subprocess.call(self.gccargs)
-      else:
-        with open(os.devnull, "w") as fnull:
-          subprocess.call(self.gccargs, stdout=fnull, stderr=fnull)
+        if args.args.verbose > 1:
+          subprocess.call(self.gccargs)
+        else:
+          with open(os.devnull, "w") as fnull:
+            subprocess.call(self.gccargs, stdout=fnull, stderr=fnull)
 
-      explicitout = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
-      explicitproc = subprocess.Popen([ofile.name], stdout=explicitout,
-          preexec_fn=os.setpgrp)
-      procs.append((explicitproc, explicitout, "explicit"))
+        explicitout = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
+        explicitproc = subprocess.Popen([ofile.name], stdout=explicitout,
+            preexec_fn=os.setpgrp)
+        procs.append((explicitproc, explicitout, "explicit"))
 
-    (finished, retcode) = os.wait()
-    perf.end("checker")
+      (finished, retcode) = os.wait()
+    except Exception as e:
+      for (proc, _, _) in procs:
+        os.killpg(proc.pid, signal.SIGKILL)
+        proc.wait()
+
+      raise e
+    finally:
+      perf.end("checker")
 
     retfile = None
 

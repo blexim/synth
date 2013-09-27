@@ -35,6 +35,7 @@ def summary():
   print "Perf timers:"
 
   for (key, times) in timers.iteritems():
-    total = sum(end - start for (start, end) in times)
+    total = sum(end - start for (start, end) in times if end is not None)
+    total += sum(time.time() - start for (start, end) in times if end is None)
     print "%s: %.02fs" % (key, total)
 

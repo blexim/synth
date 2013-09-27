@@ -7,6 +7,7 @@ import itertools
 import random
 import time
 import sys
+import signal
 import perfcounters as perf
 import args
 
@@ -62,8 +63,19 @@ args.argparser.add_argument("--tests", "-t", default=16, type=int,
 args.argparser.add_argument("--verbose", "-v", action='count',
     help="increase verbosity")
 
+args.argparser.add_argument("--timeout", "-T", default=1800, type=int,
+    help="time limit")
+
 args.argparser.add_argument("checker",
     help="code to check the function we synthesise")
+
+class TimeoutError(Exception):
+  pass
+
+def alarm_handler(signum, frame):
+  raise TimeoutError()
+
+signal.signal(signal.SIGALRM, alarm_handler)
 
 def synth(tests, exclusions, width, codelen, nconsts):
   """
@@ -116,7 +128,10 @@ void tests(prog_t *prog) {
 
   bmc.write("}\n")
 
-  (retcode, output) = bmc.run()
+  try:
+    (retcode, output) = bmc.run()
+  finally:
+    perf.end("synth")
 
   prog = None
 
@@ -125,7 +140,6 @@ void tests(prog_t *prog) {
     prog = Prog()
     prog.parse(output)
 
-  perf.end("synth")
   return prog
 
 def verif(prog, checker, width, codelen):
@@ -150,7 +164,10 @@ prog_t prog = {
        ", ".join(str(p) for p in prog.params),
        ", ".join(str(c) for c in prog.consts)))
 
-  (retcode, output) = bmc.run()
+  try:
+    (retcode, output) = bmc.run()
+  finally:
+    perf.end("verify")
 
   cex = None
 
@@ -165,7 +182,6 @@ prog_t prog = {
     # No counterexample -- this sequence is correct!
     pass
 
-  perf.end("verify")
   return cex
 
 def cegar(checker):
@@ -179,6 +195,8 @@ def cegar(checker):
   starttime = time.time()
   seqlim = args.args.seqlim
   nconsts = 0
+
+  signal.alarm(args.args.timeout)
 
   if args.args.consts >= 0:
     nconsts = args.args.consts
@@ -245,7 +263,6 @@ def cegar(checker):
           nconsts = 0
 
       exclusions = []
-      #tests = gentests(wordlen, codelen)
 
       if args.args.verbose > 0:
         print "Increasing constants to %d\n" % nconsts
@@ -255,7 +272,6 @@ def cegar(checker):
 
     if args.args.verbose > 0:
       print str(prog)
-      #prettyprint(prog)
 
     test = verif(prog, checker, wordlen, codelen)
 
@@ -274,8 +290,6 @@ def cegar(checker):
 
         correct.append(prog)
         continue
-
-      #tests.append(test)
 
       if args.args.verbose > 0:
         print "Trying to generalize..."
@@ -327,7 +341,6 @@ def cegar(checker):
   
   for prog in correct:
     print str(prog)
-    #prettyprint(prog)
     print ""
 
 def expand(x, narrow, wide):
@@ -439,7 +452,11 @@ if __name__ == '__main__':
 
   random.seed()
 
-  cegar(args.args.checker)
+  try:
+    cegar(args.args.checker)
+  except TimeoutError:
+    perf.inc("timeout")
+    print "\n"*7 + "Timeout"
 
   if args.args.verbose > 0:
     perf.summary()
