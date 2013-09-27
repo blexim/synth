@@ -15,6 +15,8 @@ numbenchmarks = 25
 
 def runbenchmarks():
   for i in xrange(1, numbenchmarks+1):
+    print i
+
     if i in benchmarks11:
       args = 1
       res = 1
