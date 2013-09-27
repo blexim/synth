@@ -32,8 +32,10 @@ def runbenchmarks():
     else:
       word = 5
 
-  os.system("./cegar.py -a%d -r%s -w%d -v > benchmarks/%d.out" %
-      args, res, word, i)
+    cmd = ("./cegar.py -a%d -r%d -w%d -v specs/p%d.c > benchmarks/%d.out" %
+        (args, res, word, i, i))
+
+    print cmd
 
 if __name__ == '__main__':
   runbenchmarks()
