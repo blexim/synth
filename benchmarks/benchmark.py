@@ -36,6 +36,7 @@ def runbenchmarks():
         (args, res, word, i, i))
 
     print cmd
+    os.system(cmd)
 
 if __name__ == '__main__':
   runbenchmarks()
