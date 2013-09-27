@@ -37,6 +37,14 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     i1 = p1;
     i2 = p2;
 
+#ifdef SEARCH
+    i1 <<= (32 - WIDTH);
+    i1 >>= (32 - WIDTH);
+
+    i2 <<= (32 - WIDTH);
+    i2 >>= (32 - WIDTH);
+#endif
+
     fi.x = p1;
     f1 = fi.f;
 

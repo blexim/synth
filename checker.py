@@ -80,7 +80,7 @@ class Checker(object):
 
     if verif:
       self.cbmcargs = [args.args.cbmc,
-          os.path.join("cbmc", "verif.c")] + genericargs
+          os.path.join("cbmc", "verif.c"), "--32"] + genericargs
       self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm", "-g",
           os.path.join("explicit", "verif.c")] + genericargs
     else:

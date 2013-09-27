@@ -65,8 +65,12 @@ int main(void) {
   do {
     exec(&prog, args, res);
 
+    for (int i = 0; i < NRES; i++) {
+      res[i] &= WORDMASK;
+    }
+
     if (!execok || !check(args, res)) {
-      printf("%x -> %x (%d/%d)\n", args[0], res, check(args, res), execok);
+      printf("%x -> %x (%d/%d)\n", args[0], res[0], check(args, res), execok);
       print_args(args);
       return 10;
     }
