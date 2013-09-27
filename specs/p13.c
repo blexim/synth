@@ -7,6 +7,11 @@ int check(word_t args[NARGS], word_t res[NRES]) {
   word_t expected;
   word_t z = res[0];
 
+#ifdef SEARCH
+  q <<= (32 - WIDTH);
+  q >>= (32 - WIDTH);
+#endif
+
   if (q == zero) {
     expected = 0;
   } else if (q < 0) {
