@@ -9,7 +9,7 @@ benchmarks21 = [10, 11, 12, 14, 15, 16,
     25]
 benchmarks31 = [19, 21]
 
-wordoverrides = {24: 8}
+wordoverrides = {4:4, 24: 8}
 
 numbenchmarks = 25
 
@@ -30,7 +30,7 @@ def runbenchmarks():
     if i in wordoverrides:
       word = wordoverrides[i]
     else:
-      word = 5
+      word = 4
 
     cmd = ("./cegar.py -a%d -r%d -w%d -v specs/p%d.c > benchmarks/%d.out" %
         (args, res, word, i, i))
