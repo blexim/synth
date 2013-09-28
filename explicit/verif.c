@@ -59,13 +59,14 @@ void print_args(word_t args[NARGS]) {
 int main(void) {
   word_t args[NARGS];
   word_t res[NRES];
+  int i;
 
   init_args(args);
 
   do {
     exec(&prog, args, res);
 
-    for (int i = 0; i < NRES; i++) {
+    for (i = 0; i < NRES; i++) {
       res[i] &= WORDMASK;
     }
 
