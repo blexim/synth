@@ -20,5 +20,9 @@ int check(word_t args[NARGS], word_t res[NRES]) {
     expected = 1;
   }
 
+#ifdef SEARCH
+  expected &= ((1 << WIDTH) - 1);
+#endif
+
   return expected == z;
 }
