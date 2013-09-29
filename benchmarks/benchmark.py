@@ -5,13 +5,12 @@ import os
 
 benchmarks11 = [1, 2, 3, 4, 5, 6, 7, 8,
     9, 13, 17, 18, 20, 22, 23, 24]
-benchmarks21 = [10, 11, 12, 14, 15, 16,
-    25]
+benchmarks21 = [10, 11, 12, 14, 15, 16]
 benchmarks31 = [19, 21]
 
 wordoverrides = {4:4, 24: 8}
 
-numbenchmarks = 25
+numbenchmarks = 24
 
 def runbenchmarks():
   for i in xrange(1, numbenchmarks+1):
