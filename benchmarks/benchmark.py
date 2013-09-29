@@ -6,7 +6,8 @@ import os
 benchmarks11 = [1, 2, 3, 4, 5, 6, 7, 8,
     9, 13, 17, 18, 20, 22, 23, 24]
 benchmarks21 = [10, 11, 12, 14, 15, 16]
-benchmarks31 = [19, 21]
+benchmarks31 = [19]
+benchmarks41 = [21]
 
 wordoverrides = {4:4, 24: 8}
 
@@ -24,6 +25,9 @@ def runbenchmarks():
       res = 1
     elif i in benchmarks31:
       args = 3
+      res = 1
+    elif i in benchmarks41:
+      args = 4
       res = 1
 
     if i in wordoverrides:
