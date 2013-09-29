@@ -1,0 +1,72 @@
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+t1 = a2 ^ a1
+t2 = a2 & a1
+t3 = t2 / t1
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: cbmc
+t1 = a1 & a2
+t2 = a2 ^ a1
+t3 = t2 <= t1
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 9.80s
+
+t1 = a1 & a2
+t2 = a2 ^ a1
+t3 = t2 <= t1
+
+Perf counters:
+{'cbmc': 3, 'explicit': 7, 'iterations': 7}
+Perf timers:
+verify: 1.02s
+checker: 9.66s
+_: 9.80s
+synth: 8.78s
