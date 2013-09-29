@@ -34,9 +34,6 @@
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 5
 
-#define FLOAT
-
-
 #ifndef SEARCH
   typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
   typedef __CPROVER_bitvector[WIDTH] sword_t;
