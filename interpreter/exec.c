@@ -165,6 +165,10 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       break;
     }
 
+#ifdef SEARCH
+    res &= ((1 << WIDTH) - 1);
+#endif
+
     A[NARGS + CONSTS + i] = res;
   }
 
