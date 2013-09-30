@@ -7,6 +7,14 @@ int check(word_t args[NARGS], word_t res[NRES]) {
   word_t c = args[3];
   word_t z = res[0];
 
+  if (a == b || a == c || b == c) {
+    return 1;
+  }
+
+  if (x != a && x != b && x != c) {
+    return 1;
+  }
+
   word_t t1 = x != c;
   word_t t2 = a ^ c;
   word_t t3 = x != a;
