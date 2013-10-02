@@ -1,0 +1,101 @@
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+t1 = a2 & a1
+t2 = a2 ^ a1
+t3 = t2 >> 0x1
+t4 = t1 + t3
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 54.71s
+
+t1 = a2 & a1
+t2 = a2 ^ a1
+t3 = t2 >> 0x1
+t4 = t1 + t3
+
+Perf counters:
+{'cbmc': 8, 'explicit': 5, 'iterations': 11}
+Perf timers:
+verify: 0.82s
+checker: 54.49s
+_: 54.71s
+synth: 53.88s

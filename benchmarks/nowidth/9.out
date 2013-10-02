@@ -1,0 +1,77 @@
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x16cc022e
+t2 = t1 ^ a1
+t3 = t2 - t1
+Fastest checker: explicit
+Fails for (16385,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x6ffeba
+t2 = t1 ^ a1
+t3 = t2 - t1
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 505.10s
+
+t1 = a1 >>> 0x6ffeba
+t2 = t1 ^ a1
+t3 = t2 - t1
+
+Perf counters:
+{'cbmc': 6, 'explicit': 4, 'iterations': 8}
+Perf timers:
+verify: 1.09s
+checker: 504.91s
+_: 505.10s
+synth: 503.99s

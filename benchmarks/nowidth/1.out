@@ -1,0 +1,46 @@
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = 0xffffffff + a1
+t2 = a1 & t1
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 23.54s
+
+t1 = 0xffffffff + a1
+t2 = a1 & t1
+
+Perf counters:
+{'cbmc': 3, 'explicit': 2, 'iterations': 4}
+Perf timers:
+verify: 0.57s
+checker: 23.46s
+_: 23.54s
+synth: 22.96s
