@@ -1,0 +1,127 @@
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 4
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 5
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 5
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 5
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 16, 'timeout': 1, 'iterations': 17}
+Perf timers:
+checker: 1799.99s
+_: 1800.01s
+synth: 1800.00s
