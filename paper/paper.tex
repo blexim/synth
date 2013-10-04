@@ -97,8 +97,8 @@ loop-free programs over machine integers and floating-point number from a
 specification given as program fragment.
 
 Our work represents a substantial refinement of {\sc brahma}~\cite{brahma},
-which is also the closest work to ours is.  {\sc brahma} is also a method
-for synthesizing loop-free bitvector programs.  In~\cite{brahma}, the
+which is also the closest work to ours.  {\sc Brahma} also focuses on
+synthesizing loop-free machine-integer programs.  In~\cite{brahma}, the
 authors characterise the program synthesis problem as a second-order
 $\exists \forall$ formula, and introduce the CEGIS algorithm for solving
 these formulae.  This algorithm reduces the satisfiability of the $\exists
@@ -123,26 +123,30 @@ brahma} can be no longer than the size of the library, as the synthesis
 outcome is a permutation of the component library.
 
 Another successful approach to program synthesis has been \emph{program
-sketching}, in particular the {\sc sketch} tool~\cite{sketch}.  With this
-method the user supplies a program sketch, written in a C-like language,
-together with either a specification (written in the same language) or a
-suite of unit tests.  The sketch is a skeleton program which contains much
-of the high level structure of the final program, but with several ``holes''
-that {\sc sketch} fills in to meet the specification, again using the CEGIS
-algorithm.
+sketching}, in particular the {\sc sketch} tool~\cite{sketch}.  This method
+requires the programmer to provide a \emph{program sketch}, written in a
+C-like language, together with either a specification (written in the same
+language) or a suite of unit tests.  The sketch is a skeleton program which
+contains much of the high-level structure of the final program, but with
+several ``holes'', which {\sc sketch} fills in to meet the specification,
+again using the CEGIS algorithm.
 
 Program synthesis is strongly related to superoptimisation~\cite{superoptimisation},
 which is the problem of taking a segment of code, usually written in C, and finding
 a minimal program which has the same functionality.  The {\sc aha}~\cite{aha} tool
-and the GNU superoptimiser~\cite{gnu-superoptimiser} both do superoptimisation of
+and the GNU superoptimiser~\cite{gnu-superoptimiser} both perform superoptimisation of
 C programs, both by enumerating possible programs and testing them on suitable inputs.
 This search can be compiled down to native code using an optimising compiler,
 so for short programs the method is extremely fast, however because of the exponential
-blowup of the program space it is impractical for synthesising longer programs.
-We incorporate this technique by using explicit state model checking in parallel
+blowup of the search space it is impractical for synthesising longer programs.
+We incorporate this technique by using explicit-state model checking in parallel
 with symbolic model checking.
 
+%\paragraph{Outline} We give details of our new algorithm in
+%Sec.~\ref{sec:algorithm}. 
+
 \section{The Basic Synthesis Algorithm}
+\label{sec:algorithm}
 
 \subsection{The Abstract Algorithm}
 
