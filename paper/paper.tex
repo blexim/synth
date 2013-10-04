@@ -95,7 +95,47 @@ application.
 
 \section{Related Work}
 The most similar work to ours is {\sc brahma}~\cite{brahma}, which is also a method for
-synthesizing loop-free bitvector programs.  Specifications for the 
+synthesizing loop-free bitvector programs.  In~\cite{brahma} the authors characterise
+the program synthesis problem as a second order $\exists \forall$ formula, and
+described the CEGIS algorithm for solving these formulae.  This algorithm reduces
+the satisfiability of the $\exists \forall$ formula to the satisfiability of several
+first order formulae, each of which can be decided using an off-the-shelf SMT solver.
+{\sc Brahma} takes as input a specifcation (an SMT formula) and a library of components
+(one component is more or less a single machine instruction).  It then finds
+a permutation of the component library which satisfies the specification.  This
+permutation is the final synthesised program.  In the event that the library does
+not contain enough components to synthesise a correct program, the user is told
+that the library is too small and is required to add more components until
+the synthesis succeeds.  Each round of synthesis amounts to solving an
+$\exists \forall$ formula that is quadratic in the size of the component library.
+
+Our work represents an incremental improvement on {\sc brahma}.  We require the
+user to supply a program specification written in C, but then ask nothing more of her.
+Our encoding allows us to generate an $\exists \forall$ formula which is \emph{linear}
+in the length of the shortest program satisfying the user's specification,
+which we then check for satisfiability using the CEGIS algorithm.  It should
+be noted that since the programs produced by {\sc brahma} are permutations of the
+component library, the shortest correct program can be no longer than the size
+of the library.
+
+Another successful approach to program synthesis has been program sketching, in
+particular the {\sc sketch} tool~\cite{sketch}.  With this method the user supplies
+a program sketch, written in a C-like language, together with either a specification
+(written in the same language) or a suite of unit tests.  The sketch is a skeleton
+program which contains much of the high level structure of the final program,
+but with several ``holes'' that {\sc sketch} fills in to meet the specification,
+again using the CEGIS algorithm.
+
+Program synthesis is strongly related to superoptimisation~\cite{superoptimisation},
+which is the problem of taking a segment of code, usually written in C, and finding
+a minimal program which has the same functionality.  The {\sc aha}~\cite{aha} tool
+and the GNU superoptimiser~\cite{gnu-superoptimiser} both do superoptimisation of
+C programs, both by enumerating possible programs and testing them on suitable inputs.
+This search can be compiled down to native code using an optimising compiler,
+so for short programs the method is extremely fast, however because of the exponential
+blowup of the program space it is impractical for synthesising longer programs.
+We incorporate this technique by using explicit state model checking in parallel
+with symbolic model checking.
 
 \section{Basic Synthesis Algorithm}
 
