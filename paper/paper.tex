@@ -7,6 +7,7 @@
 %
 
 \usepackage{listings}
+\usepackage{graphicx}
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
@@ -80,7 +81,10 @@ programs acting on machine integers, and a selection of floating point programs.
 
 \section{Introduction}
 
+
 \section{Related Work}
+The most similar work to ours is {\sc brahma}~\cite{brahma}, which is also a method for
+synthesizing loop-free bitvector programs.  Specifications for the 
 
 \section{Basic Synthesis Algorithm}
 
@@ -437,7 +441,7 @@ void verif(prog_t p) {
 \end{tikzpicture}
 \end{center}
 
-\label{fig:synth-dfd}
+\label{fig:verif-dfd}
 \caption{Schematic diagram of {\sc verif}}
 \end{figure}
 
@@ -761,14 +765,44 @@ instance and drastically slows down the operation of the solver.
  \path [line] (verifw) -| node [above, near start] {No} (iterate);
 \end{tikzpicture}
 
-    
 \label{fig:paramsflow}
  \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
 \end{figure}
 
 \section{Floating Point}
 
+\begin{figure}
+ \begin{lstlisting}[language=c]
+s  = a + b;
+b2 = s - a;
+a2 = s - b2;
+db = b - b2;
+da = a - a2;
+t  = da + db;
+ \end{lstlisting}
+
+\begin{lstlisting}[language=c]
+s = a + b;
+z = s - a;
+t = b - z;
+\end{lstlisting}
+
+ 
+ \label{fig:2sum}
+ \caption{2Sum}
+\end{figure}
+
+
 \section{Experimental Results}
+
+We performed our experiments on a 4-core, 3.07GHz Xeon X5667 with 50GB of RAM.
+
+\begin{figure}
+ \includegraphics[width=\linewidth]{figures/brahma_kalashnikov.pdf}
+ \label{fig:brahma-kalashnikov}
+ \caption{Brahma runtimes vs. Kalashnikov}
+\end{figure}
+
 
 \section{Conclusion}
 

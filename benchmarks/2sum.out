@@ -1,0 +1,154 @@
+[]
+Fastest checker: cbmc
+t1 = a1 | a1
+Fastest checker: cbmc
+Fails for (89, 200)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = a2 f+ a1
+t2 = a2 s< a2
+Fastest checker: cbmc
+Fails for (161, 160)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = a1 f+ a2
+t2 = t1 f/ 0xe
+Fastest checker: cbmc
+Fails for (220, 41)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a2 < a1
+t2 = a1 f+ a2
+t3 = t1 f* a2
+Fastest checker: cbmc
+Fails for (168, 163)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = 0xca * a1
+t2 = a2 f+ a1
+t3 = 0xdb f/ t1
+Fastest checker: cbmc
+Fails for (128, 1)
+
+[]
+Fastest checker: cbmc
+t1 = a2 * 0xd2
+t2 = a1 f+ a2
+t3 = t1 f/ 0x87
+Fastest checker: cbmc
+Fails for (71, 47)
+
+[]
+Fastest checker: cbmc
+t1 = a2 * 0xd6
+t2 = a1 f+ a2
+t3 = t1 f/ 0xf
+Fastest checker: cbmc
+Fails for (219, 42)
+
+[]
+Fastest checker: cbmc
+t1 = a2 * 0xd6
+t2 = a1 f+ a2
+t3 = t1 f/ 0xd
+Fastest checker: cbmc
+Fails for (88, 161)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+t1 = a1 f+ a2
+t2 = t1 f- a1
+t3 = a1 f+ t2
+t4 = a2 f- t2
+Fastest checker: cbmc
+Correct for wordlen=8
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 799.11s
+
+t1 = a1 f+ a2
+t2 = t1 f- a1
+t3 = a1 f+ t2
+t4 = a2 f- t2
+
+Perf counters:
+{'cbmc': 28, 'iterations': 18}
+Perf timers:
+verify: 445.42s
+checker: 799.00s
+_: 799.11s
+synth: 353.59s
