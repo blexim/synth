@@ -154,26 +154,27 @@ summarize the results of our experiments in Sec.~\ref{sec:experiments}.
 
 Our task is to find a program which satisfies some specifcation.  We can formalize this
 notion as follows: fix an input set $I$ and an output set $O$.  Specifications $\sigma$
-are then relations and programs $P$ are computable functions:
-
+relate inputs and outputs, and programs $P$ map an input to an output:
+%
 $$ \sigma \subseteq I \times O $$
 $$ P : I \rightarrow O$$
 
-The synthesis problem is then to determine the validity of the following formula, and
-to find a witness $P$ if the following second-order formula is valid:
+The synthesis problem is then to determine the validity of the following
+second-order formula, and if so, to find a a suitable witness program $P$:
+%
+$$\exists P .\, \forall x \in I.\, \sigma(x, P(x))$$
 
-$$\exists P . \forall x \in I . \sigma(x, P(x))$$
-
-Depending on the logic needed to express this formula the synthesis problem may
-be decidable, semi-decidable or undecidable.  For many interesting logics, checking
-the validity of a second order formula, such as the synthesis formula, is undecidable.
-Even for logics in which the problem is decidable, the quantifier alternation means that
-we do not have efficient decision procedures to verify our formula, although efficient
-methods may exist for solving problems with only one quantifier.  In particular
-if we are working in the logic of propositional satisfiability, we have SAT solvers
-which are efficient-in-practice at solving queries with a single quantifier.
-The corresponding problem with one level of quantifier alternation (2-QBF) is
-complete for $NP^{NP}$, and current 2-QBF solvers are much less efficient than SAT solvers.
+Depending on the logic needed to express this formula the synthesis problem
+may be decidable, semi-decidable or undecidable.  For many interesting
+logics, checking the validity of a second-order formula is undecidable. 
+Even for logics in which the problem is decidable, the quantifier
+alternation means that we may not have an efficient decision procedure for
+the formula above, although efficient methods may exist for solving problems
+with only one quantifier.  In particular, in the case of propositional
+satisfiability, we have SAT solvers which are efficient-in-practice at
+solving queries with a single quantifier.  The corresponding problem with
+one level of quantifier alternation (2-QBF) is complete for $NP^{NP}$, and
+current 2-QBF solvers are much less efficient than SAT solvers.
 
 When the first-order fragment of the logic is efficiently decidable and $P$ can be
 expressed as a ground term of the logic, we can use a refinement loop to check the
@@ -215,7 +216,7 @@ procedure is guaranteed to terminate.
 \begin{figure}
 \centering
 \begin{minipage}{0.9\textwidth}
- \begin{lstlisting}[mathescape,language=C]
+ \begin{lstlisting}[mathescape,language=C,morekeywords={function}]
 function synth(inputs) {
   $(i_1, \ldots, i_N)$ = inputs
   query := $\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$
@@ -304,7 +305,7 @@ Example:
 \end{figure}
 
 To synthesize tricky bitvector programs like this, it is natural for us to work
-in the logic of quantifer free propositional formulae and to use a SAT solver as
+in the logic of quantifer-free propositional formulae and to use a SAT solver as
 the decision procedure.  However, we propose a slightly different tack, which is
 to use a decidable fragment of C as our underlying logic.  The fragment we use
 has the following restrictions:
@@ -315,7 +316,7 @@ has the following restrictions:
  \item Arrays must all be statically allocated with a constant size.
 \end{itemize}
 
-Other than this any C constructs can be used, which still leaves a very expressive
+Any other C constructs are permitted, which still leaves a very expressive
 language with the nice property that safety is decidable using a single query to a
 bounded model checker.  We will refer to this fragment as C-.  To instantiate the
 abstract synthesis algorithm in C- we must express $I, O, \sigma$ and $P$ in C-,
@@ -323,14 +324,14 @@ then ensure that we can express the validity of the synthesis formula as a safet
 property of the resulting C- program.
 
 Our encoding is the following:
-
+%
 \begin{itemize}
  \item $I$ is the type \verb|int[N]|.
  \item $O$ is the type \verb|int[M]|.
  \item $\sigma$ is a function with signature
  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
  by the user.
- \item $P$ is written in a simple RISC language $\mathcal{L}$.  Programs in $\mathcal{L}$
+ \item $P$ is written in a simple RISC-like language $\mathcal{L}$.  Programs in $\mathcal{L}$
  have the type \verb|prog_t|.
  \item We supply an interpreter for $\mathcal{L}$ which is written in C-.  The signature
  of this interpreter is \\
