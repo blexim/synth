@@ -142,8 +142,10 @@ blowup of the search space it is impractical for synthesising longer programs.
 We incorporate this technique by using explicit-state model checking in parallel
 with symbolic model checking.
 
-%\paragraph{Outline} We give details of our new algorithm in
-%Sec.~\ref{sec:algorithm}. 
+\paragraph{Outline} We give details of our new algorithm in
+Sec.~\ref{sec:algorithm}.  We use a fragment of the C programming lanugage
+as our underlying logic, which is elaborated in Sec.~\ref{sec:logic}. We
+summarize the results of our experiments in Sec.~\ref{sec:experiments}.
 
 \section{The Basic Synthesis Algorithm}
 \label{sec:algorithm}
@@ -505,8 +507,9 @@ void verif(prog_t p) {
 \caption{Schematic diagram of {\sc verif}}
 \end{figure}
 
-
 \section{C-}
+\label{sec:logic}
+
 We use a fragment of C as our underlying logic.  We will refer to this fragment
 as C-.  The characteristic property of C- is that safety can be decided for
 C- programs by using a bounded model checker.  A C- program is just a C program
@@ -854,12 +857,13 @@ t = b - z;
 
 
 \section{Experimental Results}
+\label{sec:experiments}
 
 We performed our experiments on a 4-core, 3.07GHz Xeon X5667 with 50GB of RAM.
 
 \begin{figure}
 \begin{center}
-\begin{tabular}{l|l|l|l|l}
+\begin{tabular}{l|r@{\,\,}|r@{\,\,}|r@{\,\,}|r@{\,\,}}
 Problem & {\sc Brahma} & {\sc Kalashnikov} & {\sc Kalashnikov} & {\sc Kalashnikov} \\
         &               &                    & (no width)         & (CBMC only) \\
 \hline
@@ -881,12 +885,12 @@ p15 & 62.30s &{\bf 43.49s} &{\bf 43.49s} &44.31s \\
 p16 & 78.10s &{\bf 27.41s} &{\bf 27.41s} &45.84s \\
 p17 & 45.90s &{\bf 27.73s} &{\bf 27.73s} &46.63s \\
 p18 & 34.70s &{\bf 5.55s} &{\bf 5.55s} &15.63s \\
-p19 & {\bf 108.40s} &- &- &- \\
-p20 & {\bf 28.30s} &- &- &- \\
-p21 & {\bf 279.00s} &- &- &- \\
-p22 & {\bf 1668.00s} &- &- &- \\
-p23 & {\bf 224.90s} &- &- &- \\
-p24 & {\bf 2778.70s} &- &- &- \\
+p19 & {\bf 108.40s} &-- &-- &-- \\
+p20 & {\bf 28.30s} &-- &-- &-- \\
+p21 & {\bf 279.00s} &-- &-- &-- \\
+p22 & {\bf 1668.00s} &-- &-- &-- \\
+p23 & {\bf 224.90s} &-- &-- &-- \\
+p24 & {\bf 2778.70s} &-- &-- &-- \\
 \end{tabular}
 
 \end{center}
