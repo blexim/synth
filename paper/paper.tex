@@ -848,30 +848,30 @@ t = b - z;
 
 We performed our experiments on a 4-core, 3.07GHz Xeon X5667 with 50GB of RAM.
 
-\bigskip
-
+\begin{figure}
+\begin{center}
 \begin{tabular}{l|l|l|l|l}
 Problem & {\sc Brahma} & {\sc Kalashnikov} & {\sc Kalashnikov} & {\sc Kalashnikov} \\
         &               &                    & (no width)         & (CBMC only) \\
 \hline
-p1 & 3.20s &{\bf 1.83s} &23.54s &23.54s \\
-p2 & 3.60s &{\bf 1.49s} &1271.12s &1271.12s \\
-p3 & {\bf 1.40s} &1.60s &4.09s &4.09s \\
-p4 & 3.30s &{\bf 1.86s} &79.72s &79.72s \\
-p5 & 2.20s &{\bf 1.98s} &12.16s &12.16s \\
-p6 & 2.40s &{\bf 1.51s} &104.19s &104.19s \\
-p7 & {\bf 1.00s} &4.04s &- &- \\
-p8 & {\bf 1.40s} &4.31s &- &- \\
-p9 & {\bf 5.80s} &35.09s &505.10s &505.10s \\
-p10 & 76.10s &{\bf 9.80s} &- &- \\
-p11 & 57.10s &{\bf 9.40s} &{\bf 9.40s} &{\bf 9.40s} \\
-p12 & 67.80s &{\bf 21.43s} &{\bf 21.43s} &{\bf 21.43s} \\
-p13 & 59.60s &{\bf 27.74s} &{\bf 27.74s} &{\bf 27.74s} \\
-p14 & 118.90s &{\bf 54.71s} &{\bf 54.71s} &{\bf 54.71s} \\
-p15 & 62.30s &{\bf 43.49s} &{\bf 43.49s} &{\bf 43.49s} \\
-p16 & 78.10s &{\bf 27.41s} &{\bf 27.41s} &{\bf 27.41s} \\
-p17 & 45.90s &{\bf 27.73s} &{\bf 27.73s} &{\bf 27.73s} \\
-p18 & 34.70s &{\bf 5.55s} &{\bf 5.55s} &{\bf 5.55s} \\
+p1 & 3.20s &{\bf 1.83s} &23.54s &8.07s \\
+p2 & 3.60s &{\bf 1.49s} &1271.12s &8.19s \\
+p3 & {\bf 1.40s} &1.60s &4.09s &5.90s \\
+p4 & 3.30s &{\bf 1.86s} &79.72s &8.15s \\
+p5 & 2.20s &{\bf 1.98s} &12.16s &8.10s \\
+p6 & 2.40s &{\bf 1.51s} &104.19s &8.17s \\
+p7 & {\bf 1.00s} &4.04s &- &14.49s \\
+p8 & {\bf 1.40s} &4.31s &- &14.20s \\
+p9 & {\bf 5.80s} &35.09s &505.10s &13.45s \\
+p10 & 76.10s &{\bf 9.80s} &- &19.14s \\
+p11 & 57.10s &{\bf 9.40s} &{\bf 9.40s} &32.98s \\
+p12 & 67.80s &{\bf 21.43s} &{\bf 21.43s} &38.23s \\
+p13 & 59.60s &27.74s &27.74s &{\bf 13.16s} \\
+p14 & 118.90s &54.71s &54.71s &{\bf 52.69s} \\
+p15 & 62.30s &{\bf 43.49s} &{\bf 43.49s} &44.31s \\
+p16 & 78.10s &{\bf 27.41s} &{\bf 27.41s} &45.84s \\
+p17 & 45.90s &{\bf 27.73s} &{\bf 27.73s} &46.63s \\
+p18 & 34.70s &{\bf 5.55s} &{\bf 5.55s} &15.63s \\
 p19 & {\bf 108.40s} &- &- &- \\
 p20 & {\bf 28.30s} &- &- &- \\
 p21 & {\bf 279.00s} &- &- &- \\
@@ -879,6 +879,12 @@ p22 & {\bf 1668.00s} &- &- &- \\
 p23 & {\bf 224.90s} &- &- &- \\
 p24 & {\bf 2778.70s} &- &- &- \\
 \end{tabular}
+
+\end{center}
+
+\label{fig:results-table}
+\caption{Times for synthesis of machine integer benchmarks from {\sc brahma} paper}
+\end{figure}
 
 
 \begin{figure}

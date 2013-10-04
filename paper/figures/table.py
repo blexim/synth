@@ -95,7 +95,7 @@ def make_graph():
 
   for i in xrange(len(brahma_times)):
     times = (brahma_times[i], kalashnikov_times[i], kalashnikov_no_width_times[i],
-        kalashnikov_no_width_times[i])
+        kalashnikov_cbmc_times[i])
     mintime = min(times)
 
     line = "p%d & " % (i+1)
