@@ -528,11 +528,11 @@ Additionally, C- programs may use:
 \begin{itemize}
  \item Nondeterministic values.
  \item Assumptions.
- \item Arbitrary width types.
+ \item Arbitrary-width types.
 \end{itemize}
 
-So for example the programs in Fig.~\ref{fig:c-} are valid
-C- programs, but the program in Fig.~\ref{fig:not-c-} is not, since it uses
+For example, the programs in Fig.~\ref{fig:c-} are valid
+C- programs, whereas the program in Fig.~\ref{fig:not-c-} is not, since it uses
 a non-constant loop bound.
 
 \begin{figure}
@@ -596,12 +596,12 @@ int fib(int n) {
 
 Since each loop is bounded by a constant, and each recursive function call is
 limited to a cosntant depth, a C- program necessarily terminates and in
-fact does so in $O(1)$ time.  If we call the largest loop bound $k$, then
+fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
 a bounded model checker with an unrolling bound of $k$ will be a complete
 decision procedure for the safety of the program.  For a C- program of
-size $l$ and with largest loop bound $k$, a bounded model checker will
+size $l$ and with largest loop bound~$k$, a bounded model checker will
 create a SAT problem of size $O(lk) = O(l)$.  Conversely, a SAT problem
-of size $s$ can be converted trivially into a loop free C- program
+of size $s$ can be converted trivially into a loop-free C- program
 of size $O(s)$.  The safety problem for C- is therefore NP-complete,
 which means it can be decided fairly efficiently for many practical
 instances.
@@ -623,12 +623,12 @@ Some of the more significant advantages are:
 \end{itemize}
 
 To illustrate some of these points, we were able to implement a first
-version of {\sc kalashnikov} in around 150 lines of code, which took
-around two hours to write.  The resulting code was easy to modify,
-optimise and debug.  The current version, which includes floating point
-support, several optimisations and two model checking algorithms,
-is still less than 1200 lines of code (600 lines of C- and 600 lines
-of Python).
+version of {\sc kalashnikov} in around 150 lines of code, which took around
+two hours to write.  The resulting code was easy to modify, optimise and
+debug.  The current version, which includes support for floating-point
+arithmetic, several optimisations and two model checking algorithms, is
+still less than 1200 lines of code (600 lines of C- and 600 lines of
+Python).
 
 Another benefit of using C- as our logic is that it would be easy to
 automatically extract specifications from C programs, which would be
@@ -645,21 +645,24 @@ of the SAT problem is influenced by the number of bits needed to encode $P$,
 and by the number of bits needed to encode a run of the $\mathcal{L}$-interpreter.
 The connection to Kolmogorov complexity is fairly obvious.
 
-The most successful optimizations we found were related to making fragments of
-$\mathcal{L}$ and searching progressively larger fragments until a program
-could be found.
+The most successful optimizations we found were related to defining
+fragments of $\mathcal{L}$ and searching progressively larger fragments
+until a program is found.
 
 \subsection{Limited Program Length}
+
 The simplest restriction on programs is to only consider programs of a certain length.
 We start by considering programs consisting of one instruction and progressively
 increase this number.
 
 \subsection{Word Width}
-It is often the case that a program which satisfies the specification
-will continue to satisfy it regardless of the word width of the machine it is
-impemented on.  For example the program in Fig.~\ref{fig:bitvector-program}
-isolates the least significant bit of an 8-bit word, but it will also
-isolate the least significant bit of a 32-bit or indeed any sized word.
+
+It is often the case that a program which satisfies the specification will
+continue to satisfy it regardless of the word width of the machine it is
+impemented on.  For example, the program in Fig.~\ref{fig:bitvector-program}
+isolates the least-significant bit of an 8-bit word, but it will also
+isolate the least-significant bit of a 32-bit word or indeed of a word of
+any size.
 
 Because of this, we can often find a program that is correct for a large
 word size by synthesizing a program for a machine with a smaller word size.
@@ -670,8 +673,8 @@ to the $\mathcal{L}$-interpreter.
 The only wrinkle here is that sometimes a program we synthesize will contain
 constants.  If we have synthesized a program for a machine with $k$-bit words,
 the constants in the program will be $k$ bits wide.  To generalize the program
-to a $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit
-wide numbers from $k$-bit ones.  We have several strategies for this and
+to an $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit-wide
+numbers from $k$-bit ones.  We have several strategies for this and
 just try each in turn.  In the following, a subscript $n$ on a value means that
 the value is an $n$-bit word.  The dot operator $a_l \cdot b_m$ denotes
 concatenation, resulting in an $(l+m)$-bit wide word.  A superscript on a value
@@ -691,6 +694,7 @@ To generalize a number $x$ we use the following rules:
 
 
 \subsection{Separate Constants}
+
 $\mathcal{L}$ is a SSA, three address instruction set.  Destination registers
 are implicit and a fresh register exists for each instruction to write its
 output to.  A natural way to encode $\mathcal{L}$ instructions is to have an
@@ -728,6 +732,7 @@ our program.  We start by trying to synthesize a program with no constants, then
 if that fails we try to synthesize using one constant and so on.
 
 \subsection{Explicit Search}
+
 When we are working on an $\mathcal{L}$-machine with a small word size and
 a compact program encoding, our state space is very small.
 We can quickly check the validity of the {\sc synth} and {\sc verif} formulae
