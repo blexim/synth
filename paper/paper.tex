@@ -54,7 +54,7 @@
 }
 \makeatother
 
-     
+
 
 \begin{document}
 %
@@ -62,15 +62,14 @@
 %
 \pagestyle{headings}  % switches on printing of running heads
 
-\abstract
-We present a method for synthesizing loop free programs using a combination of
-bounded model checking and explicit enumeration.  The user provides a specification
-in plain C and is not required to interact further with the synthesis processs.
-In particular the user need not tell the synthesizer which program components to
-use.
+\begin{abstract}
+We present a method for synthesizing loop-free programs, using a combination of
+bounded model checking and explicit state model checking.  The user provides a
+specification in plain C, after which the synthesis process is fully automatic.
 
-We demonstrate the effectiveness of our method by synthesizing several tricky
-bitvector programs and a selection of floating point programs.
+We demonstrate the effectiveness of our method by synthesizing several subtle
+programs acting on machine integers, and a selection of floating point programs.
+\end{abstract}
 
 
 \begin{keywords}
