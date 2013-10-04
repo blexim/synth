@@ -86,15 +86,15 @@ satisfies a given specification.  Synthesis tools promise to relieve the
 programmer from thinking about \emph{how} the problem is to be solved;
 instead, the programmer only provides a compact description of \emph{what}
 is to be achieved.  Foundational research in this area has been
-exceptionally fruitful, beginning with Alonso Church's work on the
-\emph{Circuit Synthesis Problem} in the sixties.  In this paper, we present
-a new method that brings the promise of automating programming closer to
-application.
+exceptionally fruitful, beginning with Alonzo Church's work on the
+\emph{Circuit Synthesis Problem} in the sixties~\cite{church-synth}.
+In this paper, we present a new method that brings the promise of
+automating programming closer to application.
 
 
 
 \section{Related Work}
-The most similar work to ours is {\sc brahma}~\cite{brahma}, which is also a method for
+The closest work to ours is {\sc brahma}~\cite{brahma}, which is also a method for
 synthesizing loop-free bitvector programs.  In~\cite{brahma} the authors characterise
 the program synthesis problem as a second order $\exists \forall$ formula, and
 described the CEGIS algorithm for solving these formulae.  This algorithm reduces
@@ -595,7 +595,7 @@ instances.
 
 \subsection{Why use C- instead of SAT?}
 To misquote David Wheeler: ``all problems in computer science can be solved by
-another level of abstraction.''~\cite{wheeler-abstraction}.  C- serves as
+another level of abstraction.''~\cite{beautiful-code}.  C- serves as
 an abstraction of SAT.  We can think of SAT as an assembly language and
 {\sc cbmc} as a compiler for C- to this assembly language.  The benefits
 of using C- as our logic rather than SAT are very similar to the benefits of
@@ -856,5 +856,8 @@ We performed our experiments on a 4-core, 3.07GHz Xeon X5667 with 50GB of RAM.
 
 
 \section{Conclusion}
+
+\bibliography{synth}{}
+\bibliographystyle{splncs}
 
 \end{document}
