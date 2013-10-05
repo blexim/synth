@@ -197,11 +197,11 @@ procedure is guaranteed to terminate.
  semithick, initial text=]
 
   \matrix[nodes={draw, fill=none, scale=1, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
-          row sep=2cm, column sep=4cm] {
+          row sep=2cm, column sep=3cm] {
    \node (synth) {Synthesize};
    &
-   \node (verif) {Verify}; \\
-   \node[draw=none] {};
+   \node (verif) {Verify}; %\\
+   %\node[draw=none] {};
    &
    \node[ellipse] (done) {Done}; \\
   };
