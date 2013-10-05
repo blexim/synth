@@ -64,8 +64,9 @@
 \pagestyle{headings}  % switches on printing of running heads
 
 \begin{abstract}
-We present a simple-yet-effective method for synthesizing loop-free
-programs, using a novel combination of Bounded Model Checking and
+
+We present a simple-yet-effective method for synthesizing loop-free programs
+from specifications, using a novel combination of Bounded Model Checking and
 explicit-state Model Checking.  The user provides a specification in plain
 C, after which the synthesis process is fully automatic.
 
@@ -93,11 +94,11 @@ In this paper, we present a new method that brings the promise of
 automating programming closer to application.  We make pragmatic
 restrictions of the general synthesis problem in order to arrive at an
 effective solution.  To this end, we focus on the problem of synthesizing
-loop-free programs over machine integers and floating-point number from a
+loop-free programs over machine integers and floating-point numbers from a
 specification given as program fragment.
 
 Our work represents a substantial refinement of {\sc brahma}~\cite{brahma},
-which is also the closest work to ours.  {\sc Brahma} also focuses on
+which is the closest work to ours.  {\sc Brahma} also focuses on
 synthesizing loop-free machine-integer programs.  In~\cite{brahma}, the
 authors characterise the program synthesis problem as a second-order
 $\exists \forall$ formula, and introduce the CEGIS algorithm for solving
@@ -131,16 +132,18 @@ contains much of the high-level structure of the final program, but with
 several ``holes'', which {\sc sketch} fills in to meet the specification,
 again using the CEGIS algorithm.
 
-Program synthesis is strongly related to superoptimisation~\cite{superoptimisation},
-which is the problem of taking a segment of code, usually written in C, and finding
-a minimal program which has the same functionality.  The {\sc aha}~\cite{aha} tool
-and the GNU superoptimiser~\cite{gnu-superoptimiser} both perform superoptimisation of
-C programs, both by enumerating possible programs and testing them on suitable inputs.
-This search can be compiled down to native code using an optimising compiler,
-so for short programs the method is extremely fast, however because of the exponential
-blowup of the search space it is impractical for synthesising longer programs.
-We incorporate this technique by using explicit-state model checking in parallel
-with symbolic model checking.
+Program synthesis is strongly related to
+superoptimisation~\cite{superoptimisation}, which is the problem of taking a
+segment of code, usually written in C, and finding a minimal program which
+has the same functionality.  The {\sc aha}~\cite{aha} tool and the GNU
+superoptimiser~\cite{gnu-superoptimiser} both perform superoptimisation of C
+programs, both by enumerating possible programs and testing them on suitable
+inputs.  This search can be compiled down to native code using an optimising
+compiler, so for short programs the method is extremely fast.  However, this
+method is impractical for synthesising longer programs because of the
+exponential blowup of the search space.  We incorporate the core idea of
+this technique by using explicit-state model checking in parallel with
+symbolic model checking.
 
 \paragraph{Outline} We give details of our new algorithm in
 Sec.~\ref{sec:algorithm}.  We use a fragment of the C programming lanugage
