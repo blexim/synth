@@ -220,8 +220,9 @@ int common_factor(int A[10]) {
  \end{lstlisting}
 \end{minipage}
 
- \label{fig:c-}
  \caption{Two \newC programs}
+  \label{fig:c-}
+
 \end{figure}
 
 \begin{figure}
@@ -241,8 +242,9 @@ int fib(int n) {
 }
  \end{lstlisting}
 
- \label{fig:not-c-}
  \caption{A C program to compute Fibonacci numbers.}
+  \label{fig:not-c-}
+
 \end{figure}
 
 Since each loop is bounded by a constant, and each recursive function call is
@@ -351,7 +353,8 @@ procedure is guaranteed to terminate.
     (verif) edge node {Valid} (done);
  \end{tikzpicture}
  
- \caption{Abstract synthesis refinement loop\label{fig:abstract-refinement}}
+ \caption{Abstract synthesis refinement loop
+ \label{fig:abstract-refinement}}
 \end{figure}
 
 \begin{figure}
@@ -402,7 +405,9 @@ function refinement_loop() {
  \end{lstlisting}
  \end{minipage}
  
- \caption{Abstract refinement algorithm\label{fig:abstract-refinement-code}}
+
+ \caption{Abstract refinement algorithm
+ \label{fig:abstract-refinement-code}}
 \end{figure}
 
 \subsection{The Concrete Algorithm for Bitvector Programs}
@@ -440,8 +445,9 @@ Example:
 \end{tabular}
 \end{minipage}
 
- \label{fig:bitvector-program}
+
  \caption{A tricky bitvector program}
+  \label{fig:bitvector-program}
 \end{figure}
 
 
@@ -475,16 +481,18 @@ Our encoding is the following:
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
 
-\begin{tabular}{lllll}
- \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| & \verb|neg a|
+\begin{tabular}{llll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
+ \verb|neg a| & & &
 \end{tabular}
 
 \medskip
 
 Bitwise logical and shift instructions:
 
-\begin{tabular}{llllll}
- \verb|and  a b| & \verb|or a b| & \verb|xor a b| & \verb|ashr a b| & \verb|lshr a b| & \verb|not  a|
+\begin{tabular}{llll}
+ \verb|and  a b| & \verb|or a b| & \verb|xor a b| & \verb|ashr a b| \\
+ \verb|lshr a b| & \verb|not  a| & &
 \end{tabular}
 
 \medskip
@@ -496,8 +504,9 @@ Unsigned and signed comparison instructions:
 \end{tabular}
 \end{center}
 
- \label{fig:l-language}
  \caption{The language $\mathcal{L}$}
+ \label{fig:l-language}
+
 \end{figure}
 
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
@@ -537,19 +546,21 @@ void verif(prog_t p) {
 \end{lstlisting}
 \end{minipage}
 
- \label{fig:c-synthverif}
  \caption{The {\sc synth} and {\sc verif} formulae expressed as a \newC program}
+ \label{fig:c-synthverif}
 \end{figure}
 
 In order to determine the validity of the {\sc synth} formula, we can now
 check the {\sc synth} program for safety.  The {\sc synth} program is a
 \newC program, which means we can check its safety by invoking a bounded
 model checker, such as {\sc cbmc}.  Since \newC is a fragment of C,
-the {\sc synth} program can also be compiled executable using {\sc gcc}.
-We can add a small piece of code which searches all possible
-$\mathcal{L}$-programs and evaluates each on the current test vectors until
-it finds one which is correct, just like a conventional superoptimiser,
-and compile the whole thing down to an executable.  This leaves
+the {\sc synth} program can also be compiled using {\sc gcc}.
+We can add a small piece of code which enumerates each possible
+$\mathcal{L}$-programs, then evaluates program on the current test vectors by
+running {\sc synth}. If it finds a program which is correct, it emits
+the program as a candidate, just like a conventional superoptimiser.
+The combination of this enumeration function and {\sc synth} can be compiled
+to an executable using {\sc gcc}.  This leaves
 us with a very simple explicit-state model checker which decides
 safety for {\sc synth}.  We can run the explicit-state model checker
 in parallel with {\sc cbmc} and take the answer of whichever happens
@@ -601,8 +612,8 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd} and for
 \end{tikzpicture}
 \end{center}
 
-\label{fig:synth-dfd}
 \caption{Schematic diagram of {\sc synth}}
+\label{fig:synth-dfd}
 \end{figure}
 
 
@@ -650,8 +661,8 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd} and for
 \end{tikzpicture}
 \end{center}
 
-\label{fig:verif-dfd}
 \caption{Schematic diagram of {\sc verif}}
+\label{fig:verif-dfd}
 \end{figure}
 
 
@@ -853,8 +864,9 @@ instance and drastically slows down the operation of the solver.
  \path [line] (verifw) -| node [above, near start] {No} (iterate);
 \end{tikzpicture}
 
-\label{fig:paramsflow}
  \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
+ \label{fig:paramsflow}
+
 \end{figure}
 
 \section{Floating Point}
@@ -876,8 +888,9 @@ t = b - z;
 \end{lstlisting}
 
  
- \label{fig:2sum}
  \caption{2Sum}
+  \label{fig:2sum}
+
 \end{figure}
 
 
@@ -920,15 +933,17 @@ p24 & {\bf 2778.70s} &-- &-- &-- \\
 
 \end{center}
 
-\label{fig:results-table}
 \caption{Times for synthesis of machine integer benchmarks from {\sc brahma} paper}
+\label{fig:results-table}
+
 \end{figure}
 
 
 \begin{figure}
  \includegraphics[width=\linewidth]{figures/brahma_kalashnikov.pdf}
- \label{fig:brahma-kalashnikov}
  \caption{Brahma runtimes vs. Kalashnikov}
+  \label{fig:brahma-kalashnikov}
+
 \end{figure}
 
 
