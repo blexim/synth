@@ -197,7 +197,7 @@ expressed as a ground term of the logic, we can use a refinement loop to check t
 validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
 Fig.~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
 components: {\sc synth} and {\sc verif}.  We track a finite (small) set of inputs
-and {\sc synth} synthesizes a candidate program that is correct on just those inputs.
+and {\sc synth} synthesises a candidate program that is correct on just those inputs.
 {\sc Verif} then tries to verify the candidate program by searching for an input on
 which the candidate program does not satisfy the specification.  If no such input
 can be found, the candidate program is correct.  Otherwise, the new input is added
@@ -428,7 +428,7 @@ Example:
 \end{figure}
 
 
-To synthesize tricky bitvector programs like this, it is natural for us to
+To synthesise tricky bitvector programs like this, it is natural for us to
 work in the logic of quantifier-free propositional formulae and to use a
 propositional SAT or SMT-$\mathcal{BV}$ solver as the decision procedure. 
 However, we propose a slightly different tack, which is to use \newC as
@@ -619,8 +619,8 @@ This reduces the size of all the constants in the program, the search space
 of possible test inputs and also the size of all the state variables internal
 to the $\mathcal{L}$-interpreter.
 
-The only wrinkle here is that sometimes a program we synthesize will contain
-constants.  If we have synthesized a program for a machine with $k$-bit words,
+The only wrinkle here is that we will sometimes synthesise a program containing
+constants.  If we have synthesised a program for a machine with $k$-bit words,
 the constants in the program will be $k$ bits wide.  To generalize the program
 to an $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit-wide
 numbers from $k$-bit ones.  We have several strategies for this and
@@ -677,8 +677,8 @@ This is a substantial reduction in size and when the required program requires
 few constants this can lead to a very significant speed up.
 
 As with program length we can progressively increase the number of constants in
-our program.  We start by trying to synthesize a program with no constants, then
-if that fails we try to synthesize using one constant and so on.
+our program.  We start by trying to synthesise a program with no constants, then
+if that fails we try to synthesise using one constant and so on.
 
 \subsection{Explicit Search}
 
