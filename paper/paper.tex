@@ -10,12 +10,16 @@
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{pgf}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
 
 
 \newcommand{\newC}{C$^-$\xspace}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+
 
 %\usepackage{makeidx}  % allows for indexgeneration
 %
@@ -159,135 +163,6 @@ as our underlying logic, which is elaborated in Sec.~\ref{sec:logic}. We
 summarize the results of our experiments in Sec.~\ref{sec:experiments}.
 
 
-\section{\newC}
-\label{sec:logic}
-
-We use a fragment of C as our underlying logic.  We will refer to this fragment
-as \newC.  The characteristic property of \newC is that safety can be decided for
-\newC programs using a single query to bounded model checker.  A \newC program is
-just a C program with the following syntactic restrictions:
-
-\begin{itemize}
- \item All loops in the program must have a constant bound.
- \item All recursion in the program must be limited to a constant depth.
- \item All arrays must be statically allocated (i.e. not using \texttt{malloc}),
- and be of constant size.
-\end{itemize}
-
-Additionally, \newC programs may use:
-
-\begin{itemize}
- \item Nondeterministic values.
- \item Assumptions.
- \item Arbitrary-width types.
-\end{itemize}
-
-For example, the programs in Fig.~\ref{fig:c-} are valid
-\newC programs, whereas the program in Fig.~\ref{fig:not-c-} is not, since it uses
-a non-constant loop bound.
-
-\begin{figure}
-\begin{minipage}[scale=0.8]{0.45\linewidth}
- \begin{lstlisting}[language=c]
-int count_bits(int x) {
-  int i, ret;
-  
-  ret = 0;
-  
-  for (i = 0; i < 32; i++) {
-    if (x & (1 << i))
-      ret++;
-  }
-  
-  return ret;
-}
- \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.54\linewidth}
- \begin{lstlisting}[language=C]
-int common_factor(int A[10]) {
-  int factor = nondet();
-  int i;
-
-  for (i = 0; i < 10; i++) {
-    assume((A[i] % factor) == 0);
-  }
-
-  assume(factor > 1);
-  return factor;
-}
-
- \end{lstlisting}
-\end{minipage}
-
- \caption{Two \newC programs}
-  \label{fig:c-}
-
-\end{figure}
-
-\begin{figure}
- \begin{lstlisting}[language=C]
-int fib(int n) {
-  int a, b, c;
-  
-  a = b = 1;
-  
-  while (n--) {
-    c = a+b;
-    a = b;
-    b = c;
-  }
-  
-  return a;
-}
- \end{lstlisting}
-
- \caption{A C program to compute Fibonacci numbers.}
-  \label{fig:not-c-}
-
-\end{figure}
-
-Since each loop is bounded by a constant, and each recursive function call is
-limited to a constant depth, a \newC program necessarily terminates and in
-fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
-a bounded model checker with an unrolling bound of $k$ will be a complete
-decision procedure for the safety of the program.  For a \newC program of
-size $l$ and with largest loop bound~$k$, a bounded model checker will
-create a SAT problem of size $O(lk) = O(l)$.  Conversely, a SAT problem
-of size $s$ can be converted trivially into a loop-free \newC program
-of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
-which means it can be decided fairly efficiently for many practical
-instances.
-
-\subsection{Why use \newC instead of SAT?}
-To misquote David Wheeler: ``all problems in computer science can be solved by
-another level of abstraction.''~\cite{beautiful-code}.  \newC serves as
-an abstraction of SAT.  We can think of SAT as an assembly language and
-{\sc cbmc} as a compiler for \newC to this assembly language.  The benefits
-of using \newC as our logic rather than SAT are very similar to the benefits of
-writing code in a high level language rather than assembly language.
-Some of the more significant advantages are:
-
-\begin{itemize}
- \item The code is more readable and easier to debug.
- \item The code is much more concise.
- \item We can take advantage of new optimisations, different model
- checkers and different back-ends (SAT, SMT, ACDCL, etc.) for free.
-\end{itemize}
-
-To illustrate some of these points, we were able to implement a first
-version of {\sc kalashnikov} in around 150 lines of code, which took around
-two hours to write.  The resulting code was easy to modify, optimise and
-debug.  The current version, which includes support for floating-point
-arithmetic, several optimisations and two model checking algorithms, is
-still less than 1200 lines of code (600 lines of \newC and 600 lines of
-Python).
-
-Another benefit of using \newC as our logic is that it would be easy to
-automatically extract specifications from C programs, which would be
-useful in the context of superoptimisation.  This is because \newC is
-a relatively large fragment of C, so we anticipate that many interesting
-sections of real code will already be~\newC.
 
 \section{The Basic Synthesis Algorithm}
 \label{sec:algorithm}
@@ -325,7 +200,7 @@ expressed as a ground term of the logic, we can use a refinement loop to check t
 validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
 Fig.~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
 components: {\sc synth} and {\sc verif}.  We track a finite (small) set of inputs
-and {\sc synth} synthesizes a candidate program that is correct on just those inputs.
+and {\sc synth} synthesises a candidate program that is correct on just those inputs.
 {\sc Verif} then tries to verify the candidate program by searching for an input on
 which the candidate program does not satisfy the specification.  If no such input
 can be found, the candidate program is correct.  Otherwise, the new input is added
@@ -357,60 +232,160 @@ procedure is guaranteed to terminate.
  \label{fig:abstract-refinement}}
 \end{figure}
 
-\begin{figure}
-\centering
-\begin{minipage}{0.9\textwidth}
- \begin{lstlisting}[mathescape,language=C,morekeywords={function}]
-function synth(inputs) {
-  $(i_1, \ldots, i_N)$ = inputs
-  query := $\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$
-  result := decide(query)
-  
-  if (result.satisfiable) {
-    return result.model
-  } else {
-    return unsatisfiable
-  }
-}
-
-function verif(P) {
-  query := $\exists x . \lnot \sigma(x, P(x))$
-  result := decide(query)
-  
-  if (result.satisfiable) {
-    return result.model
-  } else {
-    return valid
-  }
-}
-
-function refinement_loop() {
-  inputs := $\emptyset$
-
-  while (true) {
-    candidate := synth(inputs)
-
-    if (candidate = unsatisfiable) {
-      return unsatisfiable
-    }
-
-    res := verif(candidate)
-
-    if (res = valid) {
-      return candidate
-    } else {
-      inputs := inputs $\cup$ res
-    }
-  }
- \end{lstlisting}
- \end{minipage}
- 
-
+\begin{algorithm}
  \caption{Abstract refinement algorithm
  \label{fig:abstract-refinement-code}}
+ 
+
+ \begin{algorithmic}[1]
+\Statex
+\Function{synth}{inputs}
+  \Let{$(i_1, \ldots, i_N)$}{inputs}
+  \Let{query}{$\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{unsatisfiable}
+  \EndIf
+\EndFunction
+\Statex
+\Function{verif}{P}
+  \Let{query}{$\exists x . \lnot \sigma(x, P(x))$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{valid}
+  \EndIf
+\EndFunction
+\Statex
+\Function{refinement loop}{}
+  \Let{inputs}{$\emptyset$}
+  \Loop
+    \Let{candidate}{synth(inputs)}
+    \If{candidate = unsatisfiable}
+      \State \Return{unsatisfiable}
+    \EndIf
+    \Let{res}{verif(candidate)}
+    \If{res = valid}
+      \State \Return{candidate}
+    \Else
+      \Let{inputs}{inputs $\cup$ res}
+    \EndIf
+  \EndLoop
+\EndFunction
+ \end{algorithmic}
+\end{algorithm}
+ 
+
+
+\section{\newC}
+\label{sec:logic}
+
+We use a fragment of C as our underlying logic.  We will refer to this fragment
+as \newC.  The characteristic property of \newC is that safety can be decided for
+\newC programs using a single query to bounded model checker.  A \newC program is
+just a C program with the following syntactic restrictions:
+
+\begin{itemize}
+ \item All loops in the program must have a constant bound.
+ \item All recursion in the program must be limited to a constant depth.
+ \item All arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ and be of constant size.
+\end{itemize}
+
+Additionally, \newC programs may use:
+
+\begin{itemize}
+ \item Nondeterministic values.
+ \item Assumptions.
+ \item Arbitrary-width types.
+\end{itemize}
+
+\begin{figure}
+\begin{minipage}[scale=0.8]{0.45\linewidth}
+ \begin{lstlisting}[language=c]
+int count_bits(int x) {
+  int i, ret;
+  
+  ret = 0;
+  
+  for (i = 0; i < 32; i++) {
+    if (x & (1 << i))
+      ret++;
+  }
+  
+  return ret;
+}
+ \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.54\linewidth}
+ \begin{lstlisting}[language=C]
+int common_factor(int A[10]) {
+  int factor = nondet();
+  int i;
+
+  for (i = 0; i < 10; i++) {
+    assume((A[i] % factor) == 0);
+  }
+
+  assume(factor > 1);
+  return factor;
+}
+
+ \end{lstlisting}
+\end{minipage}
+
+ \caption{Two \newC programs}
+ \label{fig:c-}
+
 \end{figure}
 
-\subsection{The Concrete Algorithm for Bitvector Programs}
+Since each loop is bounded by a constant, and each recursive function call is
+limited to a constant depth, a \newC program necessarily terminates and in
+fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
+a bounded model checker with an unrolling bound of $k$ will be a complete
+decision procedure for the safety of the program.  For a \newC program of
+size $l$ and with largest loop bound~$k$, a bounded model checker will
+create a SAT problem of size $O(lk) = O(l)$.  Conversely, a SAT problem
+of size $s$ can be converted trivially into a loop-free \newC program
+of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
+which means it can be decided fairly efficiently for many practical
+instances.
+
+\subsection{Why use \newC instead of SAT?}
+To misquote David Wheeler: ``all problems in computer science can be solved by
+another level of abstraction''~\cite{beautiful-code}.  \newC serves as
+an abstraction of SAT.  We can think of SAT as an assembly language and
+{\sc cbmc} as a compiler for \newC to this assembly language.  The benefits
+of using \newC as our logic rather than SAT are very similar to the benefits of
+writing code in a high level language rather than assembly language.
+Some of the more significant advantages are:
+
+\begin{itemize}
+ \item The code is more readable and easier to debug.
+ \item The code is much more concise.
+ \item We can take advantage of new optimisations, different model
+ checkers and different back-ends (SAT, SMT, ACDCL, etc.) for free.
+\end{itemize}
+
+To illustrate some of these points, we were able to implement a first
+version of {\sc kalashnikov} in around 150 lines of code, which took around
+two hours to write.  The resulting code was easy to modify, optimise and
+debug.  The current version, which includes support for floating-point
+arithmetic, several optimisations and two model checking algorithms, is
+still less than 1200 lines of code (600 lines of \newC and 600 lines of
+Python).
+
+Another benefit of using \newC as our logic is that it would be easy to
+automatically extract specifications from C programs, which would be
+useful in the context of superoptimisation.  This is because \newC is
+a relatively large fragment of C, so we anticipate that many interesting
+sections of real code will already be~\newC.
+
+
+\section{The Concrete Algorithm for Bitvector Programs}
 
 One area in which program synthesis can shine is in producing very small,
 intricate programs that manipulate bitvectors.  An example of such a program
@@ -451,7 +426,7 @@ Example:
 \end{figure}
 
 
-To synthesize tricky bitvector programs like this, it is natural for us to
+To synthesise tricky bitvector programs like this, it is natural for us to
 work in the logic of quantifier-free propositional formulae and to use a
 propositional SAT or SMT-$\mathcal{BV}$ solver as the decision procedure. 
 However, we propose a slightly different tack, which is to use \newC as
@@ -565,104 +540,46 @@ us with a very simple explicit-state model checker which decides
 safety for {\sc synth}.  We can run the explicit-state model checker
 in parallel with {\sc cbmc} and take the answer of whichever happens
 to terminate first, stopping the other process.  This procedure is
-depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd} and for
-{\sc verif} in Fig.~\ref{fig:verif-dfd}.
+depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc verif}.
 
 \begin{figure}
 \begin{center}
-\begin{tikzpicture}[
-  scale=0.8,
-  font=\sffamily,
-  every matrix/.style={ampersand replacement=\&,column sep=.5cm,row sep=.75cm},
-  source/.style={draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm},
-  process/.style={draw,thick,circle,fill=blue!20},
-  sink/.style={source,fill=green!20},
-  datastore/.style={draw,very thick,shape=datastore,inner sep=.3cm},
-  dots/.style={gray,scale=2},
-  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize},
-  every node/.style={align=center, scale=0.8}]
+\tikzstyle{file}=[draw, text width=7.0em, text centered,
+  minimum height=1.5em]
+\tikzstyle{process} = [draw, minimum height=3em, circle]
+\tikzstyle{line} = [draw, color=black, -latex']
 
-  % Position the nodes using a matrix layout
-  \matrix{
-    \& \node[source] (driver) {driver}; \& \node[source] (user) {user}; \& \\
-    \& \node[datastore] (tests) {\texttt{tests.c}}; \& \node[datastore] (spec) {\texttt{spec.c}}; \& \node[datastore] (interpreter) {\texttt{interpreter.c}}; \\
-    \node[datastore] (cbmc-synth) {\texttt{cbmc/synth.c}}; \& \node[process] (cbmc) {\sc cbmc}; \& \node[process] (gcc) {\sc gcc}; \& \node[datastore] (explicit-synth) {\texttt{explicit/synth.c}}; \\
-    \& \& \node[process] (aout) {\texttt{a.out}}; \& \\
-    \& \node[sink] (cbmc-out) {candidate program}; \& \node[sink] (explicit-out) {candidate program}; \& \\
-  };
 
-  \draw[to] (driver) -- (tests);
-  \draw[to] (user) -- (spec);
+\begin{tikzpicture}[font=\sffamily]
 
-  \draw[to] (tests) -- (cbmc);
-  \draw[to] (spec) -- (cbmc);
-  \draw[to] (interpreter) -- (cbmc);
+\node [file] (synth) {\sc synth.c};
+\path (synth.south)+(0.0, -0.5) node [file] (tests) {\sc tests.c};
+\path (tests.south)+(0.0, -0.5) node [file] (interpreter) {\sc interpreter.c};
+\path (interpreter.south)+(0.0, -0.5) node [file] (spec) {\sc spec.c};
 
-  \draw[to] (tests) -- (gcc);
-  \draw[to] (spec) -- (gcc);
-  \draw[to] (interpreter) -- (gcc);
-  
-  \draw[to] (cbmc-synth) -- (cbmc);
-  \draw[to] (explicit-synth) -- (gcc);
-  
-  \draw[to] (gcc) -- (aout);
-  
-  \draw[to] (cbmc) -- (cbmc-out);
-  \draw[to] (aout) -- (explicit-out);
+\path (tests.east)+(2.0, -0.25) node [process] (merged) {merge};
+
+\path (merged.east)+(2.0, 1.0) node [process] (cbmc) {\sc cbmc};
+\path (merged.east)+(2.0, -1.0) node [process] (gcc) {\sc gcc};
+
+\path (cbmc.east)+(2.5, -1.0) node [file] (out) {candidate program};
+
+\path [line] (synth) -- (merged);
+\path [line] (tests) -- (merged);
+\path [line] (interpreter) -- (merged);
+\path [line] (spec) -- (merged);
+
+\path [line] (merged) -- (cbmc);
+\path [line] (merged) -- (gcc);
+
+\path [line] (cbmc) -- (out);
+\path [line] (gcc) -- (out);
+
 \end{tikzpicture}
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
 \label{fig:synth-dfd}
-\end{figure}
-
-
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}[
-  scale=0.8,
-  font=\sffamily,
-  every matrix/.style={ampersand replacement=\&,column sep=.5cm,row sep=.75cm},
-  source/.style={draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm},
-  process/.style={draw,thick,circle,fill=blue!20},
-  sink/.style={source,fill=green!20},
-  datastore/.style={draw,very thick,shape=datastore,inner sep=.3cm},
-  dots/.style={gray,scale=2},
-  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize},
-  every node/.style={align=center, scale=0.8}]
-
-  % Position the nodes using a matrix layout
-  \matrix{
-    \& \node[source] (driver) {driver}; \& \node[source] (user) {user}; \& \\
-    \& \node[datastore] (prog) {\texttt{prog.c}}; \& \node[datastore] (spec) {\texttt{spec.c}}; \& \node[datastore] (interpreter) {\texttt{interpreter.c}}; \\
-    \node[datastore] (cbmc-verif) {\texttt{cbmc/verif.c}}; \& \node[process] (cbmc) {\sc cbmc}; \& \node[process] (gcc) {\sc gcc}; \& \node[datastore] (explicit-verif) {\texttt{explicit/verif.c}}; \\
-    \& \& \node[process] (aout) {\texttt{a.out}}; \& \\
-    \& \node[sink] (cbmc-out) {test vector}; \& \node[sink] (explicit-out) {test vector}; \& \\
-  };
-
-  \draw[to] (driver) -- (prog);
-  \draw[to] (user) -- (spec);
-
-  \draw[to] (prog) -- (cbmc);
-  \draw[to] (spec) -- (cbmc);
-  \draw[to] (interpreter) -- (cbmc);
-
-  \draw[to] (tests) -- (gcc);
-  \draw[to] (spec) -- (gcc);
-  \draw[to] (interpreter) -- (gcc);
-  
-  \draw[to] (cbmc-verif) -- (cbmc);
-  \draw[to] (explicit-verif) -- (gcc);
-  
-  \draw[to] (gcc) -- (aout);
-  
-  \draw[to] (cbmc) -- (cbmc-out);
-  \draw[to] (aout) -- (explicit-out);
-\end{tikzpicture}
-\end{center}
-
-\caption{Schematic diagram of {\sc verif}}
-\label{fig:verif-dfd}
 \end{figure}
 
 
@@ -700,8 +617,8 @@ This reduces the size of all the constants in the program, the search space
 of possible test inputs and also the size of all the state variables internal
 to the $\mathcal{L}$-interpreter.
 
-The only wrinkle here is that sometimes a program we synthesize will contain
-constants.  If we have synthesized a program for a machine with $k$-bit words,
+The only wrinkle here is that we will sometimes synthesise a program containing
+constants.  If we have synthesised a program for a machine with $k$-bit words,
 the constants in the program will be $k$ bits wide.  To generalize the program
 to an $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit-wide
 numbers from $k$-bit ones.  We have several strategies for this and
@@ -733,21 +650,21 @@ executed and the operands specify which registers should be operated on.
 We might allow the operands to be either a register (i.e. a program argument
 or the result of a previous instruction), or an immediate constant.
 
-Each opcode requires $\log_2 I$ bits to encode, where $I$ is the number
+Each opcode requires $\lceil \log_2 I \rceil$ bits to encode, where $I$ is the number
 of instruction types in $\mathcal{L}$.  Each operand can be encoded using
 $\log_2 w$ bits, where $w$ is the $\mathcal{L}$-machine word, plus one
 bit to specify whether the operand is a register name or an immediate constant.
-One instruction can therefore be encoded using $\log_2 I + 2w + 2$ bits.
-For an $n$ instruction program, we need $$n \log_2 I + 2nw + 2n$$ bits to encode
+One instruction can therefore be encoded using $\lceil \log_2 I \rceil + 2w + 2$ bits.
+For an $n$ instruction program, we need $$\lceil n \log_2 I \rceil + 2nw + 2n$$ bits to encode
 the entire program.
 
 If we instead limit the number of constants that can appear in the program,
 our operands can be encoded using fewer bits.  For an $n$ instruction program
 using $k$ constants and taking $a$ arguments as inputs, each operand can refer
 to a program argument, the result of a previous instruction or a constant.
-This can be encoded using $\log_2 (k+a+n-1)$ bits, which means each instruction
-can be encoded in $\log_2 I + \log_2 (k + a + n - 1)$ and the full program
-needs $$n \log_2 I + n \log_2 (k + a + n - 1) + kw$$ bits to encode.
+This can be encoded using $\lceil \log_2 (k+a+n-1) \rceil$ bits, which means each instruction
+can be encoded in $\lceil \log_2 I \rceil + \lceil \log_2 (k + a + n - 1) \rceil$ and the full program
+needs $$\lceil n \log_2 I \rceil + \lceil n \log_2 (k + a + n - 1) \rceil + kw$$ bits to encode.
 
 To give an example, $\mathcal{L}$ has 15 instruction types, so each opcode is 4 bits.
 For a 10 instruction program over 1 argument, using 2 constants on a 32-bit word
@@ -758,13 +675,13 @@ This is a substantial reduction in size and when the required program requires
 few constants this can lead to a very significant speed up.
 
 As with program length we can progressively increase the number of constants in
-our program.  We start by trying to synthesize a program with no constants, then
-if that fails we try to synthesize using one constant and so on.
+our program.  We start by trying to synthesise a program with no constants, then
+if that fails we try to synthesise using one constant and so on.
 
-\subsection{Explicit Search}
+\subsection{Explicit-State Model Checking}
 
 When we are working on an $\mathcal{L}$-machine with a small word size and
-a compact program encoding, our state space is very small.
+a compact program encoding, our program space is very small.
 We can quickly check the validity of the {\sc synth} and {\sc verif} formulae
 by simply enumerating all of the inputs and programs, then explicitly
 executing each program on each input.
@@ -953,12 +870,12 @@ p25 & {\bf 2778.70s} &- &- &- \\
 \end{figure}
 
 
-\begin{figure}
- \includegraphics[width=\linewidth]{figures/brahma_kalashnikov.pdf}
- \caption{Brahma runtimes vs. Kalashnikov}
-  \label{fig:brahma-kalashnikov}
+%\begin{figure}
+% \includegraphics[width=\linewidth]{figures/brahma_kalashnikov.pdf}
+% \caption{Brahma runtimes vs. Kalashnikov}
+%  \label{fig:brahma-kalashnikov}
 
-\end{figure}
+%\end{figure}
 
 
 \section{Conclusion}
