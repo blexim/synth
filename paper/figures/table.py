@@ -18,6 +18,7 @@ brahma = [
   (14, 76.1),
   (7, 57.1),
   (9, 67.8),
+  (4, 6.2),
   (4, 59.6),
   (8, 118.9),
   (5, 62.3),
@@ -33,9 +34,13 @@ brahma = [
 ]
 
 def load_file(filename):
-  f = open(filename)
   counters = {}
   timers = {}
+
+  try:
+    f = open(filename)
+  except:
+    return ({"_": 3600}, {"timeout": "1"})
 
   START = 0
   COUNTERS = 1
