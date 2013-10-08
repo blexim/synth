@@ -90,15 +90,15 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = ~p1;
       break;
     case SHL:
-      p2 &= ((1 << WIDTH) -1);
+      p2 %= WIDTH;
       res = p1 << p2;
       break;
     case LSHR:
-      p2 &= ((1 << WIDTH) - 1);
+      p2 %= WIDTH;
       res = p1 >> p2;
       break;
     case ASHR:
-      i2 &= ((1 << WIDTH) - 1);
+      i2 %= WIDTH;
       res = (word_t) (i1 >> i2);
       break;
     case LE:
