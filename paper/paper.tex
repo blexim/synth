@@ -10,13 +10,16 @@
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{pgf}
-%\usepackage{algorithmic}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
 
 
 \newcommand{\newC}{C$^-$\xspace}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+
 
 %\usepackage{makeidx}  % allows for indexgeneration
 %
@@ -229,58 +232,53 @@ procedure is guaranteed to terminate.
  \label{fig:abstract-refinement}}
 \end{figure}
 
-\begin{figure}
-\centering
-\begin{minipage}{0.9\textwidth}
- \begin{lstlisting}[mathescape,language=C,morekeywords={function}]
-function synth(inputs) {
-  $(i_1, \ldots, i_N)$ = inputs
-  query := $\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$
-  result := decide(query)
-  
-  if (result.satisfiable) {
-    return result.model
-  } else {
-    return unsatisfiable
-  }
-}
-
-function verif(P) {
-  query := $\exists x . \lnot \sigma(x, P(x))$
-  result := decide(query)
-  
-  if (result.satisfiable) {
-    return result.model
-  } else {
-    return valid
-  }
-}
-
-function refinement_loop() {
-  inputs := $\emptyset$
-
-  while (true) {
-    candidate := synth(inputs)
-
-    if (candidate = unsatisfiable) {
-      return unsatisfiable
-    }
-
-    res := verif(candidate)
-
-    if (res = valid) {
-      return candidate
-    } else {
-      inputs := inputs $\cup$ res
-    }
-  }
- \end{lstlisting}
- \end{minipage}
- 
-
+\begin{algorithm}
  \caption{Abstract refinement algorithm
  \label{fig:abstract-refinement-code}}
-\end{figure}
+ 
+
+ \begin{algorithmic}[1]
+\Statex
+\Function{synth}{inputs}
+  \Let{$(i_1, \ldots, i_N)$}{inputs}
+  \Let{query}{$\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{unsatisfiable}
+  \EndIf
+\EndFunction
+\Statex
+\Function{verif}{P}
+  \Let{query}{$\exists x . \lnot \sigma(x, P(x))$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{valid}
+  \EndIf
+\EndFunction
+\Statex
+\Function{refinement loop}{}
+  \Let{inputs}{$\emptyset$}
+  \Loop
+    \Let{candidate}{synth(inputs)}
+    \If{candidate = unsatisfiable}
+      \State \Return{unsatisfiable}
+    \EndIf
+    \Let{res}{verif(candidate)}
+    \If{res = valid}
+      \State \Return{candidate}
+    \Else
+      \Let{inputs}{inputs $\cup$ res}
+    \EndIf
+  \EndLoop
+\EndFunction
+ \end{algorithmic}
+\end{algorithm}
+ 
+
 
 \section{\newC}
 \label{sec:logic}
@@ -652,21 +650,21 @@ executed and the operands specify which registers should be operated on.
 We might allow the operands to be either a register (i.e. a program argument
 or the result of a previous instruction), or an immediate constant.
 
-Each opcode requires $\log_2 I$ bits to encode, where $I$ is the number
+Each opcode requires $\lceil \log_2 I \rceil$ bits to encode, where $I$ is the number
 of instruction types in $\mathcal{L}$.  Each operand can be encoded using
 $\log_2 w$ bits, where $w$ is the $\mathcal{L}$-machine word, plus one
 bit to specify whether the operand is a register name or an immediate constant.
-One instruction can therefore be encoded using $\log_2 I + 2w + 2$ bits.
-For an $n$ instruction program, we need $$n \log_2 I + 2nw + 2n$$ bits to encode
+One instruction can therefore be encoded using $\lceil \log_2 I \rceil + 2w + 2$ bits.
+For an $n$ instruction program, we need $$\lceil n \log_2 I \rceil + 2nw + 2n$$ bits to encode
 the entire program.
 
 If we instead limit the number of constants that can appear in the program,
 our operands can be encoded using fewer bits.  For an $n$ instruction program
 using $k$ constants and taking $a$ arguments as inputs, each operand can refer
 to a program argument, the result of a previous instruction or a constant.
-This can be encoded using $\log_2 (k+a+n-1)$ bits, which means each instruction
-can be encoded in $\log_2 I + \log_2 (k + a + n - 1)$ and the full program
-needs $$n \log_2 I + n \log_2 (k + a + n - 1) + kw$$ bits to encode.
+This can be encoded using $\lceil \log_2 (k+a+n-1) \rceil$ bits, which means each instruction
+can be encoded in $\lceil \log_2 I \rceil + \lceil \log_2 (k + a + n - 1) \rceil$ and the full program
+needs $$\lceil n \log_2 I \rceil + \lceil n \log_2 (k + a + n - 1) \rceil + kw$$ bits to encode.
 
 To give an example, $\mathcal{L}$ has 15 instruction types, so each opcode is 4 bits.
 For a 10 instruction program over 1 argument, using 2 constants on a 32-bit word
