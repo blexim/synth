@@ -556,7 +556,7 @@ check the {\sc synth} program for safety.  The {\sc synth} program is a
 model checker, such as {\sc cbmc}.  Since \newC is a fragment of C,
 the {\sc synth} program can also be compiled using {\sc gcc}.
 We can add a small piece of code which enumerates each possible
-$\mathcal{L}$-programs, then evaluates program on the current test vectors by
+$\mathcal{L}$-program, then evaluates each program on the current test vectors by
 running {\sc synth}. If it finds a program which is correct, it emits
 the program as a candidate, just like a conventional superoptimiser.
 The combination of this enumeration function and {\sc synth} can be compiled
@@ -869,7 +869,14 @@ instance and drastically slows down the operation of the solver.
 
 \end{figure}
 
+TODO
+Explain parameterisations of L
+Explain how we search through the parameters
+
 \section{Floating Point}
+
+TODO
+Explain 2sum
 
 \begin{figure}
  \begin{lstlisting}[language=c]
@@ -898,6 +905,11 @@ t = b - z;
 \label{sec:experiments}
 
 We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
+
+TODO
+Explain experiments
+Explain difference to Brahma (to explain timeouts)
+Run experiments on Sketch and AHA
 
 \begin{figure}
 \begin{center}
