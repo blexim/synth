@@ -34,87 +34,7 @@ Increasing constants to 0
 Increasing sequence length to 3
 
 []
-Fastest checker: explicit
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Correct for wordlen=4
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Couldn't generalize :-(
-Excluding current sequence
-[]
-Fastest checker: explicit
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Correct for wordlen=4
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Couldn't generalize :-(
-Increasing wordlen to 5
-[]
-Fastest checker: explicit
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Correct for wordlen=5
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Couldn't generalize :-(
-Excluding current sequence
-[]
-Fastest checker: explicit
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Correct for wordlen=5
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Couldn't generalize :-(
-Increasing wordlen to 6
-[]
-Fastest checker: explicit
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Fails for (33,)
-
-[]
 Fastest checker: cbmc
-t1 = a1 >>> a1
-t2 = t1 + a1
-t3 = t1 ^ t2
-Fastest checker: explicit
-Fails for (33,)
-
-[]
-Fastest checker: cbmc
-t1 = a1 >>> a1
-t2 = a1 ^ t1
-t3 = t2 - t1
-Fastest checker: explicit
-Fails for (33,)
-
-[]
-Fastest checker: cbmc
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Fails for (33,)
-
-[]
-Fastest checker: explicit
 No sequence possible!
 Increasing constants to 1
 
@@ -122,27 +42,25 @@ Increasing sequence length to 3
 
 []
 Fastest checker: cbmc
-t1 = a1 >>> a1
-t2 = t1 | 0x1
-t3 = t2 * a1
+t1 = a1 >>> 0xa
+t2 = t1 + a1
+t3 = t1 ^ t2
 Fastest checker: explicit
-Fails for (33,)
-
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
 []
 Fastest checker: cbmc
-t1 = a1 >>> a1
-t2 = t1 ^ a1
-t3 = t2 - t1
-Fastest checker: explicit
-Fails for (33,)
-
-[]
-Fastest checker: cbmc
-t1 = a1 >>> 0x5
+t1 = a1 >>> 0x3
 t2 = a1 + t1
 t3 = t1 ^ t2
 Fastest checker: explicit
-Correct for wordlen=6
+Correct for wordlen=4
 Fastest checker: explicit
 Trying to generalize...
 Fastest checker: explicit
@@ -156,17 +74,17 @@ Fastest checker: cbmc
 
 
 
-Finished in 35.09s
+Finished in 13.64s
 
 t1 = a1 >>> 0x1f
 t2 = a1 + t1
 t3 = t1 ^ t2
 
 Perf counters:
-{'cbmc': 8, 'explicit': 33, 'exclusions': 2, 'iterations': 17}
+{'cbmc': 5, 'explicit': 14, 'exclusions': 1, 'iterations': 8}
 Perf timers:
-verify: 4.43s
-checker: 34.44s
-generalize: 1.76s
-_: 35.09s
-synth: 30.62s
+verify: 2.25s
+checker: 13.37s
+generalize: 1.56s
+_: 13.64s
+synth: 11.38s
