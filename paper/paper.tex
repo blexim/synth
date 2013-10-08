@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{pgf}
+%\usepackage{algorithmic}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
@@ -159,135 +160,6 @@ as our underlying logic, which is elaborated in Sec.~\ref{sec:logic}. We
 summarize the results of our experiments in Sec.~\ref{sec:experiments}.
 
 
-\section{\newC}
-\label{sec:logic}
-
-We use a fragment of C as our underlying logic.  We will refer to this fragment
-as \newC.  The characteristic property of \newC is that safety can be decided for
-\newC programs using a single query to bounded model checker.  A \newC program is
-just a C program with the following syntactic restrictions:
-
-\begin{itemize}
- \item All loops in the program must have a constant bound.
- \item All recursion in the program must be limited to a constant depth.
- \item All arrays must be statically allocated (i.e. not using \texttt{malloc}),
- and be of constant size.
-\end{itemize}
-
-Additionally, \newC programs may use:
-
-\begin{itemize}
- \item Nondeterministic values.
- \item Assumptions.
- \item Arbitrary-width types.
-\end{itemize}
-
-For example, the programs in Fig.~\ref{fig:c-} are valid
-\newC programs, whereas the program in Fig.~\ref{fig:not-c-} is not, since it uses
-a non-constant loop bound.
-
-\begin{figure}
-\begin{minipage}[scale=0.8]{0.45\linewidth}
- \begin{lstlisting}[language=c]
-int count_bits(int x) {
-  int i, ret;
-  
-  ret = 0;
-  
-  for (i = 0; i < 32; i++) {
-    if (x & (1 << i))
-      ret++;
-  }
-  
-  return ret;
-}
- \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.54\linewidth}
- \begin{lstlisting}[language=C]
-int common_factor(int A[10]) {
-  int factor = nondet();
-  int i;
-
-  for (i = 0; i < 10; i++) {
-    assume((A[i] % factor) == 0);
-  }
-
-  assume(factor > 1);
-  return factor;
-}
-
- \end{lstlisting}
-\end{minipage}
-
- \caption{Two \newC programs}
-  \label{fig:c-}
-
-\end{figure}
-
-\begin{figure}
- \begin{lstlisting}[language=C]
-int fib(int n) {
-  int a, b, c;
-  
-  a = b = 1;
-  
-  while (n--) {
-    c = a+b;
-    a = b;
-    b = c;
-  }
-  
-  return a;
-}
- \end{lstlisting}
-
- \caption{A C program to compute Fibonacci numbers.}
-  \label{fig:not-c-}
-
-\end{figure}
-
-Since each loop is bounded by a constant, and each recursive function call is
-limited to a constant depth, a \newC program necessarily terminates and in
-fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
-a bounded model checker with an unrolling bound of $k$ will be a complete
-decision procedure for the safety of the program.  For a \newC program of
-size $l$ and with largest loop bound~$k$, a bounded model checker will
-create a SAT problem of size $O(lk) = O(l)$.  Conversely, a SAT problem
-of size $s$ can be converted trivially into a loop-free \newC program
-of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
-which means it can be decided fairly efficiently for many practical
-instances.
-
-\subsection{Why use \newC instead of SAT?}
-To misquote David Wheeler: ``all problems in computer science can be solved by
-another level of abstraction.''~\cite{beautiful-code}.  \newC serves as
-an abstraction of SAT.  We can think of SAT as an assembly language and
-{\sc cbmc} as a compiler for \newC to this assembly language.  The benefits
-of using \newC as our logic rather than SAT are very similar to the benefits of
-writing code in a high level language rather than assembly language.
-Some of the more significant advantages are:
-
-\begin{itemize}
- \item The code is more readable and easier to debug.
- \item The code is much more concise.
- \item We can take advantage of new optimisations, different model
- checkers and different back-ends (SAT, SMT, ACDCL, etc.) for free.
-\end{itemize}
-
-To illustrate some of these points, we were able to implement a first
-version of {\sc kalashnikov} in around 150 lines of code, which took around
-two hours to write.  The resulting code was easy to modify, optimise and
-debug.  The current version, which includes support for floating-point
-arithmetic, several optimisations and two model checking algorithms, is
-still less than 1200 lines of code (600 lines of \newC and 600 lines of
-Python).
-
-Another benefit of using \newC as our logic is that it would be easy to
-automatically extract specifications from C programs, which would be
-useful in the context of superoptimisation.  This is because \newC is
-a relatively large fragment of C, so we anticipate that many interesting
-sections of real code will already be~\newC.
 
 \section{The Basic Synthesis Algorithm}
 \label{sec:algorithm}
@@ -410,7 +282,112 @@ function refinement_loop() {
  \label{fig:abstract-refinement-code}}
 \end{figure}
 
-\subsection{The Concrete Algorithm for Bitvector Programs}
+\section{\newC}
+\label{sec:logic}
+
+We use a fragment of C as our underlying logic.  We will refer to this fragment
+as \newC.  The characteristic property of \newC is that safety can be decided for
+\newC programs using a single query to bounded model checker.  A \newC program is
+just a C program with the following syntactic restrictions:
+
+\begin{itemize}
+ \item All loops in the program must have a constant bound.
+ \item All recursion in the program must be limited to a constant depth.
+ \item All arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ and be of constant size.
+\end{itemize}
+
+Additionally, \newC programs may use:
+
+\begin{itemize}
+ \item Nondeterministic values.
+ \item Assumptions.
+ \item Arbitrary-width types.
+\end{itemize}
+
+\begin{figure}
+\begin{minipage}[scale=0.8]{0.45\linewidth}
+ \begin{lstlisting}[language=c]
+int count_bits(int x) {
+  int i, ret;
+  
+  ret = 0;
+  
+  for (i = 0; i < 32; i++) {
+    if (x & (1 << i))
+      ret++;
+  }
+  
+  return ret;
+}
+ \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.54\linewidth}
+ \begin{lstlisting}[language=C]
+int common_factor(int A[10]) {
+  int factor = nondet();
+  int i;
+
+  for (i = 0; i < 10; i++) {
+    assume((A[i] % factor) == 0);
+  }
+
+  assume(factor > 1);
+  return factor;
+}
+
+ \end{lstlisting}
+\end{minipage}
+
+ \caption{Two \newC programs}
+ \label{fig:c-}
+
+\end{figure}
+
+Since each loop is bounded by a constant, and each recursive function call is
+limited to a constant depth, a \newC program necessarily terminates and in
+fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
+a bounded model checker with an unrolling bound of $k$ will be a complete
+decision procedure for the safety of the program.  For a \newC program of
+size $l$ and with largest loop bound~$k$, a bounded model checker will
+create a SAT problem of size $O(lk) = O(l)$.  Conversely, a SAT problem
+of size $s$ can be converted trivially into a loop-free \newC program
+of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
+which means it can be decided fairly efficiently for many practical
+instances.
+
+\subsection{Why use \newC instead of SAT?}
+To misquote David Wheeler: ``all problems in computer science can be solved by
+another level of abstraction''~\cite{beautiful-code}.  \newC serves as
+an abstraction of SAT.  We can think of SAT as an assembly language and
+{\sc cbmc} as a compiler for \newC to this assembly language.  The benefits
+of using \newC as our logic rather than SAT are very similar to the benefits of
+writing code in a high level language rather than assembly language.
+Some of the more significant advantages are:
+
+\begin{itemize}
+ \item The code is more readable and easier to debug.
+ \item The code is much more concise.
+ \item We can take advantage of new optimisations, different model
+ checkers and different back-ends (SAT, SMT, ACDCL, etc.) for free.
+\end{itemize}
+
+To illustrate some of these points, we were able to implement a first
+version of {\sc kalashnikov} in around 150 lines of code, which took around
+two hours to write.  The resulting code was easy to modify, optimise and
+debug.  The current version, which includes support for floating-point
+arithmetic, several optimisations and two model checking algorithms, is
+still less than 1200 lines of code (600 lines of \newC and 600 lines of
+Python).
+
+Another benefit of using \newC as our logic is that it would be easy to
+automatically extract specifications from C programs, which would be
+useful in the context of superoptimisation.  This is because \newC is
+a relatively large fragment of C, so we anticipate that many interesting
+sections of real code will already be~\newC.
+
+
+\section{The Concrete Algorithm for Bitvector Programs}
 
 One area in which program synthesis can shine is in producing very small,
 intricate programs that manipulate bitvectors.  An example of such a program
@@ -565,104 +542,46 @@ us with a very simple explicit-state model checker which decides
 safety for {\sc synth}.  We can run the explicit-state model checker
 in parallel with {\sc cbmc} and take the answer of whichever happens
 to terminate first, stopping the other process.  This procedure is
-depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd} and for
-{\sc verif} in Fig.~\ref{fig:verif-dfd}.
+depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc verif}.
 
 \begin{figure}
 \begin{center}
-\begin{tikzpicture}[
-  scale=0.8,
-  font=\sffamily,
-  every matrix/.style={ampersand replacement=\&,column sep=.5cm,row sep=.75cm},
-  source/.style={draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm},
-  process/.style={draw,thick,circle,fill=blue!20},
-  sink/.style={source,fill=green!20},
-  datastore/.style={draw,very thick,shape=datastore,inner sep=.3cm},
-  dots/.style={gray,scale=2},
-  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize},
-  every node/.style={align=center, scale=0.8}]
+\tikzstyle{file}=[draw, text width=7.0em, text centered,
+  minimum height=1.5em]
+\tikzstyle{process} = [draw, minimum height=3em, circle]
+\tikzstyle{line} = [draw, color=black, -latex']
 
-  % Position the nodes using a matrix layout
-  \matrix{
-    \& \node[source] (driver) {driver}; \& \node[source] (user) {user}; \& \\
-    \& \node[datastore] (tests) {\texttt{tests.c}}; \& \node[datastore] (spec) {\texttt{spec.c}}; \& \node[datastore] (interpreter) {\texttt{interpreter.c}}; \\
-    \node[datastore] (cbmc-synth) {\texttt{cbmc/synth.c}}; \& \node[process] (cbmc) {\sc cbmc}; \& \node[process] (gcc) {\sc gcc}; \& \node[datastore] (explicit-synth) {\texttt{explicit/synth.c}}; \\
-    \& \& \node[process] (aout) {\texttt{a.out}}; \& \\
-    \& \node[sink] (cbmc-out) {candidate program}; \& \node[sink] (explicit-out) {candidate program}; \& \\
-  };
 
-  \draw[to] (driver) -- (tests);
-  \draw[to] (user) -- (spec);
+\begin{tikzpicture}[font=\sffamily]
 
-  \draw[to] (tests) -- (cbmc);
-  \draw[to] (spec) -- (cbmc);
-  \draw[to] (interpreter) -- (cbmc);
+\node [file] (synth) {\sc synth.c};
+\path (synth.south)+(0.0, -0.5) node [file] (tests) {\sc tests.c};
+\path (tests.south)+(0.0, -0.5) node [file] (interpreter) {\sc interpreter.c};
+\path (interpreter.south)+(0.0, -0.5) node [file] (spec) {\sc spec.c};
 
-  \draw[to] (tests) -- (gcc);
-  \draw[to] (spec) -- (gcc);
-  \draw[to] (interpreter) -- (gcc);
-  
-  \draw[to] (cbmc-synth) -- (cbmc);
-  \draw[to] (explicit-synth) -- (gcc);
-  
-  \draw[to] (gcc) -- (aout);
-  
-  \draw[to] (cbmc) -- (cbmc-out);
-  \draw[to] (aout) -- (explicit-out);
+\path (tests.east)+(2.0, -0.25) node [process] (merged) {merge};
+
+\path (merged.east)+(2.0, 1.0) node [process] (cbmc) {\sc cbmc};
+\path (merged.east)+(2.0, -1.0) node [process] (gcc) {\sc gcc};
+
+\path (cbmc.east)+(2.5, -1.0) node [file] (out) {candidate program};
+
+\path [line] (synth) -- (merged);
+\path [line] (tests) -- (merged);
+\path [line] (interpreter) -- (merged);
+\path [line] (spec) -- (merged);
+
+\path [line] (merged) -- (cbmc);
+\path [line] (merged) -- (gcc);
+
+\path [line] (cbmc) -- (out);
+\path [line] (gcc) -- (out);
+
 \end{tikzpicture}
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
 \label{fig:synth-dfd}
-\end{figure}
-
-
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}[
-  scale=0.8,
-  font=\sffamily,
-  every matrix/.style={ampersand replacement=\&,column sep=.5cm,row sep=.75cm},
-  source/.style={draw,thick,rounded corners,fill=yellow!20,inner sep=.3cm},
-  process/.style={draw,thick,circle,fill=blue!20},
-  sink/.style={source,fill=green!20},
-  datastore/.style={draw,very thick,shape=datastore,inner sep=.3cm},
-  dots/.style={gray,scale=2},
-  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize},
-  every node/.style={align=center, scale=0.8}]
-
-  % Position the nodes using a matrix layout
-  \matrix{
-    \& \node[source] (driver) {driver}; \& \node[source] (user) {user}; \& \\
-    \& \node[datastore] (prog) {\texttt{prog.c}}; \& \node[datastore] (spec) {\texttt{spec.c}}; \& \node[datastore] (interpreter) {\texttt{interpreter.c}}; \\
-    \node[datastore] (cbmc-verif) {\texttt{cbmc/verif.c}}; \& \node[process] (cbmc) {\sc cbmc}; \& \node[process] (gcc) {\sc gcc}; \& \node[datastore] (explicit-verif) {\texttt{explicit/verif.c}}; \\
-    \& \& \node[process] (aout) {\texttt{a.out}}; \& \\
-    \& \node[sink] (cbmc-out) {test vector}; \& \node[sink] (explicit-out) {test vector}; \& \\
-  };
-
-  \draw[to] (driver) -- (prog);
-  \draw[to] (user) -- (spec);
-
-  \draw[to] (prog) -- (cbmc);
-  \draw[to] (spec) -- (cbmc);
-  \draw[to] (interpreter) -- (cbmc);
-
-  \draw[to] (tests) -- (gcc);
-  \draw[to] (spec) -- (gcc);
-  \draw[to] (interpreter) -- (gcc);
-  
-  \draw[to] (cbmc-verif) -- (cbmc);
-  \draw[to] (explicit-verif) -- (gcc);
-  
-  \draw[to] (gcc) -- (aout);
-  
-  \draw[to] (cbmc) -- (cbmc-out);
-  \draw[to] (aout) -- (explicit-out);
-\end{tikzpicture}
-\end{center}
-
-\caption{Schematic diagram of {\sc verif}}
-\label{fig:verif-dfd}
 \end{figure}
 
 
@@ -951,12 +870,12 @@ p24 & {\bf 2778.70s} &-- &-- &-- \\
 \end{figure}
 
 
-\begin{figure}
- \includegraphics[width=\linewidth]{figures/brahma_kalashnikov.pdf}
- \caption{Brahma runtimes vs. Kalashnikov}
-  \label{fig:brahma-kalashnikov}
+%\begin{figure}
+% \includegraphics[width=\linewidth]{figures/brahma_kalashnikov.pdf}
+% \caption{Brahma runtimes vs. Kalashnikov}
+%  \label{fig:brahma-kalashnikov}
 
-\end{figure}
+%\end{figure}
 
 
 \section{Conclusion}
