@@ -680,10 +680,10 @@ As with program length we can progressively increase the number of constants in
 our program.  We start by trying to synthesise a program with no constants, then
 if that fails we try to synthesise using one constant and so on.
 
-\subsection{Explicit Search}
+\subsection{Explicit-State Model Checking}
 
 When we are working on an $\mathcal{L}$-machine with a small word size and
-a compact program encoding, our state space is very small.
+a compact program encoding, our program space is very small.
 We can quickly check the validity of the {\sc synth} and {\sc verif} formulae
 by simply enumerating all of the inputs and programs, then explicitly
 executing each program on each input.
