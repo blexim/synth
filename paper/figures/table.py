@@ -92,7 +92,7 @@ def make_graph():
   kalashnikov_cbmc_times = [file_to_time("%s/cbmc_%d.out" % (benchmark_dir, i))
       for i in xrange(1, len(brahma_times) + 1)]
 
-  print "\\begin{tabular}{l|l|l|l|l}"
+  print "\\begin{tabular}{l|r|r|r|r}"
   print "Problem & {\\sc Brahma} & {\\sc Kalashnikov} & {\\sc Kalashnikov} & {\\sc Kalashnikov} \\\\"
   print "        &               &                    & (no width)         & (CBMC only) \\\\"
 
@@ -109,7 +109,7 @@ def make_graph():
       if t == mintime:
         line += "{\\bf %.02fs} &" % t
       elif t == 3600.0:
-        line += "- &"
+        line += "-- &"
       else:
         line += "%.02fs &" % t
 
