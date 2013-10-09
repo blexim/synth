@@ -620,7 +620,7 @@ high-complexity language.  Our paramterisation is constructed
 in such a way that the programs we synthesise are guaranteed to be
 minimal in length.
 
-\subsection{$l$: Program Length}
+\subsection{Program Length: $l$}
 The first paramter we introduce is program length, denoted by $l$.
 At each iteration we synthesise programs of length exactly $l$.
 We start with $l = 1$ and increment $l$ by $1$ when we have determined
@@ -629,7 +629,55 @@ successfully synthesise a program, we are guaranteed that it
 is of minimal length since we have previously established that no
 correct program of smaller length exists.
 
-\subsection{$w$: Word Width}
+
+\subsection{Number of Constants: $c$}
+Instructions in $\mathcal{L}$ take either one or two operands.
+Since any instruction whose operands are all constants can always be
+eliminated (since its result is a constant), we know that a program
+of minimal length will not contain any instructions with two constant
+operands.  Therefore the number of constants which can appear in
+a minimal program of length $l$ is at most $2l$.  By minimising the number
+of constants appearing in a program, we are able to use a particularly
+efficient program encoding that speeds up the synthesis procedure
+substantially.  The number of constants used in a program is the parameter $c$.
+
+$\mathcal{L}$ is a SSA, three address instruction set.  Destination registers
+are implicit and a fresh register exists for each instruction to write its
+output to.  A na\"{\i}ve way to encode $\mathcal{L}$ instructions is to have an
+opcode and two operands, where each operand is either a register (i.e. a program argument
+or the result of a previous instruction), or an immediate constant.
+
+In this encoding, each opcode requires $\lceil \log_2 I \rceil$ bits to encode, where $I$ is the number
+of instruction types in $\mathcal{L}$.  Each operand can be encoded using
+$\log_2 w$ bits, where $w$ is the $\mathcal{L}$-machine word, plus one
+bit to specify whether the operand is a register name or an immediate constant.
+One instruction can therefore be encoded using $\lceil \log_2 I \rceil + 2w + 2$ bits.
+For an $n$ instruction program, we need $$\lceil n \log_2 I \rceil + 2nw + 2n$$ bits to encode
+the entire program.
+
+If we instead limit the number of constants that can appear in the program,
+our operands can be encoded using fewer bits.  For an $n$ instruction program
+using $c$ constants and taking $a$ arguments as inputs, each operand can refer
+to a program argument, the result of a previous instruction or a constant.
+This can be encoded using $\lceil \log_2 (c+a+n-1) \rceil$ bits, which means each instruction
+can be encoded in $\lceil \log_2 I \rceil + \lceil \log_2 (c + a + n - 1) \rceil$ and the full program
+needs $$\lceil n \log_2 I \rceil + \lceil n \log_2 (c + a + n - 1) \rceil + cw$$ bits to encode.
+
+To give an example, $\mathcal{L}$ has 15 instruction types, so each opcode is 4 bits.
+For a 10 instruction program over 1 argument, using 2 constants on a 32-bit word
+machine the first encoding requires $10 * (4 + 32 + 1 + 32 + 1) = 700$ bits.
+Using the second encoding, each operand can be represented using
+$\log_2 (2 + 1 + 10 - 1) = 4$ bits, and the entire program requires 184 bits.
+This is a substantial reduction in size and when the required program requires
+few constants this can lead to a very significant speed up.
+
+As with program length we can progressively increase the number of constants in
+our program.  We start by trying to synthesise a program with no constants, then
+if that fails we try to synthesise using one constant and so on until we reach
+$c = l$.
+
+
+\subsection{Word Width: $w$}
 It is often the case that a program which satisfies the specification will
 continue to satisfy it regardless of the word width of the machine it is
 implemented on.  For example, the program in Fig.~\ref{fig:bitvector-program}
@@ -664,43 +712,6 @@ To generalize a number $x$ we use the following rules:
  \item Generalize $x_k$ to $x_k \cdot 0_{n-k}$.
  \item Generalize $x_k$ to $x_k^{n / k}$.
 \end{itemize}
-
-\subsection{$c$: Number of Constants}
-$\mathcal{L}$ is a SSA, three address instruction set.  Destination registers
-are implicit and a fresh register exists for each instruction to write its
-output to.  A natural way to encode $\mathcal{L}$ instructions is to have an
-opcode and two operands.  The opcode selects which instruction type is being
-executed and the operands specify which registers should be operated on.
-We might allow the operands to be either a register (i.e. a program argument
-or the result of a previous instruction), or an immediate constant.
-
-Each opcode requires $\lceil \log_2 I \rceil$ bits to encode, where $I$ is the number
-of instruction types in $\mathcal{L}$.  Each operand can be encoded using
-$\log_2 w$ bits, where $w$ is the $\mathcal{L}$-machine word, plus one
-bit to specify whether the operand is a register name or an immediate constant.
-One instruction can therefore be encoded using $\lceil \log_2 I \rceil + 2w + 2$ bits.
-For an $n$ instruction program, we need $$\lceil n \log_2 I \rceil + 2nw + 2n$$ bits to encode
-the entire program.
-
-If we instead limit the number of constants that can appear in the program,
-our operands can be encoded using fewer bits.  For an $n$ instruction program
-using $k$ constants and taking $a$ arguments as inputs, each operand can refer
-to a program argument, the result of a previous instruction or a constant.
-This can be encoded using $\lceil \log_2 (k+a+n-1) \rceil$ bits, which means each instruction
-can be encoded in $\lceil \log_2 I \rceil + \lceil \log_2 (k + a + n - 1) \rceil$ and the full program
-needs $$\lceil n \log_2 I \rceil + \lceil n \log_2 (k + a + n - 1) \rceil + kw$$ bits to encode.
-
-To give an example, $\mathcal{L}$ has 15 instruction types, so each opcode is 4 bits.
-For a 10 instruction program over 1 argument, using 2 constants on a 32-bit word
-machine the first encoding requires $10 * (4 + 32 + 1 + 32 + 1) = 700$ bits.
-Using the second encoding, each operand can be represented using
-$\log_2 (2 + 1 + 10 - 1) = 4$ bits, and the entire program requires 184 bits.
-This is a substantial reduction in size and when the required program requires
-few constants this can lead to a very significant speed up.
-
-As with program length we can progressively increase the number of constants in
-our program.  We start by trying to synthesise a program with no constants, then
-if that fails we try to synthesise using one constant and so on.
 
 \subsection{Remove nops}
 Many instructions in $\mathcal{L}$ are nops that do not doing anything.
