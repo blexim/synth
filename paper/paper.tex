@@ -109,7 +109,7 @@ Our work represents a substantial refinement of {\sc brahma}~\cite{brahma},
 which is the closest work to ours.  {\sc Brahma} also focuses on
 synthesizing loop-free machine-integer programs.  In~\cite{brahma}, the
 authors characterise the program synthesis problem as a second-order
-$\exists \forall$ formula and uses the CEGIS algorithm,
+$\exists \forall$ formula and uses a variation of the CEGIS algorithm,
 introduced in~\cite{lezama-thesis}, for solving
 these formulae.  This algorithm reduces the satisfiability of the $\exists
 \forall$ formula to the satisfiability of several first-order formulae, each
@@ -144,7 +144,7 @@ contains much of the high-level structure of the final program, but with
 several ``holes'', which {\sc sketch} fills in to meet the specification,
 again using the CEGIS algorithm.
 
-Program synthesis is strongly related to
+Program synthesis is closely related to
 superoptimisation~\cite{superoptimisation}, which is the problem of taking a
 segment of code, usually written in C, and finding a minimal program which
 has the same functionality.  The {\sc aha}~\cite{aha} tool and the GNU
@@ -162,7 +162,21 @@ Sec.~\ref{sec:algorithm}.  We use a fragment of the C programming language
 as our underlying logic, which is elaborated in Sec.~\ref{sec:logic}. We
 summarize the results of our experiments in Sec.~\ref{sec:experiments}.
 
+\section{Technical Contributions}
+Our approach generates an $\exists \forall$ formula which is linear
+in the size of the synthesised program.  This improves over the
+enoding of~\cite{brahma}, which generates a $\exists \forall$ formula
+that is quadratic in the size of the synthesised program.
 
+We introduce a novel parameterisation of the programming language
+used to express our synthesised programs.
+This parameterisation allows us to efficiently explore the program space
+without relying on human guidance.
+
+Our tool is the first we are aware of that is able to effectively
+synthesise floating point programs.  We demonstrate this by
+synthesising {\sc Fast2Sum} using Knuth's {\sc 2Sum}~\cite{taocp2} as
+a specification.
 
 \section{The Basic Synthesis Algorithm}
 \label{sec:algorithm}
@@ -196,7 +210,10 @@ current 2-QBF solvers are much less efficient than SAT solvers.
 \subsection{CEGIS}
 
 When the first-order fragment of the logic is efficiently decidable and $P$ can be
-expressed as a ground term of the logic, we can use a refinement loop to check the
+expressed as a ground term of the logic, we can use
+Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis, sketch} to
+check the validity of the synthesis formula.  The core of the CEGIS algorithm is
+a refinement loop to check the
 validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
 Fig.~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
 components: {\sc synth} and {\sc verif}.  We track a finite (small) set of inputs
@@ -277,7 +294,7 @@ procedure is guaranteed to terminate.
 \EndFunction
  \end{algorithmic}
 \end{algorithm}
- 
+
 
 
 \section{\newC}
