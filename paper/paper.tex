@@ -16,6 +16,9 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
 
+\algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
+\algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
+
 
 \newcommand{\newC}{C$^-$\xspace}
 \newcommand*\Let[2]{\State #1 $\gets$ #2}
@@ -822,30 +825,39 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
 
 \end{figure}
 
-
-\section{Floating Point}
-
-TODO
-Explain 2sum
-
 \begin{figure}
- \begin{lstlisting}[language=c]
-s  = a + b;
-b2 = s - a;
-a2 = s - b2;
-db = b - b2;
-da = a - a2;
-t  = da + db;
- \end{lstlisting}
-
-\begin{lstlisting}[language=c]
-s = a + b;
-z = s - a;
-t = b - z;
-\end{lstlisting}
+\begin{center}
+\begin{minipage}[t]{0.45\linewidth}
+\begin{algorithm}[H]
+\caption{\sc 2Sum}
+\begin{algorithmic}
+\Let{$s$}{$a+b$}
+\Let{$b'$}{$s - a$}
+\Let{$a'$}{$s - b'$}
+\Let{$\delta b$}{$b - b'$}
+\Let{$\delta a$}{$a - a'$}
+\Let{$t$}{$\delta a + \delta b$}
+\Ensure{$a + b$ = $s + t$ exactly}
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\linewidth}
+\begin{algorithm}[H]
+\caption{\sc Fast2Sum}
+\begin{algorithmic}
+\Require{$a > b$}
+\Let{$s$}{$a + b$}
+\Let{$z$}{$s - a$}
+\Let{$t$}{$b - z$}
+\Ensure{$a + b$ = $s + t$ exactly}
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\end{center}
 
  
- \caption{2Sum}
+ \caption{The {\sc 2Sum} algorithm for correctly rounded floating point sums.}
   \label{fig:2sum}
 
 \end{figure}
