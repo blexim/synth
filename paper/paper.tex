@@ -708,6 +708,9 @@ To generalize an $m$-bit wide number to an $n$-bit wide one:
  \bv{x}{m} & \rightarrow & \underbrace{\bv{x}{m} \cdotp \ldots \cdotp \bv{x}{m}}_{\frac{n}{m} \mathrm{ times}}
 \end{eqnarray*}
 
+Sometimes a program will be correct for some particular word width $w$, but is
+not correct for $w' > w$ even if the constants are replaced with appropriate ones.
+When this happens we are forced to increase $w$ and continue synthesising.
 
 \caption{Rules for generalizing program constants
  \label{fig:generalize}}
@@ -763,8 +766,15 @@ our program.  We start by trying to synthesise a program with no constants, then
 if that fails we try to synthesise using one constant and so on until we reach
 $c = l$.
 
+\subsection{Searching the Program Space}
+The key to our automation approach is to come up with a sensible way in which to
+adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
+After each round of {\sc synth}, we may need to adjust the parameters.  The
+logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
+
+
 \begin{figure}
-\begin{tikzpicture}{node distance=2cm, auto}
+\begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
@@ -776,16 +786,18 @@ $c = l$.
  \node [decision] (synthsucc) {{\sc Synth} succeeds?};
 
  \node [decision, below of=synthsucc, node distance=2.5cm] (verif) {{\sc Verif} succeeds?};
- \node [decision, right of=verif] (ck) {$c < k$?};
+ \node [decision, right of=verif] (ck) {$c < l$?};
 
  \node [block, below of=verif, node distance=2.5cm]   (done) {Done!};
  \node [decision, left of=done] (verifw) {{\sc Verif} succeeds for small words?};
 
  \node [block, below of=ck, node distance=2.5cm] (incc) {$c := c+1$};
- \node [block, right of=incc, node distance=2cm] (inck) {$c := 0$\\ $k := k+1$};
+ \node [block, right of=incc, node distance=2cm] (incl) {$c := 0$\\ $l := l+1$};
 
- \node [block, below of=verifw, node distance=2.5cm] (incw) {$w := w+1$};
- \node [block, left of=incw, node distance=2cm] (iterate) {Loop to {\sc synth}};
+ \node [decision, below of=verifw, node distance=3cm] (gen) {Extend succeeds?};
+ \node [block, left of=gen, node distance=2.5cm] (iterate) {Loop to {\sc synth}};
+
+ \node [block, below of=gen, node distance=2.5cm] (incw) {$w := w+1$};
 
  \path [line] (synthsucc) -- node [left] {Yes} (verif);
  \path [line] (synthsucc) -| node [above, near start] {No} (ck);
@@ -794,10 +806,15 @@ $c = l$.
  \path [line] (verif) -| node [above, near start] {No} (verifw);
 
  \path [line] (ck) -- node [left] {Yes} (incc);
- \path [line] (ck) -| node  [above, near start]  {No}(inck);
+ \path [line] (ck) -| node  [above, near start]  {No} (incl);
 
- \path [line] (verifw) -- node [right] {Yes} (incw);
- \path [line] (verifw) -| node [above, near start] {No} (iterate);
+ \path [line] (verifw) -- node [right] {Yes} (gen);
+ \path [line] (verifw) -| node [above] {No} (iterate);
+ 
+ \path [line] (gen) -| node [below, near start] {Yes} (done);
+ \path [line] (gen) -- node [right] {No} (incw);
+
+ \path [dotted, line] (iterate.west) |- (synthsucc);
 \end{tikzpicture}
 
  \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
