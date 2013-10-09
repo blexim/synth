@@ -103,7 +103,8 @@ automating programming closer to application.  We make pragmatic
 restrictions of the general synthesis problem in order to arrive at an
 effective solution.  To this end, we focus on the problem of synthesizing
 loop-free programs over machine integers and floating-point numbers from a
-specification given as program fragment.
+specification given as program fragment.  Our exploration of the program
+space ensures that our programs are minimal in size.
 
 Our work represents a substantial refinement of {\sc brahma}~\cite{brahma},
 which is the closest work to ours.  {\sc Brahma} also focuses on
@@ -211,11 +212,11 @@ current 2-QBF solvers are much less efficient than SAT solvers.
 
 When the first-order fragment of the logic is efficiently decidable and $P$ can be
 expressed as a ground term of the logic, we can use
-Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis, sketch} to
+Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
 check the validity of the synthesis formula.  The core of the CEGIS algorithm is
 a refinement loop to check the
 validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
-Fig.~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
+Algorithm~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
 components: {\sc synth} and {\sc verif}.  We track a finite (small) set of inputs
 and {\sc synth} synthesises a candidate program that is correct on just those inputs.
 {\sc Verif} then tries to verify the candidate program by searching for an input on
@@ -294,7 +295,6 @@ procedure is guaranteed to terminate.
 \EndFunction
  \end{algorithmic}
 \end{algorithm}
-
 
 
 \section{\newC}
@@ -545,16 +545,17 @@ void verif(prog_t p) {
 In order to determine the validity of the {\sc synth} formula, we can now
 check the {\sc synth} program for safety.  The {\sc synth} program is a
 \newC program, which means we can check its safety by invoking a bounded
-model checker, such as {\sc cbmc}.  Since \newC is a fragment of C,
-the {\sc synth} program can also be compiled using {\sc gcc}.
-We can add a small piece of code which enumerates each possible
-$\mathcal{L}$-program, then evaluates each program on the current test vectors by
-running {\sc synth}. If it finds a program which is correct, it emits
-the program as a candidate, just like a conventional superoptimiser.
-The combination of this enumeration function and {\sc synth} can be compiled
-to an executable using {\sc gcc}.  This leaves
-us with a very simple explicit-state model checker which decides
-safety for {\sc synth}.  We can run the explicit-state model checker
+model checker, such as {\sc cbmc}.
+
+In some cases, it is faster to use an explicit-state model checker rather
+than a bounded model checker.  This is particularly true when we are checking
+the {\sc verif} formula, where we have observed that incorrect programs tend
+to be incorrect on a large fraction of the input space.  Counterexamples
+are then very easy to find by explicit enumeration of possible inputs.
+Since \newC is a fragment of C, we can generate an explicit-state
+model checker using the same source files that we pass to {\sc cbmc}
+and adding a small function which enumerates possible inputs.
+We can run the explicit-state model checker
 in parallel with {\sc cbmc} and take the answer of whichever happens
 to terminate first, stopping the other process.  This procedure is
 depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc verif}.
@@ -599,8 +600,11 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \label{fig:synth-dfd}
 \end{figure}
 
+\subsection{Size of the Synthesis Formula}
 
-\section{Optimizations}
+
+
+\section{Parameterising the Program Space}
 
 By far the dominant factor in the total runtime of the synthesis algorithm is
 the runtime of {\sc synth}.  It is not entirely surprising that this runtime
