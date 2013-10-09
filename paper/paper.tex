@@ -603,6 +603,41 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \label{fig:synth-dfd}
 \end{figure}
 
+\subsection{Implementation Issues}
+For performance reasons, we found that adding extra constraints on the
+shape of the synthesised programs sped up synthesis.  The extra constraints
+fell into two categories: eliminating nops and instruction level symmetry reduction.
+
+\subsubsection{Remove nops}
+Many instructions in $\mathcal{L}$ are nops that do not doing anything.
+For example the instruction \verb|add x 0| does nothing.  Such instructions
+can be removed from any program they appear in to leave a semantically
+equivalent, but shorter, program.  We can therefore be sure that nops
+will never appear in any minimal program.  By adding constraints saying that
+each instruction is not a nop, we can help the underlying SAT solver's
+search, which reduces the runtime of the overall procedure.
+
+\subsubsection{Symmetry Reduction}
+There are many instructions that are equivalent to each other.  For example,
+\verb|add x y| is equivalent to \verb|add y x| -- any program containing
+one instruction could have it replaced by the other instruction and
+keep the same semantics.  We choose a single canonical instruction to
+represent all instructions in a particular equivalence class, then add
+constraints saying that no non-canonical instructions appear in the program.
+
+Our rules for excluding non-canonical instructions are:
+
+\begin{itemize}
+ \item For commutative operations, the first operand is smaller than the second.
+ \item For unary operations, the second (unused) operand is always 0.
+ \item No instruction may have two constant operands.
+ \item All program constants are distinct.
+\end{itemize}
+
+As with the nop constraints, these additional constraints do increase the
+size of the resulting SAT instance, but this still ends up as a win in
+terms of runtime.
+
 
 \section{Parameterising the Program Space}
 In order to search the space of candidate programs, we parameterise
@@ -689,7 +724,11 @@ of constants appearing in a program, we are able to use a particularly
 efficient program encoding that speeds up the synthesis procedure
 substantially.  The number of constants used in a program is the parameter $c$.
 
-$\mathcal{L}$ is a SSA, three address instruction set.  Destination registers
+$\mathcal{L}$ is a SSA, three address instruction set\footnote{
+We experimented with implementing $\mathcal{L}$ as a stack machine, expecting
+the programs to be smaller and synthesis to be faster as a result.  We saw
+the opposite effect -- the more complex interpreter led to much slower synthesis.
+}.  Destination registers
 are implicit and a fresh register exists for each instruction to write its
 output to.  A na\"{\i}ve way to encode $\mathcal{L}$ instructions is to have an
 opcode and two operands, where each operand is either a register (i.e. a program argument
@@ -723,57 +762,6 @@ As with program length we can progressively increase the number of constants in
 our program.  We start by trying to synthesise a program with no constants, then
 if that fails we try to synthesise using one constant and so on until we reach
 $c = l$.
-
-
-\subsection{Remove nops}
-Many instructions in $\mathcal{L}$ are nops that do not doing anything.
-For example the instruction \verb|add x 0| does nothing.  Such instructions
-can be removed from any program they appear in to leave a semantically
-equivalent, but shorter, program.  We can therefore be sure that nops
-will never appear in any minimal program.  By adding constraints saying that
-each instruction is not a nop, we can help the underlying SAT solver's
-search, which reduces the runtime of the overall procedure.
-
-\subsection{Symmetry Reduction}
-There are many instructions that are equivalent to each other.  For example,
-\verb|add x y| is equivalent to \verb|add y x| -- any program containing
-one instruction could have it replaced by the other instruction and
-keep the same semantics.  We choose a single canonical instruction to
-represent all instructions in a particular equivalence class, then add
-constraints saying that no non-canonical instructions appear in the program.
-
-Our rules for excluding non-canonical instructions are:
-
-\begin{itemize}
- \item For commutative operations, the first operand is smaller than the second.
- \item For unary operations, the second (unused) operand is always 0.
- \item No instruction may have two constant operands.
- \item All program constants are distinct.
-\end{itemize}
-
-As with the nop constraints, these additional constraints do increase the
-size of the resulting SAT instance, but this still ends up as a win in
-terms of runtime.
-
-\subsubsection{Implementing $\mathcal{L}$ With A Stack Machine}
-Three-address code tends to be less compact than code written for a stack
-machine.  It therefore would seem reasonable to use a stack machine to
-execute $\mathcal{L}$ programs, since we would expect to see smaller programs
-(in terms of bits used in the encoding), leading to smaller SAT instances
-and faster runtimes overall.
-
-Unfortunately we saw quite the opposite effect -- runtimes when implementing the
-$\mathcal{L}$-interpreter as a stack machine were much higher than the three-address
-code implementation.  We believe the reason for this
-effect is that the internal state of a stack based interpreter is much more complex
-to analyse than an interpreter for three-address code.  This is because a
-three-address code interpreter can be implemented using a single array whose cells are
-each written to exactly once (each cell corresponds to a register in the program).
-By contrast a stack machine interpreter has a stack as its central data structure.
-It is natural to implement this as an array, but the array's contents are accessed
-in an unpredictable, non-uniform manner as the stack pointer increases and decreases
-over the lifetime of the program.  This leads to a \emph{larger} SAT
-instance and drastically slows down the operation of the solver.
 
 \begin{figure}
 \begin{tikzpicture}{node distance=2cm, auto}
@@ -817,9 +805,6 @@ instance and drastically slows down the operation of the solver.
 
 \end{figure}
 
-TODO
-Explain parameterisations of L
-Explain how we search through the parameters
 
 \section{Floating Point}
 
