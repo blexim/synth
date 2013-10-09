@@ -829,7 +829,8 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
 \begin{algorithm}[H]
-\caption{\sc 2Sum}
+\caption{\sc 2Sum
+ \label{alg:2sum}}
 \begin{algorithmic}
 \Let{$s$}{$a+b$}
 \Let{$b'$}{$s - a$}
@@ -844,9 +845,10 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
 \hfill
 \begin{minipage}[t]{0.45\linewidth}
 \begin{algorithm}[H]
-\caption{\sc Fast2Sum}
+\caption{\sc Fast2Sum
+ \label{alg:fast2sum}}
 \begin{algorithmic}
-\Require{$a > b$}
+\Require{$a \ge b$}
 \Let{$s$}{$a + b$}
 \Let{$z$}{$s - a$}
 \Let{$t$}{$b - z$}
@@ -859,19 +861,40 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
  
  \caption{The {\sc 2Sum} algorithm for correctly rounded floating point sums.}
   \label{fig:2sum}
-
 \end{figure}
 
 
 \section{Experimental Results}
 \label{sec:experiments}
-
+We implemented our synthesis procedure as the {\sc kalashnikov} tool.  The implementation consists
+of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
+programs from~\cite{brahma}.  The code we used to perform the experiments, along with the
+benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a backend solver, we used
+{\sc CBMC} at SVN revision r2777, using Glucose 2.2~\cite{glucose} as the SAT solver.
 We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
 
-TODO
-Explain experiments
-Explain difference to Brahma (to explain timeouts)
-Run experiments on Sketch and AHA
+To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
+on the same benchmarks, as reported in~\cite{brahma}.  These experiments were performed an 8-core,
+1.86\,GHz Xeon with 4\,GB of RAM, so the timings should be comparable to within a factor of 2 or so.
+
+The results of our experiments are shown in Fig.~\ref{fig:results-table}.  On the problems for which
+we are able to synthesise a program, we take a similar time to {\sc brahma}.  We are unable to synthesise
+programs for 6 of the 25 problems that {\sc brahma} is able to solve.  We believe this to be a result of
+the slight difference in the problems solved by {\sc kalashnikov} and {\sc brahma}.  We do not ask the
+user for any information beyond the program specification, whereas {\sc brahma} asks for an extended
+component library when synthesis with the standard library fails.  This extended library contains a
+reasonable amount of information about the structure of the final program, which we believe makes
+problems P19 to P25 tractable for {\sc brahma} but intractable for us.
+
+To demonstrate the capabilities of \newC as an impementation language, we wanted to synthesise a
+non-trivial floating point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
+exact sums of floating point numbers.  The original {\sc 2Sum} algorithm is shown in Alg.~\ref{alg:2sum}.
+In the case that $a \ge b$, exact addition can be implemented in fewer instructions -- this is the
+{\sc Fast2Sum} algorithm~\cite{fast2sum}.  We used {\sc 2sum} as our specification, and
+added an assumption that $a \ge b$.  {\sc Kalashnikov} was able to synthesise and verify the
+code for {\sc Fast2Sum} from this specification in 396.07s, which we believe to be the first time
+this has been achieved.  This provides an alternative proof to~\cite{fast2sum} that {\sc Fast2Sum} is
+minimal in terms of floating point operations.
 
 \begin{figure}
 \begin{center}
@@ -924,6 +947,7 @@ p25 & {\bf 2778.70s} &- &- &- \\
 
 
 \section{Conclusion}
+
 
 \bibliography{synth}{}
 \bibliographystyle{splncs}
