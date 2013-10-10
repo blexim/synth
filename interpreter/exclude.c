@@ -5,9 +5,18 @@
 
 int exclude_1(unsigned int idx, op_t op, param_t p1, param_t p2,
     word_t consts[CONSTS]) {
-  word_t c = consts[p1];
-  sword_t s1 = (sword_t) consts[p1];
-  sword_t s2 = (sword_t) consts[p2];
+  word_t c = 0;
+  sword_t s1 = 0;
+  sword_t s2 = 0;
+
+  if (ISCONST(p1)) {
+    c = consts[p1];
+    s1 = (sword_t) consts[p1];
+  }
+
+  if (ISCONST(p2)) {
+    s2 = (sword_t) consts[p2];
+  }
 
   // Exclude anything with an invalid opcode...
   if (op > MAXOPCODE) {

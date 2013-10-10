@@ -13,15 +13,17 @@
 #define SHL 9
 #define LSHR 10
 #define ASHR 11
-#define LE 12
-#define LT 13
-#define SLE 14
-#define SLT 15
+#define EQ 12
+#define NE 13
+#define LE 14
+#define LT 15
+#define SLE 16
+#define SLT 17
 
-#define FPLUS 16
-#define FMINUS 17
-#define FMUL 18
-#define FDIV 19
+#define FPLUS 18
+#define FMINUS 19
+#define FMUL 20
+#define FDIV 21
 
 #define ARG 0
 #define CONST 1

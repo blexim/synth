@@ -10,9 +10,12 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   param_t a1, a2;
   word_t p1, p2, res;
   sword_t i1, i2;
-  fword_t f1, f2;
   word_t A[SZ + NARGS + CONSTS];
+
+#ifdef FLOAT
+  fword_t f1, f2;
   fi_t fi;
+#endif
 
   unsigned int i;
 
@@ -45,11 +48,13 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     i2 >>= (32 - WIDTH);
 #endif
 
+#ifdef FLOAT
     fi.x = p1;
     f1 = fi.f;
 
     fi.x = p2;
     f2 = fi.f;
+#endif
 
     switch(op) {
     case PLUS:
@@ -100,6 +105,20 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     case ASHR:
       i2 %= WIDTH;
       res = (word_t) (i1 >> i2);
+      break;
+    case EQ:
+      if (p1 == p2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
+      break;
+    case NE:
+      if (p1 != p2) {
+        res = 1;
+      } else {
+        res = 0;
+      }
       break;
     case LE:
       if (p1 <= p2) {
