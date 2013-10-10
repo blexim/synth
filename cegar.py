@@ -241,10 +241,6 @@ def cegar(checker):
 
     n += 1
 
-    if len(tests) > 3*codelen and False:
-      tests = gentests(wordlen, codelen)
-
-
     if args.args.verbose > 1:
       print "Test vectors: %s" % str(tests)
 
@@ -331,6 +327,7 @@ def cegar(checker):
         print "Fails for %s\n" % str(test)
 
       tests.append(test)
+      tests.append(geninput(wordlen))
 
   perf.end()
   endtime = time.time()
@@ -446,6 +443,28 @@ def gentests(wordlen, codelen):
       slices.append(thisslice)
 
   return list(itertools.product(*slices))
+
+input_cnt = 0
+
+def geninput(wordlen):
+  global input_cnt
+
+  k = wordlen / 2
+  numargs = args.args.args
+  ret = []
+
+  for i in xrange(numargs):
+    x = random.randint(0, (2**wordlen) - 1)
+
+    x &= ~((1 << k) - 1)
+    x |= input_cnt
+
+    ret.append(x)
+
+  input_cnt += 1
+  input_cnt %= (1 << k)
+
+  return ret
 
 if __name__ == '__main__':
   args.args = args.argparser.parse_args()
