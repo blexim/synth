@@ -29,7 +29,7 @@
  #define PWIDTH WIDTH
 #endif
 
-#define MAXOPCODE 19
+#define MAXOPCODE 21
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 5
