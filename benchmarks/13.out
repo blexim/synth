@@ -60,7 +60,7 @@ Fastest checker: cbmc
 
 
 
-Finished in 8.90s
+Finished in 10.24s
 
 t1 = a1 >>> 0x1f
 t2 = t1 < a1
@@ -69,8 +69,8 @@ t3 = t2 + t1
 Perf counters:
 {'cbmc': 3, 'explicit': 10, 'iterations': 7}
 Perf timers:
-verify: 1.45s
-checker: 8.68s
-generalize: 1.10s
-_: 8.90s
-synth: 7.46s
+verify: 1.36s
+checker: 10.05s
+generalize: 1.05s
+_: 10.24s
+synth: 8.88s

@@ -42,21 +42,7 @@ Increasing sequence length to 3
 
 []
 Fastest checker: cbmc
-t1 = a1 >>> 0xa
-t2 = t1 + a1
-t3 = t1 ^ t2
-Fastest checker: explicit
-Correct for wordlen=4
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Couldn't generalize :-(
-Excluding current sequence
-[]
-Fastest checker: cbmc
-t1 = a1 >>> 0x3
+t1 = a1 >>> 0x9
 t2 = a1 + t1
 t3 = t1 ^ t2
 Fastest checker: explicit
@@ -65,7 +51,6 @@ Fastest checker: explicit
 Trying to generalize...
 Fastest checker: explicit
 Fastest checker: explicit
-Fastest checker: explicit
 Fastest checker: cbmc
 
 
@@ -74,17 +59,17 @@ Fastest checker: cbmc
 
 
 
-Finished in 13.64s
+Finished in 10.86s
 
-t1 = a1 >>> 0x1f
+t1 = a1 >>> 0x99999999
 t2 = a1 + t1
 t3 = t1 ^ t2
 
 Perf counters:
-{'cbmc': 5, 'explicit': 14, 'exclusions': 1, 'iterations': 8}
+{'cbmc': 4, 'explicit': 8, 'iterations': 7}
 Perf timers:
-verify: 2.25s
-checker: 13.37s
-generalize: 1.56s
-_: 13.64s
-synth: 11.38s
+verify: 1.27s
+checker: 10.69s
+generalize: 0.94s
+_: 10.86s
+synth: 9.58s
