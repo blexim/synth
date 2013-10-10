@@ -53,7 +53,7 @@ class Checker(object):
     nres = args.args.res
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
-    ewidth = width/4
+    ewidth = max(width/4, 1)
     mwidth = width - ewidth - 1
     self.verif = verif
 
