@@ -218,15 +218,15 @@ current 2-QBF solvers are much less efficient in practice than SAT solvers.
 
 \subsection{CEGIS}
 
-When the first-order fragment of the logic is efficiently decidable and $P$ can be
-expressed as a ground term of the logic, we can use
+When the quantifier free first-order fragment of the logic is efficiently decidable and
+$P$ can be expressed as a quantifier free term of the logic, we can use
 Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
 check the validity of the synthesis formula.  The core of the CEGIS algorithm is
 a refinement loop to check the
 validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
 Algorithm~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
-components: {\sc synth} and {\sc verif}.  We track a finite (small) set of inputs
-and {\sc synth} synthesises a candidate program that is correct on just those inputs.
+components: {\sc synth} and {\sc verif}.  We track a finite (small) subset of test inputs
+and {\sc synth} synthesises a candidate program that is correct on just those tests.
 {\sc Verif} then tries to verify the candidate program by searching for an input on
 which the candidate program does not satisfy the specification.  If no such input
 can be found, the candidate program is correct.  Otherwise, the new input is added
@@ -366,7 +366,7 @@ fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
 a Bounded Model Checker with an unrolling bound of $k$ will be a complete
 decision procedure for the safety of the program.  For a \newC program of
 size $l$ and with largest loop bound~$k$, a Bounded Model Checker will
-create a SAT problem of size $O(lk) = O(l)$.  Conversely, a SAT problem
+create a SAT problem of size $O(lk)$.  Conversely, a SAT problem
 of size $s$ can be converted trivially into a loop-free \newC program
 of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
 which means it can be decided fairly efficiently for many practical
@@ -629,7 +629,7 @@ Our rules for excluding non-canonical instructions are:
  \item For commutative operations, the first operand is smaller than the second.
  \item For unary operations, the second (unused) operand is always 0.
  \item No instruction may have two constant operands.
- \item All program constants are distinct.
+ \item All constants in the constant table are distinct.
 \end{itemize}
 
 As with the nop constraints, these additional constraints do increase the
@@ -686,7 +686,7 @@ full-sized word.
 
 The only wrinkle here is that we will sometimes synthesise a program containing
 constants.  If we have synthesised a program for with $w=k$,
-the constants in the program will be $k$ bits wide.  To generalize the program
+the constants in the program will be $k$-bits wide.  To generalize the program
 to an $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit-wide
 numbers from $k$-bit ones.  We have several strategies for this and
 just try each in turn.  The strategies are shown in Fig.~\ref{fig:generalize},
@@ -716,7 +716,7 @@ When this happens we are forced to increase $w$ and continue synthesising.
 \subsection{Number of Constants: $c$}
 Instructions in $\mathcal{L}$ take either one or two operands.
 Since any instruction whose operands are all constants can always be
-eliminated (since its result is a constant), we know that a program
+eliminated (since its result is a constant), we know that a loop-free program
 of minimal length will not contain any instructions with two constant
 operands.  Therefore the number of constants which can appear in
 a minimal program of length $l$ is at most $2l$.  By minimising the number
@@ -792,7 +792,7 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
  \node [block, right of=incc, node distance=2cm] (incl) {$c := 0$\\ $l := l+1$};
 
  \node [decision, below of=verifw, node distance=3cm] (gen) {Extend succeeds?};
- \node [block, left of=gen, node distance=2.5cm] (iterate) {Loop to {\sc synth}};
+ \node [block, left of=gen, node distance=2.5cm] (iterate) {Parameters unchanged};
 
  \node [block, below of=gen, node distance=2.5cm] (incw) {$w := w+1$};
 
@@ -811,7 +811,7 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
  \path [line] (gen) -| node [below, near start] {Yes} (done);
  \path [line] (gen) -- node [right] {No} (incw);
 
- \path [dotted, line] (iterate.west) |- (synthsucc);
+ %\path [dotted, line] (iterate.west) |- (synthsucc);
 \end{tikzpicture}
 
  \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
