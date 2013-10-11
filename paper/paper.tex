@@ -12,6 +12,7 @@
 \usepackage{pgf}
 \usepackage[noend]{algpseudocode}
 \usepackage{algorithm}
+\usepackage{amsfonts}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
@@ -892,18 +893,20 @@ minimal in terms of floating point operations.
 
 \begin{figure}
 \begin{center}
+{\tiny
 \include{figures/results_table}
+}
 \end{center}
-
-\caption{Times for synthesis of machine integer benchmarks from {\sc brahma} PLDI paper}
-\label{fig:results-table}
+\caption{Time for synthesis of machine integer benchmarks from {\sc brahma} PLDI paper
+ \label{fig:results-table}}
 \end{figure}
 
 \begin{figure}
 \begin{center}
+{\tiny
 \include{figures/icse_results_table}
+}
 \end{center}
-
 \caption{Times for synthesis of machine integer benchmarks from {\sc brahma} ICSE paper}
 \label{fig:icse-results-table}
 \end{figure}

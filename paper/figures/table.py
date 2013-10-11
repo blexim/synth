@@ -96,9 +96,9 @@ def make_graph():
   kalashnikov = [load_file("%s/%d.out" % (benchmark_dir, i))
       for i in xrange(1, len(brahma) + 1)]
 
-  print "\\begin{tabular}{l||rrr|rrr}"
-  print "Problem & \multicolumn{3}{c}{\\sc Brahma} & \multicolumn{3}{|c}{\\sc Kalashnikov} \\\\"
-  print "        & Iter. & Runtime & \#Lines & Iter. & Runtime & \#Lines \\\\"
+  print "\\begin{tabular}{l||rrc|rr}"
+  print "Problem & \multicolumn{3}{c}{\\sc Brahma} & \multicolumn{2}{|c}{\\sc Kalashnikov} \\\\"
+  print "        & Runtime & \#Lines & Aut. & Runtime & \#Lines \\\\"
 
   print "\\hline"
   print "\\hline"
@@ -114,7 +114,8 @@ def make_graph():
 
 
     def f(t, its, insts):
-      ret = '%d & ' % its
+      #ret = '%d & ' % its
+      ret = ''
 
       if t == mintime:
         ret += "{\\bf %.02fs} &" % t
@@ -133,6 +134,12 @@ def make_graph():
       return ret
 
     line += f(brt, brit, brinsts)
+
+    if i <= 17:
+      line += ' \\checkmark & '
+    else:
+      line += ' & '
+
     line += f(kaltimes['_'], kalcnt['iterations'], kalcnt['insts'])
 
     line = line[:-1]
