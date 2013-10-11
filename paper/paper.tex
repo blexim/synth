@@ -153,9 +153,9 @@ several ``holes'', which {\sc sketch} fills in to meet the specification,
 again using the CEGIS algorithm.
 
 Program synthesis is closely related to
-superoptimisation~\cite{superoptimisation}, which is the problem of taking a
+superoptimisation, which is the problem of taking a
 segment of code, usually written in C, and finding a minimal program which
-has the same functionality.  The {\sc aha}~\cite{aha} tool and the GNU
+has the same functionality.  The {\sc aha}~\cite{aha-paper,aha-website} tool and the GNU
 superoptimiser~\cite{gnu-superoptimiser} both perform superoptimisation of C
 programs, both by enumerating possible programs and testing them on suitable
 inputs.  This search can be compiled down to native code using an optimising
@@ -851,7 +851,7 @@ We implemented our synthesis procedure as the {\sc kalashnikov} tool.  The imple
 of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
 programs from~\cite{brahma}.  The code we used to perform the experiments, along with the
 benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a backend solver, we used
-{\sc CBMC} at SVN revision r2777, using Glucose 2.2~\cite{glucose} as the SAT solver.
+{\sc CBMC} at SVN revision r2777, using Glucose 2.2~\cite{glucose-paper} as the SAT solver.
 We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
 
 To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
@@ -878,6 +878,8 @@ semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
 
 {\bf {\sc Kalashnikov} is unable to synthesise a program:}
 This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
+It is not too surprising that there are some cases that are much harder to solve without manual
+intervention, and these 8 tests fall into this category.
 
 {\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
 This happens in 4 of the 29 cases.  For example the specification for p24 of Fig.~\ref{fig:icse-results-table} 
@@ -945,6 +947,7 @@ minimal in terms of floating point operations.
 
 
 \section{Conclusion}
+
 
 \paragraph{Future Work}
 Another benefit of using \newC as our logic is that it would be easy to
