@@ -431,7 +431,7 @@ Our encoding is the following:
 %
 \begin{itemize}
  \item $I$ is the set of $N$-tuples of 32-bit bitvectors.  This is written in \newC as the type \verb|int[N]|.
- \item $O$ is the set of $M$-tuples of 32-bit bitvectors, which si writen in \newC as the type \verb|int[M]|.
+ \item $O$ is the set of $M$-tuples of 32-bit bitvectors, which is written in \newC as the type \verb|int[M]|.
  \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
  by the user.
@@ -623,17 +623,17 @@ a program at the lowest point on this lattice and increase the
 parameters of~$\mathcal{L}$ until we reach a point at which
 the synthesis succeeds.
 
-As well as giving us an automatic search procedure, this paramterisation
+As well as giving us an automatic search procedure, this parameterisation
 greatly increases the efficiency of our system since languages
 low down the lattice are very easy to decide safety for.  If a program
 can be synthesised in a low-complexity language, the whole procedure
 finishes much faster than if synthesis had been attempted in a
-high-complexity language.  Our paramterisation is constructed
+high-complexity language.  Our parameterisation is constructed
 in such a way that the programs we synthesise are guaranteed to be
 minimal in length.
 
 \subsection{Program Length: $l$}
-The first paramter we introduce is program length, denoted by $l$.
+The first parameter we introduce is program length, denoted by $l$.
 At each iteration we synthesise programs of length exactly $l$.
 We start with $l = 1$ and increment $l$ by $1$ when we have determined
 that no program of length $l$ can satisfy the specification.  When we do
