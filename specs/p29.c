@@ -21,5 +21,9 @@ int check(word_t args[1], word_t res[1])
       else {
         z=y << 3; a=!a; b=!b; } } }
 
+#ifdef SEARCH
+  y &= ((1 << WIDTH) -1);
+#endif
+
   return y == r;
 }
