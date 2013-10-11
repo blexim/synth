@@ -160,9 +160,9 @@ again using the CEGIS algorithm.
 Program synthesis is closely related to
 superoptimisation, which is the problem of taking a
 segment of code, usually written in C, and finding a minimal program which
-has the same functionality.  The {\sc aha}~\cite{aha-paper,aha-website} tool and the GNU
-superoptimiser~\cite{gnu-superoptimiser} both perform superoptimisation of C
-programs, both by enumerating possible programs and testing them on suitable
+has the same functionality.  The {\sc aha}~\cite{aha-paper} tool, GNU
+superoptimiser~\cite{gnu-superoptimiser} and TOAST~\cite{toast} all perform superoptimisation of C
+programs by enumerating possible programs and testing them on suitable
 inputs.  This search can be compiled down to native code using an optimising
 compiler, so for short programs the method is extremely fast.  However, this
 method is impractical for synthesising longer programs because of the
@@ -846,7 +846,8 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
 \label{sec:experiments}
 We implemented our fully automatic synthesis procedure as the {\sc kalashnikov} tool.  The implementation consists
 of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
-programs from~\cite{brahma} and~\cite{brahma-icse}.  The code we used to perform the experiments, along with the
+programs from~\cite{brahma} and~\cite{brahma-icse}.  The majority of these are ``bit twiddling hacks'' taken from
+Hacker's Delight~\cite{hackers-delight}.  The code we used to perform the experiments, along with the
 benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a backend solver, we used
 {\sc CBMC}~\cite{cbmc-website} at SVN revision r2777, with Glucose 2.2~\cite{glucose-paper} as the SAT solver.
 We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
