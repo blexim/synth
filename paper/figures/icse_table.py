@@ -123,9 +123,9 @@ def make_graph():
   kalashnikov = [load_file("%s/%d.out" % (benchmark_dir, mappings[i]))
       for i in xrange(1, len(brahma) + 1)]
 
-  print "\\begin{tabular}{l||rr|rr|rr}"
-  print "Problem & \multicolumn{2}{c}{Random {\\sc Brahma}} & \multicolumn{2}{|c}{Semibiased {\sc Brahma}} & \multicolumn{2}{|c}{\\sc Kalashnikov} \\\\"
-  print "        & Runtime & \#Lines & Runtime & \#Lines & Runtime & \#Lines \\\\"
+  print "\\begin{tabular}{l||rr|rrc|rr}"
+  print "Problem & \multicolumn{2}{c}{Random {\\sc Brahma}} & \multicolumn{3}{|c}{Semibiased {\sc Brahma}} & \multicolumn{2}{|c}{\\sc Kalashnikov} \\\\"
+  print "        & Runtime & \#Lines & Runtime & \#Lines & Aut. & Runtime & \#Lines \\\\"
 
   print "\\hline"
   print "\\hline"
@@ -166,6 +166,12 @@ def make_graph():
 
     line += f(brt, brl)
     line += f(semitime, brl)
+
+    if breq:
+      line += ' & '
+    else:
+      line += '\\xmark & '
+
     line += f(kaltimes['_'], kalcnt['insts'])
 
     line = line[:-1]
