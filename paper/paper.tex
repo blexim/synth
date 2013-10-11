@@ -306,7 +306,55 @@ procedure is guaranteed to terminate.
 \end{algorithm}
 
 
-\section{\newC}
+\section{The Concrete Algorithm for Bitvector Programs}
+
+One area in which program synthesis can shine is in producing very small,
+intricate programs that manipulate bitvectors.  An example of such a program
+is shown in Fig.~\ref{fig:bitvector-program}.  This program takes a machine word
+as input and clears every bit except for the least significant bit that was set.
+Even though this program is extremely short, it is fairly difficult for a human
+to see what it does.  It is even more difficult for a human to come up with such
+minimal code -- a natural solution for this problem might be to use a loop which
+iterates over all of the bits in the word.  The program is so concise because it
+takes advantage of the low-level details of the machine, such as the fact that
+signed integers are stored in two's complement form.
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\linewidth}
+ \begin{lstlisting}[language=C]
+int isolate_lsb(int x) {
+  return x & -x;
+}
+ \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+ 
+Example:
+
+\hrule
+
+\begin{tabular}{llcccccccc}
+ x       & = & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+ -x      & = & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 \\
+ x \& -x & = & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+\end{tabular}
+\end{minipage}
+
+
+ \caption{A tricky bitvector program}
+  \label{fig:bitvector-program}
+\end{figure}
+
+
+To synthesise tricky bitvector programs like this, it is natural for us to
+work in the logic of quantifier-free propositional formulae and to use a
+propositional SAT or SMT-$\mathcal{BV}$ solver as the decision procedure. 
+However, we propose a slightly different tack, which is to use \newC as
+our underlying logic.
+
+
+\subsection{\newC}
 \label{sec:logic}
 
 We use a fragment of C as our underlying logic.  We will refer to this fragment
@@ -373,70 +421,8 @@ of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
 which means it can be decided fairly efficiently for many practical
 instances.
 
-\subsection{Why use \newC instead of SAT?}
-To misquote David Wheeler: ``all problems in computer science can be solved by
-another level of abstraction''~\cite{beautiful-code}.  \newC serves as
-an abstraction of SAT.  We can think of SAT as an assembly language and
-{\sc cbmc} as a compiler for \newC to this assembly language.  The benefits
-of using \newC as our logic rather than SAT are very similar to the benefits of
-writing code in a high level language rather than assembly language.
-Some of the more significant advantages are:
 
-\begin{itemize}
- \item The code is more readable and easier to debug.
- \item The code is much more concise.
- \item We can take advantage of new optimisations, different model
- checkers and different back-ends (SAT, SMT, ACDCL, etc.) for free.
-\end{itemize}
-
-
-\section{The Concrete Algorithm for Bitvector Programs}
-
-One area in which program synthesis can shine is in producing very small,
-intricate programs that manipulate bitvectors.  An example of such a program
-is shown in Fig.~\ref{fig:bitvector-program}.  This program takes a machine word
-as input and clears every bit except for the least significant bit that was set.
-Even though this program is extremely short, it is fairly difficult for a human
-to see what it does.  It is even more difficult for a human to come up with such
-minimal code -- a natural solution for this problem might be to use a loop which
-iterates over all of the bits in the word.  The program is so concise because it
-takes advantage of the low-level details of the machine, such as the fact that
-signed integers are stored in two's complement form.
-
-\begin{figure}
-\centering
-\begin{minipage}{0.45\linewidth}
- \begin{lstlisting}[language=C]
-int isolate_lsb(int x) {
-  return x & -x;
-}
- \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.45\linewidth}
- 
-Example:
-
-\hrule
-
-\begin{tabular}{llcccccccc}
- x       & = & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 \\
- -x      & = & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 \\
- x \& -x & = & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
-\end{tabular}
-\end{minipage}
-
-
- \caption{A tricky bitvector program}
-  \label{fig:bitvector-program}
-\end{figure}
-
-
-To synthesise tricky bitvector programs like this, it is natural for us to
-work in the logic of quantifier-free propositional formulae and to use a
-propositional SAT or SMT-$\mathcal{BV}$ solver as the decision procedure. 
-However, we propose a slightly different tack, which is to use \newC as
-our underlying logic.
-
+\subsection{Encoding into \newC}
 To instantiate the abstract synthesis algorithm in \newC we must express $I, O,
 \sigma$ and $P$ in \newC, then ensure that we can express the validity of the
 synthesis formula as a safety property of the resulting \newC program.
@@ -444,16 +430,20 @@ synthesis formula as a safety property of the resulting \newC program.
 Our encoding is the following:
 %
 \begin{itemize}
- \item $I$ is the type \verb|int[N]|.
- \item $O$ is the type \verb|int[M]|.
- \item $\sigma$ is a function with signature
+ \item $I$ is the set of $N$-tuples of 32-bit bitvectors.  This is written in \newC as the type \verb|int[N]|.
+ \item $O$ is the set of $M$-tuples of 32-bit bitvectors, which si writen in \newC as the type \verb|int[M]|.
+ \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
  by the user.
  \item $P$ is written in a simple RISC-like language $\mathcal{L}$.  Programs in $\mathcal{L}$
- have the type \verb|prog_t|.
- \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The signature
- of this interpreter is \\
+ have type $I \rightarrow O$ and
+ are represented in \newC as objects of type \verb|prog_t|.
+ \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
+ this interpreter is $(I \rightarrow O) \times I \rightarrow O$ and the signature
+ of the \newC implementation of this interpreter is \\
  \verb|void exec(prog_t p, int in[N], int out[M])|.
+ 
+ The \verb|out| parameter is an output that gets written to by the interpreter.
 \end{itemize}
 
 \begin{figure}
@@ -610,6 +600,7 @@ keep the same semantics.  We choose a single canonical instruction to
 represent all instructions in a particular equivalence class, then add
 constraints saying that no non-canonical instructions appear in the program.
 
+\iffalse
 Our rules for excluding non-canonical instructions are:
 
 \begin{itemize}
@@ -622,7 +613,7 @@ Our rules for excluding non-canonical instructions are:
 As with the nop constraints, these additional constraints do increase the
 size of the resulting SAT instance, but this still ends up as a win in
 terms of runtime.
-
+\fi
 
 \section{Parameterising the Program Space}
 In order to search the space of candidate programs, we parameterise
