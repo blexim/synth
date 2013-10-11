@@ -854,8 +854,8 @@ be noted that there is a lot of overlap between the two sets of benchmarks and t
 We also ran {\sc AHA} on our benchmarks and found that on the small problems (those with 2-instruction solutions)
 {\sc AHA} found a single correct solution in negligible time.  On the larger benchmarks, candidate solutions
 were still found rapidly (around 10\,s for the 3-instruction programs) but the number of candidates was
-too large to practically check them all.  For example on p12, {\sc AHA} found 2284262 candidate
-programs in 12.13\,s.
+too large to practically check them all.  For example, {\sc AHA} found 2284262 candidate
+programs in 12.13\,s for p12.
 
 We do not compare {\sc Kalashnikov} to {\sc Sketch}~\cite{sketch}, since the problem domains are
 too different to make a meaningful comparison.
@@ -866,17 +866,17 @@ The results include the runtime for each tool, the number of lines in the synthe
 On both sets of benchmarks, the results can be broadly divided into three categories:
 
 {\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
-This represent the majority of cases.  A statistical breakdown of this case is shown in Fig~\ref{fig:stats-table}.
+This represents the majority of cases.  A statistical breakdown of this case is shown in Fig~\ref{fig:stats-table}.
 {\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and similarly to
 semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
 
 {\bf {\sc Kalashnikov} is unable to synthesise a program:}
 This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
-It is not too surprising that there are some cases that are much harder to solve without manual
-intervention, and these 8 tests fall into this category.
+The existence of instances that are beyond the reach of current automatic
+methods, and thus require manual intervention, is to be expected. A total of 8 tests fall into this category.
 
 {\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
-This happens in 4 of the 29 cases.  For example the specification for p24 of Fig.~\ref{fig:icse-results-table} 
+This happens in 4 of the 29 cases.  For instance, the specification for p24 of Fig.~\ref{fig:icse-results-table} 
 is a segment of obfuscated C code taken from a piece of malware.  The code uses an apparently unbounded loop
 to multiply its input by the constant 45.  {\sc Brahma} synthesises an equivalent program consisting of
 4 instructions, whereas {\sc Kalashnikov} synthesises the single instruction \texttt{mul x 45}.
