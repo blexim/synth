@@ -327,7 +327,6 @@ def cegar(checker):
         print "Fails for %s\n" % str(test)
 
       tests.append(test)
-      tests.append(geninput(wordlen))
 
   perf.end()
   endtime = time.time()
@@ -421,6 +420,7 @@ def gentests(wordlen, codelen):
   numargs = args.args.args
   numtests = min(args.args.tests, 2**(wordlen * numargs))
   numslice = int(numtests**(1.0/numargs))
+  k = 3
 
   # See if we can exhaust the state space...
   if (1 << (wordlen*numargs)) <= numtests:
@@ -440,31 +440,11 @@ def gentests(wordlen, codelen):
     for i in xrange(numargs):
       thisslice = [random.randint(0, (2**wordlen) - 1)
                     for j in xrange(numslice)]
+      thisslice = [(x & ((1 << k) - 1)) | i for x in thisslice]
+
       slices.append(thisslice)
 
   return list(itertools.product(*slices))
-
-input_cnt = 0
-
-def geninput(wordlen):
-  global input_cnt
-
-  k = wordlen / 2
-  numargs = args.args.args
-  ret = []
-
-  for i in xrange(numargs):
-    x = random.randint(0, (2**wordlen) - 1)
-
-    x &= ~((1 << k) - 1)
-    x |= input_cnt
-
-    ret.append(x)
-
-  input_cnt += 1
-  input_cnt %= (1 << k)
-
-  return ret
 
 if __name__ == '__main__':
   args.args = args.argparser.parse_args()
