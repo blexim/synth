@@ -97,7 +97,7 @@ programs acting on machine integers, and a previously un-synthesised floating-po
 
 \section{Introduction}
 
-Program synthesis is the mechanized construction of software that provably
+Program synthesis is the mechanised construction of software that provably
 satisfies a given specification.  Synthesis tools promise to relieve the
 programmer from thinking about \emph{how} the problem is to be solved;
 instead, the programmer only provides a compact description of \emph{what}
@@ -110,14 +110,14 @@ automated theorem proving~\cite{manna-waldinger,proof-planning}.
 In this paper, we present a new method that brings the promise of
 automating programming closer to application.  We make pragmatic
 restrictions to the general synthesis problem in order to arrive at an
-effective solution.  To this end, we focus on the problem of synthesizing
+effective solution.  To this end, we focus on the problem of synthesising
 loop-free programs over machine integers and floating-point numbers from a
 specification given as program fragment.  Our exploration of the program
 space ensures that our programs are minimal in size.
 
 Our work represents a substantial refinement of {\sc brahma}~\cite{brahma},
 which is the closest work to ours.  {\sc Brahma} also focuses on
-synthesizing loop-free machine-integer programs.  In~\cite{brahma}, the
+synthesising loop-free machine-integer programs.  In~\cite{brahma}, the
 authors characterise the program synthesis problem as a second-order
 $\exists \forall$ formula and use a variation of the CEGIS algorithm,
 introduced in~\cite{lezama-thesis}, for solving
@@ -135,7 +135,7 @@ synthesis amounts to solving an $\exists \forall$ formula that is quadratic
 in the size of the component library.
 
 We require the user to supply a program specification written in C, but then
-ask nothing more of her.  We parameterise the space of programs in such a way
+ask nothing more of her.  We parametrise the space of programs in such a way
 that it can be explored automatically, rather than asking a human for hints.
 Our program encoding generates an $\exists
 \forall$ formula that is \emph{linear} in the length of the shortest program
@@ -175,9 +175,9 @@ in the size of the synthesised program.  This improves over the
 encoding of~\cite{brahma}, which generates a $\exists \forall$ formula
 that is quadratic in the size of the synthesised program.
 
-We introduce a novel parameterisation of the programming language
+We introduce a novel parametrisation of the programming language
 used to express our synthesised programs.
-This parameterisation allows us to efficiently explore the program space
+This parametrisation allows us to efficiently explore the program space
 without relying on human guidance and also ensures that our programs
 are of minimal length.
 
@@ -190,7 +190,7 @@ a specification.
 Sec.~\ref{sec:abstract-algorithm} and give details of our new algorithm in
 Sec.~\ref{sec:concrete-algorithm}.  We use a fragment of the C programming language
 as our underlying logic, which is elaborated in Sec.~\ref{sec:logic}. We
-summarize the results of our experiments in Sec.~\ref{sec:experiments}.
+summarise the results of our experiments in Sec.~\ref{sec:experiments}.
 
 \section{The Basic Synthesis Algorithm}
 \label{sec:abstract-algorithm}
@@ -198,7 +198,7 @@ summarize the results of our experiments in Sec.~\ref{sec:experiments}.
 \subsection{The Synthesis Formula}
 \label{sec:abstract-formula}
 
-Our task is to find a program that satisfies some specification.  We can formalize this
+Our task is to find a program that satisfies some specification.  We can formalise this
 notion as follows: fix an input set $I$ and an output set $O$.  Specifications $\sigma$
 relate inputs and outputs, and programs $P$ map an input to an output:
 %
@@ -293,7 +293,7 @@ procedure is guaranteed to terminate.
 
   \matrix[nodes={draw, fill=none, scale=1, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
           row sep=2cm, column sep=3cm] {
-   \node (synth) {Synthesize};
+   \node (synth) {Synthesise};
    &
    \node (verif) {Verify}; %\\
    %\node[draw=none] {};
@@ -447,7 +447,7 @@ Our encoding is the following:
  are represented in \newC as objects of type \verb|prog_t|.
  \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
  this interpreter is $(I \rightarrow O) \times I \rightarrow O$ and the \newC signature is \\
- \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an ouput parameter.
+ \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
 \end{itemize}
 
 \begin{figure}
@@ -620,20 +620,20 @@ size of the resulting SAT instance, but this still ends up as a win in
 terms of runtime.
 \fi
 
-\section{Parameterising the Program Space}
-In order to search the space of candidate programs, we parameterise
+\section{Parametrise the Program Space}
+In order to search the space of candidate programs, we parametrise
 the language~$\mathcal{L}$, inducing a lattice of progressively
 more expressive languages.  We start by attempting to synthesise
 a program at the lowest point on this lattice and increase the
 parameters of~$\mathcal{L}$ until we reach a point at which
 the synthesis succeeds.
 
-As well as giving us an automatic search procedure, this parameterisation
+As well as giving us an automatic search procedure, this parametrisation
 greatly increases the efficiency of our system since languages
 low down the lattice are very easy to decide safety for.  If a program
 can be synthesised in a low-complexity language, the whole procedure
 finishes much faster than if synthesis had been attempted in a
-high-complexity language.  Our parameterisation is constructed
+high-complexity language.  Our parametrisation is constructed
 in such a way that the programs we synthesise are guaranteed to be
 minimal in length.
 
@@ -863,13 +863,13 @@ too large to practically check them all.  For example, {\sc AHA} found 2284262 c
 programs in 12.13\,s for p12.
 
 We do not compare {\sc Kalashnikov} to {\sc Sketch}~\cite{sketch}, since the problem domains are
-too different to make a meaningful comparison.
+too dissimilar to make a meaningful comparison.
 
 The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
 The results include the runtime for each tool, the number of lines in the synthesised program and whether
 {\sc Brahma} was able to complete the synthesis completely automatically (the Aut. column).  A blank
 in the Aut. column means that {\sc Brahma} was able to synthesise the program automatically, and a \xmark
-means that user assistance was required.
+\,means that user assistance was required.
 On both sets of benchmarks, the results can be broadly divided into three categories:
 
 {\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
