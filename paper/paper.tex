@@ -389,20 +389,6 @@ Some of the more significant advantages are:
  checkers and different back-ends (SAT, SMT, ACDCL, etc.) for free.
 \end{itemize}
 
-To illustrate some of these points, we were able to implement a first
-version of {\sc kalashnikov} in around 150 lines of code, which took around
-two hours to write.  The resulting code was easy to modify, optimise and
-debug.  The current version, which includes support for floating-point
-arithmetic, several optimisations and two model checking algorithms, is
-still less than 1200 lines of code (600 lines of \newC and 600 lines of
-Python).
-
-Another benefit of using \newC as our logic is that it would be easy to
-automatically extract specifications from C programs, which would be
-useful in the context of superoptimisation.  This is because \newC is
-a relatively large fragment of C, so we anticipate that many interesting
-sections of real code will already be~\newC.
-
 
 \section{The Concrete Algorithm for Bitvector Programs}
 
@@ -869,17 +855,34 @@ benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a b
 We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
 
 To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
-on the same benchmarks, as reported in~\cite{brahma}.  These experiments were performed an 8-core,
-1.86\,GHz Xeon with 4\,GB of RAM, so the timings should be comparable to within a factor of 2 or so.
+on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}.  These experiments were performed an 8-core,
+1.86\,GHz Xeon with 4\,GB of RAM.  Although there are 49 results shown across the two tables, it should
+be noted that there is a lot of overlap between the two sets of benchmarks and that there are only
+29 unique benchmarks altogether.
 
-The results of our experiments are shown in Fig.~\ref{fig:results-table}.  On the problems for which
-we are able to synthesise a program, we take a similar time to {\sc brahma}.  We are unable to synthesise
-programs for 6 of the 25 problems that {\sc brahma} is able to solve.  We believe this to be a result of
-the slight difference in the problems solved by {\sc kalashnikov} and {\sc brahma}.  We do not ask the
-user for any information beyond the program specification, whereas {\sc brahma} asks for an extended
-component library when synthesis with the standard library fails.  This extended library contains a
-reasonable amount of information about the structure of the final program, which we believe makes
-problems P19 to P25 tractable for {\sc brahma} but intractable for us.
+We also ran {\sc AHA} on our benchmarks and found that on the small problems (those with 2-instruction solutions)
+{\sc AHA} found a single correct solution in negligible time.  On the larger benchmarks, candidate solutions
+were still found rapidly (around 10\,s for the 3-instruction programs) but the number of candidates was
+too large to practically check them all.  For example on p12, {\sc AHA} found 2284262 candidate
+programs in 12.13\,s.
+
+The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
+The results include the runtime for each tool, the number of lines in the synthesised program and whether
+{\sc Brahma} was able to complete the synthesis completely automatically (the Aut. column).
+On both sets of benchmarks, the results can be broadly divided into three categories:
+
+\paragraph{Problems where both {\sc Brahma} and {\sc Kalashnikov} synthesise minimal programs}
+This represent the majority of cases.  A statistical breakdown of this case is shown in Fig~\ref{fig:stats-table}.
+{\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and very similarly to
+semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
+
+\paragraph{Problems where {\sc Kalashnikov} is unable to synthesise a program}
+This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
+
+\paragraph{Problems where {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}}
+This happens in 4 of the 29 cases.  For example p24 in Fig.~\ref{fig:icse-results-table} uses
+an obfuscated procedure 
+
 
 To demonstrate the capabilities of \newC as an impementation language, we synthesise a
 non-trivial floating point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
@@ -897,7 +900,7 @@ minimal in terms of floating point operations.
 \include{figures/results_table}
 }
 \end{center}
-\caption{Time for synthesis of machine integer benchmarks from {\sc brahma} PLDI paper
+\caption{Time for synthesis of machine integer benchmarks from~\cite{brahma}
  \label{fig:results-table}}
 \end{figure}
 
@@ -907,7 +910,7 @@ minimal in terms of floating point operations.
 \include{figures/icse_results_table}
 }
 \end{center}
-\caption{Times for synthesis of machine integer benchmarks from {\sc brahma} ICSE paper}
+\caption{Times for synthesis of machine integer benchmarks from~\cite{brahma-icse}}
 \label{fig:icse-results-table}
 \end{figure}
 
@@ -918,8 +921,36 @@ minimal in terms of floating point operations.
 
 %\end{figure}
 
+\begin{figure}
+
+{\tiny
+\begin{center}
+ \begin{tabular}{r||r|r|r|r|r|r|r|r|r}
+  & \multicolumn{3}{c}{Count} & \multicolumn{2}{|c}{Total time} & \multicolumn{2}{|c}{Absolute speedup} & \multicolumn{2}{|c}{Relative speedup} \\
+  {\sc Brahma} version & Total & {\sc Kalashnikov} & {\sc Brahma} & {\sc Kalashnikov} & {\sc Brahma} & Mean & Median & Mean & Median \\
+  &       & faster            & faster       &                   &              &      &        &      & \\
+  \hline
+  \hline
+  PLDI & 16 & 13 & 3 & 184.12\,s & 544.20\,s & 22.50\,s & 2.11\,s & 2.60 & 1.77 \\
+  ICSE Semibiased & 17 & 7 & 10 & 225.49\,s & 262.24\,s & 2.16\,s & -1.00\,s & 1.26 & 0.87
+ \end{tabular}
+\end{center}
+}
+
+ \caption{Performance statistics when {\sc Brahma} and {\sc Kalashnikov} were both successful
+ \label{fig:stats-table}}
+\end{figure}
+
+
 
 \section{Conclusion}
+
+\paragraph{Future Work}
+Another benefit of using \newC as our logic is that it would be easy to
+automatically extract specifications from C programs, which would be
+useful in the context of superoptimisation.  This is because \newC is
+a relatively large fragment of C, so we anticipate that many interesting
+sections of real code will already be~\newC.
 
 
 \bibliography{synth}{}
