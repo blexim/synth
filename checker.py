@@ -43,24 +43,20 @@ def log2(x):
 
   return i+extra
 
-SYNTH = 0
-VERIF = 1
-DISTINCT = 2
-
 class Checker(object):
   cbmcargs = []
   gccargs = []
   scratchfile = None
 
-  def __init__(self, sz, width, consts, task=SYNTH):
+  def __init__(self, sz, width, consts, verif=False):
     nargs = args.args.args
     nres = args.args.res
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
     ewidth = max(width/4, 1)
     mwidth = width - ewidth - 1
-    self.task = task
 
+    self.verif = verif
     self.scratchfile = tempfile.NamedTemporaryFile(suffix=".c",
         delete=not args.args.keeptemps)
 
@@ -82,15 +78,11 @@ class Checker(object):
     if args.args.float:
       genericargs.insert(0, "-DFLOAT")
 
-    if task == VERIF:
+    if verif:
       self.cbmcargs = [args.args.cbmc,
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
       self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm", "-g",
           os.path.join("explicit", "verif.c")] + genericargs
-    elif task == DISTINCT:
-      self.cbmcargs = [args.args.cbmc,
-          os.path.join("cbmc", "distinct.c"), "--32"] + genericargs
-      self.gccargs = None
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           os.path.join("cbmc", "synth.c")] + genericargs
@@ -109,13 +101,11 @@ class Checker(object):
 
     strategy = None
 
-    if self.task == VERIF:
+    if self.verif:
       if args.args.verif_strategy == "default":
         strategy = args.args.strategy
       else:
         strategy = args.args.verif_strategy
-    elif self.task == DISTINCT:
-      strategy = "cbmc"
     else:
       if args.args.synth_strategy == "default":
         strategy = args.args.strategy
