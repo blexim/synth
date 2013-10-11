@@ -168,9 +168,9 @@ def make_graph():
     line += f(semitime, brl)
 
     if breq:
-      line += '\\checkmark & '
-    else:
       line += ' & '
+    else:
+      line += '\\xmark & '
 
     line += f(kaltimes['_'], kalcnt['insts'])
 

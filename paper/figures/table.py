@@ -135,8 +135,8 @@ def make_graph():
 
     line += f(brt, brit, brinsts)
 
-    if i <= 17:
-      line += ' \\checkmark & '
+    if i >= 17:
+      line += ' \\xmark & '
     else:
       line += ' & '
 
