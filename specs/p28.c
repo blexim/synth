@@ -5,13 +5,13 @@ void interchangeObs(word_t* src, word_t* dest)
 {
   *src = *src ^ *dest;
 
-  if (*src == *src ^ *dest) {
+  if (*src == (*src ^ *dest)) {
     *src = *src ^ *dest;
 
-    if (*src == *src ^ *dest) {
+    if (*src == (*src ^ *dest)) {
       *dest = *src ^ *dest;
       
-      if (*dest == *src ^ *dest) {
+      if (*dest == (*src ^ *dest)) {
         *src = *dest ^ *src;
         return;
       } else {
