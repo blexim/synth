@@ -896,8 +896,9 @@ In the case that $a \ge b$, exact addition can be implemented in fewer instructi
 {\sc Fast2Sum} algorithm~\cite{fast2sum}.  We used {\sc 2sum} as our specification, and
 added an assumption that $a \ge b$.  {\sc Kalashnikov} is able to synthesise and verify the
 code for {\sc Fast2Sum} from this specification in 396.07\,s, which we believe to be the first time
-this has been achieved.  This provides an alternative proof to~\cite{fast2sum} that {\sc Fast2Sum} is
-minimal in terms of floating point operations.
+this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum}, but
+we believe our synthesis constitutes the first proof that {\sc Fast2Sum} is
+minimal under the assumption that $a \ge b$.
 
 \begin{figure}
 \begin{center}
