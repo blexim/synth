@@ -70,12 +70,12 @@ Increasing sequence length to 4
 
 []
 Fastest checker: cbmc
-t1 = a1 ^ a2
-t2 = t1 / 0x2
-t3 = a2 & a1
-t4 = t3 + t2
+t1 = a1 & a2
+t2 = a2 ^ a1
+t3 = t2 / 0x2
+t4 = t1 + t3
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -85,17 +85,17 @@ Also correct for wordlen=32!
 
 
 
-Finished in 50.74s
+Finished in 40.28s
 
-t1 = a1 ^ a2
-t2 = t1 / 0x2
-t3 = a2 & a1
-t4 = t3 + t2
+t1 = a1 & a2
+t2 = a2 ^ a1
+t3 = t2 / 0x2
+t4 = t1 + t3
 
 Perf counters:
 {'cbmc': 8, 'explicit': 5, 'iterations': 11}
 Perf timers:
-verify: 0.90s
-checker: 50.53s
-_: 50.74s
-synth: 49.83s
+verify: 0.92s
+checker: 40.09s
+_: 40.28s
+synth: 39.35s
