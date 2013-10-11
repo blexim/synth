@@ -871,18 +871,19 @@ The results include the runtime for each tool, the number of lines in the synthe
 {\sc Brahma} was able to complete the synthesis completely automatically (the Aut. column).
 On both sets of benchmarks, the results can be broadly divided into three categories:
 
-\paragraph{Problems where both {\sc Brahma} and {\sc Kalashnikov} synthesise minimal programs}
+{\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
 This represent the majority of cases.  A statistical breakdown of this case is shown in Fig~\ref{fig:stats-table}.
-{\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and very similarly to
+{\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and similarly to
 semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
 
-\paragraph{Problems where {\sc Kalashnikov} is unable to synthesise a program}
+{\bf {\sc Kalashnikov} is unable to synthesise a program:}
 This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
 
-\paragraph{Problems where {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}}
-This happens in 4 of the 29 cases.  For example p24 in Fig.~\ref{fig:icse-results-table} uses
-an obfuscated procedure 
-
+{\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
+This happens in 4 of the 29 cases.  For example the specification for p24 of Fig.~\ref{fig:icse-results-table} 
+is a segment of obfuscated C code taken from a piece of malware.  The code uses an apparently unbounded loop
+to multiply its input by the constant 45.  {\sc Brahma} synthesises an equivalent program consisting of
+4 instructions, whereas {\sc Kalashnikov} synthesises the single instruction \texttt{mul x 45}.
 
 To demonstrate the capabilities of \newC as an impementation language, we synthesise a
 non-trivial floating point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
