@@ -932,23 +932,26 @@ minimal in terms of floating point operations.
 
 
 \section{Conclusion}
-By expressing the program synthesis problem as a safety property for a program interpreter,
-we have been able to harness the power of state of the art program analysis tools and reuse
-them in a new problem domain.  We have implemented our algorithm as a freely downloadable
-tool whose performance compares favourably to a state of the art program synthesiser.
-Fianlly, we have taken advantage of the expressiveness of our specification language
-to make an initial step towards practical synthesis of floating point programs.
 
-
+By expressing the program synthesis problem as a safety property for a
+program interpreter, we have been able to harness the power of
+state-of-the-art program analysis tools and reuse them in a new problem
+domain.  We have implemented our algorithm as a freely downloadable tool
+whose performance compares favourably to a recent program synthesiser. 
+Finally, we have taken advantage of the expressiveness of our specification
+language to make an initial step towards practical synthesis of
+floating-point programs.
 
 \paragraph{Future Work}
-It may be possible to extend the language $\mathcal{L}$ with constructs such as branching and limited
-looping while still retaining decidability, which would be an interesting direction to pursue.
-Since our specification language is a subset of C, interfacing {\sc kalashnikov} with
-other analysis tools should not be too difficult.  Various problems such as ranking function synthesis,
-loop invariant generation and loop summarisation can be phrased as program synthesis problems,
-and we would like to investigate the possiblities of applying {\sc kalashnikov} to these domains.
 
+It may be possible to extend the language $\mathcal{L}$ with constructs such
+as branching and limited looping while still retaining decidability, which
+would be an interesting direction to pursue.  Since our specification
+language is a subset of C, it is straight-forward to interface {\sc
+kalashnikov} with other analysis tools.  Various problems such as ranking
+function synthesis, loop invariant generation and loop summarisation can be
+phrased as program synthesis problems, and we would like to investigate the
+possiblities of applying {\sc kalashnikov} to these domains.
 
 \bibliography{synth}{}
 \bibliographystyle{splncs}
