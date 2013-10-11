@@ -943,12 +943,14 @@ minimal in terms of floating point operations.
 \section{Conclusion}
 
 
+
 \paragraph{Future Work}
-Another benefit of using \newC as our logic is that it would be easy to
-automatically extract specifications from C programs, which would be
-useful in the context of superoptimisation.  This is because \newC is
-a relatively large fragment of C, so we anticipate that many interesting
-sections of real code will already be~\newC.
+It may be possible to extend the language $\mathcal{L}$ with constructs such as branching and limited
+looping while still retaining decidability, which would be an interesting direction to pursue.
+Since our specification language is a subset of C, interfacing {\sc kalashnikov} with
+other analysis tools should not be too difficult.  Various problems such as ranking function synthesis,
+loop invariant generation and loop summarisation can be phrased as program synthesis problems,
+and we would like to investigate the possiblities of applying {\sc kalashnikov} to these domains.
 
 
 \bibliography{synth}{}
