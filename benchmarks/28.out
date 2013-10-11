@@ -1,0 +1,34 @@
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+t1 = a2 / 0x1
+t2 = a1 / 0x1
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.20s
+
+t1 = a2 / 0x1
+t2 = a1 / 0x1
+
+Perf counters:
+{'cbmc': 1, 'explicit': 3, 'iterations': 2}
+Perf timers:
+verify: 0.69s
+checker: 1.15s
+_: 1.20s
+synth: 0.51s
