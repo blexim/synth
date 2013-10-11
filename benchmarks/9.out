@@ -27,7 +27,7 @@ Increasing constants to 2
 Increasing sequence length to 2
 
 []
-Fastest checker: cbmc
+Fastest checker: explicit
 No sequence possible!
 Increasing constants to 0
 
@@ -42,13 +42,14 @@ Increasing sequence length to 3
 
 []
 Fastest checker: cbmc
-t1 = a1 >>> 0x9
+t1 = a1 >>> 0x2
 t2 = a1 + t1
-t3 = t1 ^ t2
+t3 = t2 ^ t1
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: explicit
 Trying to generalize...
+Fastest checker: explicit
 Fastest checker: explicit
 Fastest checker: explicit
 Fastest checker: cbmc
@@ -59,17 +60,17 @@ Fastest checker: cbmc
 
 
 
-Finished in 10.86s
+Finished in 5.74s
 
-t1 = a1 >>> 0x99999999
+t1 = a1 >>> 0x1f
 t2 = a1 + t1
-t3 = t1 ^ t2
+t3 = t2 ^ t1
 
 Perf counters:
-{'cbmc': 4, 'explicit': 8, 'iterations': 7}
+{'cbmc': 3, 'explicit': 10, 'iterations': 7}
 Perf timers:
-verify: 1.27s
-checker: 10.69s
-generalize: 0.94s
-_: 10.86s
-synth: 9.58s
+verify: 1.30s
+checker: 5.60s
+generalize: 0.98s
+_: 5.74s
+synth: 4.44s
