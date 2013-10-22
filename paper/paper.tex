@@ -272,11 +272,11 @@ procedure is guaranteed to terminate.
 \Function{refinement loop}{}
   \Let{inputs}{$\emptyset$}
   \Loop
-    \Let{candidate}{synth(inputs)}
+    \Let{candidate}{\Call{synth}{inputs}}
     \If{candidate = unsatisfiable}
       \State \Return{unsatisfiable}
     \EndIf
-    \Let{res}{verif(candidate)}
+    \Let{res}{\Call{verif}{candidate}}
     \If{res = valid}
       \State \Return{candidate}
     \Else
