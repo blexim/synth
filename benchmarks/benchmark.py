@@ -35,7 +35,7 @@ def runbenchmarks():
     else:
       word = 4
 
-    cmd = ("./cegar.py -a%d -r%d -w%d -v specs/p%d.c > benchmarks/%d.out" %
+    cmd = ("./kalashnikov.py -a%d -r%d -w%d -v specs/p%d.c > benchmarks/%d.out" %
         (args, res, word, i, i))
 
     print cmd
