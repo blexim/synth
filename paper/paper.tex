@@ -161,7 +161,7 @@ again using the CEGIS algorithm.
 Program synthesis is closely related to
 superoptimisation, which is the problem of taking a
 segment of code, usually written in C, and finding a minimal program which
-has the same functionality.  The {\sc aha}~\cite{aha-paper} tool, GNU
+has the same functionality.  The {\sc aha}~\cite{aha-paper} tool, the GNU
 superoptimiser~\cite{gnu-superoptimiser} and TOAST~\cite{toast} all perform superoptimisation of C
 programs by enumerating possible programs and testing them on suitable
 inputs.  This search can be compiled down to native code using an optimising
@@ -184,7 +184,7 @@ without relying on human guidance and also ensures that our programs
 are of minimal length.
 
 Our tool is the first we are aware of that is able to effectively
-synthesise floating point programs.  We demonstrate this by
+synthesise floating-point programs.  We demonstrate this by
 synthesising {\sc Fast2Sum} using Knuth's {\sc 2Sum}~\cite{taocp2} as
 a specification.
 
@@ -319,7 +319,7 @@ procedure is guaranteed to terminate.
 
 One area in which program synthesis can shine is in producing very small,
 intricate programs that manipulate bitvectors.  An example of such a program
-is shown in Fig.~\ref{fig:bitvector-program}.  This program takes a machine word
+is given in Fig.~\ref{fig:bitvector-program}.  This program takes a machine word
 as input and clears every bit except for the least significant bit that was set.
 Even though this program is extremely short, it is fairly difficult for a human
 to see what it does.  It is even more difficult for a human to come up with such
@@ -486,7 +486,7 @@ Unsigned and signed comparison instructions:
 \end{figure}
 
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
-of \newC programs, which is shown in Fig.~\ref{fig:c-synthverif}.
+of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
 \begin{figure}
 \centering
@@ -622,7 +622,8 @@ size of the resulting SAT instance, but this still ends up as a win in
 terms of runtime.
 \fi
 
-\section{Parametrise the Program Space}
+\section{Parametrisation of the Program Space}
+
 In order to search the space of candidate programs, we parametrise
 the language~$\mathcal{L}$, inducing a lattice of progressively
 more expressive languages.  We start by attempting to synthesise
@@ -709,7 +710,7 @@ of constants appearing in a program, we are able to use a particularly
 efficient program encoding that speeds up the synthesis procedure
 substantially.  The number of constants used in a program is the parameter $c$.
 
-$\mathcal{L}$ is an SSA, three address instruction set\footnote{
+$\mathcal{L}$ is an SSA, three-address instruction set\footnote{
 We experimented with implementing $\mathcal{L}$ as a stack machine, expecting
 the programs to be smaller and synthesis to be faster as a result.  We saw
 the opposite effect -- the more complex interpreter led to much slower synthesis.
@@ -724,36 +725,36 @@ of instruction types in $\mathcal{L}$.  Each operand can be encoded using
 $\log_2 w$ bits, where $w$ is the $\mathcal{L}$-machine word width, plus one
 bit to specify whether the operand is a register name or an immediate constant.
 One instruction can therefore be encoded using $\lceil \log_2 I \rceil + 2w + 2$ bits.
-For an $n$ instruction program, we need $$\lceil n \log_2 I \rceil + 2nw + 2n$$ bits to encode
+For an $n$-instruction program, we need $$\lceil n \log_2 I \rceil + 2nw + 2n$$ bits to encode
 the entire program.
 
 If we instead limit the number of constants that can appear in the program,
-our operands can be encoded using fewer bits.  For an $n$ instruction program
+our operands can be encoded using fewer bits.  For an $n$-instruction program
 using $c$ constants and taking $a$ arguments as inputs, each operand can refer
 to a program argument, the result of a previous instruction or a constant.
 This can be encoded using $\lceil \log_2 (c+a+n-1) \rceil$ bits, which means each instruction
 can be encoded in $\lceil \log_2 I \rceil + \lceil \log_2 (c + a + n - 1) \rceil$ and the full program
 needs $$\lceil n \log_2 I \rceil + \lceil n \log_2 (c + a + n - 1) \rceil + cw$$ bits to encode.
 
-To give an example, $\mathcal{L}$ has 15 instruction types, so each opcode is 4 bits.
-For a 10 instruction program over 1 argument, using 2 constants on a 32-bit word
+We give an example. Our language $\mathcal{L}$ has 15 instruction types, so each opcode is 4 bits.
+For a 10-instruction program over 1 argument, using 2 constants on a 32-bit word
 machine the first encoding requires $10 * (4 + 32 + 1 + 32 + 1) = 700$ bits.
 Using the second encoding, each operand can be represented using
 $\log_2 (2 + 1 + 10 - 1) = 4$ bits, and the entire program requires 184 bits.
-This is a substantial reduction in size and when the required program requires
-few constants this can lead to a very significant speed up.
+This is a substantial reduction in size and when the desired program requires
+only few constants this can lead to a very significant speed up.
 
 As with program length, we progressively increase the number of constants in
-our program.  We start by trying to synthesise a program with no constants, then
-if that fails we try to synthesise using one constant and so on until we reach
-$c = l$.
+our program.  We start by trying to synthesise a program with no constants,
+then if that fails we attempt to synthesise using one constant and so on until we
+reach $c = l$.
 
 \subsection{Searching the Program Space}
+
 The key to our automation approach is to come up with a sensible way in which to
 adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
 After each round of {\sc synth}, we may need to adjust the parameters.  The
-logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
-
+logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
 \begin{figure}
 \begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
@@ -838,7 +839,7 @@ logic for these adjustments is shown as a tree in Fig~\ref{fig:paramsflow}.
 \end{center}
 
 
- \caption{The {\sc 2Sum} algorithm for correctly rounded floating point sums.}
+ \caption{The {\sc 2Sum} algorithm for correctly rounded floating-point sums.}
   \label{fig:2sum}
 \end{figure}
 
@@ -866,24 +867,25 @@ too large to practically check them all.  For example, {\sc AHA} found 2284262 c
 programs in 12.13\,s for p12.
 
 We do not compare {\sc Kalashnikov} to {\sc Sketch}~\cite{sketch}, since the problem domains are
-too dissimilar to make a meaningful comparison.
+too dissimilar to permit a meaningful comparison.
 
 The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
-The results include the runtime for each tool, the number of lines in the synthesised program and whether
-{\sc Brahma} was able to complete the synthesis completely automatically (the Aut. column).  A blank
-in the Aut. column means that {\sc Brahma} was able to synthesise the program automatically, and a \xmark
+The tables include the runtime for each tool, the number of lines in the synthesised program and whether
+{\sc Brahma} was able to complete the synthesis completely automatically (the ``Aut.''~column).  A blank
+in the ``Aut.''~column means that {\sc Brahma} was able to synthesise the program automatically, and a \xmark
 \,means that user assistance was required.
 On both sets of benchmarks, the results can be broadly divided into three categories:
 
 {\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
-This represents the majority of cases.  A statistical breakdown of this case is shown in Fig~\ref{fig:stats-table}.
+This represents the majority of cases.  A statistical breakdown of this case is given in Fig~\ref{fig:stats-table}.
 {\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and similarly to
 semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
 
 {\bf {\sc Kalashnikov} is unable to synthesise a program:}
 This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
 The existence of instances that are beyond the reach of current automatic
-methods, and thus require manual intervention, is to be expected. A total of 8 tests fall into this category.
+methods, and thus require manual intervention, is to be expected.
+% A total of 8 tests fall into this category.
 
 {\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
 This happens in 4 of the 29 cases.  For instance, the specification for p24 of Fig.~\ref{fig:icse-results-table} 
@@ -892,8 +894,8 @@ to multiply its input by the constant 45.  {\sc Brahma} synthesises an equivalen
 4 instructions, whereas {\sc Kalashnikov} synthesises the single instruction \texttt{mul x 45}.
 
 To demonstrate the capabilities of \newC as an implementation language, we synthesise a
-non-trivial floating point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
-exact sums of floating point numbers.  The original {\sc 2Sum} algorithm is shown in Alg.~\ref{alg:2sum}.
+non-trivial floating-point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
+exact sums of floating-point numbers.  The original {\sc 2Sum} algorithm is given as Alg.~\ref{alg:2sum}.
 In the case that $a \ge b$, exact addition can be implemented in fewer instructions -- this is the
 {\sc Fast2Sum} algorithm~\cite{fast2sum}.  We used {\sc 2sum} as our specification, and
 added an assumption that $a \ge b$.  {\sc Kalashnikov} is able to synthesise and verify the
