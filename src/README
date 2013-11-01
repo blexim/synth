@@ -1,0 +1,24 @@
+How to use Kalashnikov
+
+1) Download and install a recent version of CBMC.
+2) Add CBMC to your $PATH.
+3) Run Kalashnikov like this:
+
+     $ ./kalashnikov.py specs/p1.c
+
+   Or to get help with the command line flags:
+
+     $ ./kalashnikov.py -h
+
+4) To re-run the benchmarks, use the benchmarks/benchmark.py script:
+
+     $ ./benchmarks/benchmark.py
+
+   This will create a bunch of files in benchmarks/ each of which
+   is the output of running Kalashnikov on the relevant benchmark.
+   The end of each output includes performance data, including performance
+   timers.  In the performance timers section, the line:
+
+     _: 7.02s
+
+   is the total time taken to synthesise the program.
