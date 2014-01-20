@@ -155,8 +155,11 @@ requires the programmer to provide a \emph{program sketch}, written in a
 C-like language, together with either a specification (written in the same
 language) or a suite of unit tests.  The sketch is a skeleton program
 containing much of the high-level structure of the final program, but with
-several ``holes'', which {\sc sketch} fills in to meet the specification,
-again using the CEGIS algorithm.
+several ``holes'', which {\sc sketch} fills in to meet the specification.
+Despite the many similarities, our problem domains are quite different:
+sketching is able to make use of human insight to synthesise fairly large
+programs, whereas we are restricted to synthesising small (but intricate)
+programs without guidance.
 
 Program synthesis is closely related to
 superoptimisation, which is the problem of taking a
@@ -867,8 +870,14 @@ were still found rapidly (around 10\,s for the 3-instruction programs) but the n
 too large to practically check them all.  For example, {\sc AHA} found 2284262 candidate
 programs in 12.13\,s for p12.
 
-We do not compare {\sc Kalashnikov} to {\sc Sketch}~\cite{sketch}, since the problem domains are
-too dissimilar to permit a meaningful comparison.
+We invested significant effort into trying to implement the benchmarks in a way
+that would allow us to compare with {\sc sketch}. Unfortunately, we were unable to come up
+with an encoding that afforded a meaningful comparison.  In retrospect,
+we realise that this is due to a fundamental difference in the problem domains
+our respective tools are designed to solve: {\sc sketch} is able to use
+human insight to generate large, complex programs, whereas we are optimised for 
+automatically generating small programs with somewhat more intricate data-flow.
+
 
 The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
 The tables include the runtime for each tool, the number of lines in the synthesised program and whether
