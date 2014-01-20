@@ -379,7 +379,8 @@ just a C program with the following syntactic restrictions:
 \end{itemize}
 
 Additionally, \newC programs may use nondeterministic values, assumptions
-and arbitrary-width types.
+and arbitrary-width types.  Two example \newC programs are shown 
+in Fig.~\ref{fig:c-}.
 
 \begin{figure}
 \begin{minipage}[scale=0.8]{0.45\linewidth}
@@ -444,7 +445,7 @@ Our encoding is the following:
  \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
  by the user.
- \item $P$ is written in a simple RISC-like language $\mathcal{L}$.  Programs in $\mathcal{L}$
+ \item $P$ is written in a simple RISC-like language $\mathcal{L}$, described in Fig.~\ref{fig:l-language}.  Programs in $\mathcal{L}$
  have type $I \rightarrow O$ and
  are represented in \newC as objects of type \verb|prog_t|.
  \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
@@ -756,7 +757,7 @@ adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
 After each round of {\sc synth}, we may need to adjust the parameters.  The
 logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
@@ -805,7 +806,7 @@ logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
 \begin{algorithm}[H]
@@ -897,7 +898,7 @@ To demonstrate the capabilities of \newC as an implementation language, we synth
 non-trivial floating-point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
 exact sums of floating-point numbers.  The original {\sc 2Sum} algorithm is given as Alg.~\ref{alg:2sum}.
 In the case that $a \ge b$, exact addition can be implemented in fewer instructions -- this is the
-{\sc Fast2Sum} algorithm~\cite{fast2sum}.  We used {\sc 2sum} as our specification, and
+{\sc Fast2Sum} algorithm~\cite{fast2sum}, shown in Alg.~\ref{alg:fast2sum}.  We used {\sc 2sum} as our specification, and
 added an assumption that $a \ge b$.  {\sc Kalashnikov} is able to synthesise and verify the
 code for {\sc Fast2Sum} from this specification in 396.07\,s, which we believe to be the first time
 this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum}, but
