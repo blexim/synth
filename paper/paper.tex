@@ -13,10 +13,14 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{algorithm}
 \usepackage{amsfonts}
+\usepackage{amsmath}
+%\usepackage{amsthm}
 \usepackage{pifont}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
+
+\newtheorem{defn}{Definition}
 
 \algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
 \algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
@@ -445,9 +449,9 @@ Our encoding is the following:
  \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
  by the user.
- \item $P$ is written in a simple RISC-like language $\mathcal{L}$, described in Fig.~\ref{fig:l-language}.  Programs in $\mathcal{L}$
+ \item $P$ is written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  Programs in $\mathcal{L}$
  have type $I \rightarrow O$ and
- are represented in \newC as objects of type \verb|prog_t|.
+ are represented in \newC as objects of type \verb|prog_t|, shown in Fig.~\ref{fig:c-l-encoding}.
  \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
  this interpreter is $(I \rightarrow O) \times I \rightarrow O$ and the \newC signature is \\
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
@@ -486,6 +490,8 @@ Unsigned and signed comparison instructions:
 
 \end{figure}
 
+
+The exact details of how we encoding an $\mathcal{L}$-program are given in Sec.~\ref{sec:encode-l}.
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
 of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
@@ -623,7 +629,7 @@ size of the resulting SAT instance, but this still ends up as a win in
 terms of runtime.
 \fi
 
-\section{Parametrisation of the Program Space}
+\section{Parameterising the Program Space}
 
 In order to search the space of candidate programs, we parametrise
 the language~$\mathcal{L}$, inducing a lattice of progressively
@@ -805,6 +811,55 @@ logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
  \label{fig:paramsflow}
 
 \end{figure}
+
+\subsection{Encoding an $\mathcal{L}$-Program in \newC}
+\label{sec:encode-l}
+
+\begin{figure}
+\begin{lstlisting}[language=c++,mathescape]
+typedef $\mathcal{BV}(4)$ op_t;                  // An opcode
+typedef $\mathcal{BV}(w)$ word_t;                // An $\mathcal{L}$-word
+typedef $\mathcal{BV}(\log_2 \lceil c+l+a \rceil)$ param_t;  // An operand
+
+struct prog_t {
+  op_t ops[$l$];          // The opcodes
+  param_t params[$l$*2];  // The operands
+  word_t consts[$c$];     // The program constants
+}
+\end{lstlisting}
+
+ \caption{The \newC structure we use to encode an $\mathcal{L}$ program
+  \label{fig:c-l-encoding}}
+\end{figure}
+
+The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
+The \verb|prog_t| structure encodes a complete program, which is a sequence of instructions.
+The parameter $a$ is the number of arguments the program takes.
+The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
+right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
+a program argument or the result of a previous instruction.  The value of an operand
+is determined at runtime as follows:
+
+\[
+ val(x) = \begin{cases}
+           x < a & \text{the } x^{\text{th}} \text{ program argument} \\
+           a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
+           x \geq a + c & \text{the result of the } (x - a - c)^{\text{th}} \text{ instruction}
+          \end{cases}
+\]
+
+
+\begin{defn}
+A program is well formed if
+no operand refers to the result of an instruction that has not been computed yet.
+\label{defn:well-formed}
+\end{defn}
+
+We add a well-formedness constraint of the form \verb|params[i] <= (a + c + 2*i)|
+for each instruction.  It should be noted that this requires a linear number of well-formedness
+constraints.  If all of these constraints are satisfied, the program is well-formed in the sense
+of Defn.~\ref{defn:well-formed}.
+
 
 \begin{figure}
 \begin{center}
