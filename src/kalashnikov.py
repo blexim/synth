@@ -184,7 +184,7 @@ prog_t prog = {
 
   return cex
 
-def cegar(checker):
+def kalashnikov(checker):
   codelen = args.args.seqlen
   wordlen = args.args.wordwidth
   targetwordlen = args.args.targetwordwidth
@@ -452,7 +452,7 @@ if __name__ == '__main__':
   random.seed()
 
   try:
-    cegar(args.args.checker)
+    kalashnikov(args.args.checker)
   except TimeoutError:
     perf.inc("timeout")
     print "\n"*7 + "Timeout"
