@@ -158,7 +158,7 @@ containing much of the high-level structure of the final program, but with
 several ``holes'', which {\sc sketch} fills in to meet the specification.
 Despite the many similarities, our problem domains are quite different:
 sketching is able to make use of human insight to synthesise fairly large
-programs, whereas we are restricted to synthesising small (but intricate)
+programs, whereas we are optimised for synthesising small (but intricate)
 programs without guidance.
 
 Program synthesis is closely related to
@@ -389,9 +389,7 @@ in Fig.~\ref{fig:c-}.
 \begin{minipage}[scale=0.8]{0.45\linewidth}
  \begin{lstlisting}[language=c]
 int count_bits(int x) {
-  int i, ret;
-  
-  ret = 0;
+  int i, ret = 0;
   
   for (i = 0; i < 32; i++)
     if (x & (1 << i))
@@ -404,8 +402,7 @@ int count_bits(int x) {
 \begin{minipage}{0.54\linewidth}
  \begin{lstlisting}[language=C]
 int common_factor(int A[10]) {
-  int factor = nondet();
-  int i;
+  int i, factor = nondet();
 
   for (i = 0; i < 10; i++)
     assume((A[i] % factor) == 0);
@@ -456,7 +453,7 @@ Our encoding is the following:
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
@@ -760,7 +757,7 @@ adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
 After each round of {\sc synth}, we may need to adjust the parameters.  The
 logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
-\begin{figure}[h]
+\begin{figure}
 \begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
@@ -809,7 +806,7 @@ logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
 \begin{algorithm}[H]
@@ -859,7 +856,9 @@ benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a b
 We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
 
 To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
-on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}.  These experiments were performed an 8-core,
+on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}\footnote{Unfortunately
+we were not able to obtain a copy of {\sc Brahma}, and so were unable to repeat the experiments ourselves.}.
+These experiments were performed an 8-core,
 1.86\,GHz Xeon with 4\,GB of RAM.  Although there are 49 results shown across the two tables, it should
 be noted that there is a lot of overlap between the two sets of benchmarks and that there are only
 29 unique benchmarks altogether.
@@ -889,7 +888,9 @@ On both sets of benchmarks, the results can be broadly divided into three catego
 {\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
 This represents the majority of cases.  A statistical breakdown of this case is given in Fig~\ref{fig:stats-table}.
 {\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and similarly to
-semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
+semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).  Program synthesis appears to
+be CPU-bound, and so part of the performance difference may be explained by the faster CPU in the machine
+used to run {\sc Kalashnikov}.
 
 {\bf {\sc Kalashnikov} is unable to synthesise a program:}
 This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
