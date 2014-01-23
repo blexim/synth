@@ -66,6 +66,9 @@ args.argparser.add_argument("--verbose", "-v", action='count',
 args.argparser.add_argument("--timeout", "-T", default=1800, type=int,
     help="time limit")
 
+args.argparser.add_argument("--seed", default=None, type=int,
+    help="random seed")
+
 args.argparser.add_argument("checker",
     help="code to check the function we synthesise")
 
@@ -450,6 +453,13 @@ if __name__ == '__main__':
   args.args = args.argparser.parse_args()
 
   random.seed()
+
+  if args.args.seed is None:
+    args.args.seed = random.randint(0, 100000)
+
+  print "Using seed: %d" % args.args.seed
+
+  random.seed(args.args.seed)
 
   try:
     kalashnikov(args.args.checker)
