@@ -1,3 +1,4 @@
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -34,7 +35,7 @@ Increasing constants to 0
 Increasing sequence length to 3
 
 []
-Fastest checker: cbmc
+Fastest checker: explicit
 No sequence possible!
 Increasing constants to 1
 
@@ -63,9 +64,9 @@ Increasing sequence length to 4
 
 []
 Fastest checker: cbmc
-t1 = a1 + a1
+t1 = -a1
 t2 = t1 & a1
-t3 = t2 - t1
+t3 = t2 + a1
 t4 = a1 & t3
 Fastest checker: explicit
 Correct for wordlen=4
@@ -78,17 +79,17 @@ Also correct for wordlen=32!
 
 
 
-Finished in 27.73s
+Finished in 50.41s
 
-t1 = a1 + a1
+t1 = -a1
 t2 = t1 & a1
-t3 = t2 - t1
+t3 = t2 + a1
 t4 = a1 & t3
 
 Perf counters:
-{'cbmc': 7, 'explicit': 5, 'iterations': 10}
+{'cbmc': 6, 'explicit': 6, 'iterations': 10}
 Perf timers:
-verify: 0.88s
-checker: 27.44s
-_: 27.73s
-synth: 26.84s
+verify: 1.02s
+checker: 50.36s
+_: 50.41s
+synth: 49.39s

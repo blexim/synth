@@ -1,3 +1,4 @@
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -36,7 +37,7 @@ Fastest checker: cbmc
 
 
 
-Finished in 1.83s
+Finished in 2.34s
 
 t1 = a1 + 0xffffffff
 t2 = t1 & a1
@@ -44,8 +45,8 @@ t2 = t1 & a1
 Perf counters:
 {'cbmc': 1, 'explicit': 7, 'iterations': 4}
 Perf timers:
-verify: 1.08s
-checker: 1.73s
-generalize: 0.77s
-_: 1.83s
-synth: 0.75s
+verify: 1.44s
+checker: 2.31s
+generalize: 1.00s
+_: 2.34s
+synth: 0.90s

@@ -1,3 +1,4 @@
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -49,7 +50,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 5.55s
+Finished in 8.29s
 
 t1 = -a1
 t2 = t1 ^ a1
@@ -58,7 +59,7 @@ t3 = t2 < t1
 Perf counters:
 {'cbmc': 2, 'explicit': 6, 'iterations': 6}
 Perf timers:
-verify: 0.82s
-checker: 5.42s
-_: 5.55s
-synth: 4.73s
+verify: 1.14s
+checker: 8.25s
+_: 8.29s
+synth: 7.14s

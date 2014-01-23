@@ -1,3 +1,4 @@
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -21,20 +22,6 @@ Increasing sequence length to 2
 
 []
 Fastest checker: explicit
-t1 = a2 + 0x3
-t2 = a1 / t1
-Fastest checker: explicit
-Fails for (1, 0)
-
-[]
-Fastest checker: explicit
-t1 = a1 / 0x2
-t2 = a2 <= t1
-Fastest checker: explicit
-Fails for (0, 0)
-
-[]
-Fastest checker: explicit
 No sequence possible!
 Increasing constants to 2
 
@@ -48,9 +35,17 @@ Increasing constants to 0
 Increasing sequence length to 3
 
 []
-Fastest checker: cbmc
-t1 = ~a2
-t2 = a1 & t1
+Fastest checker: explicit
+t1 = a2 & a1
+t2 = a1 - t1
+t3 = t2 / a2
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: explicit
+t1 = a2 & a1
+t2 = a1 - t1
 t3 = a2 < t2
 Fastest checker: explicit
 Correct for wordlen=4
@@ -63,16 +58,16 @@ Also correct for wordlen=32!
 
 
 
-Finished in 9.40s
+Finished in 15.03s
 
-t1 = ~a2
-t2 = a1 & t1
+t1 = a2 & a1
+t2 = a1 - t1
 t3 = a2 < t2
 
 Perf counters:
-{'cbmc': 3, 'explicit': 9, 'iterations': 8}
+{'cbmc': 2, 'explicit': 8, 'iterations': 7}
 Perf timers:
-verify: 1.31s
-checker: 9.22s
-_: 9.40s
-synth: 8.08s
+verify: 1.24s
+checker: 14.98s
+_: 15.03s
+synth: 13.78s
