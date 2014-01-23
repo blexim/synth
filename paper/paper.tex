@@ -631,7 +631,8 @@ is determined at runtime as follows:
 
 \begin{defn}
 A program is well formed if
-no operand refers to the result of an instruction that has not been computed yet.
+no operand refers to the result of an instruction that has not been computed yet, and if
+each opcode is valid.
 \label{defn:well-formed}
 \end{defn}
 
@@ -788,7 +789,7 @@ a constant), contradicting the assumed minimality of the program.  So
 if $c = l$, we set $c$ to 0 and increment $l$, before attempting
 synthesis again.
 
-If {\sc synth} succeeds by {\sc verif} fails, we have a candidate
+If {\sc synth} succeeds but {\sc verif} fails, we have a candidate
 program that is correct for some inputs but incorrect on at least
 one input.  However, it may be the case that the candidate program
 is correct for \emph{all} inputs when run on an $\mathcal{L}$-machine
