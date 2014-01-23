@@ -457,7 +457,7 @@ Our encoding is the following:
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}
 \begin{center}
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
@@ -592,42 +592,55 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \label{fig:synth-dfd}
 \end{figure}
 
-\subsection{Implementation Issues}
-For performance reasons, we found that adding extra constraints on the
-syntax of the synthesised programs sped up synthesis.  The extra constraints
-fell into two categories: eliminating nops and instruction-level symmetry reduction.
+\subsection{Encoding an $\mathcal{L}$-Program in \newC}
+\label{sec:encode-l}
 
-\subsubsection{Remove nops}
-Many instructions in $\mathcal{L}$ are nops that do not doing anything,
-for example the instruction \verb|add x 0|.  Such instructions
-can be removed from any program they appear in to leave a semantically
-equivalent, but shorter, program.  We can therefore be sure that nops
-will never appear in any minimal program.  By adding constraints saying that
-each instruction is not a nop, we can help the underlying SAT solver's
-search, which reduces the runtime of the overall procedure.
+\begin{figure}
+\begin{lstlisting}[language=c++,mathescape]
+typedef $\mathcal{BV}(4)$ op_t;                  // An opcode
+typedef $\mathcal{BV}(w)$ word_t;                // An $\mathcal{L}$-word
+typedef $\mathcal{BV}(\log_2 \lceil c+l+a \rceil)$ param_t;  // An operand
 
-\subsubsection{Symmetry Reduction}
-There are many instructions that are equivalent to each other.  For example,
-\verb|add x y| is equivalent to \verb|add y x| -- any program containing
-one instruction could have it replaced by the other instruction and
-keep the same semantics.  We choose a single canonical instruction to
-represent all instructions in a particular equivalence class, then add
-constraints saying that no non-canonical instructions appear in the program.
+struct prog_t {
+  op_t ops[$l$];          // The opcodes
+  param_t params[$l$*2];  // The operands
+  word_t consts[$c$];     // The program constants
+}
+\end{lstlisting}
 
-\iffalse
-Our rules for excluding non-canonical instructions are:
+ \caption{The \newC structure we use to encode an $\mathcal{L}$ program
+  \label{fig:c-l-encoding}}
+\end{figure}
 
-\begin{itemize}
- \item For commutative operations, the first operand is smaller than the second.
- \item For unary operations, the second (unused) operand is always 0.
- \item No instruction may have two constant operands.
- \item All constants in the constant table are distinct.
-\end{itemize}
+The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
+The \verb|prog_t| structure encodes a complete program, which is a sequence of instructions.
+The parameter $a$ is the number of arguments the program takes.
+The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
+right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
+a program argument or the result of a previous instruction.  The value of an operand
+is determined at runtime as follows:
 
-As with the nop constraints, these additional constraints do increase the
-size of the resulting SAT instance, but this still ends up as a win in
-terms of runtime.
-\fi
+\[
+ val(x) = \begin{cases}
+           x < a & \text{the } x^{\text{th}} \text{ program argument} \\
+           a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
+           x \geq a + c & \text{the result of the } (x - a - c)^{\text{th}} \text{ instruction}
+          \end{cases}
+\]
+
+
+\begin{defn}
+A program is well formed if
+no operand refers to the result of an instruction that has not been computed yet.
+\label{defn:well-formed}
+\end{defn}
+
+We add a well-formedness constraint of the form \verb|params[i] <= (a + c + 2*i)|
+for each instruction.  It should be noted that this requires a linear number of well-formedness
+constraints.  If all of these constraints are satisfied, the program is well-formed in the sense
+of Defn.~\ref{defn:well-formed}.
+
+
 
 \section{Parameterising the Program Space}
 
@@ -763,7 +776,34 @@ adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
 After each round of {\sc synth}, we may need to adjust the parameters.  The
 logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
-\begin{figure}[h]
+Whenever {\sc synth} fails, we consider which parameter might have caused the
+failure.  There are two possibilities: either the program length $l$ was too small,
+or the number of allowed constants $c$ was.  If $c < l$, we just increment $c$ and
+try another round of synthesis, but allowing ourselves an extra program constant.
+If $c = l$, there is no point in increasing $c$ any further.  This is because
+no minimal $\mathcal{L}$-program has $c > l$, for if it did there would
+have to be at least one instruction with two constant operands.  This
+instruction could be removed (at the expense of adding its result as
+a constant), contradicting the assumed minimality of the program.  So
+if $c = l$, we set $c$ to 0 and increment $l$, before attempting
+synthesis again.
+
+If {\sc synth} succeeds by {\sc verif} fails, we have a candidate
+program that is correct for some inputs but incorrect on at least
+one input.  However, it may be the case that the candidate program
+is correct for \emph{all} inputs when run on an $\mathcal{L}$-machine
+with a small word size.  For example, we may have synthesised a
+program which is correct for all 8-bit inputs, but incorrect for
+some 32-bit input.  If this is the case (which we can determine
+by running the candidate program through {\sc verif} using the smaller
+word size), we may be able to produce a correct program for
+the full $\mathcal{L}$-machine by using the constant extension rules
+shown in Fig.~\ref{fig:generalize}.  If constant generalization
+is able to find a correct program, we are done.  Otherwise,
+we need to increase the word width of the $\mathcal{L}$-machine
+we are currently synthesising for.
+
+\begin{figure}
 \begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
@@ -812,92 +852,43 @@ logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
 \end{figure}
 
-\subsection{Encoding an $\mathcal{L}$-Program in \newC}
-\label{sec:encode-l}
 
-\begin{figure}
-\begin{lstlisting}[language=c++,mathescape]
-typedef $\mathcal{BV}(4)$ op_t;                  // An opcode
-typedef $\mathcal{BV}(w)$ word_t;                // An $\mathcal{L}$-word
-typedef $\mathcal{BV}(\log_2 \lceil c+l+a \rceil)$ param_t;  // An operand
+\subsection{Implementation Issues}
+For performance reasons, we found that adding extra constraints on the
+syntax of the synthesised programs sped up synthesis.  The extra constraints
+fell into two categories: eliminating nops and instruction-level symmetry reduction.
 
-struct prog_t {
-  op_t ops[$l$];          // The opcodes
-  param_t params[$l$*2];  // The operands
-  word_t consts[$c$];     // The program constants
-}
-\end{lstlisting}
+\subsubsection{Remove nops}
+Many instructions in $\mathcal{L}$ are nops that do not doing anything,
+for example the instruction \verb|add x 0|.  Such instructions
+can be removed from any program they appear in to leave a semantically
+equivalent, but shorter, program.  We can therefore be sure that nops
+will never appear in any minimal program.  By adding constraints saying that
+each instruction is not a nop, we can help the underlying SAT solver's
+search, which reduces the runtime of the overall procedure.
 
- \caption{The \newC structure we use to encode an $\mathcal{L}$ program
-  \label{fig:c-l-encoding}}
-\end{figure}
+\subsubsection{Symmetry Reduction}
+There are many instructions that are equivalent to each other.  For example,
+\verb|add x y| is equivalent to \verb|add y x| -- any program containing
+one instruction could have it replaced by the other instruction and
+keep the same semantics.  We choose a single canonical instruction to
+represent all instructions in a particular equivalence class, then add
+constraints saying that no non-canonical instructions appear in the program.
 
-The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
-The \verb|prog_t| structure encodes a complete program, which is a sequence of instructions.
-The parameter $a$ is the number of arguments the program takes.
-The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
-right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
-a program argument or the result of a previous instruction.  The value of an operand
-is determined at runtime as follows:
+\iffalse
+Our rules for excluding non-canonical instructions are:
 
-\[
- val(x) = \begin{cases}
-           x < a & \text{the } x^{\text{th}} \text{ program argument} \\
-           a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
-           x \geq a + c & \text{the result of the } (x - a - c)^{\text{th}} \text{ instruction}
-          \end{cases}
-\]
+\begin{itemize}
+ \item For commutative operations, the first operand is smaller than the second.
+ \item For unary operations, the second (unused) operand is always 0.
+ \item No instruction may have two constant operands.
+ \item All constants in the constant table are distinct.
+\end{itemize}
 
-
-\begin{defn}
-A program is well formed if
-no operand refers to the result of an instruction that has not been computed yet.
-\label{defn:well-formed}
-\end{defn}
-
-We add a well-formedness constraint of the form \verb|params[i] <= (a + c + 2*i)|
-for each instruction.  It should be noted that this requires a linear number of well-formedness
-constraints.  If all of these constraints are satisfied, the program is well-formed in the sense
-of Defn.~\ref{defn:well-formed}.
-
-
-\begin{figure}
-\begin{center}
-\begin{minipage}[t]{0.45\linewidth}
-\begin{algorithm}[H]
-\caption{\sc 2Sum
- \label{alg:2sum}}
-\begin{algorithmic}
-\Let{$s$}{$a+b$}
-\Let{$b'$}{$s - a$}
-\Let{$a'$}{$s - b'$}
-\Let{$\delta b$}{$b - b'$}
-\Let{$\delta a$}{$a - a'$}
-\Let{$t$}{$\delta a + \delta b$}
-\Ensure{$a + b$ = $s + t$ exactly}
-\end{algorithmic}
-\end{algorithm}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\linewidth}
-\begin{algorithm}[H]
-\caption{\sc Fast2Sum
- \label{alg:fast2sum}}
-\begin{algorithmic}
-\Require{$a \ge b$}
-\Let{$s$}{$a + b$}
-\Let{$z$}{$s - a$}
-\Let{$t$}{$b - z$}
-\Ensure{$a + b$ = $s + t$ exactly}
-\end{algorithmic}
-\end{algorithm}
-\end{minipage}
-\end{center}
-
-
- \caption{The {\sc 2Sum} algorithm for correctly rounded floating-point sums.}
-  \label{fig:2sum}
-\end{figure}
+As with the nop constraints, these additional constraints do increase the
+size of the resulting SAT instance, but this still ends up as a win in
+terms of runtime.
+\fi
 
 
 \section{Experimental Results}
@@ -972,6 +963,45 @@ minimal under the assumption that $a \ge b$.
 
 \begin{figure}
 \begin{center}
+\begin{minipage}[t]{0.45\linewidth}
+\begin{algorithm}[H]
+\caption{\sc 2Sum
+ \label{alg:2sum}}
+\begin{algorithmic}
+\Let{$s$}{$a+b$}
+\Let{$b'$}{$s - a$}
+\Let{$a'$}{$s - b'$}
+\Let{$\delta b$}{$b - b'$}
+\Let{$\delta a$}{$a - a'$}
+\Let{$t$}{$\delta a + \delta b$}
+\Ensure{$a + b$ = $s + t$ exactly}
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\linewidth}
+\begin{algorithm}[H]
+\caption{\sc Fast2Sum
+ \label{alg:fast2sum}}
+\begin{algorithmic}
+\Require{$a \ge b$}
+\Let{$s$}{$a + b$}
+\Let{$z$}{$s - a$}
+\Let{$t$}{$b - z$}
+\Ensure{$a + b$ = $s + t$ exactly}
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\end{center}
+
+
+ \caption{The {\sc 2Sum} algorithm for correctly rounded floating-point sums.}
+  \label{fig:2sum}
+\end{figure}
+
+
+\begin{figure}[p]
+\begin{center}
 {\tiny
 \include{figures/results_table}
 }
@@ -980,7 +1010,7 @@ minimal under the assumption that $a \ge b$.
  \label{fig:results-table}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 \begin{center}
 {\tiny
 \include{figures/icse_results_table}
@@ -990,7 +1020,7 @@ minimal under the assumption that $a \ge b$.
 \label{fig:icse-results-table}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 {\tiny
 \begin{center}
  \begin{tabular}{r||r|r|r|r|r|r|r|r|r}
