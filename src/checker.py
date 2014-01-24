@@ -29,6 +29,15 @@ args.argparser.add_argument("--synth-strategy",
 args.argparser.add_argument("--verif-strategy",
     choices=["default", "hybrid", "explicit", "cbmc"], default="default",
     help="the synthesis strategy")
+args.argparser.add_argument("--nosymmetry", default=False,
+    action="store_const", const=True,
+    help="don't add symmetry breakers")
+args.argparser.add_argument("--nonops", default=False,
+    action="store_const", const=True,
+    help="don't add nop breakers")
+args.argparser.add_argument("--noconsts", default=False,
+    action="store_const", const=True,
+    help="don't remove const instructions")
 
 def log2(x):
   i = 0
@@ -71,12 +80,22 @@ class Checker(object):
         "-DPWIDTH=%d" % pwidth,
         os.path.join(args.args.interpreter, "exec.c"),
         os.path.join(args.args.interpreter, "exclude.c"),
+        os.path.join(args.args.interpreter, "wellformed.c"),
         self.scratchfile.name,
         args.args.checker
       ]
 
     if args.args.float:
       genericargs.insert(0, "-DFLOAT")
+
+    if not args.args.nosymmetry:
+      genericargs.insert(0, "-DREMOVE_SYMMETRIC")
+
+    if not args.args.nonops:
+      genericargs.insert(0, "-DREMOVE_NOPS")
+
+    if not args.args.noconsts:
+      genericargs.insert(0, "-DREMOVE_CONST")
 
     if verif:
       self.cbmcargs = [args.args.cbmc,
