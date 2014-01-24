@@ -136,7 +136,7 @@ int main(void) {
   init_prog(&prog);
 
   do {
-    if (exclude(&prog)) {
+    if (!wellformed(&prog) || exclude(&prog)) {
       continue;
     }
 

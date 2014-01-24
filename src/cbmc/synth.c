@@ -14,6 +14,7 @@ int main(void) {
   hint(&prog);
 #endif
 
+  __CPROVER_assume(wellformed(&prog));
   __CPROVER_assume(!exclude(&prog));
 
   tests(&prog);

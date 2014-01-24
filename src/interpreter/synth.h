@@ -82,5 +82,6 @@ void tests(prog_t *prog);
 
 void hint(prog_t *prog);
 int exclude(prog_t *prog);
+int wellformed(prog_t *prog);
 
 #endif // SYNTH_H
