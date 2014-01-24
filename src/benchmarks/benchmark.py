@@ -4,16 +4,17 @@ import sys
 import os
 
 benchmarks11 = [1, 2, 3, 4, 5, 6, 7, 8,
-    9, 13, 17, 18, 20, 22, 23, 24]
-benchmarks21 = [10, 11, 12, 14, 15, 16]
+    9, 13, 17, 18, 20, 22, 23, 24, 29]
+benchmarks21 = [10, 11, 12, 14, 15, 16, 26, 27]
+benchmarks22 = [28]
 benchmarks31 = [19]
 benchmarks41 = [21]
 
 wordoverrides = {4:4, 24: 8}
 
-numbenchmarks = 24
+numbenchmarks = 29
 
-def runbenchmarks():
+def runbenchmarks(restrict_width, flags, outdir):
   for i in xrange(1, numbenchmarks+1):
     print i
 
@@ -23,6 +24,9 @@ def runbenchmarks():
     elif i in benchmarks21:
       args = 2
       res = 1
+    elif i in benchmarks22:
+      args = 2
+      res = 2
     elif i in benchmarks31:
       args = 3
       res = 1
@@ -35,11 +39,27 @@ def runbenchmarks():
     else:
       word = 4
 
-    cmd = ("./kalashnikov.py -a%d -r%d -w%d -v --seed 1337 specs/p%d.c > benchmarks/%d.out" %
-        (args, res, word, i, i))
+    if not restrict_width:
+      word = 32
+
+    cmd = ("./kalashnikov.py -a%d -r%d -w%d -v --seed 1337 %s specs/p%d.c > %s/%d.out" %
+        (args, res, word, flags, i, outdir, i))
+
+    try:
+      os.mkdir(outdir)
+    except:
+      pass
 
     print cmd
     os.system(cmd)
 
 if __name__ == '__main__':
-  runbenchmarks()
+  runbenchmarks(True, "--nonops --nosymmetry --noconst", "benchmarks/none")
+  runbenchmarks(True, "--nonops --nosymmetry", "benchmarks/const")
+  runbenchmarks(True, "--nonops --noconst", "benchmarks/symmetry")
+  runbenchmarks(True, "--noconst --nosymmetry", "benchmarks/nops")
+  runbenchmarks(True, "--nonops", "benchmarks/const+symmetry")
+  runbenchmarks(True, "--noconst", "benchmarks/nops+symmetry")
+  runbenchmarks(True, "--nosymmetry", "benchmarks/const+nops")
+  runbenchmarks(True, "", "benchmarks/all")
+  runbenchmarks(False, "", "benchmarks/nowidth")
