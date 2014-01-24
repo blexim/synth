@@ -66,6 +66,9 @@ args.argparser.add_argument("--verbose", "-v", action='count',
 args.argparser.add_argument("--timeout", "-T", default=1800, type=int,
     help="time limit")
 
+args.argparser.add_argument("--seed", default=None, type=int,
+    help="random seed")
+
 args.argparser.add_argument("checker",
     help="code to check the function we synthesise")
 
@@ -184,7 +187,7 @@ prog_t prog = {
 
   return cex
 
-def cegar(checker):
+def kalashnikov(checker):
   codelen = args.args.seqlen
   wordlen = args.args.wordwidth
   targetwordlen = args.args.targetwordwidth
@@ -451,8 +454,15 @@ if __name__ == '__main__':
 
   random.seed()
 
+  if args.args.seed is None:
+    args.args.seed = random.randint(0, 100000)
+
+  print "Using seed: %d" % args.args.seed
+
+  random.seed(args.args.seed)
+
   try:
-    cegar(args.args.checker)
+    kalashnikov(args.args.checker)
   except TimeoutError:
     perf.inc("timeout")
     print "\n"*7 + "Timeout"

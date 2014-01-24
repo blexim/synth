@@ -1,9 +1,4 @@
-[]
-Fastest checker: explicit
-t1 = a1 <= a2
-Fastest checker: explicit
-Fails for (3, 2)
-
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -41,27 +36,19 @@ Increasing sequence length to 3
 
 []
 Fastest checker: explicit
-t1 = a1 <= a2
-t2 = a2 & a1
-t3 = t2 + t1
+t1 = a2 s<= a1
+t2 = t1 - a2
+t3 = a2 >> t2
 Fastest checker: explicit
-Fails for (3, 1)
-
-[]
-Fastest checker: explicit
-t1 = a2 < a1
-t2 = t1 = a2
-t3 = t2 - a2
-Fastest checker: explicit
-Fails for (4, 2)
+Fails for (0, 0)
 
 []
 Fastest checker: cbmc
 t1 = a2 | a1
-t2 = t1 ^ a2
+t2 = a2 ^ t1
 t3 = t2 <= a2
 Fastest checker: explicit
-Correct for wordlen=3
+Correct for wordlen=4
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -71,16 +58,16 @@ Also correct for wordlen=32!
 
 
 
-Finished in 10.12s
+Finished in 16.19s
 
 t1 = a2 | a1
-t2 = t1 ^ a2
+t2 = a2 ^ t1
 t3 = t2 <= a2
 
 Perf counters:
-{'cbmc': 3, 'explicit': 11, 'iterations': 9}
+{'cbmc': 3, 'explicit': 7, 'iterations': 7}
 Perf timers:
-verify: 1.25s
-checker: 9.91s
-_: 10.12s
-synth: 8.87s
+verify: 1.21s
+checker: 16.15s
+_: 16.19s
+synth: 14.98s

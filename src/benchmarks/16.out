@@ -1,3 +1,4 @@
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -63,10 +64,10 @@ Increasing sequence length to 4
 
 []
 Fastest checker: cbmc
-t1 = a2 < a1
-t2 = a1 - a2
+t1 = a2 - a1
+t2 = a1 < a2
 t3 = t1 * t2
-t4 = a2 + t3
+t4 = a1 + t3
 Fastest checker: explicit
 Correct for wordlen=4
 Fastest checker: cbmc
@@ -78,17 +79,17 @@ Also correct for wordlen=32!
 
 
 
-Finished in 27.41s
+Finished in 45.84s
 
-t1 = a2 < a1
-t2 = a1 - a2
+t1 = a2 - a1
+t2 = a1 < a2
 t3 = t1 * t2
-t4 = a2 + t3
+t4 = a1 + t3
 
 Perf counters:
 {'cbmc': 7, 'explicit': 5, 'iterations': 10}
 Perf timers:
-verify: 0.79s
-checker: 27.23s
-_: 27.41s
-synth: 26.62s
+verify: 1.06s
+checker: 45.80s
+_: 45.84s
+synth: 44.77s

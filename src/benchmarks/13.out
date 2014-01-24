@@ -1,3 +1,4 @@
+Using seed: 1337
 []
 Fastest checker: explicit
 No sequence possible!
@@ -34,7 +35,7 @@ Increasing constants to 0
 Increasing sequence length to 3
 
 []
-Fastest checker: cbmc
+Fastest checker: explicit
 No sequence possible!
 Increasing constants to 1
 
@@ -60,17 +61,17 @@ Fastest checker: cbmc
 
 
 
-Finished in 10.24s
+Finished in 12.49s
 
 t1 = a1 >>> 0x1f
 t2 = t1 < a1
 t3 = t2 + t1
 
 Perf counters:
-{'cbmc': 3, 'explicit': 10, 'iterations': 7}
+{'cbmc': 2, 'explicit': 11, 'iterations': 7}
 Perf timers:
-verify: 1.36s
-checker: 10.05s
-generalize: 1.05s
-_: 10.24s
-synth: 8.88s
+verify: 1.90s
+checker: 12.43s
+generalize: 1.48s
+_: 12.49s
+synth: 10.58s

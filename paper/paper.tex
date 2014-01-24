@@ -13,10 +13,14 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{algorithm}
 \usepackage{amsfonts}
+\usepackage{amsmath}
+%\usepackage{amsthm}
 \usepackage{pifont}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
+
+\newtheorem{defn}{Definition}
 
 \algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
 \algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
@@ -155,8 +159,11 @@ requires the programmer to provide a \emph{program sketch}, written in a
 C-like language, together with either a specification (written in the same
 language) or a suite of unit tests.  The sketch is a skeleton program
 containing much of the high-level structure of the final program, but with
-several ``holes'', which {\sc sketch} fills in to meet the specification,
-again using the CEGIS algorithm.
+several ``holes'', which {\sc sketch} fills in to meet the specification.
+Despite the many similarities, our problem domains are quite different:
+sketching is able to make use of human insight to synthesise fairly large
+programs, whereas we are optimised for synthesising small (but intricate)
+programs without guidance.
 
 Program synthesis is closely related to
 superoptimisation, which is the problem of taking a
@@ -379,15 +386,14 @@ just a C program with the following syntactic restrictions:
 \end{itemize}
 
 Additionally, \newC programs may use nondeterministic values, assumptions
-and arbitrary-width types.
+and arbitrary-width types.  Two example \newC programs are shown 
+in Fig.~\ref{fig:c-}.
 
 \begin{figure}
 \begin{minipage}[scale=0.8]{0.45\linewidth}
  \begin{lstlisting}[language=c]
 int count_bits(int x) {
-  int i, ret;
-  
-  ret = 0;
+  int i, ret = 0;
   
   for (i = 0; i < 32; i++)
     if (x & (1 << i))
@@ -400,8 +406,7 @@ int count_bits(int x) {
 \begin{minipage}{0.54\linewidth}
  \begin{lstlisting}[language=C]
 int common_factor(int A[10]) {
-  int factor = nondet();
-  int i;
+  int i, factor = nondet();
 
   for (i = 0; i < 10; i++)
     assume((A[i] % factor) == 0);
@@ -444,9 +449,9 @@ Our encoding is the following:
  \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
  by the user.
- \item $P$ is written in a simple RISC-like language $\mathcal{L}$.  Programs in $\mathcal{L}$
+ \item $P$ is written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  Programs in $\mathcal{L}$
  have type $I \rightarrow O$ and
- are represented in \newC as objects of type \verb|prog_t|.
+ are represented in \newC as objects of type \verb|prog_t|, shown in Fig.~\ref{fig:c-l-encoding}.
  \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
  this interpreter is $(I \rightarrow O) \times I \rightarrow O$ and the \newC signature is \\
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
@@ -485,6 +490,8 @@ Unsigned and signed comparison instructions:
 
 \end{figure}
 
+
+The exact details of how we encoding an $\mathcal{L}$-program are given in Sec.~\ref{sec:encode-l}.
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
 of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
@@ -585,44 +592,58 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \label{fig:synth-dfd}
 \end{figure}
 
-\subsection{Implementation Issues}
-For performance reasons, we found that adding extra constraints on the
-syntax of the synthesised programs sped up synthesis.  The extra constraints
-fell into two categories: eliminating nops and instruction-level symmetry reduction.
+\subsection{Encoding an $\mathcal{L}$-Program in \newC}
+\label{sec:encode-l}
 
-\subsubsection{Remove nops}
-Many instructions in $\mathcal{L}$ are nops that do not doing anything,
-for example the instruction \verb|add x 0|.  Such instructions
-can be removed from any program they appear in to leave a semantically
-equivalent, but shorter, program.  We can therefore be sure that nops
-will never appear in any minimal program.  By adding constraints saying that
-each instruction is not a nop, we can help the underlying SAT solver's
-search, which reduces the runtime of the overall procedure.
+\begin{figure}
+\begin{lstlisting}[language=c++,mathescape]
+typedef $\mathcal{BV}(4)$ op_t;                  // An opcode
+typedef $\mathcal{BV}(w)$ word_t;                // An $\mathcal{L}$-word
+typedef $\mathcal{BV}(\log_2 \lceil c+l+a \rceil)$ param_t;  // An operand
 
-\subsubsection{Symmetry Reduction}
-There are many instructions that are equivalent to each other.  For example,
-\verb|add x y| is equivalent to \verb|add y x| -- any program containing
-one instruction could have it replaced by the other instruction and
-keep the same semantics.  We choose a single canonical instruction to
-represent all instructions in a particular equivalence class, then add
-constraints saying that no non-canonical instructions appear in the program.
+struct prog_t {
+  op_t ops[$l$];          // The opcodes
+  param_t params[$l$*2];  // The operands
+  word_t consts[$c$];     // The program constants
+}
+\end{lstlisting}
 
-\iffalse
-Our rules for excluding non-canonical instructions are:
+ \caption{The \newC structure we use to encode an $\mathcal{L}$ program
+  \label{fig:c-l-encoding}}
+\end{figure}
 
-\begin{itemize}
- \item For commutative operations, the first operand is smaller than the second.
- \item For unary operations, the second (unused) operand is always 0.
- \item No instruction may have two constant operands.
- \item All constants in the constant table are distinct.
-\end{itemize}
+The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
+The \verb|prog_t| structure encodes a complete program, which is a sequence of instructions.
+The parameter $a$ is the number of arguments the program takes.
+The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
+right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
+a program argument or the result of a previous instruction.  The value of an operand
+is determined at runtime as follows:
 
-As with the nop constraints, these additional constraints do increase the
-size of the resulting SAT instance, but this still ends up as a win in
-terms of runtime.
-\fi
+\[
+ val(x) = \begin{cases}
+           x < a & \text{the } x^{\text{th}} \text{ program argument} \\
+           a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
+           x \geq a + c & \text{the result of the } (x - a - c)^{\text{th}} \text{ instruction}
+          \end{cases}
+\]
 
-\section{Parametrisation of the Program Space}
+
+\begin{defn}
+A program is well formed if
+no operand refers to the result of an instruction that has not been computed yet, and if
+each opcode is valid.
+\label{defn:well-formed}
+\end{defn}
+
+We add a well-formedness constraint of the form \verb|params[i] <= (a + c + 2*i)|
+for each instruction.  It should be noted that this requires a linear number of well-formedness
+constraints.  If all of these constraints are satisfied, the program is well-formed in the sense
+of Defn.~\ref{defn:well-formed}.
+
+
+
+\section{Parameterising the Program Space}
 
 In order to search the space of candidate programs, we parametrise
 the language~$\mathcal{L}$, inducing a lattice of progressively
@@ -756,6 +777,33 @@ adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
 After each round of {\sc synth}, we may need to adjust the parameters.  The
 logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
+Whenever {\sc synth} fails, we consider which parameter might have caused the
+failure.  There are two possibilities: either the program length $l$ was too small,
+or the number of allowed constants $c$ was.  If $c < l$, we just increment $c$ and
+try another round of synthesis, but allowing ourselves an extra program constant.
+If $c = l$, there is no point in increasing $c$ any further.  This is because
+no minimal $\mathcal{L}$-program has $c > l$, for if it did there would
+have to be at least one instruction with two constant operands.  This
+instruction could be removed (at the expense of adding its result as
+a constant), contradicting the assumed minimality of the program.  So
+if $c = l$, we set $c$ to 0 and increment $l$, before attempting
+synthesis again.
+
+If {\sc synth} succeeds but {\sc verif} fails, we have a candidate
+program that is correct for some inputs but incorrect on at least
+one input.  However, it may be the case that the candidate program
+is correct for \emph{all} inputs when run on an $\mathcal{L}$-machine
+with a small word size.  For example, we may have synthesised a
+program which is correct for all 8-bit inputs, but incorrect for
+some 32-bit input.  If this is the case (which we can determine
+by running the candidate program through {\sc verif} using the smaller
+word size), we may be able to produce a correct program for
+the full $\mathcal{L}$-machine by using the constant extension rules
+shown in Fig.~\ref{fig:generalize}.  If constant generalization
+is able to find a correct program, we are done.  Otherwise,
+we need to increase the word width of the $\mathcal{L}$-machine
+we are currently synthesising for.
+
 \begin{figure}
 \begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
@@ -805,6 +853,115 @@ logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 
 \end{figure}
 
+
+\subsection{Implementation Issues}
+For performance reasons, we found that adding extra constraints on the
+syntax of the synthesised programs sped up synthesis.  The extra constraints
+fell into two categories: eliminating nops and instruction-level symmetry reduction.
+
+\subsubsection{Remove nops}
+Many instructions in $\mathcal{L}$ are nops that do not doing anything,
+for example the instruction \verb|add x 0|.  Such instructions
+can be removed from any program they appear in to leave a semantically
+equivalent, but shorter, program.  We can therefore be sure that nops
+will never appear in any minimal program.  By adding constraints saying that
+each instruction is not a nop, we can help the underlying SAT solver's
+search, which reduces the runtime of the overall procedure.
+
+\subsubsection{Symmetry Reduction}
+There are many instructions that are equivalent to each other.  For example,
+\verb|add x y| is equivalent to \verb|add y x| -- any program containing
+one instruction could have it replaced by the other instruction and
+keep the same semantics.  We choose a single canonical instruction to
+represent all instructions in a particular equivalence class, then add
+constraints saying that no non-canonical instructions appear in the program.
+
+\iffalse
+Our rules for excluding non-canonical instructions are:
+
+\begin{itemize}
+ \item For commutative operations, the first operand is smaller than the second.
+ \item For unary operations, the second (unused) operand is always 0.
+ \item No instruction may have two constant operands.
+ \item All constants in the constant table are distinct.
+\end{itemize}
+
+As with the nop constraints, these additional constraints do increase the
+size of the resulting SAT instance, but this still ends up as a win in
+terms of runtime.
+\fi
+
+
+\section{Experimental Results}
+\label{sec:experiments}
+We implemented our fully automatic synthesis procedure as the {\sc kalashnikov} tool.  The implementation consists
+of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
+programs from~\cite{brahma} and~\cite{brahma-icse}.  The majority of these are ``bit twiddling hacks'' taken from
+Hacker's Delight~\cite{hackers-delight}.  The code we used to perform the experiments, along with the
+benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a backend solver, we used
+{\sc CBMC}~\cite{cbmc-website} at SVN revision r2777, with Glucose 2.2~\cite{glucose-paper} as the SAT solver.
+We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
+
+To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
+on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}\footnote{Unfortunately
+we were not able to obtain a copy of {\sc Brahma}, and so were unable to rerun the experiments ourselves.}.
+These experiments were performed an 8-core,
+1.86\,GHz Xeon with 4\,GB of RAM.  Although there are 49 results shown across the two tables, it should
+be noted that there is a lot of overlap between the two sets of benchmarks and that there are only
+29 unique benchmarks altogether.
+
+We also ran {\sc AHA} on our benchmarks and found that on the small problems (those with 2-instruction solutions)
+{\sc AHA} found a single correct solution in negligible time.  On the larger benchmarks, candidate solutions
+were still found rapidly (around 10\,s for the 3-instruction programs) but the number of candidates was
+too large to practically check them all.  For example, {\sc AHA} found 2284262 candidate
+programs in 12.13\,s for p12.
+
+We invested significant effort into trying to implement the benchmarks in a way
+that would allow us to compare with {\sc sketch}. Unfortunately, we were unable to come up
+with an encoding that afforded a meaningful comparison.  In retrospect,
+we realise that this is due to a fundamental difference in the problem domains
+our respective tools are designed to solve: {\sc sketch} is able to use
+human insight to generate large, complex programs, whereas we are optimised for 
+automatically generating small programs with somewhat more intricate data-flow.
+
+
+The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
+The tables include the runtime for each tool, the number of lines in the synthesised program and whether
+{\sc Brahma} was able to complete the synthesis completely automatically (the ``Aut.''~column).  A blank
+in the ``Aut.''~column means that {\sc Brahma} was able to synthesise the program automatically, and a \xmark
+\,means that user assistance was required.
+On both sets of benchmarks, the results can be broadly divided into three categories:
+
+{\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
+This represents the majority of cases.  A statistical breakdown of this case is given in Fig~\ref{fig:stats-table}.
+{\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and similarly to
+semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).  Program synthesis appears to
+be CPU-bound, and so part of the performance difference may be explained by the faster CPU in the machine
+used to run {\sc Kalashnikov}.
+
+{\bf {\sc Kalashnikov} is unable to synthesise a program:}
+This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
+The existence of instances that are beyond the reach of current automatic
+methods, and thus require manual intervention, is to be expected.
+% A total of 8 tests fall into this category.
+
+{\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
+This happens in 4 of the 29 cases.  For instance, the specification for p24 of Fig.~\ref{fig:icse-results-table} 
+is a segment of obfuscated C code taken from a piece of malware.  The code uses an apparently unbounded loop
+to multiply its input by the constant 45.  {\sc Brahma} synthesises an equivalent program consisting of
+4 instructions, whereas {\sc Kalashnikov} synthesises the single instruction \texttt{mul x 45}.
+
+To demonstrate the capabilities of \newC as an implementation language, we synthesise a
+non-trivial floating-point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
+exact sums of floating-point numbers.  The original {\sc 2Sum} algorithm is given as Alg.~\ref{alg:2sum}.
+In the case that $a \ge b$, exact addition can be implemented in fewer instructions -- this is the
+{\sc Fast2Sum} algorithm~\cite{fast2sum}, shown in Alg.~\ref{alg:fast2sum}.  We used {\sc 2sum} as our specification, and
+added an assumption that $a \ge b$.  {\sc Kalashnikov} is able to synthesise and verify the
+code for {\sc Fast2Sum} from this specification in 396.07\,s, which we believe to be the first time
+this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum}, but
+we believe our synthesis constitutes the first proof that {\sc Fast2Sum} is
+minimal under the assumption that $a \ge b$.
+
 \begin{figure}
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
@@ -844,67 +1001,7 @@ logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 \end{figure}
 
 
-\section{Experimental Results}
-\label{sec:experiments}
-We implemented our fully automatic synthesis procedure as the {\sc kalashnikov} tool.  The implementation consists
-of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
-programs from~\cite{brahma} and~\cite{brahma-icse}.  The majority of these are ``bit twiddling hacks'' taken from
-Hacker's Delight~\cite{hackers-delight}.  The code we used to perform the experiments, along with the
-benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a backend solver, we used
-{\sc CBMC}~\cite{cbmc-website} at SVN revision r2777, with Glucose 2.2~\cite{glucose-paper} as the SAT solver.
-We performed our experiments on a 4-core, 3.07\,GHz Xeon X5667 with 50\,GB of RAM.
-
-To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
-on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}.  These experiments were performed an 8-core,
-1.86\,GHz Xeon with 4\,GB of RAM.  Although there are 49 results shown across the two tables, it should
-be noted that there is a lot of overlap between the two sets of benchmarks and that there are only
-29 unique benchmarks altogether.
-
-We also ran {\sc AHA} on our benchmarks and found that on the small problems (those with 2-instruction solutions)
-{\sc AHA} found a single correct solution in negligible time.  On the larger benchmarks, candidate solutions
-were still found rapidly (around 10\,s for the 3-instruction programs) but the number of candidates was
-too large to practically check them all.  For example, {\sc AHA} found 2284262 candidate
-programs in 12.13\,s for p12.
-
-We do not compare {\sc Kalashnikov} to {\sc Sketch}~\cite{sketch}, since the problem domains are
-too dissimilar to permit a meaningful comparison.
-
-The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
-The tables include the runtime for each tool, the number of lines in the synthesised program and whether
-{\sc Brahma} was able to complete the synthesis completely automatically (the ``Aut.''~column).  A blank
-in the ``Aut.''~column means that {\sc Brahma} was able to synthesise the program automatically, and a \xmark
-\,means that user assistance was required.
-On both sets of benchmarks, the results can be broadly divided into three categories:
-
-{\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
-This represents the majority of cases.  A statistical breakdown of this case is given in Fig~\ref{fig:stats-table}.
-{\sc Kalashnikov} performs substantially better than {\sc Brahma} on these tests, and similarly to
-semibiased {\sc Brahma} (an optimisation introduced in~\cite{brahma-icse}).
-
-{\bf {\sc Kalashnikov} is unable to synthesise a program:}
-This happens in 8 of the 29 cases.  In each case, {\sc Brahma} needs user guidance to synthesise the program.
-The existence of instances that are beyond the reach of current automatic
-methods, and thus require manual intervention, is to be expected.
-% A total of 8 tests fall into this category.
-
-{\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
-This happens in 4 of the 29 cases.  For instance, the specification for p24 of Fig.~\ref{fig:icse-results-table} 
-is a segment of obfuscated C code taken from a piece of malware.  The code uses an apparently unbounded loop
-to multiply its input by the constant 45.  {\sc Brahma} synthesises an equivalent program consisting of
-4 instructions, whereas {\sc Kalashnikov} synthesises the single instruction \texttt{mul x 45}.
-
-To demonstrate the capabilities of \newC as an implementation language, we synthesise a
-non-trivial floating-point program.  For this we chose the classic {\sc 2Sum} algorithm for computing
-exact sums of floating-point numbers.  The original {\sc 2Sum} algorithm is given as Alg.~\ref{alg:2sum}.
-In the case that $a \ge b$, exact addition can be implemented in fewer instructions -- this is the
-{\sc Fast2Sum} algorithm~\cite{fast2sum}.  We used {\sc 2sum} as our specification, and
-added an assumption that $a \ge b$.  {\sc Kalashnikov} is able to synthesise and verify the
-code for {\sc Fast2Sum} from this specification in 396.07\,s, which we believe to be the first time
-this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum}, but
-we believe our synthesis constitutes the first proof that {\sc Fast2Sum} is
-minimal under the assumption that $a \ge b$.
-
-\begin{figure}
+\begin{figure}[p]
 \begin{center}
 {\tiny
 \include{figures/results_table}
@@ -914,7 +1011,7 @@ minimal under the assumption that $a \ge b$.
  \label{fig:results-table}}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 \begin{center}
 {\tiny
 \include{figures/icse_results_table}
@@ -924,7 +1021,7 @@ minimal under the assumption that $a \ge b$.
 \label{fig:icse-results-table}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 {\tiny
 \begin{center}
  \begin{tabular}{r||r|r|r|r|r|r|r|r|r}
