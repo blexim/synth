@@ -1,0 +1,172 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+t1 = a1 + a1
+Fastest checker: explicit
+Fails for (0, 2, 1, 0)
+
+[]
+Fastest checker: explicit
+t1 = a1 + a2
+Fastest checker: explicit
+Fails for (1, 2, 1, 0)
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+t1 = a3 - a1
+t2 = t1 + t1
+Fastest checker: explicit
+Fails for (2, 2, 1, 0)
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+t1 = 0x3 >> a1
+t2 = a3 ^ t1
+Fastest checker: explicit
+Fails for (0, 3, 1, 0)
+
+[]
+Fastest checker: explicit
+t1 = 0x4 >> a1
+t2 = a2 >> t1
+Fastest checker: explicit
+Fails for (3, 3, 1, 0)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a2 ^ a3
+t2 = t1 >>> a1
+t3 = a3 ^ t2
+Fastest checker: explicit
+Fails for (1, 4, 1, 0)
+
+[]
+Fastest checker: cbmc
+t1 = a1 * a2
+t2 = a2 ^ t1
+t3 = t2 >> a1
+Fastest checker: explicit
+Fails for (4, 4, 1, 0)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+t1 = a1 < a3
+t2 = a2 * t1
+t3 = a3 s< a1
+t4 = t2 | t3
+Fastest checker: explicit
+Fails for (8, 8, 1, 0)
+
+[]
+Fastest checker: cbmc
+t1 = a2 - a1
+t2 = a2 & t1
+t3 = a2 <= a1
+t4 = t2 | t3
+Fastest checker: explicit
+Fails for (1, 3, 1, 0)
+
+[]
+Fastest checker: cbmc
+t1 = a2 <= a1
+t2 = a1 < a3
+t3 = a2 * t2
+t4 = t1 ^ t3
+Fastest checker: explicit
+Fails for (1, 1, 2, 0)
+
+[]
+Fastest checker: cbmc
+t1 = a1 < a3
+t2 = a2 * t1
+t3 = a2 = a1
+t4 = t2 + t3
+Fastest checker: explicit
+Fails for (3, 3, 2, 0)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 4
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 13, 'explicit': 19, 'timeout': 1, 'iterations': 22}
+Perf timers:
+verify: 2.61s
+checker: 599.86s
+_: 600.02s
+synth: 597.36s

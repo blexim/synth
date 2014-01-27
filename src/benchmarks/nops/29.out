@@ -1,0 +1,82 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+t1 = a1 * 0xd
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
+[]
+Fastest checker: explicit
+t1 = a1 * 0xd
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 5
+[]
+Fastest checker: explicit
+t1 = a1 * 0xd
+Fastest checker: explicit
+Correct for wordlen=5
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
+[]
+Fastest checker: explicit
+t1 = a1 * 0xd
+Fastest checker: explicit
+Correct for wordlen=5
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 6
+[]
+Fastest checker: explicit
+t1 = a1 * 0x2d
+Fastest checker: explicit
+Correct for wordlen=6
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 8.79s
+
+t1 = a1 * 0x2d
+
+Perf counters:
+{'cbmc': 1, 'explicit': 27, 'exclusions': 2, 'iterations': 6}
+Perf timers:
+verify: 7.33s
+checker: 8.66s
+generalize: 2.93s
+_: 8.79s
+synth: 1.45s

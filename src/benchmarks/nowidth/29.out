@@ -1,0 +1,31 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+t1 = 0x2d * a1
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 7.06s
+
+t1 = 0x2d * a1
+
+Perf counters:
+{'cbmc': 2, 'explicit': 1, 'iterations': 2}
+Perf timers:
+verify: 2.22s
+checker: 7.05s
+_: 7.06s
+synth: 4.84s

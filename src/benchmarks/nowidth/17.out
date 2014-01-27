@@ -1,0 +1,96 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = 0x1b5 * a1
+t2 = t1 >> t1
+Fastest checker: explicit
+Fails for (8,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x47e >> a1
+t2 = t1 >> t1
+Fastest checker: explicit
+Fails for (9,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x21df4 >>> a1
+t2 = 0x21df4 >>> t1
+Fastest checker: explicit
+Fails for (10,)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a1 << 0xf8d98ea3
+t2 = 0xf8d98ea3 >> t1
+t3 = a1 & t2
+Fastest checker: explicit
+Fails for (14,)
+
+[]
+Fastest checker: cbmc
+t1 = 0xc7a0c501 >> a1
+t2 = t1 >>> t1
+t3 = a1 & t2
+Fastest checker: explicit
+Fails for (11,)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 8, 'explicit': 8, 'timeout': 1, 'iterations': 12}
+Perf timers:
+verify: 1.22s
+checker: 599.93s
+_: 600.01s
+synth: 598.77s

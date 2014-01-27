@@ -1,0 +1,97 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+t1 = 0x1 s< a1
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x1 s<= a1
+Fastest checker: cbmc
+Fails for (2147516416,)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = 0x3fffffff + a1
+t2 = t1 >>> 0x4800829e
+Fastest checker: cbmc
+Fails for (2147483648,)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a1 / 0x3ec40209
+t2 = a1 != t1
+t3 = t2 - t1
+Fastest checker: cbmc
+Fails for (1056964608,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x6a40001e
+t2 = a1 != t1
+t3 = t1 | t2
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 159.20s
+
+t1 = a1 >>> 0x6a40001e
+t2 = a1 != t1
+t3 = t1 | t2
+
+Perf counters:
+{'cbmc': 12, 'explicit': 4, 'iterations': 11}
+Perf timers:
+verify: 4.35s
+checker: 159.14s
+_: 159.20s
+synth: 154.83s

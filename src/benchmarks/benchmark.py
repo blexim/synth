@@ -42,7 +42,7 @@ def runbenchmarks(restrict_width, flags, outdir):
     if not restrict_width:
       word = 32
 
-    cmd = ("./kalashnikov.py -a%d -r%d -w%d -v --seed 1337 %s specs/p%d.c > %s/%d.out" %
+    cmd = ("./kalashnikov.py -a%d -r%d -w%d -v --seed 1337 -T600 %s specs/p%d.c > %s/%d.out" %
         (args, res, word, flags, i, outdir, i))
 
     try:
