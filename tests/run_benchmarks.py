@@ -27,6 +27,7 @@ def runbenchmarks(restrict_width, flags, outdir):
     elif i in benchmarks22:
       args = 2
       res = 2
+      flags += ' -s2'
     elif i in benchmarks31:
       args = 3
       res = 1
@@ -42,7 +43,7 @@ def runbenchmarks(restrict_width, flags, outdir):
     if not restrict_width:
       word = 32
 
-    cmd = ("./kalashnikov.py -a%d -r%d -w%d -v --seed 1337 -T600 %s specs/p%d.c > %s/%d.out" %
+    cmd = ("../src/kalashnikov.py --cbmc ../bin/cbmc-glucose -a%d -r%d -w%d -v --seed 1337 -T600 %s specs/p%d.c > %s/%d.out" %
         (args, res, word, flags, i, outdir, i))
 
     try:
