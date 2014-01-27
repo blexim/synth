@@ -1,0 +1,133 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+t1 = a1 << 0x80000000
+Fastest checker: cbmc
+Fails for (2147516416,)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = 0x7fffc000 + a1
+t2 = 0x7fffc000 ^ t1
+Fastest checker: explicit
+Fails for (16384,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x80008020 ^ a1
+t2 = t1 - 0x80008020
+Fastest checker: explicit
+Fails for (32,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x7fffa4c0 + a1
+t2 = 0x7fffa4c0 ^ t1
+Fastest checker: explicit
+Fails for (64,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x226b8000 ^ a1
+t2 = t1 - 0x226b8000
+Fastest checker: explicit
+Fails for (32768,)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x800401f0
+t2 = t1 << 0x800401f0
+t3 = a1 + t2
+Fastest checker: explicit
+Fails for (65536,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 / 0x2aae8003
+t2 = a1 * t1
+t3 = a1 - t2
+Fastest checker: cbmc
+Fails for (876609536,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x10017
+t2 = 0x10017 & t1
+t3 = a1 - t2
+Fastest checker: explicit
+Fails for (8388608,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x10191
+t2 = 0x10191 & t1
+t3 = a1 - t2
+Fastest checker: explicit
+Fails for (131072,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x80040010
+t2 = t1 << 0x80040010
+t3 = a1 + t2
+Fastest checker: explicit
+Fails for (65536,)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 15, 'explicit': 11, 'timeout': 1, 'iterations': 17}
+Perf timers:
+verify: 4.51s
+checker: 599.93s
+_: 600.06s
+synth: 595.50s

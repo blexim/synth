@@ -1,0 +1,117 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+t1 = ~a1
+t2 = a1 * t1
+t3 = t2 / 0x8
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
+[]
+Fastest checker: explicit
+t1 = ~a1
+t2 = a1 * t1
+t3 = t2 / 0x8
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 5
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = 0xb ^ a1
+t2 = t1 << a1
+t3 = t2 s< 0x1e
+Fastest checker: explicit
+Fails for (2,)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'timeout': 1, 'cbmc': 5, 'explicit': 18, 'exclusions': 1, 'iterations': 13}
+Perf timers:
+verify: 2.65s
+checker: 599.89s
+generalize: 1.44s
+_: 600.01s
+synth: 597.35s

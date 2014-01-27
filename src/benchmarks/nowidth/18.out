@@ -1,0 +1,80 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = 0x6ab >>> a1
+t2 = 0x6ab >> t1
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x94000000 << a1
+t2 = a1 s<= t1
+Fastest checker: explicit
+Fails for (8,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x97000002 << a1
+t2 = a1 s<= t1
+Fastest checker: explicit
+Fails for (9,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x6886ff8f << a1
+t2 = 0x6886ff8f < t1
+Fastest checker: explicit
+Fails for (12,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x97400000 << a1
+t2 = a1 s<= t1
+Fastest checker: explicit
+Fails for (16,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x177b7a00 << a1
+t2 = 0x177b7a00 s< t1
+Fastest checker: explicit
+Fails for (13,)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 7, 'explicit': 8, 'timeout': 1, 'iterations': 10}
+Perf timers:
+verify: 1.46s
+checker: 599.96s
+_: 600.04s
+synth: 598.55s

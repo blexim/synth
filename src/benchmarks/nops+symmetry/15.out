@@ -1,0 +1,105 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+t1 = a1 ^ a2
+t2 = t1 >> 0x5
+t3 = a1 | t1
+t4 = t3 - t2
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Finished in 114.23s
+
+t1 = a1 ^ a2
+t2 = t1 >> 0x21
+t3 = a1 | t1
+t4 = t3 - t2
+
+Perf counters:
+{'cbmc': 8, 'explicit': 7, 'iterations': 11}
+Perf timers:
+verify: 1.76s
+checker: 114.17s
+generalize: 1.28s
+_: 114.23s
+synth: 112.46s

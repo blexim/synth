@@ -1,0 +1,157 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0xa
+t2 = t1 + a1
+t3 = t2 ^ t1
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
+[]
+Fastest checker: cbmc
+t1 = a1 | 0x6
+t2 = t1 >>> 0x6
+t3 = a1 * t2
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 5
+[]
+Fastest checker: cbmc
+t1 = a1 | 0xd
+t2 = t1 >>> 0xd
+t3 = a1 * t2
+Fastest checker: explicit
+Correct for wordlen=5
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
+[]
+Fastest checker: cbmc
+t1 = a1 | 0x8
+t2 = t1 >>> 0x8
+t3 = t2 * a1
+Fastest checker: explicit
+Correct for wordlen=5
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 6
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x30
+t2 = t1 ^ a1
+t3 = t2 - t1
+Fastest checker: explicit
+Correct for wordlen=6
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Excluding current sequence
+[]
+Fastest checker: cbmc
+t1 = a1 | 0x16
+t2 = t1 >>> 0x16
+t3 = t2 * a1
+Fastest checker: explicit
+Correct for wordlen=6
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 7
+[]
+Fastest checker: cbmc
+t1 = a1 >>> 0x5f
+t2 = a1 + t1
+t3 = t2 ^ t1
+Fastest checker: explicit
+Correct for wordlen=7
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 66.58s
+
+t1 = a1 >>> 0x5f
+t2 = a1 + t1
+t3 = t2 ^ t1
+
+Perf counters:
+{'cbmc': 9, 'explicit': 36, 'exclusions': 3, 'iterations': 13}
+Perf timers:
+verify: 8.39s
+checker: 66.38s
+generalize: 4.31s
+_: 66.58s
+synth: 58.15s

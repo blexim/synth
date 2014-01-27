@@ -1,0 +1,52 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+t1 = a1 + a1
+t2 = t1 >> a2
+Fastest checker: cbmc
+Fails for (1, 1)
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 3, 'explicit': 3, 'timeout': 1, 'iterations': 6}
+Perf timers:
+verify: 1.01s
+checker: 600.01s
+_: 600.03s
+synth: 599.01s

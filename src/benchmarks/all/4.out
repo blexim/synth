@@ -1,0 +1,52 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+t1 = 0xf + a1
+t2 = a1 ^ t1
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Finished in 2.76s
+
+t1 = 0xffffffff + a1
+t2 = a1 ^ t1
+
+Perf counters:
+{'cbmc': 1, 'explicit': 7, 'iterations': 4}
+Perf timers:
+verify: 1.74s
+checker: 2.71s
+generalize: 1.25s
+_: 2.76s
+synth: 1.02s

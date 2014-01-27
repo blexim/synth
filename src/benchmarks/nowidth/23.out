@@ -1,0 +1,75 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = 0xafd64867 >>> a1
+t2 = 0xafd64867 << t1
+t3 = t1 / t2
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: cbmc
+t1 = 0xf72a9203 * a1
+t2 = 0xf72a9203 << t1
+t3 = t1 / t2
+Fastest checker: explicit
+Fails for (8,)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 5, 'explicit': 5, 'timeout': 1, 'iterations': 9}
+Perf timers:
+verify: 0.49s
+checker: 599.96s
+_: 600.01s
+synth: 599.51s

@@ -1,0 +1,205 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+t1 = a1 + a1
+Fastest checker: explicit
+Fails for (1, 1, 0)
+
+[]
+Fastest checker: explicit
+t1 = a3 + a1
+Fastest checker: explicit
+Fails for (0, 1, 1)
+
+[]
+Fastest checker: explicit
+t1 = a2 - a3
+Fastest checker: explicit
+Fails for (0, 1, 0)
+
+[]
+Fastest checker: explicit
+t1 = a1 * a1
+Fastest checker: explicit
+Fails for (2, 1, 0)
+
+[]
+Fastest checker: explicit
+t1 = a2 * a1
+Fastest checker: explicit
+Fails for (1, 2, 0)
+
+[]
+Fastest checker: explicit
+t1 = a1 & a1
+Fastest checker: explicit
+Fails for (1, 1, 1)
+
+[]
+Fastest checker: explicit
+t1 = a1 << a3
+Fastest checker: explicit
+Fails for (2, 1, 1)
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = a1 ^ a3
+t2 = a1 << a1
+t3 = t2 >> t1
+Fastest checker: explicit
+Fails for (3, 1, 0)
+
+[]
+Fastest checker: cbmc
+t1 = a1 + a3
+t2 = t1 & a3
+t3 = t1 >> t2
+Fastest checker: explicit
+Fails for (3, 1, 1)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+t1 = 0x5 * a1
+t2 = t1 << a3
+t3 = t2 / 0x4
+Fastest checker: explicit
+Fails for (4, 1, 0)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 3
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+t1 = a1 & a3
+t2 = a1 >>> a3
+t3 = t2 + t1
+t4 = t1 + t3
+Fastest checker: explicit
+Fails for (4, 1, 1)
+
+[]
+Fastest checker: cbmc
+t1 = a3 << a1
+t2 = a2 s<= t1
+t3 = a1 << t1
+t4 = t3 >> t2
+Fastest checker: explicit
+Fails for (5, 1, 1)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 4
+
+[]
+Fastest checker: cbmc
+t1 = a1 ^ 0xe
+t2 = a3 << t1
+t3 = t2 >>> t1
+t4 = a1 - t3
+Fastest checker: explicit
+Fails for (8, 1, 1)
+
+[]
+Fastest checker: cbmc
+t1 = a3 << a1
+t2 = a3 s< t1
+t3 = t2 * 0x3
+t4 = a1 ^ t3
+Fastest checker: explicit
+Fails for (1, 2, 1)
+
+[]
+Fastest checker: cbmc
+t1 = a3 << a1
+t2 = a2 s< t1
+t3 = 0x3 * t2
+t4 = a1 ^ t3
+Fastest checker: explicit
+Fails for (2, 2, 1)
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 4
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 16, 'explicit': 25, 'timeout': 1, 'iterations': 27}
+Perf timers:
+verify: 3.54s
+checker: 599.84s
+_: 600.01s
+synth: 596.43s

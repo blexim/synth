@@ -1,0 +1,77 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 2
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 3
+
+[]
+Fastest checker: explicit
+t1 = a1 >>> 0x3
+t2 = t1 < a1
+t3 = t2 + t1
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Finished in 14.65s
+
+t1 = a1 >>> 0x1f
+t2 = t1 < a1
+t3 = t2 + t1
+
+Perf counters:
+{'cbmc': 2, 'explicit': 11, 'iterations': 7}
+Perf timers:
+verify: 2.24s
+checker: 14.58s
+generalize: 1.76s
+_: 14.65s
+synth: 12.41s

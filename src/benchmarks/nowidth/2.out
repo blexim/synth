@@ -1,0 +1,82 @@
+Using seed: 1337
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: cbmc
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: cbmc
+t1 = a1 - 0x10000007
+t2 = a1 & t1
+Fastest checker: explicit
+Fails for (8,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x28a24488 << a1
+t2 = t1 s< 0x28a24488
+Fastest checker: explicit
+Fails for (9,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x91200000 << a1
+t2 = a1 s< t1
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: cbmc
+t1 = 0xd10653f0 << a1
+t2 = 0xd10653f0 s< t1
+Fastest checker: explicit
+Fails for (13,)
+
+[]
+Fastest checker: cbmc
+t1 = a1 - 0x7fffffef
+t2 = a1 & t1
+Fastest checker: explicit
+Fails for (16,)
+
+[]
+Fastest checker: cbmc
+t1 = 0x1 + a1
+t2 = a1 & t1
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 228.22s
+
+t1 = 0x1 + a1
+t2 = a1 & t1
+
+Perf counters:
+{'cbmc': 8, 'explicit': 7, 'iterations': 9}
+Perf timers:
+verify: 2.23s
+checker: 228.16s
+_: 228.22s
+synth: 225.98s
