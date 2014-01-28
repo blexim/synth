@@ -33,6 +33,11 @@
 
 \newcommand{\bv}[2]{\mathcal{BV}(#1, #2)}
 
+\iffalse
+\lstset{emph={
+  assume, assert}, emphstyle=\bfseries}
+\fi
+  
 %\usepackage{makeidx}  % allows for indexgeneration
 %
 \title{Fully Automatic Loop-free Program Synthesis by Bounded Model Checking}
@@ -462,7 +467,7 @@ Our encoding is the following:
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 {\small
 \begin{center}
 \setlength{\tabcolsep}{16pt}
@@ -500,7 +505,7 @@ The exact details of how we encoding an $\mathcal{L}$-program are given in Sec.~
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
 of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{minipage}[t]{.45\textwidth}
 \begin{lstlisting}[language=C++]
