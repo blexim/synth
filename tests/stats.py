@@ -70,11 +70,11 @@ def print_stats(n1, n2, stats):
 
   if pval <= threshold:
     if med1 < med2:
-      print "%s is SIGNIFICANTLY faster" % n1
+      print "%s is SIGNIFICANTLY faster (p=%.3f)" % (n1, pval)
     else:
-      print "%s is SIGNIFICANTLY faster" % n2
+      print "%s is SIGNIFICANTLY faster (p=%.3f)" % (n2, pval)
   else:
-    print "No signficant speed difference"
+    print "No signficant speed difference (p=%.3f)" % pval
 
 if __name__ == '__main__':
   import sys
