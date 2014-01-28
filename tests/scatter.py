@@ -58,12 +58,12 @@ def plot(name1, name2, times):
 
   ax2.set_axis_off()
 
-  plt.show()
-
   plt.axhline(color='k')
   plt.axvline(color='k')
   plt.axhline(y=1, color='k')
   plt.axvline(x=1, color='k')
+
+  return plt
 
 if __name__ == '__main__':
   import sys
@@ -75,4 +75,5 @@ if __name__ == '__main__':
   expname2 = sys.argv[4]
 
   times = load(fname1, fname2)
-  plot(expname1, expname2, times)
+  graph = plot(expname1, expname2, times)
+  graph.show()
