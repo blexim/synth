@@ -16,6 +16,7 @@
 \usepackage{amsmath}
 %\usepackage{amsthm}
 \usepackage{pifont}
+\usepackage{multicol}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
@@ -253,8 +254,8 @@ procedure is guaranteed to terminate.
 \begin{algorithm}
  \caption{Abstract refinement algorithm
  \label{fig:abstract-refinement-code}}
- 
 
+ \begin{multicols}{2}
  \begin{algorithmic}[1]
 \Statex
 \Function{synth}{inputs}
@@ -277,12 +278,13 @@ procedure is guaranteed to terminate.
     \State \Return{valid}
   \EndIf
 \EndFunction
+\columnbreak
 \Statex
 \Function{refinement loop}{}
   \Let{inputs}{$\emptyset$}
   \Loop
     \Let{candidate}{\Call{synth}{inputs}}
-    \If{candidate = unsatisfiable}
+    \If{candidate = UNSAT}
       \State \Return{unsatisfiable}
     \EndIf
     \Let{res}{\Call{verif}{candidate}}
@@ -294,12 +296,13 @@ procedure is guaranteed to terminate.
   \EndLoop
 \EndFunction
  \end{algorithmic}
+ \end{multicols}
 \end{algorithm}
 
 
 \begin{figure}
  \centering
- \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
+ \begin{tikzpicture}[scale=0.5,->,>=stealth',shorten >=1pt,auto,
  semithick, initial text=]
 
   \matrix[nodes={draw, fill=none, scale=1, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
@@ -368,7 +371,7 @@ To synthesise tricky bitvector programs like this, it is natural for us to
 work in the logic of quantifier-free propositional formulae and to use a
 propositional SAT or SMT-$\mathcal{BV}$ solver as the decision procedure. 
 However we propose a slightly different tack, which is to use a decidable
-fragment as C as a ``high level'' logic.
+fragment of C as a ``high level'' logic.
 
 
 \subsection{\newC}
@@ -459,7 +462,8 @@ Our encoding is the following:
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[h]
+{\small
 \begin{center}
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
@@ -486,10 +490,9 @@ Unsigned and signed comparison instructions:
  \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| & \verb|slt a b|
 \end{tabular}
 \end{center}
-
+}
  \caption{The language $\mathcal{L}$}
  \label{fig:l-language}
-
 \end{figure}
 
 
@@ -497,20 +500,20 @@ The exact details of how we encoding an $\mathcal{L}$-program are given in Sec.~
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
 of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\begin{minipage}[t]{0.43\textwidth}
+\begin{minipage}[t]{.45\textwidth}
 \begin{lstlisting}[language=C++]
 void synth() {
   prog_t p = nondet();
   int in[N], out[M];
-  
+
+  assume(wellformed(p));
+
   in = test1;
   exec(p, in, out);
   assume(check(in, out));
-  
   ...
-  
   in = testN;
   exec(p, in, out);
   assume(check(in, out));
@@ -519,9 +522,9 @@ void synth() {
 }
 \end{lstlisting}
 \end{minipage}
-\vrule \quad
-\begin{minipage}[t]{0.45\textwidth}
-\begin{lstlisting}[language=C]
+\hfill
+\begin{minipage}[t]{.45\linewidth}
+\begin{lstlisting}[language=C++]
 void verif(prog_t p) {
   int in[N] = nondet();
   int out[M];
@@ -562,6 +565,7 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \tikzstyle{line} = [draw, color=black, -latex']
 
 
+\resizebox{!}{2.5cm}{
 \begin{tikzpicture}[font=\sffamily]
 
 \node [file] (synth) {\sc synth.c};
@@ -588,6 +592,7 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \path [line] (gcc) -- (out);
 
 \end{tikzpicture}
+}
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
@@ -615,13 +620,12 @@ struct prog_t {
 \end{figure}
 
 The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
-The \verb|prog_t| structure encodes a complete program, which is a sequence of instructions.
+The \verb|prog_t| structure encodes a program, which is a sequence of instructions.
 The parameter $a$ is the number of arguments the program takes.
 The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
 right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
-a program argument or the result of a previous instruction.  The value of an operand
+a program argument or the result of a previous instruction, and its value
 is determined at runtime as follows:
-
 \[
  val(x) = \begin{cases}
            x < a & \text{the } x^{\text{th}} \text{ program argument} \\
@@ -807,7 +811,8 @@ we need to increase the word width of the $\mathcal{L}$-machine
 we are currently synthesising for.
 
 \begin{figure}
-\begin{tikzpicture}[scale=0.9, transform shape, node distance=2cm, auto]
+\centering
+\begin{tikzpicture}[scale=0.7, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
@@ -821,31 +826,31 @@ we are currently synthesising for.
  \node [decision, below of=synthsucc, node distance=2.5cm] (verif) {{\sc Verif} succeeds?};
  \node [decision, right of=verif] (ck) {$c < l$?};
 
- \node [block, below of=verif, node distance=2.5cm]   (done) {Done!};
- \node [decision, left of=done] (verifw) {{\sc Verif} succeeds for small words?};
+ \node [block, below of=verif, node distance=3cm]   (done) {Done!};
+ \node [decision, left of=verif] (verifw) {{\sc Verif} succeeds for small words?};
 
  \node [block, below of=ck, node distance=2.5cm] (incc) {$c := c+1$};
  \node [block, right of=incc, node distance=2cm] (incl) {$c := 0$\\ $l := l+1$};
 
  \node [decision, below of=verifw, node distance=3cm] (gen) {Extend succeeds?};
- \node [block, left of=gen, node distance=2.5cm] (iterate) {Parameters unchanged};
+ \node [block, left of=verifw, node distance=3cm] (iterate) {Parameters unchanged};
 
- \node [block, below of=gen, node distance=2.5cm] (incw) {$w := w+1$};
+ \node [block, left of=gen, node distance=3cm] (incw) {$w := w+1$};
 
  \path [line] (synthsucc) -- node [left] {Yes} (verif);
  \path [line] (synthsucc) -| node [above, near start] {No} (ck);
 
  \path [line] (verif) -- node [left] {Yes} (done);
- \path [line] (verif) -| node [above, near start] {No} (verifw);
+ \path [line] (verif) -- node [above, near start] {No} (verifw);
 
  \path [line] (ck) -- node [left] {Yes} (incc);
  \path [line] (ck) -| node  [above, near start]  {No} (incl);
 
  \path [line] (verifw) -- node [right] {Yes} (gen);
- \path [line] (verifw) -| node [above] {No} (iterate);
+ \path [line] (verifw) -- node [above] {No} (iterate);
  
- \path [line] (gen) -| node [below, near start] {Yes} (done);
- \path [line] (gen) -- node [right] {No} (incw);
+ \path [line] (gen) -- node [below] {Yes} (done);
+ \path [line] (gen) -- node [below] {No} (incw);
 
  %\path [dotted, line] (iterate.west) |- (synthsucc);
 \end{tikzpicture}
@@ -1021,6 +1026,7 @@ this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum},
 we believe our synthesis constitutes the first proof that {\sc Fast2Sum} is
 minimal under the assumption that $a \ge b$.
 
+\iffalse
 \begin{figure}
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
@@ -1058,9 +1064,9 @@ minimal under the assumption that $a \ge b$.
  \caption{The {\sc 2Sum} algorithm for correctly rounded floating-point sums.}
   \label{fig:2sum}
 \end{figure}
+\fi
 
-
-\begin{figure}[p]
+\begin{figure}
 \begin{center}
 {\small
 \include{figures/results_table}
@@ -1080,21 +1086,10 @@ minimal under the assumption that $a \ge b$.
 %\label{fig:icse-results-table}
 %\end{figure}
 
-\begin{figure}[p]
-{\tiny
-\begin{center}
- \begin{tabular}{r||r|r|r|r|r|r|r|r|r}
-  & \multicolumn{3}{c}{Count} & \multicolumn{2}{|c}{Total time} & \multicolumn{2}{|c}{Absolute speedup} & \multicolumn{2}{|c}{Relative speedup} \\
-  {\sc Brahma} version & Total & {\sc Kalashnikov} & {\sc Brahma} & {\sc Kalashnikov} & {\sc Brahma} & Mean & Median & Mean & Median \\
-  &       & faster            & faster       &                   &              &      &        &      & \\
-  \hline
-  \hline
-  PLDI & 16 & 13 & 3 & 184.12\,s & 544.20\,s & 22.50\,s & 2.11\,s & 2.60 & 1.77 \\
-  ICSE Semibiased & 17 & 7 & 10 & 225.49\,s & 262.24\,s & 2.16\,s & -1.00\,s & 1.26 & 0.87
- \end{tabular}
-\end{center}
+\begin{figure}
+{\small
+ \include{figures/stats_table}
 }
-
  \caption{Performance statistics when {\sc Brahma} and {\sc Kalashnikov} were both successful.
  \label{fig:stats-table}}
 \end{figure}
