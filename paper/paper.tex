@@ -638,7 +638,7 @@ each opcode is valid.
 \label{defn:well-formed}
 \end{defn}
 
-We add a well-formedness constraint of the form \verb|params[i] <= (a + c + 2*i)|
+We add a well-formedness constraint of the form \verb|params[i] <= (a+c+2*i)|
 for each instruction.  It should be noted that this requires a linear number of well-formedness
 constraints.  If all of these constraints are satisfied, the program is well-formed in the sense
 of Defn.~\ref{defn:well-formed}.
@@ -929,16 +929,16 @@ human insight to generate large, complex programs, whereas we are optimised for
 automatically generating small programs with somewhat more intricate data-flow.
 
 
-\subsection{Experimental Results and Analysis}
+\subsection{Results and Analysis}
 The results of our experiments are shown in Fig.~\ref{fig:results-table}.
 Column 1 shows the runtime reported for each benchmark in \cite{brahma}, column 2
-shows the number of instructions in the synthesised program, and column 3 contains a \xmark when
+shows the number of instructions in the synthesised program, and column 3 contains a \xmark\,when
 {\sc Brahma} needed user assistance to solve a benchmark.
 Columns 4 through 7 show the same information, but with the data taken from~\cite{brahma-icse}.
 Column 5 shows the runtimes for the version of {\sc Brahma} from~\cite{brahma-icse} which
 implemented the semibiased optimisation.
 Finally, column 8 shows the runtime for {\sc Kalashnikov} and column 9 the number of instructions
-in the program synthesised by {\sc Kalashnikov}.  The results can be broadly divided into
+in the program synthesised by {\sc Kalashnikov}.  The results can be divided into
 three categories, as follows:
 
 
