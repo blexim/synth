@@ -894,8 +894,9 @@ terms of runtime.
 \fi
 
 
-\section{Experimental Results}
+\section{Experiments}
 \label{sec:experiments}
+\subsection{Experimental Setup}
 We implemented our fully automatic synthesis procedure as the {\sc kalashnikov} tool.  The implementation consists
 of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
 programs from~\cite{brahma} and~\cite{brahma-icse}.  The majority of these are ``bit twiddling hacks'' taken from
@@ -928,12 +929,18 @@ human insight to generate large, complex programs, whereas we are optimised for
 automatically generating small programs with somewhat more intricate data-flow.
 
 
-The results of our experiments are shown in Fig.~\ref{fig:results-table} and Fig.~\ref{fig:icse-results-table}.
-The tables include the runtime for each tool, the number of lines in the synthesised program and whether
-{\sc Brahma} was able to complete the synthesis completely automatically (the ``Aut.''~column).  A blank
-in the ``Aut.''~column means that {\sc Brahma} was able to synthesise the program automatically, and a \xmark
-\,means that user assistance was required.
-On both sets of benchmarks, the results can be broadly divided into three categories:
+\subsection{Experimental Results and Analysis}
+The results of our experiments are shown in Fig.~\ref{fig:results-table}.
+Column 1 shows the runtime reported for each benchmark in \cite{brahma}, column 2
+shows the number of instructions in the synthesised program, and column 3 contains a \xmark when
+{\sc Brahma} needed user assistance to solve a benchmark.
+Columns 4 through 7 show the same information, but with the data taken from~\cite{brahma-icse}.
+Column 5 shows the runtimes for the version of {\sc Brahma} from~\cite{brahma-icse} which
+implemented the semibiased optimisation.
+Finally, column 8 shows the runtime for {\sc Kalashnikov} and column 9 the number of instructions
+in the program synthesised by {\sc Kalashnikov}.  The results can be broadly divided into
+three categories, as follows:
+
 
 \paragraph{\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
 This happens in 4 of the 29 cases.  This case is illustrated by benchmark p29, shown in Fig.~\ref{fig:obfuscated}.
@@ -950,7 +957,7 @@ methods, and thus require manual intervention, is to be expected.
 % A total of 8 tests fall into this category.
 \paragraph{\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
 In the remaining cases, both {\sc brahma} and {\sc kalashnikov} are able to produce
-minimal programs.  We performed a Mann-Whitney U-test (see Fig.~\ref{fig:stats-table})
+minimal programs.  We performed a Mann-Whitney U test (see Fig.~\ref{fig:stats-table})
 to determine whether there was a significant difference
 in the speed of the two tools.  The test was unable to reject the null hypothesis
 (that the tools are equally fast) at the p=0.05
