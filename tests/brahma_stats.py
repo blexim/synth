@@ -95,6 +95,12 @@ for i in xrange(len(pldi_brahma)):
   stats = pldi_brahma[i]
   timers = {'_': stats[1]}
   counters = {'iterations': stats[0], 'insts': stats[2]}
+
+  if i >= 17:
+    counters['automatic'] = 0
+  else:
+    counters['automatic'] = 1
+
   brahma_stats['%d' % (i+1)] = (counters, timers)
 
 brahmaf = open('processed/brahma.stats', 'wb')
@@ -113,7 +119,9 @@ for i in xrange(len(icse_brahma)):
 
   if not stats[3]:
     time = stats[1] + stats[2]
+    counters['automatic'] = 0
   else:
+    counters['automatic'] = 1
     time = stats[1]
 
   timers = {'_': time}
