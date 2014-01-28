@@ -111,7 +111,12 @@ for i in xrange(len(icse_brahma)):
 
   icse_stats['%d' % icse_pldi_map[i+1]] = (counters, timers)
 
-  timers = {'_': stats[1]}
+  if not stats[3]:
+    time = stats[1] + stats[2]
+  else:
+    time = stats[1]
+
+  timers = {'_': time}
   icse_semibiased_stats['%d' % icse_pldi_map[i+1]] = (counters, timers)
 
 icsef = open('processed/icse.stats', 'wb')
