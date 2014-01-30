@@ -49,7 +49,6 @@ def str2ints(s):
 
 class Prog(object):
   instperm = []
-  invperm = []
   opsperm = []
   outvar = -1
 
@@ -57,11 +56,6 @@ class Prog(object):
     self.instperm = instperm
     self.opsperm = opsperm
     self.outvar = outvar
-    self.invperm = self.inv(instperm)
-
-  def inv(self, instperm):
-    if instperm:
-      return [instperm.index(i) for i in xrange(max(instperm)+1)]
 
   def parse(self, output):
     for l in output:
@@ -71,7 +65,6 @@ class Prog(object):
 
       if minsts:
         self.instperm = str2ints(minsts.group(1))
-        self.invperm = self.inv(self.instperm)
 
       if mops:
         self.opsperm = str2ints(mops.group(1))
@@ -83,8 +76,7 @@ class Prog(object):
     if p < args.args.args:
       return 'a%d' % (p+1)
     else:
-      invperm = self.invperm
-      a = invperm[p - args.args.args]
+      a = p - args.args.args
       return 't%d' % a
 
   def __str__(self):
@@ -94,11 +86,12 @@ class Prog(object):
 
     print instperm
     print opsperm
+    print self.outvar
 
     for i in xrange(max(instperm) + 1):
       op = instperm[i]
-      p1 = opsperm[op*2]
-      p2 = opsperm[(op*2) + 1]
+      p1 = opsperm[i*2]
+      p2 = opsperm[(i*2) + 1]
 
       if op in binops:
         strinsts.append("t%d = %s %s %s" % (i, self.strarg(p1),

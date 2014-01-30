@@ -18,24 +18,9 @@ void wellformed(prog_t *prog) {
   for (i = 0; i < LIBSZ; i++) {
     int in1 = prog->op_perm[2*i];
     int in2 = prog->op_perm[(2*i) + 1];
-    int idxo, idxa, idxb;
 
-    __CPROVER_assume(in1 >= 0 && in1 < (LIBSZ + NARGS));
-    __CPROVER_assume(in2 >= 0 && in2 < (LIBSZ + NARGS));
-    __CPROVER_assume(idxo >= 0 && idxo < LIBSZ &&
-        prog->inst_perm[idxo] == i);
-
-    if (in1 >= NARGS) {
-      __CPROVER_assume(idxa >= 0 && idxa < LIBSZ &&
-          prog->inst_perm[idxa] == (in1 - NARGS));
-      __CPROVER_assume(idxa < idxo);
-    }
-
-    if (in2 >= NARGS) {
-      __CPROVER_assume(idxb >= 0 && idxb < LIBSZ &&
-          prog->inst_perm[idxb] == (in2 - NARGS));
-      __CPROVER_assume(idxb < idxo);
-    }
+    __CPROVER_assume(in1 >= 0 && in1 < (i + NARGS));
+    __CPROVER_assume(in2 >= 0 && in2 < (i + NARGS));
   }
 
   __CPROVER_assume(prog->output_var >= 0 && prog->output_var < LIBSZ);

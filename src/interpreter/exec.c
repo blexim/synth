@@ -7,6 +7,7 @@
 void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   word_t lib[LIBSZ*3];
   int i;
+  int idx;
 
   // The library constraint.
   assume_library(lib);
@@ -21,18 +22,23 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     if (in1 < NARGS) {
       a = args[in1];
     } else {
-      a = lib[(in1 - NARGS) * 3];
+      idx = prog->inst_perm[in1 - NARGS];
+      a = lib[idx * 3];
     }
 
     if (in2 < NARGS) {
       b = args[in2];
     } else {
-      b = lib[(in2 - NARGS) * 3];
+      idx = prog->inst_perm[in2 - NARGS];
+      b = lib[idx * 3];
     }
+  
+    idx = prog->inst_perm[i];
 
-    __CPROVER_assume(a == lib[(i*3) + 1]);
-    __CPROVER_assume(b == lib[(i*3) + 2]);
+    __CPROVER_assume(a == lib[(idx*3) + 1]);
+    __CPROVER_assume(b == lib[(idx*3) + 2]);
   }
 
-  results[0] = lib[prog->output_var * 3];
+  idx = prog->inst_perm[prog->output_var];
+  results[0] = lib[idx * 3];
 }
