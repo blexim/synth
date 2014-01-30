@@ -109,6 +109,7 @@ void tests(prog_t *prog) {
   # already know are wrong...
 
   for prog in exclusions:
+    break
     ops = prog.ops
     parms = prog.params
     consts = prog.consts
@@ -387,6 +388,7 @@ def expand(x, narrow, wide):
   return list(set(ret))
 
 def generalize(prog, checker, width, targetwidth, tests, codelen):
+  return None
   perf.start("generalize")
   ret = heuristic_generalize(prog, checker, width, targetwidth, codelen)
   perf.end("generalize")
