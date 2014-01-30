@@ -11,6 +11,9 @@ args.argparser.add_argument("--cbmc", default="cbmc", type=str,
     help="path to CBMC")
 args.argparser.add_argument("--gcc", default="gcc", type=str,
     help="path to GCC")
+args.argparser.add_argument("--z3", default=False,
+    action="store_const", const=True,
+    help="use Z3 as the decision procedure")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
     type=str, help="path to interpreter")
 args.argparser.add_argument("--library", "-L", default="library",
@@ -24,7 +27,7 @@ args.argparser.add_argument("--noslice", default=False,
     action="store_const", const=True,
     help="do not slice formula")
 args.argparser.add_argument("--strategy", choices=["hybrid", "explicit", "cbmc"],
-    default="hybrid", help="the synthesis strategy")
+    default="cbmc", help="the synthesis strategy")
 args.argparser.add_argument("--synth-strategy",
     choices=["default", "hybrid", "explicit", "cbmc"], default="default",
     help="the synthesis strategy")
@@ -114,7 +117,11 @@ class Checker(object):
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
 
-    print ' '.join(self.cbmcargs)
+    if args.args.z3:
+      self.cbmcargs.append("--z3")
+
+    if args.args.verbose > 1:
+      print ' '.join(self.cbmcargs)
 
     self.write = self.scratchfile.write
 
