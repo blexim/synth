@@ -11,6 +11,9 @@ args.argparser.add_argument("--cbmc", default="cbmc", type=str,
     help="path to CBMC")
 args.argparser.add_argument("--gcc", default="gcc", type=str,
     help="path to GCC")
+args.argparser.add_argument("--z3", default=False,
+    action="store_const", const=True,
+    help="use Z3 as the backend")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
     type=str, help="path to interpreter")
 args.argparser.add_argument("--searcher", default="searcher",
@@ -110,6 +113,12 @@ class Checker(object):
 
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
+
+    if args.args.z3:
+      self.cbmcargs.append("--z3")
+
+    if args.args.verbose > 1:
+      print ' '.join(self.cbmcargs)
 
     self.write = self.scratchfile.write
 
