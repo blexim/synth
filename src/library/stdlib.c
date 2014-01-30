@@ -12,21 +12,17 @@
 void assume_library(word_t lib[LIBSZ*3]) {
   int idx = 0;
 
-  component(x + y);
-  component(x - y);
-  component(x * y);
-  __CPROVER_assume(y != 0);
-  component(x / y);
-  component(1);
-  component(0);
-  component(x & y);
-  component(x | y);
-  component(x ^ y);
-  component(~x);
-  component(x == y);
-  component(x != y);
-  component(x < y);
-  component(x <= y);
-  component(x << y);
-  component(x >> y);
+  component(x & y);   // 0
+  component(x | y);   // 1
+  component(~x);      // 2
+  component(x + 1);   // 3
+  component(x - 1);   // 4
+  component(x ^ y);   // 5
+  component(x >> y);  // 6
+  component(x + y);   // 7
+  component(x - y);   // 8
+  component(x == y);  // 9
+  component(x != y);  // 10
+  component(x < y);   // 11
+  component(x <= y);  // 12
 }

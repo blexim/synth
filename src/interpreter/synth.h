@@ -1,7 +1,7 @@
 #ifndef SYNTH_H
 
 #ifndef LIBSZ
- #define LIBSZ 15
+ #define LIBSZ 13
 #endif
 
 #ifndef WIDTH
