@@ -13,7 +13,7 @@ args.argparser.add_argument("--gcc", default="gcc", type=str,
     help="path to GCC")
 args.argparser.add_argument("--z3", default=False,
     action="store_const", const=True,
-    help="use Z3 as the decision procedure")
+    help="use Z3 as the backend")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
     type=str, help="path to interpreter")
 args.argparser.add_argument("--library", "-L", default="library",
