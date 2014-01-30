@@ -152,7 +152,7 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  bmc = Checker(codelen, width, len(prog.consts), True)
+  bmc = Checker(codelen, width, 0, True)
 
 
   bmc.write(r"""
@@ -161,11 +161,11 @@ def verif(prog, checker, width, codelen):
 prog_t prog = {
   { %s },
   { %s },
-  { %s },
+  %d,
 };
-""" % (", ".join(str(o) for o in prog.ops),
-       ", ".join(str(p) for p in prog.params),
-       ", ".join(str(c) for c in prog.consts)))
+""" % (", ".join(str(o) for o in prog.instperm),
+       ", ".join(str(p) for p in prog.opsperm),
+       prog.outvar))
 
   try:
     (retcode, output) = bmc.run()
