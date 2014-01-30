@@ -2,7 +2,7 @@
 #include "library.h"
 
 #define component(e) do { \
-  __CPROVER_assume(lib[idx] == e); \
+  __CPROVER_assume(lib[idx] == (word_t) (e)); \
   idx += 3; \
 } while (0)
 
@@ -30,5 +30,4 @@ void assume_library(word_t lib[LIBSZ*3]) {
   component(x < y);
   component(x <= y);
   component(x << y);
-  component(x >> y);
 }
