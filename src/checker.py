@@ -13,6 +13,8 @@ args.argparser.add_argument("--gcc", default="gcc", type=str,
     help="path to GCC")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
     type=str, help="path to interpreter")
+args.argparser.add_argument("--library", "-L", default="library",
+    type=str, help="path to interpreter")
 args.argparser.add_argument("--searcher", default="searcher",
     type=str, help="path to searcher")
 args.argparser.add_argument("--keeptemps", "-k", default=False,
@@ -71,6 +73,7 @@ class Checker(object):
 
     genericargs = [
         "-I%s" % args.args.interpreter,
+        "-I%s" % args.args.library,
         "-DSZ=%d" % sz,
         "-DWIDTH=%d" % width,
         "-DMWIDTH=%d" % mwidth,
@@ -79,8 +82,8 @@ class Checker(object):
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
         os.path.join(args.args.interpreter, "exec.c"),
-        os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),
+        os.path.join(args.args.library, "stdlib.c"),
         self.scratchfile.name,
         args.args.checker
       ]
@@ -110,6 +113,8 @@ class Checker(object):
 
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
+
+    print ' '.join(self.cbmcargs)
 
     self.write = self.scratchfile.write
 

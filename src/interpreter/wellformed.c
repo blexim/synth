@@ -3,38 +3,34 @@
 
 #define ISCONST(x) (x < CONSTS)
 
-int wellformed(prog_t *prog) {
+void wellformed(prog_t *prog) {
   int i, j;
 
-  for (i = 0; i < SZ; i++) {
-    op_t op;
-    param_t p1, p2;
+  for (i = 0; i < LIBSZ; i++) {
+    __CPROVER_assume(prog->inst_perm[i] >= 0 &&
+        prog->inst_perm[i] < LIBSZ);
 
-    op = prog->ops[i];
-    p1 = prog->params[i*2];
-    p2 = prog->params[i*2+1];
-
-    // Must have a valid opcode.
-    if (op > MAXOPCODE) {
-      return 0;
-    }
-
-    // Operands must not refer to uninitialised registers.
-    if (p1 >= i + NARGS + CONSTS) {
-      return 0;
-    }
-
-    if (p2 >= i + NARGS + CONSTS) {
-      return 0;
+    for (j = i+1; j < LIBSZ; j++) {
+      __CPROVER_assume(prog->inst_perm[i] != prog->inst_perm[j]);
     }
   }
 
-  // Constants must be ordered & no duplicates.
-  for (i = 0; i < CONSTS-1; i++) {
-    if (prog->consts[i] >= prog->consts[i+1]) {
-      return 1;
+  for (i = 0; i < LIBSZ; i++) {
+    int in1 = prog->op_perm[2*i];
+    int in2 = prog->op_perm[(2*i) + 1];
+    int idx = prog->inst_perm[i];
+
+    __CPROVER_assume(in1 >= 0 && in1 < (LIBSZ + NARGS));
+    __CPROVER_assume(in2 >= 0 && in2 < (LIBSZ + NARGS));
+
+    if (in1 >= NARGS) {
+      __CPROVER_assume(prog->inst_perm[in1 - NARGS] < idx);
+    }
+
+    if (in2 >= NARGS) {
+      __CPROVER_assume(prog->inst_perm[in2 - NARGS] < idx);
     }
   }
 
-  return 1;
+  __CPROVER_assume(prog->output_var >= 0 && prog->output_var < LIBSZ);
 }
