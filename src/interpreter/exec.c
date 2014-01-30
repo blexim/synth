@@ -2,8 +2,6 @@
 #include "exec.h"
 #include "library.h"
 
-#include <math.h>
-
 void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   word_t lib[LIBSZ*3];
   int i;
