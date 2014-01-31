@@ -44,8 +44,8 @@ def compare(bench1, cpu1, bench2, cpu2):
 
   medspeedup = median(speedups)
 
-  corrected1 = [t * cpu2 for t in solved1]
-  corrected2 = [t * cpu1 for t in solved2]
+  corrected1 = [t * cpu1 for t in solved1]
+  corrected2 = [t * cpu2 for t in solved2]
 
   (uval, pval) = scipy.stats.mannwhitneyu(corrected1, corrected2)
 
@@ -72,10 +72,10 @@ def print_stats(n1, n2, stats):
   print ""
 
   if pval <= threshold:
-    if med1 < med2:
-      print ("%s is SIGNIFICANTLY faster " % m1),
+    if (med1 * cpu1) < (med2 * cpu2):
+      print ("%s is SIGNIFICANTLY faster " % n1),
     else:
-      print ("%s is SIGNIFICANTLY faster " % m2),
+      print ("%s is SIGNIFICANTLY faster " % n2),
   else:
     print "No signficant speed difference ",
 
