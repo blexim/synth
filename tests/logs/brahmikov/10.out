@@ -1,0 +1,39 @@
+Using seed: 1337
+[]
+Fastest checker: cbmc
+[5, 7, 2, 4, 0, 11, 12, 10, 8, 3, 6, 9, 1]
+[1, 0, 1, 1, 1, 2, 3, 2, 0, 0, 3, 2, 6, 5, 7, 8, 7, 7, 1, 10, 6, 2, 8, 9, 1, 7]
+11
+t0 = a2 ^ a1
+t1 = a2 + a2
+t2 = ~ a2
+t3 = -1 +  t1
+t4 = a1 & a1
+t5 = t1 < t0
+t6 = t4 <= t3
+t7 = t5 != t6
+t8 = t5 - t5
+t9 = 1 + a2
+t10 = t4 >> t0
+t11 = t6 == t7
+t12 = a2 | t5
+return t11
+Fastest checker: cbmc
+Fails for (0, 2)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'cbmc': 2, 'timeout': 1, 'iterations': 2}
+Perf timers:
+verify: 0.91s
+checker: 600.07s
+_: 600.09s
+synth: 599.16s
