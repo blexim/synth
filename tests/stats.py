@@ -19,7 +19,7 @@ def load(filename):
 def median(l):
   return sorted(l)[len(l) / 2]
 
-def compare(bench1, bench2):
+def compare(bench1, cpu1, bench2, cpu2):
   both_solved = [(bench1[k][1]['_'], bench2[k][1]['_'])
       for k in bench1
       if k in bench2 and
@@ -44,7 +44,10 @@ def compare(bench1, bench2):
 
   medspeedup = median(speedups)
 
-  (uval, pval) = scipy.stats.mannwhitneyu(solved1, solved2)
+  corrected1 = [t * cpu2 for t in solved1]
+  corrected2 = [t * cpu1 for t in solved2]
+
+  (uval, pval) = scipy.stats.mannwhitneyu(corrected1, corrected2)
 
   return (total1, total2, med1, med2, medspeedup, len(only1), len(only2),
       pval, uval, len(both_solved))
@@ -70,9 +73,9 @@ def print_stats(n1, n2, stats):
 
   if pval <= threshold:
     if med1 < med2:
-      print "%s is SIGNIFICANTLY faster ",
+      print ("%s is SIGNIFICANTLY faster " % m1),
     else:
-      print "%s is SIGNIFICANTLY faster ",
+      print ("%s is SIGNIFICANTLY faster " % m2),
   else:
     print "No signficant speed difference ",
 
@@ -82,8 +85,10 @@ if __name__ == '__main__':
   import sys
 
   (n1, bench1) = load(sys.argv[1])
-  (n2, bench2) = load(sys.argv[2])
+  cpu1 = float(sys.argv[2])
+  (n2, bench2) = load(sys.argv[3])
+  cpu2 = float(sys.argv[4])
 
-  stats = compare(bench1, bench2)
+  stats = compare(bench1, cpu1, bench2, cpu2)
 
   print_stats(n1, n2, stats)
