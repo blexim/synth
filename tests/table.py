@@ -47,9 +47,9 @@ def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
 
       if brakn == 0:
         brakt = -1
-
-      alltimes.append(brakn)
-      insts.append(brakn)
+      else:
+        alltimes.append(brakt)
+        insts.append(brakn)
     else:
       brakt = None
 
@@ -80,16 +80,16 @@ def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
 
       if t is None:
         ret += "N/A &"
-      elif t == mintime:
-        ret += "{\\bf %.02fs} &" % t
       elif t < 0:
         ret  += "T/O &"
+      elif t <= mintime:
+        ret += "{\\bf %.02fs} &" % t
       else:
         ret += "%.02fs &" % t
 
       if t < 0:
         ret += '-- &'
-      elif insts == mininsts:
+      elif insts <= mininsts:
         ret += '{\\bf %d} &' % insts
       else:
         ret += '%d &' % insts
