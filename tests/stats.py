@@ -44,13 +44,13 @@ def compare(bench1, bench2):
 
   medspeedup = median(speedups)
 
-  (uval, pval) = scipy.stats.mannwhitneyu(solved1, solved2)
+  (uval, pval) = scipy.stats.wilcoxon(solved1, solved2)
 
   return (total1, total2, med1, med2, medspeedup, len(only1), len(only2),
-      pval, len(both_solved))
+      pval, uval, len(both_solved))
 
 def print_stats(n1, n2, stats):
-  (total1, total2, med1, med2, medspeedup, only1, only2, pval, cnt) = stats
+  (total1, total2, med1, med2, medspeedup, only1, only2, pval, uval, cnt) = stats
   totalspeedup = total2 - total1
 
   maxlen = max(len(n1), len(n2))
@@ -70,11 +70,13 @@ def print_stats(n1, n2, stats):
 
   if pval <= threshold:
     if med1 < med2:
-      print "%s is SIGNIFICANTLY faster (p=%.3f)" % (n1, pval)
+      print ("%s is SIGNIFICANTLY faster " % n1),
     else:
-      print "%s is SIGNIFICANTLY faster (p=%.3f)" % (n2, pval)
+      print ("%s is SIGNIFICANTLY faster " % n2),
   else:
-    print "No signficant speed difference (p=%.3f)" % pval
+    print "No signficant speed difference ",
+
+  print "(p=%.3f, U=%.3f)" % (pval, uval)
 
 if __name__ == '__main__':
   import sys
