@@ -17,6 +17,7 @@
 %\usepackage{amsthm}
 \usepackage{pifont}
 \usepackage{multicol}
+\usepackage{appendix}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
@@ -911,10 +912,11 @@ terms of runtime.
 \label{sec:experiments}
 \subsection{Experimental Setup}
 We implemented our fully automatic synthesis procedure as the {\sc kalashnikov} tool.  The implementation consists
-of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 25 bitvector
+of around 600 lines of \newC and 600 lines of Python.  To evaluate the tool we used the 29 bitvector
 programs from~\cite{brahma} and~\cite{brahma-icse}.  The majority of these are ``bit twiddling hacks'' taken from
 Hacker's Delight~\cite{hackers-delight}.  The code we used to perform the experiments, along with the
-benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a backend solver, we used
+benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov} and the benchmarks can also
+be found in Appendix~\ref{app:benchmarks}.  As a backend solver, we used
 {\sc CBMC}~\cite{cbmc-website} at SVN revision r3545, with Glucose 3.0~\cite{glucose-paper} as the SAT solver.
 We performed our experiments on a 4-core, 2.40\,GHz Xeon E5-2665 with 32\,GB of RAM.
 
@@ -1134,5 +1136,385 @@ preparation of this paper.
 
 \bibliography{synth}{}
 \bibliographystyle{splncs}
+
+\appendix
+
+\section{Benchmarks}
+\label{app:benchmarks}
+
+\begin{figure}
+\scriptsize
+ \begin{multicols}{4}
+ 
+   \begin{minipage}{.2\textwidth}
+   \bf{P1}($x$): Turn-off rightmost 1 bit.
+   \begin{enumerate}
+    \item $t1 = x - 1$
+    \item $t2 = x \& t1$
+   \end{enumerate}
+   \end{minipage}
+
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P2}($x$): Test whether $x$ is of the form $2^n - 1$.
+   \begin{enumerate}
+    \item $t1 = x + 1$
+    \item $t2 = x \& t1$
+   \end{enumerate}
+   \end{minipage}
+
+   \vspace{12pt}
+   
+
+   \begin{minipage}{.2\textwidth}
+   \bf{P3}($x$): Isolate the rightmost 1 bit.
+   \begin{enumerate}
+    \item $t1 = -x$
+    \item $t2 = x \& t1$
+   \end{enumerate}
+   \end{minipage}
+
+   \vspace{12pt}
+   
+
+   \begin{minipage}{.2\textwidth}
+   \bf{P4}($x$): Form a mask that identifies the rightmost 1 bit and trailing 0s.
+   \begin{enumerate}
+    \item $t1 = x - 1$
+    \item $t2 = x \oplus t1$
+   \end{enumerate}
+   \end{minipage}
+
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P5}($x$): Right propagate the rightmost 1 bit.
+   \begin{enumerate}
+    \item $t1 = x - 1$
+    \item $t2 = x \mid t1$
+   \end{enumerate}
+   \end{minipage}
+
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P6}($x$): Turn on the rightmost 0 bit.
+   \begin{enumerate}
+    \item $t1 = x + 1$
+    \item $t2 = x \mid t1$
+   \end{enumerate}
+   \end{minipage}
+      \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P7}($x$): Isolate the rightmost 0 bit.
+   \begin{enumerate}
+    \item $t1 = \sim x$
+    \item $t2 = x + 1$
+    \item $t3 = t1 \& t2$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P8}($x$): Form a mask the identifies the trailing 0s.
+   \begin{enumerate}
+    \item $t1 = x -1$
+    \item $t2 = \sim x$
+    \item $t3 = t1 \& t2$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P9}($x$): Absolute value.
+   \begin{enumerate}
+    \item $t1 = x >> 31$
+    \item $t2 = x \oplus t1$
+    \item $t3 = t2 - t1$
+   \end{enumerate}
+   \end{minipage}
+
+      \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P10}($x, y$): Test if nlz(x) == nlz(y), where nlz is number of leading zeroes.
+   \begin{enumerate}
+    \item $t1 = x \& y$
+    \item $t2 = x \oplus y$
+    \item $t3 = t2 \leq t1$
+   \end{enumerate}
+   \end{minipage}
+
+   
+      \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P11}($x, y$): Test if nlz(x) < nlz(y).
+   \begin{enumerate}
+    \item $t1 = \sim y$
+    \item $t2 = x \& t1$
+    \item $t3 = t2 > y$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P12}($x, y$): Test if nlz(x) <= nlz(y).
+   \begin{enumerate}
+    \item $t1 = \sim y$
+    \item $t2 = x \& t1$
+    \item $t3 = t2 \leq y$
+   \end{enumerate}
+   \end{minipage}
+   
+      \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P13}($x$): Sign.
+   \begin{enumerate}
+    \item $t1 = x >> 31$
+    \item $t2 = t1 < x$
+    \item $t3 = t2 + t1$
+   \end{enumerate}
+   \end{minipage}
+
+   \vspace{12pt}
+
+   \begin{minipage}{.2\textwidth}
+   \bf{P14}($x, y$): Floor of average of $x$ and $y$ without overflowing.
+   \begin{enumerate}
+    \item $t1 = x \& y$
+    \item $t2 = x \oplus y$
+    \item $t3 = t2 >> 1$
+    \item $t4 = t1 + t3$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P15}($x, y$): Ceil of average of $x$ and $y$ without overflowing.
+   \begin{enumerate}
+    \item $t1 = x \mid y$
+    \item $t2 = x \oplus y$
+    \item $t3 = t2 >> 1$
+    \item $t4 = t1 - t3$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P16}($x$): Max.
+   \begin{enumerate}
+    \item $t1 = x \leq y$
+    \item $t2 = x \oplus y$
+    \item $t3 = t1 * t2$
+    \item $t4 = t3 \oplus y$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P17}($x$): Turn off the rightmost contiguous string of 1 bits.
+   \begin{enumerate}
+    \item $t1 = x - 1$
+    \item $t2 = x \mid t1$
+    \item $t3 = t2 + 1$
+    \item $t4 = t3 \& x$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P18}($x$): Determine if $x$ is a power of 2.
+   \begin{enumerate}
+    \item $t1 = -x$
+    \item $t2 = x \oplus t1$
+    \item $t3 = t2 < t1$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+  
+  \iffalse
+   \begin{minipage}{.2\textwidth}
+   \bf{P19}($x, m, k$): Exchange two fields of $x$, demarcated by $m$ and $k$.
+   \begin{enumerate}
+    \item $t1 = x >> k$
+    \item $t2 = x \oplus t1$
+    \item $t3 = t2 & m$
+    \item $t4 = t3 << k$
+    \item $t5 = t4 \oplus t3$
+    \item $t6 = t5 \oplus x$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P20}($x$): Next higher unsigned number with the same number of 1 bits.
+   \begin{enumerate}
+    \item $t1 = \sim x$
+    \item $t2 = x \& t1$
+    \item $t3 = x + t2$
+    \item $t4 = x \opus t2$
+    \item $t5 = t4 >> 2$
+    \item $t6 = t5 / t2$
+    \item $t7 = t6 \mid t3$
+   \end{enumerate}
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   \bf{P21}($x, a, b, c$): Cycling through 3 values $a, b, c$.
+   \begin{enumerate}
+    \item $t1 = x \neq c$
+    \item $t2 = a \oplus c$
+    \item $t3 = x \neq a$
+    \item $t4 = b \oplus c$
+    \item $t5 = t2 \& t2$
+    \item $t6 = t3 \& t4$
+    \item $t7 = t5 \oplus t6$
+    \item $t8 = t7 \oplus c$
+   \end{enumerate}
+   \end{minipage}
+\fi
+   
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P19($x, m, k$): Exchange two fields of $x$, demarcated by $m$ and $k$.}
+
+   N/A ({\sc Kalashnikov} was unable to synthesise this program.)
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P20($x$): Next higher unsigned number with the same number of 1 bits.}
+
+   N/A
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P21($x, a, b, c$): Cycling through 3 values $a, b, c$.}
+
+    N/A
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P22($x$): Compute parity.}
+
+    N/A
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P23($x$): Count number of set bits.}
+
+    N/A
+   \end{minipage}
+      \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P24($x$): Round up to next highest power of 2.}
+
+    N/A
+   \end{minipage}
+   \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P25($x, y$): Computer higher order half of $x \times y$.}
+
+    N/A
+   \end{minipage}
+
+   \vspace{12pt}
+
+   \begin{minipage}{.2\textwidth}
+   {\bf P26($x, k$): Round $x$ up to a multiple of $2^k$.}
+
+N/A
+   \end{minipage}
+
+      \vspace{12pt}
+   
+   \begin{minipage}{.2\textwidth}
+   {\bf P27($x, y$): Min.}
+    \begin{enumerate}
+     \item $t1 = x \oplus y$
+     \item $t2 = t1 \leq t2$
+     \item $t3 = t1 * t2$
+     \item $t4 = y \oplus t3$
+    \end{enumerate}
+   \end{minipage}
+
+   
+ \end{multicols}
+
+ \caption{The integer benchmarks}
+\end{figure}
+
+\begin{figure}
+ \begin{lstlisting}[language=C++]
+void interchangeObs(word_t* src, word_t* dest)
+{
+  *src = *src ^ *dest;
+
+  if (*src == (*src ^ *dest)) {
+    *src = *src ^ *dest;
+
+    if (*src == (*src ^ *dest)) {
+      *dest = *src ^ *dest;
+      
+      if (*dest == (*src ^ *dest)) {
+        *src = *dest ^ *src;
+        return;
+      } else {
+        *src = *src ^ *dest;
+        *dest = *src ^ *dest;
+        return;
+      } 
+    } else
+      *src = *src ^ *dest;
+  }
+  
+  *dest = *src ^ *dest;
+  *src = *src ^ *dest;
+
+  return;
+}
+ \end{lstlisting}
+
+ \caption{Benchmark 28: an obfuscated swap function}
+\end{figure}
+
+\begin{figure}
+ \begin{lstlisting}[language=C++]
+int mul45(int y) {
+  int a=1, b=0, z=1, c=0;
+
+  while(1) {
+    if (a == 0) {
+      if (b == 0) {
+	y=z+y; a =!a; b=!b;c=!c;
+	if (! c) break;
+      } else {
+	z=z+y; a=!a; b=!b; c=!c;
+	if (! c) break;
+      }
+    } else {
+      if (b == 0) { z=y << 2; a=!a; }
+      else {
+	z=y << 3; a=!a; b=!b; } } }
+
+  return y;
+}
+	
+ \end{lstlisting}
+
+ \caption{Benchmark 29: an obfuscated function to multiply by 45}
+ 
+\end{figure}
+
 
 \end{document}
