@@ -19,7 +19,7 @@ def load(filename):
 def median(l):
   return sorted(l)[len(l) / 2]
 
-def compare(bench1, cpu1, bench2, cpu2):
+def compare(bench1, bench2):
   both_solved = [(bench1[k][1]['_'], bench2[k][1]['_'])
       for k in bench1
       if k in bench2 and
@@ -44,10 +44,7 @@ def compare(bench1, cpu1, bench2, cpu2):
 
   medspeedup = median(speedups)
 
-  corrected1 = [t * cpu1 for t in solved1]
-  corrected2 = [t * cpu2 for t in solved2]
-
-  (uval, pval) = scipy.stats.mannwhitneyu(corrected1, corrected2)
+  (uval, pval) = scipy.stats.wilcoxon(solved1, solved2)
 
   return (total1, total2, med1, med2, medspeedup, len(only1), len(only2),
       pval, uval, len(both_solved))
@@ -72,7 +69,7 @@ def print_stats(n1, n2, stats):
   print ""
 
   if pval <= threshold:
-    if (med1 * cpu1) < (med2 * cpu2):
+    if med1 < med2:
       print ("%s is SIGNIFICANTLY faster " % n1),
     else:
       print ("%s is SIGNIFICANTLY faster " % n2),
@@ -85,10 +82,8 @@ if __name__ == '__main__':
   import sys
 
   (n1, bench1) = load(sys.argv[1])
-  cpu1 = float(sys.argv[2])
-  (n2, bench2) = load(sys.argv[3])
-  cpu2 = float(sys.argv[4])
+  (n2, bench2) = load(sys.argv[2])
 
-  stats = compare(bench1, cpu1, bench2, cpu2)
+  stats = compare(bench1, bench2)
 
   print_stats(n1, n2, stats)
