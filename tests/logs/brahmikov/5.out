@@ -1,0 +1,58 @@
+Using seed: 1337
+[]
+Fastest checker: cbmc
+[9, 3, 2, 4, 6, 10, 7, 11, 12, 8, 5, 1, 0]
+[0, 0, 0, 0, 2, 0, 0, 2, 3, 4, 5, 1, 0, 4, 1, 7, 3, 3, 7, 9, 10, 1, 0, 4, 3, 10]
+11
+t0 = a1 == a1
+t1 = 1 + a1
+t2 = ~ t1
+t3 = -1 +  a1
+t4 = t2 >> t3
+t5 = t4 != t0
+t6 = a1 + t3
+t7 = t0 < t6
+t8 = t2 <= t2
+t9 = t6 - t8
+t10 = t9 ^ t0
+t11 = a1 | t3
+t12 = t2 & t9
+return t11
+Fastest checker: cbmc
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 73.60s
+
+[9, 3, 2, 4, 6, 10, 7, 11, 12, 8, 5, 1, 0]
+[0, 0, 0, 0, 2, 0, 0, 2, 3, 4, 5, 1, 0, 4, 1, 7, 3, 3, 7, 9, 10, 1, 0, 4, 3, 10]
+11
+t0 = a1 == a1
+t1 = 1 + a1
+t2 = ~ t1
+t3 = -1 +  a1
+t4 = t2 >> t3
+t5 = t4 != t0
+t6 = a1 + t3
+t7 = t0 < t6
+t8 = t2 <= t2
+t9 = t6 - t8
+t10 = t9 ^ t0
+t11 = a1 | t3
+t12 = t2 & t9
+return t11
+
+Perf counters:
+{'cbmc': 3, 'iterations': 1}
+Perf timers:
+verify: 1.85s
+checker: 73.59s
+_: 73.60s
+synth: 71.74s
