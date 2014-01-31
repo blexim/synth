@@ -1,9 +1,10 @@
 Using seed: 1337
 []
 Fastest checker: explicit
-t1 = a1 & a1
+t1 = a2 & a2
+t2 = a1 & a1
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -13,14 +14,15 @@ Also correct for wordlen=32!
 
 
 
-Finished in 1.47s
+Finished in 1.80s
 
-t1 = a1 & a1
+t1 = a2 & a2
+t2 = a1 & a1
 
 Perf counters:
 {'cbmc': 1, 'explicit': 2, 'iterations': 1}
 Perf timers:
-verify: 1.23s
-checker: 1.46s
-_: 1.47s
-synth: 0.24s
+verify: 1.53s
+checker: 1.78s
+_: 1.80s
+synth: 0.27s
