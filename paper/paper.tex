@@ -387,14 +387,10 @@ The logic is a subset of C that we call \newC.  The characteristic property of a
 \newC  program is that safety can be decided for
 it using a single query to a Bounded Model Checker.  A \newC program is
 just a C program with the following syntactic restrictions:
-
-\begin{itemize}
- \item All loops in the program must have a constant bound.
- \item All recursion in the program must be limited to a constant depth.
- \item All arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ all loops in the program must have a constant bound;
+ all recursion in the program must be limited to a constant depth;
+ all arrays must be statically allocated (i.e. not using \texttt{malloc}),
  and be of constant size.
-\end{itemize}
-
 Additionally, \newC programs may use nondeterministic values, assumptions
 and arbitrary-width types.
 
@@ -471,7 +467,7 @@ Our encoding is the following:
  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
 \end{itemize}
 
-\begin{figure}[ht]
+\begin{figure}
 {\small
 \begin{center}
 \setlength{\tabcolsep}{16pt}
@@ -509,7 +505,7 @@ The exact details of how we encode an $\mathcal{L}$-program are given in Sec.~\r
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
 of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \begin{minipage}[t]{.45\textwidth}
 \begin{lstlisting}[language=C++]
@@ -644,17 +640,11 @@ is determined at runtime as follows:
 \]
 
 
-\begin{defn}
 A program is well formed if
 no operand refers to the result of an instruction that has not been computed yet, and if
-each opcode is valid.
-\label{defn:well-formed}
-\end{defn}
-
-We add a well-formedness constraint of the form \verb|params[i] <= (a+c+2*i)|
+each opcode is valid.  We add a well-formedness constraint of the form \verb|params[i] <= (a+c+2*i)|
 for each instruction.  It should be noted that this requires a linear number of well-formedness
-constraints.  If all of these constraints are satisfied, the program is well-formed in the sense
-of Defn.~\ref{defn:well-formed}.
+constraints.  If all of these constraints are satisfied, the program is well-formed in the sense.
 
 
 
@@ -672,17 +662,15 @@ greatly increases the efficiency of our system since languages
 low down the lattice are very easy to decide safety for.  If a program
 can be synthesised in a low-complexity language, the whole procedure
 finishes much faster than if synthesis had been attempted in a
-high-complexity language.  Our parametrisation is constructed
-in such a way that the programs we synthesise are guaranteed to be
-minimal in length.
+high-complexity language.
 
 \subsection{Program Length: $l$}
 The first parameter we introduce is program length, denoted by $l$.
 At each iteration we synthesise programs of length exactly $l$.
 We start with $l = 1$ and increment $l$ whenever we determine
 that no program of length $l$ can satisfy the specification.  When we do
-successfully synthesise a program, we are guaranteed that it
-is of minimal length since we have previously established that no
+successfully synthesise a program, we are \emph{guaranteed that it
+is of minimal length} since we have previously established that no
 shorter program is correct.
 
 
@@ -717,14 +705,21 @@ and $b \cdotp c$ means the concatenation of bitvectors $b$ and $c$.
 
 \begin{figure}
 
+\centering
+\begin{minipage}[t]{.45\textwidth}
 \begin{eqnarray*}
  \bv{m}{m} & \rightarrow & \bv{n}{n} \\
  \bv{m-1}{m} & \rightarrow & \bv{n-1}{n} \\
- \bv{m+1}{m} & \rightarrow & \bv{n+1}{n} \\
+ \bv{m+1}{m} & \rightarrow & \bv{n+1}{n}
+\end{eqnarray*}
+\end{minipage}
+\begin{minipage}[t]{.45\textwidth}
+\begin{eqnarray*}
  \bv{x}{m} & \rightarrow & \bv{x}{n} \\
  \bv{x}{m} & \rightarrow & \bv{x}{m} \cdotp \bv{0}{n - m} \\
  \bv{x}{m} & \rightarrow & \underbrace{\bv{x}{m} \cdotp \ldots \cdotp \bv{x}{m}}_{\frac{n}{m} \mathrm{ times}}
 \end{eqnarray*}
+\end{minipage}
 
 \caption{Rules for extending
 an $m$-bit wide number to an $n$-bit wide one.
@@ -819,7 +814,7 @@ is able to find a correct program, we are done.  Otherwise,
 we need to increase the word width of the $\mathcal{L}$-machine
 we are currently synthesising for.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \begin{tikzpicture}[scale=0.7, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
@@ -920,12 +915,18 @@ benchmarks, is available at \texttt{http://www.cprover.org/kalashnikov}.  As a b
 We performed our experiments on a 4-core, 2.40\,GHz Xeon E5-2665 with 32\,GB of RAM.
 
 To give a reference point for the efficiency of our tool, we present the results given for {\sc brahma}
-on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}\footnote{Unfortunately
-we were not able to obtain a copy of {\sc Brahma}, and so were unable to rerun the experiments ourselves.}.
+on the same benchmarks, as reported in~\cite{brahma} and~\cite{brahma-icse}.
 These experiments were performed on an 8-core,
-1.86\,GHz Xeon with 4\,GB of RAM.  Although there are 49 results shown across the two tables, it should
-be noted that there is a lot of overlap between the two sets of benchmarks and that there are only
-29 unique benchmarks altogether.
+1.86\,GHz Xeon with 4\,GB of RAM.
+
+Since we were unable to obtain a copy of {\sc brahma}, we re-implemented the {\sc brahma} program encoding in our framework,
+resulting in the {\sc brahmikov} tool. {\sc Brahmikov} implements the component based synthesis
+paradigm, but still uses {\sc cbmc} as the backend decision procedure.  Since {\sc brahma} and {\sc brahmikov} are written in
+different frameworks, we cannot compare their performance.  However we can compare {\sc brahmikov} and {\sc kalashnikov}.
+In particular it is interesting to note that {\sc brahmikov} often produces longer programs than {\sc kalashnikov}.  We
+believe this is due to differences in the post-processing strategies used by {\sc brahmikov} and {\sc brahma}.  {\sc Brahmikov}
+performs syntatic dead code elimination (following~\cite{brahma}), but this is not enough to generate minimal programs
+in many cases.  This is in contrast to {\sc kalashnikov}, which always generates minimal programs.
 
 We also ran the {\sc AHA} superoptimiser on our benchmarks and found that on the small problems
 (those with 2-instruction solutions)
@@ -946,14 +947,20 @@ automatically generating small programs with somewhat more intricate data-flow.
 \subsection{Results and Analysis}
 The results of our experiments are shown in Fig.~\ref{fig:results-table}.
 Column 1 shows the runtime reported for each benchmark in \cite{brahma}, column 2
-shows the number of instructions in the synthesised program, and column 3 contains a \xmark\,when
+shows the number of instructions in the synthesised program, and column 3 contains a \xmark\;when
 {\sc Brahma} needed user assistance to solve a benchmark.
 Columns 4 through 7 show the same information, but with the data taken from~\cite{brahma-icse}.
 Column 5 shows the runtimes for the version of {\sc Brahma} from~\cite{brahma-icse} which
 implemented the semibiased optimisation.
-Finally, column 8 shows the runtime for {\sc Kalashnikov} and column 9 the number of instructions
-in the program synthesised by {\sc Kalashnikov}.  The results can be divided into
-three categories, as follows:
+Finally, columns 8 and 10 show the runtime for {\sc Brahmikov} and {\sc Kalashnikov} respectively.
+Columns 9 and 11 show the number of instructions
+in the program synthesised by {\sc Brahmikov} and {\sc Kalashnikov}.  In all cases,
+{\sc Brahmikov} performs very poorly, which demonstrates that the {\sc Kalashnikov} program
+encoding is more suitable for our system than the component based synthesis encoding.
+We also ran the {\sc Brahmikov} experiments using Z3 as the solver rather than Glucose,
+but this configuration failed to terminate for any of the examples.
+
+The results can be divided into three categories, as follows:
 
 
 \paragraph{\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
@@ -973,20 +980,13 @@ methods, and thus require manual intervention, is to be expected.
 \paragraph{\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
 In the remaining cases, both {\sc brahma} and {\sc kalashnikov} are able to produce
 minimal programs.  It was not clear from just looking at the runtime numbers whether
-any of the tools was significantly faster than the others, so we performed a Mann-Whitney U test.
-Since the {\sc brahma} experiments were performed on a slower machine than the
-{\sc kalashnikov} ones, we multiplied each of the runtimes by the CPU frequency of the machine
-that was used for that experiment.  This gives an estimate of the time we would expect the test to
-have taken on a 1GHz machine.  Scaling in this way  is more or less legitimate, since we have empirically
-observed that our algorithm is CPU bound.
+any of the tools was significantly faster than the others, so we performed a Wilcoxon signed-rank test.
 
-For each pair of tools ({\sc kalashnikov} vs. each of the {\sc brahma} configurations), the U test was
+For each pair of tools ({\sc kalashnikov} vs. each of the {\sc brahma} configurations), the Wilcoxon test was
 unable to reject the null hypothesis (that the tools are equally fast) at the p=0.05 level. In other words,
-there is no statistically significant difference in the speed of {\sc kalashnikov} and {\sc brahma} on this
-set of benchmarks, even after correcting for the difference in CPU frequency.
+there is no statistically significant difference in the speed of {\sc kalashnikov} and {\sc brahma}.
 
-\begin{figure}[ht]
-
+\begin{figure}
 Obfuscated code
 
 \begin{lstlisting}[frame=single,language=c]
@@ -1042,7 +1042,7 @@ this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum},
 we believe our synthesis constitutes the first proof that {\sc Fast2Sum} is
 minimal under the assumption that $a \ge b$.
 
-\begin{figure}
+\begin{figure}[ht]
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
 \begin{algorithm}[H]
@@ -1080,9 +1080,9 @@ minimal under the assumption that $a \ge b$.
   \label{fig:2sum}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
-{\scriptsize
+{\tiny
 \include{figures/results_table}
 }
 \caption{Time for synthesis of machine integer benchmarks from~\cite{brahma} and~\cite{brahma-icse}.
