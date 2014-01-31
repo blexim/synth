@@ -171,7 +171,11 @@ several ``holes'', which {\sc sketch} fills in to meet the specification.
 Despite the many similarities, our problem domains are quite different:
 sketching is able to make use of human insight to synthesise fairly large
 programs, whereas we are optimised for synthesising small (but intricate)
-programs without guidance.
+programs without guidance.  A sketching-like approach to optimising
+fixed point arithmetic code was described in~\cite{eldib-wang}.  This
+work is similar in goal to our floating-point work, but is more restricted
+in scope in that it only tries to minimise register widths for embedded
+systems using fixed point arithmetic.
 
 Program synthesis is closely related to
 superoptimisation, which is the problem of taking a
@@ -1125,7 +1129,8 @@ possibilities of applying {\sc kalashnikov} to these domains.
 
 \paragraph{Acknowledgements}
 We thank Martin Brain for his insight and advice during our synthesis discussions.
-
+Also, thanks to Cristina David for her extensive help and proof reading during the
+preparation of this paper.
 
 \bibliography{synth}{}
 \bibliographystyle{splncs}
