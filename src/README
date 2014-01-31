@@ -11,7 +11,13 @@ How to use Brahmikov
      $ ./brahmikov.py -h
 
 
-   To do dead code elimination, pipe the output of brahmikov through
-   tests/slice_log.py, e.g.:
+   To do dead code elimination, use tests/slice_log.py, e.g.:
 
-     $ ./brahmikov.py --cbmc=../bin/x64/cbmc ../tests/specs/p1.c -v | ../tests/slice_log.py
+     $ ./brahmikov.py --cbmc=../bin/x64/cbmc ../tests/specs/p1.c --seed=1337 -v > /tmp/p1
+     $ ../tests/slice_log.py /tmp/p1
+       t0 = 1 < a1
+       t1 = t0 ^ a1
+       t7 = -1 +  t1
+       t10 = t1 & t7
+       return t10
+
