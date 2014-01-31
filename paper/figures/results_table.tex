@@ -1,35 +1,35 @@
-\begin{tabular}{l||rrc|rrrc|rr}
-Problem & \multicolumn{3}{c}{\sc PLDI Brahma} & \multicolumn{4}{|c}{ICSE Brahma} & \multicolumn{2}{|c}{\sc Kalashnikov} \\
-        & Runtime & \#Lines & Aut. & Random & Semibiased & \#Lines & Aut. & Runtime & \#Lines \\
+\begin{tabular}{l||rrc|rrrc|rr|rr}
+Problem & \multicolumn{3}{c}{\sc PLDI Brahma} & \multicolumn{4}{|c}{ICSE Brahma} & \multicolumn{2}{|c}{\sc Brahmikov} & \multicolumn{2}{|c}{\sc Kalashnikov} \\
+        & Runtime & \#Lines & Aut. & Random & Semibiased & \#Lines & Aut. & Runtime & \#Lines & Runtime & \#Lines \\
 \hline
 \hline
-p1 & 3.20s &{\bf 2} & & 1.48s & {\bf 0.80s} & {\bf 2} & & 2.71s &{\bf 2} \\
-p2 & 3.60s &{\bf 2} & & 7.35s & 4.75s & {\bf 2} & & {\bf 2.24s} &{\bf 2} \\
-p3 & 1.40s &{\bf 2} & & 1.60s & {\bf 0.65s} & {\bf 2} & & 1.92s &{\bf 2} \\
-p4 & 3.30s &{\bf 2} & & 1.65s & {\bf 0.86s} & {\bf 2} & & 2.71s &{\bf 2} \\
-p5 & {\bf 2.20s} &{\bf 2} & & 3.92s & 2.28s & {\bf 2} & & 2.77s &{\bf 2} \\
-p6 & 2.40s &{\bf 2} & & 6.22s & {\bf 1.64s} & {\bf 2} & & 2.23s &{\bf 2} \\
-p7 & 1.00s &{\bf 3} & & 1.39s & {\bf 0.50s} & {\bf 3} & & 6.38s &{\bf 3} \\
-p8 & {\bf 1.40s} &{\bf 3} & & 2.20s & 1.42s & {\bf 3} & & 6.73s &{\bf 3} \\
-p9 & 5.80s &{\bf 3} & & {\bf 4.95s} & 8.75s & {\bf 3} & \xmark & 15.14s &{\bf 3} \\
-p10 & 76.10s &{\bf 3} & & 13.99s & {\bf 7.82s} & {\bf 3} & \xmark & 18.59s &{\bf 3} \\
-p11 & 57.10s &{\bf 3} & & 24.31s & 17.13s & {\bf 3} & \xmark & {\bf 15.17s} &{\bf 3} \\
-p12 & 67.80s &{\bf 3} & & 279.49s & 48.16s & {\bf 3} & \xmark & {\bf 16.21s} &{\bf 3} \\
-p13 & {\bf 6.20s} &4 & & 32.50s & 9.97s & 4 & \xmark & 12.56s &{\bf 3} \\
-p14 & 59.60s &{\bf 4} & & 167.84s & {\bf 18.07s} & {\bf 4} & \xmark & 81.87s &{\bf 4} \\
-p15 & 118.90s &{\bf 4} & & 228.78s & {\bf 33.53s} & {\bf 4} & \xmark & 104.97s &{\bf 4} \\
-p16 & 62.30s &{\bf 4} & & 66.93s & {\bf 23.92s} & {\bf 4} & \xmark & 49.90s &{\bf 4} \\
-p17 & 78.10s &{\bf 4} & & 163.82s & 65.45s & {\bf 4} & & {\bf 56.56s} &{\bf 4} \\
-p18 & 45.90s &6 & \xmark & 214.14s & 82.53s & 6 & \xmark & {\bf 8.71s} &{\bf 3} \\
-p19 & {\bf 34.70s} &6 & \xmark & N/A & N/A &-- & \xmark & T/O &-- \\
-p20 & {\bf 108.40s} &7 & \xmark & 1074.04s & 285.56s & 7 & \xmark & T/O &-- \\
-p21 & {\bf 28.30s} &8 & \xmark & N/A & N/A &-- & \xmark & T/O &-- \\
-p22 & {\bf 279.00s} &8 & \xmark & N/A & N/A &-- & \xmark & T/O &-- \\
-p23 & {\bf 1668.00s} &10 & \xmark & N/A & N/A &-- & \xmark & T/O &-- \\
-p24 & {\bf 224.90s} &12 & \xmark & T/O & 372.74s & -- & \xmark & T/O &-- \\
-p25 & {\bf 2778.70s} &16 & \xmark & N/A & N/A &-- & \xmark & T/O &-- \\
-p26 & N/A &-- & \xmark & 14.32s & 6.66s & 4 & \xmark & {\bf 1.47s} &{\bf 1} \\
-p27 & N/A &-- & \xmark & 217.34s & {\bf 26.51s} & {\bf 4} & \xmark & 54.28s &{\bf 4} \\
-p28 & N/A &-- & \xmark & {\bf 1.38s} & 12.12s & 3 & & 1.47s &{\bf 1} \\
-p29 & N/A &-- & \xmark & 5.28s & {\bf 2.96s} & 4 & & 8.78s &{\bf 1} \\
+p1 & 3.20s &{\bf 2} & & 1.48s & {\bf 0.80s} & {\bf 2} & & 117.02s &5 &2.71s &{\bf 2} \\
+p2 & 3.60s &{\bf 2} & & 7.35s & 4.75s & {\bf 2} & & 46.38s &4 &{\bf 2.24s} &{\bf 2} \\
+p3 & 1.40s &{\bf 2} & & 1.60s & {\bf 0.65s} & {\bf 2} & & 131.06s &6 &1.92s &{\bf 2} \\
+p4 & 3.30s &{\bf 2} & & 1.65s & {\bf 0.86s} & {\bf 2} & & 52.13s &7 &2.71s &{\bf 2} \\
+p5 & 2.20s &{\bf 2} & & 3.92s & 2.28s & {\bf 2} & & 73.60s &{\bf 2} &2.77s &{\bf 2} \\
+p6 & 2.40s &{\bf 2} & & 6.22s & {\bf 1.64s} & {\bf 2} & & 41.95s &3 &2.23s &{\bf 2} \\
+p7 & 1.00s &{\bf 3} & & 1.39s & {\bf 0.50s} & {\bf 3} & & 166.56s &{\bf 3} &6.38s &{\bf 3} \\
+p8 & {\bf 1.40s} &{\bf 3} & & 2.20s & 1.42s & {\bf 3} & & 86.30s &{\bf 3} &6.73s &{\bf 3} \\
+p9 & 5.80s &{\bf 3} & & {\bf 4.95s} & 8.75s & {\bf 3} & \xmark & 524.77s &7 &15.14s &{\bf 3} \\
+p10 & 76.10s &{\bf 3} & & 13.99s & {\bf 7.82s} & {\bf 3} & \xmark & T/O &-- &18.59s &{\bf 3} \\
+p11 & 57.10s &{\bf 3} & & 24.31s & 17.13s & {\bf 3} & \xmark & T/O &-- &15.17s &{\bf 3} \\
+p12 & 67.80s &{\bf 3} & & 279.49s & 48.16s & {\bf 3} & \xmark & 534.26s &5 &16.21s &{\bf 3} \\
+p13 & {\bf 6.20s} &4 & & 32.50s & 9.97s & 4 & \xmark & 255.22s &10 &12.56s &{\bf 3} \\
+p14 & 59.60s &4 & & 167.84s & {\bf 18.07s} & 4 & \xmark & N/A &-- &81.87s &4 \\
+p15 & 118.90s &4 & & 228.78s & {\bf 33.53s} & 4 & \xmark & N/A &-- &104.97s &4 \\
+p16 & 62.30s &4 & & 66.93s & {\bf 23.92s} & 4 & \xmark & N/A &-- &49.90s &4 \\
+p17 & 78.10s &{\bf 4} & & 163.82s & 65.45s & {\bf 4} & & 488.92s &9 &56.56s &{\bf 4} \\
+p18 & 45.90s &6 & \xmark & 214.14s & 82.53s & 6 & \xmark & 311.58s &8 &8.71s &{\bf 3} \\
+p19 & 34.70s &6 & \xmark & N/A & N/A &-- & \xmark & T/O &-- &T/O &-- \\
+p20 & {\bf 108.40s} &7 & \xmark & 1074.04s & 285.56s & 7 & \xmark & N/A &-- &T/O &-- \\
+p21 & 28.30s &8 & \xmark & N/A & N/A &-- & \xmark & T/O &-- &T/O &-- \\
+p22 & {\bf 279.00s} &8 & \xmark & N/A & N/A &-- & \xmark & N/A &-- &T/O &-- \\
+p23 & {\bf 1668.00s} &10 & \xmark & N/A & N/A &-- & \xmark & N/A &-- &T/O &-- \\
+p24 & {\bf 224.90s} &12 & \xmark & T/O & 372.74s & -- & \xmark & N/A &-- &T/O &-- \\
+p25 & {\bf 2778.70s} &16 & \xmark & N/A & N/A &-- & \xmark & N/A &-- &T/O &-- \\
+p26 & N/A &-- & \xmark & 14.32s & 6.66s & 4 & \xmark & N/A &-- &{\bf 1.47s} &1 \\
+p27 & N/A &-- & \xmark & 217.34s & {\bf 26.51s} & 4 & \xmark & N/A &-- &54.28s &4 \\
+p28 & N/A &-- & \xmark & {\bf 1.38s} & 12.12s & 3 & & T/O &-- &1.47s &{\bf 1} \\
+p29 & N/A &-- & \xmark & 5.28s & {\bf 2.96s} & 4 & & T/O &-- &8.78s &{\bf 1} \\
 \end{tabular}
