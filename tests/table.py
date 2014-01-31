@@ -56,18 +56,22 @@ def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
     if k in icse:
       (cnt, time) = icse[k]
       icset = time['_']
-      icsen = cnt['insts']
 
       alltimes.append(icset)
+    else:
+      icset = None
 
+    if k in icse_semibiased:
       (cnt, time) = icse_semibiased[k]
       semit = time['_']
       icseaut = cnt['automatic']
+      icsen = cnt['insts']
 
       alltimes.append(semit)
       insts.append(icsen)
     else:
-      icset = None
+      semit = None
+      icsen = None
 
     mintime = min(t for t in alltimes if t > 0)
     mininsts = min(insts)
@@ -98,7 +102,7 @@ def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
 
     line += f(pldit, pldin)
 
-    if not pldiaut:
+    if pldit and not pldiaut:
       line += ' \\xmark & '
     else:
       line += ' & '
@@ -124,7 +128,7 @@ def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
       else:
         ret += " %.02fs & " % semit
 
-      if t < 0:
+      if not insts:
         ret += '-- &'
       elif insts == mininsts:
         ret += '{\\bf %d} &' % insts
@@ -135,7 +139,7 @@ def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
 
     line += g(icset, semit, icsen)
 
-    if not icseaut:
+    if semit and not icseaut:
       line += ' \\xmark & '
     else:
       line += ' & '
