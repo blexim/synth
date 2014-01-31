@@ -396,7 +396,10 @@ just a C program with the following syntactic restrictions:
 \end{itemize}
 
 Additionally, \newC programs may use nondeterministic values, assumptions
-and arbitrary-width types.  Two example \newC programs are shown 
+and arbitrary-width types.
+
+\iffalse
+Two example \newC programs are shown 
 in Fig.~\ref{fig:c-}.
 
 \begin{figure}
@@ -432,6 +435,7 @@ int common_factor(int A[10]) {
  \label{fig:c-}
 
 \end{figure}
+\fi
 
 Since each loop is bounded by a constant, and each recursive function call is
 limited to a constant depth, a \newC program necessarily terminates and in
@@ -501,7 +505,7 @@ Unsigned and signed comparison instructions:
 \end{figure}
 
 
-The exact details of how we encoding an $\mathcal{L}$-program are given in Sec.~\ref{sec:encode-l}.
+The exact details of how we encode an $\mathcal{L}$-program are given in Sec.~\ref{sec:encode-l}.
 We must now express the {\sc synth} and {\sc verif} formulae as safety properties
 of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
@@ -703,7 +707,7 @@ same program is correct when run on an $\mathcal{L}$-machine with a
 full-sized word.
 
 The only wrinkle here is that we will sometimes synthesise a program containing
-constants.  If we have synthesised a program for with $w=k$,
+constants.  If we have synthesised a program with $w=k$,
 the constants in the program will be $k$-bits wide.  To extend the program
 to an $n$-bit machine (with $n > k$), we need some way of deriving $n$-bit-wide
 numbers from $k$-bit ones.  We have several strategies for this and
@@ -953,7 +957,8 @@ three categories, as follows:
 
 
 \paragraph{\bf {\sc Kalashnikov} synthesises a shorter program than {\sc Brahma}:}
-This happens in 4 of the 29 cases.  This case is illustrated by benchmark p29, shown in Fig.~\ref{fig:obfuscated}.
+This happens in 4 of the 29 cases, which is to be expected since {\sc Kalashnikov}'s outputs
+are, by construction, guaranteed to be minimal.  This case is illustrated by benchmark p29, shown in Fig.~\ref{fig:obfuscated}.
 The specification here is a piece of obfuscated code taken from the Conficker worm~\cite{conficker}, and
 our goal is to synthesise an equivalent program which is easier to understand.  The obfuscated code
 uses several tricks, including an apparently unbounded loop.  {\sc Brahma} is able to
@@ -967,14 +972,20 @@ methods, and thus require manual intervention, is to be expected.
 % A total of 8 tests fall into this category.
 \paragraph{\bf {\sc Brahma} and {\sc Kalashnikov} both synthesise minimal programs:}
 In the remaining cases, both {\sc brahma} and {\sc kalashnikov} are able to produce
-minimal programs.  We performed a Mann-Whitney U test (see Fig.~\ref{fig:stats-table})
-to determine whether there was a significant difference
-in the speed of the two tools.  The test was unable to reject the null hypothesis
-(that the tools are equally fast) at the p=0.05
-level, i.e. there is no statistically significant difference in the speed of
-the two tools on this set of benchmarks.
+minimal programs.  It was not clear from just looking at the runtime numbers whether
+any of the tools was significantly faster than the others, so we performed a Mann-Whitney U test.
+Since the {\sc brahma} experiments were performed on a slower machine than the
+{\sc kalashnikov} ones, we multiplied each of the runtimes by the CPU frequency of the machine
+that was used for that experiment.  This gives an estimate of the time we would expect the test to
+have taken on a 1GHz machine.  Scaling in this way  is more or less legitimate, since we have empirically
+observed that our algorithm is CPU bound.
 
-\begin{figure}
+For each pair of tools ({\sc kalashnikov} vs. each of the {\sc brahma} configurations), the U test was
+unable to reject the null hypothesis (that the tools are equally fast) at the p=0.05 level. In other words,
+there is no statistically significant difference in the speed of {\sc kalashnikov} and {\sc brahma} on this
+set of benchmarks, even after correcting for the difference in CPU frequency.
+
+\begin{figure}[ht]
 
 Obfuscated code
 
@@ -1031,7 +1042,6 @@ this has been achieved.  {\sc 2Sum} was proved to be minimal in~\cite{fast2sum},
 we believe our synthesis constitutes the first proof that {\sc Fast2Sum} is
 minimal under the assumption that $a \ge b$.
 
-\iffalse
 \begin{figure}
 \begin{center}
 \begin{minipage}[t]{0.45\linewidth}
@@ -1069,7 +1079,6 @@ minimal under the assumption that $a \ge b$.
  \caption{The {\sc 2Sum} algorithm for correctly rounded floating-point sums.}
   \label{fig:2sum}
 \end{figure}
-\fi
 
 \begin{figure}
 \centering
@@ -1090,13 +1099,6 @@ minimal under the assumption that $a \ge b$.
 %\label{fig:icse-results-table}
 %\end{figure}
 
-\begin{figure}
-{\small
- \include{figures/stats_table}
-}
- \caption{Performance statistics when {\sc Brahma} and {\sc Kalashnikov} were both successful.
- \label{fig:stats-table}}
-\end{figure}
 
 
 \section{Conclusion}
