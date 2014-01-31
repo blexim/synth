@@ -2,10 +2,10 @@
 
 import cPickle
 
-def make_graph(kalashnikov, pldi, icse, icse_semibiased):
-  print "\\begin{tabular}{l||rrc|rrrc|rr}"
-  print "Problem & \multicolumn{3}{c}{\\sc PLDI Brahma} & \multicolumn{4}{|c}{ICSE Brahma} & \multicolumn{2}{|c}{\\sc Kalashnikov} \\\\"
-  print "        & Runtime & \#Lines & Aut. & Random & Semibiased & \#Lines & Aut. & Runtime & \#Lines \\\\"
+def make_graph(kalashnikov, brahmikov, pldi, icse, icse_semibiased):
+  print "\\begin{tabular}{l||rrc|rrrc|rr|rr}"
+  print "Problem & \multicolumn{3}{c}{\\sc PLDI Brahma} & \multicolumn{4}{|c}{ICSE Brahma} & \multicolumn{2}{|c}{\sc Brahmikov} & \multicolumn{2}{|c}{\\sc Kalashnikov} \\\\"
+  print "        & Runtime & \#Lines & Aut. & Random & Semibiased & \#Lines & Aut. & Runtime & \#Lines & Runtime & \#Lines \\\\"
 
   print "\\hline"
   print "\\hline"
@@ -39,7 +39,20 @@ def make_graph(kalashnikov, pldi, icse, icse_semibiased):
       insts.append(kaln)
     else:
       kalt = None
-    
+
+    if k in brahmikov:
+      (cnt, times) = brahmikov[k]
+      brakt = times['_']
+      brakn = cnt['insts']
+
+      if brakn == 0:
+        brakt = -1
+
+      alltimes.append(brakn)
+      insts.append(brakn)
+    else:
+      brakt = None
+
     if k in icse:
       (cnt, time) = icse[k]
       icset = time['_']
@@ -127,6 +140,7 @@ def make_graph(kalashnikov, pldi, icse, icse_semibiased):
     else:
       line += ' & '
 
+    line += f(brakt, brakn)
     line += f(kalt, kaln)
 
     line = line[:-1]
@@ -146,6 +160,7 @@ if __name__ == '__main__':
   pldi = load('processed/brahma.stats')
   icse = load('processed/icse.stats')
   semi = load('processed/icse_semibiased.stats')
+  brahmikov = load('processed/brahmikov.stats')
   kalashnikov = load('processed/const.stats')
 
-  make_graph(kalashnikov, pldi, icse, semi)
+  make_graph(kalashnikov, brahmikov, pldi, icse, semi)
