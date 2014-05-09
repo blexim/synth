@@ -103,15 +103,15 @@ class Checker(object):
       genericargs.insert(0, "-DREMOVE_CONST")
 
     if verif:
-      self.cbmcargs = [args.args.cbmc,
+      self.cbmcargs = [args.args.cbmc, "--smt2",
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
-      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm", "-g",
+      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm", "-g", "-O3",
           os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           os.path.join("cbmc", "synth.c")] + genericargs
-      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99",
-          os.path.join("explicit", "synth.c")] + genericargs
+      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
+          os.path.join("genetic", "synth.c")] + genericargs
 
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
