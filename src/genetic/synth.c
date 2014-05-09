@@ -15,17 +15,20 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
-#define POPSIZE 10
-#define KEEP 1
-#define KILL 1
+#define POPSIZE 1000
+#define KEEPLIM 50
+#define KILLLIM POPSIZE
 
-#define MUTATION_PROB 0.01
+#define MUTATION_PROB 0.1
 
-#define PRINT_GEN 0
+#define PRINT_GEN 100
 
 extern int execok;
 
 int generation;
+int correct;
+int numtests;
+
 
 void rand_prog(prog_t *prog) {
   int i;
@@ -147,6 +150,7 @@ int compare(const void *v1, const void *v2) {
 void next_gen(prog_t *previous, prog_t *next) {
   int indices[POPSIZE];
   int i, j;
+  int maxfit, minfit;
 
   for (i = 0; i < POPSIZE; i++) {
     indices[i] = i;
@@ -155,17 +159,23 @@ void next_gen(prog_t *previous, prog_t *next) {
 
   qsort(indices, POPSIZE, sizeof(int), compare);
 
+  maxfit = fitnesses[indices[POPSIZE - 1]];
+  minfit = fitnesses[indices[0]];
+
   if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
-    printf("Fittest: %d, least fit: %d\n",
-        fitnesses[indices[POPSIZE-1]],
-        fitnesses[indices[0]]);
+    printf("Fittest: %d, least fit: %d\n", maxfit, minfit);
+    printf("Target: %d\n", numtests);
   }
 
   // Copy the fittest individuals straight into the next generation.
   j = 0;
 
-  for (i = 0; i < KEEP; i++) {
-    prog_t *p = &previous[indices[POPSIZE - i - 1]];
+  int keep;
+
+  for (keep = 0;
+       keep < KEEPLIM && fitnesses[indices[POPSIZE - keep - 1]] == maxfit;
+       keep++) {
+    prog_t *p = &previous[indices[POPSIZE - keep - 1]];
 
     memcpy(&next[j], p, sizeof(prog_t));
     j++;
@@ -173,19 +183,27 @@ void next_gen(prog_t *previous, prog_t *next) {
 
   // Now generate some random individuals.
 
-  for (i = 0; i < KILL; i++) {
+  int kill;
+
+  for (kill = 0;
+       kill < KILLLIM && fitnesses[indices[kill]] == minfit;
+       kill++) {
     rand_prog(&next[j]);
     j++;
+  }
+
+  if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
+    printf("Killed %d, kept %d\n", kill, keep);
   }
 
   // Finally, let the somewhat-fit individuals from the previous generation breed.
 
   while (j < POPSIZE) {
-    int idx = KILL + (rand() % (POPSIZE - KILL));
+    int idx = kill + (rand() % (POPSIZE - kill));
     idx = indices[idx];
     prog_t *a = &previous[idx];
 
-    idx = KILL + (rand() % (POPSIZE - KILL));
+    idx = kill + (rand() % (POPSIZE - kill));
     idx = indices[idx];
     prog_t *b = &previous[idx];
 
@@ -194,9 +212,6 @@ void next_gen(prog_t *previous, prog_t *next) {
     j++;
   }
 }
-
-int correct;
-int numtests;
 
 void test(prog_t *prog, word_t args[NARGS]) {
   int i;
