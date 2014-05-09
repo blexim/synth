@@ -15,11 +15,11 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
-#define POPSIZE 1000
-#define KEEPLIM 50
+#define POPSIZE 2000
+#define KEEPLIM (POPSIZE/2)
 #define KILLLIM POPSIZE
 
-#define MUTATION_PROB 0.1
+#define MUTATION_PROB 0.01
 
 #define PRINT_GEN 100
 
