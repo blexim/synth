@@ -199,13 +199,14 @@ class Checker(object):
         procs.append((geneticproc, geneticout, "genetic"))
 
       (finished, retcode) = os.wait()
-    except Exception as e:
-      for (proc, _, _) in procs:
-        os.killpg(proc.pid, signal.SIGKILL)
-        proc.wait()
-
-      raise e
     finally:
+      for (proc, _, _) in procs:
+        try:
+          os.killpg(proc.pid, signal.SIGKILL)
+          proc.wait()
+        except:
+          pass
+
       perf.end("checker")
 
     retfile = None
@@ -217,9 +218,6 @@ class Checker(object):
 
         if args.args.verbose > 0:
           print "Fastest checker: %s" % checker
-      else:
-        os.killpg(proc.pid, signal.SIGKILL)
-        proc.wait()
 
     if args.args.strategy in ("explicit", "hybrid") and not args.args.keeptemps:
       os.remove(explicitbin.name)
