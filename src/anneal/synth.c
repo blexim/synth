@@ -180,6 +180,11 @@ int main(void) {
 
     if (generation % ((int) (TEMP_STEP / temperature)) == 0) {
       temperature *= 0.9;
+
+      if (temperature <= 0.001) {
+        temperature = 1.0;
+      }
+
       printf("Temperature: %.04f\n", temperature);
     }
 
