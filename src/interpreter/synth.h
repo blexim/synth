@@ -29,7 +29,10 @@
  #define PWIDTH WIDTH
 #endif
 
-#define MAXOPCODE 21
+#define MAXOPCODE 17
+
+// Use this one to enable floating point
+//#define MAXOPCODE 21
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 5
