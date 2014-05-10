@@ -24,10 +24,10 @@
 #define MUTATION_PROB 0.01
 
 #define PRINT_GEN 1000
-#define GEN_LIM 200000
+#define GEN_LIM 2
 
 #ifndef SEED
-#define SEED time(NULL)
+//#define SEED time(NULL)
 #endif
 
 extern int execok;
@@ -283,7 +283,7 @@ void next_gen(prog_t *previous, prog_t *next) {
 
   // Finally, let the somewhat-fit individuals from the previous generation breed.
 
-  while (j < POPSIZE - 1) {
+  while (j < POPSIZE) {
     int idx = kill + (rand() % (nprogs - kill));
     idx = indices[idx];
     prog_t *a = &previous[idx];
@@ -304,6 +304,8 @@ void test(prog_t *prog, word_t args[NARGS]) {
 
   numtests++;
 
+  execok = 1;
+
   exec(prog, args, res);
 
   for (i = 0; i < NRES; i++) {
@@ -322,12 +324,14 @@ void test(prog_t *prog, word_t args[NARGS]) {
 int main(void) {
   prog_t pop_a[POPSIZE], pop_b[POPSIZE];
   int i;
+  int seed = SEED;
 
-  srand(SEED);
+  printf("Using random seed: %d\n", seed);
+  srand(seed);
 
   for (i = 0; i < POPSIZE; i++) {
     rand_prog(&pop_a[i]);
-    rand_prog(&pop_b[i]);
+    //rand_prog(&pop_b[i]);
   }
 
   for (generation = 0; generation < GEN_LIM; generation++) {
@@ -335,7 +339,7 @@ int main(void) {
       printf("Generation %d\n", generation);
     }
 
-    if (generation % 2) {
+    if (generation & 1) {
       next_gen(pop_b, pop_a);
     } else {
       next_gen(pop_a, pop_b);
