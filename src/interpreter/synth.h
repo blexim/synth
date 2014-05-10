@@ -80,7 +80,7 @@ extern int execok;
 void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]);
 void test(prog_t *prog, word_t args[NARGS]);
 
-int check(word_t args[NARGS], word_t res[NRES]);
+int check(prog_t *prog, word_t args[NARGS]);
 void tests(prog_t *prog);
 
 void hint(prog_t *prog);

@@ -137,10 +137,22 @@ int fitness(prog_t *prog) {
 
 
 void test(prog_t *prog, word_t args[NARGS]) {
-  numtests++;
-  execok = 1;
+  int i;
+  word_t res[NRES];
 
-  if(check(prog, args) && execok) {
+  numtests++;
+
+  exec(prog, args, res);
+
+  for (i = 0; i < NRES; i++) {
+    res[i] &= WORDMASK;
+  }
+
+  if (!execok) {
+    return;
+  }
+
+  if(check(args, res)) {
     correct++;
   }
 }

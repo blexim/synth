@@ -298,24 +298,10 @@ int next_gen(prog_t *previous, prog_t *next) {
 }
 
 void test(prog_t *prog, word_t args[NARGS]) {
-  int i;
-  word_t res[NRES];
-
   numtests++;
-
   execok = 1;
 
-  exec(prog, args, res);
-
-  for (i = 0; i < NRES; i++) {
-    res[i] &= WORDMASK;
-  }
-
-  if (!execok) {
-    return;
-  }
-
-  if(check(args, res)) {
+  if(check(prog, args) && execok) {
     correct++;
   }
 }

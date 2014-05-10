@@ -29,7 +29,10 @@ void interchangeObs(word_t* src, word_t* dest)
   return;
 }
 
-int check(word_t args[2], word_t res[2]) {
+int check(prog_t *prog, word_t args[2]) {
+  word_t res[2];
+  exec(prog, args, res);
+
   word_t src = args[0];
   word_t dest = args[1];
 

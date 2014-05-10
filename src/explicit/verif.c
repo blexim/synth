@@ -58,20 +58,14 @@ void print_args(word_t args[NARGS]) {
 
 int main(void) {
   word_t args[NARGS];
-  word_t res[NRES];
   int i;
 
   init_args(args);
 
   do {
-    exec(&prog, args, res);
+    execok = 1;
 
-    for (i = 0; i < NRES; i++) {
-      res[i] &= WORDMASK;
-    }
-
-    if (!execok || !check(args, res)) {
-      printf("%x -> %x (%d/%d)\n", args[0], res[0], check(args, res), execok);
+    if (!check(&prog, args) || !execok) {
       print_args(args);
       return 10;
     }

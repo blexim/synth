@@ -109,21 +109,14 @@ void print_prog(prog_t *prog) {
 int ok;
 
 void test(prog_t *prog, word_t args[NARGS]) {
-  int i;
-  word_t res[NRES];
+  execok = 1;
 
-  exec(prog, args, res);
-
-  for (i = 0; i < NRES; i++) {
-    res[i] &= WORDMASK;
-  }
+  int valid = check(prog, args);
 
   if (!execok) {
     ok = 0;
     return;
   }
-
-  int valid = check(args, res);
 
   if (!valid) {
     ok = 0;

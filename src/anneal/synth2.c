@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 #ifndef SEARCH
  #define SEARCH
@@ -16,7 +17,11 @@
 #define OPMASK ((1 << OPLEN) - 1)
 
 #define PRINT_GEN 0
-#define TEMP_STEP 500000
+
+#define INIT_TEMP 100.0
+#define TEMP_STEP 1000
+
+#define MUTATION_PROB 0.01
 
 #ifndef SEED
 #define SEED time(NULL)
@@ -48,7 +53,7 @@ void rand_prog(prog_t *prog) {
 
 int should_mutate() {
   double r = rand();
-  return (r / RAND_MAX) <= temperature;
+  return (r / RAND_MAX) <= MUTATION_PROB;
 }
 
 void mutate(prog_t *b) {
@@ -58,21 +63,19 @@ void mutate(prog_t *b) {
     if (should_mutate()) {
       b->ops[i] = rand() % (MAXOPCODE + 1);
     }
-  }
 
-  for (i = 0; i < CONSTS; i++) {
-    if (should_mutate()) {
-      b->consts[i] = rand() & WORDMASK;
-    }
-  }
-
-  for (i = 0; i < SZ; i++) {
     if (should_mutate()) {
       b->params[i*2] = rand() % (i + NARGS + CONSTS);
     }
 
     if (should_mutate()) {
       b->params[i*2+1] = rand() % (i + NARGS + CONSTS);
+    }
+  }
+
+  for (i = 0; i < CONSTS; i++) {
+    if (should_mutate()) {
+      b->consts[i] = rand() & WORDMASK;
     }
   }
 }
@@ -137,27 +140,55 @@ int fitness(prog_t *prog) {
 
 
 void test(prog_t *prog, word_t args[NARGS]) {
-  numtests++;
-  execok = 1;
+  int i;
+  word_t res[NRES];
 
-  if(check(prog, args) && execok) {
+  numtests++;
+
+  exec(prog, args, res);
+
+  for (i = 0; i < NRES; i++) {
+    res[i] &= WORDMASK;
+  }
+
+  if (!execok) {
+    return;
+  }
+
+  if(check(args, res)) {
     correct++;
   }
 }
 
+int should_move(int fit1, int fit2) {
+  if (fit2 > fit1) {
+    return 1;
+  }
+
+  double d1 = fit1;
+  double d2 = fit2;
+  double x = exp(-(d2 - d1) / temperature);
+
+  return (x * RAND_MAX) > rand();
+}
+
 int main(void) {
-  prog_t p, best_prog;
+  prog_t curr, next, best_prog;
   int best_fitness = 0;
+  int curr_fitness = 0;
   int i;
   int seed = SEED;
 
   printf("Using random seed: %d\n", seed);
   srand(seed);
 
-  temperature = 1.0;
+  temperature = INIT_TEMP;
 
   rand_prog(&best_prog);
   best_fitness = fitness(&best_prog);
+  curr_fitness = best_fitness;
+
+  memcpy(&curr, &best_prog, sizeof(prog_t));
 
   while (temperature > 0) {
     generation++;
@@ -166,26 +197,30 @@ int main(void) {
       printf("Best fitness: %d, target=%d\n", best_fitness, numtests);
     }
 
-    if (generation % ((int) (TEMP_STEP / temperature)) == 0) {
-      temperature *= 0.9;
+    if (generation % TEMP_STEP == 0) {
+      temperature -= 0.01;
 
-      if (temperature <= 0.001) {
-        temperature = 1.0;
+      if (temperature <= 0.0) {
+        temperature = INIT_TEMP;
+        memcpy(&curr, &best_prog, sizeof(prog_t));
+        printf("Best: %d\n", best_fitness);
       }
-
-      printf("Temperature: %.04f\n", temperature);
     }
 
-    memcpy(&p, &best_prog, sizeof(prog_t));
-    mutate(&p);
+    memcpy(&next, &curr, sizeof(prog_t));
+    mutate(&next);
 
-    int new_fitness = fitness(&p);
+    int new_fitness = fitness(&next);
+
+    if (should_move(curr_fitness, new_fitness)) {
+      memcpy(&curr, &next, sizeof(prog_t));
+      curr_fitness = new_fitness;
+    }
 
     if (new_fitness > best_fitness) {
-      generation = 0;
       printf("New best fitness: %d, target=%d\n", new_fitness, numtests);
       best_fitness = new_fitness;
-      memcpy(&best_prog, &p, sizeof(prog_t));
+      memcpy(&best_prog, &next, sizeof(prog_t));
     }
   }
 }

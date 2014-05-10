@@ -1,7 +1,9 @@
 #include "synth.h"
 
-int check(word_t args[1], word_t res[1])
-{
+int check(prog_t *prog, word_t args[2]) {
+  word_t res[1];
+  exec(prog, args, res);
+
   word_t y = args[0];
   word_t r = res[0];
 
