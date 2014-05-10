@@ -148,6 +148,26 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
         res = 0;
       }
       break;
+    case MOD:
+#ifdef SYNTH
+      __CPROVER_assume(p2 != 0);
+#elif defined(SEARCH)
+      if (p2 == 0) {
+        execok = 0;
+        return;
+      }
+#endif
+      res = p1 % p2;
+      break;
+    case IMPLIES:
+      res = (p1 == 0) || (p2 != 0);
+      break;
+    case MIN:
+      res = (p1 < p2) ? p1 : p2;
+      break;
+    case MAX:
+      res = (p1 > p2) ? p1 : p2;
+      break;
 #ifdef FLOAT
     case FPLUS:
       fi.f = f1 + f2;

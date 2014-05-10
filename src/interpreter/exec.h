@@ -19,11 +19,15 @@
 #define LT 15
 #define SLE 16
 #define SLT 17
+#define MOD 18
+#define IMPLIES 19
+#define MIN 20
+#define MAX 21
 
-#define FPLUS 18
-#define FMINUS 19
-#define FMUL 20
-#define FDIV 21
+#define FPLUS 22
+#define FMINUS 23
+#define FMUL 24
+#define FDIV 25
 
 #define ARG 0
 #define CONST 1
