@@ -16,7 +16,7 @@
 #define OPMASK ((1 << OPLEN) - 1)
 
 #define PRINT_GEN 0
-#define TEMP_STEP 100000
+#define TEMP_STEP 500000
 
 #ifndef SEED
 #define SEED time(NULL)
@@ -179,7 +179,7 @@ int main(void) {
     }
 
     if (generation % ((int) (TEMP_STEP / temperature)) == 0) {
-      temperature *= 0.8;
+      temperature *= 0.9;
       printf("Temperature: %.04f\n", temperature);
     }
 
@@ -189,6 +189,7 @@ int main(void) {
     int new_fitness = fitness(&p);
 
     if (new_fitness > best_fitness) {
+      generation = 0;
       printf("New best fitness: %d, target=%d\n", new_fitness, numtests);
       best_fitness = new_fitness;
       memcpy(&best_prog, &p, sizeof(prog_t));
