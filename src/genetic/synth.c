@@ -21,7 +21,8 @@
 
 #define MUTATION_PROB 0.01
 
-#define PRINT_GEN 100
+#define PRINT_GEN 1000
+#define GEN_LIM 1000
 
 extern int execok;
 
@@ -41,7 +42,7 @@ void rand_prog(prog_t *prog) {
     prog->consts[i] = rand() & WORDMASK;
   }
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ; i++) {
     prog->params[i*2] = rand() % (i + NARGS + CONSTS);
     prog->params[i*2+1] = rand() % (i + NARGS + CONSTS);
   }
@@ -66,7 +67,7 @@ void mutate(prog_t *b) {
     }
   }
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ; i++) {
     if (should_mutate()) {
       b->params[i*2] = rand() % (i + NARGS + CONSTS);
     }
@@ -90,7 +91,7 @@ void crossover(prog_t *a, prog_t *b, prog_t *c) {
     cross(a->consts[i], b->consts[i], c->consts[i]);
   }
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ; i++) {
     cross(a->params[i*2], b->params[i*2], c->params[i*2]);
     cross(a->params[i*2+1], b->params[i*2+1], c->params[i*2+1]);
   }
@@ -184,9 +185,10 @@ void next_gen(prog_t *previous, prog_t *next) {
   // Now generate some random individuals.
 
   int kill;
+  int cutoff = (minfit + maxfit) / 2;
 
   for (kill = 0;
-       kill < KILLLIM && fitnesses[indices[kill]] == minfit;
+       kill < KILLLIM && fitnesses[indices[kill]] < cutoff;
        kill++) {
     rand_prog(&next[j]);
     j++;
@@ -198,7 +200,7 @@ void next_gen(prog_t *previous, prog_t *next) {
 
   // Finally, let the somewhat-fit individuals from the previous generation breed.
 
-  while (j < POPSIZE) {
+  while (j < POPSIZE - 1) {
     int idx = kill + (rand() % (POPSIZE - kill));
     idx = indices[idx];
     prog_t *a = &previous[idx];
@@ -260,7 +262,7 @@ int main(void) {
     rand_prog(&pop_b[i]);
   }
 
-  for (generation = 0; ; generation++) {
+  for (generation = 0; generation < GEN_LIM; generation++) {
     if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
       printf("Generation %d\n", generation);
     }
