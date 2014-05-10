@@ -200,14 +200,14 @@ class Checker(object):
 
       (finished, retcode) = os.wait()
     finally:
+      perf.end("checker")
+
       for (proc, _, _) in procs:
         try:
           os.killpg(proc.pid, signal.SIGKILL)
           proc.wait()
         except:
           pass
-
-      perf.end("checker")
 
     retfile = None
 
