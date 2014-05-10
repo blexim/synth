@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,7 +24,7 @@
 #define MUTATION_PROB 0.01
 
 #define PRINT_GEN 1000
-#define GEN_LIM 1000
+#define GEN_LIM 200000
 
 extern int execok;
 
@@ -78,22 +80,27 @@ void mutate(prog_t *b) {
   }
 }
 
-#define cross(x, y, z) (z = (rand() % 2) ? x : y)
-
 void crossover(prog_t *a, prog_t *b, prog_t *c) {
   int i;
 
   for (i = 0; i < SZ; i++) {
-    cross(a->ops[i], b->ops[i], c->ops[i]);
+    if (rand() % 2) {
+      c->ops[i] = a->ops[i];
+      c->params[i*2] = a->ops[i*2];
+      c->params[(i*2)+1] = a->ops[(i*2)+1];
+    } else {
+      c->ops[i] = b->ops[i];
+      c->params[i*2] = b->ops[i*2];
+      c->params[(i*2)+1] = b->ops[(i*2)+1];
+    }
   }
 
   for (i = 0; i < CONSTS; i++) {
-    cross(a->consts[i], b->consts[i], c->consts[i]);
-  }
-
-  for (i = 0; i < SZ; i++) {
-    cross(a->params[i*2], b->params[i*2], c->params[i*2]);
-    cross(a->params[i*2+1], b->params[i*2+1], c->params[i*2+1]);
+    if (rand() % 2) {
+      c->consts[i] = a->consts[i];
+    } else {
+      c->consts[i] = b->consts[i];
+    }
   }
 }
 
@@ -139,7 +146,23 @@ void print_prog(prog_t *prog) {
 
 int fitnesses[POPSIZE];
 
-int compare(const void *v1, const void *v2) {
+int fitness(prog_t *prog) {
+  correct = 0;
+  numtests = 0;
+
+  tests(prog);
+
+  if (correct == numtests) {
+    printf("Found a program with fitness=%d\n", correct);
+    print_prog(prog);
+    exit(10);
+  }
+
+  return correct;
+}
+
+
+int compare_fitness(const void *v1, const void *v2) {
   int *i1 = (int *) v1;
   int *i2 = (int *) v2;
   int f1 = fitnesses[*i1];
@@ -148,22 +171,78 @@ int compare(const void *v1, const void *v2) {
   return f1 - f2;
 }
 
+#define compare_op(x, y) do { \
+  if ((x) < (y)) return -1; \
+  else if ((x) > (y)) return 1; \
+} while(0)
+
+int compare_progs(const void *v1, const void *v2, void *arg) {
+  prog_t *progs = (prog_t *) arg;
+  int *i1 = (int *) v1;
+  int *i2 = (int *) v2;
+  prog_t *p1 = &progs[*i1];
+  prog_t *p2 = &progs[*i2];
+  int i;
+
+  for (i = 0; i < SZ; i++) {
+    compare_op(p1->ops[i], p2->ops[i]);
+    compare_op(p1->params[i*2], p2->params[i*2]);
+    compare_op(p1->params[(i*2)+1], p2->params[(i*2)+1]);
+  }
+
+  for (i = 0; i < CONSTS; i++) {
+    compare_op(p1->consts[i], p2->consts[i]);
+  }
+
+  return 0;
+}
+
+int dedup(prog_t *progs, int *indices) {
+  int i, ret, last;
+  int sorted[POPSIZE];
+
+  memcpy(sorted, indices, POPSIZE*sizeof(int));
+  qsort_r(sorted, POPSIZE, sizeof(int), compare_progs, progs);
+
+  indices[0] = sorted[0];
+  last = sorted[0];
+  ret = 1;
+
+  for (i = 1; i < POPSIZE; i++) {
+    if (compare_progs(&last, &sorted[i], progs) != 0) {
+      // This is a program we haven't seen before.  Save it.
+      indices[ret++] = sorted[i];
+      last = sorted[i];
+    }
+  }
+
+  return ret;
+}
+
 void next_gen(prog_t *previous, prog_t *next) {
   int indices[POPSIZE];
   int i, j;
   int maxfit, minfit;
+  int nprogs;
 
   for (i = 0; i < POPSIZE; i++) {
     indices[i] = i;
-    fitnesses[i] = fitness(&previous[i]);
   }
 
-  qsort(indices, POPSIZE, sizeof(int), compare);
+  nprogs = dedup(previous, indices);
 
-  maxfit = fitnesses[indices[POPSIZE - 1]];
+  for (i = 0; i < nprogs; i++) {
+    int idx = indices[i];
+    fitnesses[idx] = fitness(&previous[idx]);
+  }
+
+  qsort(indices, nprogs, sizeof(int), compare_fitness);
+
+  maxfit = fitnesses[indices[nprogs - 1]];
   minfit = fitnesses[indices[0]];
 
   if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
+    printf("Unique programs: %d\n", nprogs);
     printf("Fittest: %d, least fit: %d\n", maxfit, minfit);
     printf("Target: %d\n", numtests);
   }
@@ -174,9 +253,9 @@ void next_gen(prog_t *previous, prog_t *next) {
   int keep;
 
   for (keep = 0;
-       keep < KEEPLIM && fitnesses[indices[POPSIZE - keep - 1]] == maxfit;
+       keep < KEEPLIM && fitnesses[indices[nprogs - keep - 1]] == maxfit;
        keep++) {
-    prog_t *p = &previous[indices[POPSIZE - keep - 1]];
+    prog_t *p = &previous[indices[nprogs - keep - 1]];
 
     memcpy(&next[j], p, sizeof(prog_t));
     j++;
@@ -201,11 +280,11 @@ void next_gen(prog_t *previous, prog_t *next) {
   // Finally, let the somewhat-fit individuals from the previous generation breed.
 
   while (j < POPSIZE - 1) {
-    int idx = kill + (rand() % (POPSIZE - kill));
+    int idx = kill + (rand() % (nprogs - kill));
     idx = indices[idx];
     prog_t *a = &previous[idx];
 
-    idx = kill + (rand() % (POPSIZE - kill));
+    idx = kill + (rand() % (nprogs - kill));
     idx = indices[idx];
     prog_t *b = &previous[idx];
 
@@ -234,21 +313,6 @@ void test(prog_t *prog, word_t args[NARGS]) {
   if(check(args, res)) {
     correct++;
   }
-}
-
-int fitness(prog_t *prog) {
-  correct = 0;
-  numtests = 0;
-
-  tests(prog);
-
-  if (correct == numtests) {
-    printf("Found a program with fitness=%d\n", correct);
-    print_prog(prog);
-    exit(10);
-  }
-
-  return correct;
 }
 
 int main(void) {
