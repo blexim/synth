@@ -19,7 +19,7 @@
 
 #define POPSIZE 2000
 #define KEEPLIM (POPSIZE/2)
-#define KILLLIM POPSIZE
+#define KILLLIM (POPSIZE/4)
 
 #define MUTATION_PROB 0.01
 
@@ -264,7 +264,7 @@ void next_gen(prog_t *previous, prog_t *next) {
   // Now generate some random individuals.
 
   int kill;
-  int cutoff = (minfit + maxfit) / 2;
+  int cutoff = minfit+1;
 
   for (kill = 0;
        kill < KILLLIM && fitnesses[indices[kill]] < cutoff;
