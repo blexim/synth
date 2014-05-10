@@ -24,6 +24,10 @@ int check(prog_t *prog, word_t args[9]) {
 
   flag = args[4];
 
+  if (flag != 1) {
+    return 1;
+  }
+
   a = 0;
   b = 0;
   j = 1;
@@ -60,8 +64,8 @@ int check(prog_t *prog, word_t args[9]) {
   a = args[7];
   b = args[8];
 
-  if (flag) {
-    if (checkit(prog, i, j, a, b, flag)) {
+  if (checkit(prog, i, j, a, b, flag)) {
+    if (flag) {
       if (a != b) {
         return 0;
       }
