@@ -18,13 +18,13 @@
 #define OPMASK ((1 << OPLEN) - 1)
 
 #define POPSIZE 2000
-#define KEEPLIM (POPSIZE/2)
+#define KEEPLIM (POPSIZE/4)
 #define KILLLIM (POPSIZE/4)
 
 #define MUTATION_PROB 0.01
 
 #define PRINT_GEN 1000
-#define GEN_LIM 20000
+#define GEN_LIM 10000
 
 #ifndef SEED
 //#define SEED time(NULL)
@@ -218,7 +218,7 @@ int dedup(prog_t *progs, int *indices) {
   return ret;
 }
 
-void next_gen(prog_t *previous, prog_t *next) {
+int next_gen(prog_t *previous, prog_t *next) {
   int indices[POPSIZE];
   int i, j;
   int idx;
@@ -293,6 +293,8 @@ void next_gen(prog_t *previous, prog_t *next) {
     mutate(&next[j]);
     j++;
   }
+
+  return maxfit;
 }
 
 void test(prog_t *prog, word_t args[NARGS]) {
@@ -322,6 +324,8 @@ int main(void) {
   prog_t pop_a[POPSIZE], pop_b[POPSIZE];
   int i;
   int seed = SEED;
+  int bestfitness = 0;
+  int currfitness;
 
   printf("Using random seed: %d\n", seed);
   srand(seed);
@@ -333,13 +337,19 @@ int main(void) {
 
   for (generation = 0; generation < GEN_LIM; generation++) {
     if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
-      printf("Generation %d\n", generation);
+      printf("Generation %d, best=%d\n", generation, bestfitness);
     }
 
     if (generation & 1) {
-      next_gen(pop_b, pop_a);
+      currfitness = next_gen(pop_b, pop_a);
     } else {
-      next_gen(pop_a, pop_b);
+      currfitness = next_gen(pop_a, pop_b);
+    }
+
+    if (currfitness > bestfitness) {
+      printf("Best fitness: %d\n", currfitness);
+      bestfitness = currfitness;
+      generation = 0;
     }
   }
 
