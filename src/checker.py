@@ -24,10 +24,10 @@ args.argparser.add_argument("--keeptemps", "-k", default=False,
 args.argparser.add_argument("--noslice", default=False,
     action="store_const", const=True,
     help="do not slice formula")
-args.argparser.add_argument("--strategy", choices=["hybrid", "explicit", "cbmc"],
+args.argparser.add_argument("--strategy", choices=["hybrid", "explicit", "genetic", "cbmc"],
     default="hybrid", help="the synthesis strategy")
 args.argparser.add_argument("--synth-strategy",
-    choices=["default", "hybrid", "explicit", "cbmc"], default="default",
+    choices=["default", "hybrid", "explicit", "genetic", "cbmc"], default="default",
     help="the synthesis strategy")
 args.argparser.add_argument("--verif-strategy",
     choices=["default", "hybrid", "explicit", "cbmc"], default="default",
@@ -59,7 +59,8 @@ def log2(x):
 
 class Checker(object):
   cbmcargs = []
-  gccargs = []
+  explicitgccargs = []
+  geneticgccargs = []
   scratchfile = None
 
   def __init__(self, sz, width, consts, verif=False):
@@ -77,8 +78,8 @@ class Checker(object):
     genericargs = [
         "-I%s" % args.args.interpreter,
         "-DSZ=%d" % sz,
-        "-DWIDTH=%d" % width,
         "-DMWIDTH=%d" % mwidth,
+        "-DWIDTH=%d" % width,
         "-DNARGS=%d" % nargs,
         "-DNRES=%d" % nres,
         "-DCONSTS=%d" % consts,
@@ -105,13 +106,18 @@ class Checker(object):
     if verif:
       self.cbmcargs = [args.args.cbmc, "--smt2",
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
-      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm", "-g", "-O3",
-          os.path.join("explicit", "verif.c")] + genericargs
+      self.explicitgccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
+          "-g", "-O3", os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           os.path.join("cbmc", "synth.c")] + genericargs
-      self.gccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
+      self.explicitgccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
+          os.path.join("explicit", "synth.c")] + genericargs
+      self.geneticgccargs = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
           os.path.join("genetic", "synth.c")] + genericargs
+
+      if args.args.seed is not None:
+        self.geneticgccargs.append("-DSEED=%d" % args.args.seed)
 
     if not args.args.noslice:
       self.cbmcargs.append("--slice-formula")
@@ -126,6 +132,8 @@ class Checker(object):
 
     if args.args.verbose > 1:
       print ' '.join(self.cbmcargs)
+      print ' '.join(self.explicitgccargs)
+      print ' '.join(self.geneticgccargs)
 
     self.write = self.scratchfile.write
 
@@ -155,22 +163,40 @@ class Checker(object):
         procs.append((cbmcproc, cbmcfile, "cbmc"))
 
       if strategy in ("explicit", "hybrid"):
-        ofile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
+        explicitbin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
                                          dir="ofiles")
-        self.gccargs += ["-o", ofile.name, "-lm"]
+        self.explicitgccargs += ["-o", explicitbin.name, "-lm"]
 
-        ofile.close()
+        explicitbin.close()
 
         if args.args.verbose > 1:
-          subprocess.call(self.gccargs)
+          subprocess.call(self.explicitgccargs)
         else:
           with open(os.devnull, "w") as fnull:
-            subprocess.call(self.gccargs, stdout=fnull, stderr=fnull)
+            subprocess.call(self.explicitgccargs, stdout=fnull, stderr=fnull)
 
         explicitout = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
-        explicitproc = subprocess.Popen([ofile.name], stdout=explicitout,
+        explicitproc = subprocess.Popen([explicitbin.name], stdout=explicitout,
             preexec_fn=os.setpgrp)
         procs.append((explicitproc, explicitout, "explicit"))
+
+      if strategy in ("genetic", "hybrid") and not self.verif:
+        geneticbin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
+                                         dir="ofiles")
+        self.geneticgccargs += ["-o", geneticbin.name, "-lm"]
+
+        geneticbin.close()
+
+        if args.args.verbose > 1:
+          subprocess.call(self.geneticgccargs)
+        else:
+          with open(os.devnull, "w") as fnull:
+            subprocess.call(self.geneticgccargs, stdout=fnull, stderr=fnull)
+
+        geneticout = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
+        geneticproc = subprocess.Popen([geneticbin.name], stdout=geneticout,
+            preexec_fn=os.setpgrp)
+        procs.append((geneticproc, geneticout, "genetic"))
 
       (finished, retcode) = os.wait()
     except Exception as e:
@@ -196,8 +222,10 @@ class Checker(object):
         proc.wait()
 
     if args.args.strategy in ("explicit", "hybrid") and not args.args.keeptemps:
-      os.remove(ofile.name)
+      os.remove(explicitbin.name)
 
+    if args.args.strategy in ("genetic", "hybrid") and not self.verif and not args.args.keeptemps:
+      os.remove(geneticbin.name)
 
     retfile.seek(0)
 

@@ -26,6 +26,10 @@
 #define PRINT_GEN 1000
 #define GEN_LIM 200000
 
+#ifndef SEED
+#define SEED time(NULL)
+#endif
+
 extern int execok;
 
 int generation;
@@ -319,7 +323,7 @@ int main(void) {
   prog_t pop_a[POPSIZE], pop_b[POPSIZE];
   int i;
 
-  srand(time(NULL));
+  srand(SEED);
 
   for (i = 0; i < POPSIZE; i++) {
     rand_prog(&pop_a[i]);
