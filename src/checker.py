@@ -107,7 +107,7 @@ class Checker(object):
       genericargs.append("-DSEED=%d" % args.args.seed)
 
     if verif:
-      self.cbmcargs = [args.args.cbmc, "--smt2",
+      self.cbmcargs = [args.args.cbmc,
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
