@@ -16,17 +16,13 @@ word_t checkit(prog_t *prog, word_t i, word_t j, word_t a, word_t b, word_t flag
 
   exec(prog, args, res);
 
-  return res[0];
+  return res[0] != 0;
 }
 
 int check(prog_t *prog, word_t args[9]) {
   word_t i, j, a, b, flag;
 
   flag = args[4];
-
-  if (flag != 1) {
-    return 1;
-  }
 
   a = 0;
   b = 0;
