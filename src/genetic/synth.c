@@ -24,7 +24,7 @@
 #define MUTATION_PROB 0.01
 
 #define PRINT_GEN 1000
-#define GEN_LIM 2
+#define GEN_LIM 20000
 
 #ifndef SEED
 //#define SEED time(NULL)
@@ -42,15 +42,12 @@ void rand_prog(prog_t *prog) {
 
   for (i = 0; i < SZ; i++) {
     prog->ops[i] = rand() % (MAXOPCODE + 1);
+    prog->params[i*2] = rand() % (i + NARGS + CONSTS);
+    prog->params[(i*2)+1] = rand() % (i + NARGS + CONSTS);
   }
 
   for (i = 0; i < CONSTS; i++) {
     prog->consts[i] = rand() & WORDMASK;
-  }
-
-  for (i = 0; i < SZ; i++) {
-    prog->params[i*2] = rand() % (i + NARGS + CONSTS);
-    prog->params[i*2+1] = rand() % (i + NARGS + CONSTS);
   }
 }
 
@@ -65,21 +62,19 @@ void mutate(prog_t *b) {
     if (should_mutate()) {
       b->ops[i] = rand() % (MAXOPCODE + 1);
     }
-  }
 
-  for (i = 0; i < CONSTS; i++) {
-    if (should_mutate()) {
-      b->consts[i] = rand() & WORDMASK;
-    }
-  }
-
-  for (i = 0; i < SZ; i++) {
     if (should_mutate()) {
       b->params[i*2] = rand() % (i + NARGS + CONSTS);
     }
 
     if (should_mutate()) {
-      b->params[i*2+1] = rand() % (i + NARGS + CONSTS);
+      b->params[(i*2)+1] = rand() % (i + NARGS + CONSTS);
+    }
+  }
+
+  for (i = 0; i < CONSTS; i++) {
+    if (should_mutate()) {
+      b->consts[i] = rand() & WORDMASK;
     }
   }
 }
@@ -88,19 +83,19 @@ void crossover(prog_t *a, prog_t *b, prog_t *c) {
   int i;
 
   for (i = 0; i < SZ; i++) {
-    if (rand() % 2) {
+    if (rand() & 1) {
       c->ops[i] = a->ops[i];
-      c->params[i*2] = a->ops[i*2];
-      c->params[(i*2)+1] = a->ops[(i*2)+1];
+      c->params[i*2] = a->params[i*2];
+      c->params[(i*2)+1] = a->params[(i*2)+1];
     } else {
       c->ops[i] = b->ops[i];
-      c->params[i*2] = b->ops[i*2];
-      c->params[(i*2)+1] = b->ops[(i*2)+1];
+      c->params[i*2] = b->params[i*2];
+      c->params[(i*2)+1] = b->params[(i*2)+1];
     }
   }
 
   for (i = 0; i < CONSTS; i++) {
-    if (rand() % 2) {
+    if (rand() & 1) {
       c->consts[i] = a->consts[i];
     } else {
       c->consts[i] = b->consts[i];
@@ -226,6 +221,7 @@ int dedup(prog_t *progs, int *indices) {
 void next_gen(prog_t *previous, prog_t *next) {
   int indices[POPSIZE];
   int i, j;
+  int idx;
   int maxfit, minfit;
   int nprogs;
 
@@ -259,7 +255,8 @@ void next_gen(prog_t *previous, prog_t *next) {
   for (keep = 0;
        keep < KEEPLIM && fitnesses[indices[nprogs - keep - 1]] == maxfit;
        keep++) {
-    prog_t *p = &previous[indices[nprogs - keep - 1]];
+    idx = indices[nprogs - keep - 1];
+    prog_t *p = &previous[idx];
 
     memcpy(&next[j], p, sizeof(prog_t));
     j++;
@@ -284,7 +281,7 @@ void next_gen(prog_t *previous, prog_t *next) {
   // Finally, let the somewhat-fit individuals from the previous generation breed.
 
   while (j < POPSIZE) {
-    int idx = kill + (rand() % (nprogs - kill));
+    idx = kill + (rand() % (nprogs - kill));
     idx = indices[idx];
     prog_t *a = &previous[idx];
 
