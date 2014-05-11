@@ -7,8 +7,6 @@
 #include "synth.h"
 #include "exec.h"
 
-extern int execok;
-
 #define WORDMASK ((1 << WIDTH) - 1)
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)

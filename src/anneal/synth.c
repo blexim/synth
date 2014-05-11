@@ -22,8 +22,6 @@
 #define SEED time(NULL)
 #endif
 
-extern int execok;
-
 int generation;
 
 double temperature;
@@ -138,7 +136,6 @@ int fitness(prog_t *prog) {
 
 void test(prog_t *prog, word_t args[NARGS]) {
   numtests++;
-  execok = 1;
 
   if(check(prog, args) && execok) {
     correct++;

@@ -111,7 +111,7 @@ class Checker(object):
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
-          "-g", "-O3", os.path.join("explicit", "verif.c")] + genericargs
+          "-O3", os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           os.path.join("cbmc", "synth.c")] + genericargs

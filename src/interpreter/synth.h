@@ -75,7 +75,7 @@ typedef union fi {
 } fi_t;
 
 extern prog_t prog;
-extern int execok;
+extern volatile int execok;
 
 void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]);
 void test(prog_t *prog, word_t args[NARGS]);

@@ -98,7 +98,7 @@ void tests(prog_t *prog) {
   word_t input[NARGS];
 """)
 
-  random.shuffle(tests)
+  #random.shuffle(tests)
   for x in tests:
     for i in xrange(len(x)):
       bmc.write("  input[%d] = %d;\n" % (i, x[i]))

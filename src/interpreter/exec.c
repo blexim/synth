@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-int execok;
+volatile int execok;
 
 void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;

@@ -30,8 +30,6 @@
 #define SEED time(NULL)
 #endif
 
-extern int execok;
-
 int generation;
 int correct;
 int numtests;
@@ -300,7 +298,6 @@ int next_gen(prog_t *previous, prog_t *next) {
 
 void test(prog_t *prog, word_t args[NARGS]) {
   numtests++;
-  execok = 1;
 
   if(check(prog, args) && execok) {
     correct++;
