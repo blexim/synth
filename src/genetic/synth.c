@@ -18,16 +18,16 @@
 #define OPMASK ((1 << OPLEN) - 1)
 
 #define POPSIZE 2000
-#define KEEPLIM (POPSIZE/4)
+#define KEEPLIM (POPSIZE/2)
 #define KILLLIM (POPSIZE/4)
 
 #define MUTATION_PROB 0.01
 
 #define PRINT_GEN 1000
-#define GEN_LIM 10000
+#define GEN_LIM 0
 
 #ifndef SEED
-//#define SEED time(NULL)
+#define SEED time(NULL)
 #endif
 
 extern int execok;
@@ -229,7 +229,8 @@ int next_gen(prog_t *previous, prog_t *next) {
     indices[i] = i;
   }
 
-  nprogs = dedup(previous, indices);
+  //nprogs = dedup(previous, indices);
+  nprogs = POPSIZE;
 
   for (i = 0; i < nprogs; i++) {
     int idx = indices[i];
@@ -321,7 +322,9 @@ int main(void) {
     //rand_prog(&pop_b[i]);
   }
 
-  for (generation = 0; generation < GEN_LIM; generation++) {
+  for (generation = 0;
+       GEN_LIM == 0 || generation < GEN_LIM;
+       generation++) {
     if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
       printf("Generation %d, best=%d\n", generation, bestfitness);
     }
