@@ -6,10 +6,10 @@ word_t rank(prog_t *prog, word_t x, word_t y) {
   word_t args[5];
   word_t res[1];
 
-  args[0] = 0;
-  args[1] = 0;
-  args[2] = x;
-  args[3] = y;
+  args[0] = x;
+  args[1] = y;
+  args[2] = 0;
+  args[3] = 0;
   args[4] = 0;
 
   exec(prog, args, res);
@@ -30,28 +30,20 @@ int check(prog_t *prog, word_t args[5]) {
   y_ = y;
 
   if (x > 0 && y > 0) {
-    if (taken == 1) {
+    if (taken) {
       x_--;
       y_++;
 
       y_ &= WORDMASK;
-
-      if (x_ > x || y_ < y) {
-        return 1;
-      }
     } else {
       y_--;
-
-      if (y_ > y) {
-        return 1;
-      }
     }
 
     if (rank(prog, x, y) <= 0) {
       return 0;
     }
 
-    if (rank(prog, x, y) < rank(prog, x_, y_)) {
+    if (rank(prog, x, y) <= rank(prog, x_, y_)) {
       return 0;
     }
   }
