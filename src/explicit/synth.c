@@ -11,7 +11,7 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
-extern int execok;
+//#define DEBUG
 
 // Generate the lexicographically next highest program.
 //
@@ -107,9 +107,33 @@ void print_prog(prog_t *prog) {
 }
 
 int ok;
+int print = 0;
 
 void test(prog_t *prog, word_t args[NARGS]) {
   execok = 1;
+
+  if (print) {
+    int i;
+    int x;
+
+    word_t res[NRES];
+
+    exec(prog, args, res);
+
+    for (i = 0; i < NARGS; i++) {
+      x = args[i] & WORDMASK;
+      printf("%d ", x);
+    }
+
+    printf("-> ");
+
+    for (i = 0; i < NRES; i++) {
+      x = res[i] & WORDMASK;
+      printf("%d ", x);
+    }
+
+    printf("\n");
+  }
 
   int valid = check(prog, args);
 
@@ -137,6 +161,11 @@ int main(void) {
     tests(&prog);
 
     if (ok) {
+#ifdef DEBUG
+      print = 1;
+      tests(&prog);
+#endif
+
       print_prog(&prog);
       return 10;
     }
