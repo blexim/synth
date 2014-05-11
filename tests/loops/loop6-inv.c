@@ -1,4 +1,5 @@
 #include "synth.h"
+#include "exec.h"
 
 word_t checkit(prog_t *prog, word_t x, word_t y) {
   word_t args[5];
@@ -21,6 +22,10 @@ int check(prog_t *prog, word_t args[5]) {
   x = 0;
   y = 0;
 
+  if (CONSTS != 1 || prog->consts[0] != 10) {
+    return 0;
+  }
+
   if (!checkit(prog, x, y)) {
     return 0;
   }
@@ -30,7 +35,7 @@ int check(prog_t *prog, word_t args[5]) {
   taken = args[2];
 
   if (checkit(prog, x, y) &&
-      y < 0xff) {
+      y < 50) {
     if (taken) {
       x++;
       y += 10;
@@ -49,7 +54,7 @@ int check(prog_t *prog, word_t args[5]) {
   x = args[3];
   y = args[4];
 
-  if (x < 0xff && checkit(prog, x, y)) {
+  if (x < 50 && y >= 50 && checkit(prog, x, y)) {
     if (x > y || y > 10*x) {
       return 0;
     }
