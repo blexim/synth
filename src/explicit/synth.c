@@ -110,8 +110,6 @@ int ok;
 int print = 0;
 
 void test(prog_t *prog, word_t args[NARGS]) {
-  execok = 1;
-
   if (print) {
     int i;
     int x;
