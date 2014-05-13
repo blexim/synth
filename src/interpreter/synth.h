@@ -29,7 +29,7 @@
  #define PWIDTH WIDTH
 #endif
 
-#define MAXOPCODE 21
+#define MAXOPCODE 22
 
 // Use this one to enable floating point
 //#define MAXOPCODE 25
@@ -65,7 +65,7 @@
 
 typedef struct prog {
   op_t ops[SZ];
-  param_t params[SZ*2];
+  param_t params[SZ*3];
   word_t consts[CONSTS];
 } prog_t;
 

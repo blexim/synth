@@ -29,15 +29,19 @@ binops = {
     19: "==>",
     20: "MIN",
     21: "MAX",
-    22: "f+",
-    23: "f-",
-    24: "f*",
-    25: "f/"
+    23: "f+",
+    24: "f-",
+    25: "f*",
+    26: "f/"
 }
 
 unops = {
     4: "-",
     8: "~"
+}
+
+ternops = {
+    22: "ITE"
 }
 
 def str2ints(s):
@@ -92,19 +96,22 @@ class Prog(object):
 
   def __str__(self):
     # List comprehension trickery to generate a list like:
-    # [(op0, param0, param1, 1), (op1, param2, param3, 2), ... ]
-    insts = zip(self.ops, self.params[::2], self.params[1::2],
+    # [(op0, param0, param1, param2, 1), (op1, param3, param4, param5, 2), ... ]
+    insts = zip(self.ops, self.params[::3], self.params[1::3], self.params[2::3],
         xrange(1, len(self.ops) + 1))
     strinsts = []
 
-    for (op, p1, p2, idx) in insts:
+    for (op, p1, p2, p3, idx) in insts:
       if op in binops:
         strinsts.append("t%d = %s %s %s" % (idx, self.strarg(p1), binops[op],
           self.strarg(p2)))
       elif op in unops:
         strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1)))
+      elif op in ternops:
+        strinsts.append("t%d = %s(%s, %s, %s)" % (idx, ternops[op], self.strarg(p1),
+                                                  self.strarg(p2), self.strarg(p3)))
       else:
-        raise Exception("Couldn't parse instruction: (%d, %d, %d)" %
-            (op, p1, p2))
+        raise Exception("Couldn't parse instruction: (%d, %d, %d, %d)" %
+            (op, p1, p2, p3))
 
     return '\n'.join(strinsts)

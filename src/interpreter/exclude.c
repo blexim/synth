@@ -3,7 +3,7 @@
 
 #define ISCONST(x) (x < CONSTS)
 
-int is_const(op_t op, param_t p1, param_t p2, word_t consts[CONSTS]) {
+int is_const(op_t op, param_t p1, param_t p2, param_t p3, word_t consts[CONSTS]) {
   word_t c1 = 0;
   word_t c2 = 0;
   sword_t s1 = 0;
@@ -49,10 +49,16 @@ int is_const(op_t op, param_t p1, param_t p2, word_t consts[CONSTS]) {
     }
   }
 
+  if (op == ITE) {
+    if (ISCONST(p1) && ISCONST(p2) && ISCONST(p3)) {
+      return 1;
+    }
+  }
+
   return 0;
 }
 
-int is_nop(op_t op, param_t p1, param_t p2, word_t consts[CONSTS]) {
+int is_nop(op_t op, param_t p1, param_t p2, param_t p3, word_t consts[CONSTS]) {
   word_t c = 0;
   sword_t s1 = 0;
   sword_t s2 = 0;
@@ -94,7 +100,7 @@ int is_nop(op_t op, param_t p1, param_t p2, word_t consts[CONSTS]) {
   return 0;
 }
 
-int is_symmetric(op_t op, param_t p1, param_t p2, word_t consts[CONSTS]) {
+int is_symmetric(op_t op, param_t p1, param_t p2, param_t p3, word_t consts[CONSTS]) {
   word_t c1 = 0;
   word_t c2 = 0;
   sword_t s1 = 0;
@@ -151,6 +157,12 @@ int is_symmetric(op_t op, param_t p1, param_t p2, word_t consts[CONSTS]) {
     }
   }
 
+  if (op == ITE) {
+    if (ISCONST(p1)) {
+      return 1;
+    }
+  }
+
   return 0;
 }
 
@@ -159,26 +171,27 @@ int exclude(prog_t *prog) {
 
   for (i = 0; i < SZ; i++) {
     op_t op;
-    param_t p1, p2;
+    param_t p1, p2, p3;
 
     op = prog->ops[i];
-    p1 = prog->params[i*2];
-    p2 = prog->params[i*2+1];
+    p1 = prog->params[i*3];
+    p2 = prog->params[i*3+1];
+    p3 = prog->params[i*3+2];
 
 #ifdef REMOVE_CONST
-    if (is_const(op, p1, p2, prog->consts)) {
+    if (is_const(op, p1, p2, p3, prog->consts)) {
       return 1;
     }
 #endif
 
 #ifdef REMOVE_NOPS
-    if (is_nop(op, p1, p2, prog->consts)) {
+    if (is_nop(op, p1, p2, p3, prog->consts)) {
       return 1;
     }
 #endif
 
 #ifdef REMOVE_SYMMETRIC
-    if (is_symmetric(op, p1, p2, prog->consts)) {
+    if (is_symmetric(op, p1, p2, p3, prog->consts)) {
       return 1;
     }
 #endif

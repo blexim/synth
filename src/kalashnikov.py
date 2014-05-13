@@ -120,8 +120,8 @@ void tests(prog_t *prog) {
         bmc.write(" && ")
 
       bmc.write("prog->ops[%d] == %d " % (i, ops[i]))
-      bmc.write("&& prog->params[%d] == %d && prog->params[%d] == %d" %
-          (2*i, parms[2*i], 2*i+1, parms[2*i+1]))
+      bmc.write("&& prog->params[%d] == %d && prog->params[%d] == %d && prog->params[%d] == %d" %
+          (3*i, parms[3*i], 3*i+1, parms[3*i+1], 3*i+1, parms[3*i+2]))
 
     for i in xrange(len(consts)):
       bmc.write("&& prog->consts[%d] == %d" %

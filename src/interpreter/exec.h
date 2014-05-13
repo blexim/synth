@@ -23,14 +23,13 @@
 #define IMPLIES 19
 #define MIN 20
 #define MAX 21
+#define ITE 22
 
-#define FPLUS 22
-#define FMINUS 23
-#define FMUL 24
-#define FDIV 25
+#define FPLUS 23
+#define FMINUS 24
+#define FMUL 25
+#define FDIV 26
 
-#define ARG 0
-#define CONST 1
 
 
 #endif // EXEC_H

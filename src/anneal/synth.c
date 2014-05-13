@@ -39,8 +39,9 @@ void rand_prog(prog_t *prog) {
   }
 
   for (i = 0; i < SZ; i++) {
-    prog->params[i*2] = rand() % (i + NARGS + CONSTS);
-    prog->params[i*2+1] = rand() % (i + NARGS + CONSTS);
+    prog->params[i*3] = rand() % (i + NARGS + CONSTS);
+    prog->params[i*3+1] = rand() % (i + NARGS + CONSTS);
+    prog->params[i*3+2] = rand() % (i + NARGS + CONSTS);
   }
 }
 
@@ -66,11 +67,15 @@ void mutate(prog_t *b) {
 
   for (i = 0; i < SZ; i++) {
     if (should_mutate()) {
-      b->params[i*2] = rand() % (i + NARGS + CONSTS);
+      b->params[i*3] = rand() % (i + NARGS + CONSTS);
     }
 
     if (should_mutate()) {
-      b->params[i*2+1] = rand() % (i + NARGS + CONSTS);
+      b->params[i*3+1] = rand() % (i + NARGS + CONSTS);
+    }
+
+    if (should_mutate()) {
+      b->params[i*3+2] = rand() % (i + NARGS + CONSTS);
     }
   }
 }
@@ -92,7 +97,7 @@ void print_prog(prog_t *prog) {
 
   printf("params={");
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ*3; i++) {
     if (i != 0) {
       printf(", ");
     }

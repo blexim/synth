@@ -40,8 +40,9 @@ void rand_prog(prog_t *prog) {
 
   for (i = 0; i < SZ; i++) {
     prog->ops[i] = rand() % (MAXOPCODE + 1);
-    prog->params[i*2] = rand() % (i + NARGS + CONSTS);
-    prog->params[(i*2)+1] = rand() % (i + NARGS + CONSTS);
+    prog->params[i*3] = rand() % (i + NARGS + CONSTS);
+    prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
+    prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
   }
 
   for (i = 0; i < CONSTS; i++) {
@@ -62,11 +63,15 @@ void mutate(prog_t *b) {
     }
 
     if (should_mutate()) {
-      b->params[i*2] = rand() % (i + NARGS + CONSTS);
+      b->params[i*3] = rand() % (i + NARGS + CONSTS);
     }
 
     if (should_mutate()) {
-      b->params[(i*2)+1] = rand() % (i + NARGS + CONSTS);
+      b->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
+    }
+
+    if (should_mutate()) {
+      b->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
     }
   }
 
@@ -83,12 +88,14 @@ void crossover(prog_t *a, prog_t *b, prog_t *c) {
   for (i = 0; i < SZ; i++) {
     if (rand() & 1) {
       c->ops[i] = a->ops[i];
-      c->params[i*2] = a->params[i*2];
-      c->params[(i*2)+1] = a->params[(i*2)+1];
+      c->params[i*3] = a->params[i*3];
+      c->params[(i*3)+1] = a->params[(i*3)+1];
+      c->params[(i*3)+2] = a->params[(i*3)+2];
     } else {
       c->ops[i] = b->ops[i];
-      c->params[i*2] = b->params[i*2];
-      c->params[(i*2)+1] = b->params[(i*2)+1];
+      c->params[i*3] = b->params[i*3];
+      c->params[(i*3)+1] = b->params[(i*3)+1];
+      c->params[(i*3)+2] = b->params[(i*3)+2];
     }
   }
 
@@ -118,7 +125,7 @@ void print_prog(prog_t *prog) {
 
   printf("params={");
 
-  for (i = 0; i < SZ*2; i++) {
+  for (i = 0; i < SZ*3; i++) {
     if (i != 0) {
       printf(", ");
     }
@@ -183,8 +190,9 @@ int compare_progs(const void *v1, const void *v2, void *arg) {
 
   for (i = 0; i < SZ; i++) {
     compare_op(p1->ops[i], p2->ops[i]);
-    compare_op(p1->params[i*2], p2->params[i*2]);
-    compare_op(p1->params[(i*2)+1], p2->params[(i*2)+1]);
+    compare_op(p1->params[i*3], p2->params[i*3]);
+    compare_op(p1->params[(i*3)+1], p2->params[(i*3)+1]);
+    compare_op(p1->params[(i*3)+2], p2->params[(i*3)+2]);
   }
 
   for (i = 0; i < CONSTS; i++) {

@@ -8,11 +8,12 @@ int wellformed(prog_t *prog) {
 
   for (i = 0; i < SZ; i++) {
     op_t op;
-    param_t p1, p2;
+    param_t p1, p2, p3;
 
     op = prog->ops[i];
-    p1 = prog->params[i*2];
-    p2 = prog->params[i*2+1];
+    p1 = prog->params[i*3];
+    p2 = prog->params[i*3+1];
+    p3 = prog->params[i*3+2];
 
     // Must have a valid opcode.
     if (op > MAXOPCODE) {
@@ -25,6 +26,10 @@ int wellformed(prog_t *prog) {
     }
 
     if (p2 >= i + NARGS + CONSTS) {
+      return 0;
+    }
+
+    if (p3 >= i + NARGS + CONSTS) {
       return 0;
     }
   }

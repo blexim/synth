@@ -7,9 +7,9 @@ volatile int execok;
 
 void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;
-  param_t a1, a2;
-  word_t p1, p2, res;
-  sword_t i1, i2;
+  param_t a1, a2, a3;
+  word_t p1, p2, p3, res;
+  sword_t i1, i2, i3;
   word_t A[SZ + NARGS + CONSTS];
 
 #ifdef FLOAT
@@ -31,14 +31,17 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
 
   for (i = 0; i < SZ; i++) {
     op = prog->ops[i];
-    a1 = prog->params[2*i];
-    a2 = prog->params[2*i + 1];
+    a1 = prog->params[3*i];
+    a2 = prog->params[3*i + 1];
+    a3 = prog->params[3*i + 2];
 
     p1 = A[a1];
     p2 = A[a2];
+    p3 = A[a3];
 
     i1 = p1;
     i2 = p2;
+    i3 = p3;
 
 #ifdef SEARCH
     i1 <<= (32 - WIDTH);
@@ -167,6 +170,9 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       break;
     case MAX:
       res = (p1 > p2) ? p1 : p2;
+      break;
+    case ITE:
+      res = (p1 != 0) ? p2 : p3;
       break;
 #ifdef FLOAT
     case FPLUS:
