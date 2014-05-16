@@ -2,7 +2,7 @@ int main() {
   int x = 1;
 
   while (nondet()) {
-    x += 1;
+    x += 2;
   }
 
   assert(x % 2);
