@@ -22,8 +22,8 @@ int check(prog_t *prog, word_t args[5]) {
   x = 0;
   y = 0;
 
-  if (CONSTS != 1 || prog->consts[0] != 10) {
-    return 0;
+  if (CONSTS >= 1) {
+    prog->consts[0] = 10;
   }
 
   if (!checkit(prog, x, y)) {
