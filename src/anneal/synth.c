@@ -22,10 +22,40 @@
 #define SEED time(NULL)
 #endif
 
+#define SAVEFILE "/tmp/annealsynth"
+
 int generation;
 
 double temperature;
 
+void save(prog_t *prog) {
+#ifdef SAVEFILE
+  FILE *f = fopen(SAVEFILE, "wb");
+  fwrite(prog, sizeof(prog_t), 1, f);
+  fclose(f);
+#endif
+}
+
+void load(prog_t *prog) {
+#ifdef SAVEFILE
+  FILE *f = fopen(SAVEFILE, "rb");
+  size_t sz;
+
+  if (f == NULL) {
+    return;
+  }
+
+  fseek(f, 0, SEEK_END);
+  sz = ftell(f);
+  fseek(f, 0, SEEK_SET);
+
+  if (sz == sizeof(prog_t)) {
+    fread(prog, sizeof(prog_t), 1, f);
+  }
+
+  fclose(f);
+#endif
+}
 
 void rand_prog(prog_t *prog) {
   int i;
@@ -131,6 +161,7 @@ int fitness(prog_t *prog) {
 
   if (correct == numtests) {
     printf("Found a program with fitness=%d\n", correct);
+    save(prog);
     print_prog(prog);
     exit(10);
   }
@@ -159,6 +190,7 @@ int main(void) {
   temperature = 1.0;
 
   rand_prog(&best_prog);
+  load(&best_prog);
   best_fitness = fitness(&best_prog);
 
   while (temperature > 0) {

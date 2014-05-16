@@ -30,10 +30,50 @@
 #define SEED time(NULL)
 #endif
 
+#define SAVEFILE "/tmp/geneticsynth"
+
 int generation;
 int correct;
 int numtests;
 
+void save(prog_t *pop) {
+#ifdef SAVEFILE
+  FILE *savefile = fopen(SAVEFILE, "wb");
+  size_t written = 0;
+
+  while (written < POPSIZE) {
+    written += fwrite(&pop[written], sizeof(prog_t), POPSIZE - written, savefile);
+  }
+
+  fclose(savefile);
+#endif // SAVEFILE
+}
+
+void load(prog_t *pop) {
+#ifdef SAVEFILE
+  FILE *savefile = fopen(SAVEFILE, "rb");
+  size_t sz;
+  size_t nread = 0;
+
+  if (savefile == NULL) {
+    return;
+  }
+
+  fseek(savefile, 0, SEEK_END);
+  sz = ftell(savefile);
+  fseek(savefile, 0, SEEK_SET);
+
+  if (sz != POPSIZE * sizeof(prog_t)) {
+    return;
+  }
+
+  while (nread < POPSIZE) {
+    nread += fread(&pop[nread], sizeof(prog_t), POPSIZE - nread, savefile);
+  }
+
+  fclose(savefile);
+#endif
+}
 
 void rand_prog(prog_t *prog) {
   int i;
@@ -156,12 +196,6 @@ int fitness(prog_t *prog) {
 
   tests(prog);
 
-  if (correct == numtests) {
-    printf("Found a program with fitness=%d\n", correct);
-    print_prog(prog);
-    exit(10);
-  }
-
   return correct;
 }
 
@@ -241,6 +275,14 @@ int next_gen(prog_t *previous, prog_t *next) {
   for (i = 0; i < nprogs; i++) {
     int idx = indices[i];
     fitnesses[idx] = fitness(&previous[idx]);
+
+    if (fitnesses[idx] == numtests) {
+      printf("Found a program with fitness=%d\n", correct);
+      save(previous);
+
+      print_prog(&previous[idx]);
+      exit(10);
+    }
   }
 
   qsort(indices, nprogs, sizeof(int), compare_fitness);
@@ -326,6 +368,8 @@ int main(void) {
     rand_prog(&pop_a[i]);
     //rand_prog(&pop_b[i]);
   }
+
+  load(pop_a);
 
   for (generation = 0;
        GEN_LIM == 0 || generation < GEN_LIM;
