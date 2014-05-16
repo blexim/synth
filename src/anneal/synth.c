@@ -50,7 +50,7 @@ void load(prog_t *prog) {
   fseek(f, 0, SEEK_SET);
 
   if (sz == sizeof(prog_t)) {
-    fread(prog, sizeof(prog_t), 1, f);
+    while (fread(prog, sizeof(prog_t), 1, f) == 0);
   }
 
   fclose(f);
@@ -184,7 +184,7 @@ int main(void) {
   int i;
   int seed = SEED;
 
-  printf("Using random seed: %d\n", seed);
+  printf("Annealing using random seed: %d\n", seed);
   srand(seed);
 
   temperature = 1.0;

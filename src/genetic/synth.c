@@ -361,7 +361,7 @@ int main(void) {
   int bestfitness = 0;
   int currfitness;
 
-  printf("Using random seed: %d\n", seed);
+  printf("Genetic programming using random seed: %d\n", seed);
   srand(seed);
 
   for (i = 0; i < POPSIZE; i++) {
