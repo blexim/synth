@@ -8,23 +8,17 @@ word_t checkit(prog_t *prog, word_t x, word_t y) {
   args[0] = x;
   args[1] = y;
   args[2] = 0;
-  args[3] = 0;
-  args[4] = 0;
 
   exec(prog, args, res);
 
   return res[0] != 0;
 }
 
-int check(prog_t *prog, word_t args[5]) {
+int check(prog_t *prog, word_t args[3]) {
   word_t x, y, taken;
 
   x = 0;
   y = 0;
-
-  if (CONSTS >= 1) {
-    prog->consts[0] = 10;
-  }
 
   if (!checkit(prog, x, y)) {
     return 0;
@@ -35,6 +29,7 @@ int check(prog_t *prog, word_t args[5]) {
   taken = args[2];
 
   if (checkit(prog, x, y) &&
+      x < 50 &&
       y < 50) {
     if (taken) {
       x++;
@@ -51,8 +46,8 @@ int check(prog_t *prog, word_t args[5]) {
     }
   }
 
-  x = args[3];
-  y = args[4];
+  x = args[0];
+  y = args[1];
 
   if (x < 50 && y >= 50 && checkit(prog, x, y)) {
     if (x > y || y > 10*x) {
