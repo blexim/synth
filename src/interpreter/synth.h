@@ -29,6 +29,9 @@
  #define PWIDTH WIDTH
 #endif
 
+// Use this one to use the same instruction set as Brahma
+//#define MAXOPCODE 17
+
 #define MAXOPCODE 22
 
 // Use this one to enable floating point
