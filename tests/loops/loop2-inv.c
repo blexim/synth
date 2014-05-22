@@ -1,7 +1,7 @@
 #include "synth.h"
 
-word_t checkit(prog_t *prog, word_t i, word_t j, word_t a, word_t b, word_t flag) {
-  word_t args[9];
+word_t inv(prog_t *prog, word_t i, word_t j, word_t a, word_t b, word_t flag) {
+  word_t args[5];
   word_t res[1];
 
   args[0] = i;
@@ -9,20 +9,20 @@ word_t checkit(prog_t *prog, word_t i, word_t j, word_t a, word_t b, word_t flag
   args[2] = a;
   args[3] = b;
   args[4] = flag;
-  args[5] = 0;
-  args[6] = 0;
-  args[7] = 0;
-  args[8] = 0;
 
   exec(prog, args, res);
 
   return res[0] != 0;
 }
 
-int check(prog_t *prog, word_t args[9]) {
+int check(prog_t *prog, word_t args[5]) {
   word_t i, j, a, b, flag;
 
   flag = args[4];
+
+  if (CONSTS >= 1) {
+    prog->consts[0] = 1;
+  }
 
   a = 0;
   b = 0;
@@ -31,7 +31,7 @@ int check(prog_t *prog, word_t args[9]) {
   if (flag) i = 0;
   else      i = 1;
 
-  if (!checkit(prog, i, j, a, b, flag)) {
+  if (!inv(prog, i, j, a, b, flag)) {
     return 0;
   }
 
@@ -40,10 +40,7 @@ int check(prog_t *prog, word_t args[9]) {
   a = args[2];
   b = args[3];
 
-  if (!checkit(prog, i, j, a, b, flag)) {
-    return 1;
-  }
-
+  if (inv(prog, i, j, a, b, flag)) {
     a++;
     b += (j - i);
     i += 2;
@@ -51,16 +48,17 @@ int check(prog_t *prog, word_t args[9]) {
     if (i % 2 == 0) j += 2;
     else            j++;
 
-  if (!checkit(prog, i, j, a, b, flag)) {
-    return 0;
+    if (!inv(prog, i, j, a, b, flag)) {
+      return 0;
+    }
   }
 
-  i = args[5];
-  j = args[6];
-  a = args[7];
-  b = args[8];
+  i = args[0];
+  j = args[1];
+  a = args[2];
+  b = args[3];
 
-  if (checkit(prog, i, j, a, b, flag)) {
+  if (inv(prog, i, j, a, b, flag)) {
     if (flag) {
       if (a != b) {
         return 0;

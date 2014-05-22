@@ -1,5 +1,6 @@
 int main(void) {
   int i, j, a, b, flag;
+  unsigned int N = nondet();
 
   a = 0;
   b = 0;
@@ -8,7 +9,7 @@ int main(void) {
   if (flag) i = 0;
   else      i = 1;
 
-  while (nondet) {
+  while (N--) {
     a++;
     b += (j - i);
     i += 2;
