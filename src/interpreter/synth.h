@@ -86,14 +86,14 @@ typedef struct solution {
   word_t evars[NEVARS];
 } solution_t;
 
-extern prog_t prog;
+extern solution_t solution;
 extern volatile int execok;
 
 void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]);
-void test(prog_t *prog, word_t args[NARGS]);
 
-int check(prog_t *prog, word_t args[NARGS]);
-void tests(prog_t *prog);
+void test(solution_t *solution, word_t args[NARGS]);
+int check(solution_t *solution, word_t args[NARGS]);
+void tests(solution_t *solution);
 
 void hint(prog_t *prog);
 int exclude(prog_t *prog);

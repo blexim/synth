@@ -1,9 +1,9 @@
 #include "synth.h"
 
-extern prog_t prog;
+extern solution_t solution;
 
 unsigned int main(void) {
   word_t cex_args[NARGS];
 
-  assert(check(&prog, cex_args));
+  assert(check(&solution, cex_args));
 }

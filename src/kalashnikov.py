@@ -36,6 +36,8 @@ args.argparser.add_argument("--args", "-a", default=1, type=int,
     help="number of arguments to function")
 args.argparser.add_argument("--res", "-r", default=1, type=int,
     help="number of returns")
+args.argparser.add_argument("--evars", "-V", default=0, type=int,
+    help="number of existentially quantified arguments")
 
 args.argparser.add_argument("--float", "-f", default=False, action="store_const",
     const=True,
@@ -94,7 +96,7 @@ def synth(tests, exclusions, width, codelen, nconsts):
   bmc.write(r"""
 #include "synth.h"
 
-void tests(prog_t *prog) {
+void tests(solution_t *solution) {
   word_t input[NARGS];
 """)
 
@@ -103,7 +105,7 @@ void tests(prog_t *prog) {
     for i in xrange(len(x)):
       bmc.write("  input[%d] = %d;\n" % (i, x[i]))
 
-    bmc.write("  test(prog, input);\n\n")
+    bmc.write("  test(solution, input);\n\n")
 
   # Now we're going to list each of the programs we
   # already know are wrong...
@@ -158,10 +160,13 @@ def verif(prog, checker, width, codelen):
   bmc.write(r"""
 #include "synth.h"
 
-prog_t prog = {
-  { %s },
-  { %s },
-  { %s },
+solution_t solution = {
+  {
+    { %s },
+    { %s },
+    { %s },
+  },
+  { }
 };
 """ % (", ".join(str(o) for o in prog.ops),
        ", ".join(str(p) for p in prog.params),
