@@ -89,6 +89,10 @@ void rand_solution(solution_t *solution) {
   for (i = 0; i < CONSTS; i++) {
     prog->consts[i] = rand() & WORDMASK;
   }
+
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i] = rand() & WORDMASK;
+  }
 }
 
 int should_mutate() {
@@ -122,6 +126,12 @@ void mutate(solution_t *solution) {
       b->consts[i] = rand() & WORDMASK;
     }
   }
+
+  for (i = 0; i < NEVARS; i++) {
+    if (should_mutate()) {
+      solution->evars[i] = rand() & WORDMASK;
+    }
+  }
 }
 
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
@@ -149,6 +159,14 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
       c->consts[i] = a->consts[i];
     } else {
       c->consts[i] = b->consts[i];
+    }
+  }
+
+  for (i = 0; i < NEVARS; i++) {
+    if (rand() & 1) {
+      sol_c->evars[i] = sol_a->evars[i];
+    } else {
+      sol_c->evars[i] = sol_b->evars[i];
     }
   }
 }
@@ -189,6 +207,18 @@ void print_solution(solution_t *solution) {
     }
 
     printf("%d", prog->consts[i]);
+  }
+
+  printf("}\n");
+
+  printf("evars={");
+
+  for (i = 0; i < NEVARS; i++) {
+    if (i != 0) {
+      printf(", ");
+    }
+
+    printf("%d", solution->evars[i]);
   }
 
   printf("}\n");
