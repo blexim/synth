@@ -110,10 +110,11 @@ void tests(solution_t *solution) {
   # Now we're going to list each of the programs we
   # already know are wrong...
 
-  for prog in exclusions:
-    ops = prog.ops
-    parms = prog.params
-    consts = prog.consts
+  for soln in exclusions:
+    ops = soln.ops
+    parms = soln.params
+    consts = soln.consts
+    evars = soln.evars
 
     bmc.write("  __CPROVER_assume(!(")
 
@@ -121,13 +122,17 @@ void tests(solution_t *solution) {
       if i != 0:
         bmc.write(" && ")
 
-      bmc.write("prog->ops[%d] == %d " % (i, ops[i]))
-      bmc.write("&& prog->params[%d] == %d && prog->params[%d] == %d && prog->params[%d] == %d" %
+      bmc.write("soln->prog.ops[%d] == %d " % (i, ops[i]))
+      bmc.write("&& soln->prog.params[%d] == %d && soln->prog.params[%d] == %d && soln->prog.params[%d] == %d" %
           (3*i, parms[3*i], 3*i+1, parms[3*i+1], 3*i+1, parms[3*i+2]))
 
     for i in xrange(len(consts)):
-      bmc.write("&& prog->consts[%d] == %d" %
+      bmc.write("&& soln->prog.consts[%d] == %d" %
           (i, consts[i]))
+
+    for i in xrange(len(eavrs)):
+      bmc.write("&& soln->evars[%d] == %d" %
+          (i, evars[i]))
 
     bmc.write("));\n")
 
