@@ -63,7 +63,7 @@ int main(void) {
   do {
     execok = 1;
 
-    if (!check(&prog, args) || !execok) {
+    if (!check(&solution, args) || !execok) {
       print_args(args);
       return 10;
     }

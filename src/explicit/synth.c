@@ -109,7 +109,9 @@ void print_prog(prog_t *prog) {
 int ok;
 int print = 0;
 
-void test(prog_t *prog, word_t args[NARGS]) {
+void test(solution_t *solution, word_t args[NARGS]) {
+  prog_t *prog = &solution->prog;
+
   if (print) {
     int i;
     int x;
@@ -133,7 +135,7 @@ void test(prog_t *prog, word_t args[NARGS]) {
     printf("\n");
   }
 
-  int valid = check(prog, args);
+  int valid = check(solution, args);
 
   if (!execok) {
     ok = 0;
@@ -146,28 +148,29 @@ void test(prog_t *prog, word_t args[NARGS]) {
 }
 
 int main(void) {
-  prog_t prog;
+  solution_t solution;
+  prog_t *prog = &solution.prog;
 
-  init_prog(&prog);
+  init_prog(prog);
 
   do {
-    if (!wellformed(&prog) || exclude(&prog)) {
+    if (!wellformed(prog) || exclude(prog)) {
       continue;
     }
 
     ok = 1;
-    tests(&prog);
+    tests(&solution);
 
     if (ok) {
 #ifdef DEBUG
       print = 1;
-      tests(&prog);
+      tests(&solution);
 #endif
 
-      print_prog(&prog);
+      print_prog(prog);
       return 10;
     }
-  } while (next_prog(&prog));
+  } while (next_prog(prog));
 
   return 0;
 }
