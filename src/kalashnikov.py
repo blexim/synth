@@ -122,16 +122,16 @@ void tests(solution_t *solution) {
       if i != 0:
         bmc.write(" && ")
 
-      bmc.write("soln->prog.ops[%d] == %d " % (i, ops[i]))
-      bmc.write("&& soln->prog.params[%d] == %d && soln->prog.params[%d] == %d && soln->prog.params[%d] == %d" %
+      bmc.write("solution->prog.ops[%d] == %d " % (i, ops[i]))
+      bmc.write("&& solution->prog.params[%d] == %d && solution->prog.params[%d] == %d && solution->prog.params[%d] == %d" %
           (3*i, parms[3*i], 3*i+1, parms[3*i+1], 3*i+1, parms[3*i+2]))
 
     for i in xrange(len(consts)):
-      bmc.write("&& soln->prog.consts[%d] == %d" %
+      bmc.write("&& solution->prog.consts[%d] == %d" %
           (i, consts[i]))
 
     for i in xrange(len(evars)):
-      bmc.write("&& soln->evars[%d] == %d" %
+      bmc.write("&& solution->evars[%d] == %d" %
           (i, evars[i]))
 
     bmc.write("));\n")
