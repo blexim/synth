@@ -36,20 +36,20 @@ int generation;
 int correct;
 int numtests;
 
-void save(prog_t *pop) {
+void save(solution_t *pop) {
 #ifdef SAVEFILE
   FILE *savefile = fopen(SAVEFILE, "wb");
   size_t written = 0;
 
   while (written < POPSIZE) {
-    written += fwrite(&pop[written], sizeof(prog_t), POPSIZE - written, savefile);
+    written += fwrite(&pop[written], sizeof(solution_t), POPSIZE - written, savefile);
   }
 
   fclose(savefile);
 #endif // SAVEFILE
 }
 
-void load(prog_t *pop) {
+void load(solution_t *pop) {
 #ifdef SAVEFILE
   FILE *savefile = fopen(SAVEFILE, "rb");
   size_t sz;
@@ -63,19 +63,20 @@ void load(prog_t *pop) {
   sz = ftell(savefile);
   fseek(savefile, 0, SEEK_SET);
 
-  if (sz != POPSIZE * sizeof(prog_t)) {
+  if (sz != POPSIZE * sizeof(solution_t)) {
     return;
   }
 
   while (nread < POPSIZE) {
-    nread += fread(&pop[nread], sizeof(prog_t), POPSIZE - nread, savefile);
+    nread += fread(&pop[nread], sizeof(solution_t), POPSIZE - nread, savefile);
   }
 
   fclose(savefile);
 #endif
 }
 
-void rand_prog(prog_t *prog) {
+void rand_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
 
   for (i = 0; i < SZ; i++) {
@@ -94,7 +95,8 @@ int should_mutate() {
   return (rand() < (RAND_MAX * MUTATION_PROB));
 }
 
-void mutate(prog_t *b) {
+void mutate(solution_t *solution) {
+  prog_t *b = &solution->prog;
   int i;
 
   for (i = 0; i < SZ; i++) {
@@ -122,7 +124,10 @@ void mutate(prog_t *b) {
   }
 }
 
-void crossover(prog_t *a, prog_t *b, prog_t *c) {
+void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
+  prog_t *a = &sol_a->prog;
+  prog_t *b = &sol_b->prog;
+  prog_t *c = &sol_c->prog;
   int i;
 
   for (i = 0; i < SZ; i++) {
@@ -148,7 +153,8 @@ void crossover(prog_t *a, prog_t *b, prog_t *c) {
   }
 }
 
-void print_prog(prog_t *prog) {
+void print_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
 
   printf("ops={");
@@ -190,11 +196,11 @@ void print_prog(prog_t *prog) {
 
 int fitnesses[POPSIZE];
 
-int fitness(prog_t *prog) {
+int fitness(solution_t *solution) {
   correct = 0;
   numtests = 0;
 
-  tests(prog);
+  tests(solution);
 
   return correct;
 }
@@ -215,11 +221,11 @@ int compare_fitness(const void *v1, const void *v2) {
 } while(0)
 
 int compare_progs(const void *v1, const void *v2, void *arg) {
-  prog_t *progs = (prog_t *) arg;
+  solution_t *solutions = (solution_t *) arg;
   int *i1 = (int *) v1;
   int *i2 = (int *) v2;
-  prog_t *p1 = &progs[*i1];
-  prog_t *p2 = &progs[*i2];
+  prog_t *p1 = &solutions[*i1].prog;
+  prog_t *p2 = &solutions[*i2].prog;
   int i;
 
   for (i = 0; i < SZ; i++) {
@@ -236,19 +242,19 @@ int compare_progs(const void *v1, const void *v2, void *arg) {
   return 0;
 }
 
-int dedup(prog_t *progs, int *indices) {
+int dedup(solution_t *solutions, int *indices) {
   int i, ret, last;
   int sorted[POPSIZE];
 
   memcpy(sorted, indices, POPSIZE*sizeof(int));
-  qsort_r(sorted, POPSIZE, sizeof(int), compare_progs, progs);
+  qsort_r(sorted, POPSIZE, sizeof(int), compare_progs, solutions);
 
   indices[0] = sorted[0];
   last = sorted[0];
   ret = 1;
 
   for (i = 1; i < POPSIZE; i++) {
-    if (compare_progs(&last, &sorted[i], progs) != 0) {
+    if (compare_progs(&last, &sorted[i], solutions) != 0) {
       // This is a program we haven't seen before.  Save it.
       indices[ret++] = sorted[i];
       last = sorted[i];
@@ -258,7 +264,7 @@ int dedup(prog_t *progs, int *indices) {
   return ret;
 }
 
-int next_gen(prog_t *previous, prog_t *next) {
+int next_gen(solution_t *previous, solution_t *next) {
   int indices[POPSIZE];
   int i, j;
   int idx;
@@ -280,7 +286,7 @@ int next_gen(prog_t *previous, prog_t *next) {
       printf("Found a program with fitness=%d\n", correct);
       save(previous);
 
-      print_prog(&previous[idx]);
+      print_solution(&previous[idx]);
       exit(10);
     }
   }
@@ -307,7 +313,7 @@ int next_gen(prog_t *previous, prog_t *next) {
     idx = indices[nprogs - keep - 1];
     prog_t *p = &previous[idx];
 
-    memcpy(&next[j], p, sizeof(prog_t));
+    memcpy(&next[j], p, sizeof(solution_t));
     j++;
   }
 
@@ -319,7 +325,7 @@ int next_gen(prog_t *previous, prog_t *next) {
   for (kill = 0;
        kill < KILLLIM && fitnesses[indices[kill]] < cutoff;
        kill++) {
-    rand_prog(&next[j]);
+    rand_solution(&next[j]);
     j++;
   }
 
@@ -332,11 +338,11 @@ int next_gen(prog_t *previous, prog_t *next) {
   while (j < POPSIZE) {
     idx = kill + (rand() % (nprogs - kill));
     idx = indices[idx];
-    prog_t *a = &previous[idx];
+    solution_t *a = &previous[idx];
 
     idx = kill + (rand() % (nprogs - kill));
     idx = indices[idx];
-    prog_t *b = &previous[idx];
+    solution_t *b = &previous[idx];
 
     crossover(a, b, &next[j]);
     mutate(&next[j]);
@@ -346,16 +352,16 @@ int next_gen(prog_t *previous, prog_t *next) {
   return maxfit;
 }
 
-void test(prog_t *prog, word_t args[NARGS]) {
+void test(solution_t *solution, word_t args[NARGS]) {
   numtests++;
 
-  if(check(prog, args) && execok) {
+  if(check(solution, args) && execok) {
     correct++;
   }
 }
 
 int main(void) {
-  prog_t pop_a[POPSIZE], pop_b[POPSIZE];
+  solution_t pop_a[POPSIZE], pop_b[POPSIZE];
   int i;
   int seed = SEED;
   int bestfitness = 0;
@@ -365,7 +371,7 @@ int main(void) {
   srand(seed);
 
   for (i = 0; i < POPSIZE; i++) {
-    rand_prog(&pop_a[i]);
+    rand_solution(&pop_a[i]);
     //rand_prog(&pop_b[i]);
   }
 
