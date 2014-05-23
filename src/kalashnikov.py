@@ -130,7 +130,7 @@ void tests(solution_t *solution) {
       bmc.write("&& soln->prog.consts[%d] == %d" %
           (i, consts[i]))
 
-    for i in xrange(len(eavrs)):
+    for i in xrange(len(evars)):
       bmc.write("&& soln->evars[%d] == %d" %
           (i, evars[i]))
 
