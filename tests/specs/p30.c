@@ -14,4 +14,6 @@ int check(solution_t *solution, word_t args[1]) {
   if (res[0] != args[0]) {
     return 0;
   }
+
+  return 1;
 }
