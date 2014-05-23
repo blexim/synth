@@ -16,6 +16,10 @@
  #define NARGS 1
 #endif
 
+#ifndef NEVARS
+ #define NEVARS 0
+#endif
+
 #ifndef NRES
  #define NRES 1
 #endif
@@ -65,6 +69,11 @@
   } while(0)
 #endif
 
+typedef union fi {
+  word_t x;
+  fword_t f;
+} fi_t;
+
 
 typedef struct prog {
   op_t ops[SZ];
@@ -72,10 +81,10 @@ typedef struct prog {
   word_t consts[CONSTS];
 } prog_t;
 
-typedef union fi {
-  word_t x;
-  fword_t f;
-} fi_t;
+typedef struct solution {
+  prog_t prog;
+  word_t evars[NEVARS];
+} solution_t;
 
 extern prog_t prog;
 extern volatile int execok;
