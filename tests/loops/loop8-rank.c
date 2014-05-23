@@ -2,7 +2,7 @@
 
 #define WORDMASK ((1 << WIDTH) - 1)
 
-word_t rank(prog_t *prog, word_t x, word_t y) {
+word_t rank(solution_t *solution, word_t x, word_t y) {
   word_t args[5];
   word_t res[1];
 
@@ -12,12 +12,12 @@ word_t rank(prog_t *prog, word_t x, word_t y) {
   args[3] = 0;
   args[4] = 0;
 
-  exec(prog, args, res);
+  exec(&solution->prog, args, res);
 
   return res[0];
 }
 
-int check(prog_t *prog, word_t args[5]) {
+int check(solution_t *solution, word_t args[5]) {
   int a, b, x, y, x_, y_, taken;
 
   a = args[0];
@@ -39,11 +39,11 @@ int check(prog_t *prog, word_t args[5]) {
       y_--;
     }
 
-    if (rank(prog, x, y) <= 0) {
+    if (rank(solution, x, y) <= 0) {
       return 0;
     }
 
-    if (rank(prog, x, y) <= rank(prog, x_, y_)) {
+    if (rank(solution, x, y) <= rank(solution, x_, y_)) {
       return 0;
     }
   }

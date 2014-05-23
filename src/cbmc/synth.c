@@ -1,19 +1,19 @@
 #include "synth.h"
-void test(prog_t *prog, word_t args[NARGS]) {
-  __CPROVER_assume(check(prog, args));
+void test(solution_t *solution, word_t args[NARGS]) {
+  __CPROVER_assume(check(solution, args));
 }
 
 int main(void) {
-  prog_t prog;
+  solution_t solution;
 
 #ifdef HINT
-  hint(&prog);
+  hint(&solution.prog);
 #endif
 
-  __CPROVER_assume(wellformed(&prog));
-  __CPROVER_assume(!exclude(&prog));
+  __CPROVER_assume(wellformed(&solution.prog));
+  __CPROVER_assume(!exclude(&solution.prog));
 
-  tests(&prog);
+  tests(&solution);
 
   assert(0);
 }

@@ -36,6 +36,8 @@ args.argparser.add_argument("--args", "-a", default=1, type=int,
     help="number of arguments to function")
 args.argparser.add_argument("--res", "-r", default=1, type=int,
     help="number of returns")
+args.argparser.add_argument("--evars", "-V", default=0, type=int,
+    help="number of existentially quantified arguments")
 
 args.argparser.add_argument("--float", "-f", default=False, action="store_const",
     const=True,
@@ -94,7 +96,7 @@ def synth(tests, exclusions, width, codelen, nconsts):
   bmc.write(r"""
 #include "synth.h"
 
-void tests(prog_t *prog) {
+void tests(solution_t *solution) {
   word_t input[NARGS];
 """)
 
@@ -103,15 +105,16 @@ void tests(prog_t *prog) {
     for i in xrange(len(x)):
       bmc.write("  input[%d] = %d;\n" % (i, x[i]))
 
-    bmc.write("  test(prog, input);\n\n")
+    bmc.write("  test(solution, input);\n\n")
 
   # Now we're going to list each of the programs we
   # already know are wrong...
 
-  for prog in exclusions:
-    ops = prog.ops
-    parms = prog.params
-    consts = prog.consts
+  for soln in exclusions:
+    ops = soln.ops
+    parms = soln.params
+    consts = soln.consts
+    evars = soln.evars
 
     bmc.write("  __CPROVER_assume(!(")
 
@@ -119,13 +122,17 @@ void tests(prog_t *prog) {
       if i != 0:
         bmc.write(" && ")
 
-      bmc.write("prog->ops[%d] == %d " % (i, ops[i]))
-      bmc.write("&& prog->params[%d] == %d && prog->params[%d] == %d && prog->params[%d] == %d" %
+      bmc.write("solution->prog.ops[%d] == %d " % (i, ops[i]))
+      bmc.write("&& solution->prog.params[%d] == %d && solution->prog.params[%d] == %d && solution->prog.params[%d] == %d" %
           (3*i, parms[3*i], 3*i+1, parms[3*i+1], 3*i+1, parms[3*i+2]))
 
     for i in xrange(len(consts)):
-      bmc.write("&& prog->consts[%d] == %d" %
+      bmc.write("&& solution->prog.consts[%d] == %d" %
           (i, consts[i]))
+
+    for i in xrange(len(evars)):
+      bmc.write("&& solution->evars[%d] == %d" %
+          (i, evars[i]))
 
     bmc.write("));\n")
 
@@ -158,14 +165,18 @@ def verif(prog, checker, width, codelen):
   bmc.write(r"""
 #include "synth.h"
 
-prog_t prog = {
-  { %s },
-  { %s },
-  { %s },
+solution_t solution = {
+  {
+    { %s },
+    { %s },
+    { %s },
+  },
+  { %s }
 };
 """ % (", ".join(str(o) for o in prog.ops),
        ", ".join(str(p) for p in prog.params),
-       ", ".join(str(c) for c in prog.consts)))
+       ", ".join(str(c) for c in prog.consts),
+       ", ".join(str(e) for e in prog.evars)))
 
   try:
     (retcode, output) = bmc.run()
@@ -406,7 +417,7 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
     expansions.append(expanded)
 
   for newconsts in itertools.product(*expansions):
-    newprog = Prog(prog.ops, prog.params, list(newconsts))
+    newprog = Prog(prog.ops, prog.params, list(newconsts), prog.evars)
 
     if args.args.verbose > 1:
       print "Trying %s" % (str(newprog))

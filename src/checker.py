@@ -66,6 +66,7 @@ class Checker(object):
   def __init__(self, sz, width, consts, verif=False):
     nargs = args.args.args
     nres = args.args.res
+    nevars = args.args.evars
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
     ewidth = max(width/4, 1)
@@ -82,6 +83,7 @@ class Checker(object):
         "-DWIDTH=%d" % width,
         "-DNARGS=%d" % nargs,
         "-DNRES=%d" % nres,
+        "-DNEVARS=%d" % nevars,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
         os.path.join(args.args.interpreter, "exec.c"),

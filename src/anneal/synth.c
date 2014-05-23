@@ -28,15 +28,15 @@ int generation;
 
 double temperature;
 
-void save(prog_t *prog) {
+void save(solution_t *solution) {
 #ifdef SAVEFILE
   FILE *f = fopen(SAVEFILE, "wb");
-  fwrite(prog, sizeof(prog_t), 1, f);
+  fwrite(solution, sizeof(solution_t), 1, f);
   fclose(f);
 #endif
 }
 
-void load(prog_t *prog) {
+void load(solution_t *solution) {
 #ifdef SAVEFILE
   FILE *f = fopen(SAVEFILE, "rb");
   size_t sz;
@@ -49,15 +49,16 @@ void load(prog_t *prog) {
   sz = ftell(f);
   fseek(f, 0, SEEK_SET);
 
-  if (sz == sizeof(prog_t)) {
-    while (fread(prog, sizeof(prog_t), 1, f) == 0);
+  if (sz == sizeof(solution_t)) {
+    while (fread(solution, sizeof(solution_t), 1, f) == 0);
   }
 
   fclose(f);
 #endif
 }
 
-void rand_prog(prog_t *prog) {
+void rand_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
 
   for (i = 0; i < SZ; i++) {
@@ -80,7 +81,8 @@ int should_mutate() {
   return (r / RAND_MAX) <= temperature;
 }
 
-void mutate(prog_t *b) {
+void mutate(solution_t *solution) {
+  prog_t *b = &solution->prog;
   int i;
 
   for (i = 0; i < SZ; i++) {
@@ -108,9 +110,16 @@ void mutate(prog_t *b) {
       b->params[i*3+2] = rand() % (i + NARGS + CONSTS);
     }
   }
+
+  for (i = 0; i < NEVARS; i++) {
+    if (should_mutate()) {
+      solution->evars[i] = rand() & WORDMASK;
+    }
+  }
 }
 
-void print_prog(prog_t *prog) {
+void print_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
 
   printf("ops={");
@@ -148,21 +157,33 @@ void print_prog(prog_t *prog) {
   }
 
   printf("}\n");
+
+  printf("evars={");
+
+  for (i = 0; i < NEVARS; i++) {
+    if (i != 0) {
+      printf(", ");
+    }
+
+    printf("%d", solution->evars[i]);
+  }
+
+  printf("}\n");
 }
 
 int numtests;
 int correct;
 
-int fitness(prog_t *prog) {
+int fitness(solution_t *solution) {
   correct = 0;
   numtests = 0;
 
-  tests(prog);
+  tests(solution);
 
   if (correct == numtests) {
     printf("Found a program with fitness=%d\n", correct);
-    save(prog);
-    print_prog(prog);
+    save(solution);
+    print_solution(solution);
     exit(10);
   }
 
@@ -170,16 +191,16 @@ int fitness(prog_t *prog) {
 }
 
 
-void test(prog_t *prog, word_t args[NARGS]) {
+void test(solution_t *solution, word_t args[NARGS]) {
   numtests++;
 
-  if(check(prog, args) && execok) {
+  if(check(solution, args) && execok) {
     correct++;
   }
 }
 
 int main(void) {
-  prog_t p, best_prog;
+  solution_t solution, best_solution;
   int best_fitness = 0;
   int i;
   int seed = SEED;
@@ -189,9 +210,9 @@ int main(void) {
 
   temperature = 1.0;
 
-  rand_prog(&best_prog);
-  load(&best_prog);
-  best_fitness = fitness(&best_prog);
+  rand_solution(&best_solution);
+  load(&best_solution);
+  best_fitness = fitness(&best_solution);
 
   while (temperature > 0) {
     generation++;
@@ -210,16 +231,16 @@ int main(void) {
       printf("Temperature: %.04f\n", temperature);
     }
 
-    memcpy(&p, &best_prog, sizeof(prog_t));
-    mutate(&p);
+    memcpy(&solution, &best_solution, sizeof(solution_t));
+    mutate(&solution);
 
-    int new_fitness = fitness(&p);
+    int new_fitness = fitness(&solution);
 
     if (new_fitness > best_fitness) {
       generation = 0;
       printf("New best fitness: %d, target=%d\n", new_fitness, numtests);
       best_fitness = new_fitness;
-      memcpy(&best_prog, &p, sizeof(prog_t));
+      memcpy(&best_solution, &solution, sizeof(solution_t));
     }
   }
 }

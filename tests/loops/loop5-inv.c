@@ -1,6 +1,6 @@
 #include "synth.h"
 
-word_t checkit(prog_t *prog, word_t i, word_t j, word_t x, word_t y) {
+word_t checkit(solution_t *solution, word_t i, word_t j, word_t x, word_t y) {
   word_t args[6];
   word_t res[1];
 
@@ -11,12 +11,12 @@ word_t checkit(prog_t *prog, word_t i, word_t j, word_t x, word_t y) {
   args[4] = 0;
   args[5] = 0;
 
-  exec(prog, args, res);
+  exec(&solution->prog, args, res);
 
   return res[0];
 }
 
-int check(prog_t *prog, word_t args[6]) {
+int check(solution_t *solution, word_t args[6]) {
   int i, j, x, y;
 
   i = args[0];
@@ -25,14 +25,14 @@ int check(prog_t *prog, word_t args[6]) {
   x = i;
   y = j;
 
-  if (!checkit(prog, i, j, x, y)) {
+  if (!checkit(solution, i, j, x, y)) {
     return 0;
   }
 
   x = args[2];
   y = args[3];
 
-  if (!checkit(prog, i, j, x, y)) {
+  if (!checkit(solution, i, j, x, y)) {
     return 1;
   }
 
@@ -43,7 +43,7 @@ int check(prog_t *prog, word_t args[6]) {
   x--;
   y--;
 
-  if (!checkit(prog, i, j, x, y)) {
+  if (!checkit(solution, i, j, x, y)) {
     return 0;
   }
 
@@ -54,7 +54,7 @@ int check(prog_t *prog, word_t args[6]) {
     return 1;
   }
 
-  if (checkit(prog, i, j, x, y)) {
+  if (checkit(solution, i, j, x, y)) {
     if (i == j) {
       if (y != 0) {
         return 0;
