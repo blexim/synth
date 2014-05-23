@@ -1,6 +1,6 @@
 #include "synth.h"
 
-word_t checkit(prog_t *prog, word_t i, word_t j, word_t N) {
+word_t checkit(solution_t *solution, word_t i, word_t j, word_t N) {
   word_t args[4];
   word_t res[1];
 
@@ -9,12 +9,12 @@ word_t checkit(prog_t *prog, word_t i, word_t j, word_t N) {
   args[2] = N;
   args[3] = 0;
 
-  exec(prog, args, res);
+  exec(&solution->prog, args, res);
 
   return res[0];
 }
 
-int check(prog_t *prog, word_t args[4]) {
+int check(solution_t *solution, word_t args[4]) {
   word_t i, j, N;
 
   j = args[1];
@@ -26,13 +26,13 @@ int check(prog_t *prog, word_t args[4]) {
 
   i = 0;
 
-  if (!checkit(prog, i, j, N)) {
+  if (!checkit(solution, i, j, N)) {
     return 0;
   }
 
   i = args[0];
 
-  if (!checkit(prog, i, j, N)) {
+  if (!checkit(solution, i, j, N)) {
     return 1;
   }
 
@@ -42,13 +42,13 @@ int check(prog_t *prog, word_t args[4]) {
 
   i++;
 
-  if (!checkit(prog, i, j, N)) {
+  if (!checkit(solution, i, j, N)) {
     return 0;
   }
 
   i = args[3];
 
-  if (checkit(prog, i, j, N)) {
+  if (checkit(solution, i, j, N)) {
     if (i > N) {
       return 0;
     }
