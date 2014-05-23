@@ -17,8 +17,18 @@
 //
 // Return 0 if the new program is all 0's (i.e. we have
 // wrapped around), otherwise return 1.
-int next_prog(prog_t *prog) {
+int next_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
+
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i]++;
+    solution->evars[i] &= WORDMASK;
+
+    if (solution->evars[i] != 0) {
+      return 1;
+    }
+  }
 
   for (i = 0; i < CONSTS; i++) {
     prog->consts[i]++;
@@ -50,7 +60,8 @@ int next_prog(prog_t *prog) {
   return 0;
 }
 
-void init_prog(prog_t *prog) {
+void init_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
 
   for (i = 0; i < CONSTS; i++) {
@@ -64,9 +75,14 @@ void init_prog(prog_t *prog) {
   for (i = 0; i < SZ*3; i++) {
     prog->params[i] = 0;
   }
+
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i] = 0;
+  }
 }
 
-void print_prog(prog_t *prog) {
+void print_solution(solution_t *solution) {
+  prog_t *prog = &solution->prog;
   int i;
 
   printf("ops={");
@@ -101,6 +117,18 @@ void print_prog(prog_t *prog) {
     }
 
     printf("%d", prog->consts[i]);
+  }
+
+  printf("}\n");
+
+  printf("evars={");
+
+  for (i = 0; i < NEVARS; i++) {
+    if (i != 0) {
+      printf(", ");
+    }
+
+    printf("%d", solution->evars[i]);
   }
 
   printf("}\n");
@@ -151,7 +179,7 @@ int main(void) {
   solution_t solution;
   prog_t *prog = &solution.prog;
 
-  init_prog(prog);
+  init_solution(&solution);
 
   do {
     if (!wellformed(prog) || exclude(prog)) {
@@ -167,10 +195,10 @@ int main(void) {
       tests(&solution);
 #endif
 
-      print_prog(prog);
+      print_solution(&solution);
       return 10;
     }
-  } while (next_prog(prog));
+  } while (next_solution(&solution));
 
   return 0;
 }
