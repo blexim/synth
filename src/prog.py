@@ -122,7 +122,7 @@ class Prog(object):
             (op, p1, p2, p3))
 
     if self.evars:
-      ret = 'Evars: %s\n' % ', '.join(self.evars)
+      ret = 'Evars: %s\n' % ', '.join(str(e) for e in self.evars)
     else:
       ret = ''
 
