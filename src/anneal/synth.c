@@ -110,6 +110,12 @@ void mutate(solution_t *solution) {
       b->params[i*3+2] = rand() % (i + NARGS + CONSTS);
     }
   }
+
+  for (i = 0; i < NEVARS; i++) {
+    if (should_mutate()) {
+      solution->evars[i] = rand() & WORDMASK;
+    }
+  }
 }
 
 void print_solution(solution_t *solution) {
@@ -148,6 +154,18 @@ void print_solution(solution_t *solution) {
     }
 
     printf("%d", prog->consts[i]);
+  }
+
+  printf("}\n");
+
+  printf("evars={");
+
+  for (i = 0; i < NEVARS; i++) {
+    if (i != 0) {
+      printf(", ");
+    }
+
+    printf("%d", solution->evars[i]);
   }
 
   printf("}\n");
