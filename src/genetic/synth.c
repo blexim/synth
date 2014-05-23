@@ -311,7 +311,7 @@ int next_gen(solution_t *previous, solution_t *next) {
        keep < KEEPLIM && fitnesses[indices[nprogs - keep - 1]] == maxfit;
        keep++) {
     idx = indices[nprogs - keep - 1];
-    prog_t *p = &previous[idx];
+    solution_t *p = &previous[idx];
 
     memcpy(&next[j], p, sizeof(solution_t));
     j++;
