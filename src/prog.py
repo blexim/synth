@@ -7,6 +7,7 @@ import args
 opsre = re.compile('ops={(.*?)}')
 parmsre = re.compile('params={(.*?)}')
 constsre = re.compile('consts={(.*?)}')
+evarsre = re.compile('evars={(.*?)}')
 
 binops = {
     0: "+",
@@ -62,17 +63,20 @@ class Prog(object):
   ops = []
   params = []
   consts = []
+  evars = []
 
-  def __init__(self, ops=[], params=[], consts=[]):
+  def __init__(self, ops=[], params=[], consts=[], evars=[]):
     self.ops = ops
     self.params = params
     self.consts = consts
+    self.evars = evars
 
   def parse(self, output):
     for l in output:
       mops = opsre.search(l)
       mparams = parmsre.search(l)
       mconsts = constsre.search(l)
+      mevars = evarsre.search(l)
 
       if mops:
         self.ops = str2ints(mops.group(1))
@@ -82,6 +86,9 @@ class Prog(object):
 
       if mconsts:
         self.consts = str2ints(mconsts.group(1))
+
+      if mevars:
+        self.evars = str2ints(mevars.group(1))
 
   def strarg(self, p):
     if p < len(self.consts):
@@ -114,4 +121,9 @@ class Prog(object):
         raise Exception("Couldn't parse instruction: (%d, %d, %d, %d)" %
             (op, p1, p2, p3))
 
-    return '\n'.join(strinsts)
+    if self.evars:
+      ret = 'Evars: %s\n' % ', '.join(self.evars)
+    else:
+      ret = ''
+
+    return ret + '\n'.join(strinsts)

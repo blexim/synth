@@ -166,11 +166,12 @@ solution_t solution = {
     { %s },
     { %s },
   },
-  { }
+  { %s }
 };
 """ % (", ".join(str(o) for o in prog.ops),
        ", ".join(str(p) for p in prog.params),
-       ", ".join(str(c) for c in prog.consts)))
+       ", ".join(str(c) for c in prog.consts),
+       ", ".join(str(e) for e in prog.evars)))
 
   try:
     (retcode, output) = bmc.run()
