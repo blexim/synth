@@ -1,6 +1,6 @@
 #include "synth.h"
 
-void hint(prog_t prog) {
+void hint(solution_t prog) {
   /*
   __CPROVER_assume(prog.ops[0] == 10);
   __CPROVER_assume(prog.ops[1] == 7);

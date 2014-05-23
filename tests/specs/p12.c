@@ -1,8 +1,8 @@
 #include "synth.h"
 
-int check(prog_t *prog, word_t args[2]) {
+int check(solution_t *solution, word_t args[2]) {
   word_t res[1];
-  exec(prog, args, res);
+  exec(&solution->prog, args, res);
 
   word_t x = args[0];
   word_t y = args[1];
