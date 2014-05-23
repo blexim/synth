@@ -417,7 +417,7 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
     expansions.append(expanded)
 
   for newconsts in itertools.product(*expansions):
-    newprog = Prog(prog.ops, prog.params, list(newconsts))
+    newprog = Prog(prog.ops, prog.params, list(newconsts), prog.evars)
 
     if args.args.verbose > 1:
       print "Trying %s" % (str(newprog))
