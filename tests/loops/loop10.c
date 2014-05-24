@@ -7,5 +7,5 @@ int main() {
     x += 2;
   }
 
-  assert(x % 2);
+  assert(!(x % 2));
 }

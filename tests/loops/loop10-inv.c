@@ -39,7 +39,7 @@ int check(solution_t *solution, word_t args[2]) {
   i = args[1];
 
   if (i <= 0 && inv(solution, x, i)) {
-    if (x % 2) {
+    if (!(x % 2)) {
       return 0;
     }
   }
