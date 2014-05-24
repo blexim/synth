@@ -89,9 +89,7 @@ class Checker(object):
         os.path.join(args.args.interpreter, "exec.c"),
         os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),
-        self.scratchfile.name,
-        args.args.checker
-      ]
+        self.scratchfile.name] + args.args.checker
 
     if args.args.float:
       genericargs.insert(0, "-DFLOAT")

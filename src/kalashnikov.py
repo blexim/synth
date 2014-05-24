@@ -71,7 +71,7 @@ args.argparser.add_argument("--timeout", "-T", default=1800, type=int,
 args.argparser.add_argument("--seed", default=None, type=int,
     help="random seed")
 
-args.argparser.add_argument("checker",
+args.argparser.add_argument("checker", nargs="+",
     help="code to check the function we synthesise")
 
 class TimeoutError(Exception):
