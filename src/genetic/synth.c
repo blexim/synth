@@ -22,6 +22,7 @@
 #define KILLLIM (POPSIZE/4)
 
 #define MUTATION_PROB 0.01
+#define RECOMBINE_PROB 0.1
 
 #define PRINT_GEN 1000
 #define GEN_LIM 0
@@ -99,6 +100,10 @@ int should_mutate() {
   return (rand() < (RAND_MAX * MUTATION_PROB));
 }
 
+int should_recombine() {
+  return (rand() < (RAND_MAX * RECOMBINE_PROB));
+}
+
 void mutate(solution_t *solution) {
   prog_t *b = &solution->prog;
   int i;
@@ -134,40 +139,37 @@ void mutate(solution_t *solution) {
   }
 }
 
+#define recombine() do { \
+  if (should_recombine()) { tmp = a; a = b; b = tmp; \
+    tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; \
+  } \
+} while(0)
+
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
   prog_t *a = &sol_a->prog;
   prog_t *b = &sol_b->prog;
   prog_t *c = &sol_c->prog;
+  prog_t *tmp;
+  solution_t *tmp_sol;
   int i;
 
   for (i = 0; i < SZ; i++) {
-    if (rand() & 1) {
-      c->ops[i] = a->ops[i];
-      c->params[i*3] = a->params[i*3];
-      c->params[(i*3)+1] = a->params[(i*3)+1];
-      c->params[(i*3)+2] = a->params[(i*3)+2];
-    } else {
-      c->ops[i] = b->ops[i];
-      c->params[i*3] = b->params[i*3];
-      c->params[(i*3)+1] = b->params[(i*3)+1];
-      c->params[(i*3)+2] = b->params[(i*3)+2];
-    }
+    recombine();
+
+    c->ops[i] = a->ops[i];
+    c->params[i*3] = a->params[i*3];
+    c->params[(i*3)+1] = a->params[(i*3)+1];
+    c->params[(i*3)+2] = a->params[(i*3)+2];
   }
 
   for (i = 0; i < CONSTS; i++) {
-    if (rand() & 1) {
-      c->consts[i] = a->consts[i];
-    } else {
-      c->consts[i] = b->consts[i];
-    }
+    recombine();
+    c->consts[i] = a->consts[i];
   }
 
   for (i = 0; i < NEVARS; i++) {
-    if (rand() & 1) {
-      sol_c->evars[i] = sol_a->evars[i];
-    } else {
-      sol_c->evars[i] = sol_b->evars[i];
-    }
+    recombine();
+    sol_c->evars[i] = sol_a->evars[i];
   }
 }
 
