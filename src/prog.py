@@ -72,6 +72,11 @@ class Prog(object):
     self.evars = evars
 
   def parse(self, output):
+    self.ops = []
+    self.params = []
+    self.consts = []
+    self.evars = []
+
     for l in output:
       mops = opsre.search(l)
       mparams = parmsre.search(l)
@@ -132,5 +137,6 @@ class Prog(object):
     for i in xrange(len(self.ops)):
       ret += "Program %d:\n" % i
       ret += self.prog2str(self.ops[i], self.params[i], self.consts[i])
+      ret += "\n"
 
     return ret
