@@ -36,10 +36,13 @@
 // Use this one to use the same instruction set as Brahma
 //#define MAXOPCODE 17
 
-#define MAXOPCODE 22
 
-// Use this one to enable floating point
-//#define MAXOPCODE 25
+#ifdef FLOAT
+  // Use this one to enable floating point
+  #define MAXOPCODE 26
+#else
+  #define MAXOPCODE 22
+#endif
 
 // This has to be the smallest integer such that 2**(OPLEN) >= MAXOPCODE
 #define OPLEN 5
