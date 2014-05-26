@@ -16,6 +16,8 @@ args.argparser.add_argument("--z3", default=False,
     help="use Z3 as the backend")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
     type=str, help="path to interpreter")
+args.argparser.add_argument("--lib", default="lib",
+    type=str, help="path to library")
 args.argparser.add_argument("--searcher", default="searcher",
     type=str, help="path to searcher")
 args.argparser.add_argument("--keeptemps", "-k", default=False,
@@ -77,6 +79,7 @@ class Checker(object):
 
     genericargs = [
         "-I%s" % args.args.interpreter,
+        "-I%s" % args.args.lib,
         "-DSZ=%d" % sz,
         "-DMWIDTH=%d" % mwidth,
         "-DWIDTH=%d" % width,
@@ -89,6 +92,7 @@ class Checker(object):
         os.path.join(args.args.interpreter, "exec.c"),
         os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),
+        os.path.join(args.args.lib, "solution.c"),
         self.scratchfile.name] + args.args.checker
 
     if args.args.float:
