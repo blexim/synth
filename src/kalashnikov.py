@@ -161,7 +161,7 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  bmc = Checker(codelen, width, len(prog.consts), True)
+  bmc = Checker(codelen, width, len(prog.consts[0]), True)
 
 
   bmc.write(r"""
