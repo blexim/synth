@@ -42,8 +42,6 @@ args.argparser.add_argument("--nonops", default=False,
 args.argparser.add_argument("--noconsts", default=False,
     action="store_const", const=True,
     help="don't remove const instructions")
-args.argparser.add_argument("--hint", default=None, type=str,
-    help="hint file")
 
 def log2(x):
   i = 0
@@ -128,10 +126,6 @@ class Checker(object):
 
     if args.args.z3:
       self.cbmcargs.append("--z3")
-
-    if args.args.hint:
-      self.cbmcargs.insert(1, "-DHINT")
-      self.cbmcargs.append(args.args.hint)
 
 
     self.write = self.scratchfile.write
