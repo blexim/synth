@@ -26,7 +26,7 @@ int check(solution_t *solution, word_t args[4]) {
     a[1] = y;
     a[2] = 0;
     a[3] = 0;
-    exec(&solution->prog, a, rank1);
+    exec(&solution->progs[0], a, rank1);
 
     if (rank1[0] == 0 || rank1[1] == 0) {
       return 0;
@@ -36,7 +36,7 @@ int check(solution_t *solution, word_t args[4]) {
     b[1] = y_;
     b[2] = 0;
     b[3] = 0;
-    exec(&solution->prog, b, rank2);
+    exec(&solution->progs[0], b, rank2);
 
     if (rank1[0] < rank2[0]) {
       return 0;
