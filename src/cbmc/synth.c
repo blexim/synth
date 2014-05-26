@@ -6,10 +6,6 @@ void test(solution_t *solution, word_t args[NARGS]) {
 int main(void) {
   solution_t solution;
 
-#ifdef HINT
-  hint(&solution.prog);
-#endif
-
   __CPROVER_assume(wellformed(&solution.prog));
   __CPROVER_assume(!exclude(&solution.prog));
 
