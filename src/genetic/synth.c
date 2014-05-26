@@ -314,7 +314,6 @@ int main(void) {
 
   for (i = 0; i < POPSIZE; i++) {
     rand_solution(&pop_a[i]);
-    //rand_prog(&pop_b[i]);
   }
 
   load(pop_a);
