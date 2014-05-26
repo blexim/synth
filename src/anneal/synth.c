@@ -9,6 +9,7 @@
 
 #include "synth.h"
 #include "exec.h"
+#include "solution.h"
 
 #define WORDMASK ((1 << WIDTH) - 1)
 //#define WORDMASK 0xffffffff
@@ -58,21 +59,28 @@ void load(solution_t *solution) {
 }
 
 void rand_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
+  int i, j;
 
-  for (i = 0; i < SZ; i++) {
-    prog->ops[i] = rand() % (MAXOPCODE + 1);
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
+
+    for (i = 0; i < SZ; i++) {
+      prog->ops[i] = rand() % (MAXOPCODE + 1);
+    }
+
+    for (i = 0; i < CONSTS; i++) {
+      prog->consts[i] = rand() & WORDMASK;
+    }
+
+    for (i = 0; i < SZ; i++) {
+      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
+      prog->params[i*3+1] = rand() % (i + NARGS + CONSTS);
+      prog->params[i*3+2] = rand() % (i + NARGS + CONSTS);
+    }
   }
 
-  for (i = 0; i < CONSTS; i++) {
-    prog->consts[i] = rand() & WORDMASK;
-  }
-
-  for (i = 0; i < SZ; i++) {
-    prog->params[i*3] = rand() % (i + NARGS + CONSTS);
-    prog->params[i*3+1] = rand() % (i + NARGS + CONSTS);
-    prog->params[i*3+2] = rand() % (i + NARGS + CONSTS);
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i] = rand() & WORDMASK;
   }
 }
 
@@ -82,32 +90,35 @@ int should_mutate() {
 }
 
 void mutate(solution_t *solution) {
-  prog_t *b = &solution->prog;
-  int i;
+  int i, j;
 
-  for (i = 0; i < SZ; i++) {
-    if (should_mutate()) {
-      b->ops[i] = rand() % (MAXOPCODE + 1);
-    }
-  }
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *b = &solution->progs[j];
 
-  for (i = 0; i < CONSTS; i++) {
-    if (should_mutate()) {
-      b->consts[i] = rand() & WORDMASK;
-    }
-  }
-
-  for (i = 0; i < SZ; i++) {
-    if (should_mutate()) {
-      b->params[i*3] = rand() % (i + NARGS + CONSTS);
+    for (i = 0; i < SZ; i++) {
+      if (should_mutate()) {
+        b->ops[i] = rand() % (MAXOPCODE + 1);
+      }
     }
 
-    if (should_mutate()) {
-      b->params[i*3+1] = rand() % (i + NARGS + CONSTS);
+    for (i = 0; i < CONSTS; i++) {
+      if (should_mutate()) {
+        b->consts[i] = rand() & WORDMASK;
+      }
     }
 
-    if (should_mutate()) {
-      b->params[i*3+2] = rand() % (i + NARGS + CONSTS);
+    for (i = 0; i < SZ; i++) {
+      if (should_mutate()) {
+        b->params[i*3] = rand() % (i + NARGS + CONSTS);
+      }
+
+      if (should_mutate()) {
+        b->params[i*3+1] = rand() % (i + NARGS + CONSTS);
+      }
+
+      if (should_mutate()) {
+        b->params[i*3+2] = rand() % (i + NARGS + CONSTS);
+      }
     }
   }
 
@@ -118,58 +129,6 @@ void mutate(solution_t *solution) {
   }
 }
 
-void print_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
-
-  printf("ops={");
-
-  for (i = 0; i < SZ; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", prog->ops[i]);
-  }
-
-  printf("}\n");
-
-  printf("params={");
-
-  for (i = 0; i < SZ*3; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", prog->params[i]);
-  }
-
-  printf("}\n");
-
-  printf("consts={");
-
-  for (i = 0; i < CONSTS; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", prog->consts[i]);
-  }
-
-  printf("}\n");
-
-  printf("evars={");
-
-  for (i = 0; i < NEVARS; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", solution->evars[i]);
-  }
-
-  printf("}\n");
-}
 
 int numtests;
 int correct;
