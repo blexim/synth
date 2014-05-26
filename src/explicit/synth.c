@@ -20,17 +20,17 @@
 int next_solution(solution_t *solution) {
   int i, j;
 
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i]++;
+    solution->evars[i] &= WORDMASK;
+
+    if (solution->evars[i] != 0) {
+      return 1;
+    }
+  }
+
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
-
-    for (i = 0; i < NEVARS; i++) {
-      solution->evars[i]++;
-      solution->evars[i] &= WORDMASK;
-
-      if (solution->evars[i] != 0) {
-        return 1;
-      }
-    }
 
     for (i = 0; i < CONSTS; i++) {
       prog->consts[i]++;
@@ -80,10 +80,10 @@ void init_solution(solution_t *solution) {
     for (i = 0; i < SZ*3; i++) {
       prog->params[i] = 0;
     }
+  }
 
-    for (i = 0; i < NEVARS; i++) {
-      solution->evars[i] = 0;
-    }
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i] = 0;
   }
 }
 
@@ -127,19 +127,19 @@ void print_solution(solution_t *solution) {
     }
 
     printf("}\n");
+  }
 
-    printf("evars={");
+  printf("evars={");
 
-    for (i = 0; i < NEVARS; i++) {
-      if (i != 0) {
-        printf(", ");
-      }
-
-      printf("%d", solution->evars[i]);
+  for (i = 0; i < NEVARS; i++) {
+    if (i != 0) {
+      printf(", ");
     }
 
-    printf("}\n");
+    printf("%d", solution->evars[i]);
   }
+
+  printf("}\n");
 }
 
 int ok;
