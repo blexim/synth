@@ -11,6 +11,7 @@
 
 #include "synth.h"
 #include "exec.h"
+#include "solution.h"
 
 #define WORDMASK ((1 << WIDTH) - 1)
 //#define WORDMASK 0xffffffff
