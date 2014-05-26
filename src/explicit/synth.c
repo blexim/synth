@@ -18,42 +18,45 @@
 // Return 0 if the new program is all 0's (i.e. we have
 // wrapped around), otherwise return 1.
 int next_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
+  int i, j;
 
-  for (i = 0; i < NEVARS; i++) {
-    solution->evars[i]++;
-    solution->evars[i] &= WORDMASK;
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
 
-    if (solution->evars[i] != 0) {
-      return 1;
+    for (i = 0; i < NEVARS; i++) {
+      solution->evars[i]++;
+      solution->evars[i] &= WORDMASK;
+
+      if (solution->evars[i] != 0) {
+        return 1;
+      }
     }
-  }
 
-  for (i = 0; i < CONSTS; i++) {
-    prog->consts[i]++;
-    prog->consts[i] &= WORDMASK;
+    for (i = 0; i < CONSTS; i++) {
+      prog->consts[i]++;
+      prog->consts[i] &= WORDMASK;
 
-    if (prog->consts[i] != 0) {
-      return 1;
+      if (prog->consts[i] != 0) {
+        return 1;
+      }
     }
-  }
 
-  for (i = 0; i < SZ*3; i++) {
-    prog->params[i]++;
-    prog->params[i] &= PMASK;
+    for (i = 0; i < SZ*3; i++) {
+      prog->params[i]++;
+      prog->params[i] &= PMASK;
 
-    if (prog->params[i] != 0) {
-      return 1;
+      if (prog->params[i] != 0) {
+        return 1;
+      }
     }
-  }
 
-  for (i = 0; i < SZ; i++) {
-    prog->ops[i]++;
-    prog->ops[i] &= OPMASK;
+    for (i = 0; i < SZ; i++) {
+      prog->ops[i]++;
+      prog->ops[i] &= OPMASK;
 
-    if (prog->ops[i] != 0) {
-      return 1;
+      if (prog->ops[i] != 0) {
+        return 1;
+      }
     }
   }
 
@@ -61,83 +64,89 @@ int next_solution(solution_t *solution) {
 }
 
 void init_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
+  int i, j;
 
-  for (i = 0; i < CONSTS; i++) {
-    prog->consts[i] = 0;
-  }
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
 
-  for (i = 0; i < SZ; i++) {
-    prog->ops[i] = 0;
-  }
+    for (i = 0; i < CONSTS; i++) {
+      prog->consts[i] = 0;
+    }
 
-  for (i = 0; i < SZ*3; i++) {
-    prog->params[i] = 0;
-  }
+    for (i = 0; i < SZ; i++) {
+      prog->ops[i] = 0;
+    }
 
-  for (i = 0; i < NEVARS; i++) {
-    solution->evars[i] = 0;
+    for (i = 0; i < SZ*3; i++) {
+      prog->params[i] = 0;
+    }
+
+    for (i = 0; i < NEVARS; i++) {
+      solution->evars[i] = 0;
+    }
   }
 }
 
 void print_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
+  int i, j;
 
-  printf("ops={");
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
+    printf("ops={");
 
-  for (i = 0; i < SZ; i++) {
-    if (i != 0) {
-      printf(", ");
+    for (i = 0; i < SZ; i++) {
+      if (i != 0) {
+        printf(", ");
+      }
+
+      printf("%d", prog->ops[i]);
     }
 
-    printf("%d", prog->ops[i]);
-  }
+    printf("}\n");
 
-  printf("}\n");
+    printf("params={");
 
-  printf("params={");
+    for (i = 0; i < SZ*3; i++) {
+      if (i != 0) {
+        printf(", ");
+      }
 
-  for (i = 0; i < SZ*3; i++) {
-    if (i != 0) {
-      printf(", ");
+      printf("%d", prog->params[i]);
     }
 
-    printf("%d", prog->params[i]);
-  }
+    printf("}\n");
 
-  printf("}\n");
+    printf("consts={");
 
-  printf("consts={");
+    for (i = 0; i < CONSTS; i++) {
+      if (i != 0) {
+        printf(", ");
+      }
 
-  for (i = 0; i < CONSTS; i++) {
-    if (i != 0) {
-      printf(", ");
+      printf("%d", prog->consts[i]);
     }
 
-    printf("%d", prog->consts[i]);
-  }
+    printf("}\n");
 
-  printf("}\n");
+    printf("evars={");
 
-  printf("evars={");
+    for (i = 0; i < NEVARS; i++) {
+      if (i != 0) {
+        printf(", ");
+      }
 
-  for (i = 0; i < NEVARS; i++) {
-    if (i != 0) {
-      printf(", ");
+      printf("%d", solution->evars[i]);
     }
 
-    printf("%d", solution->evars[i]);
+    printf("}\n");
   }
-
-  printf("}\n");
 }
 
 int ok;
 int print = 0;
 
 void test(solution_t *solution, word_t args[NARGS]) {
+#if 0
   prog_t *prog = &solution->prog;
 
   if (print) {
@@ -162,6 +171,7 @@ void test(solution_t *solution, word_t args[NARGS]) {
 
     printf("\n");
   }
+#endif
 
   int valid = check(solution, args);
 
@@ -177,13 +187,17 @@ void test(solution_t *solution, word_t args[NARGS]) {
 
 int main(void) {
   solution_t solution;
-  prog_t *prog = &solution.prog;
+  int i;
 
   init_solution(&solution);
 
   do {
-    if (!wellformed(prog) || exclude(prog)) {
-      continue;
+    for (i = 0; i < NPROGS; i++) {
+      prog_t *prog = &solution.progs[i];
+
+      if (!wellformed(prog) || exclude(prog)) {
+        continue;
+      }
     }
 
     ok = 1;
