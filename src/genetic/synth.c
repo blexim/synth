@@ -77,18 +77,22 @@ void load(solution_t *pop) {
 }
 
 void rand_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
+  int i, j;
 
-  for (i = 0; i < SZ; i++) {
-    prog->ops[i] = rand() % (MAXOPCODE + 1);
-    prog->params[i*3] = rand() % (i + NARGS + CONSTS);
-    prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
-    prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
-  }
 
-  for (i = 0; i < CONSTS; i++) {
-    prog->consts[i] = rand() & WORDMASK;
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
+
+    for (i = 0; i < SZ; i++) {
+      prog->ops[i] = rand() % (MAXOPCODE + 1);
+      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
+      prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
+      prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
+    }
+
+    for (i = 0; i < CONSTS; i++) {
+      prog->consts[i] = rand() & WORDMASK;
+    }
   }
 
   for (i = 0; i < NEVARS; i++) {
@@ -105,30 +109,33 @@ int should_recombine() {
 }
 
 void mutate(solution_t *solution) {
-  prog_t *b = &solution->prog;
-  int i;
+  int i, j;
 
-  for (i = 0; i < SZ; i++) {
-    if (should_mutate()) {
-      b->ops[i] = rand() % (MAXOPCODE + 1);
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *b = &solution->progs[j];
+
+    for (i = 0; i < SZ; i++) {
+      if (should_mutate()) {
+        b->ops[i] = rand() % (MAXOPCODE + 1);
+      }
+
+      if (should_mutate()) {
+        b->params[i*3] = rand() % (i + NARGS + CONSTS);
+      }
+
+      if (should_mutate()) {
+        b->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
+      }
+
+      if (should_mutate()) {
+        b->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
+      }
     }
 
-    if (should_mutate()) {
-      b->params[i*3] = rand() % (i + NARGS + CONSTS);
-    }
-
-    if (should_mutate()) {
-      b->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
-    }
-
-    if (should_mutate()) {
-      b->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
-    }
-  }
-
-  for (i = 0; i < CONSTS; i++) {
-    if (should_mutate()) {
-      b->consts[i] = rand() & WORDMASK;
+    for (i = 0; i < CONSTS; i++) {
+      if (should_mutate()) {
+        b->consts[i] = rand() & WORDMASK;
+      }
     }
   }
 
@@ -140,90 +147,42 @@ void mutate(solution_t *solution) {
 }
 
 #define recombine() do { \
-  if (should_recombine()) { tmp = a; a = b; b = tmp; \
-    tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; \
-  } \
+  if (should_recombine()) { tmp = a; a = b; b = tmp; } \
+} while(0)
+
+#define recombine_sol() do { \
+  if (should_recombine()) { tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; } \
 } while(0)
 
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
-  prog_t *a = &sol_a->prog;
-  prog_t *b = &sol_b->prog;
-  prog_t *c = &sol_c->prog;
   prog_t *tmp;
   solution_t *tmp_sol;
-  int i;
+  int i, j;
 
-  for (i = 0; i < SZ; i++) {
-    recombine();
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *a = &sol_a->progs[j];
+    prog_t *b = &sol_b->progs[j];
+    prog_t *c = &sol_c->progs[j];
 
-    c->ops[i] = a->ops[i];
-    c->params[i*3] = a->params[i*3];
-    c->params[(i*3)+1] = a->params[(i*3)+1];
-    c->params[(i*3)+2] = a->params[(i*3)+2];
-  }
+    for (i = 0; i < SZ; i++) {
+      recombine();
 
-  for (i = 0; i < CONSTS; i++) {
-    recombine();
-    c->consts[i] = a->consts[i];
+      c->ops[i] = a->ops[i];
+      c->params[i*3] = a->params[i*3];
+      c->params[(i*3)+1] = a->params[(i*3)+1];
+      c->params[(i*3)+2] = a->params[(i*3)+2];
+    }
+
+    for (i = 0; i < CONSTS; i++) {
+      recombine();
+      c->consts[i] = a->consts[i];
+    }
   }
 
   for (i = 0; i < NEVARS; i++) {
-    recombine();
+    recombine_sol();
     sol_c->evars[i] = sol_a->evars[i];
   }
-}
-
-void print_solution(solution_t *solution) {
-  prog_t *prog = &solution->prog;
-  int i;
-
-  printf("ops={");
-
-  for (i = 0; i < SZ; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", prog->ops[i]);
-  }
-
-  printf("}\n");
-
-  printf("params={");
-
-  for (i = 0; i < SZ*3; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", prog->params[i]);
-  }
-
-  printf("}\n");
-
-  printf("consts={");
-
-  for (i = 0; i < CONSTS; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", prog->consts[i]);
-  }
-
-  printf("}\n");
-
-  printf("evars={");
-
-  for (i = 0; i < NEVARS; i++) {
-    if (i != 0) {
-      printf(", ");
-    }
-
-    printf("%d", solution->evars[i]);
-  }
-
-  printf("}\n");
 }
 
 int fitnesses[POPSIZE];
@@ -247,55 +206,6 @@ int compare_fitness(const void *v1, const void *v2) {
   return f1 - f2;
 }
 
-#define compare_op(x, y) do { \
-  if ((x) < (y)) return -1; \
-  else if ((x) > (y)) return 1; \
-} while(0)
-
-int compare_progs(const void *v1, const void *v2, void *arg) {
-  solution_t *solutions = (solution_t *) arg;
-  int *i1 = (int *) v1;
-  int *i2 = (int *) v2;
-  prog_t *p1 = &solutions[*i1].prog;
-  prog_t *p2 = &solutions[*i2].prog;
-  int i;
-
-  for (i = 0; i < SZ; i++) {
-    compare_op(p1->ops[i], p2->ops[i]);
-    compare_op(p1->params[i*3], p2->params[i*3]);
-    compare_op(p1->params[(i*3)+1], p2->params[(i*3)+1]);
-    compare_op(p1->params[(i*3)+2], p2->params[(i*3)+2]);
-  }
-
-  for (i = 0; i < CONSTS; i++) {
-    compare_op(p1->consts[i], p2->consts[i]);
-  }
-
-  return 0;
-}
-
-int dedup(solution_t *solutions, int *indices) {
-  int i, ret, last;
-  int sorted[POPSIZE];
-
-  memcpy(sorted, indices, POPSIZE*sizeof(int));
-  qsort_r(sorted, POPSIZE, sizeof(int), compare_progs, solutions);
-
-  indices[0] = sorted[0];
-  last = sorted[0];
-  ret = 1;
-
-  for (i = 1; i < POPSIZE; i++) {
-    if (compare_progs(&last, &sorted[i], solutions) != 0) {
-      // This is a program we haven't seen before.  Save it.
-      indices[ret++] = sorted[i];
-      last = sorted[i];
-    }
-  }
-
-  return ret;
-}
-
 int next_gen(solution_t *previous, solution_t *next) {
   int indices[POPSIZE];
   int i, j;
@@ -307,7 +217,6 @@ int next_gen(solution_t *previous, solution_t *next) {
     indices[i] = i;
   }
 
-  //nprogs = dedup(previous, indices);
   nprogs = POPSIZE;
 
   for (i = 0; i < nprogs; i++) {
