@@ -5,8 +5,8 @@ extern int guard(word_t args[NARGS]);
 extern void body(word_t args[NARGS]);
 extern int assertion(word_t args[NARGS]);
 
-sword_t rank(prog_t *prog, word_t args[NARGS]) {
-  sword_t res;
+word_t rank(prog_t *prog, word_t args[NARGS]) {
+  word_t res;
 
   exec(prog, args, &res);
 
@@ -23,7 +23,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
   }
 
   if (guard(vars)) {
-    sword_t r1 = rank(prog, vars);
+    word_t r1 = rank(prog, vars);
 
     if (r1 <= 0) {
       return 0;
@@ -31,7 +31,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
 
     body(vars);
 
-    sword_t r2 = rank(prog, vars);
+    word_t r2 = rank(prog, vars);
 
     if (r1 <= r2) {
       return 0;
