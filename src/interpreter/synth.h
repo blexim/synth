@@ -20,6 +20,10 @@
  #define NEVARS 0
 #endif
 
+#ifndef NPROGS
+ #define NPROGS 1
+#endif
+
 #ifndef NRES
  #define NRES 1
 #endif
@@ -85,7 +89,7 @@ typedef struct prog {
 } prog_t;
 
 typedef struct solution {
-  prog_t prog;
+  prog_t progs[NPROGS];
   word_t evars[NEVARS];
 } solution_t;
 
@@ -98,7 +102,6 @@ void test(solution_t *solution, word_t args[NARGS]);
 int check(solution_t *solution, word_t args[NARGS]);
 void tests(solution_t *solution);
 
-void hint(prog_t *prog);
 int exclude(prog_t *prog);
 int wellformed(prog_t *prog);
 
