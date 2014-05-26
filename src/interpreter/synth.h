@@ -98,7 +98,6 @@ void test(solution_t *solution, word_t args[NARGS]);
 int check(solution_t *solution, word_t args[NARGS]);
 void tests(solution_t *solution);
 
-void hint(prog_t *prog);
 int exclude(prog_t *prog);
 int wellformed(prog_t *prog);
 
