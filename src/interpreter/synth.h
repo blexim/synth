@@ -20,6 +20,10 @@
  #define NEVARS 0
 #endif
 
+#ifndef NPROGS
+ #define NPROGS 1
+#endif
+
 #ifndef NRES
  #define NRES 1
 #endif
@@ -85,7 +89,7 @@ typedef struct prog {
 } prog_t;
 
 typedef struct solution {
-  prog_t prog;
+  prog_t progs[NPROGS];
   word_t evars[NEVARS];
 } solution_t;
 

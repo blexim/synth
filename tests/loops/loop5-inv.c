@@ -11,7 +11,7 @@ word_t checkit(solution_t *solution, word_t i, word_t j, word_t x, word_t y) {
   args[4] = 0;
   args[5] = 0;
 
-  exec(&solution->prog, args, res);
+  exec(&solution->progs[0], args, res);
 
   return res[0];
 }

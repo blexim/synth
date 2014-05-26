@@ -9,7 +9,7 @@ word_t checkit(solution_t *solution, word_t x, word_t y) {
   args[2] = 0;
   args[3] = 0;
 
-  exec(&solution->prog, args, res);
+  exec(&solution->progs[0], args, res);
 
   return res[0];
 }

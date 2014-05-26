@@ -15,7 +15,7 @@ int inv(prog_t *prog, word_t args[NARGS]) {
 
 int check(solution_t *solution, word_t args[NARGS]) {
   word_t vars[NARGS];
-  prog_t *prog = &solution->prog;
+  prog_t *prog = &solution->progs[0];
   int i;
 
   for (i = 0; i < NARGS; i++) {

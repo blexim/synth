@@ -7,7 +7,7 @@ word_t rank(solution_t *solution, word_t x, word_t N) {
   args[0] = x;
   args[1] = N;
 
-  exec(&solution->prog, args, res);
+  exec(&solution->progs[0], args, res);
 
   return res[0];
 }

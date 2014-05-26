@@ -5,9 +5,12 @@ void test(solution_t *solution, word_t args[NARGS]) {
 
 int main(void) {
   solution_t solution;
+  int i;
 
-  __CPROVER_assume(wellformed(&solution.prog));
-  __CPROVER_assume(!exclude(&solution.prog));
+  for (i = 0; i < NPROGS; i++) {
+    __CPROVER_assume(wellformed(&solution.progs[i]));
+    __CPROVER_assume(!exclude(&solution.progs[i]));
+  }
 
   tests(&solution);
 

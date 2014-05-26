@@ -10,7 +10,7 @@ word_t inv(solution_t *solution, word_t i, word_t j, word_t a, word_t b, word_t 
   args[3] = b;
   args[4] = flag;
 
-  exec(&solution->prog, args, res);
+  exec(&solution->progs[0], args, res);
 
   return res[0] != 0;
 }
@@ -19,10 +19,6 @@ int check(solution_t *solution, word_t args[5]) {
   word_t i, j, a, b, flag;
 
   flag = args[4];
-
-  if (CONSTS >= 1) {
-    prog->consts[0] = 1;
-  }
 
   a = 0;
   b = 0;

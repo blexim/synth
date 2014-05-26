@@ -2,7 +2,7 @@
 
 int check(solution_t *solution, word_t args[2]) {
   word_t res[1];
-  exec(&solution->prog, args, res);
+  exec(&solution->progs[0], args, res);
 
   word_t y = args[0];
   word_t r = res[0];

@@ -7,7 +7,7 @@ int inv(solution_t *solution, word_t x, word_t i) {
   a[0] = x;
   a[1] = i;
 
-  exec(&solution->prog, a, res);
+  exec(&solution->progs[0], a, res);
 
   return res[0];
 }
