@@ -7,7 +7,8 @@ void prefix(word_t args[1]) {
 int guard(word_t args[1]) {
   sword_t x = args[0];
 
-  return x <= 100 && x >= -100 && x != 0;
+  //return x <= 100 && x >= -100 && x != 0;
+  return x != 0;
 }
 
 void body(word_t args[1]) {
