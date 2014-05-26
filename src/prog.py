@@ -79,51 +79,58 @@ class Prog(object):
       mevars = evarsre.search(l)
 
       if mops:
-        self.ops = str2ints(mops.group(1))
+        self.ops.append(str2ints(mops.group(1)))
 
       if mparams:
-        self.params = str2ints(mparams.group(1))
+        self.params.append(str2ints(mparams.group(1)))
 
       if mconsts:
-        self.consts = str2ints(mconsts.group(1))
+        self.consts.append(str2ints(mconsts.group(1)))
 
       if mevars:
         self.evars = str2ints(mevars.group(1))
 
-  def strarg(self, p):
-    if p < len(self.consts):
-      return hex(self.consts[p])
+  def strarg(self, p, consts):
+    if p < len(consts):
+      return hex(consts[p])
     else:
-      p -= len(self.consts)
+      p -= len(consts)
 
       if p < args.args.args:
         return 'a%d' % (p+1)
       else:
         return 't%d' % (p - args.args.args + 1)
 
-  def __str__(self):
+  def prog2str(self, ops, params, consts):
     # List comprehension trickery to generate a list like:
     # [(op0, param0, param1, param2, 1), (op1, param3, param4, param5, 2), ... ]
-    insts = zip(self.ops, self.params[::3], self.params[1::3], self.params[2::3],
-        xrange(1, len(self.ops) + 1))
+    insts = zip(ops, params[::3], params[1::3], params[2::3],
+        xrange(1, len(ops) + 1))
     strinsts = []
 
     for (op, p1, p2, p3, idx) in insts:
       if op in binops:
-        strinsts.append("t%d = %s %s %s" % (idx, self.strarg(p1), binops[op],
-          self.strarg(p2)))
+        strinsts.append("t%d = %s %s %s" % (idx, self.strarg(p1, consts), binops[op],
+          self.strarg(p2, consts)))
       elif op in unops:
-        strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1)))
+        strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1, consts)))
       elif op in ternops:
-        strinsts.append("t%d = %s(%s, %s, %s)" % (idx, ternops[op], self.strarg(p1),
-                                                  self.strarg(p2), self.strarg(p3)))
+        strinsts.append("t%d = %s(%s, %s, %s)" % (idx, ternops[op], self.strarg(p1, consts),
+                                                  self.strarg(p2, consts), self.strarg(p3, consts)))
       else:
         raise Exception("Couldn't parse instruction: (%d, %d, %d, %d)" %
             (op, p1, p2, p3))
 
+    return '\n'.join(strinsts)
+
+  def __str__(self):
     if self.evars:
       ret = 'Evars: %s\n' % ', '.join(str(e) for e in self.evars)
     else:
       ret = ''
 
-    return ret + '\n'.join(strinsts)
+    for i in xrange(len(self.ops)):
+      ret += "Program %d:\n" % i
+      ret += self.prog2str(self.ops[i], self.params[i], self.consts[i])
+
+    return ret

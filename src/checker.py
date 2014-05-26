@@ -65,6 +65,7 @@ class Checker(object):
     nargs = args.args.args
     nres = args.args.res
     nevars = args.args.evars
+    nprogs = args.args.progs
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
     ewidth = max(width/4, 1)
@@ -82,6 +83,7 @@ class Checker(object):
         "-DNARGS=%d" % nargs,
         "-DNRES=%d" % nres,
         "-DNEVARS=%d" % nevars,
+        "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
         os.path.join(args.args.interpreter, "exec.c"),

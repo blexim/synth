@@ -38,6 +38,8 @@ args.argparser.add_argument("--res", "-r", default=1, type=int,
     help="number of returns")
 args.argparser.add_argument("--evars", "-V", default=0, type=int,
     help="number of existentially quantified arguments")
+args.argparser.add_argument("--progs", "-P", default=1, type=int,
+    help="number of programs to synthesise")
 
 args.argparser.add_argument("--float", "-f", default=False, action="store_const",
     const=True,
@@ -167,16 +169,25 @@ def verif(prog, checker, width, codelen):
 
 solution_t solution = {
   {
+""")
+
+  for i in xrange(args.args.progs):
+    bmc.write(r"""
+  {
     { %s },
     { %s },
     { %s },
   },
+""" % (", ".join(str(o) for o in prog.ops[i]),
+       ", ".join(str(p) for p in prog.params[i]),
+       ", ".join(str(c) for c in prog.consts[i])))
+
+  bmc.write(r"""
+  },
+
   { %s }
 };
-""" % (", ".join(str(o) for o in prog.ops),
-       ", ".join(str(p) for p in prog.params),
-       ", ".join(str(c) for c in prog.consts),
-       ", ".join(str(e) for e in prog.evars)))
+""" % (", ".join(str(e) for e in prog.evars)))
 
   try:
     (retcode, output) = bmc.run()
@@ -413,11 +424,24 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
   expansions = []
 
   for i in xrange(len(prog.consts)):
-    expanded = expand(prog.consts[i], width, targetwidth)
-    expansions.append(expanded)
+    for j in xrange(len(prog.consts[i])):
+      expanded = expand(prog.consts[i][j], width, targetwidth)
+      expansions.append(expanded)
 
   for newconsts in itertools.product(*expansions):
-    newprog = Prog(prog.ops, prog.params, list(newconsts), prog.evars)
+    const_lists = []
+    n = 0 
+
+    for i in xrange(len(prog.consts)):
+      l = []
+
+      for j in xrange(len(prog.consts[i])):
+        l.append(newconsts[n])
+        n += 1
+
+      const_lists.append(l)
+
+    newprog = Prog(prog.ops, prog.params, const_lists, prog.evars)
 
     if args.args.verbose > 1:
       print "Trying %s" % (str(newprog))
