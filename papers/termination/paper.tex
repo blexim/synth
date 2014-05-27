@@ -1,0 +1,144 @@
+
+\documentclass[preprint]{sigplanconf}
+
+% The following \documentclass options may be useful:
+
+% preprint      Remove this option only once the paper is in final form.
+% 10pt          To set in 10-point type instead of 9-point.
+% 11pt          To set in 11-point type instead of 9-point.
+% authoryear    To obtain author/year citation style instead of numeric.
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+
+
+\begin{document}
+
+%\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\conferenceinfo{POPL '14}{Month d--d, 20yy, City, ST, Country} 
+\copyrightyear{2014} 
+
+% Uncomment one of the following two, if you are not going for the 
+% traditional copyright transfer agreement.
+
+%\exclusivelicense                % ACM gets exclusive license to publish, 
+                                  % you retain copyright
+
+%\permissiontopublish             % ACM gets nonexclusive license to publish
+                                  % (paid open-access papers, 
+                                  % short abstracts)
+
+\title{Synthesising Complex Termination Arguments}
+
+\authorinfo{Cristina David\and Daniel Kroening\and Matt Lewis}
+           {Oxford University}
+           {firstname.lastname@cs.ox.ac.uk}
+
+\maketitle
+
+\begin{abstract}
+Proving program termination is typically done by finding a well-founded \emph{ranking function}
+for the program states.
+Existing termination provers typically find ranking functions
+using either linear algebra or templates.  As such they are often restricted to
+finding linear ranking functions over mathematical integers.  This class
+of ranking functions is not large enough to prove termination for all terminating
+programs, and furthermore a termination argument for a program operating on mathematical integers
+does not always lead to a termination argument for the same program operating on
+fixed-width machine integers.
+
+We present a reduction from program \emph{termination} to program \emph{synthesis}.
+This reduction allows us to generate nonlinear, lexicographic ranking functions that
+are correct for fixed-width machine arithmetic and floating-point arithmetic.
+We use this reduction to build a semi-decision procedure for the termination
+of fixed-width and floating-point arithmetic programs.
+\end{abstract}
+
+%\category{CR-number}{subcategory}{third-level}
+
+
+\keywords
+Termination, Program Synthesis, Lexicographic Ranking Functions, Bitvector Ranking Functions,
+Floating Point Ranking Functions.
+
+\section{Introduction}
+Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
+
+Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
+
+\section{Related Work}
+Error 404.
+
+\section{Preliminaries}
+\subsection{Termination and Ranking Functions}
+A transition system with state space $X$ and transition relation $T \subseteq X \times X$
+is said to be \emph{unconditionally terminating} if there is no infinite sequence
+$x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.  We can prove that $T$ is
+unconditionally terminating by finding an injective function $R: X \to Y$ where
+$Y$ is well-founded and $R$ is monotonically decreasing with respect $T$.  That is
+to say:
+
+$$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
+
+\subsection{Program Synthesis as Second-order Satisfaction}
+The program synthesis problem can be described as finding a satisfying assigment to the
+synthesis formula:
+
+\begin{definition}[Synthesis Formula]
+ The synthesis formula for a specification $\sigma: X \to Y$ is:
+ 
+ $$\exists P: X \to Y . \forall x : X . \sigma(x, P(x))$$
+ \end{definition}
+
+Since this formula involves quantification over functions $X \to Y$,
+this is a second-order formula -- indeed, if $X = Y = \mathbb{N}$,
+the formula describes a set at level $\Sigma_1^1$ of the analytical
+hierarchy.  As such, determining the satisfiability of the synthesis
+formula over a given logic is strictly harder than solving the
+halting problem over the same logic.
+
+\subsection{Generalised Synthesis}
+Sometimes we want to synthesise several programs at once, as well as some
+ground terms $\vec{x}$.  Also, we might want a more complex specification
+than just a relation over $X$ and $Y$.
+
+\begin{definition}[Generalised Synthesis Formula]
+ $$\exists P_1: X_1 \to Y_1, \ldots, P_N: X_N \to Y_N , \vec{x}: X^e . \forall \vec{y}: X^a: X . \sigma(x, P_1, \ldots, P_N, y) $$
+\end{definition}
+
+
+\section{Formalism}
+\subsection{Syntax and Semantics}
+
+\section{Reducing Termination to Synthesis}
+For a transition system $T$, we can build a specification $\sigma$ to find a conditional ranking function for
+$T$ with initial states I:
+
+\begin{eqnarray}
+ \sigma(V: X \to \mathbb{B}, R: X \to \mathbb{N}, x, x') = & I(x) \rightarrow V(x) \wedge \\
+ & V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) < R(x') 
+\end{eqnarray}
+
+Here we have synthesised a ranking function $R$ into $\mathbb{N}$ (which is well-founded),
+as well as an inductive invariant $V$ that guarantees termination of $T$.
+
+To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
+$R: X \to \mathbb{N}^n$.
+
+\bibliographystyle{abbrvnat}
+\bibliography{synth}{}
+
+\end{document}
