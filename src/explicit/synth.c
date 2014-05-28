@@ -138,12 +138,19 @@ int main(void) {
   init_solution(&solution);
 
   do {
+    int progok = 1;
+
     for (i = 0; i < NPROGS; i++) {
       prog_t *prog = &solution.progs[i];
 
       if (!wellformed(prog) || exclude(prog)) {
-        continue;
+        progok = 0;
+        break;
       }
+    }
+
+    if (!progok) {
+      continue;
     }
 
     ok = 1;
