@@ -11,7 +11,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-
+\usepackage{amsfonts}
+\usepackage{pifont}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -19,6 +20,8 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\xmark}{\ding{55}}
 
 
 
@@ -137,6 +140,40 @@ as well as an inductive invariant $V$ that guarantees termination of $T$.
 
 To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
 $R: X \to \mathbb{N}^n$.
+
+\section{Experiments}
+
+\begin{figure*}
+\centering
+\begin{tabular}{|l|l|l||l|l|l|l|}
+\hline
+    & LOC & Rank function size & \textsc{T2} & \textsc{ARMC} & \textsc{Headshot} & \textsc{Headshot-Linear} \\
+    \hline
+    \hline
+ P1 & 10 & 3 & 100s & 70s & 0.1s & \bf{0.01s} \\
+ P2 & 10 & 3 & 100s & 70s & 0.1s & \bf{0.01s} \\
+ P3 & 10 & 3 & 100s & 70s & 0.1s & \bf{0.01s} \\
+ \hline
+\end{tabular}
+\caption{Termination for linear programs with disjunctive, linear ranking functions\label{fig:linear}}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+    & LOC & Ranking program size & Lexicarity & Linear program? & Linear ranking function? & Time (s)\\
+    \hline
+    \hline
+ P1 & 10 & 3 & 1 & \xmark & \xmark & 0.01 \\
+ P2 & 10 & 3 & 1 & \xmark & \xmark & 0.01 \\
+ P3 & 10 & 3 & 1 & \xmark & \xmark & 0.01 \\
+ \hline
+\end{tabular}
+
+\caption{\textsc{Headshot} termination for nonlinear programs with nonlinear ranking functions\label{fig:nonlinear}}
+ \end{figure*}
+
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
