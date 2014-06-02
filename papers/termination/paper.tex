@@ -16,6 +16,8 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
 
 
 \theoremstyle{definition}
@@ -140,6 +142,101 @@ as well as an inductive invariant $V$ that guarantees termination of $T$.
 
 To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
 $R: X \to \mathbb{N}^n$.
+
+\section{Theory}
+
+In the sequel, we will fix the following notation:
+
+\begin{itemize}
+ \item Our transition relation is $T(x, x') \subseteq X \times X$.
+ \item Our loop condition is $L(x) \subseteq X$.
+ \item Our ranking function is $R(x) : X \to Y$.
+ \item Our state space has size $\| X \| = M = 2^k$.
+ \item Our ranking co-domain has size $\| Y \| = N = 2^j$.
+ \item The number of looping states is $\| L \| = l$.
+ \item Our transition relation is deterministic and parititioned into chains of length $c_i$, with $l = \sum c_i$.
+\end{itemize}
+
+
+\subsection{Termination theory}
+
+\begin{theorem}
+ A random function $f : X \to Y$ is a ranking function for $(T, L)$ with probability
+
+ $$N^{-l} \times \prod {{N-1} \choose c_i}$$
+\end{theorem}
+
+\begin{corollary}
+ This number is really small (e.g. $10^{-193}$ for a 64-bit program with 1 variable and 10 looping states.
+ Randomly sampling functions \& hoping they're ranking functions is not going to work.
+\end{corollary}
+
+
+\begin{conjecture}
+ The probability that a random program $(T, L)$ is terminating (the Chaitin constant)
+ is $0.7$.
+\end{conjecture}
+
+\begin{conjecture}
+ The probability that a random program $(T, L)$ admits a linear ranking function is
+ $0.1$.
+\end{conjecture}
+
+\begin{conjecture}
+ The probability that a random, terminating program $(T, L)$ admits a linear ranking function
+ is $0.2$.
+\end{conjecture}
+
+
+\begin{corollary}
+ Most terminating programs do not have linear ranking functions.
+\end{corollary}
+
+\begin{theorem}
+ \textsc{Headshot} is biased towards finding ranking functions with low
+ Kolmogorov complexity.
+\end{theorem}
+
+\begin{conjecture}
+ Most low-Kolmogorov-complexity programs compute non-linear functions.
+\end{conjecture}
+
+\begin{corollary}
+ \textsc{Headshot} can often prove termination where linear methods cannot.
+\end{corollary}
+
+
+\begin{conjecture}
+ Low-Kolmogorov-complexity (LKC) programs have LKC ranking functions.
+\end{conjecture}
+
+\begin{corollary}
+ Goldbach conjecture, Collatz conjecture.
+\end{corollary}
+
+\subsection{Synthesis}
+
+\begin{definition}
+ A \emph{fitness landscape} is the space of all programs along with their fitness.
+\end{definition}
+
+\begin{theorem}
+ Fitness landscapes form a lattice.  Adding test vectors corresponds to abstraction refinement on this
+ lattice, which is why incremental GP works well.
+\end{theorem}
+
+\begin{conjecture}
+ A single fitness landscape isn't really very smooth (e.g. small changes in program representation
+ don't correspond to small changes in fitness), so GP probably shouldn't work very well.
+ 
+ But it does.
+\end{conjecture}
+
+\begin{conjecture}
+ Most incorrect programs are incorrect on most inputs.
+\end{conjecture}
+
+
 
 \section{Experiments}
 
