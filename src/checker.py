@@ -120,11 +120,11 @@ class Checker(object):
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           os.path.join("cbmc", "synth.c")] + genericargs
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
-          os.path.join("explicit", "synth.c")] + genericargs
+          os.path.join("explicit", "synth.c"), "-lm"] + genericargs
       self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
-          os.path.join("genetic", "synth.c")] + genericargs
+          os.path.join("genetic", "synth.c"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
-          os.path.join("anneal", "synth.c")] + genericargs
+          os.path.join("anneal", "synth.c"), "-lm"] + genericargs
 
 
     if not args.args.noslice:
