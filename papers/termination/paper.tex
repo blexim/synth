@@ -148,16 +148,6 @@ $Y$ is well-founded and $R$ is monotonically decreasing with respect $T$.  That 
 to say:
 $$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
 
-We can specify the existence of a ranking function, and therefore the termination
-of a program, using a second order formula:
-
-\begin{definition}[Second-order Termination Formula]
-\begin{align*}
- \exists R . \forall x, x' . & R(x) > 0 ~ \wedge \\
-                             & T(x, x') \rightarrow R(x) > R(x')
-\end{align*}
-\end{definition}
-
 A special case of a ranking function is a \emph{linear ranking function}.  This
 class of functions is exactly what you'd expect: a linear function that satisfies
 the criteria for a ranking function.  We recall that a linear function $f: X \to Y$,
@@ -209,7 +199,8 @@ define the syntax of a language we will work over.
   fraction of programs).
  \item There are not many linear functions.
  \item Most terminating programs don't admit linear ranking functions.
- \item Kolmogorov complexity is relevant.
+ \item The Curry-Howard isomorphism
+ \item Kolmogorov complexity is relevant for understanding termination proofs.
 \end{itemize}
 
 
@@ -249,6 +240,59 @@ define the syntax of a language we will work over.
 \begin{corollary}
  Most terminating programs do not have linear ranking functions.
 \end{corollary}
+
+
+\section{Termination as Second-Order Satisfaction}
+We can specify the existence of a ranking function, and therefore the termination
+of a program, using a second order formula:
+
+\begin{definition}[Second-order Termination Formula]
+\begin{align*}
+ \exists R . \forall x, x' . & R(x) > 0 ~ \wedge \\
+                             & T(x, x') \rightarrow R(x) > R(x')
+\end{align*}
+\end{definition}
+
+\section{Second-Order Satisfaction as Program Synthesis}
+The program synthesis problem can be described as finding a satisfying assigment to the
+synthesis formula:
+
+\begin{definition}[Synthesis Formula]
+ The synthesis formula for a specification $\sigma: X \to Y$ is:
+ 
+ $$\exists P \cdotp \forall x \cdotp \sigma(x, P(x))$$
+ \end{definition}
+
+Since this formula involves quantification over functions $X \to Y$,
+this is a second-order formula -- indeed, if $X = Y = \mathbb{N}$,
+the formula describes a set at level $\Sigma_1^1$ of the analytical
+hierarchy.  As such, determining the satisfiability of the synthesis
+formula over a given logic is strictly harder than solving the
+halting problem over the same logic.
+
+\subsection{Generalised Synthesis}
+Sometimes we want to synthesise several programs at once, as well as some
+ground terms $\vec{x}$.  Also, we might want a more complex specification
+than just a relation over $X$ and $Y$.
+
+\begin{definition}[Generalised Synthesis Formula]
+ $$\exists P, \vec{x} \cdotp \forall \vec{y} \cdotp \sigma(x, P, y) $$
+\end{definition}
+
+\subsection{Reducing Termination to Synthesis}
+For a transition system $T$, we can build a specification $\sigma$ to find a conditional ranking function for
+$T$ with initial states I:
+
+\begin{eqnarray}
+ \sigma(V: X \to \mathbb{B}, R: X \to \mathbb{N}, x, x') = & I(x) \rightarrow V(x) \wedge \\
+ & V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) < R(x') 
+\end{eqnarray}
+
+Here we have synthesised a ranking function $R$ into $\mathbb{N}$ (which is well-founded),
+as well as an inductive invariant $V$ that guarantees termination of $T$.
+
+To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
+$R: X \to \mathbb{N}^n$.
 
 We recall the definition of the Kolmogorov-complexity of a function $f$:
 
@@ -291,58 +335,6 @@ functions.
  High-Kolmogorov-complexity (HKC) programs often have LKC ranking functions.
 \end{conjecture}
 
-
-\section{Solving the Synthesis Formula}
-
-\subsection{Program Synthesis as Second-order Satisfaction}
-The program synthesis problem can be described as finding a satisfying assigment to the
-synthesis formula:
-
-\begin{definition}[Synthesis Formula]
- The synthesis formula for a specification $\sigma: X \to Y$ is:
- 
- $$\exists P: X \to Y . \forall x : X . \sigma(x, P(x))$$
- \end{definition}
-
-Since this formula involves quantification over functions $X \to Y$,
-this is a second-order formula -- indeed, if $X = Y = \mathbb{N}$,
-the formula describes a set at level $\Sigma_1^1$ of the analytical
-hierarchy.  As such, determining the satisfiability of the synthesis
-formula over a given logic is strictly harder than solving the
-halting problem over the same logic.
-
-\subsection{Generalised Synthesis}
-Sometimes we want to synthesise several programs at once, as well as some
-ground terms $\vec{x}$.  Also, we might want a more complex specification
-than just a relation over $X$ and $Y$.
-
-\begin{definition}[Generalised Synthesis Formula]
- $$\exists P_1: X_1 \to Y_1, \ldots, P_N: X_N \to Y_N , \vec{x}: X^e . \forall \vec{y}: X^a: X . \sigma(x, P_1, \ldots, P_N, y) $$
-\end{definition}
-
-\subsection{Reducing Termination to Synthesis}
-For a transition system $T$, we can build a specification $\sigma$ to find a conditional ranking function for
-$T$ with initial states I:
-
-\begin{eqnarray}
- \sigma(V: X \to \mathbb{B}, R: X \to \mathbb{N}, x, x') = & I(x) \rightarrow V(x) \wedge \\
- & V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) < R(x') 
-\end{eqnarray}
-
-Here we have synthesised a ranking function $R$ into $\mathbb{N}$ (which is well-founded),
-as well as an inductive invariant $V$ that guarantees termination of $T$.
-
-To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
-$R: X \to \mathbb{N}^n$.
-
-\input{kalashnikov}
-
-
-
-\section{Miscellaneous Theory}
-
-\subsection{Termination theory}
-
 \begin{theorem}
  \textsc{Headshot} is biased towards finding ranking functions with
  low-Kolmogorov-complexity (LKC).
@@ -361,7 +353,20 @@ $R: X \to \mathbb{N}^n$.
  \textsc{Headshot} can often prove termination where linear methods cannot.
 \end{corollary}
 
-\subsection{Synthesis}
+
+
+\section{Solving the Synthesis Formula}
+\input{kalashnikov}
+
+\section{Genetic Programming and Incremental Evolution}
+
+We begin by observing that the asymptotic complexity of all of our synthesis
+backends are equal, assuming $P \neq NP$.  This complexity is:
+
+$$O(2^{K(f)}$$
+
+Where $K(f)$ is the Kolmogorov complexity of $f$, which is $O(\log Y^X) = O(X)$
+so the complexity is doubly exponential in the width of $X$.
 
 \begin{definition}
  A \emph{fitness landscape} is the space of all programs along with their fitness.
@@ -383,11 +388,6 @@ $R: X \to \mathbb{N}^n$.
  
  But it does.
 \end{conjecture}
-
-\begin{conjecture}
- Most incorrect programs are incorrect on most inputs.
-\end{conjecture}
-
 
 
 
