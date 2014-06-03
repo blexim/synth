@@ -106,22 +106,30 @@ Hence, we work with bit vectors!
 
 
 \noindent {\bf Second idea:}
-Moreover, most works on termination assume restrictive transition relations and are concerned with linear ranking functions. However, the probability of a random program having a linear ranking function is very low ? (see Section ?). 
+Moreover, most works on termination assume restrictive transition relations and are concerned with
+linear ranking functions. However, the probability of a random program having a linear ranking
+function is very low ? (see Section ?). 
 
 
-We propose a general framework that does not assume the existence of linear ranking functions and can uniformly handle:
+We propose a general framework that does not assume the existence of linear ranking
+functions and can uniformly handle:
 \begin{itemize}
 \item lexicographic linear functions (no templates).
 \item non-linear functions.
 \item lexicographic non-linear functions.
+\item programs with non-linear operations, e.g. logical and.
 \end{itemize}
 
 Illustration: examples of programs that do not have linear ranking functions that we can handle.
 
 
 \noindent {\bf Third idea:}
-For this purpose, we rephrase the termination problem as a synthesis problem.
- As a direct consequence, the complexity of the method is dependent on the Kolmogorov complexity of the computed ranking function (+ it's not dependent on the size/number of variables of the analysed program). We empirically observe that most programs have ranking functions with low Kolmogorov complexity (see Section ?). 
+For this purpose, we rephrase the termination problem as a second-order satisfaction problem
+(indeed, a program synthesis problem).
+ As a direct consequence, the complexity of the method is dependent on the Kolmogorov
+ complexity of the computed ranking function (+ it's not dependent on the size/number
+ of variables of the analysed program). We empirically observe that most programs have
+ ranking functions with low Kolmogorov complexity (see Section ?). 
 
 %Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
 %Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
@@ -138,57 +146,48 @@ $x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.  We can prove that $T$ is
 unconditionally terminating by finding an injective function $R: X \to Y$ where
 $Y$ is well-founded and $R$ is monotonically decreasing with respect $T$.  That is
 to say:
-
 $$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
 
-\subsection{Program Synthesis as Second-order Satisfaction}
-The program synthesis problem can be described as finding a satisfying assigment to the
-synthesis formula:
+We can specify the existence of a ranking function, and therefore the termination
+of a program, using a second order formula:
 
-\begin{definition}[Synthesis Formula]
- The synthesis formula for a specification $\sigma: X \to Y$ is:
- 
- $$\exists P: X \to Y . \forall x : X . \sigma(x, P(x))$$
- \end{definition}
-
-Since this formula involves quantification over functions $X \to Y$,
-this is a second-order formula -- indeed, if $X = Y = \mathbb{N}$,
-the formula describes a set at level $\Sigma_1^1$ of the analytical
-hierarchy.  As such, determining the satisfiability of the synthesis
-formula over a given logic is strictly harder than solving the
-halting problem over the same logic.
-
-\subsection{Generalised Synthesis}
-Sometimes we want to synthesise several programs at once, as well as some
-ground terms $\vec{x}$.  Also, we might want a more complex specification
-than just a relation over $X$ and $Y$.
-
-\begin{definition}[Generalised Synthesis Formula]
- $$\exists P_1: X_1 \to Y_1, \ldots, P_N: X_N \to Y_N , \vec{x}: X^e . \forall \vec{y}: X^a: X . \sigma(x, P_1, \ldots, P_N, y) $$
+\begin{definition}[Second-order Termination Formula]
+\begin{align*}
+ \exists R . \forall x, x' . & R(x) > 0 ~ \wedge \\
+                             & T(x, x') \rightarrow R(x) > R(x')
+\end{align*}
 \end{definition}
+
+A special case of a ranking function is a \emph{linear ranking function}.  This
+class of functions is exactly what you'd expect: a linear function that satisfies
+the criteria for a ranking function.  We recall that a linear function $f: X \to Y$,
+with $\dim(X) = n$ and $\dim(Y) = m$
+is one that can be expressed as an $n \times m$ matrix $M$:
+$$f(\vec{x}) = M\vec{x}$$
+
+In the case that $\dim(Y) = 1$, this reduces to an inner product:
+$$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c$$
+
+If $Y = Z^m$, we say that the ranking function is \emph{lexicographic},
+and require that the total order imposed on $Y$ is the lexicographic ordering
+induced on tuples of $Z$'s.  We note that some termination arguments
+require lexicographic ranking functions, or equivalently, ranking functions
+whose co-domain is the ordinals, rather than just $\mathbb{N}$.
+
+\subsection{Machine Arithmetic and Bitvectors}
+Computers tend to have fixed width integers.  For a machine with $k$-bit words,
+all arithmetic is done modulo $2^k$.  This means that a program's termination
+behaviour can depend strongly on whether it is interpreted as operating over
+mathematical integers, or over fixed-width machine words.  We can however
+observe that if no arithmetic operation \emph{overflows} (i.e. does not result
+in a value greater than $2^k$), fixed-width and integer arithmetic coincide.
 
 
 \section{Formalism}
+In this section, we fix a model of computation, describe its semantics and
+define the syntax of a language we will work over.
+
 \subsection{Syntax and Semantics}
-
-\section{Reducing Termination to Synthesis}
-For a transition system $T$, we can build a specification $\sigma$ to find a conditional ranking function for
-$T$ with initial states I:
-
-\begin{eqnarray}
- \sigma(V: X \to \mathbb{B}, R: X \to \mathbb{N}, x, x') = & I(x) \rightarrow V(x) \wedge \\
- & V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) < R(x') 
-\end{eqnarray}
-
-Here we have synthesised a ranking function $R$ into $\mathbb{N}$ (which is well-founded),
-as well as an inductive invariant $V$ that guarantees termination of $T$.
-
-To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
-$R: X \to \mathbb{N}^n$.
-
-\section{Theory}
-
-In the sequel, we will fix the following notation:
 
 \begin{itemize}
  \item Our transition relation is $T(x, x') \subseteq X \times X$.
@@ -200,8 +199,19 @@ In the sequel, we will fix the following notation:
  \item Our transition relation is deterministic and parititioned into chains of length $c_i$, with $l = \sum c_i$.
 \end{itemize}
 
+\section{Combinatorics of Termination}
 
-\subsection{Termination theory}
+\begin{itemize}
+ \item There are a TON of programs (way more than you'd expect).
+ \item There are a TON of terminating programs, and for our model of computation we can count
+  how many (the Chaitin constant).
+ \item There are a TON of ranking functions (way more than you'd expect, but not many as a
+  fraction of programs).
+ \item There are not many linear functions.
+ \item Most terminating programs don't admit linear ranking functions.
+ \item Kolmogorov complexity is relevant.
+\end{itemize}
+
 
 \begin{theorem}
  A random function $f : X \to Y$ is a ranking function for $(T, L)$ with probability
@@ -240,6 +250,99 @@ In the sequel, we will fix the following notation:
  Most terminating programs do not have linear ranking functions.
 \end{corollary}
 
+We recall the definition of the Kolmogorov-complexity of a function $f$:
+
+\begin{definition}[Kolmogorov complexity]
+ The Kolmogorov complexity $K(f)$ is the length of the shortest program that
+ computes $f$.
+\end{definition}
+
+We are primarily interested in studying low-Kolmogorov-complexity (LKC)
+functions.
+
+\begin{theorem}
+ Linear functions are LKC.
+\end{theorem}
+
+\begin{proof}
+ The program to compute a linear function $f: X \to Y$ is of size linear in
+ $\dim(X) \times \dim(Y)$.
+\end{proof}
+
+
+\begin{conjecture}
+ Most LKC functions are non-linear.
+\end{conjecture}
+
+\begin{corollary}
+ LKC is a weaker assumption than linearity.
+\end{corollary}
+
+
+\begin{theorem}
+ LKC programs do not always have LKC ranking functions.
+\end{theorem}
+
+\begin{proof}
+ This would solve the halting problem, Goldbach conjecture, Collatz conjecture.
+\end{proof}
+
+\begin{conjecture}
+ High-Kolmogorov-complexity (HKC) programs often have LKC ranking functions.
+\end{conjecture}
+
+
+\section{Solving the Synthesis Formula}
+
+\subsection{Program Synthesis as Second-order Satisfaction}
+The program synthesis problem can be described as finding a satisfying assigment to the
+synthesis formula:
+
+\begin{definition}[Synthesis Formula]
+ The synthesis formula for a specification $\sigma: X \to Y$ is:
+ 
+ $$\exists P: X \to Y . \forall x : X . \sigma(x, P(x))$$
+ \end{definition}
+
+Since this formula involves quantification over functions $X \to Y$,
+this is a second-order formula -- indeed, if $X = Y = \mathbb{N}$,
+the formula describes a set at level $\Sigma_1^1$ of the analytical
+hierarchy.  As such, determining the satisfiability of the synthesis
+formula over a given logic is strictly harder than solving the
+halting problem over the same logic.
+
+\subsection{Generalised Synthesis}
+Sometimes we want to synthesise several programs at once, as well as some
+ground terms $\vec{x}$.  Also, we might want a more complex specification
+than just a relation over $X$ and $Y$.
+
+\begin{definition}[Generalised Synthesis Formula]
+ $$\exists P_1: X_1 \to Y_1, \ldots, P_N: X_N \to Y_N , \vec{x}: X^e . \forall \vec{y}: X^a: X . \sigma(x, P_1, \ldots, P_N, y) $$
+\end{definition}
+
+\subsection{Reducing Termination to Synthesis}
+For a transition system $T$, we can build a specification $\sigma$ to find a conditional ranking function for
+$T$ with initial states I:
+
+\begin{eqnarray}
+ \sigma(V: X \to \mathbb{B}, R: X \to \mathbb{N}, x, x') = & I(x) \rightarrow V(x) \wedge \\
+ & V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) < R(x') 
+\end{eqnarray}
+
+Here we have synthesised a ranking function $R$ into $\mathbb{N}$ (which is well-founded),
+as well as an inductive invariant $V$ that guarantees termination of $T$.
+
+To synthesise an n-place lexicographic ranking function, we just ask for a ranking function
+$R: X \to \mathbb{N}^n$.
+
+\input{kalashnikov}
+
+
+
+\section{Miscellaneous Theory}
+
+\subsection{Termination theory}
+
 \begin{theorem}
  \textsc{Headshot} is biased towards finding ranking functions with
  low-Kolmogorov-complexity (LKC).
@@ -249,7 +352,6 @@ In the sequel, we will fix the following notation:
  Trivial.
 \end{proof}
 
-
 \begin{conjecture}
  Most LKC programs compute non-linear functions, but linear functions are LKC.
  So LKC is a weaker assumption than linearity.
@@ -257,15 +359,6 @@ In the sequel, we will fix the following notation:
 
 \begin{corollary}
  \textsc{Headshot} can often prove termination where linear methods cannot.
-\end{corollary}
-
-
-\begin{conjecture}
- LKC programs have LKC ranking functions (almost certainly false).
-\end{conjecture}
-
-\begin{corollary}
- Goldbach conjecture, Collatz conjecture.
 \end{corollary}
 
 \subsection{Synthesis}
@@ -296,8 +389,7 @@ In the sequel, we will fix the following notation:
 \end{conjecture}
 
 
-\section{Solving the Synthesis Formula}
-\input{kalashnikov}
+
 
 \section{Experiments}
 
