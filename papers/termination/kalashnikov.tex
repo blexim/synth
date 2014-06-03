@@ -405,26 +405,27 @@ Our encoding is the following:
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
 
-\begin{tabular}{llll}
- \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
- \verb|neg a| & & &
+\begin{tabular}{lll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| \\
+ \verb|neg a| & \verb|div a b|  & 
 \end{tabular}
 
 \medskip
 
 Bitwise logical and shift instructions:
 
-\begin{tabular}{llll}
- \verb|and  a b| & \verb|or a b| & \verb|xor a b| & \verb|ashr a b| \\
- \verb|lshr a b| & \verb|not  a| & &
+\begin{tabular}{lll}
+ \verb|and  a b| & \verb|or a b| & \verb|xor a b| \\
+ \verb|lshr a b| & \verb|ashr a b| & \verb|not  a| 
 \end{tabular}
 
 \medskip
 
 Unsigned and signed comparison instructions:
 
-\begin{tabular}{llll}
- \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| & \verb|slt a b|
+\begin{tabular}{lll}
+ \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
+ \verb|slt a b| & &
 \end{tabular}
 \end{center}
 }
@@ -502,7 +503,7 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \tikzstyle{line} = [draw, color=black, -latex']
 
 
-\resizebox{!}{2.3cm}{
+\resizebox{\linewidth}{!}{
 \begin{tikzpicture}[font=\sffamily]
 
 \node [file] (synth) {\sc synth.c};
@@ -567,7 +568,7 @@ is determined at runtime as follows:
  val(x) = \begin{cases}
            x < a & \text{the } x^{\text{th}} \text{ program argument} \\
            a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
-           x \geq a + c & \text{the result of the } (x - a - c)^{\text{th}} \text{ instruction}
+           x \geq a + c & \text{the result of instruction } (x - a - c)
           \end{cases}
 \]
 
@@ -748,7 +749,7 @@ we are currently synthesising for.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[scale=0.7, transform shape, node distance=2cm, auto]
+\begin{tikzpicture}[scale=0.65, transform shape, node distance=2cm, auto]
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
