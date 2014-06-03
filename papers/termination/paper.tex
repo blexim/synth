@@ -13,17 +13,29 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{pifont}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{pgf}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
+\usepackage{multicol}
+\usepackage{appendix}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata, shapes}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{conjecture}[theorem]{Conjecture}
 
-
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\xmark}{\ding{55}}
+
+
 
 
 
@@ -113,6 +125,7 @@ For this purpose, we rephrase the termination problem as a synthesis problem.
 
 %Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
 %Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
+
 
 \section{Related Work}
 Error 404.
@@ -283,6 +296,8 @@ In the sequel, we will fix the following notation:
 \end{conjecture}
 
 
+\section{Solving the Synthesis Formula}
+\input{kalashnikov}
 
 \section{Experiments}
 
