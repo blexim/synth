@@ -35,7 +35,7 @@
 
 \newcommand{\xmark}{\ding{55}}
 
-
+\lstset{language=c++}
 
 
 
@@ -101,6 +101,43 @@ Illustration: two examples that terminate for mathematical integers/reals, but d
 \item[1.] q = q+y; y=y+1;
 \item[2.] some floating point example
 \end{itemize}
+
+A program that does not terminate for integers, but does for bitvectors:
+\begin{lstlisting}
+while(x > 0)
+  x++;
+\end{lstlisting}
+
+A program that terminates for integers, but does not for bitvectors:
+\begin{lstlisting}
+while (x > 0)
+ x -= 2;
+\end{lstlisting}
+
+A program that does not terminate for reals, but does for floats:
+\begin{lstlisting}
+while (x > 0.0)
+ x *= 0.5;
+\end{lstlisting}
+
+A program that terminates for reals, but does not for floats:
+\begin{lstlisting}
+while (x > 0.0)
+ x -= 1.0;
+\end{lstlisting}
+
+A non-linear program with a linear ranking function:
+\begin{lstlisting}
+while (x > 0)
+ x = (x - 1) & x;
+\end{lstlisting}
+
+A linear program with a non-linear ranking function:
+\begin{lstlisting}
+while (x != 0)
+ x = -x / 2;
+\end{lstlisting}
+
 
 Hence, we work with bit vectors!
 
@@ -392,6 +429,9 @@ so the complexity is doubly exponential in the width of $X$.
 
 
 \section{Experiments}
+
+We implemented our fully automatic program synthesis procedure in the \textsc{Kalashnikov} tool.
+
 
 \begin{figure*}
 \centering
