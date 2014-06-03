@@ -80,9 +80,39 @@ Termination, Program Synthesis, Lexicographic Ranking Functions, Bitvector Ranki
 Floating Point Ranking Functions.
 
 \section{Introduction}
-Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
+{\bf First idea:}
+Most reasearch on termination focuses on generating linear ranking functions for relations over mathematical integers/reals as opposed to 
+bit-vectors (machine-level integers)/floating point. However, this may result in different behaviours than those observed in practice.
 
-Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
+Illustration: two examples that terminate for mathematical integers/reals, but don't terminate for bit vectors/floats.
+\begin{itemize}
+\item[1.] q = q+y; y=y+1;
+\item[2.] some floating point example
+\end{itemize}
+
+Hence, we work with bit vectors!
+
+
+\noindent {\bf Second idea:}
+Moreover, most works on termination assume restrictive transition relations and are concerned with linear ranking functions. However, the probability of a random program having a linear ranking function is very low ? (see Section ?). 
+
+
+We propose a general framework that does not assume the existence of linear ranking functions and can uniformly handle:
+\begin{itemize}
+\item lexicographic linear functions (no templates).
+\item non-linear functions.
+\item lexicographic non-linear functions.
+\end{itemize}
+
+Illustration: examples of programs that do not have linear ranking functions that we can handle.
+
+
+\noindent {\bf Third idea:}
+For this purpose, we rephrase the termination problem as a synthesis problem.
+ As a direct consequence, the complexity of the method is dependent on the Kolmogorov complexity of the computed ranking function (+ it's not dependent on the size/number of variables of the analysed program). We empirically observe that most programs have ranking functions with low Kolmogorov complexity (see Section ?). 
+
+%Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
+%Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
 
 \section{Related Work}
 Error 404.
