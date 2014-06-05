@@ -24,6 +24,7 @@
 \usepackage{caption}
 \DeclareCaptionType{copyrightbox}
 \usepackage{subfig}
+\usepackage{multirow}
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
 
@@ -152,6 +153,17 @@ Another limitation of the state of the art in the computation of ranking functio
 \emph{linear ranking functions} \cite{}. To better understand this restriction, we computed the probability of a random terminating program having a linear ranking
 function (see Section ?). This probability proved to be very low, indicating that the linearity assumption for the ranking functions is indeed prohibitive.
 
+Because most state-of-the-art termination procedures use disjunctive well foundedness arguments, they require the use of
+complex safety provers that are able to reason about unbounded unfoldings of a transition relation.  In contrast to this,
+we are able to build monolithic termination arguments that only need ``local'' reasoning -- our ranking functions
+can be proved sufficient by considering just a single unfolding of a loop.
+
+Many loops do not terminate for all starting states, but are contained in programs that guarantee the loop will
+terminate.  Traditional termination provers have difficulty reasoning about such conditionally-terminating loops.
+We are able to handle such loops by computing \emph{termination invariants}.  This mechanism also allows us to
+prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
+reachable after leaving a previous loop.
+
 We propose a general framework that does not assume the existence of linear ranking functions and can uniformly compute
 (lexicographic) linear and non-linear ones, 
 for programs with both bit-vectors and floats. Our technique can handle programs with non-linear operations, e.g. logical and.
@@ -161,7 +173,28 @@ As a direct consequence, our technique is semantic in nature and does not
 dependent on the size of the analysed program or its number of variables. 
 However, its efficiency does depend on the Kolmogorov
  complexity of the computed ranking functions. We show that the probability of
-a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?). 
+a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?).
+
+By phrasing the termination problem as a single rank function synthesis problem, we observe that
+we can make the termination problem as hard as finding ranking functions, rather than as hard as
+solving a difficult ``double reachability'' problem (cf. Terminator).
+
+\begin{figure}
+ \begin{tabular}{|ll||c|c|}
+ \hline
+  & & \multicolumn{2}{c|}{Program} \\
+  & & Linear & Non-Linear \\
+  \hline
+  \hline
+  \multirow{2}{*}{Ranking Functions} & Linear & \checkmark \xmark & \checkmark \\
+   & Non-Linear & \checkmark & \checkmark \\
+   \hline
+ \end{tabular}
+
+ \caption{Legend: \xmark = state-of-the art can handle, \checkmark = we can handle\label{fig:handletable}}
+\end{figure}
+
+
 %We empirically observe that most programs have
 %ranking functions with low Kolmogorov complexity (see Section ?). 
 
@@ -174,14 +207,21 @@ The main contributions of our paper are highlighted below:
 \item  We rephrased the termination problem as a second-order satisfaction problem and made 
 use of results in genetic programming to efficiently solve it. We have also investigated the effects of genetic operators on the search space for ranking functions and computed theoretical 
 bounds on the convergence time ...
-\item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.  
+\item We present a formulation that allows us to prove termination without using a fancy safety prover (because
+we don't do a DWF proof).  In particular,
+we only need a bounded model checker that performs a single unwinding of a loop.
+\item Our technique is able to uniformly handle conditionally-terminating loops, as well as programs with
+multiple loops.
+\item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 \end{itemize}
 
 This paper is organised as follows:
 
 \section{Related Work}
-Error 404.
-
+Primarily divided into structural (syntactic) vs. semantic.  For example, terminationg of term rewriting systems
+is largely structural, whereas DWF analysis (cf. Terminator) is more semantic -- it just deals
+with transition relations, but uses some amount of syntax in that it identifies loops \& looping
+paths.
 
 \section{Motivational Examples}
 A non-linear program with a linear ranking function (+ program with non-linear operations):
@@ -222,6 +262,15 @@ induced on tuples of $Z$'s.  We note that some termination arguments
 require lexicographic ranking functions, or equivalently, ranking functions
 whose co-domain is the ordinals, rather than just $\mathbb{N}$.
 
+\subsection{Disjunctive Well-Foundedness}
+Terminator uses disjunctive well foundedness arguments, which can be found
+piece by piece, but require reasoning about the transitive closure of a transition
+relation.  Because we build a monolithic well foundedness argument, we
+do not need to reason about the full transitive closure, and can instead do our
+reasoning over a single step of the transition relation.  This means that we
+can get away with very simple model checking methods, rather than requiring
+a full-blown safety prover.
+
 \subsection{Machine Arithmetic and Bitvectors}
 Computers tend to have fixed width integers.  For a machine with $k$-bit words,
 all arithmetic is done modulo $2^k$.  This means that a program's termination
@@ -230,7 +279,7 @@ mathematical integers, or over fixed-width machine words.  We can however
 observe that if no arithmetic operation \emph{overflows} (i.e. does not result
 in a value greater than $2^k$), fixed-width and integer arithmetic coincide.
 
-\section{Formalism}
+\section{Combinatorics of Finite Termination}
 In this section, we fix a model of computation, describe its semantics and
 define the syntax of a language we will work over.
 
@@ -246,8 +295,7 @@ define the syntax of a language we will work over.
  \item Our transition relation is deterministic and parititioned into chains of length $c_i$, with $l = \sum c_i$.
 \end{itemize}
 
-\section{Combinatorics of Termination}
-
+\subsection{Counting Programs}
 \begin{itemize}
  \item There are a TON of programs (way more than you'd expect).
  \item There are a TON of terminating programs, and for our model of computation we can count
@@ -303,12 +351,30 @@ define the syntax of a language we will work over.
 We can specify the existence of a ranking function, and therefore the termination
 of a program, using a second order formula:
 
+\begin{figure*}
 \begin{definition}[Second-order Termination Formula]
 \begin{align*}
  \exists R . \forall x, x' . & R(x) > 0 ~ \wedge \\
                              & T(x, x') \rightarrow R(x) > R(x')
 \end{align*}
 \end{definition}
+
+\begin{definition}[Conditional Termination Formula]
+ \begin{align*}
+  \exists R, I . \forall x, x' . & P(x) \rightarrow I(x) ~ \wedge \\
+                                 & c(x) \wedge I(x) \wedge T(x, x') \rightarrow I(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+ \end{align*}
+\end{definition}
+
+\begin{definition}[Multiple Loops Termination Formula]
+ \begin{align*}
+  \exists R, I_1, I_2 . \forall x, x' . & P(x) \rightarrow I_1(x) ~ \wedge \\
+                                        & I_1(x) \wedge L_1(x, x') \rightarrow I_1(x') ~ \wedge \\
+                                        & I_1(x) \wedge \lnot c_1(x) \rightarrow I_2(x) ~ \wedge \\
+                                        & c(x) \wedge I_2(x) \wedge L_2(x, x') \rightarrow I_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+ \end{align*}
+\end{definition}
+\end{figure*}
 
 \section{Second-Order Satisfaction as Program Synthesis}
 The program synthesis problem can be described as finding a satisfying assigment to the
@@ -413,6 +479,10 @@ functions.
 
 
 \section{Solving the Synthesis Formula}
+We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
+have a program synthesiser kicking around, we present the design of one synthesiser
+that can be used to solve the problem.
+
 \input{kalashnikov}
 
 \section{Genetic Programming and Incremental Evolution}
@@ -450,8 +520,7 @@ so the complexity is doubly exponential in the width of $X$.
 
 \section{Experiments}
 
-We implemented our fully automatic program synthesis procedure in the \textsc{Kalashnikov} tool.
-
+We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig.~\ref{fig:nonlinear}.
 
 \begin{figure*}
 \centering
