@@ -21,7 +21,9 @@
 \usepackage{algorithm}
 \usepackage{multicol}
 \usepackage{appendix}
-
+\usepackage{caption}
+\DeclareCaptionType{copyrightbox}
+\usepackage{subfig}
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
 
@@ -34,6 +36,7 @@
 \newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\xmark}{\ding{55}}
+\newcommand{\todo}[1]{{\bf TODO:} #1}
 
 \lstset{language=c++}
 
@@ -92,41 +95,96 @@ Termination, Program Synthesis, Lexicographic Ranking Functions, Bitvector Ranki
 Floating Point Ranking Functions.
 
 \section{Introduction}
-{\bf First idea:}
-Most reasearch on termination focuses on generating linear ranking functions for relations over mathematical integers/reals as opposed to 
-bit-vectors (machine-level integers)/floating point. However, this may result in different behaviours than those observed in practice.
 
-Illustration: two examples that terminate for mathematical integers/reals, but don't terminate for bit vectors/floats.
+Proving program termination is typically done by finding a well-founded \emph{ranking function}
+for the program states. When doing so, the majority of the existing termination provers diverge 
+in one important aspect from the execution
+of a program on a computer:
+bit-vectors and floats 
+are treated as mathematical integers and reals, respectively \cite{}.
+This approximation gives rise to 
+{\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
+
+
+
+For the case of bit-vectors (machine-level integers), their abstraction  to mathematical integers 
+ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in %, it gives rise to 
+%{\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors are ubiquitous in computer systems. 
+incomparable behaviours with respect to termination:
+%The differences between the semantics of unbounded mathematical integers and that of machine integers result in 
 \begin{itemize}
-\item[1.] q = q+y; y=y+1;
-\item[2.] some floating point example
+\item Programs that terminate for integers may \emph{not} terminate for bit-vectors. For illustration, consider the following loop:
+\begin{lstlisting}[language=C]
+while (x > 0) x -= 2;
+\end{lstlisting}
+The loop always terminates for unbounded integers as the value of \texttt{x} does eventually become negative, 
+whereas, with bit-vector arithmetic, \texttt{x} under-flows before becoming negative and goes back to being positive causing the loop to never terminate.
+According to the C11 standard for the C programming language, a signed under- or over-flow yields undefined behaviour.
+However, compilers generally treat signed under- and over-flows using the
+wrap-around behaviour (see Section~\ref{}). 
+\item Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
+ \begin{lstlisting}[language=C]
+ while(x > 0) x++;
+ \end{lstlisting}
+This loop is  terminating for bit-vectors since \texttt{x}
+will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
+arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
 \end{itemize}
 
-A program that does not terminate for integers, but does for bitvectors:
+A scenario similar to the one for bit-vectors happens when floats are abstracted to unbounded reals by termination provers \cite{}.
+Consequently, these provers ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
+This approximation may lead to erroneous diagnosis of a program's terminating behaviour as illustrated next:
+\begin{itemize}
+\item This loop does not terminate for reals, but does for floats.
 \begin{lstlisting}
-while(x > 0)
-  x++;
+while (x > 0.0) x *= 0.5;
 \end{lstlisting}
 
-A program that terminates for integers, but does not for bitvectors:
+\item The following loop terminates for reals, but does not for floats.
 \begin{lstlisting}
-while (x > 0)
- x -= 2;
+while (x > 0.0) x -= 1.0;
 \end{lstlisting}
+\end{itemize}   
+\todo{explain the reasons for non-termination with figures.}
 
-A program that does not terminate for reals, but does for floats:
-\begin{lstlisting}
-while (x > 0.0)
- x *= 0.5;
-\end{lstlisting}
 
-A program that terminates for reals, but does not for floats:
-\begin{lstlisting}
-while (x > 0.0)
- x -= 1.0;
-\end{lstlisting}
+Another limitation of the state of the art in the computation of ranking functions is the fact that  most techniques assume \emph{restrictive transition relations} and are only able to compute
+\emph{linear ranking functions} \cite{}. To better understand this restriction, we computed the probability of a random terminating program having a linear ranking
+function (see Section ?). This probability proved to be very low, indicating that the linearity assumption for the ranking functions is indeed prohibitive.
 
-A non-linear program with a linear ranking function:
+We propose a general framework that does not assume the existence of linear ranking functions and can uniformly compute
+(lexicographic) linear and non-linear ones, 
+for programs with both bit-vectors and floats. Our technique can handle programs with non-linear operations, e.g. logical and.
+For this purpose, we rephrase the termination problem as a second-order satisfaction problem
+(indeed, a program synthesis problem). 
+As a direct consequence, our technique is semantic in nature and does not
+dependent on the size of the analysed program or its number of variables. 
+However, its efficiency does depend on the Kolmogorov
+ complexity of the computed ranking functions. We show that the probability of
+a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?). 
+%We empirically observe that most programs have
+%ranking functions with low Kolmogorov complexity (see Section ?). 
+
+%Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
+%Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
+
+The main contributions of our paper are highlighted below:
+\begin{itemize}
+\item We designed a technique for computing ranking functions that correctly accounts for the wrap-around behavior caused by under- and overflows in bit-vector and floating point arithmetic. To the best of our knowledge, this is the first approach able to compute ranking functions for programs handling floats. Our technique is not restricted to finding linear ranking functions, but can also compute (lexicographic) non-linear  ones. We justified the need for such a non restrictive procedure by computing the probability ... .
+\item  We rephrased the termination problem as a second-order satisfaction problem and made 
+use of results in genetic programming to efficiently solve it. We have also investigated the effects of genetic operators on the search space for ranking functions and computed theoretical 
+bounds on the convergence time ...
+\item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.  
+\end{itemize}
+
+This paper is organised as follows:
+
+\section{Related Work}
+Error 404.
+
+
+\section{Motivational Examples}
+A non-linear program with a linear ranking function (+ program with non-linear operations):
 \begin{lstlisting}
 while (x > 0)
  x = (x - 1) & x;
@@ -137,43 +195,6 @@ A linear program with a non-linear ranking function:
 while (x != 0)
  x = -x / 2;
 \end{lstlisting}
-
-
-Hence, we work with bit vectors!
-
-
-\noindent {\bf Second idea:}
-Moreover, most works on termination assume restrictive transition relations and are concerned with
-linear ranking functions. However, the probability of a random program having a linear ranking
-function is very low ? (see Section ?). 
-
-
-We propose a general framework that does not assume the existence of linear ranking
-functions and can uniformly handle:
-\begin{itemize}
-\item lexicographic linear functions (no templates).
-\item non-linear functions.
-\item lexicographic non-linear functions.
-\item programs with non-linear operations, e.g. logical and.
-\end{itemize}
-
-Illustration: examples of programs that do not have linear ranking functions that we can handle.
-
-
-\noindent {\bf Third idea:}
-For this purpose, we rephrase the termination problem as a second-order satisfaction problem
-(indeed, a program synthesis problem).
- As a direct consequence, the complexity of the method is dependent on the Kolmogorov
- complexity of the computed ranking function (+ it's not dependent on the size/number
- of variables of the analysed program). We empirically observe that most programs have
- ranking functions with low Kolmogorov complexity (see Section ?). 
-
-%Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
-%Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
-
-
-\section{Related Work}
-Error 404.
 
 \section{Preliminaries}
 \subsection{Termination and Ranking Functions}
@@ -208,7 +229,6 @@ behaviour can depend strongly on whether it is interpreted as operating over
 mathematical integers, or over fixed-width machine words.  We can however
 observe that if no arithmetic operation \emph{overflows} (i.e. does not result
 in a value greater than $2^k$), fixed-width and integer arithmetic coincide.
-
 
 \section{Formalism}
 In this section, we fix a model of computation, describe its semantics and
