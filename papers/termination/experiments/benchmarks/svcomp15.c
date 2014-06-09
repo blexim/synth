@@ -1,5 +1,5 @@
 /*
- * Name:           name
+ * Name:           SVCOMP-HarrisLalNoriRajamani-SAS2010
  * Linear-program: true
  * Linear-rank:    true
  * Conditional:    false

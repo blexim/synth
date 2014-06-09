@@ -1,5 +1,5 @@
 /*
- * Name:           name
+ * Name:           SVCOMP-Genady
  * Linear-program: true
  * Linear-rank:    true
  * Conditional:    false

@@ -1,5 +1,5 @@
 /*
- * Name:           name
+ * Name:           SVCOMP-gcd
  * Linear-program: true
  * Linear-rank:    true
  * Conditional:    false
@@ -17,9 +17,8 @@
  */
 extern int nondet(void);
 
-int gcd(int x, int y)
-{
-  int r;
+int main(void) {
+  int x, y, r;
 
   if (x < 0)
     x = -x;
@@ -35,14 +34,4 @@ int gcd(int x, int y)
     y = r;
   }
   return x;
-}
-
-int main()
-{
-  int x, y;
-
-  x = nondet();
-  y = nondet();
-
-  gcd(x, y);
 }

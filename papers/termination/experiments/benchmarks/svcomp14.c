@@ -1,5 +1,5 @@
 /*
- * Name:           name
+ * Name:           SVCOMP-GulwaniJainKoskinen-PLDI2009
  * Linear-program: true
  * Linear-rank:    true
  * Conditional:    false
@@ -16,9 +16,6 @@
  * Author: heizmann@informatik.uni-freiburg.de
  *
  */
-
-extern int nondet(void);
-
 
 int main()
 {
