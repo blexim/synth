@@ -1,3 +1,12 @@
+/*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
 //#Termination
 /*
  * Date: November 2013
@@ -6,58 +15,59 @@
  * 
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
-int main() {
-    int x,y,z,m,n;
-    if (__VERIFIER_nondet_int()) {
-        x = 1;
-    } else {
-        x = -1;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    if (x > 0) {
-        x++;
-    } else {
-        x--;
-    }
-    while (y<100 && z<100) {
-        y = y+x;
-        z = z-x;
-    }
-    return 0;
+int main()
+{
+  int x, y, z, m, n;
+  if (nondet()) {
+    x = 1;
+  } else {
+    x = -1;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  if (x > 0) {
+    x++;
+  } else {
+    x--;
+  }
+  while (y < 100 && z < 100) {
+    y = y + x;
+    z = z - x;
+  }
+  return 0;
 }

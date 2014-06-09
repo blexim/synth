@@ -8,7 +8,8 @@
  * Lexicographic:  1
  */
 
-int main(void) {
+int main(void)
+{
   int x, y, z, i;
 
   x = nondet();

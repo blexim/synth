@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Program from Fig.7 of
  * 2013FSE - Nori,Sharma - Termination Proofs from Tests
  *
@@ -7,16 +16,17 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
-int main() {
-    int a,i,b,j,c,M,N;
-    a = i;
-    b = j;
-    c = 0;
-    while (i<M || j<N) {
-    	i = i + 1;
-    	j = j + 1;
-    	c = c + 1;
-    }
+int main()
+{
+  int a, i, b, j, c, M, N;
+  a = i;
+  b = j;
+  c = 0;
+  while (i < M || j < N) {
+    i = i + 1;
+    j = j + 1;
+    c = c + 1;
+  }
 }

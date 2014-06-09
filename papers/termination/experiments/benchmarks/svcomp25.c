@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Terminating Program
  * Damien Massé showed me this program
  *
@@ -6,15 +15,16 @@
  * Author: urban@di.ens.fr
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
-int main() {
-	int x;
-	while (x <= 1000) {
-		if (__VERIFIER_nondet_int()) {
-			x = - 2 * x + 2;
-		} else {
-			x = - 3 * x - 2;
-		}
-	}
+int main()
+{
+  int x;
+  while (x <= 1000) {
+    if (nondet()) {
+      x = -2 * x + 2;
+    } else {
+      x = -3 * x - 2;
+    }
+  }
 }

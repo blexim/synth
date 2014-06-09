@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Program from Fig.3 of
  * 2010SAS - Harris, Lal, Nori, Rajamani - AlternationforTermination
  *
@@ -7,24 +16,26 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
 int x;
 
-void foo(void) {
-	x--;
+void foo(void)
+{
+  x--;
 }
 
 
-int main() {
-	x = __VERIFIER_nondet_int();
+int main()
+{
+  x = nondet();
 
-	while (x > 0) {
-		if (__VERIFIER_nondet_int()) {
-			foo();
-		} else {
-			foo();
-		}
-	}
-	return 0;
+  while (x > 0) {
+    if (nondet()) {
+      foo();
+    } else {
+      foo();
+    }
+  }
+  return 0;
 }

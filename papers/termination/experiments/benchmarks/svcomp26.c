@@ -1,3 +1,12 @@
+/*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
 /* 
  * Terminating program which has a r.f. based on minimum
  *
@@ -6,20 +15,29 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
 int main()
 {
-   int x,y;
-   int z;
-   
-   x = __VERIFIER_nondet_int();
-   y = __VERIFIER_nondet_int();
-   
-   while (y > 0 && x > 0) {
-      if (x>y) z = y;
-        else  z = x;
-      if (__VERIFIER_nondet_int())  { y = y+x; x = z-1; z = y+z; }
-       else { x = y+x; y = z-1; z = x+z; }
+  int x, y;
+  int z;
+
+  x = nondet();
+  y = nondet();
+
+  while (y > 0 && x > 0) {
+    if (x > y)
+      z = y;
+    else
+      z = x;
+    if (nondet()) {
+      y = y + x;
+      x = z - 1;
+      z = y + z;
+    } else {
+      x = y + x;
+      y = z - 1;
+      z = x + z;
     }
-} 
+  }
+}

@@ -8,7 +8,8 @@
  * Lexicographic:  unk
  */
 
-int main(void) {
+int main(void)
+{
   int y1, y2;
 
   y1 = nondet();

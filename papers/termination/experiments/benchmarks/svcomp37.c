@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Terminating program that has no linear lexicographic ranking function.
  * The program chooses nondeterministically the variable x or y and assigns to
  * it the result of   minimum(x,y)-1
@@ -13,25 +22,26 @@
  */
 
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
-int main() {
-    int x,y;
-    while (x > 0 && y > 0) {
-    	if (__VERIFIER_nondet_int()) {
-    		if (x<y) {
-    			y = x - 1;
-    		} else {
-    			y = y - 1;
-    		}
-    		x = __VERIFIER_nondet_int();
-    	} else {
-    		if (x<y) {
-    			x = x - 1;
-    		} else {
-    			x = y - 1;
-    		}
-    		y = __VERIFIER_nondet_int();
-    	}
+int main()
+{
+  int x, y;
+  while (x > 0 && y > 0) {
+    if (nondet()) {
+      if (x < y) {
+        y = x - 1;
+      } else {
+        y = y - 1;
+      }
+      x = nondet();
+    } else {
+      if (x < y) {
+        x = x - 1;
+      } else {
+        x = y - 1;
+      }
+      y = nondet();
     }
+  }
 }

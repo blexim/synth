@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Program from Fig.1 of
  * 2010SAS - Harris, Lal, Nori, Rajamani - AlternationforTermination
  *
@@ -7,37 +16,39 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
 
-void f(int d) {
-	int x, y, k, z = 1;
-	if (k > 1073741823) {
-		return;
-	}
-	// ...
-	L1:
-	while (z < k) {
-		z = 2 * z;
-	}
-	L2:
-	while (x > 0 && y > 0) {
-		// ...
-		if (__VERIFIER_nondet_int()) {
-			P1:
-			x = x - d;
-			y = __VERIFIER_nondet_int();
-			z = z - 1;
-		} else {
-			y = y - d;
-		}
-	}
+void f(int d)
+{
+  int x, y, k, z = 1;
+  if (k > 1073741823) {
+    return;
+  }
+  // ...
+L1:
+  while (z < k) {
+    z = 2 * z;
+  }
+L2:
+  while (x > 0 && y > 0) {
+    // ...
+    if (nondet()) {
+    P1:
+      x = x - d;
+      y = nondet();
+      z = z - 1;
+    } else {
+      y = y - d;
+    }
+  }
 }
 
-int main() {
-	if (__VERIFIER_nondet_int()) {
-		f(1);
-	} else {
-		f(2);
-	}
+int main()
+{
+  if (nondet()) {
+    f(1);
+  } else {
+    f(2);
+  }
 }

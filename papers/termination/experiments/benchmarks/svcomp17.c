@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Program from Fig.1 of
  * 2010CAV - Kroening,Sharygina,Tsitovich,Wintersteiger - Termination Analysis with Compositional Transition Invariants
  *
@@ -7,24 +16,23 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
 
-int main() {
-	int x = __VERIFIER_nondet_int();
-	int debug = 0;
+int main()
+{
+  int x = nondet();
+  int debug = 0;
 
-	while (x < 255) {
-		if (x % 2 != 0) {
-			x--;
-		} else {
-			x += 2;
-		}
-		if (debug != 0) {
-			x = 0;
-		}
-	}
-	return 0;
+  while (x < 255) {
+    if (x % 2 != 0) {
+      x--;
+    } else {
+      x += 2;
+    }
+    if (debug != 0) {
+      x = 0;
+    }
+  }
+  return 0;
 }
-
-

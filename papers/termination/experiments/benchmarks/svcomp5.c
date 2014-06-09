@@ -8,7 +8,8 @@
  * Lexicographic:  unk
  */
 
-int main(void) {
+int main(void)
+{
   int x, y, N;
 
   x = nondet();
@@ -22,7 +23,7 @@ int main(void) {
   if (x + y >= 0) {
     while (x <= N) {
       if (nondet()) {
-        x = 2*x + y;
+        x = 2 * x + y;
         y = y + 1;
       } else {
         x = x + 1;

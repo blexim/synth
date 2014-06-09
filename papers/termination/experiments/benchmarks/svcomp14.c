@@ -1,3 +1,12 @@
+/*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
 //#Termination
 /*
  * Program from Fig.1a of
@@ -8,27 +17,26 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
 
-int main() {
-    int id = __VERIFIER_nondet_int();
-    int maxId = __VERIFIER_nondet_int();
+int main()
+{
+  int id = nondet();
+  int maxId = nondet();
 
 
-    if(0 <= id && id < maxId) {
-        int tmp = id+1;
-        while(tmp!=id && __VERIFIER_nondet_int()) {
-            if (tmp <= maxId) {
-                tmp = tmp + 1;
-            } else {
-                tmp = 0;
-            }
-        }
+  if (0 <= id && id < maxId) {
+    int tmp = id + 1;
+    while (tmp != id && nondet()) {
+      if (tmp <= maxId) {
+        tmp = tmp + 1;
+      } else {
+        tmp = 0;
+      }
     }
+  }
 
 
-    return 0;
+  return 0;
 }
-
-

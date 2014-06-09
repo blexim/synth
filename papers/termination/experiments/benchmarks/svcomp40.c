@@ -1,4 +1,13 @@
 /*
+ * Name:           name
+ * Linear-program: true
+ * Linear-rank:    true
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  1
+ */
+/*
  * Program from Fig.1 of
  * 2013WST - Urban - Piecewise-Defined Ranking Functions
  *
@@ -7,15 +16,16 @@
  *
  */
 
-extern int __VERIFIER_nondet_int(void);
+extern int nondet(void);
 
-int main() {
-    int x1, x2;
-    while (x1 <= 10) {
-        x2 = 1000;
-        while (x2 > 1) {
-            x2 = x2 -1;
-        }
-        x1 = x1 + 1;
+int main()
+{
+  int x1, x2;
+  while (x1 <= 10) {
+    x2 = 1000;
+    while (x2 > 1) {
+      x2 = x2 - 1;
     }
+    x1 = x1 + 1;
+  }
 }
