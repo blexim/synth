@@ -94,6 +94,77 @@ def flatten(ast, program):
     for (_, c) in ast.children():
       flatten(c, program)
 
+class ReturnVisitor(c_ast.NodeVisitor):
+  def visit_Return(self, node):
+    node.expr = c_ast.Constant('int', '0')
+
+def split_func(fd, ofile):
+  prog = FlatProgram()
+
+  flatten(fd.body, prog)
+  cgen = c_generator.CGenerator()
+  (id_map, rev_id_map) = number_ids(fd)
+
+  ofile.write('#include "synth.h"\n')
+  ofile.write("/*\n")
+
+  for id in sorted(rev_id_map.keys()):
+    ofile.write(" * %s -> %d\n" % (rev_id_map[id], id))
+
+  ofile.write("*/\n\n");
+
+  nids = len(id_map)
+
+  prefix = copy.deepcopy(prog.blocks[0])
+  loop = copy.deepcopy(prog.blocks[1])
+
+  decls = []
+  copy_out = []
+
+  retvis = ReturnVisitor()
+  retvis.visit(prefix)
+
+  for b in prefix.block_items:
+    if isinstance(b, c_ast.Decl):
+      id = b.name
+      vid = id_map[id]
+
+      b.init = c_ast.ArrayRef(c_ast.ID('in_vars'),
+                              c_ast.Constant('int', str(vid)))
+
+      decls.append(b)
+
+  for id in sorted(rev_id_map.keys()):
+    varname = rev_id_map[id]
+    arr = c_ast.ArrayRef(c_ast.ID('out_vars'),
+                         c_ast.Constant('int', str(id)))
+    var = c_ast.ID(varname)
+
+    copy_out.append(c_ast.Assignment("=", arr, var))
+
+
+  prefix.block_items += copy_out
+  prefix.block_items.append(c_ast.Return(c_ast.Constant('int', str('1'))))
+
+  ofile.write("int prefix(word_t in_vars[%d], word_t out_vars[%d]) {\n" % (nids, nids))
+  ofile.write(cgen.visit(prefix))
+  ofile.write("}\n\n")
+
+  ofile.write("int guard(word_t in_vars[%d]) {\n" % nids)
+  guard_body = c_ast.Compound(copy.copy(decls))
+  guard_body.block_items.append(c_ast.Return(loop.cond))
+  ofile.write(cgen.visit(guard_body))
+  ofile.write("}\n\n")
+
+  ofile.write("void body(word_t in_vars[%d], word_t out_vars[%d]) {\n" % (nids, nids))
+  loop_body = c_ast.Compound(copy.copy(decls))
+  loop_body.block_items.append(loop.stmt)
+  loop_body.block_items += copy_out
+  ofile.write(cgen.visit(loop_body))
+  ofile.write("}\n\n")
+
+
+
 def split(filename):
   ast = parse_file_libc(filename)
   prog = FlatProgram()
@@ -102,18 +173,10 @@ def split(filename):
     if not isinstance(fd, c_ast.FuncDef):
       continue
 
-    print "Flattening %s" % fd.decl.name
+    if not fd.decl.name == 'main':
+      continue
 
-    flatten(fd.body, prog)
-    cgen = c_generator.CGenerator()
-
-    for b in prog.blocks:
-      if is_loop(b):
-        print "Loop:"
-        print cgen.visit(b)
-      else:
-        print "Straight line:"
-        print cgen.visit(b)
+    split_func(fd, sys.stdout)
 
 if __name__ == '__main__':
   import sys
