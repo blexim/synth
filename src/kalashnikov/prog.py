@@ -4,6 +4,9 @@ import re
 import perfcounters as perf
 import args
 
+args.argparser.add_argument("--vars", nargs="*", default=[],
+    help="variable names")
+
 opsre = re.compile('ops={(.*?)}')
 parmsre = re.compile('params={(.*?)}')
 constsre = re.compile('consts={(.*?)}')
@@ -36,14 +39,20 @@ binops = {
     26: "f/"
 }
 
+revbinops = { v: k for (k, v) in binops.items() }
+
 unops = {
     4: "-",
     8: "~"
 }
 
+revunops = { v: k for (k, v) in unops.items() }
+
 ternops = {
     22: "ITE"
 }
+
+revternops = { v: k for (k, v) in ternops.items() }
 
 def str2ints(s):
   ret = []
@@ -95,6 +104,12 @@ class Prog(object):
       if mevars:
         self.evars = str2ints(mevars.group(1))
 
+  def argname(self, idx):
+    if len(args.args.vars) < args.args.args:
+      return 'a%d' % (idx+1)
+    else:
+      return args.args.vars[idx]
+
   def strarg(self, p, consts):
     if p < len(consts):
       return hex(consts[p])
@@ -102,7 +117,7 @@ class Prog(object):
       p -= len(consts)
 
       if p < args.args.args:
-        return 'a%d' % (p+1)
+        return self.argname(p)
       else:
         return 't%d' % (p - args.args.args + 1)
 
