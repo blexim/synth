@@ -38,6 +38,25 @@ int generation;
 int correct;
 int numtests;
 
+void load_seed(solution_t *pop) {
+#ifdef SEEDFILE
+  FILE *seedfile = fopen(SAVEFILE, "rb");
+  size_t nread = 0;
+
+  if (seedfile == NULL) {
+    return;
+  }
+
+  while (!feof(seedfile) && !ferror(seedfile)) {
+    nread += fread(&pop[nread], sizeof(solution_t), 1, savefile);
+  }
+
+  printf("Seeded %d programs\n", nread);
+
+  fclose(seedfile);
+#endif
+}
+
 void save(solution_t *pop) {
 #ifdef SAVEFILE
   FILE *savefile = fopen(SAVEFILE, "wb");
@@ -58,6 +77,7 @@ void load(solution_t *pop) {
   size_t nread = 0;
 
   if (savefile == NULL) {
+    load_seed(pop);
     return;
   }
 
@@ -66,7 +86,7 @@ void load(solution_t *pop) {
   fseek(savefile, 0, SEEK_SET);
 
   if (sz != POPSIZE * sizeof(solution_t)) {
-    return;
+    load_seed(pop);
   }
 
   while (nread < POPSIZE) {
