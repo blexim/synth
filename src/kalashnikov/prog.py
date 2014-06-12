@@ -4,8 +4,10 @@ import re
 import perfcounters as perf
 import args
 
-args.argparser.add_argument("--vars", nargs="*", default=[],
+args.argparser.add_argument("--varnames", nargs="*", default=[],
     help="variable names")
+args.argparser.add_argument("--resnames", nargs="*", default=[],
+    help="result names")
 
 opsre = re.compile('ops={(.*?)}')
 parmsre = re.compile('params={(.*?)}')
@@ -104,13 +106,25 @@ class Prog(object):
       if mevars:
         self.evars = str2ints(mevars.group(1))
 
-  def argname(self, idx):
-    if len(args.args.vars) < args.args.args:
-      return 'a%d' % (idx+1)
+  def argname(self, p):
+    if len(args.args.varnames) < args.args.args:
+      return 'a%d' % (p+1)
     else:
-      return args.args.vars[idx]
+      return args.args.varnames[p]
 
-  def strarg(self, p, consts):
+  def tempname(self, seqlen, idx):
+    residx = idx - seqlen + args.args.res
+
+    if residx >= 0:
+      if residx < len(args.args.resnames):
+        return args.args.resnames[residx]
+      else:
+        return "res%d" % (residx + 1)
+    else:
+      return "t%d" % (idx + 1)
+
+
+  def strarg(self, p, seqlen, consts):
     if p < len(consts):
       return hex(consts[p])
     else:
@@ -119,29 +133,63 @@ class Prog(object):
       if p < args.args.args:
         return self.argname(p)
       else:
-        return 't%d' % (p - args.args.args + 1)
+        return self.tempname(seqlen, p - args.args.args)
 
   def prog2str(self, ops, params, consts):
     # List comprehension trickery to generate a list like:
-    # [(op0, param0, param1, param2, 1), (op1, param3, param4, param5, 2), ... ]
+    # [(op0, param0, param1, param2, 0), (op1, param3, param4, param5, 1), ... ]
     insts = zip(ops, params[::3], params[1::3], params[2::3],
-        xrange(1, len(ops) + 1))
+        xrange(0, len(ops)))
     strinsts = []
 
+    sliced = self.slice(ops, params, consts)
+
     for (op, p1, p2, p3, idx) in insts:
+      if idx not in sliced:
+        continue
+
+      lhs = self.tempname(len(ops), idx)
+
       if op in binops:
-        strinsts.append("t%d = %s %s %s" % (idx, self.strarg(p1, consts), binops[op],
-          self.strarg(p2, consts)))
+        strinsts.append("%s = %s %s %s" % (lhs, self.strarg(p1, len(ops), consts), binops[op],
+          self.strarg(p2, len(ops), consts)))
       elif op in unops:
-        strinsts.append("t%d = %s%s" % (idx, unops[op], self.strarg(p1, consts)))
+        strinsts.append("%s = %s%s" % (lhs, unops[op], self.strarg(p1, len(ops), consts)))
       elif op in ternops:
-        strinsts.append("t%d = %s(%s, %s, %s)" % (idx, ternops[op], self.strarg(p1, consts),
-                                                  self.strarg(p2, consts), self.strarg(p3, consts)))
+        strinsts.append("%s = %s(%s, %s, %s)" % (lhs, ternops[op], self.strarg(p1, len(ops), consts),
+                                                  self.strarg(p2, len(ops), consts),
+                                                  self.strarg(p3, len(ops), consts)))
       else:
         raise Exception("Couldn't parse instruction: (%d, %d, %d, %d)" %
             (op, p1, p2, p3))
 
     return '\n'.join(strinsts)
+
+  def slice(self, ops, params, consts):
+    ret = set([len(ops) - i - 1 for i in xrange(args.args.res)])
+
+    for i in xrange(len(ops) - 1, -1, -1):
+      if i not in ret:
+        continue
+
+      op = ops[i]
+
+      if op in unops:
+        nargs = 1 
+      elif op in binops:
+        nargs = 2 
+      elif op in ternops:
+        nargs = 3 
+
+      ps = [params[i*3 + j] for j in xrange(nargs)]
+
+      for p in ps:
+        if p >= args.args.args + len(consts):
+          temp_idx = p - args.args.args - len(consts)
+          ret.add(temp_idx)
+
+    return ret
+
 
   def __str__(self):
     if self.evars:
