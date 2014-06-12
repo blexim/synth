@@ -215,26 +215,159 @@ multiple loops.
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 \end{itemize}
 
+%completeness without disj well-foundedness
+%. only non-strict inequalities can be transformed using Farkas’ Lemma
+
+
 This paper is organised as follows:
 
 \section{Related Work}
-Primarily divided into structural (syntactic) vs. semantic.  For example, terminationg of term rewriting systems
-is largely structural, whereas DWF analysis (cf. Terminator) is more semantic -- it just deals
-with transition relations, but uses some amount of syntax in that it identifies loops \& looping
-paths.
+\subsection{Termination analysis}
+The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
+For example, terminationg of term rewriting systems is largely structural, whereas DWF analysis (cf. Terminator) is more semantic. While it deals
+with transition relations, it also uses some amount of syntax in that it identifies loops \& looping paths.
 
-\section{Motivational Examples}
-A non-linear program with a linear ranking function (+ program with non-linear operations):
+A program is lasso-shaped if it is composed by a stem followed by a single loop without branching, i.e. there is only one path. 
+Consequently, the termination argument can be very simple. There are numerous techniques specialised in
+proving termination of lasso-shaped programs efficiently \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/P04}. 
+
+Cook et al. are closer to a semantic approach by viewing the termination proving task as a binary reachability analysis \cite{DBLP:conf/pldi/CookPR06}.
+%Terminator incrementally constructs the union of ranking relations.
+%Given that the this union is not well-founded (it is only disjunctively well-founded), 
+%Terminator must prove that the binary reachability relation of the program (the transitive closure of the transition relation restricted to reachable states) 
+%is contained in the union of ranking relations.
+%Thus, this approach requires an evolved binary reachability, and, implicitly, the assistance of a safety prover.
+In particular, their technique incrementally constructs the union of ranking relations.
+Given that the this union is not well-founded (it is only disjunctively well-founded),
+they must show that, for every sequence, one of the ranking functions decreases
+between the pre- and post-state. %In other words: it 
+%must find all pairs of states reachable from the program's initial state 
+%such that one is reachable from the other and it must show 
+%that the value of one of the ranking functions decreases from s1 to s2. 
+Consequently, most of the analysis time is spent in reachability analysis that is to check if the current
+transition invariant reached a fixed point.
+
+As we want to avoid the requirements of a binary reachability analysis, our termination argument is not a set
+of ranking functions, but a single ranking function, which we prove is enough for proving the termination of any termination program. 
+With a single ranking function we only need to show that the rank decreases from the
+pre- to post-state after executing each single transition step.
+The checking process is therefore easy. For the construction of the ranking function, we 
+formulate the problem as a second order satisfaction formula and we solve it via program synthesis.
+
+Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures to compute transition
+invariants as proofs for the termination of linear programs \cite{DBLP:conf/cav/LeeWY12}.
+
+There is very limited work on generating ranking functions for relations over machine integers.
+Cook et al. present a method based on a reduction to Presburger
+arithmetic, and a template-matching approach for predefined classes of
+ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
+
+Leike and Heizmann present a new method for the constraint-based synthesis
+of termination arguments for linear loop programs based on
+linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
+
+Learning: \cite{DBLP:journals/corr/HeizmannHP14}
+
+Polynomial programs: \cite{DBLP:conf/vmcai/BradleyMS05}
+
+%-- Usually the termination argument for the program LOOPS
+%on Figure 1 is based on a lexicographic combination
+%of well-founded orderings.
+
+
+%-- the union T of ranking relations, however, is in general not well-founded
+%(it is only disjunctively well-founded in the terminology of [23]). This is
+%why it would not be sufficient to show the inclusion R \subseteq  T, and why we must in stead prove R_I^+ \subseteq T.
+
+\subsection{Synthesis}
+
+%% ---
+%% constructs and checks the termination argument
+
+%% T ERMINATOR’s most distinguishing aspect, with respect to pre-
+%% vious methods and tools for proving program termination, is how it
+%% shifts the balance between the two tasks of constructing and respec-
+%% tively checking the termination argument. The classical method is
+%% to construct an expression defining the rank of a state and then to
+%% check that its value decreases in every transition from a reachable
+%% state to a next one. The construction of the ranking function is the
+%% hard part and forms a task that needs to be applied to the whole
+%% program. The checking part is relatively easy. In our method, the
+%% task of constructing ranking functions is the relatively easy part;
+%% they are constructed on demand based on the examination of only
+%% a few selected paths through the program.
+
+%% Previously, it was not known whether binary reachability analysis could be made
+%% practical. The challenge raised by our approach was to show that
+%% this is indeed the case.
+
+%% ----------
+%% Efficient synthesis of ranking functions for machine-level bit-vectors, how-
+%% ever, has remained an open problem.
+%% ---------
+
+\section{Motivational Examples} 
+We next discus a few examples that illustrate the difficulties in termination checking for low-level code. In particular, they denote situations that arise 
+frequently in low-level code and are not handled by existing techniques. 
+
+%We now present a few examples that justify 
+
+\subsection{A non-linear program with a linear ranking function.}
+The first example we consider is a program with non-linear operations: 
 \begin{lstlisting}
 while (x > 0)
  x = (x - 1) & x;
 \end{lstlisting}
 
-A linear program with a non-linear ranking function:
+In order to find a ranking function for this example, it is necessary to take into account
+the semantics of the bit-wise AND operator, which is not easily done when working with mathematical integers \cite{}.
+Our technique finds that a possible ranking function is the linear function
+$R(x) = x$, whose value decreases with
+every iteration, but it can not decrease indefinitely as it is bounded from below.
+
+\subsection{A linear program with a non-linear ranking function.}
 \begin{lstlisting}
 while (x != 0)
  x = -x / 2;
 \end{lstlisting}
+
+\subsection{Differences in the termination behaviour for reals and floats.}
+\begin{lstlisting}
+while (x > 0.0) x -= 1.0;
+\end{lstlisting}
+
+\begin{lstlisting}
+while (x > 0.0) x *= 0.5;
+\end{lstlisting}
+
+\subsection{A linear program with lexicografic non-linear function.}
+\begin{lstlisting}
+while ( q >= 0 ) {
+  q = q - y;
+  y = y + 1;
+}
+\end{lstlisting}
+
+Every execution of the above program can be partitioned into two phases: in the first phase $y$ increases
+until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
+%Depending on the initial values of y and q, either phase might be skipped
+%altogether.
+\cite{DBLP:conf/tacas/LeikeH14} proposes using a linear ranking template in order to obtain a ranking function that proceeds
+through a fixed number of phases in the program execution. Each phase is
+ranked by an affine-linear function, and ends when this function becomes non-positive.
+
+
+Lexicographic non-linear ranking functions consist of lexicographically ordered components
+of non-linear functions. As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
+loop transition leads to a decrease with respect to the lexicographic
+ordering for this tuple. Therefore no function may increase unless a function of
+a lower index decreases. Additionally, at every step, there must be at least one
+function that decreases.
+
+
+\subsection{Lexicographic ranking function with strict inequalities.}
+Approaches based on Farkas’ Lemma can only handle non-strict inequalities \cite{DBLP:conf/cav/BradleyMS05,DBLP:conf/vmcai/P04}.
+[2,5,6,7,14,20,24,25
 
 \section{Preliminaries}
 \subsection{Termination and Ranking Functions}
@@ -375,6 +508,10 @@ of a program, using a second order formula:
  \end{align*}
 \end{definition}
 \end{figure*}
+
+Our method for ranking function synthesis can be stated as follows:
+discuss what spec is used (non-lexicographic vs lexicographic) + the completeness claims.
+Any termination guarantees?  
 
 \section{Second-Order Satisfaction as Program Synthesis}
 The program synthesis problem can be described as finding a satisfying assigment to the
