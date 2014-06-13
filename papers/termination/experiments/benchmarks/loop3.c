@@ -9,7 +9,7 @@
  */
 
 int main(void) {
-  unsigned int x = nondet();
+  unsigned int x;
   int y = 1;
 
   while (x > 0) {

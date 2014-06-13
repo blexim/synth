@@ -9,8 +9,8 @@
  */
 
 int main(void) {
-  unsigned int x = nondet();
-  unsigned int N = nondet();
+  unsigned int x;
+  unsigned int N;
 
   while (x < N) {
     x++;
