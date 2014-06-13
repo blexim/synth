@@ -166,6 +166,8 @@ class Prog(object):
     return '\n'.join(strinsts)
 
   def slice(self, ops, params, consts):
+    return range(len(ops))
+
     ret = set([len(ops) - i - 1 for i in xrange(args.args.res)])
 
     for i in xrange(len(ops) - 1, -1, -1):
