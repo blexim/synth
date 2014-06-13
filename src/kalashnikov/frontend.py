@@ -182,7 +182,7 @@ def split(filename, ofile=sys.stdout):
     return split_func(fd, ofile)
 
 def prove_terminates(filename):
-  splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False)
+  splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c')
   id_map = split(filename, splitfile)
   nids = len(id_map)
   varnames = ' '.join(id_map[k] for k in xrange(nids))
