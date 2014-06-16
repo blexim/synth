@@ -166,7 +166,30 @@ def split_func(fd, ofile):
 
   return rev_id_map
 
+def is_nondet(ast):
+  return isinstance(ast, c_ast.FuncCall) and ast.name.name == 'nondet'
 
+def replace_nondet(ast, nondet_idx=0):
+  if is_nondet(ast):
+    return (c_ast.ID('nondet_%d' % nondet_idx), nondet_idx + 1)
+  elif isinstance(ast, list):
+    ret = []
+
+    for x in ast:
+      (x_, nondet_idx) = replace_nondet(x, nondet_idx)
+      ret.append(x_)
+
+    return (ret, nondet_idx)
+  elif isinstance(ast, c_ast.Node):
+    ret = copy.copy(ast)
+
+    for (k, v) in ast.__dict__.items():
+      (v_, nondet_idx) = replace_nondet(v, nondet_idx)
+      ret.__dict__[k] = v_
+
+    return (ret, nondet_idx)
+  else:
+    return (ast, nondet_idx)
 
 def split(filename, ofile=sys.stdout):
   ast = parse_file_libc(filename)
