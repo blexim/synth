@@ -97,18 +97,25 @@ Floating Point Ranking Functions.
 
 \section{Introduction}
 
-Proving program termination is typically done by finding a well-founded \emph{ranking function}
-for the program states. When doing so, the majority of the existing termination provers diverge 
-in one important aspect from the execution
-of a program on a computer:
+Proving program termination is typically done by finding a \emph{ranking function}
+for the program states, i.e. a map from the program's state space to a well-ordered set.
+As this definition of ranking function is very general, research is often limited to some
+convenient and tractable form of ranking functions, most frequently \emph{linear ranking functions} (see Section~\ref{sec:ranking.functions}). 
+In doing so, an analysis ensures that such a ranking function will be found is one  exists, 
+while failing to prove termination for terminating programs whose ranking functions fall short of the considered restriction. 
+
+Moreover, the majority of the existing termination provers diverge 
+in one important aspect from the execution of a program on a computer:
 bit-vectors and floats 
-are treated as mathematical integers and reals, respectively \cite{}.
+are treated as mathematical integers and reals, respectively.
 This approximation gives rise to 
 {\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
 
+Figure~\ref{fig:handletable} presents a summary of existing termination analyses with indeed
+most of the work concentrated on finding \emph{linear ranking functions for linear programs over integers}.
+Next, we will look in more detail at the implications of the assumptions made by such techniques.\\
 
-
-For the case of bit-vectors (machine-level integers), their abstraction  to mathematical integers 
+\noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.} The abstraction of bit-vectors to mathematical integers 
 ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in %, it gives rise to 
 %{\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors are ubiquitous in computer systems. 
 incomparable behaviours with respect to termination:
@@ -122,7 +129,7 @@ The loop always terminates for unbounded integers as the value of \texttt{x} doe
 whereas, with bit-vector arithmetic, \texttt{x} under-flows before becoming negative and goes back to being positive causing the loop to never terminate.
 According to the C11 standard for the C programming language, a signed under- or over-flow yields undefined behaviour.
 However, compilers generally treat signed under- and over-flows using the
-wrap-around behaviour (see Section~\ref{}). 
+wrap-around behaviour (see Section~\ref{sec:machine.arith}). 
 \item Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
  \begin{lstlisting}[language=C]
  while(x > 0) x++;
@@ -132,7 +139,7 @@ will eventually over-flow and become negative. Conversely, the same program is n
 arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
 \end{itemize}
 
-A scenario similar to the one for bit-vectors happens when floats are abstracted to unbounded reals by termination provers \cite{}.
+\noindent {\bf Floats vs. reals.} A scenario similar to the one for bit-vectors happens if floats were to be abstracted to unbounded reals by termination provers \cite{}. 
 Consequently, these provers ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
 This approximation may lead to erroneous diagnosis of a program's terminating behaviour as illustrated next:
 \begin{itemize}
@@ -146,27 +153,20 @@ while (x > 0.0) x *= 0.5;
 while (x > 0.0) x -= 1.0;
 \end{lstlisting}
 \end{itemize}   
-\todo{explain the reasons for non-termination with figures.}
+\todo{explain the reasons for non-termination with figures.}\\
 
 
-Another limitation of the state of the art in the computation of ranking functions is the fact that  most techniques assume \emph{restrictive transition relations} and are only able to compute
+\noindent {\bf Linear programs and linear ranking functions.} As visible in Figure~\ref{fig:handletable}, 
+most termination techniques assume \emph{restrictive transition relations}, e.g. linear programs,  and are only able to compute
 \emph{linear ranking functions} \cite{}. To better understand this restriction, we computed the probability of a random terminating program having a linear ranking
 function (see Section ?). This probability proved to be very low, indicating that the linearity assumption for the ranking functions is indeed prohibitive.
 
-Because most state-of-the-art termination procedures use disjunctive well foundedness arguments, they require the use of
-complex safety provers that are able to reason about unbounded unfoldings of a transition relation.  In contrast to this,
-we are able to build monolithic termination arguments that only need ``local'' reasoning -- our ranking functions
-can be proved sufficient by considering just a single unfolding of a loop.
-
-Many loops do not terminate for all starting states, but are contained in programs that guarantee the loop will
-terminate.  Traditional termination provers have difficulty reasoning about such conditionally-terminating loops.
-We are able to handle such loops by computing \emph{termination invariants}.  This mechanism also allows us to
-prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
-reachable after leaving a previous loop.
 
 We propose a general framework that does not assume the existence of linear ranking functions and can uniformly compute
-(lexicographic) linear and non-linear ones, 
-for programs with both bit-vectors and floats. Our technique can handle programs with non-linear operations, e.g. logical and.
+\emph{lexicographic/non-lexicographic} \emph{linear/non-linear} 
+ranking functions supported by inductive \emph{linear/non-linear} invariants for loops with 
+\emph{linear/non-linear} guards and transitions over bit-vectors and floats.
+Our technique is {\emph complete} and can handle programs with non-linear operations, e.g. logical and.
 For this purpose, we rephrase the termination problem as a second-order satisfaction problem
 (indeed, a program synthesis problem). 
 As a direct consequence, our technique is semantic in nature and does not
@@ -175,24 +175,25 @@ However, its efficiency does depend on the Kolmogorov
  complexity of the computed ranking functions. We show that the probability of
 a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?).
 
-By phrasing the termination problem as a single rank function synthesis problem, we observe that
-we can make the termination problem as hard as finding ranking functions, rather than as hard as
-solving a difficult ``double reachability'' problem (cf. Terminator).
 
-\begin{figure}
- \begin{tabular}{|ll||c|c|}
+\begin{figure*}
+\centering
+ \begin{tabular}{|ll||c|c|c|c|c|c|c|c|}
  \hline
-  & & \multicolumn{2}{c|}{Program} \\
-  & & Linear & Non-Linear \\
+  & & \multicolumn{8}{c|}{Program} \\
+  & & \multicolumn{2}{c|}{Integers} & \multicolumn{2}{c|}{Reals} & \multicolumn{2}{c|}{Bit-vectors} & \multicolumn{2}{c|}{Floats} \\
+  & & L & NL & L & NL & L & NL & L & NL \\
   \hline
   \hline
-  \multirow{2}{*}{Ranking Functions} & Linear & \checkmark \xmark & \checkmark \\
-   & Non-Linear & \checkmark & \checkmark \\
+  \multirow{4}{*}{Ranking} & Linear lexicographic &  \cite{DBLP:conf/cav/BradleyMS05} && & &\checkmark&\checkmark&\checkmark&\checkmark\\
+   & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13} & & && \checkmark \cite{DBLP:conf/tacas/CookKRW10} &\checkmark \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
+   & Non-linear lexicographic &  &  & &&\checkmark&\checkmark&\checkmark&\checkmark\\
+   & Non-linear non-lexicographic &  &  & &&\checkmark&\checkmark&\checkmark&\checkmark\\
    \hline
  \end{tabular}
 
- \caption{Legend: \xmark = state-of-the art can handle, \checkmark = we can handle\label{fig:handletable}}
-\end{figure}
+ \caption{Legend: \checkmark = we can handle\label{fig:handletable}}
+\end{figure*}
 
 
 %We empirically observe that most programs have
@@ -201,7 +202,7 @@ solving a difficult ``double reachability'' problem (cf. Terminator).
 %Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
 %Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
 
-The main contributions of our paper are highlighted below:
+ The main contributions of our work can be summarised as follows:
 \begin{itemize}
 \item We designed a technique for computing ranking functions that correctly accounts for the wrap-around behavior caused by under- and overflows in bit-vector and floating point arithmetic. To the best of our knowledge, this is the first approach able to compute ranking functions for programs handling floats. Our technique is not restricted to finding linear ranking functions, but can also compute (lexicographic) non-linear  ones. We justified the need for such a non restrictive procedure by computing the probability ... .
 \item  We rephrased the termination problem as a second-order satisfaction problem and made 
@@ -215,14 +216,31 @@ multiple loops.
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 \end{itemize}
 
-%completeness without disj well-foundedness
 %. only non-strict inequalities can be transformed using Farkas’ Lemma
+%--Our approach to termination analysis has two distinct features over previous works
+%-- a lexicographic ranking function imposes a lexicographic ordering on among the ranking function components.
 
+Other points to touch in the introduction:
+\begin{itemize}
+\item disjunctive well-foundedness: By phrasing the termination problem as a single rank function synthesis problem, we observe that
+we can make the termination problem as hard as finding ranking functions, rather than as hard as
+solving a difficult ``double reachability'' problem (cf. Terminator).
+\item The lexicographic ordering does not influence the size of the search space. Thus, finding potentially lexicographic termination arguments is not more difficult than finding non-lexicographic ones.   
+\item Compared to the previous approaches that mostly aim to find a particular form of ranking functions, our technique does not commit to any particular one. We will find the one that has the lowest Kolmogorov complexity.
+\item Many loops do not terminate for all starting states, but are contained in programs that guarantee the loop will
+terminate.  Traditional termination provers have difficulty reasoning about such conditionally-terminating loops.
+We are able to handle such loops by computing \emph{termination invariants}.  This mechanism also allows us to
+prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
+reachable after leaving a previous loop.
+
+\end{itemize}
 
 This paper is organised as follows:
 
 \section{Related Work}
 \subsection{Termination analysis}
+Given the multitude of works on termination, we have tried to summarise them in Figure~\ref{fig:handletable}. 
+
 The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
 For example, terminationg of term rewriting systems is largely structural, whereas DWF analysis (cf. Terminator) is more semantic. While it deals
 with transition relations, it also uses some amount of syntax in that it identifies loops \& looping paths.
@@ -231,6 +249,25 @@ A program is lasso-shaped if it is composed by a stem followed by a single loop 
 Consequently, the termination argument can be very simple. There are numerous techniques specialised in
 proving termination of lasso-shaped programs efficiently \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/P04}. 
 
+Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures to compute transition
+invariants as proofs for the termination of linear programs \cite{DBLP:conf/cav/LeeWY12}.
+
+There is very limited work on generating ranking functions for relations over machine integers.
+Cook et al. present a method based on a reduction to Presburger
+arithmetic, and a template-matching approach for predefined classes of
+ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
+
+Leike and Heizmann present a new method for the constraint-based synthesis
+of termination arguments for linear loop programs based on
+linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
+
+Learning: \cite{DBLP:journals/corr/HeizmannHP14}
+
+Polynomial programs: \cite{DBLP:conf/vmcai/BradleyMS05}
+
+Linear ranking functions supported by inductive linear invariants for loops with linear guards and transitions: \cite{DBLP:conf/cav/BradleyMS05}. 
+
+\subsection{Disjunctive well-foundedness}
 Cook et al. are closer to a semantic approach by viewing the termination proving task as a binary reachability analysis \cite{DBLP:conf/pldi/CookPR06}.
 %Terminator incrementally constructs the union of ranking relations.
 %Given that the this union is not well-founded (it is only disjunctively well-founded), 
@@ -254,21 +291,13 @@ pre- to post-state after executing each single transition step.
 The checking process is therefore easy. For the construction of the ranking function, we 
 formulate the problem as a second order satisfaction formula and we solve it via program synthesis.
 
-Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures to compute transition
-invariants as proofs for the termination of linear programs \cite{DBLP:conf/cav/LeeWY12}.
 
-There is very limited work on generating ranking functions for relations over machine integers.
-Cook et al. present a method based on a reduction to Presburger
-arithmetic, and a template-matching approach for predefined classes of
-ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
+Because most state-of-the-art termination procedures use disjunctive well foundedness arguments, they require the use of
+complex safety provers that are able to reason about unbounded unfoldings of a transition relation.  In contrast to this,
+we are able to build monolithic termination arguments that only need ``local'' reasoning -- our ranking functions
+can be proved sufficient by considering just a single unfolding of a loop.
 
-Leike and Heizmann present a new method for the constraint-based synthesis
-of termination arguments for linear loop programs based on
-linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
 
-Learning: \cite{DBLP:journals/corr/HeizmannHP14}
-
-Polynomial programs: \cite{DBLP:conf/vmcai/BradleyMS05}
 
 %-- Usually the termination argument for the program LOOPS
 %on Figure 1 is based on a lexicographic combination
@@ -308,16 +337,14 @@ Polynomial programs: \cite{DBLP:conf/vmcai/BradleyMS05}
 
 \section{Motivational Examples} 
 We next discus a few examples that illustrate the difficulties in termination checking for low-level code. In particular, they denote situations that arise 
-frequently in low-level code and are not handled by existing techniques. 
+frequently in low-level code and are not handled properly by existing techniques. 
 
 %We now present a few examples that justify 
 
-\subsection{A non-linear program with a linear ranking function.}
-The first example we consider is a program with non-linear operations: 
-\begin{lstlisting}
-while (x > 0)
- x = (x - 1) & x;
-\end{lstlisting}
+\subsection{Program linearity vs. the linearity of its ranking function.}
+The first examples we consider illustrate the lack of a direct correlation between the linearity of a program and that of its termination arguments.
+As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
+although a linear ranking function exists (see Figure~\ref{fig:handletable}). 
 
 In order to find a ranking function for this example, it is necessary to take into account
 the semantics of the bit-wise AND operator, which is not easily done when working with mathematical integers \cite{}.
@@ -325,29 +352,9 @@ Our technique finds that a possible ranking function is the linear function
 $R(x) = x$, whose value decreases with
 every iteration, but it can not decrease indefinitely as it is bounded from below.
 
-\subsection{A linear program with a non-linear ranking function.}
-\begin{lstlisting}
-while (x != 0)
- x = -x / 2;
-\end{lstlisting}
+Conversely, Figure~\ref{} shows a linear program with a non-linear ranking function.
 
-\subsection{Differences in the termination behaviour for reals and floats.}
-\begin{lstlisting}
-while (x > 0.0) x -= 1.0;
-\end{lstlisting}
-
-\begin{lstlisting}
-while (x > 0.0) x *= 0.5;
-\end{lstlisting}
-
-\subsection{A linear program with lexicografic non-linear function.}
-\begin{lstlisting}
-while ( q >= 0 ) {
-  q = q - y;
-  y = y + 1;
-}
-\end{lstlisting}
-
+Figure~\ref{} is an example of a linear program that only admits lexicografic non-linear ranking functions.
 Every execution of the above program can be partitioned into two phases: in the first phase $y$ increases
 until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
 %Depending on the initial values of y and q, either phase might be skipped
@@ -364,13 +371,67 @@ ordering for this tuple. Therefore no function may increase unless a function of
 a lower index decreases. Additionally, at every step, there must be at least one
 function that decreases.
 
+\begin{lstlisting}
+while (x > 0)
+ x = (x - 1) & x;
+\end{lstlisting}
 
-\subsection{Lexicographic ranking function with strict inequalities.}
-Approaches based on Farkas’ Lemma can only handle non-strict inequalities \cite{DBLP:conf/cav/BradleyMS05,DBLP:conf/vmcai/P04}.
-[2,5,6,7,14,20,24,25
+\begin{lstlisting}
+while (x != 0)
+ x = -x / 2;
+\end{lstlisting}
+
+\begin{lstlisting}
+while ( q >= 0 ) {
+  q = q - y;
+  y = y + 1;
+}
+\end{lstlisting}
+
+\subsection{Differences in the termination behaviour for integers and bit-vectors.}
+We have collected a number of motivational examples from other termination papers that treated bit-vectors as mathematical integers \cite{DBLP:conf/tacas/LeikeH14,DBLP:conf/tacas/CookSZ13}. 
+We show that the termination arguments computed by such techniques do not directly apply when considering the bit-vector semantics.
+%these programs actually exhibit different terminating behaviours for bit-vectors and integer  
+
+
+
+\subsection{Differences in the termination behaviour for reals and floats.}
+\begin{lstlisting}
+while (x > 0.0) x -= 1.0;
+\end{lstlisting}
+
+\begin{lstlisting}
+while (x > 0.0) x *= 0.5;
+\end{lstlisting}
+
+
+\subsection{Multi-phase ranking functions}
+%\subsection{Lexicographic ranking function with strict inequalities.}
+%Approaches based on Farkas’ Lemma can only handle non-strict inequalities \cite{DBLP:conf/cav/BradleyMS05,DBLP:conf/vmcai/P04}.
+\begin{lstlisting}
+int main(void) {
+  int x, y, z;
+
+  while (x > 0 && y > 0 && z > 0) {
+    if (y > x) {
+      y = z;
+      x = nondet();
+      z = x - 1;
+    } else {
+      z = z - 1;
+      x = nondet();
+      y = x - 1;
+    }
+  }
+}
+\end{lstlisting}
+
+
 
 \section{Preliminaries}
-\subsection{Termination and Ranking Functions}
+\subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
+\todo{linear program}
+
 A transition system with state space $X$ and transition relation $T \subseteq X \times X$
 is said to be \emph{unconditionally terminating} if there is no infinite sequence
 $x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.  We can prove that $T$ is
@@ -404,7 +465,7 @@ reasoning over a single step of the transition relation.  This means that we
 can get away with very simple model checking methods, rather than requiring
 a full-blown safety prover.
 
-\subsection{Machine Arithmetic and Bitvectors}
+\subsection{Machine Arithmetic and Bitvectors} \label{sec:machine.arith} 
 Computers tend to have fixed width integers.  For a machine with $k$-bit words,
 all arithmetic is done modulo $2^k$.  This means that a program's termination
 behaviour can depend strongly on whether it is interpreted as operating over
@@ -614,11 +675,20 @@ functions.
 \end{corollary}
 
 
-
 \section{Solving the Synthesis Formula}
 We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
 have a program synthesiser kicking around, we present the design of one synthesiser
 that can be used to solve the problem.
+
+\subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
+\begin{conjecture}
+The lexicographic ordering does not influence the size of the search space. Thus, finding potentially lexicographic termination arguments is not more difficult than finding non-lexicographic ones.   
+\end{conjecture}
+
+As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
+conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
+ 
+
 
 \input{kalashnikov}
 
