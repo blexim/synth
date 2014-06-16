@@ -99,10 +99,51 @@ class ReturnVisitor(c_ast.NodeVisitor):
   def visit_Return(self, node):
     node.expr = c_ast.Constant('int', '0')
 
+def is_nondet(ast):
+  return isinstance(ast, c_ast.FuncCall) and ast.name.name == 'nondet'
+
+def replace_nondet(ast, nondet_idx=0):
+  if is_nondet(ast):
+    return (c_ast.ID('nondet_%d' % nondet_idx), nondet_idx + 1)
+  elif isinstance(ast, list):
+    ret = []
+
+    for x in ast:
+      (x_, nondet_idx) = replace_nondet(x, nondet_idx)
+      ret.append(x_)
+
+    return (ret, nondet_idx)
+  elif isinstance(ast, c_ast.Node):
+    ret = copy.copy(ast)
+
+    for (k, v) in ast.__dict__.items():
+      (v_, nondet_idx) = replace_nondet(v, nondet_idx)
+      ret.__dict__[k] = v_
+
+    return (ret, nondet_idx)
+  else:
+    return (ast, nondet_idx)
+
 def split_func(fd, ofile):
   prog = FlatProgram()
 
-  flatten(fd.body, prog)
+  (fd, nondet) = replace_nondet(fd)
+  fd_body = fd.body
+
+  for i in xrange(nondet):
+    id = c_ast.ID('nondet_%d' % i)
+
+    decl = c_ast.Decl(id.name,
+                      [],
+                      [],
+                      [],
+                      c_ast.TypeDecl(id.name, [], c_ast.IdentifierType(['word_t'])),
+                      None,
+                      None)
+
+    fd_body.block_items.insert(0, decl)
+
+  flatten(fd_body, prog)
   cgen = c_generator.CGenerator()
   (id_map, rev_id_map) = number_ids(fd)
 
@@ -118,6 +159,10 @@ def split_func(fd, ofile):
 
   prefix = copy.deepcopy(prog.blocks[0])
   loop = copy.deepcopy(prog.blocks[1])
+
+  #(prefix, prefix_nondet) = replace_nondet(prefix)
+  #(guard, guard_nondet) = replace_nondet(loop.cond)
+  #(body, body_nondet) = replace_nondet(loop.stmt)
 
   decls = []
   copy_out = []
@@ -166,30 +211,6 @@ def split_func(fd, ofile):
 
   return rev_id_map
 
-def is_nondet(ast):
-  return isinstance(ast, c_ast.FuncCall) and ast.name.name == 'nondet'
-
-def replace_nondet(ast, nondet_idx=0):
-  if is_nondet(ast):
-    return (c_ast.ID('nondet_%d' % nondet_idx), nondet_idx + 1)
-  elif isinstance(ast, list):
-    ret = []
-
-    for x in ast:
-      (x_, nondet_idx) = replace_nondet(x, nondet_idx)
-      ret.append(x_)
-
-    return (ret, nondet_idx)
-  elif isinstance(ast, c_ast.Node):
-    ret = copy.copy(ast)
-
-    for (k, v) in ast.__dict__.items():
-      (v_, nondet_idx) = replace_nondet(v, nondet_idx)
-      ret.__dict__[k] = v_
-
-    return (ret, nondet_idx)
-  else:
-    return (ast, nondet_idx)
 
 def split(filename, ofile=sys.stdout):
   ast = parse_file_libc(filename)
@@ -205,7 +226,7 @@ def split(filename, ofile=sys.stdout):
     return split_func(fd, ofile)
 
 def prove_terminates(filename):
-  splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c')
+  splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False)
   id_map = split(filename, splitfile)
   nids = len(id_map)
   varnames = ' '.join(id_map[k] for k in xrange(nids))
