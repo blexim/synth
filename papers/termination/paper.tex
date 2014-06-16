@@ -440,8 +440,7 @@ The program in Figure~\ref{} is taken from SVCOMP'15  \footnote{http://sv-comp.s
 In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multi-phase ranking function, i.e. ..,  with a dedicated technique for computing it. However, in our setting 
 this type of programs do not need a special treatment, as we can find a non-linear ranking function for it as follows:
 \begin{verbatim}
-t2 = ITE(x, z, z)
-t3 = x < y
+R(x, y, z) = (x < y, z)
 \end{verbatim}
 
 
