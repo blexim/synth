@@ -65,7 +65,7 @@ class Checker(object):
 
   def __init__(self, sz, width, consts, verif=False):
     nargs = args.args.args
-    nres = args.args.res
+    nres = sz
     nevars = args.args.evars
     nprogs = args.args.progs
     pwidth = log2(sz + consts + nargs - 1)
@@ -111,7 +111,7 @@ class Checker(object):
       genericargs.append("-DSEED=%d" % args.args.seed)
 
     if verif:
-      self.cbmcargs = [args.args.cbmc,
+      self.cbmcargs = [args.args.cbmc, "--refine",
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",

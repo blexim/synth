@@ -12,13 +12,11 @@ int main(void)
 {
   int x, y, z, i;
 
-  x = nondet();
-  y = nondet();
   z = 0;
   i = x;
 
   if (y <= 0 || x <= 0) {
-    return 0;
+    return 1;
   }
 
   while (i > 0) {
