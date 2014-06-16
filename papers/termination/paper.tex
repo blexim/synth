@@ -220,6 +220,11 @@ multiple loops.
 %--Our approach to termination analysis has two distinct features over previous works
 %-- a lexicographic ranking function imposes a lexicographic ordering on among the ranking function components.
 
+% The main advantage of our approach is its unitary nature. We do not require any initial assumption regarding the form of the termination  
+% argument, as this does not influence our search process. We identify the factors influencing the performance of our design and 
+% show that these factors are independent on the linearity of the ranking function or the number of lexicographic components...
+
+
 Other points to touch in the introduction:
 \begin{itemize}
 \item disjunctive well-foundedness: By phrasing the termination problem as a single rank function synthesis problem, we observe that
@@ -398,18 +403,25 @@ We show that the termination arguments computed by such techniques do not direct
   }
 \end{lstlisting}
 
+The program in Figure~\ref{} is taken from \cite{DBLP:conf/tacas/CookSZ13}, where
+$m$ and $x$ start as any integers with $m$ positive. If $x$ is greater than
+$m$, $x$ is set to 0. Otherwise, $x$ increases until it equals $m$, upon which
+the loop terminates. While a disjunctive well-founded termination argument does exist for the loop, 
+e.g. ($x < oldx$ and $0 \leq oldx$) or ($m-x < oldm-oldx$ and $0 \leq oldm-oldx$), the loop does not 
+terminate under the bit-vector semantics. The reason is ..
+
 \begin{lstlisting}
-while ( q >= 0 ) {
-  q = q - y;
-  y = y + 1;
-}
+  while ( q >= 0 ) {
+    q = q - y;
+    y = y + 1;
+  }
 \end{lstlisting}
 
-Every execution of the program in Figure~\ref{} can be partitioned into two phases: in the first phase $y$ increases
+In Figure~\ref{}, every execution of the program can be partitioned into two phases: in the first phase $y$ increases
 until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
-\cite{DBLP:conf/tacas/LeikeH14} proposes using a linear ranking template in order to obtain a ranking function that proceeds
+This example was presented in \cite{DBLP:conf/tacas/LeikeH14}, where the authors make use of a template for obtaining a ranking function that proceeds
 through a fixed number of phases in the program execution. Each phase is ranked by a linear function, and ends when this function becomes non-positive.
-However, when considering the bit-vector semantics, this program does not terminate.
+However, when considering the bit-vector semantics, this program does not terminate as..
 
 \subsection{Differences in the termination behaviour for reals and floats.}
 \begin{lstlisting}
@@ -431,25 +443,6 @@ this type of programs do not need a special treatment, as we can find a non-line
 t2 = ITE(x, z, z)
 t3 = x < y
 \end{verbatim}
-
-%% t3 is "If x >= y, then x' >= y'" where x' is the next value of x.  This can be interpreted as "if the 'else' branch of the if is taken once, it is taken forever", which can be seen by induction.
-%% t2 is z -- this is probably the sickest part.  In the 'else' branch, z just decreases.  In the 'then' branch, we get:
-
-%% y > x
-%% y' = z
-%% x' = nondet()
-%% z' = x' - 1
-
-%% Let's consider 2 cases:
-
-%% case z' >= z, then:
-%%   x' - 1 >= z, so
-%%   x' - 1 >= y', so
-%%   x' > y',
-%%   so (x < y) has decreased, i.e. we will reamain in the 'else' branch forever and
-%% case z' < z, then:
-%%   z has decreased.
-
 
 
 \begin{lstlisting}
