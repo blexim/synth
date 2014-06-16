@@ -99,9 +99,9 @@ Floating Point Ranking Functions.
 
 Proving program termination is typically done by finding a \emph{ranking function}
 for the program states, i.e. a map from the program's state space to a well-ordered set.
-As this definition of ranking function is very general, research is often limited to some
+As this definition of a ranking function is very general, research is often limited to some
 convenient and tractable form of ranking functions, most frequently \emph{linear ranking functions} (see Section~\ref{sec:ranking.functions}). 
-In doing so, an analysis ensures that such a ranking function will be found is one  exists, 
+In doing so, an analysis ensures that such a ranking function will be found if one  exists, 
 while failing to prove termination for terminating programs whose ranking functions fall short of the considered restriction. 
 
 Moreover, the majority of the existing termination provers diverge 
@@ -113,7 +113,7 @@ This approximation gives rise to
 
 Figure~\ref{fig:handletable} presents a summary of existing termination analyses with indeed
 most of the work concentrated on finding \emph{linear ranking functions for linear programs over integers}.
-Next, we will look in more detail at the implications of the assumptions made by such techniques.\\
+Next, we will consider in more detail the assumptions made by such techniques and their implications.\\
 
 \noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.} The abstraction of bit-vectors to mathematical integers 
 ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in %, it gives rise to 
@@ -186,7 +186,7 @@ a ranking function to have a low Kolmogorov complexity is higher than the probab
   \hline
   \hline
   \multirow{4}{*}{Ranking} & Linear lexicographic &  \cite{DBLP:conf/cav/BradleyMS05} && & &\checkmark&\checkmark&\checkmark&\checkmark\\
-   & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13} & & && \checkmark \cite{DBLP:conf/tacas/CookKRW10} &\checkmark \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
+   & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13} & & && \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
    & Non-linear lexicographic &  &  & &&\checkmark&\checkmark&\checkmark&\checkmark\\
    & Non-linear non-lexicographic &  &  & &&\checkmark&\checkmark&\checkmark&\checkmark\\
    \hline
@@ -232,7 +232,7 @@ terminate.  Traditional termination provers have difficulty reasoning about such
 We are able to handle such loops by computing \emph{termination invariants}.  This mechanism also allows us to
 prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
 reachable after leaving a previous loop.
-
+\item Linearity vs. LKC.
 \end{itemize}
 
 This paper is organised as follows:
@@ -336,15 +336,16 @@ can be proved sufficient by considering just a single unfolding of a loop.
 %% ---------
 
 \section{Motivational Examples} 
-We next discus a few examples that illustrate the difficulties in termination checking for low-level code. In particular, they denote situations that arise 
-frequently in low-level code and are not handled properly by existing techniques. 
+We next discus some intricate examples that prove challenging for existent termination analysis.
+%a few examples that illustrate the difficulties in termination checking for low-level code. In particular, they denote situations that arise 
+%frequently in practise and are not properly handled by existing techniques. 
 
 %We now present a few examples that justify 
 
 \subsection{Program linearity vs. the linearity of its ranking function.}
 The first examples we consider illustrate the lack of a direct correlation between the linearity of a program and that of its termination arguments.
 As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
-although a linear ranking function exists (see Figure~\ref{fig:handletable}). 
+although a linear ranking function does exist (see Figure~\ref{fig:handletable}). 
 
 In order to find a ranking function for this example, it is necessary to take into account
 the semantics of the bit-wise AND operator, which is not easily done when working with mathematical integers \cite{}.
@@ -354,17 +355,10 @@ every iteration, but it can not decrease indefinitely as it is bounded from belo
 
 Conversely, Figure~\ref{} shows a linear program with a non-linear ranking function.
 
-Figure~\ref{} is an example of a linear program that only admits lexicografic non-linear ranking functions.
-Every execution of the above program can be partitioned into two phases: in the first phase $y$ increases
-until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
-%Depending on the initial values of y and q, either phase might be skipped
-%altogether.
-\cite{DBLP:conf/tacas/LeikeH14} proposes using a linear ranking template in order to obtain a ranking function that proceeds
-through a fixed number of phases in the program execution. Each phase is
-ranked by an affine-linear function, and ends when this function becomes non-positive.
-
-
-Lexicographic non-linear ranking functions consist of lexicographically ordered components
+Figure~\ref{} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a disjunctively well-founded one, 
+which requires an expensive binary reachability analysis.
+However, by using our technique we can find a non-linear lexicographic ranking functions.
+A lexicographic non-linear ranking functions consists of lexicographically ordered components
 of non-linear functions. As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
 loop transition leads to a decrease with respect to the lexicographic
 ordering for this tuple. Therefore no function may increase unless a function of
@@ -382,18 +376,40 @@ while (x != 0)
 \end{lstlisting}
 
 \begin{lstlisting}
+  while (x != 0) {
+    if (x > 0)
+      x--;
+    else
+      x++;
+  }
+\end{lstlisting}
+
+\subsection{Differences in the termination behaviour for integers and bit-vectors.}
+We have collected a number of motivational examples from other termination papers that treat bit-vectors as mathematical integers \cite{DBLP:conf/tacas/LeikeH14,DBLP:conf/tacas/CookSZ13}. 
+We show that the termination arguments computed by such techniques do not directly apply when considering the bit-vector semantics.
+%these programs actually exhibit different terminating behaviours for bit-vectors and integer  
+
+\begin{lstlisting}
+  while (x != m) {
+    if (x > m)
+      x = 0;
+    else
+      x++;
+  }
+\end{lstlisting}
+
+\begin{lstlisting}
 while ( q >= 0 ) {
   q = q - y;
   y = y + 1;
 }
 \end{lstlisting}
 
-\subsection{Differences in the termination behaviour for integers and bit-vectors.}
-We have collected a number of motivational examples from other termination papers that treated bit-vectors as mathematical integers \cite{DBLP:conf/tacas/LeikeH14,DBLP:conf/tacas/CookSZ13}. 
-We show that the termination arguments computed by such techniques do not directly apply when considering the bit-vector semantics.
-%these programs actually exhibit different terminating behaviours for bit-vectors and integer  
-
-
+Every execution of the program in Figure~\ref{} can be partitioned into two phases: in the first phase $y$ increases
+until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
+\cite{DBLP:conf/tacas/LeikeH14} proposes using a linear ranking template in order to obtain a ranking function that proceeds
+through a fixed number of phases in the program execution. Each phase is ranked by a linear function, and ends when this function becomes non-positive.
+However, when considering the bit-vector semantics, this program does not terminate.
 
 \subsection{Differences in the termination behaviour for reals and floats.}
 \begin{lstlisting}
@@ -408,6 +424,34 @@ while (x > 0.0) x *= 0.5;
 \subsection{Multi-phase ranking functions}
 %\subsection{Lexicographic ranking function with strict inequalities.}
 %Approaches based on Farkas’ Lemma can only handle non-strict inequalities \cite{DBLP:conf/cav/BradleyMS05,DBLP:conf/vmcai/P04}.
+The program in Figure~\ref{} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
+In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multi-phase ranking function, i.e. ..,  with a dedicated technique for computing it. However, in our setting 
+this type of programs do not need a special treatment, as we can find a non-linear ranking function for it as follows:
+\begin{verbatim}
+t2 = ITE(x, z, z)
+t3 = x < y
+\end{verbatim}
+
+%% t3 is "If x >= y, then x' >= y'" where x' is the next value of x.  This can be interpreted as "if the 'else' branch of the if is taken once, it is taken forever", which can be seen by induction.
+%% t2 is z -- this is probably the sickest part.  In the 'else' branch, z just decreases.  In the 'then' branch, we get:
+
+%% y > x
+%% y' = z
+%% x' = nondet()
+%% z' = x' - 1
+
+%% Let's consider 2 cases:
+
+%% case z' >= z, then:
+%%   x' - 1 >= z, so
+%%   x' - 1 >= y', so
+%%   x' > y',
+%%   so (x < y) has decreased, i.e. we will reamain in the 'else' branch forever and
+%% case z' < z, then:
+%%   z has decreased.
+
+
+
 \begin{lstlisting}
 int main(void) {
   int x, y, z;
@@ -664,6 +708,8 @@ functions.
 \begin{proof}
  Trivial.
 \end{proof}
+
+\subsection{The linearity assumption vs. the LKC one for ranking functions}
 
 \begin{conjecture}
  Most LKC programs compute non-linear functions, but linear functions are LKC.
