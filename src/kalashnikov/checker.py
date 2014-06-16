@@ -65,7 +65,7 @@ class Checker(object):
 
   def __init__(self, sz, width, consts, verif=False):
     nargs = args.args.args
-    nres = args.args.res
+    nres = sz
     nevars = args.args.evars
     nprogs = args.args.progs
     pwidth = log2(sz + consts + nargs - 1)
