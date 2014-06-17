@@ -12,10 +12,6 @@ int main(void)
 {
   int x, y, N;
 
-  x = nondet();
-  y = nondet();
-  N = nondet();
-
   if (N >= 536870912 || x >= 536870912 || y >= 536870912 || x < -1073741824) {
     return 0;
   }

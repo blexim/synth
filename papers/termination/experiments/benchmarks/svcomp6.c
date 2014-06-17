@@ -12,10 +12,6 @@ int main()
 {
   int i, j, n;
 
-  i = nondet();
-  j = nondet();
-  n = nondet();
-
   while (i < n) {
     j = 0;
     while (j <= i) {

@@ -21,10 +21,6 @@ int main()
 {
   int x, y, z;
 
-  x = nondet();
-  y = nondet();
-  z = nondet();
-
   while (x > 0) {
     x = x + y;
     y = z;

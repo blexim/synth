@@ -12,10 +12,6 @@ int main(void)
 {
   int x, y, z;
 
-  x = nondet();
-  y = nondet();
-  z = nondet();
-
   while (x > 0 && y > 0 && z > 0) {
     if (y > x) {
       y = z;

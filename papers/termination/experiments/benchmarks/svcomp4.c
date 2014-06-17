@@ -12,9 +12,6 @@ int main(void)
 {
   int y1, y2;
 
-  y1 = nondet();
-  y2 = nondet();
-
   if (y1 <= 0 || y2 <= 0) {
     return 0;
   }
