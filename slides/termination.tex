@@ -460,6 +460,25 @@ Once we've found a program that passes all the tests, we return it and continue 
 loop.
 \end{frame}
 
+\begin{frame}[fragile]{Oh, And One More Thing}
+Does this terminate?  If so, what's the ranking function?
+
+\begin{lstlisting}[basicstyle=\normalsize]
+while (x > 0 && y > 0 && z > 0) {
+  if (y > x) {
+    y = z;
+    x = nondet();
+    z = x - 1;
+  } else {
+    z = z - 1;
+    x = nondet();
+    y = x - 1;
+  }
+}
+\end{lstlisting}
+\end{frame}
+
+
 \section{Advanced Topics}
 \begin{frame}{Conditional Termination}
 
