@@ -116,38 +116,24 @@ most of the work concentrated on finding \emph{linear ranking functions for line
 Next, we will consider in more detail the assumptions made by such techniques and their implications.\\
 
 \noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
-Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
-integers.  For example, if $A$ is the Ackermann function and $G$ is Graham's number, a physical computer
-capable of computing $A(G, G)$ would contain (much!) more matter than is believed to exist in the universe.
-Fortunately, it is rare for a programmer to need such a large number and so modern computers do their arithmetic
-over fixed-width binary words, otherwise known as bit-vectors.
+The abstraction of bit-vectors to mathematical integers ignores
+the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in
+incomparable behaviours with respect to termination.
 
-Bit-vector arithmetic is very similar to modular arithmetic.  For a computer using $k$-bit words, unsigned
-calulcations are just defined to 
-
-The abstraction of bit-vectors to mathematical integers 
-ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in %, it gives rise to 
-%{\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors are ubiquitous in computer systems. 
-incomparable behaviours with respect to termination:
-%The differences between the semantics of unbounded mathematical integers and that of machine integers result in 
-\begin{itemize}
-\item Programs that terminate for integers may \emph{not} terminate for bit-vectors. For illustration, consider the following loop:
+Programs that terminate for integers may \emph{not} terminate for bit-vectors. For illustration, consider the following loop:
 \begin{lstlisting}[language=C]
 while (x > 0) x -= 2;
 \end{lstlisting}
 The loop always terminates for unbounded integers as the value of \texttt{x} does eventually become negative, 
-whereas, with bit-vector arithmetic, \texttt{x} under-flows before becoming negative and goes back to being positive causing the loop to never terminate.
-According to the C11 standard for the C programming language, a signed under- or over-flow yields undefined behaviour.
-However, compilers generally treat signed under- and over-flows using the
-wrap-around behaviour (see Section~\ref{sec:machine.arith}). 
-\item Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
+whereas, with bit-vector arithmetic, \texttt{x} underflows before becoming negative and goes back to being positive causing the loop to never terminate.
+
+Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
  \begin{lstlisting}[language=C]
  while(x > 0) x++;
  \end{lstlisting}
 This loop is  terminating for bit-vectors since \texttt{x}
 will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
 arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
-\end{itemize}
 
 \noindent {\bf Floats vs. reals.} A scenario similar to the one for bit-vectors happens if floats were to be abstracted to unbounded reals by termination provers \cite{}. 
 Consequently, these provers ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
@@ -512,12 +498,53 @@ can get away with very simple model checking methods, rather than requiring
 a full-blown safety prover.
 
 \subsection{Machine Arithmetic and Bitvectors} \label{sec:machine.arith} 
-Computers tend to have fixed width integers.  For a machine with $k$-bit words,
-all arithmetic is done modulo $2^k$.  This means that a program's termination
-behaviour can depend strongly on whether it is interpreted as operating over
-mathematical integers, or over fixed-width machine words.  We can however
-observe that if no arithmetic operation \emph{overflows} (i.e. does not result
-in a value greater than $2^k$), fixed-width and integer arithmetic coincide.
+Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
+integers.  For example, if $A$ is the Ackermann function and $G$ is Graham's number, a physical computer
+capable of computing $A(G, G)$ would contain (much!) more matter than is believed to exist in the universe.
+Fortunately, it is rare for a programmer to need such a large number and so modern computers do their arithmetic
+over fixed-width binary words, otherwise known as bit-vectors.  For the remainder of this section, we will say that
+the bit-vectors we are working with are $k$-bits wide, which means that each word can hold one of $2^k$ bit patterns.
+Typical values for $k$ are 32 and 64.
+
+Bit-vector arithmetic is performed modulo $2^k$, which is the source of many of the differences between
+machine arithmetic and Peano arithmetic.  To give an example: $(2^k - 1) + 1 \equiv 0 \pmod {2^k}$.
+This provides a counterexample to the statement $\forall x . x + 1 > x$, which is a theorem of Peano
+arithmetic but not of modular arithmetic.  When an arithmetic operation has a result greater than $2^k$,
+it is said to ``overflow''.  If an operation does not overflow, its machine-arithmetic result is the same
+as the result of the same operation performed on integers.
+
+Machine words can be interpreted as ``signed'' or ``unsigned'' values.  Signed values can be negative,
+while unsigned values cannot.  The encoding for signed values is two's complement, where the most significant
+bit $b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather than $2^k - 1$.  Two's complement
+representation has the property that $\forall x . -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
+is bitwise-negation.  Two's complement also has the property that addition, multiplication and subtraction are defined
+identically for unsigned and signed numbers.  Therefore signed and unsigned arithmetic differ only on comparison
+operators\footnote{There is also the difference that signed overflow in a C program results in undefined behaviour,
+but in practice the undefined behaviour is implemented just as if the arithmetic had been unsigned}.
+For example: $$\forall x . -x \leq_s x \wedge -x \geq_u x$$ where $\leq_s$ and $\geq_u$ represent signed and unsigned comparisons respectively.
+
+The final source of difference between integer arithmetic and bitvector arithmetic stems from width conversions.
+Typical computers allow variables to have different types, which can be represented using words of different widths.
+In C a \texttt{short} might occupy
+16 bits, while an \texttt{int} might occupy 32 bits.  If a $k$-bit variable is assigned to a $l$-bit variable
+with $l < k$, the result is truncated $\mod 2^l$.  For example, if $x$ is a 32-bit variable and $y$ is a 16-bit
+variable, $y$ will hold the value $0$ after the following code is executed:
+
+\begin{lstlisting}
+x = 65536;
+y = x;
+\end{lstlisting}
+
+This gives us a counterexample to the statement $\forall x, y . x = y \Rightarrow (x + 1) = (y + 1)$,
+which is a theorem of Peano arithmetic.
+
+As well as machine arithmetic differing from Peano arithmetic on the operators they have in common,
+computers have several ``bitwise'' operations that are not taken as primitive in the theory of
+integers.  These operations include the standard boolean operations \texttt{and, or, not, xor}
+applied to each element of the bit-vector.  Computer programs often make use of these operators,
+which are non-linear when interpreted in the standard model of Peano arithmetic
+(although some of these operators can be seen as linear in a different algebraic structure,
+e.g. \texttt{xor} corresponds to addition in the Galois field $\mathrm{GF}(2^k)$).
 
 \section{Combinatorics of Finite Termination}
 In this section, we fix a model of computation, describe its semantics and
