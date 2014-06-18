@@ -115,7 +115,17 @@ Figure~\ref{fig:handletable} presents a summary of existing termination analyses
 most of the work concentrated on finding \emph{linear ranking functions for linear programs over integers}.
 Next, we will consider in more detail the assumptions made by such techniques and their implications.\\
 
-\noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.} The abstraction of bit-vectors to mathematical integers 
+\noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
+Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
+integers.  For example, if $A$ is the Ackermann function and $G$ is Graham's number, a physical computer
+capable of computing $A(G, G)$ would contain (much!) more matter than is believed to exist in the universe.
+Fortunately, it is rare for a programmer to need such a large number and so modern computers do their arithmetic
+over fixed-width binary words, otherwise known as bit-vectors.
+
+Bit-vector arithmetic is very similar to modular arithmetic.  For a computer using $k$-bit words, unsigned
+calulcations are just defined to 
+
+The abstraction of bit-vectors to mathematical integers 
 ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in %, it gives rise to 
 %{\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors are ubiquitous in computer systems. 
 incomparable behaviours with respect to termination:
