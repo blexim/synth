@@ -114,11 +114,47 @@ These design decisions may give rise to
 %which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
 
 %\noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.} 
+
+Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
+integers.  For example, if $A$ is the Ackermann function and $G$ is Graham's number, a physical computer
+capable of computing $A(G, G)$ would contain (much!) more matter than is believed to exist in the universe.
+Fortunately, it is rare for a programmer to need such a large number and so modern computers do their arithmetic
+over fixed-width binary words, otherwise known as bit-vectors.
+
+Bit-vector arithmetic is very similar to modular arithmetic.  For a computer using $k$-bit words, unsigned
+calulcations are just defined to 
+===============
 The abstraction of bit-vectors to mathematical integers 
 ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in 
 incomparable behaviours with respect to termination. 
 %The loop in Figure~\ref{} terminates for integers, but does not terminate for bit-vectors. 
 The loop in Figure~\ref{} always terminates for unbounded integers as the value of \texttt{x} does eventually become negative, 
+%% =======
+%% most of the work concentrated on finding \emph{linear ranking functions for linear programs over integers}.
+%% Next, we will consider in more detail the assumptions made by such techniques and their implications.\\
+
+%% \noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
+%% Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
+%% integers.  For example, if $A$ is the Ackermann function and $G$ is Graham's number, a physical computer
+%% capable of computing $A(G, G)$ would contain (much!) more matter than is believed to exist in the universe.
+%% Fortunately, it is rare for a programmer to need such a large number and so modern computers do their arithmetic
+%% over fixed-width binary words, otherwise known as bit-vectors.
+
+%% Bit-vector arithmetic is very similar to modular arithmetic.  For a computer using $k$-bit words, unsigned
+%% calulcations are just defined to 
+
+%% The abstraction of bit-vectors to mathematical integers 
+%% ignores the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in %, it gives rise to 
+%% %{\em unsound} and {\em incomplete} analyses, which is rather surprising given that bit-vectors are ubiquitous in computer systems. 
+%% incomparable behaviours with respect to termination:
+%% %The differences between the semantics of unbounded mathematical integers and that of machine integers result in 
+%% \begin{itemize}
+%% \item Programs that terminate for integers may \emph{not} terminate for bit-vectors. For illustration, consider the following loop:
+%% \begin{lstlisting}[language=C]
+%% while (x > 0) x -= 2;
+%% \end{lstlisting}
+%% The loop always terminates for unbounded integers as the value of \texttt{x} does eventually become negative, 
+%% >>>>>>> 7b690c08a70e4161a432600e9456d922106badaf
 whereas, with bit-vector arithmetic, \texttt{x} under-flows before becoming negative and goes back to being positive causing the loop to never terminate.
 According to the C11 standard for the C programming language, a signed under- or over-flow yields undefined behaviour.
 However, compilers generally treat signed under- and over-flows using the
