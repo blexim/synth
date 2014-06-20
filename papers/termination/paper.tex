@@ -609,53 +609,77 @@ define the syntax of a language we will work over.
 
 
 \section{Termination as Second-Order Satisfaction}
-We can specify the existence of a ranking function, and therefore the termination
-of a program, using a second order formula:
+In this section we will show how several variations of the halting problem can be defined in second-order
+logic.  As it turns out, all of these variations can be defined in a fragment of second-order logic
+we will refer to as the \emph{synthesis fragment}.
 
 \begin{figure*}
 \begin{definition}[Second-order Termination Formula]
+\label{def:termination-formula}
 \begin{align*}
- \exists R . \forall x, x' . & R(x) > 0 ~ \wedge \\
+ \exists R \cdot \forall x, x' . & R(x) > 0 ~ \wedge \\
                              & T(x, x') \rightarrow R(x) > R(x')
 \end{align*}
 \end{definition}
 
+\begin{definition}[Conditional Termination Formula]
+ \begin{align*}
+  \exists R, I \cdot \forall x, x' . & I(x) \rightarrow V(x) ~ \wedge \\
+                                 & L(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+ \end{align*}
+\end{definition}
+
+\begin{definition}[Multiple Loops Termination Formula]
+ \begin{align*}
+  \exists R, V_1, V_2 \cdot \forall x, x' . & I(x) \rightarrow V_1(x) ~ \wedge \\
+                                        & V_1(x) \wedge L_1(x) \wedge T(x, x') \rightarrow V_1(x') ~ \wedge \\
+                                        & V_1(x) \wedge \lnot L_1(x) \rightarrow V_2(x) ~ \wedge \\
+                                        & V_2(x) \wedge L_2(x) \wedge T(x, x') \rightarrow V_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+ \end{align*}
+\end{definition}
+
+\begin{definition}[Non-Termination Formula]
+\label{def:nonterm-formula}
+ \begin{align*}
+  \exists N, x_0 \cdot \forall x \cdot \exists x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
+							& N(x) \wedge L(x) \rightarrow T(x, x') \wedge N(x') \wedge L(x')
+ \end{align*}
+\end{definition}
+
+\begin{definition}[Deterministic Non-Terminaton Formula]
+ \begin{align*}
+  \exists N, x_0 \cdot \forall x, x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
+							& N(x) \wedge L(x) \wedge T(x, x') \rightarrow N(x') \wedge L(x')
+ \end{align*} 
+\end{definition}
+
+\caption{The halting problem defined in second-order logic.\label{fig:termination-formulae}}
+\end{figure*}
+
+\iffalse
 Many loops do not terminate for all starting states, but are contained in programs that guarantee the loop will
 terminate.  Traditional termination provers have difficulty reasoning about such conditionally-terminating loops.
 We are able to handle such loops by computing \emph{termination invariants}.  This mechanism also allows us to
 prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
 reachable after leaving a previous loop.
 
-\begin{definition}[Conditional Termination Formula]
- \begin{align*}
-  \exists R, I . \forall x, x' . & P(x) \rightarrow I(x) ~ \wedge \\
-                                 & c(x) \wedge I(x) \wedge T(x, x') \rightarrow I(x') \wedge R(x) > 0 \wedge R(x) > R(x')
- \end{align*}
-\end{definition}
-
-\begin{definition}[Multiple Loops Termination Formula]
- \begin{align*}
-  \exists R, I_1, I_2 . \forall x, x' . & P(x) \rightarrow I_1(x) ~ \wedge \\
-                                        & I_1(x) \wedge L_1(x, x') \rightarrow I_1(x') ~ \wedge \\
-                                        & I_1(x) \wedge \lnot c_1(x) \rightarrow I_2(x) ~ \wedge \\
-                                        & c(x) \wedge I_2(x) \wedge L_2(x, x') \rightarrow I_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
- \end{align*}
-\end{definition}
-\end{figure*}
-
 Our method for ranking function synthesis can be stated as follows:
 discuss what spec is used (non-lexicographic vs lexicographic) + the completeness claims.
 Any termination guarantees?  
+\fi
 
-\section{Second-Order Satisfaction as Program Synthesis}
+We can specify the existence of a ranking function, and therefore the termination
+of a program, with the second order formulae defined in Fig.~\ref{fig:termination-formulae}.
+We can observe that each of these formulae (with the exception of Definition~\ref{def:nonterm-formula})
+is an $\exists \forall$ formula where the the universally quantified variables only range over
+ground terms.  This class of formulae is the same as the class of program synthesis formulae.
 The program synthesis problem can be described as finding a satisfying assigment to the
 synthesis formula:
 
 \begin{definition}[Synthesis Formula]
- The synthesis formula for a specification $\sigma: X \to Y$ is:
- 
- $$\exists P \cdotp \forall x \cdotp \sigma(x, P(x))$$
- \end{definition}
+ \label{def:synth-formula}
+ $$\exists \vec{P}, \vec{x} \cdotp \forall \vec{y} \cdotp \sigma(\vec{x}, \vec{P}, \vec{y}) $$
+\end{definition}
 
 Since this formula involves quantification over functions $X \to Y$,
 this is a second-order formula -- indeed, if $X = Y = \mathbb{N}$,
@@ -664,23 +688,10 @@ hierarchy.  As such, determining the satisfiability of the synthesis
 formula over a given logic is strictly harder than solving the
 halting problem over the same logic.
 
-\subsection{Generalised Synthesis}
-Sometimes we want to synthesise several programs at once, as well as some
-ground terms $\vec{x}$.  Also, we might want a more complex specification
-than just a relation over $X$ and $Y$.
-
-\begin{definition}[Generalised Synthesis Formula]
- $$\exists P, \vec{x} \cdotp \forall \vec{y} \cdotp \sigma(x, P, y) $$
-\end{definition}
-
 \subsection{Reducing Termination to Synthesis}
 For a transition system $T$, we can build a specification $\sigma$ to find a conditional ranking function for
-$T$ with initial states I:
+$T$ with initial states I.  This specification is defined in Definition~\ref{def:termination-spec}.
 
-\begin{eqnarray}
- \sigma(V: X \to \mathbb{B}, R: X \to \mathbb{N}, x, x') = & I(x) \rightarrow V(x) \wedge \\
- & V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) < R(x') 
-\end{eqnarray}
 
 Here we have synthesised a ranking function $R$ into $\mathbb{N}$ (which is well-founded),
 as well as an inductive invariant $V$ that guarantees termination of $T$.
