@@ -714,8 +714,10 @@ define the syntax of a language we will work over.
 \section{Termination as Second-Order Satisfaction}
 In this section we will show how several variations of the halting problem can be defined in second-order
 logic.  As it turns out, all of these variations can be defined in a fragment of second-order logic
-we will refer to as the \emph{synthesis fragment}.  We will make use of this observation to frame the halting
-problem as a program synthesis problem, allowing us to employ the program synthesiser described in
+we will refer to as the \emph{synthesis fragment}.  This fragment
+consists of $\exists \forall$ formulae where the the universally quantified variables only range over
+ground terms and has close ties to the program synthesis problem.  We will make use of this observation
+to frame the halting problem as a program synthesis problem, allowing us to employ the program synthesiser described in
 Section~\ref{sec:synthesis}.
 
 \begin{figure*}
@@ -815,10 +817,9 @@ exactly one successor),  the non-termination problem is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
 With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae
-above is an $\exists \forall$ formula where the the universally quantified variables only range over
-ground terms.  We refer to this syntactic class as the \emph{synthesis fragment} of second-order
-logic, because program synthesis problem can be described as finding a satisfying assigment to the
-following formula:
+belongs to the synthesis fragment.  We use this name because the program synthesis problem can be
+described as finding a satisfying assigment to the following formula, which is the general case of
+the synthesis fragment:
 
 \begin{definition}[Synthesis Formula]
  \label{def:synth-formula}
