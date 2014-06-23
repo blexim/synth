@@ -343,15 +343,13 @@ whereas Kroening et al. strengthen the termination argument such that it becomes
 
 \section{Motivational Examples} \label{sec:motivation}
 In the previous sections, we have discussed some of the assumptions made by existent termination analyses (see Figure~\ref{fig:handletable}). 
-Now, we provide some simple examples that broke those assumptions and 
+Now, we provide some simple examples that broke those assumptions and cannot therefore be handled by state of the art tools.
 
 We next discus some intricate examples that prove challenging for existent termination analysis.
-%a few examples that illustrate the difficulties in termination checking for low-level code. In particular, they denote situations that arise 
-%frequently in practise and are not properly handled by existing techniques. 
 
-%We now present a few examples that justify 
+%\subsection{Program linearity vs. the linearity of its ranking function.}
 
-\subsection{Program linearity vs. the linearity of its ranking function.}
+Figure~\ref{fig:handletable} shows that the first assumption is that programs are linear.
 The first examples we consider illustrate the lack of a direct correlation between the linearity of a program and that of its termination arguments.
 As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
 although a linear ranking function does exist (see Figure~\ref{fig:handletable}). 
