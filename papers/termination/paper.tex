@@ -21,7 +21,7 @@
 \usepackage{algorithm}
 \usepackage{multicol}
 \usepackage{appendix}
-\usepackage{caption}
+\usepackage{caption,subcaption}
 \DeclareCaptionType{copyrightbox}
 \usepackage{subfig}
 \usepackage{multirow}
@@ -103,79 +103,16 @@ for the program states, i.e. a map from the program's state space to a well-orde
 %% convenient and tractable form of ranking functions, most frequently \emph{linear ranking functions} (see Section~\ref{sec:ranking.functions}). 
 %% In doing so, an analysis ensures that such a ranking function will be found if one  exists, 
 %% while failing to prove termination for terminating programs whose ranking functions fall short of the considered restriction. 
-In doing so, the majority of the existing termination provers diverge 
-in one important aspect from the execution of a program on a computer:
-bit-vectors and floats are treated as mathematical integers and reals, respectively.
-Figure~\ref{fig:handletable} presents a summary of existing termination analyses with indeed
-most of them designed for integers and assuming a \emph{restrictive transition relation}, e.g. linear programs \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}. 
-% \emph{linear ranking functions for linear programs over integers}.
-These design decisions may give rise to 
-{\em unsound} and {\em incomplete} analyses, as discussed next.
-%which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
 
-%\noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.} 
-
-\noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
-The abstraction of bit-vectors to mathematical integers ignores
-the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in
-incomparable behaviours with respect to termination.
-
-Programs that terminate for integers may \emph{not} terminate for bit-vectors. For illustration, consider the following loop:
-\begin{lstlisting}[language=C]
-while (x > 0) x -= 2;
-\end{lstlisting}
-The loop always terminates for unbounded integers as the value of \texttt{x} does eventually become negative, 
-whereas, with bit-vector arithmetic, \texttt{x} underflows before becoming negative and goes back to being positive causing the loop to never terminate.
-
-Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
- \begin{lstlisting}[language=C]
- while(x > 0) x++;
- \end{lstlisting}
-This loop is  terminating for bit-vectors since \texttt{x}
-will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
-arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
-
-%Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
-
-\begin{lstlisting}[language=C]
-while (x > 0) x -= 2;
-\end{lstlisting}
-
-\begin{lstlisting}[language=C]
- while(x > 0) x++;
- \end{lstlisting}
-
-%\noindent {\bf Floats vs. reals.} 
-A scenario similar to the one for bit-vectors happens if floats were to be abstracted to unbounded reals by termination provers \cite{}. 
-Consequently, these provers ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
-This approximation may lead to erroneous diagnosis of a program's terminating behaviour as illustrated by the loops in Figure~\ref{} and Figure~\ref{}.
-While the former does not terminate for reals, but does for floats, the latter 
-terminates for reals, but does not for floats.
-
-\begin{lstlisting}
-while (x > 0.0) x *= 0.5;
-\end{lstlisting}
-
-\begin{lstlisting}
-while (x > 0.0) x -= 1.0;
-\end{lstlisting}
-\todo{explain the reasons for non-termination with figures.}\\
-
-
-%% \noindent {\bf Linear programs and linear ranking functions.} As visible in Figure~\ref{fig:handletable}, 
-%% most termination techniques assume \emph{restrictive transition relations}, e.g. linear programs,  and are only able to compute
-%% \emph{linear ranking functions} \cite{}. To better understand this restriction, we computed the probability of a random terminating program having a linear ranking
-%% function (see Section ?). This probability proved to be very low, indicating that the linearity assumption for the ranking functions is indeed prohibitive.
-
-
-If we survey the area of program termination chronologically, we observe an initial domination of  monolithic approaches based on a single measure shown to decrease
+When surveying the area of program termination chronologically, we observe an initial domination of  monolithic approaches based on a single measure shown to decrease
 over all program paths %(syntactic characterisation of loops) 
 \cite{DBLP:conf/vmcai/P04,DBLP:conf/cav/BradleyMS05}, followed by 
 more recent techniques moving towards termination arguments based on Ramsey's theorem \cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}.
 The latter approach aims to find a set of local termination conditions that decrease as execution follows through the loop. %(semantic characterisation of loops).
 The main justification for this paradigm shift lies in the simplicity of the local termination measures when compared to the global ones, e.g.
 there are cases in which proofs based on local measures involve applying linear functions while corresponding global
-measures involve nonlinear functions or lexicographic orders.
+measures involve nonlinear functions or lexicographic orders. Consequently, approaches based on Ramsey's theorem 
+search for linear termination arguments.
 
 
 The downside of a Ramsey-based approach is the fact that a valid termination argument must hold for the \emph{transitive closure}
@@ -192,9 +129,82 @@ recent research shifts back to more complex termination arguments that are easie
 %
 %
 Following the same trend, %of switching the complexity in termination checking back to the termination arguments, 
-we investigate its very extreme: \emph{unrestricted} termination arguments. 
+we investigate its extreme: \emph{unrestricted} termination arguments. 
 This means that our ranking functions may involve non-linearity and lexicographic orders (we do not commit to any such form, i.e. we do not use templates).
-That is, we propose a general framework that does not assume the existence of linear ranking functions and can uniformly compute
+
+
+While the summary  in Figure~\ref{fig:handletable} supports our observation that the majority of existing termination analyses are designed for
+linear programs and linear ranking functions, it also identifies another common assumption that is being made: the equivalence of bit-vector/float semantics and integer/real semantics. Thus, most of the techniques treat
+bit-vectors and floats as mathematical integers and reals, respectively  \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}. 
+
+
+By assuming bit-vector/float semantics to be equivalent to integer/real semantics, 
+these techniques ignore the wrap-around behaviour caused by under/over-flows as well as width conversions, 
+and ultimately diverge from the execution of a program on a computer.  
+In Section~\ref{sec:motivation}, we show that integers/reals and bit-vectors/floats exhibit
+incomparable behaviours with respect to termination, e.g.
+programs that terminate for integers may \emph{not} terminate for bit-vectors.
+Thus, abstracting bit-vectors/floats to integers/reals may give rise to 
+{\em unsound} and {\em incomplete} analyses.
+%design decisions
+%which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
+
+
+
+%% \noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
+%% The abstraction of bit-vectors to mathematical integers ignores
+%% the wrap-around behaviour caused by under/over-flows in bit-vector arithmetic, resulting in
+%% incomparable behaviours with respect to termination.
+
+%% Programs that terminate for integers may \emph{not} terminate for bit-vectors. For illustration, consider the following loop:
+%% \begin{lstlisting}[language=C]
+%% while (x > 0) x -= 2;
+%% \end{lstlisting}
+%% The loop always terminates for unbounded integers as the value of \texttt{x} does eventually become negative, 
+%% whereas, with bit-vector arithmetic, \texttt{x} underflows before becoming negative and goes back to being positive causing the loop to never terminate.
+
+%% Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
+%%  \begin{lstlisting}[language=C]
+%%  while(x > 0) x++;
+%%  \end{lstlisting}
+%% This loop is  terminating for bit-vectors since \texttt{x}
+%% will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
+%% arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
+
+%% %Similarly, programs that terminate for bit-vectors may \emph{not} terminate for integers. One such situation is illustrated next:  
+
+%% \begin{lstlisting}[language=C]
+%% while (x > 0) x -= 2;
+%% \end{lstlisting}
+
+%% \begin{lstlisting}[language=C]
+%%  while(x > 0) x++;
+%%  \end{lstlisting}
+
+%% %\noindent {\bf Floats vs. reals.} 
+%% A scenario similar to the one for bit-vectors happens if floats were to be abstracted to unbounded reals by termination provers \cite{}. 
+%% Consequently, these provers ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
+%% This approximation may lead to erroneous diagnosis of a program's terminating behaviour as illustrated by the loops in Figure~\ref{} and Figure~\ref{}.
+%% While the former does not terminate for reals, but does for floats, the latter 
+%% terminates for reals, but does not for floats.
+
+%% \begin{lstlisting}
+%% while (x > 0.0) x *= 0.5;
+%% \end{lstlisting}
+
+%% \begin{lstlisting}
+%% while (x > 0.0) x -= 1.0;
+%% \end{lstlisting}
+%% \todo{explain the reasons for non-termination with figures.}\\
+
+
+%% \noindent {\bf Linear programs and linear ranking functions.} As visible in Figure~\ref{fig:handletable}, 
+%% most termination techniques assume \emph{restrictive transition relations}, e.g. linear programs,  and are only able to compute
+%% \emph{linear ranking functions} \cite{}. To better understand this restriction, we computed the probability of a random terminating program having a linear ranking
+%% function (see Section ?). This probability proved to be very low, indicating that the linearity assumption for the ranking functions is indeed prohibitive.
+
+
+We propose a general framework that does not assume the existence of linear ranking functions and can uniformly compute
 \emph{lexicographic/non-lexicographic} \emph{linear/non-linear} 
 ranking functions supported by inductive \emph{linear/non-linear} invariants for loops with 
 \emph{linear/non-linear} guards and transitions over bit-vectors and floats.
@@ -298,7 +308,7 @@ arithmetic, and a template-matching approach for predefined classes of
 ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
 Similarly, the only work we are aware of that can compute non-linear ranking functions  
 for imperative loops with polynomial guards and polynomial assignments
-is \cite{DBLP:conf/vmcai/BradleyMS05}.
+is \cite{DBLP:conf/vmcai/BradleyMS05}. However, this work extends only to polynomials.
 
 Given the lack of research in handling \emph{not-linear programs}, as well as \emph{programs over bit-vectors and floats},  
 our work focuses on covering these areas. 
@@ -330,7 +340,7 @@ whereas Kroening et al. strengthen the termination argument such that it becomes
 
 %\subsection{Synthesis}
 
-\section{Motivational Examples} 
+\section{Motivational Examples} \label{sec:motivation}
 We next discus some intricate examples that prove challenging for existent termination analysis.
 %a few examples that illustrate the difficulties in termination checking for low-level code. In particular, they denote situations that arise 
 %frequently in practise and are not properly handled by existing techniques. 
@@ -360,16 +370,33 @@ ordering for this tuple. Therefore no function may increase unless a function of
 a lower index decreases. Additionally, at every step, there must be at least one
 function that decreases.
 
+\begin{figure*}
+\centering
+ \begin{tabular}{ccc}
+
+\begin{subfigure}[b]{0.3\textwidth}
 \begin{lstlisting}
 while (x > 0)
  x = (x - 1) & x;
 \end{lstlisting}
+\caption{}
+ \label{fig:motivation.a}
+\end{subfigure}%
 
+&
+
+\begin{subfigure}[b]{0.3\textwidth}
 \begin{lstlisting}
 while (x != 0)
  x = -x / 2;
 \end{lstlisting}
+\caption{}
+ \label{fig:motivation.b}
+\end{subfigure}%
 
+&
+
+\begin{subfigure}[b]{0.3\textwidth}
 \begin{lstlisting}
   while (x != 0) {
     if (x > 0)
@@ -378,6 +405,12 @@ while (x != 0)
       x++;
   }
 \end{lstlisting}
+\caption{}
+ \label{fig:motivation.c}
+\end{subfigure}%
+
+\end{tabular}
+\end{figure*}
 
 \subsection{Differences in the termination behaviour for integers and bit-vectors.}
 We have collected a number of motivational examples from other termination papers that treat bit-vectors as mathematical integers \cite{DBLP:conf/tacas/LeikeH14,DBLP:conf/tacas/CookSZ13}. 
