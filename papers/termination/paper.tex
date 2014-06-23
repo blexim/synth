@@ -646,12 +646,23 @@ define the syntax of a language we will work over.
 
 \section{Termination as Second-Order Satisfaction}
 In this section we will show how several variations of the halting problem can be defined in second-order
-logic.  As it turns out, all of these variations can be defined in a fragment of second-order logic
-we will refer to as the \emph{synthesis fragment}.  This fragment
-consists of $\exists \forall$ formulae where the the universally quantified variables only range over
-ground terms and has close ties to the program synthesis problem.  We will make use of this observation
-to frame the halting problem as a program synthesis problem, allowing us to employ the program synthesiser described in
-Section~\ref{sec:synthesis}.
+logic.  In fact, many of these problems can be encoded in a fragment of second-order logic we will
+suggestively refer to as the \emph{synthesis fragment}:
+
+\begin{definition}[Synthesis Fragment]
+ A formula is in the synthesis fragment iff it is of the form
+ \[
+  \exists P, x \cdot \forall y \cdot \sigma(P, x, y)
+ \]
+
+ Here $P$ ranges over sets, while $x$ and $y$ range over ground terms.
+\end{definition}
+
+We will then show that checking satisfiability of a formula in the synthesis fragment corresponds to program synthesis.
+We will make use of this observation to frame the halting problem as a program synthesis problem, allowing us
+to employ the program synthesiser described in Section~\ref{sec:synthesis}.
+
+\subsection{Variations of the Halting Problem}
 
 \begin{figure*}
 \begin{framed}
@@ -749,23 +760,22 @@ shortly.  We observe that in the case that $T$ is deterministic (that is, each s
 exactly one successor),  the non-termination problem is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
-With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae
+\subsection{Program Synthesis as Second-Order Satisfaction}
+
+With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae above
 belongs to the synthesis fragment.  We use this name because the program synthesis problem can be
 described as finding a satisfying assigment to the following formula, which is the general case of
 the synthesis fragment:
 
 \begin{definition}[Synthesis Formula]
  \label{def:synth-formula}
- $$\exists P, x \cdot \forall y \cdot \sigma(x, y, P)$$
+ $$\exists P, x \cdot \forall y \cdot \sigma(P, x, y)$$
 \end{definition}
 
 Here we can view $\sigma: X \times Y \times (X \times Y \to Z) \to \mathbb{B}$ as a specification function.
 The idea is that $\sigma$ returns true iff the function $P$ computes appropriate outputs
 when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ that meet the specification
-for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.  Since the formulae
-of Fig.~\ref{fig:termination-formulae} are syntactically in the synthesis fragment, by concocting an appropriate
-specification function we reduce the problem of proving termination to the problem of
-program synthesis.
+for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
 
 \subsection{Synthesis Complexity}
 In Section~\ref{sec:synthesis} we will describe a procedure for solving the synthesis formula.
