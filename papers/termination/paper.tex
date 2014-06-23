@@ -725,7 +725,7 @@ $R$ is strong enough to show that $L$ terminates from any of its initial states.
 that $V$ is a \emph{termination invariant} for $L$ and that $R$ proves termination relative to $V$.
 
 The conditional termination formula becomes more complex in the presence of multiple loops.
-Consider the following program with two loops $L_1$ and $L_2$:
+Consider the following program with two loops $L_1$ and $L_2$, one after the other:
 
 \begin{lstlisting}
 while (L1) { ... }
@@ -747,15 +747,11 @@ shortly.  We observe that in the case that $T$ is deterministic (that is, each s
 exactly one successor),  the non-termination problem is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
-
-
-We can specify the existence of a ranking function, and therefore the termination
-of a program, with the second order formulae defined in Fig.~\ref{fig:termination-formulae}.
-We can observe that each of these formulae (with the exception of Definition~\ref{def:nonterm-formula})
-is an $\exists \forall$ formula where the the universally quantified variables only range over
-ground terms.
-The program synthesis problem can be described as finding a satisfying assigment to the
-synthesis formula:
+With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae
+above is an $\exists \forall$ formula where the the universally quantified variables only range over
+ground terms.  We refer to this syntactic class as the \emph{synthesis fragment} of second-order
+logic, because program synthesis problem can be described as finding a satisfying assigment to the
+following formula:
 
 \begin{definition}[Synthesis Formula]
  \label{def:synth-formula}
