@@ -84,7 +84,7 @@ fixed-width machine integers.
 We present a reduction from program \emph{termination} to program \emph{synthesis}.
 This reduction allows us to generate nonlinear, lexicographic ranking functions that
 are correct for fixed-width machine arithmetic and floating-point arithmetic.
-We use this reduction to build a semi-decision procedure for the termination
+We use this reduction to build a sound and complete procedure for the termination
 of fixed-width and floating-point arithmetic programs.
 \end{abstract}
 
@@ -540,6 +540,7 @@ which are non-linear when interpreted in the standard model of Peano arithmetic
 (although some of these operators can be seen as linear in a different algebraic structure,
 e.g. \texttt{xor} corresponds to addition in the Galois field $\mathrm{GF}(2^k)$).
 
+\iffalse
 \section{Combinatorics of Finite Termination}
 In this section, we fix a model of computation, describe its semantics and
 define the syntax of a language we will work over.
@@ -606,6 +607,7 @@ define the syntax of a language we will work over.
 \begin{corollary}
  Most terminating programs do not have linear ranking functions.
 \end{corollary}
+\fi
 
 
 \section{Termination as Second-Order Satisfaction}
@@ -732,7 +734,8 @@ of a linear ranking function.
 \end{proof}
 
 \begin{theorem}
- Most functions are non-linear.
+Assuming a reasonable program encoding, the probability that a random program of length $l$ computes
+a linear function is $O(2^{-l})$.
 \end{theorem}
 
 \begin{corollary}
