@@ -343,27 +343,45 @@ whereas Kroening et al. strengthen the termination argument such that it becomes
 
 \section{Motivational Examples} \label{sec:motivation}
 In the previous sections, we have discussed some of the assumptions made by existent termination analyses (see Figure~\ref{fig:handletable}). 
-Now, we provide some simple examples that broke those assumptions and cannot therefore be handled by state of the art tools.
+Now, we provide some simple examples that break those assumptions and cannot therefore be handled by state of the art tools.
 
-We next discus some intricate examples that prove challenging for existent termination analysis.
+%We next discus some intricate examples that prove challenging for existent termination analysis.
 
 %\subsection{Program linearity vs. the linearity of its ranking function.}
 
-Figure~\ref{fig:handletable} shows that the first assumption is that programs are linear.
-The first examples we consider illustrate the lack of a direct correlation between the linearity of a program and that of its termination arguments.
-As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
-although a linear ranking function does exist (see Figure~\ref{fig:handletable}). 
-
+Figure~\ref{fig:handletable} shows that the most common assumption existent termination techniques make is that \emph{programs are linear}.
+A program not falling in this category is given in Figure~\ref{fig:motivation.a}.
+%As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
+%although a linear ranking function does exist (see Figure~\ref{fig:handletable}). 
 In order to find a ranking function for this example, it is necessary to take into account
-the semantics of the bit-wise AND operator, which is not easily done when working with mathematical integers \cite{}.
+the semantics of the bit-wise AND operator, which is not easily done when working with mathematical integers.
 Our technique finds that a possible ranking function is the linear function
 $R(x) = x$, whose value decreases with
 every iteration, but it can not decrease indefinitely as it is bounded from below.
+This example also illustrates the lack of a direct correlation between the linearity of a program and that of its termination arguments.
 
-Conversely, Figure~\ref{} shows a linear program with a non-linear ranking function.
+The program in Figure~\ref{fig:motivation.b} breaks a different assumption made by the majority of termination analyses, namely that \emph{ranking functions are linear}.
+Our technique proves that this loop terminates by finding that $|x|$ is a possible ranking function for it.
 
-Figure~\ref{} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a disjunctively well-founded one, 
-which requires an expensive binary reachability analysis.
+Figure~\ref{fig:motivation.c} invalidates the assumption that \emph{integer semantics and bit-vector semantics are equivalent}. 
+This loop is  terminating for bit-vectors since \texttt{x}
+will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
+arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
+
+The same assumption is broken by the program in Figure~\ref{fig:motivation.d}. Every execution of the program can be partitioned into two phases: in the first phase $y$ increases
+until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
+This example is taken from \cite{DBLP:conf/tacas/LeikeH14}, where the authors make use of a template for obtaining a ranking function that proceeds
+through a fixed number of phases in the program execution. Each phase is ranked by a linear function, and ends when this function becomes non-positive.
+However, when considering the bit-vector semantics, this program does not terminate as..
+
+The loops in Figure~\ref{fig:motivation.e} and Figure~\ref{fig:motivation.f} break the assumption that \emph{real semantics and float semantics are equivalent}. 
+% ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
+This assumption may lead to erroneous diagnosis of a program's terminating behaviour.% as illustrated by the loops in Figure~\ref{} and Figure~\ref{}.
+While the former does not terminate for reals, but does for floats, the latter 
+terminates for reals, but does not for floats.
+
+
+Figure~\ref{fig:motivation.g} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a disjunctively well-founded one, which requires an expensive binary reachability analysis.
 However, by using our technique we can find a non-linear lexicographic ranking functions.
 A lexicographic non-linear ranking functions consists of lexicographically ordered components
 of non-linear functions. As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
@@ -371,6 +389,15 @@ loop transition leads to a decrease with respect to the lexicographic
 ordering for this tuple. Therefore no function may increase unless a function of
 a lower index decreases. Additionally, at every step, there must be at least one
 function that decreases.
+
+
+The program in Figure~\ref{fig:motivation.h} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
+In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multi-phase ranking function, i.e. ..,  with a dedicated technique for computing it. However, in our setting 
+this type of programs do not need a special treatment, as we can find a non-linear ranking function for it as follows:
+\begin{verbatim}
+R(x, y, z) = (x < y, z)
+\end{verbatim}
+
 
 \begin{figure*}
 \centering
@@ -426,7 +453,7 @@ while (x != 0)
 while (x > 0.0) x -= 1.0;
 \end{lstlisting}
 \caption{}
- \label{fig:motivation.f}
+ \label{fig:motivation.e}
 \end{subfigure} 
 
 &
@@ -436,7 +463,7 @@ while (x > 0.0) x -= 1.0;
 while (x > 0.0) x *= 0.5;
 \end{lstlisting}
 \caption{}
- \label{fig:motivation.g}
+ \label{fig:motivation.f}
 \end{subfigure} \\
 \hline
 
@@ -450,7 +477,7 @@ while (x > 0.0) x *= 0.5;
   }
 \end{lstlisting}
 \caption{}
- \label{fig:motivation.h}
+ \label{fig:motivation.g}
 \end{subfigure} 
 
 
@@ -480,79 +507,31 @@ while (x > 0 && y > 0 && z > 0) {
 \caption{Sample programs}\label{fig:motivation}
 \end{figure*}
 
-\subsection{Differences in the termination behaviour for integers and bit-vectors.}
-We have collected a number of motivational examples from other termination papers that treat bit-vectors as mathematical integers \cite{DBLP:conf/tacas/LeikeH14,DBLP:conf/tacas/CookSZ13}. 
-We show that the termination arguments computed by such techniques do not directly apply when considering the bit-vector semantics.
+%\subsection{Differences in the termination behaviour for integers and bit-vectors.}
+%We have collected a number of motivational examples from other termination papers that treat bit-vectors as mathematical integers \cite{DBLP:conf/tacas/LeikeH14,DBLP:conf/tacas/CookSZ13}. 
+%We show that the termination arguments computed by such techniques do not directly apply when considering the bit-vector semantics.
 %these programs actually exhibit different terminating behaviours for bit-vectors and integer  
 
-\begin{lstlisting}
-  while (x != m) {
-    if (x > m)
-      x = 0;
-    else
-      x++;
-  }
-\end{lstlisting}
+%% \begin{lstlisting}
+%%   while (x != m) {
+%%     if (x > m)
+%%       x = 0;
+%%     else
+%%       x++;
+%%   }
+%% \end{lstlisting}
 
-The program in Figure~\ref{} is taken from \cite{DBLP:conf/tacas/CookSZ13}, where
-$m$ and $x$ start as any integers with $m$ positive. If $x$ is greater than
-$m$, $x$ is set to 0. Otherwise, $x$ increases until it equals $m$, upon which
-the loop terminates. While a disjunctive well-founded termination argument does exist for the loop, 
-e.g. ($x < oldx$ and $0 \leq oldx$) or ($m-x < oldm-oldx$ and $0 \leq oldm-oldx$), the loop does not 
-terminate under the bit-vector semantics. The reason is ..
-
-\begin{lstlisting}
-  while ( q >= 0 ) {
-    q = q - y;
-    y = y + 1;
-  }
-\end{lstlisting}
-
-In Figure~\ref{}, every execution of the program can be partitioned into two phases: in the first phase $y$ increases
-until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
-This example was presented in \cite{DBLP:conf/tacas/LeikeH14}, where the authors make use of a template for obtaining a ranking function that proceeds
-through a fixed number of phases in the program execution. Each phase is ranked by a linear function, and ends when this function becomes non-positive.
-However, when considering the bit-vector semantics, this program does not terminate as..
-
-\subsection{Differences in the termination behaviour for reals and floats.}
-\begin{lstlisting}
-while (x > 0.0) x -= 1.0;
-\end{lstlisting}
-
-\begin{lstlisting}
-while (x > 0.0) x *= 0.5;
-\end{lstlisting}
+%% The program in Figure~\ref{} is taken from \cite{DBLP:conf/tacas/CookSZ13}, where
+%% $m$ and $x$ start as any integers with $m$ positive. If $x$ is greater than
+%% $m$, $x$ is set to 0. Otherwise, $x$ increases until it equals $m$, upon which
+%% the loop terminates. While a disjunctive well-founded termination argument does exist for the loop, 
+%% e.g. ($x < oldx$ and $0 \leq oldx$) or ($m-x < oldm-oldx$ and $0 \leq oldm-oldx$), the loop does not 
+%% terminate under the bit-vector semantics. The reason is ..
 
 
-\subsection{Multi-phase ranking functions}
+%\subsection{Multi-phase ranking functions}
 %\subsection{Lexicographic ranking function with strict inequalities.}
 %Approaches based on Farkas’ Lemma can only handle non-strict inequalities \cite{DBLP:conf/cav/BradleyMS05,DBLP:conf/vmcai/P04}.
-The program in Figure~\ref{} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
-In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multi-phase ranking function, i.e. ..,  with a dedicated technique for computing it. However, in our setting 
-this type of programs do not need a special treatment, as we can find a non-linear ranking function for it as follows:
-\begin{verbatim}
-R(x, y, z) = (x < y, z)
-\end{verbatim}
-
-
-\begin{lstlisting}
-int main(void) {
-  int x, y, z;
-
-  while (x > 0 && y > 0 && z > 0) {
-    if (y > x) {
-      y = z;
-      x = nondet();
-      z = x - 1;
-    } else {
-      z = z - 1;
-      x = nondet();
-      y = x - 1;
-    }
-  }
-}
-\end{lstlisting}
-
 
 
 \section{Preliminaries}
