@@ -813,6 +813,9 @@ Assuming a reasonable program encoding, the probability that a random program of
 a linear function is $O(2^{-l})$.
 \end{theorem}
 
+(Discussion of linearity vs. LKC here)
+
+\iffalse
 \begin{corollary}
  LKC is a weaker assumption than linearity.
 \end{corollary}
@@ -849,13 +852,14 @@ a linear function is $O(2^{-l})$.
 \begin{corollary}
  \textsc{Headshot} can often prove termination where linear methods cannot.
 \end{corollary}
-
+\fi
 
 \section{Solving the Synthesis Formula}
 We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
 have a program synthesiser kicking around, we present the design of one synthesiser
 that can be used to solve the problem.
 
+\iffalse
 \subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
 \begin{conjecture}
 The lexicographic ordering does not influence the size of the search space. Thus, finding potentially lexicographic termination arguments is not more difficult than finding non-lexicographic ones.   
@@ -863,7 +867,7 @@ The lexicographic ordering does not influence the size of the search space. Thus
 
 As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
 conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
- 
+\fi
 
 
 \input{kalashnikov}
