@@ -235,7 +235,7 @@ def prove_terminates(filename):
 
   os.system(("./kalashnikov.py " +
              "%s ../../papers/termination/experiments/benchmarks/ranking.c " +
-             "-s2 --seed=1337 -a%d --varnames %s --resnames I " +
+             "-s2 --seed=1337 -w4 -a%d --varnames %s --resnames I " +
              "%s") % 
               (splitfile.name,
                 nids,
@@ -244,5 +244,15 @@ def prove_terminates(filename):
 
 if __name__ == '__main__':
   import sys
+
+  try:
+    os.unlink("/tmp/geneticsynth")
+  except:
+    pass
+
+  try:
+    os.unlink("/tmp/annealsynth")
+  except:
+    pass
 
   prove_terminates(sys.argv[1])
