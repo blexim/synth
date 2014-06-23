@@ -63,7 +63,7 @@
                                   % (paid open-access papers, 
                                   % short abstracts)
 
-\title{Synthesising Complex Termination Arguments}
+\title{Deciding Bitvector Termination with Program Synthesis}
 
 \authorinfo{Cristina David\and Daniel Kroening\and Matt Lewis}
            {Oxford University}
@@ -616,9 +616,9 @@ As well as machine arithmetic differing from Peano arithmetic on the operators t
 computers have several ``bitwise'' operations that are not taken as primitive in the theory of
 integers.  These operations include the standard boolean operations \texttt{and, or, not, xor}
 applied to each element of the bit-vector.  Computer programs often make use of these operators,
-which are non-linear when interpreted in the standard model of Peano arithmetic
-(although some of these operators can be seen as linear in a different algebraic structure,
-e.g. \texttt{xor} corresponds to addition in the Galois field $\mathrm{GF}(2^k)$).
+which are non-linear when interpreted in the standard model of Peano arithmetic\footnote{
+Although some of these operators can be seen as linear in a different algebraic structure,
+e.g. \texttt{xor} corresponds to addition in the Galois field $\mathrm{GF}(2^k)$}.
 
 \iffalse
 \section{Combinatorics of Finite Termination}
@@ -692,26 +692,37 @@ define the syntax of a language we will work over.
 
 \section{Termination as Second-Order Satisfaction}
 In this section we will show how several variations of the halting problem can be defined in second-order
-logic.  As it turns out, all of these variations can be defined in a fragment of second-order logic
-we will refer to as the \emph{synthesis fragment}.  This fragment
-consists of $\exists \forall$ formulae where the the universally quantified variables only range over
-ground terms and has close ties to the program synthesis problem.  We will make use of this observation
-to frame the halting problem as a program synthesis problem, allowing us to employ the program synthesiser described in
-Section~\ref{sec:synthesis}.
+logic.  In fact, many of these problems can be encoded in a fragment of second-order logic we will
+suggestively refer to as the \emph{synthesis fragment}:
+
+\begin{definition}[Synthesis Fragment]
+ A formula is in the synthesis fragment iff it is of the form
+ \[
+  \exists P, x . \forall y . \sigma(P, x, y)
+ \]
+
+ Here $P$ ranges over sets, while $x$ and $y$ range over ground terms.
+\end{definition}
+
+We will then show that checking satisfiability of a formula in the synthesis fragment corresponds to program synthesis.
+We will make use of this observation to frame the halting problem as a program synthesis problem, allowing us
+to employ the program synthesiser described in Section~\ref{sec:synthesis}.
+
+\subsection{Variations of the Halting Problem}
 
 \begin{figure*}
 \begin{framed}
 \begin{definition}[Second-order Termination Formula]
 \label{def:termination-formula}
 \begin{align*}
- \exists R \cdot \forall x, x' \cdot & L(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
+ \exists R . \forall x, x' . & L(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
 \begin{definition}[Conditional Termination Formula]
 \label{def:conditional-termination-formula}
  \begin{align*}
-  \exists R, V \cdot \forall x, x' \cdot & I(x) \rightarrow V(x) ~ \wedge \\
+  \exists R, V . \forall x, x' . & I(x) \wedge L(x) \rightarrow V(x) ~ \wedge \\
                                  & L(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
@@ -719,9 +730,9 @@ Section~\ref{sec:synthesis}.
 \begin{definition}[Multiple Loops Termination Formula]
 \label{def:multi-termination-formula}
  \begin{align*}
-  \exists R, V_1, V_2 \cdot \forall x, x' \cdot & I(x) \rightarrow V_1(x) ~ \wedge \\
+  \exists R, V_1, V_2 . \forall x, x' . & I(x) \rightarrow V_1(x) ~ \wedge \\
                                         & V_1(x) \wedge L_1(x) \wedge T(x, x') \rightarrow V_1(x') ~ \wedge \\
-                                        & V_1(x) \wedge \lnot L_1(x) \rightarrow V_2(x) ~ \wedge \\
+                                        & V_1(x) \wedge \lnot L_1(x) \wedge L_2(x) \rightarrow V_2(x) ~ \wedge \\
                                         & V_2(x) \wedge L_2(x) \wedge T(x, x') \rightarrow V_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
@@ -729,7 +740,7 @@ Section~\ref{sec:synthesis}.
 \begin{definition}[Non-Termination Formula]
 \label{def:nonterm-formula}
  \begin{align*}
-  \exists N, x_0 \cdot \forall x \cdot \exists x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
+  \exists N, x_0 . \forall x . \exists x' . & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
 							& N(x) \wedge L(x) \rightarrow T(x, x') \wedge N(x') \wedge L(x')
  \end{align*}
 \end{definition}
@@ -737,7 +748,7 @@ Section~\ref{sec:synthesis}.
 \begin{definition}[Deterministic Non-Termination Formula]
 \label{def:deterministic-nonterm-formula}
  \begin{align*}
-  \exists N, x_0 \cdot \forall x, x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
+  \exists N, x_0 . \forall x, x' . & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
 							& N(x) \wedge L(x) \wedge T(x, x') \rightarrow N(x') \wedge L(x')
  \end{align*} 
 \end{definition}
@@ -766,7 +777,8 @@ $R$ is a ranking function that proves the loop $L$ terminates.
 A slightly more involved case occurs if $L$'s termination depends on the state it begins
 executing in, i.e. $L$ is \emph{conditionally terminating}.  This property is equivalent to the
 formula of Defintion~\ref{def:conditional-termination-formula}.  If this formula is satisfiable,
-$V$ is an inductive invariant of $L$ that is established by the initial states $I$.
+$V$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
+condition is met.
 $R$ is then a ranking function for $L$ as restricted by $V$ -- that is to say, $R$ need only
 be well founded on those states satisfying $V$.  But since $V$ is an inductive invariant of $L$,
 $R$ is strong enough to show that $L$ terminates from any of its initial states.  We say
@@ -795,25 +807,99 @@ shortly.  We observe that in the case that $T$ is deterministic (that is, each s
 exactly one successor),  the non-termination problem is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
-With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae
+\subsection{Program Synthesis as Second-Order Satisfaction}
+
+With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae above
 belongs to the synthesis fragment.  We use this name because the program synthesis problem can be
 described as finding a satisfying assigment to the following formula, which is the general case of
 the synthesis fragment:
 
 \begin{definition}[Synthesis Formula]
  \label{def:synth-formula}
- $$\exists P, x \cdot \forall y \cdot \sigma(x, y, P)$$
+ $$\exists P, x . \forall y . \sigma(P, x, y)$$
 \end{definition}
 
 Here we can view $\sigma: X \times Y \times (X \times Y \to Z) \to \mathbb{B}$ as a specification function.
 The idea is that $\sigma$ returns true iff the function $P$ computes appropriate outputs
 when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ that meet the specification
-for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.  Since the formulae
-of Fig.~\ref{fig:termination-formulae} are syntactically in the synthesis fragment, by concocting an appropriate
-specification function we reduce the problem of proving termination to the problem of
-program synthesis.
+for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
 
-\subsection{Synthesis Complexity}
+\section{Solving the Synthesis Formula}
+We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
+have a program synthesiser kicking around, we present the design of one synthesiser
+that can be used to solve the problem.
+
+\iffalse
+\subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
+\begin{conjecture}
+The lexicographic ordering does not influence the size of the search space. Thus, finding potentially lexicographic termination arguments is not more difficult than finding non-lexicographic ones.   
+\end{conjecture}
+
+As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
+conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
+\fi
+
+
+\input{kalashnikov}
+
+\section{Genetic Programming and Incremental Evolution}
+
+We begin by observing that the asymptotic complexity of all of our synthesis
+backends are equal, assuming $P \neq NP$.  This complexity is:
+
+$$O\left(2^{K(f)}\right)$$
+
+Where $K(f)$ is the Kolmogorov complexity of $f$, which is $O(\log Y^X) = O(X)$
+so the complexity is doubly exponential in the width of $X$.
+
+\begin{definition}
+ A \emph{fitness landscape} is the space of all programs along with their fitness.
+\end{definition}
+
+\begin{theorem}
+ Fitness landscapes form a lattice.  Adding test vectors corresponds to abstraction refinement on this
+ lattice, which is why incremental GP works well.
+\end{theorem}
+
+\begin{proof}
+ Trivial.
+\end{proof}
+
+
+\begin{conjecture}
+ A single fitness landscape isn't really very smooth (e.g. small changes in program representation
+ don't correspond to small changes in fitness), so GP probably shouldn't work very well.
+
+ But it does.
+\end{conjecture}
+
+
+\section{Soundness, Completeness and Complexity}
+\begin{theorem}
+ {\sc Headshot} is sound -- if it says a program terminates then it does.
+\end{theorem}
+
+\begin{theorem}
+ {\sc Headshot} is complete -- if a program terminates, {\sc Headshot} will find a proof that it does.
+\end{theorem}
+
+\begin{theorem}
+ {\sc Headshot} is a decision procedure -- it always terminates.
+\end{theorem}
+
+\begin{theorem}
+ {\sc Kalashnikov} has time complexity $NP^{NP}(K(\sigma))$
+\end{theorem}
+
+\begin{theorem}
+ {\sc Headshot} uses a single call to {\sc Kalashnikov} and uses an encoding with $O(1)$
+ overhead.  It therefore has time complexity $NP^{NP}(K(\tau(P))$ where $\tau(P)$ is the
+ termination specification for program $P$.
+\end{theorem}
+
+
+
+
 In Section~\ref{sec:synthesis} we will describe a procedure for solving the synthesis formula.
 This procedure has the property that it will find the shortest program meeting the
 specification, and as a consequence the runtime of the program synthesiser is dominated
@@ -860,7 +946,25 @@ Assuming a reasonable program encoding, the probability that a random program of
 a linear function is $O(2^{-l})$.
 \end{theorem}
 
-(Discussion of linearity vs. LKC here)
+\begin{proof}
+ (Do this proof properly).
+ 
+ Otherwise, we'd need to have an exponential number of programs computing the same function.
+ That would be an unreasonable program encoding.
+\end{proof}
+
+
+Therefore the number of non-linear functions $f$ with $K(f) \leq \kappa$
+grows exponentially with $\kappa$, while the number of linear functions
+grows only linearly.  This shows that assuming the existence of a linear
+ranking function is much stronger than assuming the existence of a short
+termination proof.  In addition to being a much weaker assumption,
+we argue that low Kolmogorov complexity is a more natural assumption than
+linearity.  Humans tend to write programs they can understand.  It's hard
+to quantify exactly what ``understandable'' means, but we think that
+``having a short proof'' is closer to the mark than ``having a linear proof''.
+
+
 
 \iffalse
 \begin{corollary}
@@ -900,56 +1004,6 @@ a linear function is $O(2^{-l})$.
  \textsc{Headshot} can often prove termination where linear methods cannot.
 \end{corollary}
 \fi
-
-\section{Solving the Synthesis Formula}
-We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
-have a program synthesiser kicking around, we present the design of one synthesiser
-that can be used to solve the problem.
-
-\iffalse
-\subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
-\begin{conjecture}
-The lexicographic ordering does not influence the size of the search space. Thus, finding potentially lexicographic termination arguments is not more difficult than finding non-lexicographic ones.   
-\end{conjecture}
-
-As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
-conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
-\fi
-
-
-\input{kalashnikov}
-
-\section{Genetic Programming and Incremental Evolution}
-
-We begin by observing that the asymptotic complexity of all of our synthesis
-backends are equal, assuming $P \neq NP$.  This complexity is:
-
-$$O(2^{K(f)}$$
-
-Where $K(f)$ is the Kolmogorov complexity of $f$, which is $O(\log Y^X) = O(X)$
-so the complexity is doubly exponential in the width of $X$.
-
-\begin{definition}
- A \emph{fitness landscape} is the space of all programs along with their fitness.
-\end{definition}
-
-\begin{theorem}
- Fitness landscapes form a lattice.  Adding test vectors corresponds to abstraction refinement on this
- lattice, which is why incremental GP works well.
-\end{theorem}
-
-\begin{proof}
- Trivial.
-\end{proof}
-
-
-\begin{conjecture}
- A single fitness landscape isn't really very smooth (e.g. small changes in program representation
- don't correspond to small changes in fitness), so GP probably shouldn't work very well.
- 
- But it does.
-\end{conjecture}
-
 
 
 \section{Experiments}
