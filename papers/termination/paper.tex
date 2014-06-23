@@ -676,7 +676,7 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
 \begin{definition}[Conditional Termination Formula]
 \label{def:conditional-termination-formula}
  \begin{align*}
-  \exists R, V \cdot \forall x, x' \cdot & I(x) \rightarrow V(x) ~ \wedge \\
+  \exists R, V \cdot \forall x, x' \cdot & I(x) \wedge L(x) \rightarrow V(x) ~ \wedge \\
                                  & L(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
@@ -686,7 +686,7 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
  \begin{align*}
   \exists R, V_1, V_2 \cdot \forall x, x' \cdot & I(x) \rightarrow V_1(x) ~ \wedge \\
                                         & V_1(x) \wedge L_1(x) \wedge T(x, x') \rightarrow V_1(x') ~ \wedge \\
-                                        & V_1(x) \wedge \lnot L_1(x) \rightarrow V_2(x) ~ \wedge \\
+                                        & V_1(x) \wedge \lnot L_1(x) \wedge L_2(x) \rightarrow V_2(x) ~ \wedge \\
                                         & V_2(x) \wedge L_2(x) \wedge T(x, x') \rightarrow V_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
@@ -731,7 +731,8 @@ $R$ is a ranking function that proves the loop $L$ terminates.
 A slightly more involved case occurs if $L$'s termination depends on the state it begins
 executing in, i.e. $L$ is \emph{conditionally terminating}.  This property is equivalent to the
 formula of Defintion~\ref{def:conditional-termination-formula}.  If this formula is satisfiable,
-$V$ is an inductive invariant of $L$ that is established by the initial states $I$.
+$V$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
+condition is met.
 $R$ is then a ranking function for $L$ as restricted by $V$ -- that is to say, $R$ need only
 be well founded on those states satisfying $V$.  But since $V$ is an inductive invariant of $L$,
 $R$ is strong enough to show that $L$ terminates from any of its initial states.  We say
@@ -777,7 +778,7 @@ The idea is that $\sigma$ returns true iff the function $P$ computes appropriate
 when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ that meet the specification
 for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
 
-\subsection{Synthesis Complexity}
+\subsection{Time Complexity}
 In Section~\ref{sec:synthesis} we will describe a procedure for solving the synthesis formula.
 This procedure has the property that it will find the shortest program meeting the
 specification, and as a consequence the runtime of the program synthesiser is dominated
