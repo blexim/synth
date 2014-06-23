@@ -391,7 +391,7 @@ a lower index decreases. Additionally, at every step, there must be at least one
 function that decreases.
 
 
-The program in Figure~\ref{fig:motivation.h} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
+The program in Figure~\ref{fig:motivation.i} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
 In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multi-phase ranking function, i.e. ..,  with a dedicated technique for computing it. However, in our setting 
 this type of programs do not need a special treatment, as we can find a non-linear ranking function for it as follows:
 \begin{verbatim}
@@ -485,6 +485,22 @@ while (x > 0.0) x *= 0.5;
 
 \begin{subfigure}[b]{0.3\textwidth}
 \begin{lstlisting}
+  y = 1;
+
+  while (x > 0) {
+    x = x-y;
+  }
+\end{lstlisting}
+\caption{}
+ \label{fig:motivation.h}
+\end{subfigure} 
+
+
+&
+
+
+\begin{subfigure}[b]{0.3\textwidth}
+\begin{lstlisting}
 while (x > 0 && y > 0 && z > 0) {
     if (y > x) {
       y = z;
@@ -498,10 +514,10 @@ while (x > 0 && y > 0 && z > 0) {
 }
 \end{lstlisting}
 \caption{}
- \label{fig:motivation.h}
+ \label{fig:motivation.i}
 \end{subfigure} 
 
-&
+
 
 \end{tabular}
 \caption{Sample programs}\label{fig:motivation}
