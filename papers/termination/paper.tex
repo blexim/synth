@@ -652,7 +652,7 @@ suggestively refer to as the \emph{synthesis fragment}:
 \begin{definition}[Synthesis Fragment]
  A formula is in the synthesis fragment iff it is of the form
  \[
-  \exists P, x \cdot \forall y \cdot \sigma(P, x, y)
+  \exists P, x . \forall y . \sigma(P, x, y)
  \]
 
  Here $P$ ranges over sets, while $x$ and $y$ range over ground terms.
@@ -669,14 +669,14 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
 \begin{definition}[Second-order Termination Formula]
 \label{def:termination-formula}
 \begin{align*}
- \exists R \cdot \forall x, x' \cdot & L(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
+ \exists R . \forall x, x' . & L(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
 \begin{definition}[Conditional Termination Formula]
 \label{def:conditional-termination-formula}
  \begin{align*}
-  \exists R, V \cdot \forall x, x' \cdot & I(x) \wedge L(x) \rightarrow V(x) ~ \wedge \\
+  \exists R, V . \forall x, x' . & I(x) \wedge L(x) \rightarrow V(x) ~ \wedge \\
                                  & L(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
@@ -684,7 +684,7 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
 \begin{definition}[Multiple Loops Termination Formula]
 \label{def:multi-termination-formula}
  \begin{align*}
-  \exists R, V_1, V_2 \cdot \forall x, x' \cdot & I(x) \rightarrow V_1(x) ~ \wedge \\
+  \exists R, V_1, V_2 . \forall x, x' . & I(x) \rightarrow V_1(x) ~ \wedge \\
                                         & V_1(x) \wedge L_1(x) \wedge T(x, x') \rightarrow V_1(x') ~ \wedge \\
                                         & V_1(x) \wedge \lnot L_1(x) \wedge L_2(x) \rightarrow V_2(x) ~ \wedge \\
                                         & V_2(x) \wedge L_2(x) \wedge T(x, x') \rightarrow V_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
@@ -694,7 +694,7 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
 \begin{definition}[Non-Termination Formula]
 \label{def:nonterm-formula}
  \begin{align*}
-  \exists N, x_0 \cdot \forall x \cdot \exists x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
+  \exists N, x_0 . \forall x . \exists x' . & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
 							& N(x) \wedge L(x) \rightarrow T(x, x') \wedge N(x') \wedge L(x')
  \end{align*}
 \end{definition}
@@ -702,7 +702,7 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
 \begin{definition}[Deterministic Non-Termination Formula]
 \label{def:deterministic-nonterm-formula}
  \begin{align*}
-  \exists N, x_0 \cdot \forall x, x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
+  \exists N, x_0 . \forall x, x' . & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
 							& N(x) \wedge L(x) \wedge T(x, x') \rightarrow N(x') \wedge L(x')
  \end{align*} 
 \end{definition}
@@ -770,7 +770,7 @@ the synthesis fragment:
 
 \begin{definition}[Synthesis Formula]
  \label{def:synth-formula}
- $$\exists P, x \cdot \forall y \cdot \sigma(P, x, y)$$
+ $$\exists P, x . \forall y . \sigma(P, x, y)$$
 \end{definition}
 
 Here we can view $\sigma: X \times Y \times (X \times Y \to Z) \to \mathbb{B}$ as a specification function.
@@ -801,7 +801,7 @@ conduct independent searches for each possible form of the ranking function with
 We begin by observing that the asymptotic complexity of all of our synthesis
 backends are equal, assuming $P \neq NP$.  This complexity is:
 
-$$O(2^{K(f)}$$
+$$O\left(2^{K(f)}\right)$$
 
 Where $K(f)$ is the Kolmogorov complexity of $f$, which is $O(\log Y^X) = O(X)$
 so the complexity is doubly exponential in the width of $X$.
@@ -900,7 +900,25 @@ Assuming a reasonable program encoding, the probability that a random program of
 a linear function is $O(2^{-l})$.
 \end{theorem}
 
-(Discussion of linearity vs. LKC here)
+\begin{proof}
+ (Do this proof properly).
+ 
+ Otherwise, we'd need to have an exponential number of programs computing the same function.
+ That would be an unreasonable program encoding.
+\end{proof}
+
+
+Therefore the number of non-linear functions $f$ with $K(f) \leq \kappa$
+grows exponentially with $\kappa$, while the number of linear functions
+grows only linearly.  This shows that assuming the existence of a linear
+ranking function is much stronger than assuming the existence of a short
+termination proof.  In addition to being a much weaker assumption,
+we argue that low Kolmogorov complexity is a more natural assumption than
+linearity.  Humans tend to write programs they can understand.  It's hard
+to quantify exactly what ``understandable'' means, but we think that
+``having a short proof'' is closer to the mark than ``having a linear proof''.
+
+
 
 \iffalse
 \begin{corollary}
