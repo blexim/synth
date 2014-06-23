@@ -25,6 +25,7 @@
 \DeclareCaptionType{copyrightbox}
 \usepackage{subfig}
 \usepackage{multirow}
+\usepackage{framed}
 \usepackage{tikz}
 \usetikzlibrary{arrows, automata, shapes}
 
@@ -646,27 +647,31 @@ define the syntax of a language we will work over.
 \section{Termination as Second-Order Satisfaction}
 In this section we will show how several variations of the halting problem can be defined in second-order
 logic.  As it turns out, all of these variations can be defined in a fragment of second-order logic
-we will refer to as the \emph{synthesis fragment}.
+we will refer to as the \emph{synthesis fragment}.  We will make use of this observation to frame the halting
+problem as a program synthesis problem, allowing us to employ the program synthesiser described in
+Section~\ref{sec:synthesis}.
 
 \begin{figure*}
+\begin{framed}
 \begin{definition}[Second-order Termination Formula]
 \label{def:termination-formula}
 \begin{align*}
- \exists R \cdot \forall x, x' . & R(x) > 0 ~ \wedge \\
-                             & T(x, x') \rightarrow R(x) > R(x')
+ \exists R \cdot \forall x, x' \cdot & L(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
 \begin{definition}[Conditional Termination Formula]
+\label{def:conditional-termination-formula}
  \begin{align*}
-  \exists R, I \cdot \forall x, x' . & I(x) \rightarrow V(x) ~ \wedge \\
+  \exists R, V \cdot \forall x, x' \cdot & I(x) \rightarrow V(x) ~ \wedge \\
                                  & L(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
 
 \begin{definition}[Multiple Loops Termination Formula]
+\label{def:multi-termination-formula}
  \begin{align*}
-  \exists R, V_1, V_2 \cdot \forall x, x' . & I(x) \rightarrow V_1(x) ~ \wedge \\
+  \exists R, V_1, V_2 \cdot \forall x, x' \cdot & I(x) \rightarrow V_1(x) ~ \wedge \\
                                         & V_1(x) \wedge L_1(x) \wedge T(x, x') \rightarrow V_1(x') ~ \wedge \\
                                         & V_1(x) \wedge \lnot L_1(x) \rightarrow V_2(x) ~ \wedge \\
                                         & V_2(x) \wedge L_2(x) \wedge T(x, x') \rightarrow V_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
@@ -681,15 +686,17 @@ we will refer to as the \emph{synthesis fragment}.
  \end{align*}
 \end{definition}
 
-\begin{definition}[Deterministic Non-Terminaton Formula]
+\begin{definition}[Deterministic Non-Termination Formula]
+\label{def:deterministic-nonterm-formula}
  \begin{align*}
   \exists N, x_0 \cdot \forall x, x' \cdot & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
 							& N(x) \wedge L(x) \wedge T(x, x') \rightarrow N(x') \wedge L(x')
  \end{align*} 
 \end{definition}
-
-\caption{The halting problem defined in second-order logic.\label{fig:termination-formulae}}
+\end{framed}
 \end{figure*}
+
+
 
 \iffalse
 Many loops do not terminate for all starting states, but are contained in programs that guarantee the loop will
@@ -702,6 +709,45 @@ Our method for ranking function synthesis can be stated as follows:
 discuss what spec is used (non-lexicographic vs lexicographic) + the completeness claims.
 Any termination guarantees?  
 \fi
+
+
+The existence of a ranking function for a single loop is equivalent to the satisfiability
+of the formula from Definition~\ref{def:termination-formula}.  If this formula is satisfiable,
+$R$ is a ranking function that proves the loop $L$ terminates, so the termination of $L$
+is equivalent to the satisfiability of Definition~\ref{def:termination-formula}.
+
+A slightly more involved case occurs if $L$'s termination depends on the state it begins
+executing in, i.e. $L$ is \emph{conditionally terminating}.  This property is equivalent to the
+formula of Defintion~\ref{def:conditional-termination-formula}.  If this formula is satisfiable,
+$V$ is an inductive invariant of $L$ that is established by the initial states $I$.
+$R$ is then a ranking function for $L$ as restricted by $V$ -- that is to say, $R$ need only
+be well founded on those states satisfying $V$.  But since $V$ is an inductive invariant of $L$,
+$R$ is strong enough to show that $L$ terminates from any of its initial states.  We say
+that $V$ is a \emph{termination invariant} for $L$ and that $R$ proves termination relative to $V$.
+
+The conditional termination formula becomes more complex in the presence of multiple loops.
+Consider the following program with two loops $L_1$ and $L_2$:
+
+\begin{lstlisting}
+while (L1) { ... }
+while (L2) { ... }
+\end{lstlisting}
+
+The termination problem for $L_2$ is equivalent to the satisfiability of
+Definition~\ref{def:multi-termination-formula}.  If this formula is satisfiable,
+$V_1$ is an inductive invariant of $L_1$ and $V_2$ is a termination invariant of $L_2$.
+$V_1$ is established by the initial conditions $I$ and is strong enough to establish
+$V_2$ when conjoined with the negation of $L_1$'s guard.  As before, $R$ is a ranking
+function relative to $V_2$.
+
+Non-termination of the loop $L$ is encoded by Definition~\ref{def:nonterm-formula}.
+If this formula is satisfiable, $N$ is a recurrence set for $L$ which proves
+$L$'s non-termination.  However this formula has one more level of quantifier alternation
+than the others (it is an $\exists \forall \exists$ formula), which will cause us problems
+shortly.  We observe that in the case that $T$ is deterministic (that is, each state has
+exactly one successor),  the non-termination problem is equivalent to the
+satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
+
 
 We can specify the existence of a ranking function, and therefore the termination
 of a program, with the second order formulae defined in Fig.~\ref{fig:termination-formulae}.
