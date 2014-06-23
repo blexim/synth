@@ -713,8 +713,7 @@ Any termination guarantees?
 
 The existence of a ranking function for a single loop is equivalent to the satisfiability
 of the formula from Definition~\ref{def:termination-formula}.  If this formula is satisfiable,
-$R$ is a ranking function that proves the loop $L$ terminates, so the termination of $L$
-is equivalent to the satisfiability of Definition~\ref{def:termination-formula}.
+$R$ is a ranking function that proves the loop $L$ terminates.
 
 A slightly more involved case occurs if $L$'s termination depends on the state it begins
 executing in, i.e. $L$ is \emph{conditionally terminating}.  This property is equivalent to the
@@ -747,6 +746,7 @@ than the others (it is an $\exists \forall \exists$ formula), which will cause u
 shortly.  We observe that in the case that $T$ is deterministic (that is, each state has
 exactly one successor),  the non-termination problem is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
+
 
 
 We can specify the existence of a ranking function, and therefore the termination
