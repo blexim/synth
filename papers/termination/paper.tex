@@ -112,8 +112,8 @@ more recent techniques moving towards termination arguments based on Ramsey's th
 The latter approach aims to find a set of local termination conditions that decrease as execution follows through the loop. %(semantic characterisation of loops).
 The main justification for this paradigm shift lies in the simplicity of the local termination measures when compared to the global ones, e.g.
 there are cases in which proofs based on local measures involve applying linear functions while corresponding global
-measures involve nonlinear functions or lexicographic orders. Consequently, approaches based on Ramsey's theorem 
-search for linear termination arguments.
+measures involve nonlinear functions or lexicographic orders. 
+This explain why approaches based on Ramsey's theorem are restricted to searching for linear termination arguments.
 
 
 The downside of a Ramsey-based approach is the fact that a valid termination argument must hold for the \emph{transitive closure}
@@ -134,8 +134,9 @@ we investigate its extreme: \emph{unrestricted} termination arguments.
 This means that our ranking functions may involve non-linearity and lexicographic orders (we do not commit to any such form, i.e. we do not use templates).
 
 
-While the summary  in Figure~\ref{fig:handletable} supports our observation that the majority of existing termination analyses are designed for
-linear programs and linear ranking functions, it also identifies another common assumption that is being made: the equivalence of bit-vector/float semantics and integer/real semantics. Thus, most of the techniques treat
+While the summary  in Figure~\ref{fig:handletable} supports the observation that the majority of existing termination analyses are designed for
+linear programs and linear ranking functions, it also identifies another common assumption made by state of the art termination provers: 
+\emph{the equivalence of bit-vector/float semantics and integer/real semantics}. Thus, most of the techniques treat
 bit-vectors and floats as mathematical integers and reals, respectively  \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}. 
 
 
@@ -205,23 +206,40 @@ Thus, abstracting bit-vectors/floats to integers/reals may give rise to
 %% function (see Section ?). This probability proved to be very low, indicating that the linearity assumption for the ranking functions is indeed prohibitive.
 
 
-We propose a general framework that does not assume the existence of linear ranking functions and can uniformly compute
+We propose a general framework that %does not assume the existence of linear ranking functions and can 
+uniformly computes
 \emph{lexicographic/non-lexicographic} \emph{linear/non-linear} 
 ranking functions supported by inductive \emph{linear/non-linear} invariants for loops with 
 \emph{linear/non-linear} guards and transitions over bit-vectors and floats.
-Our technique is {\emph complete} and can handle programs with non-linear operations, e.g. logical and.
-In our design, the termination problem becomes as hard as finding ranking functions, rather than as hard as
-checking the validity of a termination argument. 
+%Our technique is {\emph complete} and can handle programs with non-linear operations, e.g. logical and.
+%--In our design, the termination problem becomes as hard as finding ranking functions, rather than as hard as
+%checking the validity of a termination argument. 
 
  
-Given the level of generality that we aim for, we phrase the termination problem as a second order satisfaction problem (indeed, a program synthesis problem) (Section~\ref{}).
-While investigating the search space and the distribution of solutions (Section~\ref{}), we identify factors influencing our method's performance and
-find that our technique %is semantic in nature and 
-does not dependent on the size of the analysed program or its number of variables, but on the Kolmogorov
- complexity of the computed ranking functions. We show that the probability of
-a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?).
-Moreover, we find that our technique does actually gain from the generality of the termination argument. 
-After investigating its theoretical bounds, we experimentally show that our technique performs well in practice. 
+For this purpose, we phrase the termination problem as a second order satisfaction problem and
+we identify a fragment of second-order logic that is expressive enough to capture our formulation %several variations of the halting problem 
+(Section~\ref{sec:second.order}), which we call \emph{the synthesis fragment}. We propose a method 
+for checking the satisfiability of a formula in the synthesis fragment as program synthesis (Section~\ref{sec:synthesis}). 
+Our method is theoretically complete, i.e. if a pair of a ranking function and a supporting invariant 
+exist, it will be found. With respect to its performance, we show that its runtime is dominated by the size of 
+the shortest termination proof.
+%While investigating the search space and the distribution of solutions (Section~\ref{}), we identify factors 
+%influencing our method's performance and
+%find that our technique  
+This means that our procedure is not directly dependent on the size of the analysed program or its number of variables, but on the Kolmogorov
+complexity of its minimal termination argument. We argue that it is natural to expect programmers to write programs that have relatively short termination 
+proofs as this will make them understandable.
+
+
+%% Our approach to proving termination has two distinct features over previous work. 
+%% First,
+%% Second, our runtime is dependant on the KC of the shortest termination proof rather than the structure of the loop, number of variables, number of lassos... 
+
+
+%% We show that the probability of
+%% a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?).
+%% Moreover, we find that our technique does actually gain from the generality of the termination argument. 
+%% After investigating its theoretical bounds, we experimentally show that our technique performs well in practice. 
 
 
 \begin{figure*}
@@ -753,7 +771,7 @@ define the syntax of a language we will work over.
 \fi
 
 
-\section{Termination as Second-Order Satisfaction}
+\section{Termination as Second-Order Satisfaction} \label{sec:second.order}
 In this section we will show how several variations of the halting problem can be defined in second-order
 logic.  In fact, many of these problems can be encoded in a fragment of second-order logic we will
 suggestively refer to as the \emph{synthesis fragment}:
@@ -887,7 +905,7 @@ The idea is that $\sigma$ returns true iff the function $P$ computes appropriate
 when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ that meet the specification
 for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
 
-\section{Solving the Synthesis Formula}
+\section{Solving the Synthesis Formula} \label{sec:synthesis}
 We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
 have a program synthesiser kicking around, we present the design of one synthesiser
 that can be used to solve the problem.
