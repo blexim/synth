@@ -26,7 +26,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
     return 0;
   }
 
-  if (!inv(prog, post_vars) || !guard(post_vars)) {
+  if (!inv(prog, post_vars) || !guard(post_vars) || !execok) {
     return 0;
   }
 
@@ -35,9 +35,13 @@ int check(solution_t *solution, word_t args[NARGS]) {
   }
 
   if (guard(pre_vars) && inv(prog, pre_vars)) {
+    if (!execok) {
+      return 0;
+    }
+
     body(pre_vars, post_vars);
 
-    if (!inv(prog, post_vars)) {
+    if (!inv(prog, post_vars) || !execok) {
       return 0;
     }
 
