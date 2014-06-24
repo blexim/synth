@@ -186,12 +186,14 @@ class Checker(object):
           bins[s] = bin
           bin.close()
 
+          perf.start("gcc")
           if args.args.verbose > 1:
             print " ".join(gcc)
             subprocess.call(gcc)
           else:
             with open(os.devnull, "w") as fnull:
               subprocess.call(gcc, stdout=fnull, stderr=fnull)
+          perf.end("gcc")
 
           outfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
           proc = subprocess.Popen([bin.name], stdout=outfile,
