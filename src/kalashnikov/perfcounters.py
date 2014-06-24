@@ -2,6 +2,10 @@
 
 import time
 import args
+import cPickle
+
+args.argparser.add_argument("--stats", default=None, type=str,
+    help="file to serialize statistics to")
 
 counters = {}
 timers = {}
@@ -29,6 +33,15 @@ def end(key="_"):
   timers[key][-1] = (start, time.time())
 
 def summary():
+  try:
+    if args.args.stats is not None:
+      f = open(args.args.stats, 'wb')
+      stats = (counters, timers)
+      cPickle.dump(stats, f, protocol=-1)
+      f.close()
+  except:
+    pass
+
   print "Perf counters:"
   print counters
 
