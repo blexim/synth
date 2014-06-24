@@ -89,6 +89,7 @@ class Checker(object):
         "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
+        "-DCOND",
         os.path.join(args.args.interpreter, "exec.c"),
         os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),
@@ -115,15 +116,18 @@ class Checker(object):
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
-          "-O3", os.path.join("explicit", "verif.c")] + genericargs
+          "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           os.path.join("cbmc", "synth.c")] + genericargs
-      self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
+      self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+          "-O0", "-g",
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
-      self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
+      self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+          "-O0", "-g",
           os.path.join("genetic", "synth.c"), "-lm"] + genericargs
-      self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-O3",
+      self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+          "-O0", "-g",
           os.path.join("anneal", "synth.c"), "-lm"] + genericargs
 
 
