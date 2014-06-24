@@ -260,7 +260,13 @@ bounds on the convergence time ...
 we only need a bounded model checker that performs a single unwinding of a loop.
 %% \item Our technique is able to uniformly handle conditionally-terminating loops, as well as programs with
 %% multiple loops.
+
+\item We iteratively construct a termination argument as a pair of a ranking function and supporting invariant through a single refinement loop.
+This is opposed to tools that alternate 
+between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.
+
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
+
 \end{itemize}
 
 %. only non-strict inequalities can be transformed using Farkas’ Lemma
@@ -326,6 +332,25 @@ Cook et al present an iterative termination proving procedure that searches for
 lexicographic termination arguments \cite{DBLP:conf/tacas/CookSZ13}, 
 whereas Kroening et al. strengthen the termination argument such that it becomes a transitive relation \cite{DBLP:conf/cav/KroeningSTW10}.
 
+Proving program termination implies the simultaneous search for a termination argument and a supporting invariant.
+For this purpose, several tools alternate 
+between calls to a safety prover and calls to a ranking function synthesis tool \cite{}. 
+In order to share more information about the state of the termination proofs between the two tools, 
+Brockschmidt et al. use a single representation of the state of the termination proof search that both tools operate over, 
+resulting in performance improvements \cite{DBLP:conf/cav/BrockschmidtCF13}.
+In our setting, both the ranking function and the supporting invariant are iteratively constructed through a single refinement loop.
+
+ 
+%In our setting, a candidate termination argument is iteratively constructed. 
+%A candidate termination argument is composed out of a ranking function 
+%and a supporting invariant. 
+
+%% The safety prover proves or disproves the
+%% validity of the current argument via the search for invariants. Refinement of the
+%% current termination argument is performed using the output of a rank function
+%% synthesis tool when applied to counterexamples found by the safety prover.
+
+
 \todo{add smth about synthesis}
 
 %The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
@@ -389,6 +414,13 @@ loop transition leads to a decrease with respect to the lexicographic
 ordering for this tuple. Therefore no function may increase unless a function of
 a lower index decreases. Additionally, at every step, there must be at least one
 function that decreases.
+
+
+When proving program termination we are simultaneously solving two problems:
+the search for a termination argument, and the search for a supporting invariant.
+In our setting, a candidate termination argument is iteratively constructed. 
+A candidate termination argument is composed out of a ranking function 
+and a supporting invariant. 
 
 
 The program in Figure~\ref{fig:motivation.i} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
@@ -551,16 +583,31 @@ while (x > 0 && y > 0 && z > 0) {
 
 
 \section{Preliminaries}
+Given a transition system, %with state space $X$ and transition relation $T \subseteq X \times X$, 
+we first formalise its termination argument as a ranking function (Section~\ref{sec:ranking.functions}). 
+Subsequently, we discus bit-vector semantics and illustrate 
+differences between machine arithmetic and integer arithmetic that
+make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
+
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 \todo{linear program}
 
+\begin{definition}[Unconditional termination]
 A transition system with state space $X$ and transition relation $T \subseteq X \times X$
 is said to be \emph{unconditionally terminating} if there is no infinite sequence
-$x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.  We can prove that $T$ is
-unconditionally terminating by finding an injective function $R: X \to Y$ where
-$Y$ is well-founded and $R$ is monotonically decreasing with respect $T$.  That is
+$\vec{x_1}, \vec{x_2}, \ldots$ with $\forall i . T(\vec{x_i}, \vec{x_{i+1}})$.  
+\end{definition}
+
+We can prove that $T$ is
+unconditionally terminating by finding a ranking function.
+
+\begin{definition}[Ranking function]
+Given a transition system with state space $X$ and transition relation $T \subseteq X \times X$,
+a ranking function is an injective function $R: X \to Y$ where
+$Y$ is well-founded and $R$ is monotonically decreasing with respect to $T$.  That is
 to say:
-$$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
+$$\forall \vec{x}, \vec{x'} . T(\vec{x}, \vec{x'}) \Rightarrow R(\vec{x}) < R(\vec{x'})$$
+\end{definition}
 
 A special case of a ranking function is a \emph{linear ranking function}.  This
 class of functions is exactly what you'd expect: a linear function that satisfies
@@ -578,14 +625,14 @@ induced on tuples of $Z$'s.  We note that some termination arguments
 require lexicographic ranking functions, or equivalently, ranking functions
 whose co-domain is the ordinals, rather than just $\mathbb{N}$.
 
-\subsection{Disjunctive Well-Foundedness}\label{sec:dwf}
-Terminator uses disjunctive well foundedness arguments, which can be found
-piece by piece, but require reasoning about the transitive closure of a transition
-relation.  Because we build a monolithic well foundedness argument, we
-do not need to reason about the full transitive closure, and can instead do our
-reasoning over a single step of the transition relation.  This means that we
-can get away with very simple model checking methods, rather than requiring
-a full-blown safety prover.
+%% \subsection{Disjunctive Well-Foundedness}\label{sec:dwf}
+%% Terminator uses disjunctive well foundedness arguments, which can be found
+%% piece by piece, but require reasoning about the transitive closure of a transition
+%% relation.  Because we build a monolithic well foundedness argument, we
+%% do not need to reason about the full transitive closure, and can instead do our
+%% reasoning over a single step of the transition relation.  This means that we
+%% can get away with very simple model checking methods, rather than requiring
+%% a full-blown safety prover.
 
 \subsection{Machine Arithmetic and Bitvectors} \label{sec:machine.arith} 
 Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
@@ -788,7 +835,7 @@ Any termination guarantees?
 
 The existence of a ranking function for a single loop is equivalent to the satisfiability
 of the formula from Definition~\ref{def:termination-formula}.  If this formula is satisfiable,
-$R$ is a ranking function that proves the loop $L$ terminates.
+$R$ is a ranking function that proves loop $L$ terminates.
 
 A slightly more involved case occurs if $L$'s termination depends on the state it begins
 executing in, i.e. $L$ is \emph{conditionally terminating}.  This property is equivalent to the
