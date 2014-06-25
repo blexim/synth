@@ -72,8 +72,8 @@
 
 #if defined(SEARCH)
  #define assume(x) do {\
-   if (!(x)) execok = 0; \
-   return; \
+   if (!(x)) { execok = 0; \
+   return; } \
  } while(0)
 #elif defined(SYNTH)
  #define assume(x) __CPROVER_assume(x)
