@@ -62,7 +62,7 @@ def load_benchmark(cfile):
   nontermfile = os.path.join(logdir, '%s.nonterm.stats' % benchname)
 
   termstats = load_stats(termfile)
-  nontermstats = load_stats(termfile)
+  nontermstats = load_stats(nontermfile)
 
   return (benchname, props, termstats, nontermstats)
 
@@ -85,14 +85,14 @@ def print_benchmark(benchmark):
 
     if 'timeout' not in counters:
       (start, end) = timers['_'][0]
-      elapsed = '%.02fs' % (end - start)
+      elapsed = '%.01fs' % (end - start)
       res = 'term'
     elif nontermstats:
       (counters, timers) = nontermstats
 
       if 'timeout' not in counters:
-        (start, end) = timers['_']
-        elapsed = '%.02fs' % (end - start)
+        (start, end) = timers['_'][0]
+        elapsed = '%.01fs' % (end - start)
         res = 'nonterm'
   else:
     return ''
