@@ -100,8 +100,38 @@ def print_benchmark(benchmark):
   return ' & '.join((benchname, loc, isterm, linprog, linrank, iscond,
                      isfloat, lexdim, '5', res, elapsed)) + '\\\\ \n'
 
+def munge(s):
+  REST = 0
+  INT = 1
+  state = REST
+  ret = []
+  acc = 0
+
+  for c in s:
+    if c.isdigit():
+      if state == INT:
+        acc *= 10
+        acc += int(c)
+      else:
+        state = INT
+        acc = int(c)
+    else:
+      if state == INT:
+        ret.append(acc)
+        ret.append(c)
+        state = REST
+      else:
+        ret.append(c)
+
+  if state == INT:
+    ret.append(acc)
+
+  return ret
+
 def print_all(dir):
-  for f in os.listdir(dir):
+  fs = [(munge(s), s) for s in os.listdir(dir)]
+
+  for (_, f) in sorted(fs) :
     if f.endswith('.c'):
       benchmark = load_benchmark(os.path.join(dir, f))
       print print_benchmark(benchmark)
