@@ -100,12 +100,11 @@ void load(solution_t *pop) {
 void rand_solution(solution_t *solution) {
   int i, j;
 
-
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
-    prog->len = SZ;
+    prog->len = 1 + (rand() % (SZ - 1));
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < prog->len; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
       prog->params[i*3] = rand() % (i + NARGS + CONSTS);
       prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
@@ -136,7 +135,7 @@ void mutate(solution_t *solution) {
   for (j = 0; j < NPROGS; j++) {
     prog_t *b = &solution->progs[j];
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < b->len; i++) {
       if (should_mutate()) {
         b->ops[i] = rand() % (MAXOPCODE + 1);
       }
@@ -186,9 +185,9 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
     prog_t *b = &sol_b->progs[j];
     prog_t *c = &sol_c->progs[j];
 
-    c->len = SZ;
+    c->len = a->len;
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < c->len; i++) {
       recombine();
 
       c->ops[i] = a->ops[i];

@@ -65,7 +65,7 @@ void rand_solution(solution_t *solution) {
     prog_t *prog = &solution->progs[j];
     prog->len = SZ;
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < prog->len; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
     }
 
@@ -73,7 +73,7 @@ void rand_solution(solution_t *solution) {
       prog->consts[i] = rand() & WORDMASK;
     }
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < prog->len; i++) {
       prog->params[i*3] = rand() % (i + NARGS + CONSTS);
       prog->params[i*3+1] = rand() % (i + NARGS + CONSTS);
       prog->params[i*3+2] = rand() % (i + NARGS + CONSTS);
@@ -96,7 +96,7 @@ void mutate(solution_t *solution) {
   for (j = 0; j < NPROGS; j++) {
     prog_t *b = &solution->progs[j];
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < b->len; i++) {
       if (should_mutate()) {
         b->ops[i] = rand() % (MAXOPCODE + 1);
       }
@@ -108,7 +108,7 @@ void mutate(solution_t *solution) {
       }
     }
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < b->len; i++) {
       if (should_mutate()) {
         b->params[i*3] = rand() % (i + NARGS + CONSTS);
       }

@@ -188,7 +188,11 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     A[NARGS + CONSTS + i] = res;
   }
 
-  for (i = 0; i < NRES; i++) {
-    results[NRES - i - 1] = A[NARGS + CONSTS + LEN(prog) - NRES + i];
+  for (i = 0; i < NRES && i < LEN(prog); i++) {
+    results[i] = A[NARGS + CONSTS + LEN(prog) - i - 1];
+  }
+
+  for (; i < NRES; i++) {
+    results[i] = 0;
   }
 }
