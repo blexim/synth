@@ -113,7 +113,7 @@ The latter approach aims to find a set of local termination conditions that decr
 The main justification for this paradigm shift lies in the simplicity of the local termination measures when compared to the global ones, e.g.
 there are cases in which proofs based on local measures involve applying linear functions while corresponding global
 measures involve nonlinear functions or lexicographic orders. 
-This explain why approaches based on Ramsey's theorem are restricted to searching for linear termination arguments.
+This explains why approaches based on Ramsey's theorem are restricted to searching for linear termination arguments.
 
 
 The downside of a Ramsey-based approach is the fact that a valid termination argument must hold for the \emph{transitive closure}
@@ -214,32 +214,33 @@ ranking functions supported by inductive \emph{linear/non-linear} invariants for
 %Our technique is {\emph complete} and can handle programs with non-linear operations, e.g. logical and.
 %--In our design, the termination problem becomes as hard as finding ranking functions, rather than as hard as
 %checking the validity of a termination argument. 
+We combine the generation of ranking functions with the generation of invariants such that the necessary 
+supporting invariants and the ranking function are discovered at the same time.
 
  
 For this purpose, we phrase the termination problem as a second order satisfaction problem and
-we identify a fragment of second-order logic that is expressive enough to capture our formulation %several variations of the halting problem 
-(Section~\ref{sec:second.order}), which we call \emph{the synthesis fragment}. We propose a method 
+we identify a fragment of second-order logic that is expressive enough to capture our formulation, 
+which we call \emph{the synthesis fragment}. Subsequently, we propose a method 
 for checking the satisfiability of a formula in the synthesis fragment as program synthesis (Section~\ref{sec:synthesis}). 
 Our method is theoretically complete, i.e. if a pair of a ranking function and a supporting invariant 
-exist, it will be found. With respect to its performance, we show that its runtime is dominated by the size of 
+exist, it will be found. 
+
+With respect to the performance of our technique, we show that its runtime is dominated by the size of 
 the shortest termination proof.
 %While investigating the search space and the distribution of solutions (Section~\ref{}), we identify factors 
 %influencing our method's performance and
 %find that our technique  
-This means that our procedure is not directly dependent on the size of the analysed program or its number of variables, but on the Kolmogorov
-complexity of its minimal termination argument. We argue that it is natural to expect programmers to write programs that have relatively short termination 
-proofs as this will make them understandable.
+This means that our procedure is not directly dependent on the structure of the analysed loop, e.g. number of variable, number of lassos, 
+but on the Kolmogorov complexity of its minimal termination argument. 
+\emph{In our design, proving a program terminates becomes as hard as finding its minimal temination argument}.
+We argue that the length of a program's termination proof is indicative of how easy to understand the program is, and thus 
+programmers tend to write programs that have relatively short termination proofs. 
+We empirically show that this claim holds in practice, causing our technique to perform well.
 
 
 %% Our approach to proving termination has two distinct features over previous work. 
-%% First,
-%% Second, our runtime is dependant on the KC of the shortest termination proof rather than the structure of the loop, number of variables, number of lassos... 
-
-
-%% We show that the probability of
-%% a ranking function to have a low Kolmogorov complexity is higher than the probability to be linear (see Section~?).
-%% Moreover, we find that our technique does actually gain from the generality of the termination argument. 
-%% After investigating its theoretical bounds, we experimentally show that our technique performs well in practice. 
+%% First, it is \emph{general}, i.e. does not make any assumption about the form of the termination argument.   
+%% Second, it correctly handles bit-vectors and floats without abstracting them to integers and reals, respectively.
 
 
 \begin{figure*}
@@ -280,8 +281,9 @@ we only need a bounded model checker that performs a single unwinding of a loop.
 %% multiple loops.
 
 \item We iteratively construct a termination argument as a pair of a ranking function and supporting invariant through a single refinement loop.
-This is opposed to tools that alternate 
-between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.
+This is opposed to tools that alternate between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.
+
+\item Our proposed termination proving procedure can also prove non-termination. Alternating termination and non-termination? 
 
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 
@@ -303,6 +305,9 @@ between calls to a safety prover and calls to a ranking function synthesis tool 
 %to read: constraint-based.., integers vs rationals.
 
 %This paper is organised as follows:
+
+Limitations: No recursion.
+
 
 \section{Related Work}
 %\subsection{Termination analysis}
@@ -356,7 +361,9 @@ between calls to a safety prover and calls to a ranking function synthesis tool 
 In order to share more information about the state of the termination proofs between the two tools, 
 Brockschmidt et al. use a single representation of the state of the termination proof search that both tools operate over, 
 resulting in performance improvements \cite{DBLP:conf/cav/BrockschmidtCF13}.
-In our setting, both the ranking function and the supporting invariant are iteratively constructed through a single refinement loop.
+In \cite{DBLP:conf/cav/BradleyMS05}, Bradley et al. combine the generation of ranking functions with the generation of invariants to
+form one constraint solving problem such that the necessary supporting invariants for the ranking function are discovered on demand.
+In our setting, both the ranking function and the supporting invariant are iteratively constructed through the same refinement loop.
 
  
 %In our setting, a candidate termination argument is iteratively constructed. 
@@ -369,7 +376,7 @@ In our setting, both the ranking function and the supporting invariant are itera
 %% synthesis tool when applied to counterexamples found by the safety prover.
 
 
-\todo{add smth about synthesis}
+\todo{add non-termination}
 
 %The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
 %For example, terminationg of term rewriting systems is largely structural, whereas DWF analysis (cf. Terminator) is more semantic. While it deals
