@@ -1108,15 +1108,13 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 
 \begin{figure*}
 \centering
-\begin{tabular}{|l|r|c|c|c|c|r|r|r|}
+\begin{tabular}{|l|r|c|c|c|c|c|r|r|c|r|}
 \hline
-    & LOC & \shortstack{Linear \\ program?} & \shortstack{Linear ranking \\ function?}  & Conditional? & Float? & Dimension & \shortstack{Ranking \\ program size} & Time (s)\\
+    & LOC & Terminates? & \shortstack{Linear \\ program?} & \shortstack{Linear ranking \\ function?}  & Conditional? & Float? & Dimension & \shortstack{Ranking \\ program size} & Res & Time (s)\\
     \hline
     \hline
- P1 & 10 & \xmark & \xmark & \xmark & \xmark & 3 & 1 & 0.01 \\
- P2 & 10 & \xmark & \xmark & \xmark & \xmark & 3 & 1 & 0.01 \\
- P3 & 10 & \xmark & \xmark & \xmark & \xmark & 3 & 1 & 0.01 \\
- \hline
+\input{table}
+    \hline
 \end{tabular}
 
 \caption{\textsc{Headshot} termination for nonlinear programs with nonlinear ranking functions\label{fig:nonlinear}}
