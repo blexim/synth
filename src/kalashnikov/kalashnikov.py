@@ -163,7 +163,8 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  bmc = Checker(codelen, width, len(prog.consts[0]), True)
+  sz = len(prog.ops[0])
+  bmc = Checker(sz, width, len(prog.consts[0]), True)
 
 
   bmc.write(r"""
@@ -176,11 +177,13 @@ solution_t solution = {
   for i in xrange(args.args.progs):
     bmc.write(r"""
   {
+    %d,
     { %s },
     { %s },
     { %s },
   },
-""" % (", ".join(str(o) for o in prog.ops[i]),
+""" % (len(prog.ops[i]),
+       ", ".join(str(o) for o in prog.ops[i]),
        ", ".join(str(p) for p in prog.params[i]),
        ", ".join(str(c) for c in prog.consts[i])))
 

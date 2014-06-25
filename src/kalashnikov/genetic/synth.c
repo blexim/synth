@@ -186,6 +186,8 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
     prog_t *b = &sol_b->progs[j];
     prog_t *c = &sol_c->progs[j];
 
+    c->len = SZ;
+
     for (i = 0; i < SZ; i++) {
       recombine();
 
