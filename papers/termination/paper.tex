@@ -427,7 +427,7 @@ We prove that this loop terminates by finding that the non-linear function $R(x)
 Figure~\ref{fig:motivation.c} invalidates assumption (iii). 
 This loop is  terminating for bit-vectors since \texttt{x}
 will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
-arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
+arithmetic as the loop condition stays always true for any initial \texttt{x} at least 1.
 
 Assumption (iii) is broken again by the program in Figure~\ref{fig:motivation.d}. Every execution of the program can be partitioned into two phases: 
 in the first phase $y$ increases until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
@@ -442,32 +442,41 @@ The former does not terminate for floats (if $x$ is sufficiently large, the roun
 doesn't terminate for reals, but does so for floats (due to rounding errors $x$ eventually becomes sufficiently small 
 such that the closest representable number is 0.0). \todo{can we prove non-termination?}
 
+
+Up until this point, we looked at examples that are not soundly treated by existing techniques as they 
+don't fit in the range of programs covered by these techniques.
+Next, we look at some programs that are handled by existing termination tools via dedicated analyses. We show that our method 
+uniformly handles them, without the need for any special treatment.
+
 Figure~\ref{fig:motivation.g} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, 
-where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a disjunctively well-founded one, which requires an expensive binary 
-reachability analysis.
-However, by using our technique we can find a non-linear lexicographic ranking functions.
+where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a Ramsey-based termination argument,
+which requires an expensive binary reachability analysis.
+With our technique we can find a non-linear lexicographic ranking function $R(x) = ...$.
 A lexicographic non-linear ranking functions consists of lexicographically ordered components
-of non-linear functions. As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
-loop transition leads to a decrease with respect to the lexicographic
-ordering for this tuple. Therefore no function may increase unless a function of
-a lower index decreases. Additionally, at every step, there must be at least one
-function that decreases.
+of non-linear functions. 
+%As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
+%loop transition leads to a decrease with respect to the lexicographic
+%ordering for this tuple. Therefore no function may increase unless a function of
+%a lower index decreases. Additionally, at every step, there must be at least one
+%function that decreases.
 
 
-When proving program termination we are simultaneously solving two problems:
-the search for a termination argument, and the search for a supporting invariant.
-In our setting, a candidate termination argument is iteratively constructed. 
-A candidate termination argument is composed out of a ranking function 
-and a supporting invariant. 
-
-
-The program in Figure~\ref{fig:motivation.i} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
-In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multi-phase ranking function, i.e. ..,  with a dedicated technique for computing it. However, in our setting 
-this type of programs do not need a special treatment, as we can find a non-linear ranking function for it as follows:
+The loop in Figure~\ref{fig:motivation.i} is taken from SVCOMP'15  \footnote{http://sv-comp.sosy-lab.org/2015/index.php} termination benchmarks.
+In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, this program admits a multiphase ranking function computed from a multiphase ranking template.
+A multiphase ranking template is targeted at programs that go through a
+finite number of phases in their execution. Each phase is ranked with
+an affine-linear function and the phase is considered to be completed once this
+function becomes non-positive.
+However, in our setting this type of programs do not need a special treatment, as we can find a non-linear ranking function:
 \begin{verbatim}
 R(x, y, z) = (x < y, z)
 \end{verbatim}
 
+The loop in Figure~\ref{fig:motivation.h} illustrates conditional termination.
+Basically, when proving program termination we are simultaneously solving two problems:
+the search for a termination argument, and the search for a supporting invariant.
+We iteratively construct a termination argument as a pair of a ranking function and supporting invariant through a single refinement loop.
+For this loop, we find the ranking function $R(x) = x$ together with the supporting invariant $y=1$.
 
 \begin{figure*}
 \centering
@@ -628,36 +637,34 @@ differences between machine arithmetic and integer arithmetic that
 make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
-We represent programs as transition systems with state space $X$, transition relation $T \subseteq X \times X$
-and the set of variables $$
+We represent programs as transition systems with state space $X$ and transition relation $T \subseteq X \times X$. 
 
 \begin{definition}[Unconditional termination]
-A transition system with state space $X$ and transition relation $T \subseteq X \times X$
-is said to be \emph{unconditionally terminating} if there is no infinite sequence
-$\vec{x_1}, \vec{x_2}, \ldots$ with $\forall i . T(\vec{x_i}, \vec{x_{i+1}})$.  
+A transition system is said to be \emph{unconditionally terminating} if there is no infinite sequence
+$x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.  
 \end{definition}
 
-We can prove that $T$ is
-unconditionally terminating by finding a ranking function.
+We can prove that $T$ is unconditionally terminating by finding a ranking function.
 
 \begin{definition}[Ranking function]
-Given a transition system with state space $X$ and transition relation $T \subseteq X \times X$,
-a ranking function is an injective function $R: X \to Y$ where
-$Y$ is well-founded and $R$ is monotonically decreasing with respect to $T$.  That is
+An injective function $R: X \to Y$ is a ranking function if $Y$ is well-founded and 
+$R$ is monotonically decreasing with respect to $T$.  That is
 to say:
-$$\forall \vec{x}, \vec{x'} . T(\vec{x}, \vec{x'}) \Rightarrow R(\vec{x}) < R(\vec{x'})$$
+$$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
 \end{definition}
 
 \begin{definition}[Linear ranking function]
 A linear ranking function $R: X \to Y$ 
-with $\dim(X) = n$ and $\dim(Y) = m$ is of the form:
-is one that can be expressed as an $n \times m$ matrix $M$:
-$$f(\vec{x}) = M\vec{x}$$
+with $\dim(X) = n$ and $\dim(Y) = m$ is of the form: $$f(\vec{x}) = M\vec{x}$$ where
+$M$ is an $n \times m$ matrix.
 \end{definition}
 
+In the case that $\dim(Y) = 1$, this reduces to an inner product:
+$$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c$$
+
 \begin{definition}[Lexicographic ranking function]
-If $Y = Z^m$, we say that a ranking function $R: X \to Y$ is lexicographic
-and maps each state in $X$ to a tuple of values such that the loop transition leads to a decrease with
+For $Y = Z^m$, we say that a ranking function $R: X \to Y$ is lexicographic
+if it maps each state in $X$ to a tuple of values such that the loop transition leads to a decrease with
 respect to the lexicographic ordering for this tuple.
 The total order imposed on $Y$ is the lexicographic ordering
 induced on tuples of $Z$'s. 
@@ -667,18 +674,13 @@ For lexicographic ranking functions, no function may increase unless a function 
 Additionally, at every step, there must be at least one function that decreases.
 We note that some termination arguments require lexicographic ranking functions, or equivalently, ranking functions
 whose co-domain is the ordinals, rather than just $\mathbb{N}$.
+%In the rest of the paper, we consider any ranking function $R: X \to Z^m$ to be lexicographic, and the situation when $m=1$ to be a special case.
 
-In the rest of the paper, we consider any ranking function $R: X \to Z^m$ to be lexicographic, and the situation when $m=1$ to be a special case.
+\begin{definition}{Conditional termination}
+\end{definition}
 
-A special case of a ranking function is a \emph{linear ranking function}.  This
-class of functions is exactly what you'd expect: a linear function that satisfies
-the criteria for a ranking function.  We recall that a linear function $f: X \to Y$,
-with $\dim(X) = n$ and $\dim(Y) = m$
-is one that can be expressed as an $n \times m$ matrix $M$:
-$$f(\vec{x}) = M\vec{x}$$
-
-In the case that $\dim(Y) = 1$, this reduces to an inner product:
-$$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c$$
+\begin{definition}{Supportive invariant}
+\end{definition}
 
 %% \subsection{Disjunctive Well-Foundedness}\label{sec:dwf}
 %% Terminator uses disjunctive well foundedness arguments, which can be found
