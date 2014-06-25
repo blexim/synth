@@ -948,10 +948,7 @@ when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ 
 for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
 
 \section{Solving the Synthesis Formula} \label{sec:synthesis}
-We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
-have a program synthesiser kicking around, we present the design of one synthesiser
-that can be used to solve the problem.
-
+%
 \iffalse
 \subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
 \begin{conjecture}
@@ -961,8 +958,8 @@ The lexicographic ordering does not influence the size of the search space. Thus
 As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
 conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
 \fi
-
-
+%
+%
 \input{kalashnikov}
 
 \section{Genetic Programming and Incremental Evolution}
