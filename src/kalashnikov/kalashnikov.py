@@ -27,6 +27,9 @@ RED = "\033[31m"
 
 cexre = re.compile('cex_args={(.*?)}')
 
+args.argparser.add_argument("--name", default=None, type=str,
+    help="benchmark name")
+
 args.argparser.add_argument("--seqlen", "-s", default=1, type=int,
     help="minimum length of code sequence to synthesise")
 args.argparser.add_argument("--seqlim", "-S", default=16, type=int,
@@ -44,7 +47,6 @@ args.argparser.add_argument("--progs", "-P", default=1, type=int,
 args.argparser.add_argument("--float", "-f", default=False, action="store_const",
     const=True,
     help="Synthesize floating point programs")
-
 
 args.argparser.add_argument("--consts", "-c", default=-1, type=int,
     help="number of constants to synthesize")
