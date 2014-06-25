@@ -306,8 +306,11 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 
 %This paper is organised as follows:
 
-Limitations: No recursion.
-
+Limitations: 
+\begin{itemize}
+\item No recursion.
+\item Nested loops.
+\end{itemize}
 
 \section{Related Work}
 %\subsection{Termination analysis}
@@ -392,46 +395,56 @@ In our setting, both the ranking function and the supporting invariant are itera
 %\subsection{Synthesis}
 
 \section{Motivational Examples} \label{sec:motivation}
-In the previous sections, we have discussed some of the assumptions made by existent termination analyses (see Figure~\ref{fig:handletable}). 
-Now, we provide some simple examples that break those assumptions and cannot therefore be handled by state of the art tools.
+Figure~\ref{fig:handletable} illustrates the most common assumptions made by existent termination analyses:
+\begin{itemize}
+\item[(i)] programs are linear.
+\item[(ii)] terminating programs have linear termination arguments.
+\item[(iii)] bit-vectors semantics and mathematical integers semantics are equivalent.
+\item[(iv)] floats semantics and mathematical reals semantics are equivalent.
+\end{itemize}  
+
+%In the previous sections, we have discussed some of the assumptions made by existent termination analyses (see Figure~\ref{fig:handletable}). 
+Next, we show how these assumptions are broken by even simple programs that can't therefore be handled accurately by state of the art termination tools.
 
 %We next discus some intricate examples that prove challenging for existent termination analysis.
 
 %\subsection{Program linearity vs. the linearity of its ranking function.}
 
-Figure~\ref{fig:handletable} shows that the most common assumption existent termination techniques make is that \emph{programs are linear}.
-A program not falling in this category is given in Figure~\ref{fig:motivation.a}.
+%Figure~\ref{fig:handletable} shows that the most common assumption existent termination techniques make is that \emph{programs are linear}.
+The loop in Figure~\ref{fig:motivation.a} breaks assumption (i) as it makes use of the bit-wise $\&$ operator.
 %As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
 %although a linear ranking function does exist (see Figure~\ref{fig:handletable}). 
-In order to find a ranking function for this example, it is necessary to take into account
-the semantics of the bit-wise AND operator, which is not easily done when working with mathematical integers.
+%In order to find a ranking function for this example, it is necessary to take into account
+%the semantics of the bit-wise AND operator.
 Our technique finds that a possible ranking function is the linear function
 $R(x) = x$, whose value decreases with
-every iteration, but it can not decrease indefinitely as it is bounded from below.
+every iteration, but cannot decrease indefinitely as it is bounded from below.
 This example also illustrates the lack of a direct correlation between the linearity of a program and that of its termination arguments.
 
-The program in Figure~\ref{fig:motivation.b} breaks a different assumption made by the majority of termination analyses, namely that \emph{ranking functions are linear}.
-Our technique proves that this loop terminates by finding that $|x|$ is a possible ranking function for it.
+Assumption (ii) is broken by the loop in Figure~\ref{fig:motivation.b}.
+We prove that this loop terminates by finding that the non-linear function $R(x) = |x|$ is a possible ranking function.
 
-Figure~\ref{fig:motivation.c} invalidates the assumption that \emph{integer semantics and bit-vector semantics are equivalent}. 
+Figure~\ref{fig:motivation.c} invalidates assumption (iii). 
 This loop is  terminating for bit-vectors since \texttt{x}
 will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
 arithmetic since the loop condition stays always true for any initial \texttt{x} at least 1.
 
-The same assumption is broken by the program in Figure~\ref{fig:motivation.d}. Every execution of the program can be partitioned into two phases: in the first phase $y$ increases
-until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
+Assumption (iii) is broken again by the program in Figure~\ref{fig:motivation.d}. Every execution of the program can be partitioned into two phases: 
+in the first phase $y$ increases until it is positive (in this phase $q$ may increase), whereas in the second $q$ decreases until the loop condition is violated. 
 This example is taken from \cite{DBLP:conf/tacas/LeikeH14}, where the authors make use of a template for obtaining a ranking function that proceeds
 through a fixed number of phases in the program execution. Each phase is ranked by a linear function, and ends when this function becomes non-positive.
-However, when considering the bit-vector semantics, this program does not terminate as..
+However, when considering the bit-vector semantics, this program does not terminate as..\todo{change this example}
 
-The loops in Figure~\ref{fig:motivation.e} and Figure~\ref{fig:motivation.f} break the assumption that \emph{real semantics and float semantics are equivalent}. 
-% ignore potential rounding errors, under- and over-flows, which are precisely what makes  reasoning about floating point inherently difficult.
-This assumption may lead to erroneous diagnosis of a program's terminating behaviour.% as illustrated by the loops in Figure~\ref{} and Figure~\ref{}.
-While the former does not terminate for reals, but does for floats, the latter 
-terminates for reals, but does not for floats.
+The loops in Figure~\ref{fig:motivation.e} and Figure~\ref{fig:motivation.f} break assumption (iv) as their terminating behaviour is different 
+for floats and mathematical reals. 
+%This assumption may lead to erroneous diagnosis of a program's terminating behaviour.
+The former does not terminate for floats (if $x$ is sufficiently large, the rounding makes the subtraction negligible), but does for reals. Conversely, the latter 
+doesn't terminate for reals, but does so for floats (due to rounding errors $x$ eventually becomes sufficiently small 
+such that the closest representable number is 0.0). \todo{can we prove non-termination?}
 
-
-Figure~\ref{fig:motivation.g} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a disjunctively well-founded one, which requires an expensive binary reachability analysis.
+Figure~\ref{fig:motivation.g} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, 
+where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a disjunctively well-founded one, which requires an expensive binary 
+reachability analysis.
 However, by using our technique we can find a non-linear lexicographic ranking functions.
 A lexicographic non-linear ranking functions consists of lexicographically ordered components
 of non-linear functions. As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
@@ -615,7 +628,8 @@ differences between machine arithmetic and integer arithmetic that
 make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
-\todo{linear program}
+We represent programs as transition systems with state space $X$, transition relation $T \subseteq X \times X$
+and the set of variables $$
 
 \begin{definition}[Unconditional termination]
 A transition system with state space $X$ and transition relation $T \subseteq X \times X$
@@ -634,6 +648,28 @@ to say:
 $$\forall \vec{x}, \vec{x'} . T(\vec{x}, \vec{x'}) \Rightarrow R(\vec{x}) < R(\vec{x'})$$
 \end{definition}
 
+\begin{definition}[Linear ranking function]
+A linear ranking function $R: X \to Y$ 
+with $\dim(X) = n$ and $\dim(Y) = m$ is of the form:
+is one that can be expressed as an $n \times m$ matrix $M$:
+$$f(\vec{x}) = M\vec{x}$$
+\end{definition}
+
+\begin{definition}[Lexicographic ranking function]
+If $Y = Z^m$, we say that a ranking function $R: X \to Y$ is lexicographic
+and maps each state in $X$ to a tuple of values such that the loop transition leads to a decrease with
+respect to the lexicographic ordering for this tuple.
+The total order imposed on $Y$ is the lexicographic ordering
+induced on tuples of $Z$'s. 
+\end{definition}
+
+For lexicographic ranking functions, no function may increase unless a function of a lower index decreases.
+Additionally, at every step, there must be at least one function that decreases.
+We note that some termination arguments require lexicographic ranking functions, or equivalently, ranking functions
+whose co-domain is the ordinals, rather than just $\mathbb{N}$.
+
+In the rest of the paper, we consider any ranking function $R: X \to Z^m$ to be lexicographic, and the situation when $m=1$ to be a special case.
+
 A special case of a ranking function is a \emph{linear ranking function}.  This
 class of functions is exactly what you'd expect: a linear function that satisfies
 the criteria for a ranking function.  We recall that a linear function $f: X \to Y$,
@@ -643,12 +679,6 @@ $$f(\vec{x}) = M\vec{x}$$
 
 In the case that $\dim(Y) = 1$, this reduces to an inner product:
 $$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c$$
-
-If $Y = Z^m$, we say that the ranking function is \emph{lexicographic},
-and require that the total order imposed on $Y$ is the lexicographic ordering
-induced on tuples of $Z$'s.  We note that some termination arguments
-require lexicographic ranking functions, or equivalently, ranking functions
-whose co-domain is the ordinals, rather than just $\mathbb{N}$.
 
 %% \subsection{Disjunctive Well-Foundedness}\label{sec:dwf}
 %% Terminator uses disjunctive well foundedness arguments, which can be found
