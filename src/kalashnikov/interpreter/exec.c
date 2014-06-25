@@ -27,8 +27,6 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     A[CONSTS + i] = args[i];
   }
 
-  execok = 1;
-
   for (i = 0; i < SZ; i++) {
     op = prog->ops[i];
     a1 = prog->params[3*i];

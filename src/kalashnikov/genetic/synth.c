@@ -317,6 +317,8 @@ int next_gen(solution_t *previous, solution_t *next) {
 void test(solution_t *solution, word_t args[NARGS]) {
   numtests++;
 
+  execok = 1;
+
   if(check(solution, args) && execok) {
     correct++;
   }

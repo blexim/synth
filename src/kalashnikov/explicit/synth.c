@@ -119,6 +119,8 @@ void test(solution_t *solution, word_t args[NARGS]) {
   }
 #endif
 
+  execok = 1;
+
   int valid = check(solution, args);
 
   if (!execok) {
