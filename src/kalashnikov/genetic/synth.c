@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <assert.h>
 
 #ifndef SEARCH
  #define SEARCH
@@ -18,9 +19,11 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
-#define POPSIZE 200
-#define KEEPLIM (POPSIZE/2)
-#define KILLLIM (POPSIZE/4)
+#define POPSIZE 100
+#define KEEPLIM (POPSIZE/10)
+#define NEWLIM (POPSIZE/10)
+
+#define TOURNEYSIZE 5
 
 #define MUTATION_PROB 0.01
 #define RECOMBINE_PROB 0.1
@@ -102,7 +105,7 @@ void rand_solution(solution_t *solution) {
 
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
-    prog->len = 5;
+    prog->len = 1;
 
     for (i = 0; i < prog->len; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
@@ -205,11 +208,14 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
       c->params[(i*3)+2] = a->params[(i*3)+2];
     }
 
-    for (i = prefix; i < (prefix + suffix); i++) {
-      c->ops[i] = b->ops[i];
-      c->params[i*3] = b->params[i*3];
-      c->params[(i*3)+1] = b->params[(i*3)+1];
-      c->params[(i*3)+2] = b->params[(i*3)+2];
+    int k = b->len - suffix;
+
+    for (; i < prefix + suffix; i++) {
+      c->ops[i + prefix] = b->ops[k];
+      c->params[i*3] = b->params[k*3];
+      c->params[(i*3)+1] = b->params[(k*3)+1];
+      c->params[(i*3)+2] = b->params[(k*3)+2];
+      k++;
     }
 
     for (i = 0; i < CONSTS; i++) {
@@ -235,46 +241,95 @@ int fitness(solution_t *solution) {
   return correct;
 }
 
+solution_t *pick_parent(solution_t *pop, int *fitnesses, int maxfit, int minfit, int popsize) {
+  solution_t *tourney[TOURNEYSIZE];
+  int cutoffs[TOURNEYSIZE];
+  int total = 0;
 
-int compare_fitness(const void *v1, const void *v2) {
-  int *i1 = (int *) v1;
-  int *i2 = (int *) v2;
-  int f1 = fitnesses[*i1];
-  int f2 = fitnesses[*i2];
+  for (int i = 0; i < TOURNEYSIZE; i++) {
+    int idx = rand() % popsize;
+    solution_t *s = &pop[idx];
+    int fit = fitnesses[idx];
 
-  return f1 - f2;
-}
-
-int next_gen(solution_t *previous, solution_t *next) {
-  int indices[POPSIZE];
-  int i, j;
-  int idx;
-  int maxfit, minfit;
-  int nprogs;
-
-  for (i = 0; i < POPSIZE; i++) {
-    indices[i] = i;
+    tourney[i] = s;
+    cutoffs[i] = total + fit;
+    total += fit;
   }
 
-  nprogs = POPSIZE;
+  if (total == 0) {
+    return tourney[0];
+  }
 
-  for (i = 0; i < nprogs; i++) {
-    int idx = indices[i];
-    fitnesses[idx] = fitness(&previous[idx]);
+  int winner = rand() % total;
 
-    if (fitnesses[idx] == numtests) {
-      printf("Found a program with fitness=%d\n", correct);
-      save(previous);
-
-      print_solution(&previous[idx]);
-      exit(10);
+  for (int i = 0; i < TOURNEYSIZE; i++) {
+    if (winner < cutoffs[i]) {
+      return tourney[i];
     }
   }
 
-  qsort(indices, nprogs, sizeof(int), compare_fitness);
+  assert(0);
+}
 
-  maxfit = fitnesses[indices[nprogs - 1]];
-  minfit = fitnesses[indices[0]];
+int sol_len(solution_t *s) {
+  int ret = 0;
+  int i;
+
+  for (i = 0; i < NPROGS; i++) {
+    ret += s->progs[i].len;
+  }
+
+  return ret;
+}
+
+int next_gen(solution_t *previous, solution_t *next) {
+  int i, j;
+  int maxfit, minfit;
+  int maxlen, minlen;
+  int nprogs;
+
+  nprogs = POPSIZE;
+  maxfit = -1;
+  minfit = -1;
+  maxlen = -1;
+  minlen = -1;
+
+  for (i = 0; i < nprogs; i++) {
+    int fit = fitness(&previous[i]);
+    int len = sol_len(&previous[i]);
+
+    if (fit == numtests) {
+      printf("Found a program with fitness=%d\n", correct);
+      save(previous);
+
+      print_solution(&previous[i]);
+      exit(10);
+    }
+
+    fit = (fit * 5) - len;
+
+    if (fit < 0) {
+      fit = 0;
+    }
+
+    if (maxfit == -1 || fit > maxfit) {
+      maxfit = fit;
+    }
+
+    if (minfit == -1 || fit < minfit) {
+      minfit = fit;
+    }
+
+    if (maxlen == -1 || len > maxlen) {
+      maxlen = len;
+    }
+
+    if (minlen == -1 || len < minlen) {
+      minlen = len;
+    }
+
+    fitnesses[i] = fit;
+  }
 
   if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
     printf("Unique programs: %d\n", nprogs);
@@ -282,51 +337,25 @@ int next_gen(solution_t *previous, solution_t *next) {
     printf("Target: %d\n", numtests);
   }
 
-  // Copy the fittest individuals straight into the next generation.
-  j = 0;
-
-  int keep;
-
-  for (keep = 0;
-       keep < KEEPLIM && fitnesses[indices[nprogs - keep - 1]] == maxfit;
-       keep++) {
-    idx = indices[nprogs - keep - 1];
-    solution_t *p = &previous[idx];
-
-    memcpy(&next[j], p, sizeof(solution_t));
-    j++;
+  for (i = 0; i < NEWLIM; i++) {
+    rand_solution(&next[i]);
   }
 
-  // Now generate some random individuals.
-
-  int kill;
-  int cutoff = minfit+1;
-
-  for (kill = 0;
-       kill < KILLLIM && fitnesses[indices[kill]] < cutoff;
-       kill++) {
-    rand_solution(&next[j]);
-    j++;
+  for (j = 0; j < nprogs && i < NEWLIM + KEEPLIM; j++) {
+    if (fitnesses[j] == maxfit) {
+      memcpy(&next[i], &previous[j], sizeof(solution_t));
+      i++;
+    }
   }
 
-  if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
-    printf("Killed %d, kept %d\n", kill, keep);
-  }
 
-  // Finally, let the somewhat-fit individuals from the previous generation breed.
+  for (; i < POPSIZE; i++) {
+    solution_t *a = pick_parent(previous, fitnesses, maxfit, minfit, nprogs);
+    solution_t *b = pick_parent(previous, fitnesses, maxfit, minfit, nprogs);
+    solution_t *c = &next[i];
 
-  while (j < POPSIZE) {
-    idx = kill + (rand() % (nprogs - kill));
-    idx = indices[idx];
-    solution_t *a = &previous[idx];
-
-    idx = kill + (rand() % (nprogs - kill));
-    idx = indices[idx];
-    solution_t *b = &previous[idx];
-
-    crossover(a, b, &next[j]);
-    mutate(&next[j]);
-    j++;
+    crossover(a, b, c);
+    mutate(c);
   }
 
   return maxfit;

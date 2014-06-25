@@ -128,7 +128,7 @@ class Checker(object):
           "-O0", "-g",
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
       self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99",
-          "-DSZ=1024",
+          "-DSZ=128",
           "-O0", "-g",
           os.path.join("genetic", "synth.c"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
