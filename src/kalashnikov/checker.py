@@ -82,7 +82,6 @@ class Checker(object):
     genericargs = [
         "-I%s" % args.args.interpreter,
         "-I%s" % args.args.lib,
-        "-DSZ=%d" % sz,
         "-DMWIDTH=%d" % mwidth,
         "-DWIDTH=%d" % width,
         "-DNARGS=%d" % nargs,
@@ -114,20 +113,26 @@ class Checker(object):
 
     if verif:
       self.cbmcargs = [args.args.cbmc,
+          "-DSZ=%d" % sz,
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
+          "-DSZ=%d" % sz,
           "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
-      self.cbmcargs = [args.args.cbmc, "-DSYNTH", "--no-unwinding-assertions",
+      self.cbmcargs = [args.args.cbmc, "-DSYNTH",
+          "-DSZ=%d" % sz,
           os.path.join("cbmc", "synth.c")] + genericargs
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+          "-DSZ=%d" % sz,
           "-O0", "-g",
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
       self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+          "-DSZ=1024",
           "-O0", "-g",
           os.path.join("genetic", "synth.c"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+          "-DSZ=%d" % sz,
           "-O0", "-g",
           os.path.join("anneal", "synth.c"), "-lm"] + genericargs
 

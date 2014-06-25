@@ -18,7 +18,7 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
-#define POPSIZE 2000
+#define POPSIZE 200
 #define KEEPLIM (POPSIZE/2)
 #define KILLLIM (POPSIZE/4)
 
@@ -102,7 +102,7 @@ void rand_solution(solution_t *solution) {
 
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
-    prog->len = 1 + (rand() % (SZ - 1));
+    prog->len = 5;
 
     for (i = 0; i < prog->len; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
@@ -327,7 +327,8 @@ void test(solution_t *solution, word_t args[NARGS]) {
 }
 
 int main(void) {
-  solution_t pop_a[POPSIZE], pop_b[POPSIZE];
+  solution_t *pop_a = malloc(POPSIZE * sizeof(solution_t));
+  solution_t *pop_b = malloc(POPSIZE * sizeof(solution_t));
   int i;
   int seed = SEED;
   int bestfitness = 0;
