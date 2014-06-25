@@ -120,7 +120,7 @@ void tests(solution_t *solution) {
     consts = soln.consts
     evars = soln.evars
 
-    bmc.write("  __CPROVER_assume(!(")
+    bmc.write("  assume(!(")
 
     for i in xrange(len(ops)):
       if i != 0:

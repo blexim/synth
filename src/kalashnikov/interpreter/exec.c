@@ -68,16 +68,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = p1 * p2;
       break;
     case DIV:
-#ifdef SYNTH
-      __CPROVER_assume(p2 != 0);
-#elif defined(SEARCH)
-      if (p2 == 0) {
-        execok = 0;
-        return;
-      }
-#else
-      assert(p2 != 0);
-#endif
+      assume(p2 != 0);
       res = p1 / p2;
       break;
     case NEG:
@@ -150,14 +141,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       }
       break;
     case MOD:
-#ifdef SYNTH
-      __CPROVER_assume(p2 != 0);
-#elif defined(SEARCH)
-      if (p2 == 0) {
-        execok = 0;
-        return;
-      }
-#endif
+      assume(p2 != 0);
       res = p1 % p2;
       break;
     case IMPLIES:
@@ -186,25 +170,14 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = fi.x;
       break;
     case FDIV:
-#ifdef SYNTH
-      __CPROVER_assume(fpclassify(f2) != FP_ZERO);
-#elif defined(SEARCH)
-      if (fpclassify(f2) == FP_ZERO) {
-        execok = 0;
-        return;
-      }
-#else
-      assert(fpclassify(f2) != FP_ZERO);
-#endif
+      assume(fpclassify(f2) != FP_ZERO);
       fi.f = f1 / f2;
       res = fi.x;
       break;
 #endif // FLOAT
 
     default:
-#ifndef SEARCH
-      __CPROVER_assume(0);
-#endif
+      assume(0);
       break;
     }
 

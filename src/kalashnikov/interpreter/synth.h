@@ -70,10 +70,15 @@
   typedef unsigned int bit_t;
 #endif
 
-#ifdef SEARCH
-  #define __CPROVER_assume(x) do {\
-    if (!(x)) execok = 0; \
-  } while(0)
+#if defined(SEARCH)
+ #define assume(x) do {\
+   if (!(x)) execok = 0; \
+   return; \
+ } while(0)
+#elif defined(SYNTH)
+ #define assume(x) __CPROVER_assume(x)
+#else
+ #define assume(x) assert(x)
 #endif
 
 typedef union fi {

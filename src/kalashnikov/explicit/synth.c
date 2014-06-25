@@ -119,12 +119,9 @@ void test(solution_t *solution, word_t args[NARGS]) {
   }
 #endif
 
-  execok = 1;
-
   int valid = check(solution, args);
 
   if (!execok) {
-    ok = 0;
     return;
   }
 
@@ -156,9 +153,10 @@ int main(void) {
     }
 
     ok = 1;
+    execok = 1;
     tests(&solution);
 
-    if (ok) {
+    if (ok && execok) {
 #ifdef DEBUG
       print = 1;
       tests(&solution);
