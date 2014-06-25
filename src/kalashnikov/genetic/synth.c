@@ -185,15 +185,31 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
     prog_t *b = &sol_b->progs[j];
     prog_t *c = &sol_c->progs[j];
 
-    c->len = a->len;
+    int prefix = rand() % (a->len + 1);
+    int suffix = rand() % (b->len + 1);
 
-    for (i = 0; i < c->len; i++) {
-      recombine();
+    if (prefix + suffix > SZ) {
+      if (prefix > suffix) {
+        prefix = SZ - suffix;
+      } else {
+        suffix = SZ - prefix;
+      }
+    }
 
+    c->len = prefix + suffix;
+
+    for (i = 0; i < prefix; i++) {
       c->ops[i] = a->ops[i];
       c->params[i*3] = a->params[i*3];
       c->params[(i*3)+1] = a->params[(i*3)+1];
       c->params[(i*3)+2] = a->params[(i*3)+2];
+    }
+
+    for (i = prefix; i < (prefix + suffix); i++) {
+      c->ops[i] = b->ops[i];
+      c->params[i*3] = b->params[i*3];
+      c->params[(i*3)+1] = b->params[(i*3)+1];
+      c->params[(i*3)+2] = b->params[(i*3)+2];
     }
 
     for (i = 0; i < CONSTS; i++) {
