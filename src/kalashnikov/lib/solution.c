@@ -9,7 +9,7 @@ void print_solution(solution_t *solution) {
     prog_t *prog = &solution->progs[j];
     printf("ops={");
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < prog->len; i++) {
       if (i != 0) {
         printf(", ");
       }
@@ -21,7 +21,7 @@ void print_solution(solution_t *solution) {
 
     printf("params={");
 
-    for (i = 0; i < SZ*3; i++) {
+    for (i = 0; i < (prog->len * 3); i++) {
       if (i != 0) {
         printf(", ");
       }
