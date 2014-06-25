@@ -8,6 +8,7 @@ int main(void) {
   int i;
 
   for (i = 0; i < NPROGS; i++) {
+    solution.progs[i].len = SZ;
     __CPROVER_assume(wellformed(&solution.progs[i]));
     __CPROVER_assume(!exclude(&solution.progs[i]));
   }

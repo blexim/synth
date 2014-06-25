@@ -1,4 +1,4 @@
-#define _GNU_SOURCE
+//#define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -103,6 +103,7 @@ void rand_solution(solution_t *solution) {
 
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
+    prog->len = SZ;
 
     for (i = 0; i < SZ; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
@@ -184,6 +185,8 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
     prog_t *a = &sol_a->progs[j];
     prog_t *b = &sol_b->progs[j];
     prog_t *c = &sol_c->progs[j];
+
+    c->len = SZ;
 
     for (i = 0; i < SZ; i++) {
       recombine();

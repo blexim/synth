@@ -73,6 +73,8 @@ class Checker(object):
     ewidth = max(width/4, 1)
     mwidth = width - ewidth - 1
 
+    self.sz = sz
+
     self.verif = verif
     self.scratchfile = tempfile.NamedTemporaryFile(suffix=".c",
         delete=not args.args.keeptemps)
@@ -117,7 +119,7 @@ class Checker(object):
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
           "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
-      self.cbmcargs = [args.args.cbmc, "-DSYNTH",
+      self.cbmcargs = [args.args.cbmc, "-DSYNTH", "--no-unwinding-assertions",
           os.path.join("cbmc", "synth.c")] + genericargs
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-O0", "-g",
