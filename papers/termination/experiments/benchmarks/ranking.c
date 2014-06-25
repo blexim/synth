@@ -73,7 +73,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
   }
 
   if (prefix(pre_vars, post_vars)) {
-    if (!inv(prog, post_vars) || !execok) {
+    if (!inv(prog, post_vars)) {
       return 0;
     }
   }
@@ -88,7 +88,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
 
     rank(prog, pre_vars, r1);
 
-    if (!execok || !nonzero(r1)) {
+    if (!nonzero(r1)) {
       return 0;
     }
 
@@ -96,11 +96,11 @@ int check(solution_t *solution, word_t args[NARGS]) {
 
     rank(prog, post_vars, r2);
 
-    if (!execok || cmp(r1, r2) <= 0) {
+    if (cmp(r1, r2) <= 0) {
       return 0;
     }
 
-    if (!inv(prog, post_vars) || !execok) {
+    if (!inv(prog, post_vars)) {
       return 0;
     }
   }

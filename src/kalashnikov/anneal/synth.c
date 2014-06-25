@@ -153,7 +153,9 @@ int fitness(solution_t *solution) {
 void test(solution_t *solution, word_t args[NARGS]) {
   numtests++;
 
-  if(check(solution, args) && execok) {
+  execok = 1;
+
+  if(check(solution, args)) {
     correct++;
   }
 }
