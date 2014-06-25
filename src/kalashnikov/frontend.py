@@ -233,9 +233,9 @@ def prove_terminates(filename):
 
   splitfile.close()
 
-  os.system(("./kalashnikov.py " +
+  return os.system(("./kalashnikov.py " +
              "%s ../../papers/termination/experiments/benchmarks/ranking.c " +
-             "-s1 --seed=1337 -w4 -a%d --varnames %s --resnames I " +
+             "-s2 --seed=1337 -w3 -a%d --varnames %s --resnames I " +
              "%s") % 
               (splitfile.name,
                 nids,
@@ -255,4 +255,4 @@ if __name__ == '__main__':
   except:
     pass
 
-  prove_terminates(sys.argv[1])
+  sys.exit(prove_terminates(sys.argv[1]))

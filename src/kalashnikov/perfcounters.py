@@ -16,6 +16,15 @@ def inc(key):
   else:
     counters[key] = 1
 
+def add(key, v):
+  if key in counters:
+    counters[k] += v
+  else:
+    counter[key] = v
+
+def set(key, v):
+  counters[key] = v
+
 def start(key="_"):
   global timers
 
