@@ -63,6 +63,7 @@ void rand_solution(solution_t *solution) {
 
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
+    prog->len = SZ;
 
     for (i = 0; i < SZ; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);

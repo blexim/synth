@@ -88,6 +88,7 @@ typedef union fi {
 
 
 typedef struct prog {
+  unsigned int len;
   op_t ops[SZ];
   param_t params[SZ*3];
   word_t consts[CONSTS];
