@@ -155,7 +155,7 @@ void test(solution_t *solution, word_t args[NARGS]) {
 
   execok = 1;
 
-  if(check(solution, args)) {
+  if(check(solution, args) && execok) {
     correct++;
   }
 }
