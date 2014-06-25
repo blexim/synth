@@ -4,6 +4,12 @@
  #define SZ 5
 #endif
 
+#ifdef SEARCH
+ #define LEN(prog) (prog->len)
+#else
+ #define LEN(prog) SZ
+#endif
+
 #ifndef WIDTH
  #define WIDTH 32
 #endif
@@ -72,8 +78,8 @@
 
 #if defined(SEARCH)
  #define assume(x) do {\
-   if (!(x)) execok = 0; \
-   return; \
+   if (!(x)) { execok = 0; \
+    return; } \
  } while(0)
 #elif defined(SYNTH)
  #define assume(x) __CPROVER_assume(x)

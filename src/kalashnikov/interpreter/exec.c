@@ -10,7 +10,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   param_t a1, a2, a3;
   word_t p1, p2, p3, res;
   sword_t i1, i2, i3;
-  word_t A[prog->len + NARGS + CONSTS];
+  word_t A[LEN(prog) + NARGS + CONSTS];
 
 #ifdef FLOAT
   fword_t f1, f2;
@@ -27,7 +27,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     A[CONSTS + i] = args[i];
   }
 
-  for (i = 0; i < prog->len; i++) {
+  for (i = 0; i < LEN(prog); i++) {
     op = prog->ops[i];
     a1 = prog->params[3*i];
     a2 = prog->params[3*i + 1];
@@ -189,6 +189,6 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   }
 
   for (i = 0; i < NRES; i++) {
-    results[NRES - i - 1] = A[NARGS + CONSTS + prog->len - NRES + i];
+    results[NRES - i - 1] = A[NARGS + CONSTS + LEN(prog) - NRES + i];
   }
 }

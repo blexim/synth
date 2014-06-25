@@ -113,14 +113,13 @@ class Checker(object):
       genericargs.append("-DSEED=%d" % args.args.seed)
 
     if verif:
-      self.cbmcargs = [args.args.cbmc, "--unwind", "%d" % (sz + 1),
+      self.cbmcargs = [args.args.cbmc,
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
           "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH", "--no-unwinding-assertions",
-          "--unwind", "%d" % (sz + 1),
           os.path.join("cbmc", "synth.c")] + genericargs
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-O0", "-g",
