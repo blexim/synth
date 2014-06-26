@@ -19,15 +19,17 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
-#define POPSIZE 100
+#define POPSIZE 5000
 #define KEEPLIM (POPSIZE/10)
 #define NEWLIM (POPSIZE/10)
 
+#define NEWSIZE 5
+
 #define TOURNEYSIZE 5
+#define GEN_SIZE 5
 
 #define MUTATION_PROB 0.01
 #define RECOMBINE_PROB 0.1
-#define SPLICE_PROB 0.1
 
 #define PRINT_GEN 1000
 #define GEN_LIM 0
@@ -37,6 +39,10 @@
 #endif
 
 #define SAVEFILE "/tmp/geneticsynth"
+
+#define ISTMP(x) ((x) >= NARGS + CONSTS)
+
+#define min(x, y) ((x) < (y) ? (x) : (y))
 
 int generation;
 int correct;
@@ -106,7 +112,7 @@ void rand_solution(solution_t *solution) {
 
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
-    prog->len = 1;
+    prog->len = min(SZ, 1 + (rand() % NEWSIZE));
 
     for (i = 0; i < prog->len; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
@@ -171,10 +177,6 @@ void mutate(solution_t *solution) {
   }
 }
 
-int should_splice() {
-  return rand() < (RAND_MAX * SPLICE_PROB);
-}
-
 #define recombine() do { \
   if (should_recombine()) { tmp = a; a = b; b = tmp; } \
 } while(0)
@@ -183,10 +185,10 @@ int should_splice() {
   if (should_recombine()) { tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; } \
 } while(0)
 
-#define splice(x, i, tl) do { \
-  if ((x >= NARGS + CONSTS + (i)) || should_splice()) (x) = (tl); \
+#define splice(p, delta) do { \
+  if (ISTMP((p))) (p) -= delta; \
+  if ((p) < 0) (p) = 0; \
 } while(0)
-
 
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
   prog_t *tmp;
@@ -200,6 +202,7 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
 
     int prefix = rand() % (a->len + 1);
     int suffix = rand() % (b->len + 1);
+    int delta = b->len - suffix - prefix;
 
     if (prefix + suffix > SZ) {
       if (prefix > suffix) {
@@ -220,7 +223,7 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
 
     int k = b->len - suffix;
 
-    for (; i < prefix + suffix; i++) {
+    for (; i < c->len; i++) {
       c->ops[i + prefix] = b->ops[k];
       c->params[i*3] = b->params[k*3];
       c->params[(i*3)+1] = b->params[(k*3)+1];
@@ -228,12 +231,10 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
       k++;
     }
 
-    int a_tail = prefix - 1 + NARGS + CONSTS;
-
     for (i = prefix; i < prefix + suffix; i++) {
-      splice(c->params[i*3], i, a_tail);
-      splice(c->params[(i*3)+1], i, a_tail);
-      splice(c->params[(i*3)+2], i, a_tail);
+      splice(c->params[i*3], delta);
+      splice(c->params[(i*3)+1], delta);
+      splice(c->params[(i*3)+2], delta);
     }
 
     for (i = 0; i < CONSTS; i++) {
@@ -321,6 +322,10 @@ int next_gen(solution_t *previous, solution_t *next) {
       save(previous);
 
       print_solution(&previous[i]);
+
+      free(previous);
+      free(next);
+
       exit(10);
     }
 
@@ -372,6 +377,8 @@ int next_gen(solution_t *previous, solution_t *next) {
     solution_t *b = pick_parent(previous, fitnesses, maxfit, minfit, nprogs);
     solution_t *c = &next[i];
 
+    a = &previous[0];
+
     crossover(a, b, c);
     mutate(c);
   }
@@ -395,7 +402,7 @@ int main(void) {
   int i;
   int seed = SEED;
   int bestfitness = 0;
-  int currfitness;
+  int currfitness = 0;
 
   printf("Genetic programming using random seed: %d\n", seed);
   srand(seed);
