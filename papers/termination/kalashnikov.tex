@@ -141,6 +141,7 @@ as our underlying logic, which is elaborated in Sec.~\ref{sec:logic}. We
 summarise the results of our experiments in Sec.~\ref{sec:experiments}.
 \fi
 
+\iffalse
 \subsection{The Basic Synthesis Algorithm}
 \label{sec:abstract-algorithm}
 
@@ -172,6 +173,13 @@ one level of quantifier alternation (2-QBF) is complete for $NP^{NP}$, and
 current 2-QBF solvers are much less efficient in practice than SAT solvers.
 
 \subsubsection{CEGIS}
+
+\fi
+We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
+have a program synthesiser kicking around, we present the design of one synthesiser
+that can be used to solve the problem.
+We start by recalling the synthesis formula:
+ $$\exists P, x . \forall y . \sigma(P, x, y)$$
 
 When the quantifier free first-order fragment of the logic is efficiently decidable and
 $P$ can be expressed as a ground term of the logic, we can use
@@ -262,7 +270,7 @@ procedure is guaranteed to terminate.
  \label{fig:abstract-refinement}}
 \end{figure*}
 
-
+\iffalse
 \subsection{The Concrete Algorithm for Bitvector Programs}
 \label{sec:concrete-algorithm}
 
@@ -309,9 +317,9 @@ work in the logic of quantifier-free propositional formulae and to use a
 propositional SAT or SMT-$\mathcal{BV}$ solver as the decision procedure. 
 However we propose a slightly different tack, which is to use a decidable
 fragment of C as a ``high level'' logic.
+\fi
 
-
-\subsubsection{\newC}
+\subsection{\newC}
 \label{sec:logic}
 
 We will now describe the logic we use to express our synthesis formula.
@@ -537,7 +545,7 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \label{fig:synth-dfd}
 \end{figure}
 
-\subsubsection{Encoding an $\mathcal{L}$-Program in \newC}
+%\subsubsection{Encoding an $\mathcal{L}$-Program in \newC}
 \label{sec:encode-l}
 
 \begin{figure}

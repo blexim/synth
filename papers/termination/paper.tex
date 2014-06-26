@@ -306,7 +306,9 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 
 %This paper is organised as follows:
 
-Limitations: 
+{\bf Limitations.}
+For ease of exposition, this language ignores features
+such as dynamic memory allocation and function calls. 
 \begin{itemize}
 \item No recursion.
 \item Nested loops.
@@ -450,6 +452,20 @@ Up until this point, we looked at examples that are not soundly treated by exist
 don't fit in the range of programs covered by these techniques.
 Next, we look at some programs that are handled by existing termination tools via dedicated analyses. We show that our method 
 uniformly handles them, without the need for any special treatment.
+% we are able to compute termination arguments in several interesting case
+
+% Our technique gains from generality. A possible explanation for this (perhaps initially sur-
+%prising) fact is that, for synthesis, we are interested in the mere existence of a
+%% solution, and the loss of
+%% many solutions does not necessarily mean the loss of
+%% all solutions of the constraint
+% bit-level analysis
+%These non-terminating programs represent an important class of
+%bugs, especially for denial-of-service related vulnerabilities, where
+%an attacker can exploit the overflow. Equally important,
+% equally important
+
+
 
 Figure~\ref{fig:motivation.g} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, 
 where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a Ramsey-based termination argument,
@@ -640,7 +656,8 @@ differences between machine arithmetic and integer arithmetic that
 make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
-We represent programs as transition systems with state space $X$ and transition relation $T \subseteq X \times X$. 
+We represent programs as transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $\mathcal{V}$. 
+A state of the program is a valuation of the variables from $\mathcal{V}$.
 
 \begin{definition}[Unconditional termination]
 A transition system is said to be \emph{unconditionally terminating} if there is no infinite sequence
@@ -650,7 +667,7 @@ $x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.
 We can prove that $T$ is unconditionally terminating by finding a ranking function.
 
 \begin{definition}[Ranking function]
-An injective function $R: X \to Y$ is a ranking function if $Y$ is well-founded and 
+An injective function ${R:X\to Y}$ is a ranking function if $Y$ is well-founded and 
 $R$ is monotonically decreasing with respect to $T$.  That is
 to say:
 $$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
