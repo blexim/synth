@@ -27,6 +27,7 @@
 
 #define MUTATION_PROB 0.01
 #define RECOMBINE_PROB 0.1
+#define SPLICE_PROB 0.1
 
 #define PRINT_GEN 1000
 #define GEN_LIM 0
@@ -170,6 +171,10 @@ void mutate(solution_t *solution) {
   }
 }
 
+int should_splice() {
+  return rand() < (RAND_MAX * SPLICE_PROB);
+}
+
 #define recombine() do { \
   if (should_recombine()) { tmp = a; a = b; b = tmp; } \
 } while(0)
@@ -177,6 +182,11 @@ void mutate(solution_t *solution) {
 #define recombine_sol() do { \
   if (should_recombine()) { tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; } \
 } while(0)
+
+#define splice(x, i, tl) do { \
+  if ((x >= NARGS + CONSTS + (i)) || should_splice()) (x) = (tl); \
+} while(0)
+
 
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
   prog_t *tmp;
@@ -216,6 +226,14 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
       c->params[(i*3)+1] = b->params[(k*3)+1];
       c->params[(i*3)+2] = b->params[(k*3)+2];
       k++;
+    }
+
+    int a_tail = prefix - 1 + NARGS + CONSTS;
+
+    for (i = prefix; i < prefix + suffix; i++) {
+      splice(c->params[i*3], i, a_tail);
+      splice(c->params[(i*3)+1], i, a_tail);
+      splice(c->params[(i*3)+2], i, a_tail);
     }
 
     for (i = 0; i < CONSTS; i++) {
