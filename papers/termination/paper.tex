@@ -310,6 +310,7 @@ Limitations:
 \begin{itemize}
 \item No recursion.
 \item Nested loops.
+\item Heap.
 \end{itemize}
 
 \section{Related Work}
@@ -378,9 +379,6 @@ In our setting, both the ranking function and the supporting invariant are itera
 %% current termination argument is performed using the output of a rank function
 %% synthesis tool when applied to counterexamples found by the safety prover.
 
-
-\todo{add non-termination}
-
 %The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
 %For example, terminationg of term rewriting systems is largely structural, whereas DWF analysis (cf. Terminator) is more semantic. While it deals
 %with transition relations, it also uses some amount of syntax in that it identifies loops \& looping paths.
@@ -391,8 +389,13 @@ In our setting, both the ranking function and the supporting invariant are itera
 %on Figure 1 is based on a lexicographic combination
 %of well-founded orderings.
 
-
-%\subsection{Synthesis}
+While program termination has been extensively studied, much less research has been conducted in the area of proving nontermination.
+% A counterexample to termination is an infinite program execution. 
+Gupta et al. dynamically enumerate lasso-shaped candidate
+paths for counterexamples, and then statically prove their feasibility \cite{DBLP:conf/popl/GuptaHMRX08}. 
+In \cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al. prove nontermination via
+reduction to safety proving. Their iterative algorithm uses counterexamples to a fixed safety property
+to refine an underapproximation of a program. 
 
 \section{Motivational Examples} \label{sec:motivation}
 Figure~\ref{fig:handletable} illustrates the most common assumptions made by existent termination analyses:
@@ -404,7 +407,7 @@ Figure~\ref{fig:handletable} illustrates the most common assumptions made by exi
 \end{itemize}  
 
 %In the previous sections, we have discussed some of the assumptions made by existent termination analyses (see Figure~\ref{fig:handletable}). 
-Next, we show how these assumptions are broken by even simple programs that can't therefore be handled accurately by state of the art termination tools.
+Next, we show how these assumptions are broken by even simple programs that cannot therefore be handled accurately by state of the art termination tools.
 
 %We next discus some intricate examples that prove challenging for existent termination analysis.
 
@@ -451,9 +454,9 @@ uniformly handles them, without the need for any special treatment.
 Figure~\ref{fig:motivation.g} is a linear program taken from \cite{DBLP:conf/tacas/CookSZ13}, 
 where it is shown to not admit (without prior manipulation) a lexicographic linear function, but only a Ramsey-based termination argument,
 which requires an expensive binary reachability analysis.
-With our technique we can find a non-linear lexicographic ranking function $R(x) = ...$.
-A lexicographic non-linear ranking functions consists of lexicographically ordered components
-of non-linear functions. 
+With our technique we can find a non-linear lexicographic ranking function $R(x) = |x|$ 
+(a lexicographic non-linear ranking functions consists of lexicographically ordered components
+of non-linear functions). 
 %As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
 %loop transition leads to a decrease with respect to the lexicographic
 %ordering for this tuple. Therefore no function may increase unless a function of
@@ -473,7 +476,7 @@ R(x, y, z) = (x < y, z)
 \end{verbatim}
 
 The loop in Figure~\ref{fig:motivation.h} illustrates conditional termination.
-Basically, when proving program termination we are simultaneously solving two problems:
+When proving program termination we are simultaneously solving two problems:
 the search for a termination argument, and the search for a supporting invariant.
 We iteratively construct a termination argument as a pair of a ranking function and supporting invariant through a single refinement loop.
 For this loop, we find the ranking function $R(x) = x$ together with the supporting invariant $y=1$.
@@ -919,6 +922,8 @@ $V_1$ is established by the initial conditions $I$ and is strong enough to estab
 $V_2$ when conjoined with the negation of $L_1$'s guard.  As before, $R$ is a ranking
 function relative to $V_2$.
 
+\subsection{The Non-Termination Problem}
+
 Non-termination of the loop $L$ is encoded by Definition~\ref{def:nonterm-formula}.
 If this formula is satisfiable, $N$ is a recurrence set for $L$ which proves
 $L$'s non-termination.  However this formula has one more level of quantifier alternation
@@ -945,10 +950,7 @@ when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ 
 for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
 
 \section{Solving the Synthesis Formula} \label{sec:synthesis}
-We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
-have a program synthesiser kicking around, we present the design of one synthesiser
-that can be used to solve the problem.
-
+%
 \iffalse
 \subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
 \begin{conjecture}
@@ -958,8 +960,8 @@ The lexicographic ordering does not influence the size of the search space. Thus
 As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
 conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
 \fi
-
-
+%
+%
 \input{kalashnikov}
 
 \section{Genetic Programming and Incremental Evolution}
