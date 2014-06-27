@@ -5,6 +5,8 @@ extern int guard(word_t in_vars[NARGS]);
 extern void body(word_t in_vars[NARGS], word_t out_vars[NARGS]);
 extern int assertion(word_t args[NARGS]);
 
+#define COND
+
 int inv(prog_t *prog, word_t args[NARGS]) {
 #ifndef COND
   return 1;
