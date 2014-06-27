@@ -19,6 +19,7 @@ int numtests;
 #define getint(x) do { \
   (x) = strtol(p, &q, 0); \
   assert(q > p); \
+  p = q; \
 } while(0)
 
 
@@ -28,6 +29,8 @@ void load_tests() {
 
   char buf[1024];
   char *p, *q;
+
+  int i, j;
 
   // Format of the file is:
   // <number of tests>
@@ -39,14 +42,14 @@ void load_tests() {
 
   test_vectors = malloc(numtests * sizeof(int *));
 
-  for (int i = 0; i < numtests; i++) {
+  for (i = 0; i < numtests; i++) {
     test_vectors[i] = malloc(NARGS * sizeof(int));
 
     getline(testfile);
 
     printf("Test vector %d: ", i);
 
-    for (int j = 0; j < NARGS; j++) {
+    for (j = 0; j < NARGS; j++) {
       getint(test_vectors[i][j]);
       printf("%d ", test_vectors[i][j]);
     }
@@ -73,6 +76,7 @@ void load_solution(solution_t *solution) {
 
   memset(solution, 0, sizeof(solution_t));
 
+  int i, j;
   char buf[1024];
   char *p, *q;
 
@@ -85,33 +89,46 @@ void load_solution(solution_t *solution) {
   // <const1>
   // <const2>
   // ...
-  // <n2-instructions><n2-consts>
+  // <n2-instructions>
   // ...
 
   getline(solfile);
 
-  for (int i = 0; i < NEVARS; i++) {
+  printf("Evars: ");
+
+  for (i = 0; i < NEVARS; i++) {
     getint(solution->evars[i]);
+    printf("%d ", solution->evars[i]);
   }
 
-  for (int i = 0; i < NPROGS; i++) {
+  for (i = 0; i < NPROGS; i++) {
+    printf("\nProg %d:\n", i);
+
     prog_t *prog = &solution->progs[i];
 
     getline(solfile);
     getint(prog->len);
 
-    for (int j = 0; j < prog->len; j++) {
+    for (j = 0; j < prog->len; j++) {
       getline(solfile);
 
       getint(prog->ops[j]);
       getint(prog->params[3*j]);
       getint(prog->params[3*j + 1]);
       getint(prog->params[3*j + 2]);
+
+      printf("%d %d %d %d\n",
+          prog->ops[j],
+          prog->params[3*j],
+          prog->params[3*j + 1],
+          prog->params[3*j + 2]);
     }
 
-    for (int j = 0; j < CONSTS; j++) {
+    for (j = 0; j < CONSTS; j++) {
       getline(solfile);
       getint(prog->consts[j]);
+
+      printf("Const: %d\n", prog->consts[j]);
     }
   }
 

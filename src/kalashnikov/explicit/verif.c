@@ -6,6 +6,7 @@
 
 #include "synth.h"
 #include "exec.h"
+#include "io.h"
 
 #define WORDMASK ((1 << WIDTH) - 1)
 #define PMASK ((1 << PWIDTH) - 1)
@@ -56,14 +57,16 @@ void print_args(word_t args[NARGS]) {
 
 int main(void) {
   word_t args[NARGS];
+  solution_t sol;
   int i;
 
   init_args(args);
+  load_solution(&sol);
 
   do {
     execok = 1;
 
-    if (!check(&solution, args) || !execok) {
+    if (!check(&sol, args) || !execok) {
       print_args(args);
       return 10;
     }

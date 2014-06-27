@@ -173,6 +173,26 @@ def verif(prog, checker, width, codelen):
 
   sz = len(prog.ops[0])
   bmc = Checker(sz, width, len(prog.consts[0]), verif=True)
+  solfile = open("/tmp/solution", "w")
+
+  solfile.write(" ".join(str(x) for x in prog.evars) + "\n")
+
+  for i in xrange(args.args.progs):
+    nops = len(prog.ops[i])
+    solfile.write("%d\n" % nops)
+
+    for j in xrange(nops):
+      solfile.write("%d %d %d %d\n" % (prog.ops[i][j],
+                                       prog.params[i][3*j],
+                                       prog.params[i][3*j + 1],
+                                       prog.params[i][3*j + 2]))
+
+    nconsts = len(prog.consts[i])
+
+    for j in xrange(nconsts):
+      solfile.write("%d\n" % prog.consts[i][j])
+
+  solfile.close()
 
 
   bmc.write(r"""

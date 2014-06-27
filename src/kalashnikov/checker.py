@@ -222,7 +222,7 @@ class Checker(object):
     return (os.WEXITSTATUS(retcode), retfile)
 
   def cachable(self, key):
-    return key == "genetic-synth"
+    return key in ("genetic-synth", "explicit-verif")
 
   def compile(self, name):
     global compiled
