@@ -832,7 +832,14 @@ define the syntax of a language we will work over.
 
 \section{Termination as Second-Order Satisfaction} \label{sec:second.order}
 In this section we will show how several variations of the halting problem can be defined in second-order
-logic.  In fact, many of these problems can be encoded in a fragment of second-order logic we will
+logic.  
+\begin{lstlisting}
+while (L) { T }
+\end{lstlisting}
+
+
+
+ In fact, many of these problems can be encoded in a fragment of second-order logic we will
 suggestively refer to as the \emph{synthesis fragment}:
 
 \begin{definition}[Synthesis Fragment]
@@ -855,15 +862,15 @@ to employ the program synthesiser described in Section~\ref{sec:synthesis}.
 \begin{definition}[Second-order Termination Formula]
 \label{def:termination-formula}
 \begin{align*}
- \exists R . \forall x, x' . & L(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
+ \exists R . \forall x, x' . & G(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
 \begin{definition}[Conditional Termination Formula]
 \label{def:conditional-termination-formula}
  \begin{align*}
-  \exists R, V . \forall x, x' . & I(x) \wedge L(x) \rightarrow V(x) ~ \wedge \\
-                                 & L(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+  \exists R, V . \forall x, x' . & I(x) \wedge G(x) \rightarrow V(x) ~ \wedge \\
+                                 & G(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
 
@@ -909,8 +916,8 @@ discuss what spec is used (non-lexicographic vs lexicographic) + the completenes
 Any termination guarantees?  
 \fi
 
-
-The existence of a ranking function for a single loop is equivalent to the satisfiability
+We first consider a single loop $L = (I,G,T)$ consisting of the initial states $I : X \rightarrow B$, the loop guard $G : X \rightarrow B $ and a body $T : X \rightarrow X$.
+The existence of a ranking function for this loop is equivalent to the satisfiability
 of the formula from Definition~\ref{def:termination-formula}.  If this formula is satisfiable,
 $R$ is a ranking function that proves loop $L$ terminates.
 
@@ -941,13 +948,36 @@ function relative to $V_2$.
 
 \subsection{The Non-Termination Problem}
 
-Non-termination of the loop $L$ is encoded by Definition~\ref{def:nonterm-formula}.
-If this formula is satisfiable, $N$ is a recurrence set for $L$ which proves
-$L$'s non-termination.  However this formula has one more level of quantifier alternation
-than the others (it is an $\exists \forall \exists$ formula), which will cause us problems
-shortly.  We observe that in the case that $T$ is deterministic (that is, each state has
-exactly one successor),  the non-termination problem is equivalent to the
+Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of a
+\emph{recurrence set} (open recurrence set in the terminology of \cite{DBLP:conf/tacas/ChenCFNO14}), 
+i.e. a nonempty set of states $G$ such that for each $s \in G$ there
+exists a transition to some $s'\in G$. 
+For our case, given a loop $L = (I,G,T)$, the notion of open recurrent set is encoded by Definition~\ref{def:nonterm-formula}.
+If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
+$L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
+(it is an $\exists \forall \exists$ formula). %This means that we will not be able to use the solver for the synthesis fragment to solve it.
+
+In order to formulate the non-termination problem in the synthesis fragment, we make use of the notion of \emph{closed recurrence set} introduced by Chen et al. 
+in \cite{DBLP:conf/tacas/ChenCFNO14}. As ooposed to a closed recurrence set, this is a  purely universal property: for each $s \in G$, each of its successors 
+must be in the recurrence set. The non-termination problem thus is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
+
+
+\cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14} make use of the syntactic notion of \emph{lasso}.
+%The standard way of proving non-termination is by detecting non-terminating lassos \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}.
+A lasso at a cutpoint location consists of two sequences
+of transitions, the stem and the loop.
+The stem is a finite path from an initial location to the cutpoint location. 
+The loop is a finite path that starts and ends at the cutpoint
+location by following a cyclic path through the controlflow
+graph. A lasso induces an infinite execution if the infinite path obtained by traversing the stem and then unrolling
+the loop infinitely many times is feasible. In this case, the lasso is said to be non-terminating.
+%% We observe that in the case that $T$ is deterministic (that is, each state has
+%% exactly one successor),  the non-termination problem is equivalent to the
+%% satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
+
+In contrast, our method is purely semantic ...
+
 
 \subsection{Program Synthesis as Second-Order Satisfaction}
 
