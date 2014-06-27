@@ -235,7 +235,7 @@ def prove_terminates(filename):
 
   os.system(("./kalashnikov.py " +
              "%s ../../papers/termination/experiments/benchmarks/unranking.c " +
-             "-a%d --evars %d --varnames %s --resnames I --seed=1337 -w3 " +
+             "-a%d --evars %d --varnames %s --resnames I --seed=1337 -w4 " +
              "%s") % 
               (splitfile.name,
                 nids,
