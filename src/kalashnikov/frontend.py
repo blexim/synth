@@ -58,6 +58,12 @@ def contains_loop(ast):
 
   return ret
 
+def is_nested_loop(ast):
+  if is_loop(ast):
+    return contains_loop(ast.stmt)
+
+  return False
+
 def add_parents(ast):
   if getattr(ast, 'parent', None) is None:
     ast.parent = None
@@ -89,6 +95,10 @@ def flatten(ast, program):
   if not contains_loop(ast):
     program.accumulate(ast)
   elif is_loop(ast):
+    if is_nested_loop(ast):
+      print "ERROR: nested loop"
+      sys.exit(10)
+
     program.accumulate(ast)
   else:
     # The AST contains a loop.  Recurse on its children.
