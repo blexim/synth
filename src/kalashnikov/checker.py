@@ -96,6 +96,7 @@ class Checker(object):
         os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),
         os.path.join(args.args.lib, "solution.c"),
+        os.path.join(args.args.lib, "io.c"),
         self.scratchfile.name] + args.args.checker
 
     if args.args.float:
