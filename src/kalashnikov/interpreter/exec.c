@@ -5,6 +5,13 @@
 
 volatile int execok;
 
+#define SIGN_BIT (1 << (WIDTH - 1))
+#define SIGN_MASK (-1 << WIDTH)
+
+#define SIGN_EXTEND(x) do { \
+  if ((x) & SIGN_BIT) (x) += SIGN_MASK; \
+} while(0)
+
 void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;
   param_t a1, a2, a3;
@@ -53,14 +60,9 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
 
 #ifdef SEARCH
     // Sign extension
-    i1 <<= (32 - WIDTH);
-    i1 >>= (32 - WIDTH);
-
-    i2 <<= (32 - WIDTH);
-    i2 >>= (32 - WIDTH);
-
-    i3 <<= (32 - WIDTH);
-    i3 >>= (32 - WIDTH);
+    SIGN_EXTEND(i1);
+    SIGN_EXTEND(i2);
+    SIGN_EXTEND(i3);
 #endif
 
 #ifdef FLOAT
