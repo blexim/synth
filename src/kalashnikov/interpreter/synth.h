@@ -14,6 +14,10 @@
  #define WIDTH 32
 #endif
 
+#define WORDMASK ((1 << WIDTH) - 1)
+#define PMASK ((1 << PWIDTH) - 1)
+#define OPMASK ((1 << OPLEN) - 1)
+
 #ifndef MWIDTH
  #define MWIDTH 23
 #endif

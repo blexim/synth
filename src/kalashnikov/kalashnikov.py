@@ -342,7 +342,7 @@ def kalashnikov(checker):
         exclusions.append(prog)
       else:
         exclusions = []
-        wordlen += 1
+        wordlen *= 2
 
         if wordlen > targetwordlen:
           wordlen = targetwordlen

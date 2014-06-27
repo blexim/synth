@@ -42,7 +42,7 @@ int next_solution(solution_t *solution) {
       }
     }
 
-    for (i = 0; i < SZ*3; i++) {
+    for (i = 0; i < (prog->len * 3); i++) {
       prog->params[i]++;
       prog->params[i] &= PMASK;
 
@@ -51,7 +51,7 @@ int next_solution(solution_t *solution) {
       }
     }
 
-    for (i = 0; i < SZ; i++) {
+    for (i = 0; i < prog->len; i++) {
       prog->ops[i]++;
       prog->ops[i] &= OPMASK;
 

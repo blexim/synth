@@ -6,7 +6,7 @@
 int wellformed(prog_t *prog) {
   int i, j;
 
-  for (i = 0; i < SZ; i++) {
+  for (i = 0; i < prog->len; i++) {
     op_t op;
     param_t p1, p2, p3;
 
