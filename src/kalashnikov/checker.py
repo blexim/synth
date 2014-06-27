@@ -58,6 +58,8 @@ def log2(x):
 
   return i+extra
 
+compiled = {}
+
 class Checker(object):
   cbmcargs = []
   gccargs = {}
@@ -186,21 +188,8 @@ class Checker(object):
 
       for s in ("explicit", "genetic", "anneal"):
         if s in strategies:
-          bin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
-                                         dir="ofiles")
-          gcc = self.gccargs[s] + ["-o", bin.name, "-lm"]
+          bin = self.compile(s)
           bins[s] = bin
-          bin.close()
-
-          perf.start("gcc")
-          if args.args.verbose > 1:
-            print " ".join(gcc)
-            subprocess.call(gcc)
-          else:
-            with open(os.devnull, "w") as fnull:
-              subprocess.call(gcc, stdout=fnull, stderr=fnull)
-          perf.end("gcc")
-
           outfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
           proc = subprocess.Popen([bin.name], stdout=outfile,
               preexec_fn=os.setpgrp)
@@ -227,10 +216,34 @@ class Checker(object):
         if args.args.verbose > 0:
           print "Fastest checker: %s" % checker
 
-    if not args.args.keeptemps:
-      for bin in bins.values():
-        os.remove(bin.name)
-
     retfile.seek(0)
 
     return (os.WEXITSTATUS(retcode), retfile)
+
+  def compile(self, name):
+    global compiled
+
+    if self.verif:
+      key = name + "-verif"
+    else:
+      key = name + "-synth"
+
+    if key not in compiled:
+      bin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
+                                         dir="ofiles")
+      gcc = self.gccargs[name] + ["-o", bin.name, "-lm"]
+      compiled[key] = bin
+      bin.close()
+
+      perf.start("gcc")
+      if args.args.verbose > 1:
+        print " ".join(gcc)
+        subprocess.call(gcc)
+      else:
+        with open(os.devnull, "w") as fnull:
+          subprocess.call(gcc, stdout=fnull, stderr=fnull)
+      perf.end("gcc")
+
+      return bin
+    else:
+      return compiled[key]
