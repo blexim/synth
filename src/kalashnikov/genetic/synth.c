@@ -35,6 +35,7 @@
 #endif
 
 #define SAVEFILE "/tmp/geneticsynth"
+#define TESTFILE "/tmp/testvectors"
 
 #define ISTMP(x) ((x) >= NARGS + CONSTS)
 
@@ -42,7 +43,8 @@
 
 int generation;
 int correct;
-int numtests;
+
+unsigned int test_vectors[NTESTS][NARGS];
 
 void load_seed(solution_t *pop) {
 #ifdef SEEDFILE
@@ -103,8 +105,39 @@ void load(solution_t *pop) {
 #endif
 }
 
+void load_tests() {
+  FILE *testfile = fopen(TESTFILE, "r");
+  assert(testfile != NULL);
+
+  char buf[1024];
+  char *p, *q;
+
+  for (int i = 0; i < NTESTS; i++) {
+    fgets(buf, sizeof(buf) - 1, testfile);
+
+    p = buf;
+
+    printf("Test vector %d: ", i);
+
+
+    for (int j = 0; j < NARGS; j++) {
+      test_vectors[i][j] = strtol(p, &q, 0);
+      assert(q > p);
+      p = q;
+
+      printf("%d ", test_vectors[i][j]);
+    }
+
+    printf("\n");
+  }
+
+  fclose(testfile);
+}
+
 void rand_solution(solution_t *solution) {
   int i, j;
+
+  memset(solution, 0, sizeof(solution_t));
 
   for (j = 0; j < NPROGS; j++) {
     prog_t *prog = &solution->progs[j];
@@ -249,9 +282,14 @@ int fitnesses[POPSIZE];
 
 int fitness(solution_t *solution) {
   correct = 0;
-  numtests = 0;
 
-  tests(solution);
+  for (int i = 0; i < NTESTS; i++) {
+    execok = 1;
+
+    if (check(solution, test_vectors[i]) && execok) {
+      correct++;
+    }
+  }
 
   return correct;
 }
@@ -313,7 +351,7 @@ int next_gen(solution_t *previous, solution_t *next) {
     int fit = fitness(&previous[i]);
     int len = sol_len(&previous[i]);
 
-    if (fit == numtests) {
+    if (fit == NTESTS) {
       printf("Found a program with fitness=%d\n", correct);
       save(previous);
 
@@ -353,7 +391,7 @@ int next_gen(solution_t *previous, solution_t *next) {
   if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
     printf("Unique programs: %d\n", nprogs);
     printf("Fittest: %d, least fit: %d\n", maxfit, minfit);
-    printf("Target: %d\n", numtests);
+    printf("Target: %d\n", NTESTS);
   }
 
   for (i = 0; i < NEWLIM; i++) {
@@ -383,8 +421,6 @@ int next_gen(solution_t *previous, solution_t *next) {
 }
 
 void test(solution_t *solution, word_t args[NARGS]) {
-  numtests++;
-
   execok = 1;
 
   if(check(solution, args) && execok) {
@@ -408,6 +444,7 @@ int main(void) {
   }
 
   load(pop_a);
+  load_tests();
 
   for (generation = 0;
        GEN_LIM == 0 || generation < GEN_LIM;
