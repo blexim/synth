@@ -1,4 +1,5 @@
 #ifndef SYNTH_H
+#define SYNTH_H
 
 #ifndef SZ
  #define SZ 5
