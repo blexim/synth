@@ -76,6 +76,7 @@ class Checker(object):
     mwidth = width - ewidth - 1
 
     self.sz = sz
+    self.width = width
 
     self.verif = verif
     self.scratchfile = tempfile.NamedTemporaryFile(suffix=".c",
@@ -120,7 +121,7 @@ class Checker(object):
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
-          "-DSZ=%d" % sz,
+          "-DSZ=128",
           "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
@@ -221,16 +222,16 @@ class Checker(object):
 
     return (os.WEXITSTATUS(retcode), retfile)
 
-  def cachable(self, key):
+  def cachable(self, (width, key)):
     return key in ("genetic-synth", "explicit-verif")
 
   def compile(self, name):
     global compiled
 
     if self.verif:
-      key = name + "-verif"
+      key = (self.width, name + "-verif")
     else:
-      key = name + "-synth"
+      key = (self.width, name + "-synth")
 
     if not self.cachable(key) or key not in compiled:
       bin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
