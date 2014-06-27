@@ -337,7 +337,7 @@ int next_gen(solution_t *previous, solution_t *next) {
       exit(10);
     }
 
-    fit = (fit * 5) - len;
+    fit = (fit * 10) - len;
 
     if (fit < 0) {
       fit = 0;
