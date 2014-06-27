@@ -63,7 +63,7 @@ class Checker(object):
   gccargs = {}
   scratchfile = None
 
-  def __init__(self, sz, width, consts, verif=False):
+  def __init__(self, sz, width, consts, ntests=0, verif=False):
     nargs = args.args.args
     nres = sz
     nevars = args.args.evars
@@ -90,6 +90,7 @@ class Checker(object):
         "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
+        "-DNTESTS=%d" % ntests,
         os.path.join(args.args.interpreter, "exec.c"),
         os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),

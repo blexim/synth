@@ -93,7 +93,9 @@ def synth(tests, exclusions, width, codelen, nconsts):
 
   perf.start("synth")
 
-  bmc = Checker(codelen, width, nconsts)
+  bmc = Checker(codelen, width, nconsts, ntests=len(tests))
+
+  testfile = open("/tmp/testvectors", "w")
 
 
   # Write the test inputs...
@@ -110,6 +112,10 @@ void tests(solution_t *solution) {
       bmc.write("  input[%d] = %d;\n" % (i, x[i]))
 
     bmc.write("  test(solution, input);\n\n")
+
+    testfile.write(" ".join(str(d) for d in x) + "\n")
+
+  testfile.close()
 
   # Now we're going to list each of the programs we
   # already know are wrong...
@@ -164,7 +170,7 @@ def verif(prog, checker, width, codelen):
   perf.start("verify")
 
   sz = len(prog.ops[0])
-  bmc = Checker(sz, width, len(prog.consts[0]), True)
+  bmc = Checker(sz, width, len(prog.consts[0]), verif=True)
 
 
   bmc.write(r"""
