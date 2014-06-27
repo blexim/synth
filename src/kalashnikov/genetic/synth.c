@@ -43,8 +43,9 @@
 
 int generation;
 int correct;
+int numtests;
 
-unsigned int test_vectors[NTESTS][NARGS];
+unsigned int **test_vectors;
 
 void load_seed(solution_t *pop) {
 #ifdef SEEDFILE
@@ -112,13 +113,25 @@ void load_tests() {
   char buf[1024];
   char *p, *q;
 
-  for (int i = 0; i < NTESTS; i++) {
+  // Format of the file is:
+  // <number of tests>
+  // <test 1>
+  // <test 2>
+  // ...
+  fgets(buf, sizeof(buf) - 1, testfile);
+  numtests = strtol(buf, &p, 0);
+  assert(p > buf);
+
+  test_vectors = malloc(numtests * sizeof(int *));
+
+  for (int i = 0; i < numtests; i++) {
+    test_vectors[i] = malloc(NARGS * sizeof(int));
+
     fgets(buf, sizeof(buf) - 1, testfile);
 
     p = buf;
 
     printf("Test vector %d: ", i);
-
 
     for (int j = 0; j < NARGS; j++) {
       test_vectors[i][j] = strtol(p, &q, 0);
@@ -283,7 +296,7 @@ int fitnesses[POPSIZE];
 int fitness(solution_t *solution) {
   correct = 0;
 
-  for (int i = 0; i < NTESTS; i++) {
+  for (int i = 0; i < numtests; i++) {
     execok = 1;
 
     if (check(solution, test_vectors[i]) && execok) {
@@ -351,7 +364,7 @@ int next_gen(solution_t *previous, solution_t *next) {
     int fit = fitness(&previous[i]);
     int len = sol_len(&previous[i]);
 
-    if (fit == NTESTS) {
+    if (fit == numtests) {
       printf("Found a program with fitness=%d\n", correct);
       save(previous);
 
@@ -359,6 +372,12 @@ int next_gen(solution_t *previous, solution_t *next) {
 
       free(previous);
       free(next);
+
+      for (j = 0; j < numtests; j++) {
+        free(test_vectors[j]);
+      }
+
+      free(test_vectors);
 
       exit(10);
     }
@@ -391,7 +410,7 @@ int next_gen(solution_t *previous, solution_t *next) {
   if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
     printf("Unique programs: %d\n", nprogs);
     printf("Fittest: %d, least fit: %d\n", maxfit, minfit);
-    printf("Target: %d\n", NTESTS);
+    printf("Target: %d\n", numtests);
   }
 
   for (i = 0; i < NEWLIM; i++) {

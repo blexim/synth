@@ -93,7 +93,7 @@ def synth(tests, exclusions, width, codelen, nconsts):
 
   perf.start("synth")
 
-  bmc = Checker(codelen, width, nconsts, ntests=len(tests))
+  bmc = Checker(codelen, width, nconsts)
 
   testfile = open("/tmp/testvectors", "w")
 
@@ -105,6 +105,8 @@ def synth(tests, exclusions, width, codelen, nconsts):
 void tests(solution_t *solution) {
   word_t input[NARGS];
 """)
+
+  testfile.write("%d\n" % len(tests))
 
   #random.shuffle(tests)
   for x in tests:
