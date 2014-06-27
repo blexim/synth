@@ -41,16 +41,26 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     p2 = A[a2];
     p3 = A[a3];
 
+#ifdef SEARCH
+    p1 &= WORDMASK;
+    p2 &= WORDMASK;
+    p3 &= WORDMASK;
+#endif
+
     i1 = p1;
     i2 = p2;
     i3 = p3;
 
 #ifdef SEARCH
+    // Sign extension
     i1 <<= (32 - WIDTH);
     i1 >>= (32 - WIDTH);
 
     i2 <<= (32 - WIDTH);
     i2 >>= (32 - WIDTH);
+
+    i3 <<= (32 - WIDTH);
+    i3 >>= (32 - WIDTH);
 #endif
 
 #ifdef FLOAT

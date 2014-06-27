@@ -14,10 +14,6 @@
 #include "exec.h"
 #include "solution.h"
 
-#define WORDMASK ((1 << WIDTH) - 1)
-//#define WORDMASK 0xffffffff
-#define PMASK ((1 << PWIDTH) - 1)
-#define OPMASK ((1 << OPLEN) - 1)
 
 #define POPSIZE 5000
 #define KEEPLIM (POPSIZE/10)
