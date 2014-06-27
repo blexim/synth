@@ -56,7 +56,8 @@ def load_benchmark(cfile):
   global logdir
 
   props = load_props(cfile)
-  benchname = os.path.basename(cfile).partition('.')[0]
+  benchname = os.path.basename(cfile)
+  #benchname = os.path.basename(cfile).partition('.')[0]
 
   termfile = os.path.join(logdir, '%s.term.stats' % benchname)
   nontermfile = os.path.join(logdir, '%s.nonterm.stats' % benchname)
