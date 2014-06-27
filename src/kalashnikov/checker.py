@@ -220,6 +220,9 @@ class Checker(object):
 
     return (os.WEXITSTATUS(retcode), retfile)
 
+  def cachable(self, key):
+    return key == "genetic-synth"
+
   def compile(self, name):
     global compiled
 
@@ -228,7 +231,7 @@ class Checker(object):
     else:
       key = name + "-synth"
 
-    if key not in compiled:
+    if not self.cachable(key) or key not in compiled:
       bin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
                                          dir="ofiles")
       gcc = self.gccargs[name] + ["-o", bin.name, "-lm"]
