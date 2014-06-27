@@ -17,7 +17,10 @@
 int main()
 {
   int j = 1;
-  for (int i = 10000; i - j >= 1; i--) {
+  int i = 10000;
+
+  while (i - j >= 1) {
     j++;
+    i--;
   }
 }

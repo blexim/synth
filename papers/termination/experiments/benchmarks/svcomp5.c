@@ -16,14 +16,16 @@ int main(void)
     return 0;
   }
 
-  if (x + y >= 0) {
-    while (x <= N) {
-      if (nondet()) {
-        x = 2 * x + y;
-        y = y + 1;
-      } else {
-        x = x + 1;
-      }
+  if (x + y < 0) {
+    return 0;
+  }
+
+  while (x <= N) {
+    if (nondet()) {
+      x = 2 * x + y;
+      y = y + 1;
+    } else {
+      x = x + 1;
     }
   }
 }

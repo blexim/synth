@@ -32,9 +32,9 @@ int main()
 
   while (x > 0) {
     if (nondet()) {
-      foo();
+      x--;
     } else {
-      foo();
+      x--;
     }
   }
   return 0;

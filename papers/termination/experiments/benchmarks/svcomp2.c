@@ -12,7 +12,6 @@ int main(void)
 {
   int a, tmp, count;
 
-  a = nondet();
   count = 0;
 
   while (a > 1) {

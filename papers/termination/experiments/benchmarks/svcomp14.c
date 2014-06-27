@@ -22,15 +22,17 @@ int main()
   int id = nondet();
   int maxId = nondet();
 
+  if (0 > id || id >= maxId) {
+    return 0;
+  }
 
-  if (0 <= id && id < maxId) {
-    int tmp = id + 1;
-    while (tmp != id && nondet()) {
-      if (tmp <= maxId) {
-        tmp = tmp + 1;
-      } else {
-        tmp = 0;
-      }
+
+  int tmp = id + 1;
+  while (tmp != id && nondet()) {
+    if (tmp <= maxId) {
+      tmp = tmp + 1;
+    } else {
+      tmp = 0;
     }
   }
 
