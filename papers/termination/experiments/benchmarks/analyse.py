@@ -95,7 +95,8 @@ def print_benchmark(benchmark):
         elapsed = '%.01fs' % (end - start)
         res = 'nonterm'
   else:
-    return ''
+    res = 'err'
+    elapsed = '--'
 
   return ' & '.join((benchname, loc, isterm, linprog, linrank, iscond,
                      isfloat, lexdim, '5', res, elapsed)) + '\\\\ \n'
