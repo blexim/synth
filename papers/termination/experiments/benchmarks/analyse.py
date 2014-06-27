@@ -134,7 +134,7 @@ def print_all(dir):
   fs = [(munge(s), s) for s in os.listdir(dir)]
 
   for (_, f) in sorted(fs) :
-    if f.endswith('.c'):
+    if f.endswith('.c') and (f.startswith('svcomp') or f.startswith('loop')):
       benchmark = load_benchmark(os.path.join(dir, f))
       print print_benchmark(benchmark)
 
