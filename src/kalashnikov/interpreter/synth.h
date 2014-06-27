@@ -122,4 +122,7 @@ void tests(solution_t *solution);
 int exclude(prog_t *prog);
 int wellformed(prog_t *prog);
 
+#define min(x, y) (x) <= (y) ? (x) : (y)
+#define max(x, y) (x) >= (y) ? (x) : (y)
+
 #endif // SYNTH_H

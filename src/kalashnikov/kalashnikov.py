@@ -194,6 +194,18 @@ def verif(prog, checker, width, codelen):
 
   solfile.close()
 
+  cfile = open("/tmp/exec.c", "w")
+  cfile.write(r"""
+#include "synth.h"
+
+void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]) {
+""")
+  cfile.write(prog.prog2str(prog.ops[0], prog.params[0], prog.consts[0]))
+  cfile.write(r"""
+  }
+""")
+  cfile.close()
+
 
   bmc.write(r"""
 #include "synth.h"

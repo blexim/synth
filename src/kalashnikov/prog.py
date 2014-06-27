@@ -15,43 +15,43 @@ constsre = re.compile('consts={(.*?)}')
 evarsre = re.compile('evars={(.*?)}')
 
 binops = {
-    0: "+",
-    1: "-",
-    2: "*",
-    3: "/",
-    5: "&",
-    6: "|",
-    7: "^",
-    9: "<<",
-    10: ">>",
-    11: ">>>",
-    12: "=",
-    13: "!=",
-    14: "<=",
-    15: "<",
-    16: "s<=",
-    17: "s<",
-    18: "%",
-    19: "==>",
-    20: "MIN",
-    21: "MAX",
-    23: "f+",
-    24: "f-",
-    25: "f*",
-    26: "f/"
+    0: "%s + %s",
+    1: "%s - %s",
+    2: "%s * %s",
+    3: "%s / %s",
+    5: "%s & %s",
+    6: "%s | %s",
+    7: "%s ^ %s",
+    9: "%s << %s",
+    10: "%s >> %s",
+    11: "((int) %s) >> (int) %s",
+    12: "%s == %s",
+    13: "%s != %s",
+    14: "%s <= %s",
+    15: "%s < %s",
+    16: "((int) %s) <= (int) %s",
+    17: "((int) %s) < (int) %s",
+    18: "%s %% %s",
+    19: "!%s || %s",    # Implies
+    20: "min(%s, %s)",
+    21: "max(%s, %s)",
+    23: "f+(%s, %s)",
+    24: "f-(%s, %s)",
+    25: "f*(%s, %s)",
+    26: "f/(%s, %s)"
 }
 
 revbinops = { v: k for (k, v) in binops.items() }
 
 unops = {
-    4: "-",
-    8: "~"
+    4: "-%s",
+    8: "~%s"
 }
 
 revunops = { v: k for (k, v) in unops.items() }
 
 ternops = {
-    22: "ITE"
+    22: "%s ? %s : %s"
 }
 
 revternops = { v: k for (k, v) in ternops.items() }
@@ -107,12 +107,16 @@ class Prog(object):
         self.evars = str2ints(mevars.group(1))
 
   def argname(self, p):
+    return "args[%d]" % p
+
     if len(args.args.varnames) < args.args.args:
       return 'a%d' % (p+1)
     else:
       return args.args.varnames[p]
 
   def tempname(self, seqlen, idx):
+    return "res[%d]" % (seqlen - idx - 1)
+
     residx = idx - seqlen + args.args.res
 
     if residx >= 0:
@@ -151,17 +155,22 @@ class Prog(object):
       lhs = self.tempname(len(ops), idx)
 
       if op in binops:
-        strinsts.append("%s = %s %s %s" % (lhs, self.strarg(p1, len(ops), consts), binops[op],
-          self.strarg(p2, len(ops), consts)))
+        rhs = binops[op] % (
+            self.strarg(p1, len(ops), consts),
+            self.strarg(p2, len(ops), consts))
       elif op in unops:
-        strinsts.append("%s = %s%s" % (lhs, unops[op], self.strarg(p1, len(ops), consts)))
+        rhs = unops[op] % (
+            self.strarg(p1, len(ops), consts))
       elif op in ternops:
-        strinsts.append("%s = %s(%s, %s, %s)" % (lhs, ternops[op], self.strarg(p1, len(ops), consts),
-                                                  self.strarg(p2, len(ops), consts),
-                                                  self.strarg(p3, len(ops), consts)))
+        rhs = ternops[op] % (
+            self.strarg(p1, len(ops), consts),
+            self.strarg(p2, len(ops), consts),
+            self.strarg(p3, len(ops), consts))
       else:
         raise Exception("Couldn't parse instruction: (%d, %d, %d, %d)" %
             (op, p1, p2, p3))
+
+      strinsts.append("%s = %s;" % (lhs, rhs))
 
     return '\n'.join(strinsts)
 
