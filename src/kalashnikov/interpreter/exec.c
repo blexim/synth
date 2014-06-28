@@ -5,12 +5,6 @@
 
 volatile int execok;
 
-#define SIGN_BIT (1 << (WIDTH - 1))
-#define SIGN_MASK (-1 << WIDTH)
-
-#define SIGN_EXTEND(x) do { \
-  if ((x) & SIGN_BIT) (x) |= SIGN_MASK; \
-} while(0)
 
 void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   op_t op;
