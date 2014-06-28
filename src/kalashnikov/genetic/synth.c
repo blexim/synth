@@ -47,6 +47,53 @@ int correct;
 
 unsigned int **test_vectors;
 
+void check_solution(solution_t *solution) {
+  int i, j;
+
+  for (i = 0; i < NPROGS; i++) {
+    prog_t *prog = &solution->progs[i];
+
+    for (j = 0; j < 3*prog->len; j++) {
+      assert((int) prog->params[j] >= 0);
+    }
+  }
+}
+
+void check_population(solution_t *pop) {
+  int i;
+
+  for (i = 0; i < POPSIZE; i++) {
+    check_solution(&pop[i]);
+  }
+}
+
+
+void rand_solution(solution_t *solution) {
+  int i, j;
+
+  memset(solution, 0, sizeof(solution_t));
+
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
+    prog->len = min(SZ, 1 + (rand() % NEWSIZE));
+
+    for (i = 0; i < prog->len; i++) {
+      prog->ops[i] = rand() % (MAXOPCODE + 1);
+      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
+      prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
+      prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
+    }
+
+    for (i = 0; i < CONSTS; i++) {
+      prog->consts[i] = rand() & WORDMASK;
+    }
+  }
+
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i] = rand() & WORDMASK;
+  }
+}
+
 void load_seed(solution_t *pop) {
 #ifdef SEEDFILE
   FILE *seedfile = fopen(SAVEFILE, "rb");
@@ -98,40 +145,19 @@ void load(solution_t *pop) {
     load_seed(pop);
   }
 
-  while (nread < POPSIZE) {
+  while (nread < POPSIZE && !feof(savefile)) {
     nread += fread(&pop[nread], sizeof(solution_t), POPSIZE - nread, savefile);
   }
 
   fclose(savefile);
+
+  while (nread < POPSIZE) {
+    rand_solution(&pop[nread++]);
+  }
 #endif
 }
 
 
-void rand_solution(solution_t *solution) {
-  int i, j;
-
-  memset(solution, 0, sizeof(solution_t));
-
-  for (j = 0; j < NPROGS; j++) {
-    prog_t *prog = &solution->progs[j];
-    prog->len = min(SZ, 1 + (rand() % NEWSIZE));
-
-    for (i = 0; i < prog->len; i++) {
-      prog->ops[i] = rand() % (MAXOPCODE + 1);
-      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
-      prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
-      prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
-    }
-
-    for (i = 0; i < CONSTS; i++) {
-      prog->consts[i] = rand() & WORDMASK;
-    }
-  }
-
-  for (i = 0; i < NEVARS; i++) {
-    solution->evars[i] = rand() & WORDMASK;
-  }
-}
 
 int should_mutate() {
   return (rand() < (RAND_MAX * MUTATION_PROB));
@@ -187,9 +213,11 @@ void mutate(solution_t *solution) {
   if (should_recombine()) { tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; } \
 } while(0)
 
-#define splice(p, delta) do { \
-  if (ISTMP((p))) (p) -= delta; \
-  if ((p) < 0) (p) = 0; \
+#define splice(p, delta, i) do { \
+  if (ISTMP((p))) { \
+    (p) -= delta; \
+    (p) %= (NARGS + CONSTS + i + 1); \
+  } \
 } while(0)
 
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
@@ -234,9 +262,9 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
     }
 
     for (i = prefix; i < prefix + suffix; i++) {
-      splice(c->params[i*3], delta);
-      splice(c->params[(i*3)+1], delta);
-      splice(c->params[(i*3)+2], delta);
+      splice(c->params[i*3], delta, i);
+      splice(c->params[(i*3)+1], delta, i);
+      splice(c->params[(i*3)+2], delta, i);
     }
 
     for (i = 0; i < CONSTS; i++) {
@@ -314,6 +342,8 @@ int next_gen(solution_t *previous, solution_t *next) {
   int maxlen, minlen;
   int nprogs;
 
+  //check_population(previous);
+
   nprogs = POPSIZE;
   maxfit = -1;
   minfit = -1;
@@ -390,6 +420,8 @@ int next_gen(solution_t *previous, solution_t *next) {
     crossover(a, b, c);
     mutate(c);
   }
+
+  //check_population(next);
 
   return maxfit;
 }

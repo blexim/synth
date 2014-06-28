@@ -199,6 +199,10 @@ class Checker(object):
           bin = self.compile(s)
           bins[s] = bin
           outfile = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps)
+
+          if args.args.verbose > 1:
+            print bin.name
+
           proc = subprocess.Popen([bin.name], stdout=outfile,
               preexec_fn=os.setpgrp)
           procs.append((proc, outfile, s))
