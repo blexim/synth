@@ -47,6 +47,32 @@ int correct;
 
 unsigned int **test_vectors;
 
+void rand_solution(solution_t *solution) {
+  int i, j;
+
+  memset(solution, 0, sizeof(solution_t));
+
+  for (j = 0; j < NPROGS; j++) {
+    prog_t *prog = &solution->progs[j];
+    prog->len = min(SZ, 1 + (rand() % NEWSIZE));
+
+    for (i = 0; i < prog->len; i++) {
+      prog->ops[i] = rand() % (MAXOPCODE + 1);
+      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
+      prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
+      prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
+    }
+
+    for (i = 0; i < CONSTS; i++) {
+      prog->consts[i] = rand() & WORDMASK;
+    }
+  }
+
+  for (i = 0; i < NEVARS; i++) {
+    solution->evars[i] = rand() & WORDMASK;
+  }
+}
+
 void load_seed(solution_t *pop) {
 #ifdef SEEDFILE
   FILE *seedfile = fopen(SAVEFILE, "rb");
@@ -98,40 +124,19 @@ void load(solution_t *pop) {
     load_seed(pop);
   }
 
-  while (nread < POPSIZE) {
+  while (nread < POPSIZE && !feof(savefile)) {
     nread += fread(&pop[nread], sizeof(solution_t), POPSIZE - nread, savefile);
   }
 
   fclose(savefile);
+
+  while (nread < POPSIZE) {
+    rand_solution(&pop[nread++]);
+  }
 #endif
 }
 
 
-void rand_solution(solution_t *solution) {
-  int i, j;
-
-  memset(solution, 0, sizeof(solution_t));
-
-  for (j = 0; j < NPROGS; j++) {
-    prog_t *prog = &solution->progs[j];
-    prog->len = min(SZ, 1 + (rand() % NEWSIZE));
-
-    for (i = 0; i < prog->len; i++) {
-      prog->ops[i] = rand() % (MAXOPCODE + 1);
-      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
-      prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
-      prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
-    }
-
-    for (i = 0; i < CONSTS; i++) {
-      prog->consts[i] = rand() & WORDMASK;
-    }
-  }
-
-  for (i = 0; i < NEVARS; i++) {
-    solution->evars[i] = rand() & WORDMASK;
-  }
-}
 
 int should_mutate() {
   return (rand() < (RAND_MAX * MUTATION_PROB));
