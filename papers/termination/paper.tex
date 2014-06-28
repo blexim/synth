@@ -921,6 +921,19 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 							& N(\mathcal{V}) \wedge T(\mathcal{V}, \mathcal{V}') \rightarrow N(\mathcal{V}') 
  \end{align*} 
 \end{definition}
+
+\begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
+\label{def:multi-termination-formula}
+ \begin{align*}
+  \exists R, Inv_1,..., Inv_n . \forall \mathcal{V}_0,...,\mathcal{V}_n, \mathcal{V}_1',...,\mathcal{V}_n'.  & P_0(\mathcal{V}_0,\mathcal{V}_1) \rightarrow Inv_1(\mathcal{V}_1) ~  \\
+ & \bigwedge_{i=1..n{-}1} (Inv_i(\mathcal{V}_i) \wedge G_i(\mathcal{V}_i) \wedge T_i(\mathcal{V}_i, \mathcal{V}_i') \rightarrow Inv_i(\mathcal{V}_i')) ~  \\  
+ & \bigwedge_{i=1..n{-}2} (Inv_i(\mathcal{V}_i) \wedge \lnot G_i(\mathcal{V}_i) \wedge P_{i+1}(\mathcal{V}_i, \mathcal{V}_{i+1}) \rightarrow Inv_{i+1}(\mathcal{V}_{i+1})) ~ \wedge \\
+ & Inv_{n-1}(\mathcal{V}_{n-1}) \wedge \lnot G_{n-1}(\mathcal{V}_{n-1}) \wedge P_n(\mathcal{V}_{n-1},\mathcal{V}_n) \wedge N(\mathcal{V}_n)  ~ \wedge \\
+                                                        & N(\mathcal{V}_n) \rightarrow G_n(\mathcal{V}_n) ~ \wedge 
+							 N(\mathcal{V}_n) \wedge T_n(\mathcal{V}_n, \mathcal{V}_n') \rightarrow N(\mathcal{V}_n') 
+ \end{align*}
+\end{definition}
+
 \end{framed}
 \end{figure*}
 
@@ -1070,8 +1083,10 @@ that is not periodic is illustrated by the following program:
 
 Our method is purely semantic. %We extend the notion of recurrence set in order to formulate the 
 We formulate the non-termination problem at the loop level.%, rather than transition relation.
-In our design, a loop $L=(\mathcal{V},I,G,t)$ is non-terminating iff it has a recurrence set of states.
+In our design, a loop $L=(\mathcal{V},I,G,t)$ is non-terminating iff it has a recurrence set of states.\\
 
+{\bf Sequential loops.}
+Discuss {\bf [SNT]}.
 
 %% \subsection{Program Synthesis as Second-Order Satisfaction}
 
