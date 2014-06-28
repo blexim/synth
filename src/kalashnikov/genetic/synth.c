@@ -47,6 +47,27 @@ int correct;
 
 unsigned int **test_vectors;
 
+void check_solution(solution_t *solution) {
+  int i, j;
+
+  for (i = 0; i < NPROGS; i++) {
+    prog_t *prog = &solution->progs[i];
+
+    for (j = 0; j < 3*prog->len; j++) {
+      assert((int) prog->params[j] >= 0);
+    }
+  }
+}
+
+void check_population(solution_t *pop) {
+  int i;
+
+  for (i = 0; i < POPSIZE; i++) {
+    check_solution(&pop[i]);
+  }
+}
+
+
 void rand_solution(solution_t *solution) {
   int i, j;
 
@@ -192,9 +213,11 @@ void mutate(solution_t *solution) {
   if (should_recombine()) { tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; } \
 } while(0)
 
-#define splice(p, delta) do { \
-  if (ISTMP((p))) (p) -= delta; \
-  if ((p) < 0) (p) = 0; \
+#define splice(p, delta, i) do { \
+  if (ISTMP((p))) { \
+    (p) -= delta; \
+    (p) %= (NARGS + CONSTS + i + 1); \
+  } \
 } while(0)
 
 void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
@@ -239,9 +262,9 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
     }
 
     for (i = prefix; i < prefix + suffix; i++) {
-      splice(c->params[i*3], delta);
-      splice(c->params[(i*3)+1], delta);
-      splice(c->params[(i*3)+2], delta);
+      splice(c->params[i*3], delta, i);
+      splice(c->params[(i*3)+1], delta, i);
+      splice(c->params[(i*3)+2], delta, i);
     }
 
     for (i = 0; i < CONSTS; i++) {
@@ -319,6 +342,8 @@ int next_gen(solution_t *previous, solution_t *next) {
   int maxlen, minlen;
   int nprogs;
 
+  //check_population(previous);
+
   nprogs = POPSIZE;
   maxfit = -1;
   minfit = -1;
@@ -395,6 +420,8 @@ int next_gen(solution_t *previous, solution_t *next) {
     crossover(a, b, c);
     mutate(c);
   }
+
+  //check_population(next);
 
   return maxfit;
 }
