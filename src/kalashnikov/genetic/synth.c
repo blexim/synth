@@ -216,7 +216,7 @@ void mutate(solution_t *solution) {
 #define splice(p, delta, i) do { \
   if (ISTMP((p))) { \
     (p) -= delta; \
-    (p) %= (NARGS + CONSTS + i + 1); \
+    (p) %= (NARGS + CONSTS + i); \
   } \
 } while(0)
 
