@@ -80,6 +80,7 @@ def print_benchmark(benchmark):
 
   res = 'unk'
   elapsed = 'T/O'
+  iters = '0'
 
   if termstats: 
     (counters, timers) = termstats
@@ -88,6 +89,7 @@ def print_benchmark(benchmark):
       (start, end) = timers['_'][0]
       elapsed = '%.01fs' % (end - start)
       res = 'term'
+      iters = str(counters['iterations'])
     elif nontermstats:
       (counters, timers) = nontermstats
 
@@ -95,12 +97,13 @@ def print_benchmark(benchmark):
         (start, end) = timers['_'][0]
         elapsed = '%.01fs' % (end - start)
         res = 'nonterm'
+        iters = str(counters['iterations'])
   else:
     res = 'err'
     elapsed = '--'
 
   return ' & '.join((benchname, loc, isterm, linprog, linrank, iscond,
-                     isfloat, lexdim, '5', res, elapsed)) + '\\\\ \n'
+                     isfloat, lexdim, '5', res, elapsed, iters)) + '\\\\ \n'
 
 def munge(s):
   REST = 0

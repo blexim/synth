@@ -9,7 +9,9 @@
  */
 
 int main(void) {
-  int x = 2147483648;
+  int x;
+  
+  x = 2147483648;
 
   while (x != 0) {
     if (x < 0) {
