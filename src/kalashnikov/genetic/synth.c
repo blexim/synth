@@ -40,7 +40,7 @@
 
 #define ISTMP(x) ((x) >= NARGS + CONSTS)
 
-#define min(x, y) ((x) < (y) ? (x) : (y))
+#define min(x, y) (x) <= (y) ? (x) : (y)
 
 int generation;
 int correct;
