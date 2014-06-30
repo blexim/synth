@@ -37,4 +37,9 @@ if __name__ == '__main__':
   except:
     pass
 
+  try:
+    os.unlink("/tmp/testvectors")
+  except:
+    pass
+
   sys.exit(prove_terminates(sys.argv[1]))

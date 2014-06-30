@@ -25,7 +25,11 @@ int numtests;
 
 void load_tests() {
   FILE *testfile = fopen(TESTFILE, "r");
-  assert(testfile != NULL);
+
+  if (testfile == NULL) {
+    numtests = 0;
+    return;
+  }
 
   char buf[1024];
   char *p, *q;
