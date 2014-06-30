@@ -6,12 +6,14 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
+ * Rank function:  |x|
  */
 
 int main(void) {
   int x;
-  
-  x = 2147483648;
+
+  //x = 2147483648;
 
   while (x != 0) {
     if (x < 0) {

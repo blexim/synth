@@ -15,7 +15,7 @@ int main(void) {
   y = b;
 
   while (x > 0 && y > 0) {
-    if (nondet() == 1) {
+    if (nondet()) {
       x--;
       y = nondet();
     } else {
