@@ -16,14 +16,12 @@
 #include "io.h"
 
 
-#define POPSIZE 5000
+#define POPSIZE 2000
 #define KEEPLIM (POPSIZE/10)
 #define NEWLIM (POPSIZE/10)
 
-#define NEWSIZE 5
-
-#define TOURNEYSIZE 5
-#define GEN_SIZE 5
+#define NEWSIZE 3
+#define TOURNEYSIZE 10
 
 #define MUTATION_PROB 0.01
 #define RECOMBINE_PROB 0.1
@@ -367,7 +365,7 @@ int next_gen(solution_t *previous, solution_t *next) {
       exit(10);
     }
 
-    fit = (fit * 10) - len;
+    //fit = (fit * 10) - len;
 
     if (fit < 0) {
       fit = 0;
