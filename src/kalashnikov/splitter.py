@@ -134,6 +134,9 @@ def replace_nondet(ast, nondet_idx=0):
   else:
     return (ast, nondet_idx)
 
+def is_signed(decl):
+  return 'int' in decl.type.type.names
+
 def split_func(fd, ofile):
   prog = FlatProgram()
 
@@ -189,6 +192,10 @@ def split_func(fd, ofile):
                               c_ast.Constant('int', str(vid)))
 
       decls.append(b)
+
+      if is_signed(b):
+        decls.append(c_ast.FuncCall(c_ast.ID('SIGN_EXTEND'),
+                     c_ast.ExprList([c_ast.ID(id)])))
 
   for id in sorted(rev_id_map.keys()):
     varname = rev_id_map[id]
