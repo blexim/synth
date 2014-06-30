@@ -200,10 +200,15 @@ def verif(prog, checker, width, codelen):
 
 void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]) {
 """)
-  cfile.write(prog.prog2str(prog.ops[0], prog.params[0], prog.consts[0]))
-  cfile.write(r"""
-  }
-""")
+
+  for i in xrange(args.args.progs):
+    cfile.write(r"""
+  if (prog == &solution.progs[%d]) {
+  """ % i)
+
+    cfile.write(prog.prog2str(prog.ops[i], prog.params[i], prog.consts[i]))
+    cfile.write("\n  }\n")
+  cfile.write("}")
   cfile.close()
 
 
