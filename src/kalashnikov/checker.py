@@ -44,7 +44,7 @@ args.argparser.add_argument("--nonops", default=False,
 args.argparser.add_argument("--noconsts", default=False,
     action="store_const", const=True,
     help="don't remove const instructions")
-args.args.argparser.add_argument("--nofastverif", default=False,
+args.argparser.add_argument("--nofastverif", default=False,
     action="store_const", const=True,
     help="don't use fast verification")
 
