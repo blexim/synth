@@ -21,7 +21,7 @@ extern int nondet(void);
 
 int main()
 {
-  int x = nondet();
+  int x;
   int debug = 0;
 
   while (x < 255) {

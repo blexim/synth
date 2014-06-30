@@ -18,8 +18,6 @@
 
 extern int nondet(void);
 
-int x;
-
 void foo(void)
 {
   x--;
@@ -28,7 +26,7 @@ void foo(void)
 
 int main()
 {
-  x = nondet();
+  int x;
 
   while (x > 0) {
     if (nondet()) {
