@@ -88,7 +88,6 @@ class Checker(object):
         "-DMWIDTH=%d" % mwidth,
         "-DWIDTH=%d" % width,
         "-DNARGS=%d" % nargs,
-        "-DNRES=%d" % nres,
         "-DNEVARS=%d" % nevars,
         "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
@@ -118,13 +117,13 @@ class Checker(object):
       self.cbmcargs = [args.args.cbmc,
           "-DSZ=%d" % sz,
           "/tmp/exec.c",
-          #os.path.join(args.args.interpreter, "exec.c"),
+          "-DNRES=%d" % sz,
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
-          "-DSZ=128", "-O0", "-g",
-          os.path.join(args.args.interpreter, "exec.c"),
-          os.path.join("explicit", "verif.c")] + genericargs
+          "-DSZ=128",
+          "-DNRES=128",
+          "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           "-DSZ=%d" % sz,
@@ -132,16 +131,19 @@ class Checker(object):
           os.path.join("cbmc", "synth.c")] + genericargs
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=%d" % sz,
+          "-DNRES=%d" % sz,
           "-O0", "-g",
           os.path.join(args.args.interpreter, "exec.c"),
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
       self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=128",
+          "-DNRES=128",
           "-O0", "-g",
           os.path.join(args.args.interpreter, "exec.c"),
           os.path.join("genetic", "synth.c"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=%d" % sz,
+          "-DNRES=%d" % sz,
           "-O0", "-g",
           os.path.join(args.args.interpreter, "exec.c"),
           os.path.join("anneal", "synth.c"), "-lm"] + genericargs
