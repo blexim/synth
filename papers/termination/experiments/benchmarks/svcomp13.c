@@ -16,8 +16,11 @@
 
 int main()
 {
-  int j = 1;
-  int i = 10000;
+  int j;
+  int i;
+
+  j = 1;
+  i = 10000;
 
   while (i - j >= 1) {
     j++;
