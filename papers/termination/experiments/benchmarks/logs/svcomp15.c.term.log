@@ -2,812 +2,322 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~nondet_0;
-t2 = ((sword_t) k) < ((sword_t) nondet_0);
-t3 = y >> t1;
-I = d >> t2;
+t1 = nondet_1 >> z;
+t2 = t1 & nondet_0;
+I = nondet_2 - d;
 Program 1:
-t1 = z ? z : nondet_0;
-t2 = 0x5 != nondet_0;
-I = 0x5 + nondet_2;
-
-Fastest checker: explicit
-Fails for (0, 0, 1, 0, 0, 0, 0, 0)
-
-[]
-Fastest checker: genetic
-Program 0:
 t1 = z | k;
-t2 = z ^ nondet_0;
-I = ((sword_t) x) <= ((sword_t) t2);
-Program 1:
-I = nondet_1 << nondet_1;
+t2 = max(y, nondet_0);
+I = nondet_1 + d;
 
 Fastest checker: explicit
-Fails for (0, 0, 8, 0, 0, 0, 0, 0)
+Fails for (10, 8, 5, 9, 2, 13, 6, 12)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = -0xa;
-I = z == d;
+t1 = nondet_0 s< z;
+I = y s< z;
 Program 1:
-t1 = ~nondet_0;
-t2 = ((sword_t) y) >> ((sword_t) t1);
-t3 = t2 ^ t2;
-I = -k;
+t1 = nondet_1 ^ k;
+I = t1 - nondet_2;
+
+Fastest checker: cbmc
+Fails for (0, 1, 0, 0, 0, 1, 1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = k ==> 0xa;
+I = d << y;
+Program 1:
+I = z >>> nondet_0;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0, 0, 0, 0, 0)
+Fails for (0, 0, 0, 1, 0, 1, 1, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = nondet_2 == z;
-t2 = d + d;
-t3 = ((sword_t) t2) >> ((sword_t) t1);
-I = 0x3 & z;
+t1 = nondet_2 - nondet_2;
+t2 = nondet_2 | nondet_0;
+I = y s< d;
 Program 1:
-t1 = nondet_0 < nondet_0;
-I = k + nondet_1;
-
-Fastest checker: cbmc
-Fails for (0, 11, 0, 0, 0, 0, 7, 6)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = k >> nondet_1;
-I = nondet_0 - 0x3;
-Program 1:
-t1 = nondet_2 ? k : z;
-t2 = d % nondet_1;
-t3 = y << 0x0;
-t4 = t1 ? nondet_0 : nondet_1;
-I = z - nondet_1;
+t1 = k * x;
+t2 = x == z;
+I = min(k, nondet_2);
 
 Fastest checker: explicit
-Fails for (0, 0, 3, 0, 0, 0, 0, 0)
+Fails for (0, 0, 1, 1, 0, 1, 1, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+I = z << k;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+I = y < z;
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (0, 0, 0, 0, 0, 11, 15, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+I = d * z;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+I = min(z, y);
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 8, 0, 11, 15, 13)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = z & y;
+Program 1:
+t1 = nondet_2 == nondet_0;
+t2 = z | x;
+I = k != z;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 4, 11, 15, 13)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = k * z;
+I = x ^ t1;
+Program 1:
+t1 = max(z, nondet_1);
+I = t1 - x;
+
+Fastest checker: explicit
+Fails for (0, 13, 0, 0, 4, 11, 15, 13)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y >>> 0x5;
+t2 = nondet_2 + x;
+I = z - t1;
+Program 1:
+I = min(y, z);
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (0, 0, 0, 0, 0, 14, 6, 5)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+t1 = nondet_1 < d;
+I = z * z;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+t1 = d s<= x;
+t2 = min(0x0, nondet_0);
+t3 = 0x0 + nondet_1;
+t4 = k + z;
+I = 0x0 != k;
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (0, 8, 0, 8, 10, 0, 2, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+t1 = 0x3 - 0x3;
+I = min(z, d);
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+t1 = z + x;
+t2 = t1 < nondet_2;
+I = z | x;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 11, 0, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = k * z;
+t2 = nondet_2 s<= 0x8;
+t3 = z / 0x8;
+I = nondet_2 + z;
+Program 1:
+t1 = z - k;
+I = nondet_2 + d;
+
+Fastest checker: explicit
+Fails for (14, 0, 0, 1, 11, 0, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x s<= z;
+t2 = d s<= y;
+I = z - x;
+Program 1:
+t1 = max(d, 0xa);
+t2 = nondet_1 >>> nondet_0;
+t3 = z + nondet_2;
+I = k >>> z;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 1, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = z + x;
+Program 1:
+t1 = max(d, 0x6);
+t2 = nondet_2 ^ nondet_1;
+t3 = x >> y;
+t4 = d | z;
+t5 = nondet_2 + z;
+t6 = nondet_2 + x;
+t7 = y s< x;
+t8 = nondet_2 ==> nondet_1;
+t9 = x | nondet_1;
+t10 = nondet_2 != d;
+t11 = max(z, nondet_2);
+I = k >>> z;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 14, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = z ? d : z;
+Program 1:
+t1 = k >> z;
+t2 = d | 0xb;
+t3 = nondet_2 + nondet_1;
+I = max(z, x);
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 0, 2, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = z <= k;
+I = z | x;
+Program 1:
+t1 = x | nondet_1;
+t2 = t1 | nondet_2;
+t3 = nondet_2 == x;
+t4 = z | nondet_2;
+I = k >>> z;
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (7, 7, 0, 0, 0, 0, 0, 8)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+t1 = max(k, z);
+t2 = x == t1;
+t3 = ~z;
+I = nondet_2 - z;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+t1 = z - k;
+I = nondet_2 + d;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 0, 0, 0, 8)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = y ==> z;
+Program 1:
+t1 = z << d;
+I = k >>> z;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 0, 0, 0, 8)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x6 - 0x6;
+t2 = ~0x6;
+I = y ==> z;
+Program 1:
+t1 = nondet_1 >>> nondet_0;
+t2 = z | nondet_1;
+t3 = -t2;
+t4 = z + nondet_2;
+I = k >> z;
+
+Fastest checker: explicit
+Fails for (8, 0, 0, 1, 0, 0, 0, 8)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = d + d;
+t2 = z < k;
+t3 = nondet_0 + d;
+t4 = 0x9 + 0x9;
+I = y ==> z;
+Program 1:
+t1 = z | k;
+t2 = 0xd | x;
+t3 = nondet_0 + nondet_0;
+t4 = z | nondet_2;
+I = k >>> z;
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (8, 0, 0, 0, 0, 1, 0, 8)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+I = z & 0x3;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+t1 = nondet_1 <= nondet_0;
+t2 = t1 * nondet_2;
+t3 = z >> nondet_2;
+I = k >>> z;
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (4, 7, 7, 0, 0, 0, 0, 14)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+t1 = k - nondet_2;
+t2 = min(nondet_1, nondet_0);
+t3 = 0x9 ^ k;
+t4 = z ? d : z;
+I = y ==> t4;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+t1 = d << nondet_1;
+t2 = nondet_0 s<= nondet_0;
+t3 = z | x;
+I = k | z;
 
 Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fails for (0, 4, 6, 8, 0, 4, 11, 8)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
+t1 = k - nondet_2;
+t2 = min(nondet_1, nondet_0);
+t3 = 0xa ^ k;
+t4 = z ? d : t2;
+I = y ==> t4;
 Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
+t1 = nondet_0 s<= nondet_0;
+t2 = z | x;
+I = k | z;
 
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
+Fastest checker: explicit
+Fails for (0, 0, 7, 8, 0, 4, 11, 8)
 
 []
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
-Fastest checker: cbmc
-Fails for (0, 0, 4, 15, 0, 0, 4, 15)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~0xe;
-t2 = y - 0xe;
-I = min(d, z);
-Program 1:
-t1 = z << 0xc;
-t2 = -k;
-I = k | t2;
-
 
 
 
@@ -817,10 +327,10 @@ I = k | t2;
 
 Timeout
 Perf counters:
-{'genetic': 58, 'cbmc': 53, 'explicit': 4, 'timeout': 1, 'iterations': 58}
+{'genetic': 23, 'cbmc': 8, 'explicit': 15, 'timeout': 1, 'iterations': 24}
 Perf timers:
-verify: 113.57s
-checker: 118.00s
-gcc: 0.88s
+verify: 20.52s
+checker: 119.93s
+gcc: 0.44s
 _: 120.00s
-synth: 4.69s
+synth: 99.47s

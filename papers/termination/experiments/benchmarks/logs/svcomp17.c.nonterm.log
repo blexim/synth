@@ -1,13 +1,38 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 13, 3
+Evars: 4, 8
 Program 0:
-t1 = min(debug, debug);
-I = debug | debug;
+I = 0x5 >>> 0x5;
 
 Fastest checker: explicit
 Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: cbmc
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: genetic
+Evars: 6, 0
+Program 0:
+t1 = debug >>> 0xa;
+I = x != 0xa;
+
+Fastest checker: explicit
+Fails for (8, 0)
+
+[]
+Fastest checker: genetic
+Evars: 9, 4
+Program 0:
+I = debug * 0x8;
+
+Fastest checker: explicit
+Correct for wordlen=8
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -17,19 +42,19 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.86s
+Finished in 9.47s
 
-Evars: 13, 3
+Evars: 9, 4
 Program 0:
-t1 = min(debug, debug);
-I = debug | debug;
+I = debug * 0x8;
 
 
 Perf counters:
-{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+{'genetic': 3, 'cbmc': 4, 'explicit': 5, 'iterations': 3}
 Perf timers:
-verify: 2.31s
-checker: 2.84s
-gcc: 1.13s
-_: 2.86s
-synth: 0.54s
+gcc: 1.06s
+verify: 8.89s
+checker: 9.45s
+generalize: 6.20s
+synth: 0.57s
+_: 9.47s

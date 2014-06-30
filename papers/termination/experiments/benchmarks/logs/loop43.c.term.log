@@ -2,77 +2,20 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = x <= 0xa;
-t2 = t1 | x;
-t3 = t2 ^ x;
-I = 0xa ^ t1;
+I = 0x5 + 0x5;
 Program 1:
-t1 = 0x7 == 0x7;
-t2 = min(0x7, x);
-t3 = t2 - x;
-t4 = x ^ t3;
-I = t1 / t1;
+t1 = min(x, x);
+t2 = x * 0x8;
+t3 = t2 << x;
+t4 = -x;
+I = min(0x8, x);
 
 Fastest checker: explicit
 Correct for wordlen=4
 Fastest checker: explicit
 Trying to generalize...
-Fastest checker: cbmc
-Fastest checker: cbmc
 Fastest checker: explicit
 Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: explicit
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: explicit
-Couldn't generalize :-(
-Increasing wordlen to 8
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ((sword_t) x) <= ((sword_t) 0x5);
-t2 = x == x;
-t3 = t1 | t2;
-I = t2 <= t2;
-Program 1:
-t1 = 0xb - x;
-I = min(t1, x);
-
-Fastest checker: explicit
-Fails for (6,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xb + 0xb;
-I = 0xb | t1;
-Program 1:
-t1 = ((sword_t) x) <= ((sword_t) 0x7);
-t2 = ~x;
-I = min(t2, x);
-
-Fastest checker: explicit
-Fails for (255,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = min(0x2, 0x2);
-t2 = ((sword_t) t1) < ((sword_t) x);
-t3 = t2 <= 0x2;
-t4 = t2 >> 0x2;
-I = 0x2 != t4;
-Program 1:
-t1 = -x;
-t2 = min(x, t1);
-t3 = t1 - t1;
-I = t3 != t1;
-
-Fastest checker: explicit
-Correct for wordlen=8
-Fastest checker: cbmc
-Also correct for wordlen=32!
 
 
 
@@ -80,27 +23,24 @@ Also correct for wordlen=32!
 
 
 
-Finished in 17.43s
+Finished in 3.31s
 
 Program 0:
-t1 = min(0x2, 0x2);
-t2 = ((sword_t) t1) < ((sword_t) x);
-t3 = t2 <= 0x2;
-t4 = t2 >> 0x2;
-I = 0x2 != t4;
+I = 0x50000000 + 0x50000000;
 Program 1:
-t1 = -x;
-t2 = min(x, t1);
-t3 = t1 - t1;
-I = t3 != t1;
+t1 = min(x, x);
+t2 = x * 0x80000000L;
+t3 = t2 << x;
+t4 = -x;
+I = min(0x80000000L, x);
 
 
 Perf counters:
-{'genetic': 4, 'cbmc': 7, 'explicit': 8, 'iterations': 4}
+{'genetic': 1, 'cbmc': 1, 'explicit': 3, 'iterations': 1}
 Perf timers:
-gcc: 2.01s
-verify: 15.89s
-checker: 17.22s
-generalize: 12.71s
-synth: 1.43s
-_: 17.43s
+gcc: 0.62s
+verify: 2.44s
+checker: 3.30s
+generalize: 2.08s
+synth: 0.87s
+_: 3.31s

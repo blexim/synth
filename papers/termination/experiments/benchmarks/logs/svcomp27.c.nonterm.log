@@ -1,693 +1,967 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 14, 9, 7, 9, 14, 12, 1
+Evars: 4, 8, 3, 7, 11, 12, 3
 Program 0:
-t1 = i + i;
-I = i - N;
+I = b >>> M;
 
 Fastest checker: explicit
-Fails for (0, 15, 0, 0, 0, 0, 0)
+Fails for (0, 0, 2, 5, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 3, 5, 11, 4, 13, 5, 6
+Evars: 14, 0, 2, 14, 6, 9, 5
 Program 0:
-t1 = M * b;
-t2 = N < M;
-t3 = t1 < t2;
-t4 = b * i;
-I = max(t4, t2);
+t1 = N / N;
+t2 = b + N;
+I = t2 & j;
 
 Fastest checker: explicit
-Fails for (0, 15, 1, 0, 0, 0, 0)
+Fails for (0, 0, 3, 5, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 12, 4, 11, 11, 7, 0, 4
+Evars: 13, 1, 12, 9, 8, 14, 1
 Program 0:
-t1 = ~i;
-t2 = ((sword_t) 0x1) < ((sword_t) t1);
-t3 = i >> M;
-I = t1 >> t1;
+t1 = 0xc >>> j;
+I = a * 0xc;
 
 Fastest checker: explicit
-Fails for (0, 11, 0, 0, 0, 0, 0)
+Fails for (1, 0, 3, 5, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 15, 14, 8, 2, 11, 0, 7
+Evars: 2, 8, 11, 1, 11, 15, 8
 Program 0:
-t1 = i < c;
-t2 = min(M, N);
-t3 = max(M, M);
-t4 = max(N, 0xd);
-I = N - c;
+I = i >>> b;
 
 Fastest checker: explicit
-Fails for (0, 15, 0, 0, 1, 0, 0)
+Fails for (0, 12, 3, 5, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 15, 8, 1, 5, 14, 15, 1
+Evars: 2, 7, 10, 15, 13, 8, 0
 Program 0:
-t1 = !c || c;
-t2 = a % t1;
-I = !t1 || j;
-
-Fastest checker: explicit
-Fails for (0, 15, 0, 1, 0, 0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 14, 12, 5, 15, 2, 3, 15
-Program 0:
-t1 = c & i;
-t2 = M + b;
-t3 = j ^ a;
-t4 = a - N;
-I = t2 < t4;
+t1 = M s< M;
+I = b s< t1;
 
 Fastest checker: explicit
-Fails for (1, 15, 0, 0, 0, 0, 0)
+Fails for (0, 0, 8, 5, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 3, 12, 9, 9, 11, 4, 1
+Evars: 7, 10, 2, 13, 6, 10, 2
 Program 0:
-t1 = ((sword_t) j) < ((sword_t) b);
-t2 = a % i;
-t3 = b << M;
-I = M << j;
+t1 = ~c;
+I = a >> a;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 8, 0, 0, 0)
+Fails for (4, 0, 8, 5, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 9, 6, 3, 10, 9, 2, 13
+Evars: 4, 0, 6, 13, 12, 5, 14
 Program 0:
-t1 = 0x3 == b;
-t2 = M + t1;
-t3 = ((sword_t) 0x3) >> ((sword_t) 0x3);
-I = N & b;
-
-Fastest checker: cbmc
-Fails for (0, 8, 8, 8, 2, 9, 8)
-
-[]
-Fastest checker: genetic
-Evars: 4, 2, 0, 9, 4, 10, 13
-Program 0:
-t1 = ((sword_t) i) < ((sword_t) c);
-I = ((sword_t) t1) < ((sword_t) i);
+t1 = 0xb * j;
+t2 = N | N;
+I = j s< M;
 
 Fastest checker: explicit
-Fails for (0, 7, 0, 8, 0, 0, 0)
+Fails for (0, 0, 0, 12, 3, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 6, 4, 5, 0, 12
+Evars: 1, 10, 5, 14, 12, 2, 8
 Program 0:
-I = M < N;
-
-Fastest checker: cbmc
-Fails for (0, 2, 0, 12, 3, 3, 12)
-
-[]
-Fastest checker: genetic
-Evars: 8, 6, 7, 13, 8, 15, 14
-Program 0:
-t1 = M << c;
-I = a * N;
-
-Fastest checker: cbmc
-Fails for (1, 12, 0, 8, 3, 13, 8)
-
-[]
-Fastest checker: genetic
-Evars: 14, 10, 12, 3, 1, 11, 2
-Program 0:
-I = N * b;
-
-Fastest checker: cbmc
-Fails for (0, 4, 1, 8, 3, 5, 8)
-
-[]
-Fastest checker: genetic
-Evars: 5, 8, 13, 0, 11, 6, 14
-Program 0:
-I = ((sword_t) a) >> ((sword_t) 0x2);
+t1 = b <= c;
+t2 = b ==> j;
+I = a s< M;
 
 Fastest checker: explicit
-Fails for (4, 15, 0, 0, 0, 0, 0)
+Fails for (8, 0, 0, 5, 4, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 6, 15, 12, 3, 2, 1, 3
+Evars: 1, 13, 7, 15, 12, 14, 1
 Program 0:
-t1 = c | a;
-I = a ? b : a;
+t1 = -b;
+t2 = j != 0x3;
+I = j s<= b;
 
 Fastest checker: explicit
-Fails for (1, 15, 1, 0, 0, 0, 0)
+Fails for (0, 0, 5, 5, 4, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 14, 8, 5, 11, 14, 8, 12
+Evars: 13, 14, 1, 8, 13, 13, 5
 Program 0:
-I = ((sword_t) a) < ((sword_t) N);
+I = a & i;
 
 Fastest checker: explicit
-Fails for (8, 15, 0, 0, 0, 0, 0)
+Fails for (1, 1, 5, 5, 4, 13, 6)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 4, 5, 10, 8, 14, 0, 15
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = a << M;
+t2 = b <= c;
+I = c <= t2;
+
+Fastest checker: explicit
+Fails for (0, 0, 2, 0, 0, 14, 6)
+
+[]
+Fastest checker: genetic
+Evars: 15, 7, 3, 8, 0, 8, 14
+Program 0:
+I = j s<= i;
+
+Fastest checker: explicit
+Fails for (0, 7, 2, 0, 0, 14, 6)
+
+[]
+Fastest checker: genetic
+Evars: 15, 8, 1, 13, 4, 1, 13
+Program 0:
+t1 = M s< N;
+I = M <= 0xc;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 6, 0, 0, 7)
+
+[]
+Fastest checker: genetic
+Evars: 13, 14, 11, 6, 13, 6, 8
+Program 0:
+t1 = b s<= j;
+I = N s< c;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 13, 0, 8, 7, 5, 8)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 4, 12, 5, 11, 15, 0, 6
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = j s< 0x2;
+
+Fastest checker: explicit
+Fails for (0, 4, 1, 8, 7, 5, 8)
+
+[]
+Fastest checker: genetic
+Evars: 14, 11, 13, 14, 10, 6, 12
+Program 0:
+I = c s< M;
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 0, 8, 5, 8)
+
+[]
+Fastest checker: genetic
+Evars: 4, 8, 3, 7, 11, 12, 3
+Program 0:
+I = N < j;
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 9, 8, 5, 8)
+
+[]
+Fastest checker: genetic
+Evars: 4, 8, 3, 7, 11, 12, 3
+Program 0:
+I = 0x5 / N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 1, 0, 5, 3, 2, 4)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 4, 8, 3, 9, 5, 5, 12
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = M < a;
+
+Fastest checker: explicit
+Fails for (3, 1, 0, 5, 3, 2, 4)
+
+[]
+Fastest checker: genetic
+Evars: 13, 15, 14, 5, 2, 4, 0
+Program 0:
+I = 0xe < a;
+
+Fastest checker: explicit
+Fails for (15, 1, 0, 5, 3, 2, 4)
+
+[]
+Fastest checker: genetic
+Evars: 13, 15, 14, 5, 2, 4, 0
+Program 0:
+I = i / 0xe;
+
+Fastest checker: explicit
+Fails for (0, 15, 0, 5, 3, 2, 4)
+
+[]
+Fastest checker: genetic
+Evars: 9, 3, 14, 12, 0, 12, 13
+Program 0:
+I = j / 0xb;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 15, 3, 2, 4)
+
+[]
+Fastest checker: genetic
+Evars: 12, 4, 4, 8, 9, 0, 13
+Program 0:
+t1 = j < i;
+t2 = a + j;
+t3 = N s< a;
+I = M < b;
+
+Fastest checker: explicit
+Fails for (0, 1, 3, 3, 4, 2, 4)
+
+[]
+Fastest checker: genetic
+Evars: 12, 14, 3, 14, 9, 9, 1
+Program 0:
+I = j == i;
+
+Fastest checker: explicit
+Fails for (0, 3, 3, 3, 4, 2, 4)
+
+[]
+Fastest checker: genetic
+Evars: 15, 8, 2, 0, 8, 0, 14
+Program 0:
+t1 = 0x2 <= c;
+t2 = c * c;
+t3 = c == M;
+t4 = j + c;
+I = min(i, t3);
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 3, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 15, 8, 2, 0, 8, 0, 14
+Program 0:
+t1 = 0x2 <= c;
+t2 = c * c;
+I = j == c;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 3, 3, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 6, 3, 12, 15, 3, 7, 15
+Program 0:
+t1 = a * N;
+I = t1 & i;
+
+Fastest checker: explicit
+Fails for (1, 4, 0, 3, 3, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 6, 15, 11, 2, 14, 2, 3
+Program 0:
+t1 = max(N, b);
+t2 = a & 0x2;
+I = t2 & t1;
+
+Fastest checker: explicit
+Fails for (2, 2, 6, 3, 3, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 7, 10, 7, 15, 3, 13, 4
+Program 0:
+I = a == 0xa;
+
+Fastest checker: explicit
+Fails for (10, 2, 6, 3, 3, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 1, 13, 7, 15, 15, 4, 9
+Program 0:
+t1 = N * M;
+t2 = i < j;
+I = c s< t1;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 3, 8, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 5, 14, 7, 11, 5, 12, 0
+Program 0:
+I = 0x9 < b;
+
+Fastest checker: explicit
+Fails for (0, 2, 10, 3, 8, 3, 4)
+
+[]
+Fastest checker: genetic
+Evars: 3, 2, 12, 0, 1, 7, 4
+Program 0:
+t1 = max(0x7, M);
+t2 = M & j;
+I = 0x7 s<= M;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 6, 0, 3, 3, 7, 1)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 8, 15, 8, 7, 3, 7, 5
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = N ==> b;
+I = N & t1;
+
+Fastest checker: explicit
+Fails for (0, 6, 1, 3, 3, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 10, 8, 12, 0, 8, 5, 1
+Program 0:
+I = i s< 0xb;
+
+Fastest checker: explicit
+Fails for (0, 10, 1, 3, 3, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 14, 8, 6, 10, 3, 13, 1
+Program 0:
+t1 = min(M, M);
+t2 = -N;
+I = i s<= t2;
+
+Fastest checker: explicit
+Fails for (0, 15, 1, 3, 3, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 14, 15, 0, 5, 3, 7, 15
+Program 0:
+t1 = min(c, M);
+t2 = ~j;
+t3 = min(j, 0xb);
+t4 = a == N;
+I = t4 * i;
+
+Fastest checker: explicit
+Fails for (1, 15, 1, 3, 3, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 7, 4, 8, 6, 5, 5, 10
+Program 0:
+t1 = M ^ a;
+t2 = t1 != a;
+t3 = a s<= N;
+t4 = max(j, 0xa);
+I = t4 == N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (2, 8, 0, 5, 3, 9, 10)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 7, 15, 8, 0, 8, 0, 0
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = M == N;
+
+Fastest checker: explicit
+Fails for (0, 9, 0, 0, 0, 10, 10)
+
+[]
+Fastest checker: genetic
+Evars: 7, 4, 11, 0, 1, 6, 10
+Program 0:
+t1 = M ^ a;
+t2 = ~c;
+t3 = 0xa & 0xa;
+t4 = c - c;
+I = j ? t4 : a;
+
+Fastest checker: explicit
+Fails for (1, 9, 0, 0, 0, 10, 10)
+
+[]
+Fastest checker: genetic
+Evars: 2, 10, 1, 1, 10, 15, 0
+Program 0:
+t1 = N / 0xf;
+t2 = j <= a;
+I = M / 0xf;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (2, 14, 0, 1, 3, 15, 0)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 12, 8, 5, 7, 8, 7, 13
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = j == 0x7;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 7, 3, 15, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 3, 15, 7, 8, 5, 10
+Program 0:
+t1 = min(c, M);
+t2 = ~j;
+t3 = -M;
+t4 = j + 0x3;
+I = t4 == N;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 13, 3, 15, 0)
+
+[]
+Fastest checker: genetic
+Evars: 9, 3, 9, 0, 15, 4, 3
+Program 0:
+t1 = M != i;
+t2 = M - t1;
+I = N == t2;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 15, 14, 7, 11, 5, 12, 0
+Program 0:
+I = 0xa < b;
+
+Fastest checker: explicit
+Fails for (0, 0, 11, 0, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 12, 15, 1, 2, 15, 3, 15
+Program 0:
+t1 = i | b;
+I = N == a;
+
+Fastest checker: explicit
+Fails for (1, 0, 11, 0, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 12, 15, 1, 2, 15, 3, 15
+Program 0:
+t1 = ~b;
+t2 = i == c;
+I = 0x2 == j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 2, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 13, 3, 9, 0, 15, 4, 10
+Program 0:
+t1 = M - N;
+I = N == t1;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 0, 2, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 11, 7, 9, 7, 14, 8
+Program 0:
+t1 = j s< 0xd;
+I = min(a, t1);
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 12, 0, 2, 1)
+
+[]
+Fastest checker: genetic
+Evars: 8, 7, 14, 9, 15, 1, 15
+Program 0:
+t1 = a == N;
+I = 0x6 s<= a;
+
+Fastest checker: explicit
+Fails for (6, 1, 0, 0, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Evars: 8, 14, 2, 0, 8, 0, 14
+Program 0:
+t1 = a == N;
+I = M < t1;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (4, 15, 0, 4, 3, 0, 4)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 10, 14, 7, 14, 2, 8, 5
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = -0xe;
+I = b == 0xe;
+
+Fastest checker: explicit
+Fails for (0, 15, 14, 4, 3, 0, 4)
+
+[]
+Fastest checker: genetic
+Evars: 13, 0, 6, 11, 6, 2, 2
+Program 0:
+t1 = c * i;
+t2 = -c;
+I = 0x2 == N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 13, 0, 2, 0, 14, 2)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 6, 12, 4, 0, 8, 0, 14
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = 0xd < N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 8, 0, 14, 3, 9, 14)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 10, 2, 6, 13, 15, 11, 7
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = 0xd < N;
+I = 0xd == b;
+
+Fastest checker: explicit
+Fails for (0, 8, 13, 14, 3, 9, 14)
+
+[]
+Fastest checker: genetic
+Evars: 10, 0, 14, 14, 5, 4, 3
+Program 0:
+I = 0x3 == N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 11, 0, 6, 3, 12, 3)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 2, 13, 7, 6, 6, 3, 12
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = j < M;
+I = a == 0xd;
+
+Fastest checker: explicit
+Fails for (13, 11, 0, 6, 3, 12, 3)
+
+[]
+Fastest checker: genetic
+Evars: 9, 5, 15, 15, 3, 11, 7
+Program 0:
+I = 0xf == b;
+
+Fastest checker: explicit
+Fails for (0, 11, 15, 6, 3, 12, 3)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 1, 12, 14, 4, 1
+Program 0:
+t1 = M >> i;
+t2 = N s<= t1;
+I = M == 0x4;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 3, 0, 0, 3, 4, 0)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 8, 7, 14, 9, 15, 1, 15
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = max(i, M);
+t2 = b ==> t1;
+I = 0x7 s<= a;
+
+Fastest checker: explicit
+Fails for (7, 3, 0, 0, 3, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 3, 1, 2, 15, 1, 14, 3
+Program 0:
+t1 = 0xf < a;
+t2 = 0xf == j;
+t3 = -j;
+I = b * t2;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 15, 3, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 3, 1, 2, 11, 3, 4, 0
+Program 0:
+t1 = 0xb < a;
+I = 0xb == j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 11, 4, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 3, 1, 2, 15, 1, 14, 3
+Program 0:
+t1 = c < a;
+t2 = 0xf == j;
+I = t2 & t1;
+
+Fastest checker: explicit
+Fails for (5, 0, 0, 15, 4, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 4, 4, 14, 9, 8, 15, 4
+Program 0:
+t1 = a * b;
+I = t1 == 0x4;
+
+Fastest checker: explicit
+Fails for (4, 3, 1, 15, 4, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 1, 1, 5, 9, 2, 8, 2
+Program 0:
+t1 = -0x9;
+I = b == 0x9;
+
+Fastest checker: explicit
+Fails for (0, 3, 9, 15, 4, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 2, 14, 2, 10, 8, 1, 15
+Program 0:
+t1 = i ==> i;
+t2 = ~a;
+I = M == t2;
+
+Fastest checker: explicit
+Fails for (11, 3, 9, 15, 4, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 2, 5, 7, 15, 1, 14, 3
+Program 0:
+t1 = 0xf == j;
+I = t1 & N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 7, 0, 15, 3, 1, 5)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 10, 13, 15, 8, 3, 8, 4
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = N & M;
+t2 = N ? 0x8 : a;
+t3 = N & 0x8;
+t4 = j + a;
+I = M s<= 0x8;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 8, 0, 11, 3, 8, 12)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 9, 7, 14, 8, 6, 10, 7
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = b & c;
+t2 = -t1;
+t3 = max(N, i);
+t4 = c == j;
+t5 = M + 0xd;
+I = N == t5;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 8, 0, 6, 8, 9, 6)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 15, 10, 4, 8, 6, 10, 2
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = i + b;
+t2 = M + 0x8;
+I = N == t2;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 11, 0, 4, 3, 12, 4)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 10, 6, 6, 1, 3, 14, 3
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = 0x1 == j;
+I = t1 & N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 0, 0, 1, 3, 0, 5)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 7, 14, 1, 7, 0, 15, 13
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = 0x6 s< b;
+
+Fastest checker: explicit
+Fails for (0, 0, 7, 4, 3, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 3, 10, 14, 9, 8, 15, 3
+Program 0:
+t1 = a * b;
+I = t1 == 0xa;
+
+Fastest checker: explicit
+Fails for (6, 0, 7, 4, 3, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 15, 1, 7, 12, 11, 0, 5
+Program 0:
+t1 = ~0xc;
+I = b == 0xc;
+
+Fastest checker: explicit
+Fails for (0, 0, 12, 4, 3, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 1, 12, 9, 13, 9, 8, 15
+Program 0:
+t1 = b ^ c;
+t2 = min(j, N);
+I = a == 0xc;
+
+Fastest checker: explicit
+Fails for (12, 0, 12, 4, 3, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 1, 13, 4, 10, 7, 7, 9
+Program 0:
+t1 = a >> M;
+t2 = ~0x6;
+I = t2 == N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 8, 0, 10, 3, 9, 9)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 8, 5, 7, 15, 1, 13, 4
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = a == 0x5;
+
+Fastest checker: explicit
+Fails for (5, 8, 0, 10, 3, 9, 9)
+
+[]
+Fastest checker: genetic
+Evars: 2, 9, 11, 3, 15, 11, 2
+Program 0:
+t1 = i ==> 0x9;
+t2 = ~c;
+I = a == 0x9;
+
+Fastest checker: explicit
+Fails for (9, 8, 0, 10, 3, 9, 9)
+
+[]
+Fastest checker: genetic
+Evars: 3, 11, 8, 6, 0, 15, 8
+Program 0:
+t1 = a * b;
+I = t1 == 0x2;
+
+Fastest checker: explicit
+Fails for (2, 8, 1, 10, 3, 9, 9)
+
+[]
+Fastest checker: genetic
+Evars: 4, 13, 11, 14, 13, 9, 1
+Program 0:
+t1 = 0xe == j;
+I = t1 & N;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 14, 3, 9, 9)
+
+[]
+Fastest checker: genetic
+Evars: 2, 14, 2, 0, 8, 0, 14
+Program 0:
+t1 = i == N;
+I = M < t1;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 8, 0, 9, 3, 0, 8)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 9, 1, 15, 10, 8, 13, 15
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = 0xe < N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 4, 0, 14, 3, 1, 15)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 10, 15, 3, 7, 1, 6, 13
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = a == 0xd;
+t2 = i << M;
+I = 0xd == N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (12, 4, 0, 12, 3, 1, 13)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 1, 14, 1, 4, 0, 14, 5
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = 0xe << 0xe;
+t2 = b & c;
+I = 0xe == a;
+
+Fastest checker: explicit
+Fails for (14, 4, 0, 12, 3, 1, 13)
+
+[]
+Fastest checker: genetic
+Evars: 14, 6, 14, 4, 5, 14, 5
+Program 0:
+t1 = M == 0xe;
+I = N & t1;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 13, 0, 3, 3, 14, 1)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 14, 14, 2, 0, 8, 0, 14
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = min(c, a);
+t2 = N s<= t1;
+I = M < t2;
+
+Fastest checker: explicit
+Fails for (2, 0, 0, 1, 2, 0, 2)
+
+[]
+Fastest checker: genetic
+Evars: 1, 10, 0, 4, 0, 9, 7
+Program 0:
+I = 0x4 == b;
+
+Fastest checker: explicit
+Fails for (0, 0, 4, 1, 2, 0, 2)
+
+[]
+Fastest checker: genetic
+Evars: 14, 6, 11, 2, 5, 3, 5
+Program 0:
+t1 = M == 0x3;
+I = N & t1;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (0, 2, 0, 2, 3, 3, 1)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 6, 11, 1, 11, 4, 2, 15
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = max(a, b);
+t2 = 0xb ? i : N;
+t3 = t1 * i;
+t4 = i & a;
+I = t4 == 0xb;
+
+Fastest checker: explicit
+Fails for (11, 11, 0, 2, 3, 3, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 11, 3, 3, 0, 14, 11
+Program 0:
+t1 = i ==> a;
+t2 = a ==> c;
+I = 0xb == N;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (1, 4, 0, 10, 2, 1, 11)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 2, 2, 2, 10, 11, 15, 12
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+t1 = 0xc <= i;
+t2 = a ==> 0xc;
+t3 = j << M;
+t4 = 0xc == N;
+I = min(t4, a);
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (9, 11, 0, 12, 3, 12, 12)
 
 []
 Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
+Evars: 8, 5, 12, 1, 12, 11, 7
 Program 0:
-t1 = N <= b;
-I = N << 0xa;
+I = 0x5 == i;
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 8, 4, 12, 12)
+
+[]
+Fastest checker: genetic
+Evars: 13, 8, 14, 11, 12, 11, 5
+Program 0:
+t1 = a * b;
+I = t1 == 0x8;
+
+Fastest checker: explicit
+Fails for (8, 0, 1, 11, 4, 12, 12)
+
+[]
+Fastest checker: genetic
+Evars: 7, 11, 15, 0, 8, 0, 14
+Program 0:
+t1 = min(M, a);
+t2 = N s<= t1;
+I = M < t2;
 
 Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
+Fails for (14, 15, 0, 10, 2, 0, 10)
 
 []
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
-Fastest checker: cbmc
-Fails for (0, 0, 2, 0, 3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10, 15, 11, 6, 15, 9
-Program 0:
-t1 = N <= b;
-I = N << 0xa;
-
 
 
 
@@ -697,10 +971,10 @@ I = N << 0xa;
 
 Timeout
 Perf counters:
-{'genetic': 68, 'cbmc': 56, 'explicit': 11, 'timeout': 1, 'iterations': 68}
+{'genetic': 93, 'cbmc': 24, 'explicit': 69, 'timeout': 1, 'iterations': 94}
 Perf timers:
-verify: 116.87s
-checker: 118.42s
-gcc: 0.85s
+verify: 58.93s
+checker: 119.70s
+gcc: 0.46s
 _: 120.00s
-synth: 2.78s
+synth: 61.01s

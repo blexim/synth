@@ -2,26 +2,12 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = ((sword_t) 0x1) <= ((sword_t) y);
+t1 = x s< x;
+t2 = y & 0x6;
+I = t2 == t1;
 Program 1:
+t1 = min(0x5, 0x5);
 I = x & x;
-
-Fastest checker: explicit
-Fails for (1, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~y;
-t2 = x <= x;
-t3 = t1 << 0x5;
-I = t2 / y;
-Program 1:
-t1 = y * x;
-t2 = t1 <= t1;
-t3 = 0x1 != t2;
-t4 = t1 | y;
-I = t2 + t3;
 
 Fastest checker: explicit
 Fails for (1, 0)
@@ -29,41 +15,79 @@ Fails for (1, 0)
 []
 Fastest checker: genetic
 Program 0:
-t1 = -y;
-t2 = 0xb / 0xb;
-t3 = !0xb || y;
+t1 = y == 0x1;
+t2 = min(t1, 0x1);
+I = t2 | t2;
+Program 1:
+t1 = x < y;
+t2 = x * 0x3;
+I = t1 <= x;
+
+Fastest checker: explicit
+Fails for (6, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x - 0x8;
+t2 = 0x8 s<= y;
 I = y == t2;
 Program 1:
-t1 = x | 0xd;
-t2 = min(0xd, t1);
-t3 = x == t1;
-I = -t3;
+t1 = min(x, x);
+t2 = x - 0x4;
+I = t2 >>> t2;
 
 Fastest checker: explicit
-Fails for (1, 1)
+Fails for (9, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x1 ^ 0x1;
-I = y & 0x1;
+t1 = 0xa != y;
+t2 = 0xa <= x;
+I = y == t1;
 Program 1:
-t1 = x << x;
-t2 = x & 0x3;
-I = t1 == 0x3;
+t1 = max(y, 0xd);
+t2 = y - x;
+I = x % t1;
 
 Fastest checker: explicit
-Fails for (4, 1)
+Fails for (13, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-I = y * 0x8;
+t1 = 0x5 <= y;
+I = t1 s< y;
 Program 1:
-t1 = x == x;
-t2 = 0xc == y;
-t3 = y ^ x;
-I = y ? x : t3;
+t1 = x s<= y;
+t2 = min(0x0, t1);
+t3 = x s<= x;
+I = x + t3;
+
+Fastest checker: explicit
+Fails for (15, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x9 <= y;
+I = t1 s< y;
+Program 1:
+t1 = 0x7 == y;
+I = x + t1;
+
+Fastest checker: explicit
+Fails for (1, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y ==> 0xe;
+I = y & t1;
+Program 1:
+t1 = x << 0x8;
+I = min(t1, 0x8);
 
 Fastest checker: explicit
 Fails for (1, 3)
@@ -71,25 +95,12 @@ Fails for (1, 3)
 []
 Fastest checker: genetic
 Program 0:
-t1 = x * y;
-t2 = !y || 0x6;
-I = x == t1;
-Program 1:
-t1 = x + x;
-I = 0xf == 0xf;
-
-Fastest checker: explicit
-Fails for (8, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = !x || x;
-t2 = max(y, t1);
+t1 = 0x5 != y;
+t2 = 0x5 <= x;
 I = y == t1;
 Program 1:
-t1 = x == 0x5;
-I = max(t1, x);
+t1 = y | y;
+I = x / y;
 
 Fastest checker: explicit
 Correct for wordlen=4
@@ -102,22 +113,22 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.90s
+Finished in 3.37s
 
 Program 0:
-t1 = !x || x;
-t2 = max(y, t1);
+t1 = 0x5 != y;
+t2 = 0x5 <= x;
 I = y == t1;
 Program 1:
-t1 = x == 0x5;
-I = max(t1, x);
+t1 = y | y;
+I = x / y;
 
 
 Perf counters:
-{'genetic': 7, 'cbmc': 1, 'explicit': 7, 'iterations': 7}
+{'genetic': 8, 'cbmc': 1, 'explicit': 8, 'iterations': 8}
 Perf timers:
-verify: 2.48s
-checker: 3.66s
-gcc: 1.15s
-_: 3.90s
-synth: 1.27s
+verify: 2.31s
+checker: 3.31s
+gcc: 0.56s
+_: 3.37s
+synth: 1.05s

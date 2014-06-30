@@ -2,142 +2,170 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = id < id;
+I = nondet_2 <= nondet_1;
 Program 1:
-t1 = id | nondet_2;
-t2 = tmp - t1;
-t3 = t1 >> nondet_1;
-I = t3 != nondet_1;
+t1 = max(maxId, nondet_1);
+t2 = min(nondet_0, nondet_2);
+I = nondet_0 ==> t2;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0, 1, 0)
+Fails for (1, 9, 5, 9, 2, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xc | id;
-t2 = -t1;
-I = ((sword_t) maxId) >> ((sword_t) nondet_2);
+t1 = tmp >> nondet_0;
+I = nondet_0 < nondet_0;
 Program 1:
-t1 = id << nondet_1;
-t2 = nondet_0 <= maxId;
-I = maxId >> 0xe;
+t1 = nondet_1 ==> nondet_1;
+I = tmp >> maxId;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 0, 1, 0)
+Fails for (0, 0, 0, 0, 3, 13)
 
 []
 Fastest checker: genetic
 Program 0:
 I = nondet_1 != 0x5;
 Program 1:
-t1 = ((sword_t) nondet_1) <= ((sword_t) tmp);
+t1 = nondet_1 s<= tmp;
 I = nondet_0 >> tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 1, 0, 0)
+Fails for (1, 0, 0, 0, 3, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = maxId < id;
-t2 = nondet_0 ^ tmp;
-t3 = ((sword_t) nondet_2) < ((sword_t) 0x7);
-t4 = t3 != nondet_2;
-I = nondet_2 <= maxId;
+I = maxId & 0xb;
 Program 1:
-t1 = id & 0x6;
-t2 = min(nondet_0, nondet_1);
-t3 = ~nondet_1;
-t4 = nondet_2 < 0x6;
-I = ((sword_t) t4) < ((sword_t) t4);
+t1 = maxId - tmp;
+I = maxId < 0x8;
 
 Fastest checker: explicit
-Fails for (2, 0, 0, 0, 1, 0)
+Fails for (0, 0, 0, 0, 4, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-I = maxId % 0xe;
+t1 = nondet_1 - 0x3;
+I = nondet_1 s<= maxId;
 Program 1:
-t1 = tmp ? id : 0x2;
-t2 = ((sword_t) nondet_0) <= ((sword_t) t1);
-t3 = -tmp;
-I = maxId & nondet_2;
+I = maxId >> tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 1, 1, 0)
+Fails for (0, 5, 0, 0, 4, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = maxId * maxId;
-t2 = nondet_2 <= nondet_2;
-t3 = ((sword_t) tmp) <= ((sword_t) id);
-I = t2 >> id;
+I = maxId + nondet_0;
 Program 1:
-t1 = maxId <= nondet_2;
-I = maxId << maxId;
+t1 = id < nondet_1;
+I = tmp << tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 4, 0, 0)
+Fails for (0, 0, 12, 0, 4, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = max(nondet_1, nondet_1);
-I = id <= nondet_0;
+t1 = maxId == 0xe;
+t2 = t1 * nondet_1;
+I = tmp != id;
 Program 1:
-t1 = id < nondet_0;
-t2 = id ^ maxId;
-t3 = t2 != maxId;
-t4 = id <= 0xb;
-I = max(t2, 0xb);
+t1 = nondet_0 * nondet_0;
+t2 = id s<= nondet_1;
+I = maxId - tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 1, 1, 0, 0)
+Fails for (1, 0, 0, 14, 4, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ((sword_t) maxId) < ((sword_t) nondet_2);
-I = !id || 0x0;
+t1 = nondet_1 ==> tmp;
+I = t1 <= maxId;
 Program 1:
-t1 = maxId / 0x2;
-t2 = -id;
-t3 = t1 - nondet_2;
-I = max(t2, maxId);
+t1 = -maxId;
+I = 0x7 - tmp;
+
+Fastest checker: cbmc
+Fails for (2, 0, 0, 2, 6, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x4 << nondet_1;
+t2 = ~maxId;
+I = 0x4 s<= 0x4;
+Program 1:
+t1 = id + tmp;
+I = maxId - tmp;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 1, 2, 0)
+Fails for (1, 0, 0, 0, 7, 7)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~nondet_0;
-t2 = nondet_2 <= tmp;
-I = ((sword_t) nondet_0) <= ((sword_t) nondet_1);
+t1 = ~tmp;
+t2 = max(nondet_0, t1);
+I = nondet_1 | t1;
 Program 1:
-t1 = 0x6 ? id : id;
-t2 = !nondet_1 || 0x6;
-t3 = ((sword_t) t2) >> ((sword_t) t2);
-t4 = 0x6 >> tmp;
-I = ((sword_t) nondet_2) <= ((sword_t) nondet_1);
+I = nondet_1 - tmp;
 
 Fastest checker: explicit
-Fails for (0, 8, 0, 0, 1, 0)
+Fails for (1, 7, 0, 0, 7, 7)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = id ^ nondet_1;
-t2 = maxId == maxId;
-t3 = !nondet_1 || tmp;
-I = maxId / t2;
+t1 = nondet_2 & nondet_0;
+t2 = nondet_0 ==> id;
+I = maxId << t2;
 Program 1:
-t1 = ((sword_t) nondet_2) < ((sword_t) 0xb);
-t2 = ~tmp;
-I = max(nondet_0, nondet_2);
+t1 = id ==> tmp;
+I = -tmp;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 8, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = tmp s<= tmp;
+Program 1:
+t1 = tmp >>> nondet_0;
+t2 = t1 * maxId;
+I = -tmp;
+
+Fastest checker: cbmc
+Fails for (1, 0, 4, 2, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 | tmp;
+t2 = maxId != nondet_0;
+I = t2 << t2;
+Program 1:
+t1 = nondet_0 - tmp;
+I = nondet_1 >> maxId;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_2 < 0x9;
+t2 = id >>> maxId;
+I = tmp | 0x9;
+Program 1:
+t1 = tmp s<= maxId;
+t2 = 0x0 <= nondet_0;
+I = nondet_2 - tmp;
 
 Fastest checker: explicit
 Fails for (1, 0, 0, 1, 8, 0)
@@ -152,10 +180,10 @@ Fails for (1, 0, 0, 1, 8, 0)
 
 Timeout
 Perf counters:
-{'genetic': 10, 'explicit': 10, 'timeout': 1, 'iterations': 11}
+{'genetic': 14, 'cbmc': 2, 'explicit': 12, 'timeout': 1, 'iterations': 15}
 Perf timers:
-verify: 0.62s
-checker: 119.66s
-gcc: 0.89s
+verify: 5.46s
+checker: 119.96s
+gcc: 0.45s
 _: 120.00s
-synth: 119.07s
+synth: 114.53s

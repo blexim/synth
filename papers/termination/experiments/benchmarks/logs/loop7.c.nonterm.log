@@ -1,568 +1,398 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 7, 5
+Evars: 5, 5
 Program 0:
-I = y < 0x7
+I = y <= 0x9;
 
 Fastest checker: explicit
 Fails for (0, 1)
 
 []
 Fastest checker: genetic
-Evars: 12, 6
+Evars: 1, 3
 Program 0:
-I = y = 0x6
-
-Fastest checker: explicit
-Fails for (0, 6)
-
-[]
-Fastest checker: genetic
-Evars: 15, 1
-Program 0:
-t1 = y = y
-t2 = ~0x0
-t3 = q | t1
-I = q / t2
-
-Fastest checker: explicit
-Fails for (15, 1)
-
-[]
-Fastest checker: genetic
-Evars: 5, 0
-Program 0:
-t1 = 0x0 >>> y
-t2 = 0x0 ==> 0x0
-t3 = y MIN t2
-t4 = t2 ==> t1
-I = y = t1
-
-Fastest checker: explicit
-Fails for (0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 11, 0
-Program 0:
-t1 = 0xb ^ 0xb
-t2 = q ==> y
-t3 = q & t1
-t4 = ITE(q, 0xb, y)
-I = t3 = t2
-
-Fastest checker: explicit
-Fails for (1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 9, 8
-Program 0:
-I = y s< 0x9
-
-Fastest checker: explicit
-Fails for (0, 8)
-
-[]
-Fastest checker: genetic
-Evars: 9, 9
-Program 0:
-t1 = 0x9 | 0x9
-t2 = q & y
-t3 = t2 ==> q
-I = 0x9 = y
-
-Fastest checker: explicit
-Fails for (0, 9)
-
-[]
-Fastest checker: genetic
-Evars: 8, 15
-Program 0:
-t1 = q <= q
-t2 = t1 + t1
-t3 = ITE(t1, y, q)
-t4 = ITE(t1, 0xd, t1)
-I = 0xd <= y
-
-Fastest checker: explicit
-Fails for (0, 13)
-
-[]
-Fastest checker: genetic
-Evars: 6, 15
-Program 0:
-t1 = q = 0x6
-t2 = ITE(q, 0x6, q)
-I = t1 MIN t1
-
-Fastest checker: explicit
-Fails for (6, 1)
-
-[]
-Fastest checker: genetic
-Evars: 1, 9
-Program 0:
-t1 = y s<= y
-t2 = y MAX t1
-t3 = t1 << t1
-I = q = t1
+t1 = y * q;
+t2 = t1 <= q;
+I = 0x1 == q;
 
 Fastest checker: explicit
 Fails for (1, 1)
 
 []
 Fastest checker: genetic
-Evars: 11, 4
+Evars: 5, 6
 Program 0:
-I = q = 0xb
+I = 0x5 s< y;
 
 Fastest checker: explicit
-Fails for (11, 1)
+Fails for (0, 6)
 
 []
 Fastest checker: genetic
-Evars: 10, 15
+Evars: 5, 0
 Program 0:
-I = y / 0xf
+t1 = 0x5 >>> 0x5;
+t2 = 0x5 + q;
+t3 = 0x5 != t2;
+I = y < t3;
 
 Fastest checker: explicit
-Fails for (0, 15)
+Fails for (1, 0)
 
 []
 Fastest checker: genetic
-Evars: 0, 4
+Evars: 2, 2
 Program 0:
-t1 = 0x4 >>> q
-t2 = t1 = y
-I = t2 >>> t1
-
-Fastest checker: explicit
-Fails for (3, 0)
-
-[]
-Fastest checker: genetic
-Evars: 3, 6
-Program 0:
-t1 = q MIN q
-t2 = -y
-t3 = t1 MIN y
-t4 = t3 s<= q
-I = q = 0x3
-
-Fastest checker: explicit
-Fails for (3, 1)
-
-[]
-Fastest checker: genetic
-Evars: 10, 7
-Program 0:
-t1 = 0x6 s<= y
-I = y & t1
-
-Fastest checker: explicit
-Fails for (0, 7)
-
-[]
-Fastest checker: genetic
-Evars: 10, 6
-Program 0:
-I = q = 0xa
-
-Fastest checker: explicit
-Fails for (10, 1)
-
-[]
-Fastest checker: genetic
-Evars: 2, 13
-Program 0:
-I = 0x2 = q
+I = q == 0x2;
 
 Fastest checker: explicit
 Fails for (2, 1)
 
 []
 Fastest checker: genetic
-Evars: 8, 7
+Evars: 4, 4
 Program 0:
-t1 = q <= q
-t2 = y s<= y
-t3 = q >>> 0x8
-t4 = ~y
-I = q = 0x8
-
-Fastest checker: explicit
-Fails for (8, 1)
-
-[]
-Fastest checker: genetic
-Evars: 3, 3
-Program 0:
-t1 = y | 0x3
-t2 = -0x3
-t3 = y >> t1
-I = y = 0x3
-
-Fastest checker: explicit
-Fails for (0, 3)
-
-[]
-Fastest checker: genetic
-Evars: 9, 0
-Program 0:
-t1 = ITE(y, 0x3, y)
-t2 = t1 * t1
-t3 = q <= 0x3
-I = t1 = t3
-
-Fastest checker: explicit
-Fails for (4, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 10
-Program 0:
-t1 = ITE(y, 0x3, y)
-t2 = t1 * t1
-t3 = ~q
-t4 = t2 + t3
-I = t1 = t3
-
-Fastest checker: explicit
-Fails for (15, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 11
-Program 0:
-t1 = 0xc = q
-I = t1 << 0xc
-
-Fastest checker: explicit
-Fails for (12, 1)
-
-[]
-Fastest checker: genetic
-Evars: 4, 8
-Program 0:
-t1 = y < y
-t2 = t1 >>> t1
-I = 0x4 = q
+I = 0x4 == q;
 
 Fastest checker: explicit
 Fails for (4, 1)
 
 []
 Fastest checker: genetic
+Evars: 7, 7
+Program 0:
+I = 0x6 s< y;
+
+Fastest checker: explicit
+Fails for (0, 7)
+
+[]
+Fastest checker: genetic
+Evars: 1, 8
+Program 0:
+I = y s< 0xa;
+
+Fastest checker: explicit
+Fails for (0, 8)
+
+[]
+Fastest checker: genetic
+Evars: 4, 3
+Program 0:
+t1 = -y;
+t2 = 0x3 % 0x3;
+t3 = t2 << 0x3;
+I = y == 0x3;
+
+Fastest checker: explicit
+Fails for (0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 2, 13
+Program 0:
+I = y / 0xd;
+
+Fastest checker: explicit
+Fails for (5, 13)
+
+[]
+Fastest checker: genetic
+Evars: 2, 9
+Program 0:
+t1 = min(y, 0x9);
+t2 = t1 * t1;
+I = 0x9 == y;
+
+Fastest checker: explicit
+Fails for (0, 9)
+
+[]
+Fastest checker: genetic
 Evars: 2, 14
 Program 0:
-t1 = y = 0xe
-I = q * t1
+t1 = 0xe s< 0xe;
+t2 = q ==> t1;
+I = y == 0xe;
 
 Fastest checker: explicit
-Fails for (1, 14)
+Fails for (0, 14)
 
 []
 Fastest checker: genetic
-Evars: 10, 15
+Evars: 7, 4
 Program 0:
-t1 = y = 0xf
-I = q * t1
+t1 = max(0x4, 0x4);
+t2 = y & q;
+I = y == t1;
 
 Fastest checker: explicit
-Fails for (1, 15)
+Fails for (0, 4)
 
 []
 Fastest checker: genetic
-Evars: 3, 6
+Evars: 6, 11
 Program 0:
-t1 = q + 0x3
-t2 = q <= y
-t3 = q s< y
-t4 = t1 != y
-t5 = 0x3 s<= q
-I = t3 * t5
+t1 = ~0x6;
+t2 = y + q;
+t3 = y & t1;
+I = 0x6 == q;
 
 Fastest checker: explicit
-Fails for (3, 4)
+Fails for (6, 4)
 
 []
 Fastest checker: genetic
-Evars: 15, 11
+Evars: 3, 9
 Program 0:
-t1 = -0x6
-t2 = t1 - 0x6
-t3 = ~t2
-I = y = t3
+I = 0x3 == q;
+
+Fastest checker: explicit
+Fails for (3, 5)
+
+[]
+Fastest checker: genetic
+Evars: 5, 0
+Program 0:
+t1 = 0xd >>> 0xd;
+t2 = 0xd + q;
+t3 = t1 != t2;
+I = y < t3;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 15
+Program 0:
+I = 0xe <= y;
+
+Fastest checker: explicit
+Fails for (6, 14)
+
+[]
+Fastest checker: genetic
+Evars: 5, 15
+Program 0:
+I = 0xf <= y;
+
+Fastest checker: explicit
+Fails for (0, 15)
+
+[]
+Fastest checker: genetic
+Evars: 4, 11
+Program 0:
+I = y == 0xb;
 
 Fastest checker: explicit
 Fails for (0, 11)
 
 []
 Fastest checker: genetic
-Evars: 13, 2
-Program 0:
-I = q = 0xd
-
-Fastest checker: explicit
-Fails for (13, 1)
-
-[]
-Fastest checker: genetic
-Evars: 9, 1
-Program 0:
-t1 = y << q
-t2 = q % 0x2
-t3 = 0x2 != q
-t4 = t3 ==> 0x2
-I = t1 = 0x2
-
-Fastest checker: explicit
-Fails for (0, 2)
-
-[]
-Fastest checker: genetic
-Evars: 7, 8
-Program 0:
-t1 = ITE(q, y, q)
-t2 = q | y
-t3 = 0x8 MIN q
-t4 = ~q
-I = 0x8 = t1
-
-Fastest checker: explicit
-Fails for (1, 8)
-
-[]
-Fastest checker: genetic
-Evars: 12, 11
-Program 0:
-t1 = y << q
-t2 = t1 & q
-t3 = t1 ^ t2
-I = t2 * t3
-
-Fastest checker: explicit
-Fails for (5, 3)
-
-[]
-Fastest checker: genetic
-Evars: 11, 12
-Program 0:
-t1 = q ==> 0xb
-t2 = 0xb = q
-t3 = 0xb = t2
-I = t2 >> y
-
-Fastest checker: explicit
-Fails for (11, 0)
-
-[]
-Fastest checker: genetic
-Evars: 8, 7
-Program 0:
-t1 = y + y
-t2 = t1 >> q
-t3 = 0xe s<= q
-t4 = 0xe <= t2
-I = t4 >> t3
-
-Fastest checker: explicit
-Fails for (8, 7)
-
-[]
-Fastest checker: genetic
-Evars: 15, 7
-Program 0:
-t1 = 0xf << q
-t2 = ~y
-t3 = 0xf <= q
-I = t3 >>> t2
-
-Fastest checker: explicit
-Fails for (15, 3)
-
-[]
-Fastest checker: genetic
-Evars: 8, 6
-Program 0:
-t1 = 0x6 = y
-I = t1 * q
-
-Fastest checker: explicit
-Fails for (1, 6)
-
-[]
-Fastest checker: genetic
-Evars: 14, 9
-Program 0:
-t1 = 0x9 = y
-t2 = 0x9 ^ 0x9
-t3 = q s<= t2
-I = ITE(q, t1, q)
-
-Fastest checker: explicit
-Fails for (1, 9)
-
-[]
-Fastest checker: genetic
-Evars: 5, 15
-Program 0:
-t1 = y <= q
-t2 = y MAX t1
-t3 = 0xa = t1
-t4 = y | 0xa
-t5 = y - q
-t6 = q MIN y
-t7 = q ^ 0xa
-I = 0xa = t5
-
-Fastest checker: explicit
-Fails for (6, 0)
-
-[]
-Fastest checker: genetic
-Evars: 4, 11
-Program 0:
-t1 = y MIN q
-t2 = ITE(t1, y, y)
-I = t1 = 0x4
-
-Fastest checker: explicit
-Fails for (4, 4)
-
-[]
-Fastest checker: genetic
-Evars: 12, 4
-Program 0:
-t1 = y & y
-t2 = 0x6 & y
-t3 = y + q
-t4 = t3 < y
-t5 = ITE(0x6, y, t4)
-I = t4 >> q
-
-Fastest checker: explicit
-Fails for (12, 4)
-
-[]
-Fastest checker: genetic
-Evars: 10, 8
-Program 0:
-t1 = 0x8 = y
-t2 = ITE(q, t1, y)
-t3 = t2 * q
-t4 = q - q
-I = t3 >> t3
-
-Fastest checker: explicit
-Fails for (4, 8)
-
-[]
-Fastest checker: genetic
-Evars: 10, 8
-Program 0:
-t1 = 0x8 = y
-t2 = ITE(q, t1, y)
-t3 = t2 * q
-t4 = 0x8 ==> 0x8
-t5 = t4 & t3
-t6 = t3 % 0x8
-I = y & t3
-
-Fastest checker: explicit
-Fails for (8, 8)
-
-[]
-Fastest checker: genetic
-Evars: 11, 11
-Program 0:
-t1 = y << 0x2
-t2 = y MAX t1
-t3 = q != 0x2
-t4 = y = q
-t5 = t4 * q
-t6 = 0x2 >>> t5
-t7 = q MIN 0x2
-I = t6 < t4
-
-Fastest checker: explicit
-Fails for (2, 2)
-
-[]
-Fastest checker: genetic
-Evars: 9, 9
-Program 0:
-t1 = y * y
-t2 = ITE(q, 0xa, y)
-t3 = y * 0xa
-t4 = y = q
-t5 = t3 & q
-I = t4 * t5
-
-Fastest checker: explicit
-Fails for (3, 3)
-
-[]
-Fastest checker: genetic
-Evars: 11, 3
-Program 0:
-t1 = y * q
-t2 = t1 < q
-t3 = t1 = t2
-I = t2 * t3
-
-Fastest checker: explicit
-Fails for (11, 3)
-
-[]
-Fastest checker: genetic
-Evars: 13, 10
-Program 0:
-t1 = 0x2 ^ q
-t2 = 0x2 ^ y
-t3 = 0x2 + t1
-t4 = q ==> t2
-I = t3 = t4
-
-Fastest checker: explicit
-Fails for (12, 2)
-
-[]
-Fastest checker: genetic
-Evars: 15, 12
-Program 0:
-t1 = y & q
-t2 = y s<= y
-t3 = 0x9 < t1
-I = t3 & q
-
-Fastest checker: explicit
-Fails for (11, 10)
-
-[]
-Fastest checker: genetic
 Evars: 2, 0
 Program 0:
-t1 = 0x1 >> y
-t2 = t1 + 0x1
-t3 = q << y
-I = t3 = t2
+t1 = q * 0xa;
+t2 = -t1;
+t3 = min(t2, 0xa);
+t4 = 0xa - t3;
+I = y == t4;
 
 Fastest checker: explicit
 Fails for (2, 0)
 
 []
 Fastest checker: genetic
-Evars: 3, 11
+Evars: 7, 0
 Program 0:
-t1 = 0xb = y
-t2 = y * t1
-I = q & t1
+t1 = q >> 0x6;
+I = y < t1;
+
+Fastest checker: explicit
+Fails for (4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 6
+Program 0:
+t1 = y != 0x6;
+t2 = min(q, 0x6);
+t3 = t2 * 0x6;
+t4 = 0x6 == 0x6;
+t5 = 0x6 == y;
+I = min(q, t5);
+
+Fastest checker: explicit
+Fails for (1, 6)
+
+[]
+Fastest checker: genetic
+Evars: 4, 11
+Program 0:
+t1 = y != 0xb;
+t2 = min(q, 0xb);
+t3 = t2 * 0xb;
+t4 = 0xb == 0xb;
+t5 = 0xb == y;
+I = min(q, t5);
 
 Fastest checker: explicit
 Fails for (1, 11)
+
+[]
+Fastest checker: genetic
+Evars: 4, 3
+Program 0:
+t1 = y * 0x3;
+t2 = 0x3 == 0x3;
+t3 = 0x3 == y;
+I = min(q, t3);
+
+Fastest checker: explicit
+Fails for (1, 3)
+
+[]
+Fastest checker: genetic
+Evars: 6, 10
+Program 0:
+t1 = q == y;
+t2 = y ^ q;
+I = 0xc == t2;
+
+Fastest checker: explicit
+Fails for (4, 8)
+
+[]
+Fastest checker: genetic
+Evars: 2, 7
+Program 0:
+t1 = 0x7 == 0x7;
+t2 = 0x7 == y;
+I = min(q, t2);
+
+Fastest checker: explicit
+Fails for (1, 7)
+
+[]
+Fastest checker: genetic
+Evars: 4, 14
+Program 0:
+t1 = y - q;
+t2 = 0xa ^ y;
+I = q == t2;
+
+Fastest checker: explicit
+Fails for (2, 8)
+
+[]
+Fastest checker: genetic
+Evars: 7, 9
+Program 0:
+t1 = 0x9 == y;
+I = min(q, t1);
+
+Fastest checker: explicit
+Fails for (1, 9)
+
+[]
+Fastest checker: genetic
+Evars: 3, 0
+Program 0:
+t1 = q - 0x3;
+t2 = 0x3 << y;
+I = q == t2;
+
+Fastest checker: explicit
+Fails for (6, 9)
+
+[]
+Fastest checker: genetic
+Evars: 0, 12
+Program 0:
+t1 = y <= 0xc;
+t2 = y != y;
+t3 = y >> q;
+I = 0xc == t3;
+
+Fastest checker: explicit
+Fails for (0, 12)
+
+[]
+Fastest checker: genetic
+Evars: 3, 13
+Program 0:
+t1 = y == y;
+t2 = y + y;
+t3 = -q;
+t4 = t3 == y;
+I = min(t4, y);
+
+Fastest checker: explicit
+Fails for (4, 12)
+
+[]
+Fastest checker: genetic
+Evars: 7, 11
+Program 0:
+t1 = q s<= q;
+t2 = q ^ y;
+t3 = t2 >>> 0x3;
+t4 = y & q;
+t5 = q | 0x3;
+I = t4 == 0x3;
+
+Fastest checker: explicit
+Fails for (3, 15)
+
+[]
+Fastest checker: genetic
+Evars: 7, 14
+Program 0:
+t1 = q < q;
+t2 = 0x5 - y;
+I = q == t2;
+
+Fastest checker: explicit
+Fails for (6, 15)
+
+[]
+Fastest checker: genetic
+Evars: 2, 10
+Program 0:
+t1 = 0x2 >> 0x2;
+t2 = 0x2 < t1;
+t3 = q & t2;
+t4 = y & 0x2;
+t5 = t4 == q;
+I = t4 * t5;
+
+Fastest checker: explicit
+Fails for (2, 2)
+
+[]
+Fastest checker: genetic
+Evars: 3, 13
+Program 0:
+t1 = -q;
+t2 = t1 == y;
+I = t2 & y;
+
+Fastest checker: explicit
+Fails for (7, 9)
+
+[]
+Fastest checker: genetic
+Evars: 5, 8
+Program 0:
+t1 = y == 0xd;
+t2 = -t1;
+t3 = 0xd - y;
+I = q == t3;
+
+Fastest checker: explicit
+Fails for (3, 10)
 
 []
 
@@ -574,10 +404,10 @@ Fails for (1, 11)
 
 Timeout
 Perf counters:
-{'genetic': 48, 'explicit': 48, 'timeout': 1, 'iterations': 49}
+{'genetic': 36, 'explicit': 36, 'timeout': 1, 'iterations': 37}
 Perf timers:
-verify: 0.35s
-checker: 119.34s
-gcc: 0.44s
+verify: 0.32s
+checker: 119.78s
+gcc: 0.46s
 _: 120.00s
-synth: 119.06s
+synth: 119.53s

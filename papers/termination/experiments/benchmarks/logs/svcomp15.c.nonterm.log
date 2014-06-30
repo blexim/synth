@@ -1,629 +1,513 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 1, 4, 4, 7, 14, 0, 2, 14
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = nondet_1 ? k : nondet_1;
-t2 = ((sword_t) nondet_1) >> ((sword_t) t1);
-t3 = k & nondet_0;
-t4 = k / k;
-I = x + t2;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 6, 0, 0, 11, 0, 0, 9)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 Fastest checker: cbmc
-Fails for (0, 15, 0, 8, 0, 0, 5, 11)
+Fails for (0, 0, 0, 0, 0, 2, 5, 11)
 
 []
 Fastest checker: genetic
-Evars: 6, 12, 14, 8, 0, 10, 3, 6
+Evars: 4, 8, 3, 7, 11, 12, 3, 12
 Program 0:
-t1 = 0xa | z;
-t2 = nondet_1 | x;
-I = d << x;
+I = y >>> 0x5;
 
 
 
@@ -636,8 +520,8 @@ Timeout
 Perf counters:
 {'genetic': 57, 'cbmc': 56, 'timeout': 1, 'iterations': 57}
 Perf timers:
-verify: 117.25s
-checker: 118.49s
-gcc: 0.88s
+verify: 118.94s
+checker: 119.86s
+gcc: 0.46s
 _: 120.00s
-synth: 2.13s
+synth: 1.02s

@@ -1,206 +1,142 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 5, 6, 1
+Evars: 2, 15, 4
 Program 0:
-t1 = x - y;
-t2 = z << 0x9;
-I = t2 * t2;
+t1 = x s< z;
+t2 = z * x;
+I = t1 % x;
 
 Fastest checker: explicit
-Fails for (1, 0, 1)
+Fails for (2, 0, 3)
 
 []
 Fastest checker: genetic
-Evars: 6, 2, 15
+Evars: 5, 15, 2
 Program 0:
-t1 = ~y;
-I = 0xb < t1;
+t1 = 0x0 << z;
+t2 = -y;
+I = t1 s< t2;
 
 Fastest checker: explicit
-Fails for (7, 1, 0)
+Fails for (1, 9, 3)
 
 []
 Fastest checker: genetic
-Evars: 1, 6, 12
+Evars: 3, 13, 8
 Program 0:
-t1 = 0x7 / x;
-t2 = ((sword_t) x) < ((sword_t) y);
-t3 = x ? t1 : y;
-I = t2 * t3;
+t1 = 0xa s< y;
+I = 0xa <= y;
 
 Fastest checker: explicit
-Fails for (1, 2, 0)
+Fails for (1, 10, 3)
 
 []
 Fastest checker: genetic
-Evars: 7, 13, 5
+Evars: 4, 2, 6
 Program 0:
-t1 = -z;
-t2 = ((sword_t) x) < ((sword_t) y);
-t3 = -x;
-I = t1 << x;
+I = 0x7 % x;
 
 Fastest checker: explicit
-Fails for (3, 0, 1)
+Fails for (2, 10, 3)
 
 []
 Fastest checker: genetic
-Evars: 5, 13, 8
+Evars: 4, 7, 5
 Program 0:
-t1 = x ? x : 0xe;
-t2 = ((sword_t) y) >> ((sword_t) z);
-t3 = ~z;
-I = ((sword_t) x) < ((sword_t) t3);
+I = x >>> x;
 
 Fastest checker: explicit
-Fails for (1, 0, 8)
+Fails for (4, 10, 3)
 
 []
 Fastest checker: genetic
-Evars: 4, 4, 13
+Evars: 6, 3, 1
 Program 0:
-t1 = 0x8 & x;
-I = x >> x;
-
-Fastest checker: explicit
-Fails for (6, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 4, 8, 2
-Program 0:
-I = x == 0x4;
-
-Fastest checker: explicit
-Fails for (4, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 1, 11, 9
-Program 0:
-t1 = ~y;
-t2 = 0xa <= y;
-t3 = 0xa ^ z;
-I = t2 & t2;
-
-Fastest checker: explicit
-Fails for (1, 10, 0)
-
-[]
-Fastest checker: genetic
-Evars: 2, 9, 9
-Program 0:
-t1 = max(0xd, z);
-t2 = y != z;
-t3 = x << y;
-I = y == z;
+t1 = x >>> y;
+I = z <= 0x1;
 
 Fastest checker: explicit
 Fails for (1, 0, 0)
 
 []
 Fastest checker: genetic
-Evars: 1, 10, 15
+Evars: 1, 4, 9
 Program 0:
-t1 = ((sword_t) z) >> ((sword_t) y);
-t2 = y * z;
-t3 = x + y;
-t4 = 0xc + 0xc;
-I = ((sword_t) x) < ((sword_t) t2);
+t1 = z s<= y;
+t2 = 0x5 * t1;
+I = x < t2;
 
 Fastest checker: explicit
-Fails for (1, 2, 1)
+Fails for (4, 1, 0)
 
 []
 Fastest checker: genetic
-Evars: 4, 13, 4
+Evars: 4, 7, 0
 Program 0:
-t1 = ~x;
-t2 = ((sword_t) 0xc) >> ((sword_t) z);
+I = 0x5 s< y;
+
+Fastest checker: explicit
+Fails for (1, 6, 0)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 4
+Program 0:
+I = y < 0x5;
+
+Fastest checker: explicit
+Fails for (7, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 15, 2
+Program 0:
+t1 = z >> x;
+t2 = y != x;
 I = y / 0xc;
 
 Fastest checker: explicit
-Fails for (1, 12, 0)
+Fails for (1, 12, 1)
 
 []
 Fastest checker: genetic
-Evars: 6, 13, 13
+Evars: 1, 11, 7
 Program 0:
-t1 = y + z;
-t2 = x <= y;
-t3 = x + z;
-t4 = t3 + t3;
-t5 = t3 + z;
-t6 = t4 + y;
-I = t6 < y;
+t1 = x <= z;
+I = 0x3 s< z;
 
 Fastest checker: explicit
-Fails for (7, 2, 0)
+Fails for (1, 0, 4)
 
 []
 Fastest checker: genetic
-Evars: 6, 13, 12
+Evars: 4, 12, 6
 Program 0:
-t1 = y + z;
-t2 = y + z;
-t3 = x + y;
-I = t3 <= y;
+t1 = y / x;
+t2 = 0x4 s< z;
+t3 = x + 0x4;
+I = t2 ? t2 : t2;
 
 Fastest checker: explicit
-Fails for (7, 9, 0)
+Fails for (1, 0, 5)
 
 []
 Fastest checker: genetic
-Evars: 6, 13, 13
+Evars: 3, 15, 2
 Program 0:
-t1 = y + z;
-t2 = 0x1 + x;
-I = z * t2;
+t1 = z * z;
+I = x s< t1;
 
 Fastest checker: explicit
-Fails for (7, 0, 1)
+Fails for (1, 0, 6)
 
 []
 Fastest checker: genetic
-Evars: 1, 1, 1
+Evars: 5, 12, 15
 Program 0:
-t1 = y != y;
-t2 = t1 & y;
-I = y == x;
-
-Fastest checker: explicit
-Fails for (1, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 7, 7, 11
-Program 0:
-t1 = x < y;
-t2 = !t1 || y;
-t3 = z & y;
-I = t3 << 0x2;
-
-Fastest checker: explicit
-Fails for (1, 1, 1)
-
-[]
-Fastest checker: genetic
-Evars: 7, 15, 3
-Program 0:
-t1 = 0x3 >> x;
-I = 0x3 == z;
-
-Fastest checker: explicit
-Fails for (1, 0, 3)
-
-[]
-Fastest checker: genetic
-Evars: 4, 12, 15
-Program 0:
-t1 = z < z;
-t2 = x << z;
-t3 = max(y, z);
+t1 = max(x, y);
+t2 = t1 s< 0xf;
 I = z / 0xf;
 
 Fastest checker: explicit
@@ -208,799 +144,445 @@ Fails for (1, 0, 15)
 
 []
 Fastest checker: genetic
-Evars: 4, 12, 15
+Evars: 7, 15, 2
 Program 0:
-t1 = z < z;
-t2 = x << z;
-t3 = x >> 0xf;
-t4 = t2 + y;
-I = t3 == t2;
+t1 = -z;
+I = 0xe < y;
 
 Fastest checker: explicit
-Fails for (4, 0, 2)
+Fails for (1, 15, 15)
 
 []
 Fastest checker: genetic
-Evars: 4, 5, 12
+Evars: 6, 6, 13
 Program 0:
-t1 = ~x;
-t2 = z + z;
-t3 = x < z;
-t4 = x << 0x9;
-I = t3 >> t4;
+t1 = x == y;
+I = -t1;
 
 Fastest checker: explicit
-Fails for (2, 1, 3)
+Fails for (1, 1, 0)
 
 []
 Fastest checker: genetic
-Evars: 7, 14, 2
+Evars: 2, 11, 9
 Program 0:
-t1 = !z || y;
-t2 = -z;
-I = 0xe <= y;
+t1 = y <= x;
+I = z s<= 0xa;
 
 Fastest checker: explicit
-Fails for (1, 14, 0)
+Fails for (1, 0, 8)
 
 []
 Fastest checker: genetic
-Evars: 3, 0, 7
+Evars: 6, 7, 3
 Program 0:
-t1 = x != x;
-t2 = max(x, y);
-t3 = 0x7 >> 0x7;
-I = ((sword_t) 0x7) <= ((sword_t) z);
+t1 = 0xe - x;
+t2 = x >>> x;
+I = t2 & y;
+
+Fastest checker: explicit
+Fails for (6, 1, 8)
+
+[]
+Fastest checker: genetic
+Evars: 5, 13, 8
+Program 0:
+t1 = 0xd <= y;
+I = t1 >> z;
+
+Fastest checker: explicit
+Fails for (1, 13, 8)
+
+[]
+Fastest checker: genetic
+Evars: 1, 14, 7
+Program 0:
+t1 = y <= z;
+t2 = 0x7 == z;
+I = 0x7 ? t2 : t1;
 
 Fastest checker: explicit
 Fails for (1, 0, 7)
 
 []
 Fastest checker: genetic
-Evars: 4, 15, 13
+Evars: 3, 14, 10
 Program 0:
-t1 = z == z;
-t2 = z >> 0xb;
-t3 = 0xb & y;
-I = 0xb <= t3;
-
-Fastest checker: explicit
-Fails for (1, 11, 0)
-
-[]
-Fastest checker: genetic
-Evars: 6, 13, 13
-Program 0:
-t1 = y + z;
-t2 = -x;
-t3 = y & z;
-t4 = max(0x1, x);
-I = t3 / t2;
-
-Fastest checker: explicit
-Fails for (7, 9, 9)
-
-[]
-Fastest checker: genetic
-Evars: 1, 4, 1
-Program 0:
-I = 0x4 == y;
-
-Fastest checker: explicit
-Fails for (1, 4, 0)
-
-[]
-Fastest checker: genetic
-Evars: 2, 7, 13
-Program 0:
-I = z == 0xd;
-
-Fastest checker: explicit
-Fails for (1, 0, 13)
-
-[]
-Fastest checker: genetic
-Evars: 6, 5, 4
-Program 0:
-t1 = 0x9 << x;
-t2 = t1 << y;
-I = z == t1;
-
-Fastest checker: explicit
-Fails for (1, 0, 2)
-
-[]
-Fastest checker: genetic
-Evars: 6, 12, 12
-Program 0:
-t1 = min(x, z);
-t2 = x & z;
-t3 = ~z;
-I = t2 >> x;
-
-Fastest checker: explicit
-Fails for (4, 0, 4)
-
-[]
-Fastest checker: genetic
-Evars: 4, 9, 14
-Program 0:
-t1 = 0xb <= z;
-t2 = !t1 || x;
-t3 = y + y;
-t4 = ((sword_t) 0xb) <= ((sword_t) z);
-I = t1 >> x;
-
-Fastest checker: explicit
-Fails for (4, 0, 11)
-
-[]
-Fastest checker: genetic
-Evars: 4, 9, 10
-Program 0:
-t1 = 0x4 <= z;
-t2 = t1 ? x : z;
-t3 = y + y;
-t4 = ((sword_t) 0x4) <= ((sword_t) z);
-I = t1 >> t2;
-
-Fastest checker: explicit
-Fails for (4, 1, 4)
-
-[]
-Fastest checker: genetic
-Evars: 1, 6, 2
-Program 0:
-t1 = y <= 0x4;
-t2 = ((sword_t) x) <= ((sword_t) y);
-I = ((sword_t) t2) >> ((sword_t) t1);
-
-Fastest checker: explicit
-Fails for (1, 5, 0)
-
-[]
-Fastest checker: genetic
-Evars: 6, 13, 15
-Program 0:
-t1 = 0x5 << z;
-t2 = max(z, x);
-t3 = -x;
-I = t3 < y;
-
-Fastest checker: explicit
-Fails for (7, 10, 0)
-
-[]
-Fastest checker: genetic
-Evars: 4, 11, 10
-Program 0:
-t1 = z != y;
-t2 = min(x, 0xc);
-t3 = t1 < y;
-I = ((sword_t) t3) >> ((sword_t) x);
-
-Fastest checker: explicit
-Fails for (4, 2, 0)
-
-[]
-Fastest checker: genetic
-Evars: 6, 15, 5
-Program 0:
-I = y / 0xf;
-
-Fastest checker: explicit
-Fails for (1, 15, 0)
-
-[]
-Fastest checker: genetic
-Evars: 7, 7, 4
-Program 0:
-t1 = ((sword_t) 0x7) <= ((sword_t) y);
-t2 = ((sword_t) t1) <= ((sword_t) x);
-t3 = y < t1;
-I = t1 << y;
-
-Fastest checker: explicit
-Fails for (1, 7, 0)
-
-[]
-Fastest checker: genetic
-Evars: 1, 4, 6
-Program 0:
-t1 = z ? x : y;
-t2 = max(x, y);
-t3 = 0x2 + z;
-t4 = t3 + z;
-t5 = -t3;
-I = t5 == t3;
-
-Fastest checker: explicit
-Fails for (1, 0, 6)
-
-[]
-Fastest checker: genetic
-Evars: 5, 7, 0
-Program 0:
-t1 = x == z;
-t2 = -y;
-t3 = ((sword_t) 0x5) <= ((sword_t) t1);
-t4 = 0x5 >> y;
-I = 0x5 == x;
-
-Fastest checker: explicit
-Fails for (5, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 3, 14, 9
-Program 0:
-I = 0x3 == x;
-
-Fastest checker: explicit
-Fails for (3, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 4, 9, 8
-Program 0:
-t1 = x <= x;
-t2 = 0x3 < y;
-I = t2 >> x;
-
-Fastest checker: explicit
-Fails for (4, 4, 0)
-
-[]
-Fastest checker: genetic
-Evars: 7, 5, 7
-Program 0:
-t1 = min(0x6, z);
-t2 = ((sword_t) z) < ((sword_t) t1);
-t3 = z & t1;
-t4 = y ^ y;
-t5 = ((sword_t) 0x6) <= ((sword_t) z);
-I = t5 & y;
-
-Fastest checker: explicit
-Fails for (1, 1, 6)
-
-[]
-Fastest checker: genetic
-Evars: 6, 13, 13
-Program 0:
-t1 = y + z;
-t2 = y | z;
-I = ((sword_t) t1) < ((sword_t) t2);
-
-Fastest checker: explicit
-Fails for (1, 7, 1)
-
-[]
-Fastest checker: genetic
-Evars: 5, 10, 14
-Program 0:
-t1 = z << 0x3;
-t2 = !y || z;
-t3 = min(x, y);
-t4 = ~z;
-I = t4 == t2;
-
-Fastest checker: explicit
-Fails for (1, 0, 14)
-
-[]
-Fastest checker: genetic
-Evars: 5, 3, 13
-Program 0:
-t1 = !y || y;
-t2 = t1 | y;
-t3 = ((sword_t) t2) <= ((sword_t) y);
-t4 = z + y;
-t5 = x ? y : z;
-t6 = z << x;
-t7 = z ? t6 : t6;
-t8 = ((sword_t) x) >> ((sword_t) x);
-I = min(t8, z);
-
-Fastest checker: explicit
-Fails for (6, 1, 1)
-
-[]
-Fastest checker: genetic
-Evars: 5, 3, 10
-Program 0:
-t1 = ((sword_t) z) >> ((sword_t) x);
-t2 = y < t1;
-I = t2 + t1;
-
-Fastest checker: explicit
-Fails for (4, 1, 1)
-
-[]
-Fastest checker: genetic
-Evars: 6, 13, 13
-Program 0:
-t1 = y + z;
-t2 = x <= y;
-t3 = min(z, x);
-I = t3 >> x;
-
-Fastest checker: explicit
-Fails for (4, 3, 1)
-
-[]
-Fastest checker: genetic
-Evars: 1, 0, 7
-Program 0:
-t1 = 0xa * z;
-t2 = z == y;
-t3 = z % 0xa;
-t4 = t3 + 0xa;
-I = ((sword_t) x) <= ((sword_t) t4);
-
-Fastest checker: explicit
-Fails for (1, 2, 7)
-
-[]
-Fastest checker: genetic
-Evars: 4, 7, 5
-Program 0:
-t1 = z ? z : 0x5;
-t2 = z + x;
-I = z == 0x5;
-
-Fastest checker: explicit
-Fails for (1, 0, 5)
-
-[]
-Fastest checker: genetic
-Evars: 3, 10, 6
-Program 0:
-t1 = -0x1;
-t2 = min(y, z);
-I = ((sword_t) x) < ((sword_t) t2);
-
-Fastest checker: explicit
-Fails for (1, 2, 2)
-
-[]
-Fastest checker: genetic
-Evars: 1, 13, 9
-Program 0:
-t1 = ((sword_t) z) < ((sword_t) 0xe);
-t2 = x <= x;
-t3 = 0xe - x;
-I = y == t3;
-
-Fastest checker: explicit
-Fails for (7, 7, 0)
-
-[]
-Fastest checker: genetic
-Evars: 2, 15, 13
-Program 0:
-t1 = y == 0xd;
-t2 = z == 0xd;
-t3 = z & x;
-I = t1 != t2;
-
-Fastest checker: explicit
-Fails for (1, 13, 0)
-
-[]
-Fastest checker: genetic
-Evars: 4, 14, 14
-Program 0:
-t1 = max(0x9, y);
-t2 = x | t1;
-I = t2 == z;
-
-Fastest checker: explicit
-Fails for (1, 0, 9)
-
-[]
-Fastest checker: genetic
-Evars: 6, 6, 10
-Program 0:
-t1 = 0x6 * x;
-t2 = t1 / t1;
-I = 0x6 == y;
-
-Fastest checker: explicit
-Fails for (1, 6, 0)
-
-[]
-Fastest checker: genetic
-Evars: 1, 9, 14
-Program 0:
-t1 = ~x;
-t2 = x + y;
-t3 = y << 0xa;
-I = 0xa == t2;
-
-Fastest checker: explicit
-Fails for (7, 3, 0)
-
-[]
-Fastest checker: genetic
-Evars: 1, 11, 11
-Program 0:
-t1 = z + x;
-I = 0xc == t1;
-
-Fastest checker: explicit
-Fails for (7, 0, 5)
-
-[]
-Fastest checker: genetic
-Evars: 2, 0, 10
-Program 0:
-t1 = 0xa == 0xa;
-t2 = z + x;
-t3 = x + x;
-t4 = x == 0xa;
-I = 0xa == z;
+t1 = y <= z;
+t2 = 0xa == z;
+I = 0xa ? t2 : t1;
 
 Fastest checker: explicit
 Fails for (1, 0, 10)
 
 []
 Fastest checker: genetic
-Evars: 5, 12, 11
+Evars: 3, 14, 10
 Program 0:
-t1 = 0xc <= y;
-t2 = y / 0xc;
-I = min(t2, z);
+t1 = 0xe == y;
+t2 = 0xe * y;
+t3 = t1 << z;
+I = t3 & y;
 
 Fastest checker: explicit
-Fails for (1, 12, 1)
+Fails for (1, 14, 10)
 
 []
 Fastest checker: genetic
-Evars: 7, 11, 15
+Evars: 2, 6, 13
 Program 0:
-t1 = !z || 0xd;
-t2 = t1 / t1;
-t3 = t2 - t1;
-t4 = y ^ x;
-t5 = z - y;
-t6 = ~t5;
-t7 = z != x;
-t8 = t7 <= x;
-t9 = y ^ t7;
-t10 = 0xd <= z;
-I = t10 & y;
+t1 = y >>> y;
+t2 = z * t1;
+t3 = x s< y;
+I = t3 & z;
+
+Fastest checker: explicit
+Fails for (1, 2, 11)
+
+[]
+Fastest checker: genetic
+Evars: 7, 7, 14
+Program 0:
+t1 = 0x7 s<= 0x7;
+t2 = t1 | 0x7;
+I = 0x7 == y;
+
+Fastest checker: explicit
+Fails for (1, 7, 11)
+
+[]
+Fastest checker: genetic
+Evars: 3, 5, 5
+Program 0:
+t1 = y >>> x;
+t2 = max(z, t1);
+I = 0x3 == x;
+
+Fastest checker: explicit
+Fails for (3, 7, 11)
+
+[]
+Fastest checker: genetic
+Evars: 5, 8, 15
+Program 0:
+t1 = x s<= x;
+I = x == 0x5;
+
+Fastest checker: explicit
+Fails for (5, 7, 11)
+
+[]
+Fastest checker: genetic
+Evars: 1, 14, 4
+Program 0:
+t1 = 0xe <= y;
+I = t1 >> z;
+
+Fastest checker: explicit
+Fails for (1, 14, 12)
+
+[]
+Fastest checker: genetic
+Evars: 7, 7, 5
+Program 0:
+t1 = z != x;
+t2 = y == x;
+I = t2 & z;
 
 Fastest checker: explicit
 Fails for (1, 1, 13)
 
 []
 Fastest checker: genetic
-Evars: 7, 11, 14
+Evars: 3, 15, 2
 Program 0:
-t1 = 0xe <= z;
-I = y & t1;
+t1 = z * z;
+t2 = z ? y : x;
+t3 = -x;
+I = t3 < y;
 
 Fastest checker: explicit
-Fails for (1, 1, 14)
+Fails for (7, 10, 13)
 
 []
 Fastest checker: genetic
-Evars: 5, 12, 8
+Evars: 6, 14, 14
 Program 0:
-t1 = 0xd * y;
-t2 = max(0xd, z);
-t3 = z + x;
-t4 = !0xd || x;
-I = 0xd == t3;
+t1 = -0x2;
+I = t1 == z;
 
 Fastest checker: explicit
-Fails for (7, 0, 6)
+Fails for (1, 0, 14)
 
 []
 Fastest checker: genetic
-Evars: 6, 11, 10
+Evars: 2, 10, 9
 Program 0:
-t1 = z & x;
-t2 = x + y;
-t3 = t1 < x;
-t4 = t2 + t3;
-t5 = 0xb == y;
-I = z ? t5 : z;
+t1 = x << x;
+t2 = 0xe == t1;
+t3 = z << z;
+I = t3 == x;
+
+Fastest checker: explicit
+Fails for (2, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 11, 11
+Program 0:
+t1 = x * 0xb;
+t2 = y | y;
+I = t2 == 0xb;
 
 Fastest checker: explicit
 Fails for (1, 11, 1)
 
 []
 Fastest checker: genetic
-Evars: 6, 4, 7
+Evars: 4, 4, 8
 Program 0:
-t1 = z - z;
-t2 = 0x6 << y;
-I = t2 == x;
+t1 = max(y, y);
+I = 0x4 == t1;
 
 Fastest checker: explicit
-Fails for (6, 4, 0)
+Fails for (1, 4, 2)
 
 []
 Fastest checker: genetic
-Evars: 3, 4, 7
+Evars: 3, 2, 9
 Program 0:
-t1 = x & z;
-t2 = ((sword_t) z) >> ((sword_t) x);
-I = t1 == 0x3;
+t1 = 0x9 << x;
+I = 0x9 == z;
 
 Fastest checker: explicit
-Fails for (3, 0, 3)
+Fails for (1, 0, 9)
 
 []
 Fastest checker: genetic
-Evars: 2, 12, 8
+Evars: 7, 0, 15
 Program 0:
-t1 = !y || 0x9;
-t2 = t1 & t1;
-t3 = ((sword_t) z) < ((sword_t) 0x9);
-t4 = max(t1, t1);
-t5 = min(z, y);
-t6 = 0x9 >> t5;
-I = min(y, t3);
+t1 = ~z;
+I = t1 == y;
 
 Fastest checker: explicit
-Fails for (1, 1, 8)
+Fails for (2, 6, 9)
 
 []
 Fastest checker: genetic
-Evars: 2, 11, 14
+Evars: 4, 8, 12
 Program 0:
-t1 = 0x3 + z;
-t2 = ((sword_t) t1) < ((sword_t) x);
-t3 = 0x3 | 0x3;
-t4 = x >> z;
-I = t1 == t2;
+t1 = z >> 0xb;
+t2 = t1 ^ 0xb;
+I = t1 >> x;
 
 Fastest checker: explicit
-Fails for (2, 0, 14)
+Fails for (4, 6, 9)
 
 []
 Fastest checker: genetic
-Evars: 1, 9, 12
+Evars: 4, 5, 0
 Program 0:
-t1 = ~x;
-t2 = min(y, z);
-I = ((sword_t) t2) < ((sword_t) t1);
+t1 = 0x9 >>> z;
+t2 = 0x9 - x;
+I = t2 == y;
 
 Fastest checker: explicit
-Fails for (1, 8, 8)
+Fails for (2, 7, 9)
 
 []
 Fastest checker: genetic
-Evars: 3, 7, 9
+Evars: 2, 3, 8
 Program 0:
-t1 = x <= 0x0;
-t2 = 0x0 == t1;
-t3 = y ^ 0x0;
-t4 = ((sword_t) t3) <= ((sword_t) x);
-t5 = ((sword_t) z) < ((sword_t) 0x0);
-I = ((sword_t) t4) < ((sword_t) t5);
+I = y == 0x3;
 
 Fastest checker: explicit
-Fails for (1, 2, 8)
+Fails for (1, 3, 10)
 
 []
 Fastest checker: genetic
-Evars: 4, 14, 15
+Evars: 4, 2, 3
 Program 0:
-t1 = 0xf * y;
-t2 = max(0xf, t1);
-t3 = max(t2, z);
-t4 = z ^ 0xf;
-t5 = ((sword_t) y) < ((sword_t) 0xf);
-I = ((sword_t) t5) >> ((sword_t) x);
+t1 = 0x6 - x;
+I = t1 == y;
 
 Fastest checker: explicit
-Fails for (4, 8, 0)
+Fails for (3, 3, 10)
 
 []
 Fastest checker: genetic
-Evars: 7, 7, 3
+Evars: 4, 3, 1
+Program 0:
+t1 = 0x7 == z;
+t2 = x >> x;
+I = y < t2;
+
+Fastest checker: explicit
+Fails for (4, 3, 10)
+
+[]
+Fastest checker: genetic
+Evars: 5, 1, 6
 Program 0:
 t1 = x << y;
-t2 = t1 % x;
-I = min(z, t2);
+t2 = min(t1, z);
+I = 0xa == t1;
 
 Fastest checker: explicit
-Fails for (5, 2, 1)
+Fails for (5, 5, 10)
 
 []
 Fastest checker: genetic
-Evars: 2, 14, 13
+Evars: 5, 1, 13
 Program 0:
-t1 = x >> x;
-t2 = 0xe <= y;
-t3 = t2 & x;
-I = z * t2;
+t1 = x << z;
+t2 = min(t1, z);
+I = 0xa == t1;
 
 Fastest checker: explicit
-Fails for (1, 14, 1)
+Fails for (5, 0, 13)
 
 []
 Fastest checker: genetic
-Evars: 4, 4, 7
+Evars: 2, 7, 7
 Program 0:
-t1 = max(0x3, 0x3);
-t2 = x == t1;
-t3 = x + 0x3;
-I = t3 == z;
+t1 = y << x;
+t2 = 0x7 s<= z;
+I = t2 ? t1 : t2;
 
 Fastest checker: explicit
-Fails for (1, 0, 4)
+Fails for (1, 1, 7)
 
 []
 Fastest checker: genetic
-Evars: 7, 11, 1
+Evars: 7, 4, 1
 Program 0:
-t1 = 0x9 - y;
-t2 = -x;
-t3 = !z || y;
-t4 = t2 < y;
-I = z * t4;
+t1 = 0x5 s< x;
+t2 = min(x, y);
+I = t1 >> t2;
 
 Fastest checker: explicit
-Fails for (7, 10, 1)
+Fails for (6, 4, 7)
 
 []
 Fastest checker: genetic
-Evars: 1, 6, 1
+Evars: 7, 4, 1
 Program 0:
-t1 = min(x, 0x7);
-t2 = ((sword_t) t1) >> ((sword_t) 0x7);
-t3 = z << t1;
-t4 = y << x;
-t5 = ((sword_t) 0x7) <= ((sword_t) y);
-t6 = 0x7 == t5;
-t7 = y % 0x7;
-t8 = ((sword_t) y) >> ((sword_t) y);
-t9 = x == t8;
-t10 = ((sword_t) t8) >> ((sword_t) t9);
-I = min(t9, z);
+t1 = 0x6 s< x;
+t2 = min(x, y);
+I = t1 >> t2;
 
 Fastest checker: explicit
-Fails for (4, 4, 1)
+Fails for (7, 4, 7)
 
 []
 Fastest checker: genetic
-Evars: 1, 3, 12
+Evars: 4, 12, 5
 Program 0:
-t1 = ((sword_t) 0x3) <= ((sword_t) z);
-t2 = x < y;
-t3 = ((sword_t) x) < ((sword_t) 0x3);
-t4 = y | z;
-t5 = 0x3 == y;
-I = t5 / x;
+t1 = x <= 0xb;
+t2 = x == x;
+t3 = -0xb;
+t4 = 0xb ==> y;
+t5 = t3 == z;
+I = t5 * y;
 
 Fastest checker: explicit
-Fails for (1, 3, 0)
-
-[]
-Fastest checker: genetic
-Evars: 2, 13, 14
-Program 0:
-t1 = -y;
-t2 = !y || y;
-t3 = 0xa & z;
-t4 = min(t3, y);
-t5 = t4 | t4;
-I = t4 == 0xa;
-
-Fastest checker: explicit
-Fails for (1, 10, 10)
-
-[]
-Fastest checker: genetic
-Evars: 5, 13, 8
-Program 0:
-t1 = min(z, x);
-t2 = !y || z;
-t3 = ((sword_t) t1) >> ((sword_t) t1);
-t4 = t1 >> x;
-I = t4 & t3;
-
-Fastest checker: explicit
-Fails for (4, 3, 4)
-
-[]
-Fastest checker: genetic
-Evars: 2, 13, 15
-Program 0:
-t1 = z & y;
-t2 = ((sword_t) x) >> ((sword_t) z);
-t3 = t2 << t1;
-t4 = !t2 || y;
-I = 0xd <= t1;
-
-Fastest checker: explicit
-Fails for (1, 13, 13)
-
-[]
-Fastest checker: genetic
-Evars: 2, 10, 4
-Program 0:
-t1 = 0x4 / x;
-t2 = ((sword_t) x) < ((sword_t) t1);
-t3 = z >> 0x4;
-t4 = y != x;
-t5 = t1 - t3;
-t6 = y & t1;
-I = t6 == x;
-
-Fastest checker: explicit
-Fails for (2, 2, 0)
-
-[]
-Fastest checker: genetic
-Evars: 1, 15, 14
-Program 0:
-t1 = y & z;
-t2 = ((sword_t) 0xe) >> ((sword_t) y);
-t3 = y ? 0xe : 0xe;
-I = t3 == t1;
-
-Fastest checker: explicit
-Fails for (1, 14, 14)
-
-[]
-Fastest checker: genetic
-Evars: 5, 15, 2
-Program 0:
-t1 = y == 0xf;
-t2 = min(0xf, t1);
-t3 = t2 / x;
-I = ((sword_t) t3) < ((sword_t) t1);
-
-Fastest checker: explicit
-Fails for (2, 15, 0)
+Fails for (1, 1, 5)
 
 []
 Fastest checker: genetic
 Evars: 7, 13, 3
 Program 0:
-t1 = 0xc <= y;
-t2 = 0xc >> z;
-I = t1 == t2;
+t1 = y % x;
+t2 = max(0x5, z);
+I = t2 < t1;
 
 Fastest checker: explicit
-Fails for (1, 12, 3)
+Fails for (7, 6, 5)
 
 []
 Fastest checker: genetic
-Evars: 6, 9, 15
+Evars: 7, 8, 7
 Program 0:
-t1 = z == 0xe;
-t2 = 0xe < 0xe;
-t3 = x ^ z;
-t4 = min(t2, z);
-t5 = z | 0xe;
-t6 = y ? 0xe : y;
-t7 = 0xe ? z : t5;
-t8 = 0xe < z;
-I = min(y, t8);
+t1 = 0x8 == y;
+t2 = 0x8 * y;
+t3 = t1 << z;
+I = t3 & y;
 
 Fastest checker: explicit
-Fails for (1, 1, 15)
+Fails for (1, 8, 7)
 
 []
 Fastest checker: genetic
-Evars: 1, 15, 9
+Evars: 2, 1, 0
 Program 0:
-t1 = ~y;
-t2 = min(0x8, x);
-t3 = t1 - 0x8;
-t4 = ((sword_t) x) < ((sword_t) 0x8);
-t5 = z / 0x8;
-I = t5 >> t3;
+t1 = 0x7 < x;
+t2 = ~0x7;
+t3 = x >>> y;
+I = t3 == y;
 
 Fastest checker: explicit
-Fails for (1, 3, 8)
+Fails for (2, 1, 8)
+
+[]
+Fastest checker: genetic
+Evars: 4, 8, 11
+Program 0:
+t1 = 0x5 / 0x5;
+t2 = t1 >>> x;
+I = t2 >>> y;
+
+Fastest checker: explicit
+Fails for (4, 4, 8)
+
+[]
+Fastest checker: genetic
+Evars: 6, 10, 6
+Program 0:
+t1 = z % 0x6;
+t2 = x * z;
+t3 = y >>> y;
+t4 = z == 0x6;
+t5 = z + t4;
+t6 = x == x;
+I = min(t4, y);
+
+Fastest checker: explicit
+Fails for (1, 1, 6)
+
+[]
+Fastest checker: genetic
+Evars: 4, 9, 4
+Program 0:
+t1 = min(z, x);
+t2 = z == x;
+I = t2 >> t1;
+
+Fastest checker: explicit
+Fails for (4, 0, 4)
+
+[]
+Fastest checker: genetic
+Evars: 5, 15, 2
+Program 0:
+t1 = min(z, y);
+t2 = 0xd + t1;
+I = y == t2;
+
+Fastest checker: explicit
+Fails for (1, 13, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 4, 14
+Program 0:
+t1 = y >>> y;
+t2 = z == 0xe;
+t3 = z + t2;
+t4 = x == x;
+I = min(t2, y);
+
+Fastest checker: explicit
+Fails for (1, 1, 14)
 
 []
 
@@ -1012,10 +594,10 @@ Fails for (1, 3, 8)
 
 Timeout
 Perf counters:
-{'genetic': 82, 'explicit': 82, 'timeout': 1, 'iterations': 83}
+{'genetic': 54, 'explicit': 54, 'timeout': 1, 'iterations': 55}
 Perf timers:
-verify: 0.71s
-checker: 118.27s
-gcc: 0.88s
+verify: 0.42s
+checker: 119.87s
+gcc: 0.46s
 _: 120.00s
-synth: 117.75s
+synth: 119.56s

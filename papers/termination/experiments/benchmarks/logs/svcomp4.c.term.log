@@ -2,51 +2,42 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x2 << y2;
-t2 = y2 >> t1;
-t3 = y2 ^ t2;
-t4 = !t2 || t1;
-I = max(0x2, y2);
+t1 = 0x7 != 0x7;
+I = max(t1, y1);
 Program 1:
-t1 = min(y2, y2);
-t2 = 0x6 & y1;
-I = t2 & y1;
+t1 = y1 | 0x8;
+I = y2 << y2;
 
 Fastest checker: explicit
-Fails for (1, 0)
+Fails for (1, 11)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = y1 * y2;
-t2 = ((sword_t) y1) < ((sword_t) y2);
-t3 = y1 == t2;
-I = t2 + y2;
+t1 = 0xe >> y2;
+t2 = t1 & y2;
+I = y2 <= y2;
 Program 1:
-t1 = !y1 || 0x3;
-t2 = y2 / t1;
-I = y1 << t1;
+t1 = y1 == y1;
+t2 = y2 - y2;
+t3 = y1 * 0x9;
+I = min(y2, t3);
 
 Fastest checker: explicit
-Fails for (8, 0)
+Fails for (2, 11)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xb * 0xb;
-t2 = 0xb % t1;
-t3 = y2 & t2;
-t4 = t1 <= y1;
-I = t4 - y2;
+I = 0xd + 0xd;
 Program 1:
-t1 = 0xa + y2;
-t2 = t1 % 0xa;
-t3 = 0xa != t2;
-t4 = 0xa ? y2 : y1;
-I = y1 + y1;
+t1 = y1 | 0x9;
+t2 = y2 < t1;
+t3 = ~t2;
+I = y2 | t2;
 
 Fastest checker: explicit
-Fails for (9, 0)
+Fails for (4, 11)
 
 []
 
@@ -60,8 +51,8 @@ Timeout
 Perf counters:
 {'genetic': 3, 'explicit': 3, 'timeout': 1, 'iterations': 4}
 Perf timers:
-verify: 0.35s
-checker: 119.97s
-gcc: 0.88s
+verify: 0.20s
+checker: 119.90s
+gcc: 0.46s
 _: 120.00s
-synth: 119.65s
+synth: 119.71s
