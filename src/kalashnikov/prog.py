@@ -3,6 +3,7 @@
 import re
 import perfcounters as perf
 import args
+import copy
 
 args.argparser.add_argument("--varnames", nargs="*", default=[],
     help="variable names")
@@ -24,15 +25,15 @@ binops = {
     7: "%s ^ %s",
     9: "%s << %s",
     10: "%s >> %s",
-    11: "((sword_t) %s) >> ((sword_t) %s)",
+    11: "%s >>> %s",
     12: "%s == %s",
     13: "%s != %s",
     14: "%s <= %s",
     15: "%s < %s",
-    16: "((sword_t) %s) <= ((sword_t) %s)",
-    17: "((sword_t) %s) < ((sword_t) %s)",
+    16: "%s s<= %s",
+    17: "%s s< %s",
     18: "%s %% %s",
-    19: "!%s || %s",    # Implies
+    19: "!%s ==> %s",    # Implies
     20: "min(%s, %s)",
     21: "max(%s, %s)",
     23: "f+(%s, %s)",
@@ -41,6 +42,16 @@ binops = {
     26: "f/(%s, %s)"
 }
 
+execbinops = copy.copy(binops)
+
+execbinops[9] = "%s << (%s %% WIDTH)"
+execbinops[10] = "%s >> (%s %% WIDTH)"
+execbinops[11] = "((sword_t) %s) >> ((sword_t) (%s %% WIDTH))"
+execbinops[16] = "((sword_t) %s) <= ((sword_t) %s)"
+execbinops[17] = "((sword_t) %s) < ((sword_t) %s)"
+execbinops[19] = "!%s || %s"
+
+
 revbinops = { v: k for (k, v) in binops.items() }
 
 unops = {
@@ -48,11 +59,15 @@ unops = {
     8: "~%s"
 }
 
+execunops = copy.copy(unops)
+
 revunops = { v: k for (k, v) in unops.items() }
 
 ternops = {
     22: "%s ? %s : %s"
 }
+
+execternops = copy.copy(ternops)
 
 revternops = { v: k for (k, v) in ternops.items() }
 
@@ -155,15 +170,20 @@ class Prog(object):
 
       lhs = self.tempname(len(ops), idx, executable)
 
-      if op in binops:
-        rhs = binops[op] % (
+      if executable:
+        (b, u, t) = (execbinops, execunops, execternops)
+      else:
+        (b, u, t) = (binops, unops, ternops)
+
+      if op in b:
+        rhs = b[op] % (
             self.strarg(p1, len(ops), consts, executable),
             self.strarg(p2, len(ops), consts, executable))
-      elif op in unops:
-        rhs = unops[op] % (
+      elif op in u:
+        rhs = u[op] % (
             self.strarg(p1, len(ops), consts, executable))
-      elif op in ternops:
-        rhs = ternops[op] % (
+      elif op in t:
+        rhs = t[op] % (
             self.strarg(p1, len(ops), consts, executable),
             self.strarg(p2, len(ops), consts, executable),
             self.strarg(p3, len(ops), consts, executable))
