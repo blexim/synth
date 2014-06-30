@@ -106,40 +106,41 @@ class Prog(object):
       if mevars:
         self.evars = str2ints(mevars.group(1))
 
-  def argname(self, p):
-    return "args[%d]" % p
-
-    if len(args.args.varnames) < args.args.args:
-      return 'a%d' % (p+1)
+  def argname(self, p, executable):
+    if executable:
+      return "args[%d]" % p
     else:
-      return args.args.varnames[p]
-
-  def tempname(self, seqlen, idx):
-    return "res[%d]" % (seqlen - idx - 1)
-
-    residx = idx - seqlen + args.args.res
-
-    if residx >= 0:
-      if residx < len(args.args.resnames):
-        return args.args.resnames[residx]
+      if len(args.args.varnames) < args.args.args:
+        return 'a%d' % (p+1)
       else:
-        return "res%d" % (residx + 1)
+        return args.args.varnames[p]
+
+  def tempname(self, seqlen, idx, executable):
+    if executable:
+      return "res[%d]" % (seqlen - idx - 1)
     else:
-      return "t%d" % (idx + 1)
+      residx = idx - seqlen + args.args.res
 
+      if residx >= 0:
+        if residx < len(args.args.resnames):
+          return args.args.resnames[residx]
+        else:
+          return "res%d" % (residx + 1)
+      else:
+        return "t%d" % (idx + 1)
 
-  def strarg(self, p, seqlen, consts):
+  def strarg(self, p, seqlen, consts, executable):
     if p < len(consts):
       return hex(consts[p])
     else:
       p -= len(consts)
 
       if p < args.args.args:
-        return self.argname(p)
+        return self.argname(p, executable)
       else:
-        return self.tempname(seqlen, p - args.args.args)
+        return self.tempname(seqlen, p - args.args.args, executable)
 
-  def prog2str(self, ops, params, consts):
+  def prog2str(self, ops, params, consts, executable=False):
     # List comprehension trickery to generate a list like:
     # [(op0, param0, param1, param2, 0), (op1, param3, param4, param5, 1), ... ]
     insts = zip(ops, params[::3], params[1::3], params[2::3],
@@ -152,20 +153,20 @@ class Prog(object):
       if idx not in sliced:
         continue
 
-      lhs = self.tempname(len(ops), idx)
+      lhs = self.tempname(len(ops), idx, executable)
 
       if op in binops:
         rhs = binops[op] % (
-            self.strarg(p1, len(ops), consts),
-            self.strarg(p2, len(ops), consts))
+            self.strarg(p1, len(ops), consts, executable),
+            self.strarg(p2, len(ops), consts, executable))
       elif op in unops:
         rhs = unops[op] % (
-            self.strarg(p1, len(ops), consts))
+            self.strarg(p1, len(ops), consts, executable))
       elif op in ternops:
         rhs = ternops[op] % (
-            self.strarg(p1, len(ops), consts),
-            self.strarg(p2, len(ops), consts),
-            self.strarg(p3, len(ops), consts))
+            self.strarg(p1, len(ops), consts, executable),
+            self.strarg(p2, len(ops), consts, executable),
+            self.strarg(p3, len(ops), consts, executable))
       else:
         raise Exception("Couldn't parse instruction: (%d, %d, %d, %d)" %
             (op, p1, p2, p3))
