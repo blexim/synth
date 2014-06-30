@@ -44,6 +44,9 @@ args.argparser.add_argument("--nonops", default=False,
 args.argparser.add_argument("--noconsts", default=False,
     action="store_const", const=True,
     help="don't remove const instructions")
+args.args.argparser.add_argument("--nofastverif", default=False,
+    action="store_const", const=True,
+    help="don't use fast verification")
 
 def log2(x):
   i = 0
@@ -114,9 +117,14 @@ class Checker(object):
       genericargs.append("-DSEED=%d" % args.args.seed)
 
     if verif:
+      if args.args.nofastverif:
+        execcfile = os.path.join("interpreter", "exec.c")
+      else:
+        execcfile = "/tmp/exec.c"
+
       self.cbmcargs = [args.args.cbmc,
           "-DSZ=%d" % sz,
-          "/tmp/exec.c",
+          execcfile,
           "-DNRES=%d" % sz,
           os.path.join("cbmc", "verif.c"), "--32"] + genericargs
 
