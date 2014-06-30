@@ -18,7 +18,7 @@ extern int nondet(void);
 /* Returns some null-terminated string. */
 char *__VERIFIER_nondet_String(void)
 {
-  int length = nondet();
+  int length;
   if (length < 1) {
     length = 1;
   }
