@@ -19,6 +19,13 @@
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
+#define SIGN_BIT (1 << (WIDTH - 1))
+#define SIGN_MASK (-1 << WIDTH)
+
+#define SIGN_EXTEND(x) do { \
+  if ((x) & SIGN_BIT) (x) |= SIGN_MASK; \
+} while(0)
+
 #ifndef MWIDTH
  #define MWIDTH 23
 #endif
