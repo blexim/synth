@@ -218,7 +218,7 @@ We combine the generation of ranking functions with the generation of invariants
 supporting invariants and the ranking function are discovered at the same time.
 
  
-For this purpose, we phrase the termination problem as a second order satisfaction problem and
+For this purpose, we phrase the termination and non-termination problems as second order satisfaction problem and
 we identify a fragment of second-order logic that is expressive enough to capture our formulation, 
 which we call \emph{the synthesis fragment}. Subsequently, we propose a method 
 for checking the satisfiability of a formula in the synthesis fragment as program synthesis (Section~\ref{sec:synthesis}). 
@@ -288,7 +288,7 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 
 \end{itemize}
-
+% unified approach to termination and non-termination
 %. only non-strict inequalities can be transformed using Farkas’ Lemma
 %--Our approach to termination analysis has two distinct features over previous works
 %-- a lexicographic ranking function imposes a lexicographic ordering on among the ranking function components.
@@ -310,9 +310,9 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 For ease of exposition, this language ignores features
 such as dynamic memory allocation and function calls. 
 \begin{itemize}
-\item No recursion.
+\item No procedures (this could be handled by [42]).
+\item Heap (Thor).
 \item Nested loops.
-\item Heap.
 \end{itemize}
 
 \section{Related Work}
@@ -398,6 +398,11 @@ paths for counterexamples, and then statically prove their feasibility \cite{DBL
 In \cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al. prove nontermination via
 reduction to safety proving. Their iterative algorithm uses counterexamples to a fixed safety property
 to refine an underapproximation of a program. 
+
+% program analysis as constraint solving:
+%% how the constraint-based approach can be used to model a wide spectrum of program analyses in an 
+%%expressive domain containing disjunctions and conjunctions of linear inequalities.
+
 
 \section{Motivational Examples} \label{sec:motivation}
 Figure~\ref{fig:handletable} illustrates the most common assumptions made by existent termination analyses:
@@ -649,32 +654,33 @@ while (x > 0 && y > 0 && z > 0) {
 
 
 \section{Preliminaries}
-Given a transition system, %with state space $X$ and transition relation $T \subseteq X \times X$, 
+Given a program, %with state space $X$ and transition relation $T \subseteq X \times X$, 
 we first formalise its termination argument as a ranking function (Section~\ref{sec:ranking.functions}). 
 Subsequently, we discus bit-vector semantics and illustrate 
 differences between machine arithmetic and integer arithmetic that
 make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
-We represent programs as transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $\mathcal{V}$. 
-A state of the program is a valuation of the variables from $\mathcal{V}$.
+A programs $P$ is represented as a transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $\mathcal{V}$. 
+A state of the program is a valuation of the variables from $\mathcal{V}$. For a state $s \in X$ with $T(s,s')$ we say $s'$
+is the successor of $s$ under $T$. 
 
 \begin{definition}[Unconditional termination]
-A transition system is said to be \emph{unconditionally terminating} if there is no infinite sequence
-$x_1, x_2, \ldots$ with $\forall i . T(x_i, x_{i+1})$.  
+A transition system is said to be \emph{unconditionally terminating} if there is no infinite sequence of states
+$x_1, x_2, \ldots \in X$ with $\forall i . T(x_i, x_{i+1})$.  
 \end{definition}
 
-We can prove that $T$ is unconditionally terminating by finding a ranking function.
+We can prove that the transition system is unconditionally terminating by finding a ranking function for its transition relation.
 
 \begin{definition}[Ranking function]
-An injective function ${R:X\to Y}$ is a ranking function if $Y$ is well-founded and 
+An injective function ${R:X\to Y}$ is a \emph{ranking function} for the transition relation $T$ if $Y$ is a well-founded set and 
 $R$ is monotonically decreasing with respect to $T$.  That is
 to say:
-$$\forall x, x' . T(x, x') \Rightarrow R(x) < R(x')$$
+$$\forall x, x' \in X. T(x, x') \Rightarrow R(x) < R(x')$$
 \end{definition}
 
 \begin{definition}[Linear ranking function]
-A linear ranking function $R: X \to Y$ 
+A \emph{linear ranking function} $R: X \to Y$ 
 with $\dim(X) = n$ and $\dim(Y) = m$ is of the form: $$f(\vec{x}) = M\vec{x}$$ where
 $M$ is an $n \times m$ matrix.
 \end{definition}
@@ -683,7 +689,7 @@ In the case that $\dim(Y) = 1$, this reduces to an inner product:
 $$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c$$
 
 \begin{definition}[Lexicographic ranking function]
-For $Y = Z^m$, we say that a ranking function $R: X \to Y$ is lexicographic
+For $Y = Z^m$, we say that a ranking function $R: X \to Y$ is \emph{lexicographic}
 if it maps each state in $X$ to a tuple of values such that the loop transition leads to a decrease with
 respect to the lexicographic ordering for this tuple.
 The total order imposed on $Y$ is the lexicographic ordering
@@ -696,20 +702,10 @@ We note that some termination arguments require lexicographic ranking functions,
 whose co-domain is the ordinals, rather than just $\mathbb{N}$.
 %In the rest of the paper, we consider any ranking function $R: X \to Z^m$ to be lexicographic, and the situation when $m=1$ to be a special case.
 
-\begin{definition}{Conditional termination}
-\end{definition}
 
-\begin{definition}{Supportive invariant}
-\end{definition}
+%% \begin{definition}{Supportive invariant}
+%% \end{definition}
 
-%% \subsection{Disjunctive Well-Foundedness}\label{sec:dwf}
-%% Terminator uses disjunctive well foundedness arguments, which can be found
-%% piece by piece, but require reasoning about the transitive closure of a transition
-%% relation.  Because we build a monolithic well foundedness argument, we
-%% do not need to reason about the full transitive closure, and can instead do our
-%% reasoning over a single step of the transition relation.  This means that we
-%% can get away with very simple model checking methods, rather than requiring
-%% a full-blown safety prover.
 
 \subsection{Machine Arithmetic and Bitvectors} \label{sec:machine.arith} 
 Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
@@ -831,74 +827,113 @@ define the syntax of a language we will work over.
 
 
 \section{Termination as Second-Order Satisfaction} \label{sec:second.order}
-In this section we will show how several variations of the halting problem can be defined in second-order
-logic.  
-\begin{lstlisting}
-while (L) { T }
-\end{lstlisting}
+Program model? Programs: transition systems? Constraint generation? No CFG?
+
+%% One difference from previous approaches is that our method is fully semantic. As a consequence, 
+%% we do not care about the CFG (we do not need to encode the CFG 
+%% through program counter in the second order constraints).
 
 
+The problem of program verification can be reduced to the problem
+of finding solutions to a second-order constraint \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}. 
+Our intention is to apply this approach to termination analysis. 
+In this section we show how several variations of both the termination and the non-termination problem can be defined in second-order logic.  
+%The second-order unknowns in this constraint are the unknown program invariants
+%that are inductive and strong enough to prove the desired assertions. In this section we describe the conversion of programs to constraints
 
- In fact, many of these problems can be encoded in a fragment of second-order logic we will
-suggestively refer to as the \emph{synthesis fragment}:
+In fact, we identify a fragment of second-order logic with a constrained use of quantification that is expressive enough to encode both termination and non-termination.
+We will suggestively refer to the fragment as the \emph{synthesis fragment}:
+
+% The synthesis fragment is motivated by practical requirements in software verification.
 
 \begin{definition}[Synthesis Fragment]
  A formula is in the synthesis fragment iff it is of the form
  \[
-  \exists P, x . \forall y . \sigma(P, x, y)
+  \exists \vec{P},~ \vec{x} . ~\forall~ \vec{y} . \sigma(\vec{P}, \vec{x}, \vec{y})
  \]
 
- Here $P$ ranges over sets, while $x$ and $y$ range over ground terms.
+where $\vec{P}$ ranges over sets, while $\vec{x}$ and $\vec{y}$ range over ground terms.
+Function $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to \mathbb{B}$ can be viewed as a specification function
+that  returns true iff the functions $\vec{P}$ compute appropriate outputs
+when fed the inputs $\vec{x}$ and $\vec{y}$.  
 \end{definition}
 
-We will then show that checking satisfiability of a formula in the synthesis fragment corresponds to program synthesis.
-We will make use of this observation to frame the halting problem as a program synthesis problem, allowing us
-to employ the program synthesiser described in Section~\ref{sec:synthesis}.
+Checking satisfiability of a formula in the synthesis fragment corresponds to program synthesis and
+%Solving the synthesis problem 
+amounts to finding witnesses for the unknowns $\vec{P}$ and $\vec{x}$ that meet the specification
+for all $\vec{y}$. 
+If a pair $(\vec{P_0}, \vec{x_0})$ is a solution to the synthesis problem, then we write $(\vec{P_0}, \vec{x_0}) \models \sigma$.
 
-\subsection{Variations of the Halting Problem}
+
+In the remainder of this section, we show that the synthesis fragment 
+is expressive enough to encode both termination and non-termination. %allow the formulation of both the termination and the non-termination problem. 
+Following our formulation as second order satisfaction, %the framing of the halting problem as a program synthesis problem,
+in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment that models bit-accurate semantics. 
+
+%% Following the framing of the halting problem as a program synthesis problem, 
+%% we show how we solve this problem in Section~\ref{sec:synthesis}.
+
+\subsection{The Termination Problem}
 
 \begin{figure*}
 \begin{framed}
-\begin{definition}[Second-order Termination Formula]
+\begin{definition}[Second-order Unconditional Termination Formula {\bf [UT]}]
 \label{def:termination-formula}
 \begin{align*}
- \exists R . \forall x, x' . & G(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
+ \exists R . \forall \mathcal{V}, \mathcal{V'} . & G(\mathcal{V}) \wedge T(\mathcal{V}, \mathcal{V'}) \rightarrow R(\mathcal{V}) > 0 \wedge R(\mathcal{V}) > R(\mathcal{V'})
 \end{align*}
 \end{definition}
 
-\begin{definition}[Conditional Termination Formula]
+\begin{definition}[Conditional Termination Formula {\bf [CT]}]
 \label{def:conditional-termination-formula}
  \begin{align*}
-  \exists R, V . \forall x, x' . & I(x) \wedge G(x) \rightarrow V(x) ~ \wedge \\
-                                 & G(x) \wedge V(x) \wedge T(x, x') \rightarrow V(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+  \exists R, Inv . \forall \mathcal{V}, \mathcal{V'} . & I(\mathcal{V}) \wedge G(\mathcal{V}) \rightarrow Inv(\mathcal{V}) ~ \wedge \\
+                                 & G(\mathcal{V}) \wedge V(\mathcal{V}) \wedge T(\mathcal{V}, \mathcal{V'}) \rightarrow Inv(\mathcal{V'}) \wedge R(\mathcal{V}) > 0 
+  \wedge R(\mathcal{V}) > R(\mathcal{V'})
  \end{align*}
 \end{definition}
 
-\begin{definition}[Multiple Loops Termination Formula]
+\begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
 \label{def:multi-termination-formula}
  \begin{align*}
-  \exists R, V_1, V_2 . \forall x, x' . & I(x) \rightarrow V_1(x) ~ \wedge \\
-                                        & V_1(x) \wedge L_1(x) \wedge T(x, x') \rightarrow V_1(x') ~ \wedge \\
-                                        & V_1(x) \wedge \lnot L_1(x) \wedge L_2(x) \rightarrow V_2(x) ~ \wedge \\
-                                        & V_2(x) \wedge L_2(x) \wedge T(x, x') \rightarrow V_2(x') \wedge R(x) > 0 \wedge R(x) > R(x')
+  \exists R, Inv_1,..., Inv_n . \forall \mathcal{V}_0,...,\mathcal{V}_n, \mathcal{V}_1',...,\mathcal{V}_n'.  & P_0(\mathcal{V}_0,\mathcal{V}_1) \rightarrow Inv_1(\mathcal{V}_1) ~  \\
+ & \bigwedge_{i=1..n{-}1} (Inv_i(\mathcal{V}_i) \wedge G_i(\mathcal{V}_i) \wedge T_i(\mathcal{V}_i, \mathcal{V}_i') \rightarrow Inv_i(\mathcal{V}_i')) ~  \\  
+ & \bigwedge_{i=1..n{-}2} (Inv_i(\mathcal{V}_i) \wedge \lnot G_i(\mathcal{V}_i) \wedge P_{i+1}(\mathcal{V}_i, \mathcal{V}_{i+1}) \rightarrow Inv_{i+1}(\mathcal{V}_{i+1})) ~ \wedge \\
+ & Inv_{n-1}(\mathcal{V}_{n-1}) \wedge \lnot G_{n-1}(\mathcal{V}_{n-1}) \wedge P_n(\mathcal{V}_{n-1},\mathcal{V}_n) \wedge G_n(\mathcal{V}_n) \rightarrow Inv_n(\mathcal{V}_n) ~ \wedge \\
+ & Inv_n(\mathcal{V}_n) \wedge G_n(\mathcal{V}_n) \wedge T(\mathcal{V}_n, \mathcal{V}_n') \rightarrow Inv_n(\mathcal{V}_n') \wedge R(\mathcal{V}_n) > 0 \wedge R(\mathcal{V}_n) > R(\mathcal{V}_n')
  \end{align*}
 \end{definition}
 
-\begin{definition}[Non-Termination Formula]
+\begin{definition}[Non-Termination Formula - Open Recurrence Set  {\bf [ONT]}]
 \label{def:nonterm-formula}
  \begin{align*}
-  \exists N, x_0 . \forall x . \exists x' . & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
-							& N(x) \wedge L(x) \rightarrow T(x, x') \wedge N(x') \wedge L(x')
+  \exists N, \mathcal{V}_0 . \forall \mathcal{V} . \exists \mathcal{V}' . & I(\mathcal{V}_0) \wedge N(\mathcal{V}_0) ~ \wedge \\
+                                                        & N(\mathcal{V}) \rightarrow G(\mathcal{V}) ~ \wedge \\
+							& N(\mathcal{V}) \rightarrow T(\mathcal{V}, \mathcal{V}') \wedge N(\mathcal{V}') 
  \end{align*}
 \end{definition}
 
-\begin{definition}[Deterministic Non-Termination Formula]
+\begin{definition}[Non-Termination Formula - Closed Recurrence Set {\bf [CNT]}]
 \label{def:deterministic-nonterm-formula}
  \begin{align*}
-  \exists N, x_0 . \forall x, x' . & I(x_0) \wedge L(x_0) \wedge N(x_0) ~ \wedge \\
-							& N(x) \wedge L(x) \wedge T(x, x') \rightarrow N(x') \wedge L(x')
+  \exists N, \mathcal{V}_0 . \forall \mathcal{V}, \mathcal{V}' . & I(\mathcal{V}_0) \wedge N(\mathcal{V}_0) ~ \wedge \\
+                                                        & N(\mathcal{V}) \rightarrow G(\mathcal{V}) ~ \wedge \\
+							& N(\mathcal{V}) \wedge T(\mathcal{V}, \mathcal{V}') \rightarrow N(\mathcal{V}') 
  \end{align*} 
 \end{definition}
+
+\begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
+\label{def:multi-termination-formula}
+ \begin{align*}
+  \exists R, Inv_1,..., Inv_n . \forall \mathcal{V}_0,...,\mathcal{V}_n, \mathcal{V}_1',...,\mathcal{V}_n'.  & P_0(\mathcal{V}_0,\mathcal{V}_1) \rightarrow Inv_1(\mathcal{V}_1) ~  \\
+ & \bigwedge_{i=1..n{-}1} (Inv_i(\mathcal{V}_i) \wedge G_i(\mathcal{V}_i) \wedge T_i(\mathcal{V}_i, \mathcal{V}_i') \rightarrow Inv_i(\mathcal{V}_i')) ~  \\  
+ & \bigwedge_{i=1..n{-}2} (Inv_i(\mathcal{V}_i) \wedge \lnot G_i(\mathcal{V}_i) \wedge P_{i+1}(\mathcal{V}_i, \mathcal{V}_{i+1}) \rightarrow Inv_{i+1}(\mathcal{V}_{i+1})) ~ \wedge \\
+ & Inv_{n-1}(\mathcal{V}_{n-1}) \wedge \lnot G_{n-1}(\mathcal{V}_{n-1}) \wedge P_n(\mathcal{V}_{n-1},\mathcal{V}_n) \wedge N(\mathcal{V}_n)  ~ \wedge \\
+                                                        & N(\mathcal{V}_n) \rightarrow G_n(\mathcal{V}_n) ~ \wedge 
+							 N(\mathcal{V}_n) \wedge T_n(\mathcal{V}_n, \mathcal{V}_n') \rightarrow N(\mathcal{V}_n') 
+ \end{align*}
+\end{definition}
+
 \end{framed}
 \end{figure*}
 
@@ -916,85 +951,155 @@ discuss what spec is used (non-lexicographic vs lexicographic) + the completenes
 Any termination guarantees?  
 \fi
 
-We first consider a single loop $L = (I,G,T)$ consisting of the initial states $I : X \rightarrow B$, the loop guard $G : X \rightarrow B $ and a body $T : X \rightarrow X$.
-The existence of a ranking function for this loop is equivalent to the satisfiability
+
+\noindent {\bf Unconditional termination.}
+We start by considering a program consisting of a single loop ${L=(\mathcal{V},G,T)}$,
+where the states satisfying the loop's guard are given by the assertion $G(\mathcal{V})$ over program variables $\mathcal{V}$.
+%where the initial states of the program 
+%just before the loop are given as an assertion init(V )
+%satisfy $I : X \rightarrow \mathbb{B}$, $G : X \rightarrow \mathbb{B} $ is the loop guard and $T : X \rightarrow X$ is the loop body. 
+We use assertions over program variables $\mathcal{V}$ and their successors $\mathcal{V'}$ to model program
+statements as binary relations over states. For loop $L$, $T(\mathcal{V}, \mathcal{V'})$
+represents the body of the loop. 
+%
+%Subsequently, we show how to generalise our formulation of termination and non-termination to handle sequential loops. \\
+%
+The existence of a ranking function for $L$ is equivalent to the satisfiability
 of the formula from Definition~\ref{def:termination-formula}.  If this formula is satisfiable,
-$R$ is a ranking function that proves loop $L$ terminates.
+then there exists a ranking function $R$ that proves loop $L$ terminates.
 
+A program unconditional terminating is given in Figure~\ref{fig:motivation.a}. 
+We assume that the program state is given by a valuation of the
+program variables $\mathcal{V} = \{x\}$. Then, 
+$G(x) = x>0$ and $T(x,x') = (x-1) \& x$. 
+The corresponding 
+synthesis formula {\bf [UT]} is satisfiable with a possible witness $R(x) = x$.\\
+
+\noindent {\bf Conditional termination.}
 A slightly more involved case occurs if $L$'s termination depends on the state it begins
-executing in, i.e. $L$ is \emph{conditionally terminating}.  This property is equivalent to the
-formula of Defintion~\ref{def:conditional-termination-formula}.  If this formula is satisfiable,
-$V$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
-condition is met.
-$R$ is then a ranking function for $L$ as restricted by $V$ -- that is to say, $R$ need only
-be well founded on those states satisfying $V$.  But since $V$ is an inductive invariant of $L$,
-$R$ is strong enough to show that $L$ terminates from any of its initial states.  We say
-that $V$ is a \emph{termination invariant} for $L$ and that $R$ proves termination relative to $V$.
+executing in, i.e. $L$ is \emph{conditionally terminating}. 
+The loop we consider now is $L=(\mathcal{V,I,G,T})$ and has an additional assertion $I(\mathcal{V})$ 
+representing the initial states at the loop entry.
+Conditional termination is equivalent to the
+formula of Defintion~\ref{def:conditional-termination-formula}. If this formula is satisfiable,
+two witnesses are returned:
+\begin{itemize}
+\item $Inv_0$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
+guard $G$ is met. 
+\item $R_0$ is a ranking function for $L$ as restricted by $Inv_0$ -- that is to say, $R_0$ need only
+be well founded on those states satisfying $Inv_0$.  Since $Inv_0$ is an inductive invariant of $L$,
+$R_0$ is strong enough to show that $L$ terminates from any of its initial states.
+\end{itemize}
+  
+$Inv$ is called a \emph{supporting invariant} for $L$ and $R$ proves termination relative to $Inv$.
 
-The conditional termination formula becomes more complex in the presence of multiple loops.
-Consider the following program with two loops $L_1$ and $L_2$, one after the other:
+Conditional termination is illustrated by the loop in Figure~\ref{fig:motivation.h}, 
+where $\mathcal{V} = \{x,y\}$ and $I(x,y) = (y=1)$. 
+When taken individually, without considering the program state just before the loop, the loop may not terminate.
+However, formula {\bf [CT]} is satisfiable with the possible ranking function $R(x,y) = x$ and supporting invariant $Inv(x,y) = (y = 1)$.\\
 
-\begin{lstlisting}
-while (L1) { ... }
-while (L2) { ... }
+
+\noindent {\bf Sequential loops.}
+Conditional termination allows us to
+prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
+reachable after leaving a previous loop.
+%The conditional termination formula becomes more complex in the presence of multiple loops.
+For illustration, consider the following program with $n$ sequential loops $\forall i=1..n. ~L_i=(\mathcal{V}_i,G_i,T_i)$ and
+the assertions $\forall i=1..n. ~P_i$ modelling the program statements in between loops. 
+
+\begin{lstlisting}[mathescape=true]
+$P_1$
+while ($G_1$) { $T_1$ }
+$P_2$
+while ($G_2$) { $T_2$ }
+...
+$P_n$
+while ($G_n$) { $T_n$ }
 \end{lstlisting}
 
-The termination problem for $L_2$ is equivalent to the satisfiability of
-Definition~\ref{def:multi-termination-formula}.  If this formula is satisfiable,
-$V_1$ is an inductive invariant of $L_1$ and $V_2$ is a termination invariant of $L_2$.
-$V_1$ is established by the initial conditions $I$ and is strong enough to establish
-$V_2$ when conjoined with the negation of $L_1$'s guard.  As before, $R$ is a ranking
-function relative to $V_2$.
+In order to prove that the $n^{th}$ loop terminates, we need to apply the {\bf [CT]} formula for $L_n$.
+The challenge is determining the initial states  $I(\mathcal{V}_n)$ at the loop's entry point.  
+The termination problem for $L_n$ is thus equivalent to the satisfiability of
+Definition~\ref{def:multi-termination-formula}.  If this formula is satisfiable:
+\begin{itemize}
+\item $Inv_i$ is an inductive invariant of $L_i$ for $i=1..{n-1}$ as established by the conjuncts:
+$$\bigwedge_{i=1..n{-}1} (Inv_i(\mathcal{V}_i) \wedge G_i(\mathcal{V}_i) \wedge T_i(\mathcal{V}_i, \mathcal{V}_i') \rightarrow Inv_i(\mathcal{V}_i')) $$
+
+\item Each loop invariant $Inv_i$ with $i=1..{n-2}$ is strong enough to establish $Inv_{i+1}$:
+$$\bigwedge_{i=1..n{-}2} (Inv_i(\mathcal{V}_i) \wedge \lnot G_i(\mathcal{V}_i) \wedge P_{i+1}(\mathcal{V}_i, \mathcal{V}_{i+1}) {\rightarrow} Inv_{i+1}(\mathcal{V}_{i+1})) ~$$
+
+\item When $L_n$'s guard holds, $Inv_{n-1}$ 
+is strong enough to establish $Inv_n$, i.e. $Inv_n$ holds for the program states after $L_n$'s entry point:
+$$ Inv_{n-1}(\mathcal{V}_{n-1}) \wedge \lnot G_{n-1}(\mathcal{V}_{n-1}) \wedge P_n(\mathcal{V}_{n-1},\mathcal{V}_n) \wedge G_n(\mathcal{V}_n) $$
+$$\qquad\qquad\rightarrow Inv_n(\mathcal{V}_n)$$
+
+\item $Inv_n$ is a supporting termination invariant of $L_n$ and $R$ is a ranking function relative to $Inv_n$:
+$$Inv_n(\mathcal{V}_n) \wedge G_n(\mathcal{V}_n) \wedge T(\mathcal{V}_n, \mathcal{V}_n') \rightarrow Inv_n(\mathcal{V}_n')$$
+$$ \qquad \qquad \wedge R(\mathcal{V}_n) > 0 \wedge R(\mathcal{V}_n) > R(\mathcal{V}_n')$$
+\end{itemize}
+
+\todo{add example?}\\
+
+\noindent{\bf Generalised synthesis formula.}
+Our design: for each loop always search for lexicographic ranking function + supporting invariant.
 
 \subsection{The Non-Termination Problem}
 
-Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of a
-\emph{recurrence set} (open recurrence set in the terminology of \cite{DBLP:conf/tacas/ChenCFNO14}), 
-i.e. a nonempty set of states $G$ such that for each $s \in G$ there
-exists a transition to some $s'\in G$. 
-For our case, given a loop $L = (I,G,T)$, the notion of open recurrent set is encoded by Definition~\ref{def:nonterm-formula}.
+Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
+i.e. a nonempty set of states $N$ such that for each $s \in N$ there
+exists a transition to some $s'\in N$. 
+For our case, given a loop $L = (I,\mathcal{V},G,T)$, the notion of open recurrent set is encoded by Definition~\ref{def:nonterm-formula}.
+
 If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula). %This means that we will not be able to use the solver for the synthesis fragment to solve it.
 
-In order to formulate the non-termination problem in the synthesis fragment, we make use of the notion of \emph{closed recurrence set} introduced by Chen et al. 
-in \cite{DBLP:conf/tacas/ChenCFNO14}. As ooposed to a closed recurrence set, this is a  purely universal property: for each $s \in G$, each of its successors 
-must be in the recurrence set. The non-termination problem thus is equivalent to the
+In order to formulate the non-termination problem inside the synthesis fragment, 
+we make use of the notion of \emph{closed recurrence set} introduced by Chen et al. in \cite{DBLP:conf/tacas/ChenCFNO14}. 
+As opposed to a closed recurrence set, this is a  purely universal property: for each state in the recurrence set $N$, each of its successors 
+must be in $N$. Thus, the non-termination problem becomes equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
+\todo{non-determinism?}\\
 
-\cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14} make use of the syntactic notion of \emph{lasso}.
-%The standard way of proving non-termination is by detecting non-terminating lassos \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}.
+According to \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}, a transition relation is non-terminating iff it has a recurrence set of states.
+Candidate transition relations are 
+\emph{lassos} in the program's CFG. %(they  make use of the syntactic notion of lasso).
 A lasso at a cutpoint location consists of two sequences
 of transitions, the stem and the loop.
 The stem is a finite path from an initial location to the cutpoint location. 
 The loop is a finite path that starts and ends at the cutpoint
-location by following a cyclic path through the controlflow
-graph. A lasso induces an infinite execution if the infinite path obtained by traversing the stem and then unrolling
+location by following a cyclic path through the CFG. 
+A lasso induces an infinite execution if the infinite path obtained by traversing the stem and then unrolling
 the loop infinitely many times is feasible. In this case, the lasso is said to be non-terminating.
 %% We observe that in the case that $T$ is deterministic (that is, each state has
 %% exactly one successor),  the non-termination problem is equivalent to the
 %% satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
-In contrast, our method is purely semantic ...
 
+The method is incomplete as not all non-terminating
+program executions are induced by lassos. An infinite behaviour
+that is not periodic is illustrated by the following program:
 
-\subsection{Program Synthesis as Second-Order Satisfaction}
+Our method is purely semantic. %We extend the notion of recurrence set in order to formulate the 
+We formulate the non-termination problem at the loop level.%, rather than transition relation.
+In our design, a loop $L=(\mathcal{V},I,G,t)$ is non-terminating iff it has a recurrence set of states.\\
 
-With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae above
-belongs to the synthesis fragment.  We use this name because the program synthesis problem can be
-described as finding a satisfying assigment to the following formula, which is the general case of
-the synthesis fragment:
+{\bf Sequential loops.}
+Discuss {\bf [SNT]}.
 
-\begin{definition}[Synthesis Formula]
- \label{def:synth-formula}
- $$\exists P, x . \forall y . \sigma(P, x, y)$$
-\end{definition}
+%% \subsection{Program Synthesis as Second-Order Satisfaction}
 
-Here we can view $\sigma: X \times Y \times (X \times Y \to Z) \to \mathbb{B}$ as a specification function.
-The idea is that $\sigma$ returns true iff the function $P$ computes appropriate outputs
-when fed the inputs $x$ and $y$.  If we can find a function $P$ and a value $x$ that meet the specification
-for all $y$, we have found a solution to the synthesis problem and write $P \models \sigma$.
+%% With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae above
+%% belongs to the synthesis fragment.  We use this name because the program synthesis problem can be
+%% described as finding a satisfying assigment to the following formula, which is the general case of
+%% the synthesis fragment:
+
+%% \begin{definition}[Synthesis Formula]
+%%  \label{def:synth-formula}
+%%  $$\exists P, x . \forall y . \sigma(P, x, y)$$
+%% \end{definition}
+
 
 \section{Solving the Synthesis Formula} \label{sec:synthesis}
 %
