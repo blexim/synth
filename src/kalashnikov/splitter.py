@@ -135,7 +135,7 @@ def replace_nondet(ast, nondet_idx=0):
     return (ast, nondet_idx)
 
 def is_signed(decl):
-  return 'int' in decl.type.type.names
+  return decl.type.type.names in (['int'], ['long'])
 
 def split_func(fd, ofile):
   prog = FlatProgram()
