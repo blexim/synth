@@ -198,6 +198,8 @@ def verif(prog, checker, width, codelen):
   cfile.write(r"""
 #include "synth.h"
 
+volatile int execok;
+
 void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]) {
 """)
 

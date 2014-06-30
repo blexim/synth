@@ -57,16 +57,15 @@ void print_args(word_t args[NARGS]) {
 
 int main(void) {
   word_t args[NARGS];
-  solution_t sol;
   int i;
 
   init_args(args);
-  load_solution(&sol);
+  load_solution(&solution);
 
   do {
     execok = 1;
 
-    if (!check(&sol, args) || !execok) {
+    if (!check(&solution, args) || !execok) {
       print_args(args);
       return 10;
     }

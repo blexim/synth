@@ -131,6 +131,7 @@ class Checker(object):
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
           "-DSZ=128",
           "-DNRES=128",
+          #execcfile,
           os.path.join("interpreter", "exec.c"),
           "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
     else:
