@@ -1,0 +1,67 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x2 << y2;
+t2 = y2 >> t1;
+t3 = y2 ^ t2;
+t4 = !t2 || t1;
+I = max(0x2, y2);
+Program 1:
+t1 = min(y2, y2);
+t2 = 0x6 & y1;
+I = t2 & y1;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y1 * y2;
+t2 = ((sword_t) y1) < ((sword_t) y2);
+t3 = y1 == t2;
+I = t2 + y2;
+Program 1:
+t1 = !y1 || 0x3;
+t2 = y2 / t1;
+I = y1 << t1;
+
+Fastest checker: explicit
+Fails for (8, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0xb * 0xb;
+t2 = 0xb % t1;
+t3 = y2 & t2;
+t4 = t1 <= y1;
+I = t4 - y2;
+Program 1:
+t1 = 0xa + y2;
+t2 = t1 % 0xa;
+t3 = 0xa != t2;
+t4 = 0xa ? y2 : y1;
+I = y1 + y1;
+
+Fastest checker: explicit
+Fails for (9, 0)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 3, 'explicit': 3, 'timeout': 1, 'iterations': 4}
+Perf timers:
+verify: 0.35s
+checker: 119.97s
+gcc: 0.88s
+_: 120.00s
+synth: 119.65s

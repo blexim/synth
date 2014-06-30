@@ -1,0 +1,76 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0xd ^ a;
+t2 = t1 | a;
+t3 = t1 & count;
+t4 = 0xd < t1;
+I = ((sword_t) count) <= ((sword_t) count);
+Program 1:
+t1 = a % tmp;
+t2 = count - count;
+I = 0x3 ? a : 0x3;
+
+Fastest checker: explicit
+Fails for (2, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = a | 0xc;
+Program 1:
+t1 = max(count, a);
+I = 0x4 < tmp;
+
+Fastest checker: explicit
+Fails for (2, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0xb ? 0xb : 0xb;
+t2 = 0xb < a;
+t3 = tmp << t1;
+t4 = !t1 || t1;
+I = t1 + t1;
+Program 1:
+t1 = a % 0xd;
+t2 = !0xd || t1;
+t3 = 0xd * count;
+I = min(a, a);
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 3.28s
+
+Program 0:
+t1 = 0xb ? 0xb : 0xb;
+t2 = 0xb < a;
+t3 = tmp << t1;
+t4 = !t1 || t1;
+I = t1 + t1;
+Program 1:
+t1 = a % 0xd;
+t2 = !0xd || t1;
+t3 = 0xd * count;
+I = min(a, a);
+
+
+Perf counters:
+{'genetic': 3, 'cbmc': 1, 'explicit': 3, 'iterations': 3}
+Perf timers:
+verify: 2.46s
+checker: 3.21s
+gcc: 1.17s
+_: 3.28s
+synth: 0.75s

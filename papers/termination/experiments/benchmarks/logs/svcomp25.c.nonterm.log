@@ -1,0 +1,59 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 13, 3
+Program 0:
+t1 = min(x, x);
+I = x | x;
+
+Fastest checker: explicit
+Fails for (1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 14
+Program 0:
+t1 = x == x;
+t2 = x < 0xc;
+t3 = ((sword_t) t1) < ((sword_t) nondet_0);
+I = ((sword_t) t2) <= ((sword_t) t1);
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: genetic
+Evars: 11, 13
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) 0xc);
+t2 = 0xc * 0xc;
+I = min(0xc, t2);
+
+Fastest checker: explicit
+Correct for wordlen=8
+Fastest checker: cbmc
+Trying to generalize...
+Fastest checker: explicit
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 3, 'cbmc': 5, 'explicit': 4, 'timeout': 1, 'iterations': 3}
+Perf timers:
+gcc: 1.99s
+verify: 118.81s
+checker: 119.91s
+generalize: 114.12s
+synth: 1.13s
+_: 120.00s

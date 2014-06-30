@@ -1,0 +1,840 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+I = i & j;
+Program 1:
+t1 = max(i, c);
+t2 = ((sword_t) 0xb) < ((sword_t) 0xb);
+t3 = !b || b;
+t4 = ((sword_t) a) <= ((sword_t) t2);
+I = t3 - t1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j + 0x8;
+Program 1:
+t1 = b ^ i;
+I = ((sword_t) 0x3) <= ((sword_t) N);
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = N < b;
+t2 = a ^ j;
+t3 = ((sword_t) a) < ((sword_t) c);
+t4 = t2 != t2;
+I = N <= N;
+Program 1:
+t1 = c & M;
+t2 = min(c, a);
+t3 = ~c;
+t4 = i < b;
+I = ((sword_t) t2) < ((sword_t) M);
+
+Fastest checker: explicit
+Fails for (0, 15, 1, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = N << N;
+I = a == i;
+Program 1:
+t1 = ((sword_t) M) >> ((sword_t) M);
+t2 = 0x0 == i;
+t3 = 0x0 < j;
+t4 = min(t1, b);
+I = ((sword_t) 0x0) <= ((sword_t) N);
+
+Fastest checker: explicit
+Fails for (8, 8, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = a - 0x9;
+Program 1:
+t1 = M ? 0x0 : b;
+t2 = a >> t1;
+t3 = -j;
+I = i >> c;
+
+Fastest checker: explicit
+Fails for (0, 9, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1 >> j;
+t2 = b >> 0x1;
+t3 = a << i;
+t4 = 0x1 ? M : t1;
+I = 0x1 - t3;
+Program 1:
+t1 = min(0xd, M);
+I = ~j;
+
+Fastest checker: explicit
+Fails for (1, 11, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j ? i : 0x4;
+t2 = 0x4 * j;
+t3 = b == t1;
+t4 = max(M, 0x4);
+I = ~t1;
+Program 1:
+t1 = ~j;
+t2 = -b;
+t3 = -0x5;
+I = M <= c;
+
+Fastest checker: explicit
+Fails for (0, 14, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~c;
+t2 = b ? M : 0x7;
+I = -0x7;
+Program 1:
+I = ~j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 15, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a + 0x2;
+t2 = N | a;
+t3 = N | c;
+t4 = 0x2 + 0x2;
+I = -t4;
+Program 1:
+t1 = i | j;
+t2 = c - j;
+t3 = M + a;
+t4 = ~j;
+I = ((sword_t) t3) <= ((sword_t) t4);
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 7, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) N) >> ((sword_t) a);
+t2 = j <= j;
+t3 = i | c;
+I = max(M, 0x5);
+Program 1:
+I = ~c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 15, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) j) <= ((sword_t) a);
+I = ~c;
+Program 1:
+t1 = ((sword_t) i) <= ((sword_t) i);
+t2 = c + i;
+I = j - t2;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) i) <= ((sword_t) N);
+I = j + 0xc;
+Program 1:
+t1 = M + a;
+t2 = M * i;
+t3 = t1 != b;
+t4 = N - j;
+t5 = !N || t2;
+t6 = M + i;
+I = t4 + t5;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 1, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a < M;
+t2 = c << 0xc;
+I = !0xc || 0xc;
+Program 1:
+t1 = M + a;
+t2 = M * i;
+t3 = 0x2 != i;
+t4 = t3 - c;
+I = M | t4;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = !0x0 || i;
+t2 = t1 / t1;
+I = !b || t1;
+Program 1:
+t1 = -i;
+t2 = t1 == N;
+I = b ? t1 : N;
+
+Fastest checker: explicit
+Fails for (0, 15, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = b == a;
+t2 = c == M;
+t3 = !0x2 || N;
+t4 = ~t1;
+I = ((sword_t) a) <= ((sword_t) a);
+Program 1:
+t1 = 0xa - j;
+t2 = i ? 0xa : c;
+t3 = min(j, a);
+I = t1 >> a;
+
+Fastest checker: explicit
+Fails for (2, 8, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = M << N;
+I = !M || M;
+Program 1:
+t1 = M + a;
+t2 = M * i;
+t3 = t1 != b;
+t4 = 0x2 - c;
+t5 = t4 + N;
+t6 = j + t4;
+I = b | N;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 2, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) i) <= ((sword_t) N);
+t2 = M / 0x3;
+I = 0x3 ^ i;
+Program 1:
+t1 = M + a;
+t2 = M * i;
+t3 = t1 != b;
+t4 = 0x5 - c;
+I = !a || N;
+
+Fastest checker: explicit
+Fails for (0, 3, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j == j;
+Program 1:
+t1 = b + a;
+t2 = M * i;
+t3 = t1 != b;
+I = 0x2 - j;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 2, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~0xc;
+t2 = max(b, i);
+t3 = t1 != 0xc;
+t4 = ((sword_t) N) <= ((sword_t) c);
+I = ~0xc;
+Program 1:
+t1 = b - a;
+t2 = 0x2 + c;
+t3 = max(t1, N);
+I = -t2;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 14, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0xc;
+Program 1:
+t1 = b - a;
+t2 = 0x4 + c;
+t3 = max(t1, N);
+I = -t2;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 12, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j == j;
+Program 1:
+I = 0x4 - j;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 4, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0x4 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 4, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = c + 0xc;
+Program 1:
+t1 = M + a;
+t2 = M * i;
+t3 = N + j;
+t4 = N + N;
+t5 = a != i;
+I = 0x2 - i;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0x8 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 8, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(M, N);
+t2 = ((sword_t) 0xb) >> ((sword_t) a);
+t3 = 0xb & i;
+t4 = M << t2;
+t5 = ((sword_t) 0xb) < ((sword_t) t1);
+I = t5 + 0xb;
+Program 1:
+t1 = b ^ c;
+I = 0x3 - j;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 3, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = M != N;
+I = ((sword_t) 0x9) >> ((sword_t) a);
+Program 1:
+I = 0x3 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 3, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0x0;
+Program 1:
+t1 = b ^ c;
+t2 = 0xa - j;
+I = t1 & b;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 10, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0x9;
+Program 1:
+t1 = ((sword_t) M) <= ((sword_t) N);
+t2 = 0xa + j;
+I = 0xa - i;
+
+Fastest checker: explicit
+Fails for (0, 10, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(i, N);
+I = ((sword_t) a) <= ((sword_t) i);
+Program 1:
+t1 = j != N;
+t2 = N | c;
+I = !t2 || N;
+
+Fastest checker: explicit
+Fails for (0, 7, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = b + b;
+t2 = ((sword_t) i) < ((sword_t) N);
+t3 = ((sword_t) N) < ((sword_t) b);
+t4 = 0x6 | t1;
+I = ~t4;
+Program 1:
+t1 = min(i, b);
+t2 = b + j;
+I = 0xd - t2;
+
+Fastest checker: explicit
+Fails for (0, 8, 13, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0x1 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 1, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0x2;
+Program 1:
+I = 0xc - j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 12, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = N != M;
+t2 = i + N;
+I = ((sword_t) 0x0) <= ((sword_t) c);
+Program 1:
+t1 = i < M;
+t2 = N + a;
+t3 = 0xe - c;
+t4 = t2 + N;
+I = max(t3, a);
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 7, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0x6;
+Program 1:
+I = 0xd - j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 13, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0xd - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 13, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) 0x3) <= ((sword_t) 0x3);
+t2 = ((sword_t) c) < ((sword_t) a);
+t3 = ~t1;
+I = 0x3 - M;
+Program 1:
+t1 = ((sword_t) j) >> ((sword_t) i);
+t2 = 0xb - c;
+I = c & N;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 11, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(N, c);
+I = max(0x8, M);
+Program 1:
+I = 0xe - j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 14, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = c / 0x2;
+I = 0x2 + M;
+Program 1:
+I = 0x5 - j;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 5, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j == j;
+Program 1:
+I = 0x6 - j;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 6, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0x6 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 6, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0xa - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 10, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !N || i;
+Program 1:
+I = 0x5 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 5, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = M - i;
+t2 = c - N;
+t3 = 0x6 < M;
+I = !N || i;
+Program 1:
+I = 0x9 - c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 9, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0x9;
+Program 1:
+I = 0xb - j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 11, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = !i || i;
+Program 1:
+t1 = i <= M;
+t2 = ~j;
+I = c < t1;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 15, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = c < N;
+t2 = min(c, c);
+I = ((sword_t) a) <= ((sword_t) a);
+Program 1:
+t1 = 0x4 - i;
+I = N == M;
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x3 != N;
+Program 1:
+I = 0xd - i;
+
+Fastest checker: explicit
+Fails for (0, 13, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) b) <= ((sword_t) b);
+t2 = !M || N;
+I = -t2;
+Program 1:
+t1 = b != a;
+t2 = a - j;
+t3 = 0xc - i;
+I = t1 + b;
+
+Fastest checker: explicit
+Fails for (0, 12, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = c < M;
+I = 0x8 + N;
+Program 1:
+I = 0x6 - i;
+
+Fastest checker: explicit
+Fails for (0, 6, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) b) <= ((sword_t) c);
+t2 = max(i, a);
+I = j | t1;
+Program 1:
+I = ~c;
+
+Fastest checker: explicit
+Fails for (0, 0, 2, 15, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a - b;
+I = 0x3 ^ N;
+Program 1:
+I = 0x5 - i;
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = N <= i;
+Program 1:
+t1 = ~i;
+I = !c || i;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 8, 1, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) 0x5) < ((sword_t) i);
+t2 = M == b;
+I = ~M;
+Program 1:
+t1 = max(M, M);
+t2 = ((sword_t) N) <= ((sword_t) c);
+I = 0x3 - i;
+
+Fastest checker: explicit
+Fails for (0, 3, 0, 8, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = N <= b;
+Program 1:
+I = 0x9 - j;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 9, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = c << j;
+I = ~t1;
+Program 1:
+t1 = i <= N;
+I = ~c;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 3, 14, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i | b;
+t2 = j - c;
+t3 = M != t2;
+t4 = ((sword_t) i) < ((sword_t) c);
+I = !t3 || b;
+Program 1:
+t1 = b != M;
+I = ~c;
+
+Fastest checker: explicit
+Fails for (0, 8, 1, 0, 15, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) a) >> ((sword_t) b);
+t2 = j - c;
+I = !t2 || b;
+Program 1:
+t1 = !M || 0x5;
+t2 = a + N;
+t3 = M == c;
+t4 = ((sword_t) j) <= ((sword_t) a);
+I = ~t2;
+
+Fastest checker: explicit
+Fails for (0, 8, 1, 7, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = max(0xa, 0xa);
+Program 1:
+t1 = 0xb < 0xb;
+t2 = !b || 0xb;
+t3 = a << i;
+t4 = i + a;
+t5 = 0xb - t4;
+I = M + t5;
+
+Fastest checker: explicit
+Fails for (3, 8, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = N == i;
+t2 = ((sword_t) j) < ((sword_t) a);
+I = 0x7 | 0x7;
+Program 1:
+t1 = ~i;
+t2 = min(j, c);
+t3 = ((sword_t) b) < ((sword_t) t1);
+t4 = c ? M : M;
+I = ~t2;
+
+Fastest checker: explicit
+Fails for (0, 7, 0, 15, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j * b;
+t2 = i + t1;
+t3 = a | c;
+t4 = ((sword_t) t1) < ((sword_t) t1);
+I = t3 == i;
+Program 1:
+t1 = ((sword_t) b) >> ((sword_t) M);
+t2 = j ? t1 : c;
+I = ~i;
+
+Fastest checker: explicit
+Fails for (9, 9, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x3 == i;
+t2 = i + a;
+t3 = j - b;
+I = c == t3;
+Program 1:
+t1 = j - 0x7;
+t2 = ((sword_t) t1) >> ((sword_t) t1);
+t3 = j - M;
+t4 = max(b, b);
+I = 0x7 >> j;
+
+Fastest checker: explicit
+Fails for (0, 8, 3, 3, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = N ? a : i;
+t2 = M <= b;
+t3 = -a;
+I = M <= M;
+Program 1:
+t1 = j == a;
+t2 = N | a;
+t3 = -i;
+I = t3 <= t1;
+
+Fastest checker: explicit
+Fails for (1, 14, 0, 0, 0, 0, 0)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 62, 'explicit': 62, 'timeout': 1, 'iterations': 63}
+Perf timers:
+verify: 4.54s
+checker: 117.30s
+gcc: 0.91s
+_: 120.00s
+synth: 112.99s

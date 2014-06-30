@@ -1,0 +1,290 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 14, 3
+Program 0:
+t1 = -0x2
+t2 = t1 >> t1
+t3 = t1 < x
+I = t2 / y
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 10, 14
+Program 0:
+t1 = x | x
+t2 = 0xa & x
+t3 = 0xa >>> 0xa
+t4 = y MAX 0xa
+I = t4 = t1
+
+Fastest checker: explicit
+Fails for (10, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 6
+Program 0:
+t1 = x MAX y
+t2 = x = x
+I = t1 = 0x2
+
+Fastest checker: explicit
+Fails for (1, 2)
+
+[]
+Fastest checker: genetic
+Evars: 15, 1
+Program 0:
+t1 = y = y
+t2 = ~0x0
+t3 = x | t1
+I = x / t2
+
+Fastest checker: explicit
+Fails for (15, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 6
+Program 0:
+t1 = 0x3 != x
+t2 = t1 >>> x
+t3 = t1 >>> x
+I = t1 s<= t2
+
+Fastest checker: explicit
+Fails for (3, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 12
+Program 0:
+t1 = ~0x7
+t2 = y < x
+I = t2 >>> x
+
+Fastest checker: explicit
+Fails for (4, 1)
+
+[]
+Fastest checker: genetic
+Evars: 6, 15
+Program 0:
+t1 = x = 0x6
+t2 = ITE(x, 0x6, x)
+I = t1 MIN t1
+
+Fastest checker: explicit
+Fails for (6, 1)
+
+[]
+Fastest checker: genetic
+Evars: 11, 4
+Program 0:
+I = x = 0xb
+
+Fastest checker: explicit
+Fails for (11, 1)
+
+[]
+Fastest checker: genetic
+Evars: 8, 0
+Program 0:
+t1 = ITE(0x8, 0x8, 0x8)
+t2 = y * 0x8
+I = 0x8 = x
+
+Fastest checker: explicit
+Fails for (8, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 9
+Program 0:
+t1 = y - x
+I = 0x2 = x
+
+Fastest checker: explicit
+Fails for (2, 1)
+
+[]
+Fastest checker: genetic
+Evars: 1, 0
+Program 0:
+t1 = 0x2 != y
+t2 = x < 0x2
+I = t1 / x
+
+Fastest checker: explicit
+Fails for (1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 13, 4
+Program 0:
+t1 = y >> y
+t2 = y % x
+t3 = y ==> t2
+t4 = ~y
+I = x = 0xd
+
+Fastest checker: explicit
+Fails for (13, 1)
+
+[]
+Fastest checker: genetic
+Evars: 12, 15
+Program 0:
+t1 = 0xc ^ 0xc
+I = x = 0xc
+
+Fastest checker: explicit
+Fails for (12, 1)
+
+[]
+Fastest checker: genetic
+Evars: 12, 4
+Program 0:
+t1 = x / x
+t2 = ITE(x, y, 0xd)
+t3 = t2 & t2
+t4 = 0xd - y
+t5 = t4 = x
+I = t5 MAX t5
+
+Fastest checker: explicit
+Fails for (13, 0)
+
+[]
+Fastest checker: genetic
+Evars: 9, 12
+Program 0:
+t1 = x MAX x
+t2 = x ^ y
+I = t2 = 0x8
+
+Fastest checker: explicit
+Fails for (8, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 4
+Program 0:
+t1 = y << y
+t2 = t1 MIN t1
+t3 = t2 | x
+t4 = 0x7 ^ y
+I = 0x7 = t3
+
+Fastest checker: explicit
+Fails for (5, 1)
+
+[]
+Fastest checker: genetic
+Evars: 7, 10
+Program 0:
+t1 = x * y
+t2 = x >>> 0x7
+t3 = -t2
+I = t1 = 0x7
+
+Fastest checker: explicit
+Fails for (7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 14, 4
+Program 0:
+t1 = 0xe <= x
+t2 = 0xe * y
+I = t2 = x
+
+Fastest checker: explicit
+Fails for (14, 1)
+
+[]
+Fastest checker: genetic
+Evars: 9, 8
+Program 0:
+t1 = x * 0x9
+t2 = x >>> y
+t3 = t2 + 0x9
+I = t1 = y
+
+Fastest checker: explicit
+Fails for (9, 1)
+
+[]
+Fastest checker: genetic
+Evars: 6, 11
+Program 0:
+t1 = -0xb
+t2 = x + y
+I = t1 s< t2
+
+Fastest checker: explicit
+Fails for (7, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 5
+Program 0:
+t1 = x & x
+t2 = x < y
+t3 = 0x3 >>> 0x3
+t4 = 0x3 + 0x3
+t5 = y & y
+t6 = t5 + x
+I = t6 = t4
+
+Fastest checker: explicit
+Fails for (6, 0)
+
+[]
+Fastest checker: genetic
+Evars: 4, 5
+Program 0:
+t1 = x MIN y
+t2 = x ^ t1
+t3 = t2 - x
+t4 = t3 MIN t2
+t5 = 0x5 / x
+I = t5 & t4
+
+Fastest checker: explicit
+Fails for (3, 2)
+
+[]
+Fastest checker: genetic
+Evars: 13, 14
+Program 0:
+t1 = 0xc | 0xc
+t2 = y ^ t1
+t3 = y * t2
+t4 = t3 / 0xc
+I = t3 = x
+
+Fastest checker: explicit
+Fails for (12, 2)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 23, 'explicit': 23, 'timeout': 1, 'iterations': 24}
+Perf timers:
+verify: 0.30s
+checker: 119.55s
+gcc: 0.46s
+_: 120.00s
+synth: 119.32s

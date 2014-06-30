@@ -1,0 +1,934 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 10, 14
+Program 0:
+I = 0x9 != x;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 12, 6
+Program 0:
+I = m == 0x6;
+
+Fastest checker: explicit
+Fails for (5, 6)
+
+[]
+Fastest checker: genetic
+Evars: 0, 11
+Program 0:
+t1 = x + 0xc;
+t2 = x ? 0xc : 0xc;
+t3 = min(t2, 0xc);
+t4 = m + t1;
+I = t4 <= m;
+
+Fastest checker: explicit
+Fails for (4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 6, 11
+Program 0:
+t1 = 0x7 - 0x7;
+t2 = m ^ x;
+t3 = ~m;
+t4 = t3 ^ t2;
+I = ((sword_t) t2) < ((sword_t) t1);
+
+Fastest checker: explicit
+Fails for (15, 0)
+
+[]
+Fastest checker: genetic
+Evars: 0, 7
+Program 0:
+t1 = 0x9 <= m;
+t2 = 0x9 | t1;
+t3 = x - x;
+I = x <= t3;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 9, 8
+Program 0:
+I = ((sword_t) m) < ((sword_t) 0x9);
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: genetic
+Evars: 11, 13
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) 0xc);
+t2 = 0xc * 0xc;
+I = min(0xc, t2);
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 13, 3
+Program 0:
+t1 = min(m, m);
+I = m | m;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 11, 15
+Program 0:
+t1 = ((sword_t) 0x1) >> ((sword_t) m);
+I = ((sword_t) m) >> ((sword_t) 0x1);
+
+Fastest checker: explicit
+Fails for (1, 2)
+
+[]
+Fastest checker: genetic
+Evars: 10, 13
+Program 0:
+I = ((sword_t) 0xb) <= ((sword_t) m);
+
+Fastest checker: explicit
+Fails for (10, 11)
+
+[]
+Fastest checker: genetic
+Evars: 12, 6
+Program 0:
+I = m == 0x6;
+
+Fastest checker: explicit
+Fails for (5, 6)
+
+[]
+Fastest checker: genetic
+Evars: 8, 15
+Program 0:
+t1 = x <= x;
+t2 = t1 + t1;
+t3 = t1 ? m : x;
+t4 = t1 ? 0xd : t1;
+I = 0xd <= m;
+
+Fastest checker: explicit
+Fails for (12, 13)
+
+[]
+Fastest checker: genetic
+Evars: 6, 15
+Program 0:
+t1 = x == 0x6;
+t2 = x ? 0x6 : x;
+I = min(t1, t1);
+
+Fastest checker: explicit
+Fails for (6, 0)
+
+[]
+Fastest checker: genetic
+Evars: 10, 15
+Program 0:
+I = ((sword_t) 0xe) <= ((sword_t) m);
+
+Fastest checker: explicit
+Fails for (13, 14)
+
+[]
+Fastest checker: genetic
+Evars: 41, 196
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0xf1);
+t2 = m ? 0xf1 : x;
+I = -t1;
+
+Fastest checker: explicit
+Fails for (128, 129)
+
+[]
+Fastest checker: genetic
+Evars: 232, 13
+Program 0:
+t1 = ((sword_t) 0x9) >> ((sword_t) 0x9);
+t2 = 0x9 * 0x9;
+t3 = x + m;
+t4 = 0x9 + t3;
+t5 = t4 % 0x9;
+t6 = ((sword_t) t4) < ((sword_t) 0x9);
+I = t6 * 0x9;
+
+Fastest checker: explicit
+Fails for (119, 0)
+
+[]
+Fastest checker: genetic
+Evars: 132, 79
+Program 0:
+t1 = m + x;
+t2 = m + m;
+I = ((sword_t) t2) >> ((sword_t) 0xff);
+
+Fastest checker: explicit
+Fails for (63, 64)
+
+[]
+Fastest checker: genetic
+Evars: 186, 79
+Program 0:
+t1 = m & 0x45;
+t2 = m + x;
+I = ((sword_t) 0x45) < ((sword_t) m);
+
+Fastest checker: explicit
+Fails for (69, 70)
+
+[]
+Fastest checker: genetic
+Evars: 63, 222
+Program 0:
+I = m / 0x89;
+
+Fastest checker: explicit
+Fails for (136, 137)
+
+[]
+Fastest checker: genetic
+Evars: 239, 230
+Program 0:
+t1 = m + 0xd5;
+I = 0xd5 < m;
+
+Fastest checker: explicit
+Fails for (213, 214)
+
+[]
+Fastest checker: genetic
+Evars: 150, 103
+Program 0:
+t1 = 0x86 & x;
+t2 = !0x86 || m;
+t3 = min(x, m);
+I = ((sword_t) x) < ((sword_t) t3);
+
+Fastest checker: explicit
+Fails for (255, 0)
+
+[]
+Fastest checker: genetic
+Evars: 71, 169
+Program 0:
+t1 = x & m;
+t2 = t1 >> m;
+t3 = ((sword_t) t1) <= ((sword_t) t2);
+t4 = t1 ? m : 0x4e;
+I = ((sword_t) m) < ((sword_t) t1);
+
+Fastest checker: explicit
+Correct for wordlen=8
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 16
+[]
+Fastest checker: genetic
+Evars: 186, 64
+Program 0:
+t1 = x | x;
+t2 = t1 ? m : 0x80;
+t3 = -t1;
+I = !t3 || t2;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 239, 154
+Program 0:
+t1 = ((sword_t) m) < ((sword_t) x);
+t2 = ((sword_t) m) >> ((sword_t) 0x4);
+I = min(m, t1);
+
+Fastest checker: explicit
+Fails for (2, 1)
+
+[]
+Fastest checker: genetic
+Evars: 125, 14
+Program 0:
+t1 = 0xd1 << 0xd1;
+I = ((sword_t) m) >> ((sword_t) 0xd1);
+
+Fastest checker: explicit
+Fails for (1, 2)
+
+[]
+Fastest checker: genetic
+Evars: 95, 227
+Program 0:
+t1 = max(m, 0xcc);
+I = 0xcc <= m;
+
+Fastest checker: cbmc
+Fails for (203, 204)
+
+[]
+Fastest checker: genetic
+Evars: 162, 146
+Program 0:
+t1 = m >> m;
+t2 = 0xb0 <= m;
+I = t1 + t1;
+
+Fastest checker: explicit
+Fails for (15, 16)
+
+[]
+Fastest checker: genetic
+Evars: 12, 6
+Program 0:
+I = m == 0x6;
+
+Fastest checker: explicit
+Fails for (5, 6)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+Fastest checker: cbmc
+Fails for (16348, 16349)
+
+[]
+Fastest checker: genetic
+Evars: 50729, 61380
+Program 0:
+t1 = ((sword_t) m) >> ((sword_t) 0x91f1);
+t2 = m ? 0x91f1 : x;
+I = -t1;
+
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 83, 'cbmc': 55, 'explicit': 35, 'timeout': 1, 'iterations': 83}
+Perf timers:
+gcc: 2.77s
+verify: 114.15s
+checker: 117.95s
+generalize: 0.02s
+synth: 4.71s
+_: 120.00s

@@ -1,0 +1,615 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Correct for wordlen=4
+Fastest checker: cbmc
+Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 254, 128, 0, 244, 0)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 54, 'cbmc': 57, 'timeout': 1, 'iterations': 54}
+Perf timers:
+gcc: 2.07s
+verify: 116.98s
+checker: 118.61s
+generalize: 6.11s
+synth: 2.63s
+_: 120.00s

@@ -1,0 +1,506 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 14, 9, 7, 9, 14, 12, 1
+Program 0:
+t1 = nondet_2 + nondet_2
+I = nondet_2 - z
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 6, 10, 11, 7, 8, 4
+Program 0:
+t1 = y / y
+t2 = z <= z
+t3 = y & nondet_0
+I = nondet_1 >> x
+
+Fastest checker: explicit
+Fails for (0, 0, 2, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 5, 11, 4, 13, 5, 6
+Program 0:
+t1 = y * nondet_1
+t2 = z < y
+t3 = t1 < t2
+t4 = nondet_1 * nondet_2
+I = t4 MAX t2
+
+Fastest checker: explicit
+Fails for (0, 1, 1, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 12, 9, 8, 14, 1, 4, 10
+Program 0:
+I = z s<= nondet_0
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 1, 0, 12, 2, 4, 12, 14
+Program 0:
+I = -nondet_3
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 14, 1, 2, 7, 10, 13, 12
+Program 0:
+t1 = nondet_1 <= z
+t2 = z % 0x6
+t3 = z = z
+t4 = nondet_3 != x
+I = 0x6 < y
+
+Fastest checker: cbmc
+Fails for (4, 0, 2, 0, 8, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 11, 10, 7, 5, 12, 8
+Program 0:
+t1 = x >> z
+t2 = x MIN nondet_1
+I = t1 MIN nondet_3
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 2, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 15, 10, 8, 14, 12, 10, 6
+Program 0:
+t1 = -nondet_0
+t2 = t1 * nondet_3
+t3 = t1 MAX nondet_0
+I = t2 % z
+
+Fastest checker: cbmc
+Fails for (2, 0, 0, 4, 1, 9, 11)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5, 12
+Program 0:
+t1 = nondet_2 < nondet_3
+I = nondet_2 * nondet_0
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 4, 2, 2, 13, 6, 7
+Program 0:
+t1 = nondet_0 = x
+I = nondet_2 MIN nondet_3
+
+Fastest checker: explicit
+Fails for (1, 1, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 7, 13, 10, 8, 10, 7, 1
+Program 0:
+t1 = z < nondet_1
+t2 = t1 >> 0xf
+t3 = nondet_1 / z
+t4 = x MIN 0xf
+I = nondet_1 >>> 0xf
+
+Fastest checker: explicit
+Fails for (0, 0, 8, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 14, 6, 5, 2, 11, 10
+Program 0:
+I = nondet_3 >>> nondet_3
+
+Fastest checker: explicit
+Fails for (4, 0, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 9, 2, 14, 12, 13, 14, 1
+Program 0:
+I = x s< nondet_2
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 13, 9, 11, 13, 12, 2, 9
+Program 0:
+I = nondet_2 >>> nondet_2
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 8, 1, 13, 13, 1, 5, 12
+Program 0:
+t1 = y + nondet_1
+t2 = nondet_3 <= nondet_1
+I = nondet_0 & nondet_1
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 3, 9, 8, 9, 6, 14
+Program 0:
+t1 = x & z
+I = x s< 0xd
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 8, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 15, 0, 15, 15, 9, 4, 15
+Program 0:
+t1 = 0xa - y
+t2 = nondet_2 >> nondet_3
+I = nondet_3 MIN nondet_1
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 9, 15, 6, 10, 4, 12, 5
+Program 0:
+t1 = x / y
+t2 = ~nondet_3
+I = nondet_0 & nondet_3
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 6, 10, 2, 15, 13, 10, 1
+Program 0:
+t1 = z MAX z
+I = nondet_2 / 0x8
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 11, 4, 13, 11, 9, 14, 8
+Program 0:
+t1 = nondet_2 - y
+I = nondet_0 >>> z
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 2, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 6, 14, 0, 1, 1, 10
+Program 0:
+t1 = ITE(nondet_0, nondet_0, z)
+t2 = y s< x
+t3 = x | nondet_0
+I = t1 s< t2
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 8, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 1, 15, 3, 13, 9, 4, 10
+Program 0:
+t1 = x / x
+t2 = y s<= z
+t3 = ~nondet_0
+t4 = z >> t3
+I = t4 * nondet_1
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 3, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 15, 14, 7, 13, 10, 15, 4
+Program 0:
+t1 = nondet_3 | z
+t2 = 0xe ^ nondet_3
+t3 = y - nondet_1
+t4 = t1 >>> z
+I = nondet_2 / 0xe
+
+Fastest checker: explicit
+Fails for (0, 14, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 8, 4, 5, 3, 13, 14, 3
+Program 0:
+t1 = y * y
+t2 = nondet_3 | t1
+t3 = y <= t1
+t4 = t3 / y
+I = 0x2 s<= z
+
+Fastest checker: cbmc
+Fails for (3, 0, 4, 0, 11, 1, 2)
+
+[]
+Fastest checker: genetic
+Evars: 6, 11, 3, 14, 1, 13, 13
+Program 0:
+t1 = nondet_0 >>> nondet_1
+t2 = x MIN t1
+t3 = nondet_1 <= nondet_1
+t4 = nondet_1 ^ 0x7
+I = nondet_3 >> t4
+
+Fastest checker: explicit
+Fails for (8, 0, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 9, 13, 9, 11, 7, 10, 10
+Program 0:
+t1 = x ==> 0xe
+I = nondet_1 % z
+
+Fastest checker: cbmc
+Fails for (0, 0, 2, 0, 11, 1, 4)
+
+[]
+Fastest checker: genetic
+Evars: 13, 11, 7, 2, 12, 12, 10
+Program 0:
+I = nondet_2 % y
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Evars: 15, 15, 12, 10, 12, 10, 7
+Program 0:
+t1 = nondet_0 | nondet_2
+t2 = x * nondet_2
+t3 = t2 ==> y
+t4 = nondet_3 ==> z
+I = nondet_2 % z
+
+Fastest checker: cbmc
+Fails for (0, 1, 2, 0, 1, 3, 3)
+
+[]
+Fastest checker: genetic
+Evars: 5, 14, 3, 5, 12, 4, 3
+Program 0:
+t1 = -y
+t2 = nondet_3 MAX nondet_3
+t3 = t2 * 0xd
+I = x = t1
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 15, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 3, 6, 15, 15, 14, 14
+Program 0:
+t1 = nondet_2 MAX z
+I = 0xd <= y
+
+Fastest checker: cbmc
+Fails for (0, 0, 1, 0, 1, 13, 4)
+
+[]
+Fastest checker: genetic
+Evars: 4, 10, 12, 13, 5, 5, 5
+Program 0:
+I = z = 0x5
+
+Fastest checker: cbmc
+Fails for (0, 0, 1, 0, 9, 8, 5)
+
+[]
+Fastest checker: genetic
+Evars: 15, 4, 8, 11, 3, 12, 10
+Program 0:
+t1 = x <= nondet_2
+I = t1 >>> y
+
+Fastest checker: cbmc
+Fails for (0, 12, 1, 0, 8, 4, 9)
+
+[]
+Fastest checker: genetic
+Evars: 5, 12, 1, 4, 4, 6, 11
+Program 0:
+t1 = nondet_0 / y
+t2 = 0xb + nondet_3
+t3 = nondet_3 * z
+t4 = x ==> t3
+I = t2 = t1
+
+Fastest checker: explicit
+Fails for (5, 0, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 7, 8, 7, 5, 15, 11, 6
+Program 0:
+t1 = x ==> nondet_1
+t2 = ~nondet_1
+t3 = nondet_2 ^ y
+I = nondet_2 / t2
+
+Fastest checker: explicit
+Fails for (0, 15, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 13, 14, 4, 14
+Program 0:
+t1 = nondet_1 >>> y
+t2 = x + nondet_0
+t3 = nondet_1 >>> nondet_3
+t4 = y = y
+I = nondet_0 / 0xc
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 12, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 6, 6, 7, 3, 12, 14, 4
+Program 0:
+t1 = nondet_1 >>> y
+t2 = y * nondet_2
+t3 = y + nondet_1
+t4 = nondet_2 + nondet_2
+I = 0xc = x
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 12, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 15, 11
+Program 0:
+t1 = nondet_1 >>> y
+t2 = ~nondet_1
+t3 = t2 MAX y
+t4 = x >>> y
+t5 = t4 = nondet_2
+I = t2 < nondet_2
+
+Fastest checker: explicit
+Fails for (0, 15, 1, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 13, 4, 10, 10, 6, 12
+Program 0:
+t1 = nondet_1 & nondet_2
+t2 = nondet_2 + nondet_2
+I = nondet_0 = 0xa
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 10, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 8, 7, 8, 15, 6, 14
+Program 0:
+t1 = x >> nondet_0
+t2 = nondet_1 >> nondet_0
+I = t2 MIN nondet_0
+
+Fastest checker: explicit
+Fails for (0, 0, 2, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 13, 8, 15, 2, 10, 11, 14
+Program 0:
+t1 = z / 0xc
+t2 = nondet_1 != x
+I = t1 MIN t2
+
+Fastest checker: cbmc
+Fails for (0, 8, 0, 0, 4, 9, 12)
+
+[]
+Fastest checker: genetic
+Evars: 15, 10, 5, 12, 15, 1, 7
+Program 0:
+t1 = nondet_2 / y
+t2 = nondet_0 * y
+t3 = nondet_0 >>> nondet_2
+t4 = t3 >>> nondet_0
+I = t4 = x
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 4, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 15, 3, 13, 1, 5, 14
+Program 0:
+t1 = nondet_0 % z
+I = t1 << 0x3
+
+Fastest checker: cbmc
+Fails for (0, 0, 1, 7, 1, 9, 2)
+
+[]
+Fastest checker: genetic
+Evars: 5, 8, 7, 8, 10, 7, 5
+Program 0:
+t1 = nondet_1 & nondet_2
+t2 = nondet_1 MIN nondet_2
+I = t2 & nondet_3
+
+Fastest checker: explicit
+Fails for (1, 1, 1, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 8, 7, 8, 15, 8, 13
+Program 0:
+t1 = nondet_1 & nondet_2
+t2 = nondet_2 MIN nondet_1
+I = t2 MIN nondet_0
+
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 44, 'cbmc': 10, 'explicit': 33, 'timeout': 1, 'iterations': 44}
+Perf timers:
+verify: 117.69s
+checker: 118.72s
+gcc: 0.48s
+_: 120.01s
+synth: 2.16s

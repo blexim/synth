@@ -1,0 +1,718 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Correct for wordlen=4
+Fastest checker: cbmc
+Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: genetic
+Evars: 11, 13, 4, 10, 10, 6
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) n);
+t2 = z * 0xc;
+I = min(m, x);
+
+Fastest checker: cbmc
+Fails for (0, 250, 64, 96, 240, 4)
+
+[]
+Fastest checker: genetic
+Evars: 6, 8, 9, 4, 12, 4
+Program 0:
+t1 = y | x;
+t2 = m <= y;
+t3 = m >> m;
+t4 = t3 == t2;
+I = max(t2, t4);
+
+Fastest checker: explicit
+Fails for (0, 100, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 9, 3, 11, 12, 0, 5
+Program 0:
+t1 = ~n;
+t2 = m ^ x;
+t3 = t2 <= t1;
+I = nondet_0 >> 0x2;
+
+Fastest checker: explicit
+Fails for (4, 100, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+Fastest checker: cbmc
+Fails for (0, 131, 234, 171, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 0, 5, 2, 10, 13, 5
+Program 0:
+t1 = max(z, 0x9);
+t2 = 0x9 - t1;
+t3 = x != n;
+t4 = z < y;
+I = z * y;
+
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 54, 'cbmc': 55, 'explicit': 2, 'timeout': 1, 'iterations': 54}
+Perf timers:
+gcc: 2.07s
+verify: 117.09s
+checker: 118.55s
+generalize: 6.53s
+synth: 2.57s
+_: 120.00s

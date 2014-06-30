@@ -1,0 +1,138 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i < 0x7;
+t2 = x ^ i;
+t3 = ((sword_t) t2) < ((sword_t) i);
+t4 = t1 != t3;
+I = t3 <= t3;
+Program 1:
+t1 = 0x6 & 0x6;
+t2 = min(t1, i);
+t3 = ~x;
+t4 = x < i;
+I = ((sword_t) z) < ((sword_t) z);
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y & 0xd;
+I = y * 0xd;
+Program 1:
+t1 = y << x;
+t2 = t1 * y;
+t3 = ~z;
+t4 = ~y;
+I = y / x;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i << 0x4;
+I = max(y, t1);
+Program 1:
+I = i >> z;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~i;
+t2 = ((sword_t) t1) >> ((sword_t) z);
+t3 = x % t1;
+t4 = ((sword_t) t1) >> ((sword_t) t3);
+I = i <= x;
+Program 1:
+t1 = x ^ 0xf;
+t2 = t1 * t1;
+t3 = i >> 0xf;
+I = i + t1;
+
+Fastest checker: explicit
+Fails for (15, 1, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x + i;
+I = min(x, i);
+Program 1:
+t1 = i - y;
+I = ((sword_t) 0x1) <= ((sword_t) x);
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y << i;
+t2 = t1 * t1;
+I = !t2 || x;
+Program 1:
+t1 = max(i, 0xf);
+I = ((sword_t) i) >> ((sword_t) z);
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = z ? y : 0x8;
+t2 = z == t1;
+I = ((sword_t) 0x8) <= ((sword_t) z);
+Program 1:
+t1 = x == x;
+t2 = !t1 || 0x6;
+t3 = t1 & i;
+t4 = 0x6 <= x;
+I = t3 ^ i;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Finished in 12.45s
+
+Program 0:
+t1 = z ? y : 0x80000000L;
+t2 = z == t1;
+I = ((sword_t) 0x80000000L) <= ((sword_t) z);
+Program 1:
+t1 = x == x;
+t2 = !t1 || 0x60000000;
+t3 = t1 & i;
+t4 = 0x60000000 <= x;
+I = t3 ^ i;
+
+
+Perf counters:
+{'genetic': 7, 'cbmc': 5, 'explicit': 7, 'iterations': 7}
+Perf timers:
+gcc: 1.19s
+verify: 11.19s
+checker: 12.17s
+generalize: 8.57s
+synth: 1.05s
+_: 12.45s

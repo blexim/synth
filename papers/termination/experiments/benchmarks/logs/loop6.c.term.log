@@ -1,0 +1,43 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x5 == 0x5;
+Program 1:
+t1 = ((sword_t) 0x1) <= ((sword_t) 0x1);
+t2 = x & x;
+t3 = ~t1;
+t4 = 0x1 / 0x1;
+I = t1 < x;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 3.10s
+
+Program 0:
+I = 0x5 == 0x5;
+Program 1:
+t1 = ((sword_t) 0x1) <= ((sword_t) 0x1);
+t2 = x & x;
+t3 = ~t1;
+t4 = 0x1 / 0x1;
+I = t1 < x;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 2.49s
+checker: 3.09s
+gcc: 1.16s
+_: 3.10s
+synth: 0.61s

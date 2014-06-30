@@ -1,0 +1,150 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) nondet_0) >> ((sword_t) 0xc);
+t2 = 0xc * 0xc;
+I = min(nondet_0, x);
+Program 1:
+I = ((sword_t) 0x0) <= ((sword_t) 0x0);
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y >> nondet_2;
+t2 = ((sword_t) x) >> ((sword_t) 0x4);
+t3 = 0x4 * t2;
+t4 = 0x4 != 0x4;
+I = -0x4;
+Program 1:
+I = max(y, nondet_2);
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 | x;
+t2 = nondet_2 ^ x;
+I = ((sword_t) t1) <= ((sword_t) y);
+Program 1:
+I = y << y;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) nondet_1) >> ((sword_t) nondet_0);
+t2 = t1 != y;
+t3 = 0x2 << t1;
+I = ~nondet_1;
+Program 1:
+t1 = x <= nondet_1;
+I = nondet_2 << x;
+
+Fastest checker: explicit
+Fails for (0, 15, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x5 == 0x5;
+Program 1:
+t1 = ((sword_t) nondet_1) <= ((sword_t) nondet_1);
+t2 = nondet_1 & nondet_2;
+t3 = ~nondet_1;
+t4 = y / 0x1;
+I = 0x1 < y;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(0xe, x);
+t2 = nondet_1 | nondet_0;
+I = 0xe == 0xe;
+Program 1:
+t1 = x ? 0xe : nondet_2;
+t2 = ((sword_t) nondet_0) <= ((sword_t) t1);
+t3 = ((sword_t) x) < ((sword_t) x);
+I = t3 | x;
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y + nondet_2;
+t2 = 0x6 * nondet_0;
+t3 = t1 >> t2;
+t4 = t2 == t2;
+I = ((sword_t) 0x6) <= ((sword_t) 0x6);
+Program 1:
+t1 = ((sword_t) y) <= ((sword_t) x);
+t2 = y >> nondet_1;
+I = ((sword_t) nondet_1) < ((sword_t) nondet_2);
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) nondet_2) <= ((sword_t) x);
+t2 = nondet_0 <= t1;
+t3 = t2 * nondet_2;
+t4 = -nondet_1;
+I = -0xa;
+Program 1:
+t1 = -nondet_1;
+t2 = min(x, x);
+I = !nondet_0 || y;
+
+Fastest checker: explicit
+Fails for (2, 0, 1, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = nondet_1 <= nondet_1;
+Program 1:
+t1 = nondet_2 | nondet_1;
+I = min(y, x);
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 4.22s
+
+Program 0:
+I = nondet_1 <= nondet_1;
+Program 1:
+t1 = nondet_2 | nondet_1;
+I = min(y, x);
+
+
+Perf counters:
+{'genetic': 9, 'cbmc': 1, 'explicit': 9, 'iterations': 9}
+Perf timers:
+verify: 2.78s
+checker: 3.87s
+gcc: 1.20s
+_: 4.22s
+synth: 1.19s

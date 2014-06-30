@@ -1,0 +1,47 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x % 0x2;
+t2 = 0x2 ? 0x2 : t1;
+t3 = 0x2 ? t1 : t1;
+I = 0x2 + t1;
+Program 1:
+t1 = -x;
+t2 = 0xe + 0xe;
+t3 = -x;
+I = t3 | t1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.98s
+
+Program 0:
+t1 = x % 0x2;
+t2 = 0x2 ? 0x2 : t1;
+t3 = 0x2 ? t1 : t1;
+I = 0x2 + t1;
+Program 1:
+t1 = -x;
+t2 = 0xe + 0xe;
+t3 = -x;
+I = t3 | t1;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 2.40s
+checker: 2.94s
+gcc: 1.12s
+_: 2.98s
+synth: 0.59s

@@ -1,0 +1,703 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = d ^ 0xd;
+t2 = nondet_2 | 0xd;
+t3 = t1 & nondet_0;
+t4 = nondet_1 < x;
+I = ((sword_t) nondet_0) <= ((sword_t) nondet_0);
+Program 1:
+t1 = d % nondet_1;
+t2 = d - 0x3;
+I = 0x3 ? t1 : nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1 >> nondet_1;
+I = t1 / 0x1;
+Program 1:
+t1 = !x || nondet_2;
+t2 = ~nondet_0;
+t3 = d ? d : t1;
+t4 = y ^ x;
+I = nondet_1 | y;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 == 0x8;
+t2 = ((sword_t) 0x8) >> ((sword_t) x);
+I = x ? y : 0x8;
+Program 1:
+t1 = ((sword_t) nondet_2) < ((sword_t) nondet_2);
+t2 = ((sword_t) nondet_2) >> ((sword_t) nondet_1);
+t3 = !t1 || nondet_0;
+I = x + d;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(nondet_2, d);
+t2 = 0x2 != y;
+t3 = nondet_0 <= nondet_2;
+I = x - 0x2;
+Program 1:
+t1 = min(y, nondet_0);
+I = x & 0x3;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 2, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~y;
+t2 = 0x9 << t1;
+I = !y || t1;
+Program 1:
+t1 = x + nondet_1;
+t2 = nondet_1 / 0xc;
+I = x ? y : nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 15, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_0 == d;
+I = !d || x;
+Program 1:
+t1 = min(x, 0x9);
+I = ~nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(x, x);
+t2 = t1 - y;
+I = ~0x3;
+Program 1:
+t1 = nondet_2 >> nondet_0;
+t2 = ((sword_t) 0x9) < ((sword_t) x);
+t3 = d ^ y;
+t4 = 0x9 & t3;
+I = nondet_1 | x;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(nondet_1, nondet_1);
+t2 = d >> t1;
+t3 = ~x;
+t4 = t2 == d;
+I = !t4 || t3;
+Program 1:
+I = d ^ 0x8;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 15, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = y - 0x9;
+Program 1:
+t1 = x ? d : nondet_0;
+t2 = nondet_1 >> 0x0;
+t3 = -y;
+I = d >> d;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 9, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = !nondet_2 || nondet_1;
+t2 = x - d;
+I = t1 - 0x8;
+Program 1:
+t1 = nondet_1 | nondet_2;
+t2 = d * d;
+t3 = ((sword_t) x) < ((sword_t) d);
+I = t3 <= x;
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(0x1, nondet_0);
+t2 = max(nondet_2, nondet_1);
+t3 = ((sword_t) nondet_0) <= ((sword_t) nondet_1);
+I = t1 <= d;
+Program 1:
+t1 = -y;
+t2 = nondet_0 + d;
+t3 = min(d, t1);
+I = y << nondet_1;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 - nondet_1;
+t2 = t1 ? y : t1;
+t3 = ~t1;
+I = !t2 || nondet_1;
+Program 1:
+t1 = max(nondet_2, d);
+I = nondet_2 / 0x1;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(d, d);
+I = nondet_0 + 0x2;
+Program 1:
+t1 = -x;
+t2 = nondet_0 >> t1;
+I = t2 ? nondet_1 : d;
+
+Fastest checker: explicit
+Fails for (0, 0, 14, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = y | 0x7;
+Program 1:
+t1 = nondet_0 * d;
+t2 = y % 0xa;
+t3 = d >> nondet_0;
+I = d & d;
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x3 << nondet_0;
+Program 1:
+t1 = d ? 0x4 : d;
+t2 = x + nondet_1;
+t3 = -t2;
+t4 = ((sword_t) nondet_2) < ((sword_t) t3);
+I = ((sword_t) y) >> ((sword_t) nondet_1);
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) y) < ((sword_t) x);
+t2 = 0xf - nondet_2;
+t3 = nondet_1 * nondet_2;
+t4 = d & nondet_0;
+I = ~d;
+Program 1:
+t1 = ((sword_t) x) >> ((sword_t) nondet_1);
+I = y << nondet_1;
+
+Fastest checker: explicit
+Fails for (15, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y ^ d;
+t2 = t1 < d;
+t3 = t2 - d;
+t4 = d ? nondet_0 : t1;
+I = t4 - 0x6;
+Program 1:
+t1 = ((sword_t) nondet_1) < ((sword_t) 0xe);
+t2 = y >> nondet_0;
+I = min(d, x);
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 6, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 - d;
+t2 = nondet_2 ^ 0x5;
+I = t2 - y;
+Program 1:
+t1 = -d;
+t2 = max(t1, x);
+t3 = max(x, nondet_1);
+I = y < 0x8;
+
+Fastest checker: explicit
+Fails for (5, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = !y || nondet_2;
+t2 = ((sword_t) x) <= ((sword_t) nondet_2);
+t3 = d + nondet_1;
+I = ~nondet_1;
+Program 1:
+t1 = nondet_2 < 0x1;
+t2 = t1 < x;
+t3 = nondet_2 >> nondet_2;
+I = x & d;
+
+Fastest checker: explicit
+Fails for (0, 15, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_0 ? nondet_2 : nondet_2;
+I = -0xe;
+Program 1:
+t1 = nondet_1 | x;
+I = x <= y;
+
+Fastest checker: explicit
+Fails for (0, 1, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(0x4, nondet_2);
+I = nondet_1 + 0x4;
+Program 1:
+t1 = x != nondet_1;
+t2 = x + nondet_0;
+t3 = min(y, x);
+I = ((sword_t) nondet_1) < ((sword_t) nondet_2);
+
+Fastest checker: explicit
+Fails for (0, 12, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x >> x;
+t2 = d & x;
+t3 = x & y;
+I = t3 <= y;
+Program 1:
+t1 = 0x7 <= nondet_2;
+I = y << x;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 4, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x << 0x9;
+I = 0x9 ? 0x9 : x;
+Program 1:
+t1 = min(nondet_0, nondet_0);
+t2 = ~0x1;
+t3 = min(x, d);
+t4 = nondet_0 ? nondet_1 : t3;
+I = t2 < y;
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 2, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_0 == x;
+t2 = t1 | x;
+t3 = !y || y;
+t4 = nondet_2 != t1;
+I = max(y, t3);
+Program 1:
+t1 = y + y;
+t2 = t1 << x;
+t3 = nondet_2 + 0x8;
+I = -y;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 3, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) d);
+t2 = x * 0xc;
+I = 0xc + nondet_1;
+Program 1:
+t1 = y * d;
+t2 = nondet_0 ? x : t1;
+t3 = ((sword_t) nondet_0) < ((sword_t) t2);
+I = !nondet_1 || nondet_1;
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ((sword_t) 0xc) >> ((sword_t) d);
+Program 1:
+I = y * x;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ((sword_t) 0xc) >> ((sword_t) d);
+Program 1:
+t1 = y << x;
+t2 = d ^ x;
+I = nondet_1 ? d : x;
+
+Fastest checker: explicit
+Fails for (1, 1, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) d);
+t2 = nondet_1 + d;
+t3 = nondet_2 - 0xc;
+I = t3 ^ y;
+Program 1:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+t2 = x + nondet_1;
+I = max(y, 0x0);
+
+Fastest checker: explicit
+Fails for (12, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) 0xc) >> ((sword_t) d);
+t2 = x * 0xc;
+t3 = min(y, nondet_1);
+I = 0xc + nondet_2;
+Program 1:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+t2 = nondet_1 + x;
+t3 = nondet_2 << nondet_2;
+t4 = y >> nondet_0;
+I = !t3 || y;
+
+Fastest checker: explicit
+Fails for (4, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ((sword_t) 0xc) >> ((sword_t) d);
+Program 1:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+t2 = 0x0 + y;
+t3 = nondet_0 * nondet_2;
+I = y * x;
+
+Fastest checker: explicit
+Fails for (0, 3, 0, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+I = 0xc + nondet_0;
+Program 1:
+t1 = x + nondet_0;
+I = y * 0x2;
+
+Fastest checker: explicit
+Fails for (0, 0, 4, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ((sword_t) 0xc) >> ((sword_t) d);
+Program 1:
+t1 = 0x0 + nondet_0;
+t2 = y * 0x0;
+t3 = 0x0 != x;
+t4 = x + nondet_1;
+t5 = x + nondet_1;
+I = y + 0x0;
+
+Fastest checker: explicit
+Fails for (0, 15, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+t2 = 0xc + nondet_2;
+I = nondet_2 + t2;
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = 0x2 - y;
+t5 = x + nondet_1;
+t6 = 0x2 + d;
+I = 0x2 + nondet_1;
+
+Fastest checker: explicit
+Fails for (2, 0, 0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+t2 = 0xc + d;
+t3 = ((sword_t) x) >> ((sword_t) 0xc);
+I = ((sword_t) t2) <= ((sword_t) t2);
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = 0x2 - y;
+t5 = !nondet_1 || nondet_2;
+t6 = 0x2 + nondet_0;
+t7 = y + 0x2;
+t8 = y + x;
+I = 0x2 + y;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 15, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ((sword_t) x) <= ((sword_t) x);
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = 0x2 - y;
+t5 = !nondet_1 || nondet_2;
+t6 = 0x2 + nondet_0;
+t7 = y + 0x2;
+t8 = 0x2 + x;
+t9 = 0x2 + y;
+I = nondet_1 + nondet_2;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 14, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0xc + d;
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = 0x2 - y;
+t5 = 0x2 + nondet_0;
+t6 = x + nondet_1;
+I = y + d;
+
+Fastest checker: explicit
+Fails for (2, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0xc + d;
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = y + 0x2;
+t5 = x + nondet_1;
+t6 = nondet_0 + t5;
+I = d * t5;
+
+Fastest checker: explicit
+Fails for (0, 15, 0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) x) <= ((sword_t) nondet_1);
+I = 0xc + d;
+Program 1:
+t1 = 0x3 + nondet_0;
+t2 = y * 0x3;
+t3 = 0x3 != x;
+t4 = 0x3 - y;
+t5 = !nondet_1 || nondet_2;
+t6 = 0x3 + y;
+t7 = nondet_1 + nondet_2;
+t8 = y + 0x3;
+t9 = 0x3 + x;
+t10 = 0x3 + y;
+t11 = nondet_1 - nondet_2;
+I = !t11 || d;
+
+Fastest checker: explicit
+Fails for (4, 0, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ((sword_t) x) <= ((sword_t) x);
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 + x;
+t4 = 0x2 + y;
+t5 = nondet_1 != nondet_2;
+t6 = x - nondet_1;
+I = !y || x;
+
+Fastest checker: explicit
+Fails for (0, 2, 1, 2, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~0xc;
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = 0x2 - y;
+t5 = nondet_1 + nondet_2;
+t6 = x + x;
+I = y + y;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 8, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0xb | nondet_2;
+Program 1:
+t1 = nondet_1 >> nondet_0;
+t2 = d % 0xd;
+t3 = t1 | x;
+I = ((sword_t) nondet_1) <= ((sword_t) d);
+
+Fastest checker: explicit
+Fails for (1, 2, 1, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y == x;
+t2 = x + nondet_1;
+I = ((sword_t) 0xe) <= ((sword_t) 0xe);
+Program 1:
+t1 = nondet_0 < nondet_0;
+t2 = !0xa || y;
+t3 = !nondet_1 || nondet_2;
+t4 = 0xa + x;
+t5 = 0xa + y;
+I = t3 + nondet_2;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 6, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = d == d;
+I = -0xc;
+Program 1:
+t1 = 0x2 + nondet_0;
+t2 = y * 0x2;
+t3 = 0x2 != x;
+t4 = 0x2 - y;
+t5 = y + y;
+t6 = x + 0x2;
+t7 = t6 + t6;
+t8 = 0x2 + nondet_2;
+t9 = nondet_0 ? nondet_0 : 0x2;
+t10 = ((sword_t) y) <= ((sword_t) 0x2);
+t11 = 0x2 ? x : nondet_2;
+t12 = 0x2 == y;
+t13 = nondet_1 + nondet_2;
+t14 = nondet_1 + nondet_2;
+I = 0x2 + y;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 14, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(nondet_1, nondet_2);
+t2 = x & x;
+t3 = !x || t1;
+I = 0xc + 0xc;
+Program 1:
+t1 = nondet_1 + nondet_2;
+t2 = 0x0 + x;
+t3 = 0x0 + y;
+I = nondet_1 + nondet_2;
+
+Fastest checker: cbmc
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 13.70s
+
+Program 0:
+t1 = min(nondet_1, nondet_2);
+t2 = x & x;
+t3 = !x || t1;
+I = 0xc + 0xc;
+Program 1:
+t1 = nondet_1 + nondet_2;
+t2 = 0x0 + x;
+t3 = 0x0 + y;
+I = nondet_1 + nondet_2;
+
+
+Perf counters:
+{'genetic': 44, 'cbmc': 2, 'explicit': 43, 'iterations': 44}
+Perf timers:
+verify: 8.24s
+checker: 12.74s
+gcc: 1.19s
+_: 13.70s
+synth: 4.60s

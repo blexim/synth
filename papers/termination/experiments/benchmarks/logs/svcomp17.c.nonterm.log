@@ -1,0 +1,35 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 13, 3
+Program 0:
+t1 = min(debug, debug);
+I = debug | debug;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.86s
+
+Evars: 13, 3
+Program 0:
+t1 = min(debug, debug);
+I = debug | debug;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 2.31s
+checker: 2.84s
+gcc: 1.13s
+_: 2.86s
+synth: 0.54s

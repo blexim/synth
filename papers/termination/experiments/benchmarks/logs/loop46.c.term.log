@@ -1,0 +1,50 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ((sword_t) x) < ((sword_t) m);
+I = t1 | 0x3;
+Program 1:
+I = -x;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(x, m);
+t2 = x & t1;
+I = max(t2, 0x9);
+Program 1:
+I = m - x;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 3.36s
+
+Program 0:
+t1 = max(x, m);
+t2 = x & t1;
+I = max(t2, 0x9);
+Program 1:
+I = m - x;
+
+
+Perf counters:
+{'genetic': 2, 'cbmc': 1, 'explicit': 2, 'iterations': 2}
+Perf timers:
+verify: 2.63s
+checker: 3.28s
+gcc: 1.22s
+_: 3.36s
+synth: 0.72s
