@@ -171,7 +171,7 @@ def verif(prog, checker, width, codelen):
 
   perf.start("verify")
 
-  sz = len(prog.ops[0])
+  sz = max(len(o) for o in prog.ops)
   bmc = Checker(sz, width, len(prog.consts[0]), verif=True)
   solfile = open("/tmp/solution", "w")
 
