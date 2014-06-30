@@ -33,7 +33,7 @@ binops = {
     16: "%s s<= %s",
     17: "%s s< %s",
     18: "%s %% %s",
-    19: "!%s ==> %s",    # Implies
+    19: "%s ==> %s",    # Implies
     20: "min(%s, %s)",
     21: "max(%s, %s)",
     23: "f+(%s, %s)",
@@ -41,6 +41,8 @@ binops = {
     25: "f*(%s, %s)",
     26: "f/(%s, %s)"
 }
+
+unsafeops = (3, 18)
 
 execbinops = copy.copy(binops)
 
@@ -167,6 +169,9 @@ class Prog(object):
     for (op, p1, p2, p3, idx) in insts:
       if idx not in sliced:
         continue
+
+      if executable and op in unsafeops:
+        strinsts.append("assume(%s != 0);" % self.strarg(p2, len(ops), consts, executable))
 
       lhs = self.tempname(len(ops), idx, executable)
 
