@@ -206,6 +206,9 @@ void exec(prog_t *prog, word_t args[NARGS], word_t res[NRES]) {
   if (prog == &solution.progs[%d]) {
   """ % i)
 
+    for j in xrange(sz):
+      cfile.write("  res[%d] = 0;\n" % j)
+
     cfile.write(prog.prog2str(prog.ops[i], prog.params[i], prog.consts[i], executable=True))
     cfile.write("\n  }\n")
   cfile.write("}")
