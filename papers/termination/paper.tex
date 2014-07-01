@@ -905,7 +905,7 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 \end{definition}
 
 \begin{definition}[ Nested Loops Termination Formula {\bf [NT]}]
-\label{def:deterministic-nonterm-formula}
+\label{def:nested-term-formula}
  \begin{align*}
   \exists R, S . \forall \mathcal{V}, \mathcal{V}' . & G_1(\mathcal{V}) \wedge P_1(\mathcal{V},\mathcal{V}') \rightarrow S(\mathcal{V}',\mathcal{V}') ~ \wedge \\
                                 & G_2(\mathcal{V}') \wedge S(\mathcal{V},\mathcal{V}') \wedge T(\mathcal{V}',\mathcal{V}'')\rightarrow S(\mathcal{V},\mathcal{V}'') ~ \wedge \\
@@ -1052,8 +1052,22 @@ $$ \qquad \qquad \wedge R(\mathcal{V}_n) > 0 \wedge R(\mathcal{V}_n) > R(\mathca
 
 \todo{add example?}\\
 
-\noindent{\bf Generalised synthesis formula.}
-Our design: for each loop always search for lexicographic ranking function + supporting invariant.
+\noindent{\bf Nested loops.}
+For brevity reasons, we illustrate our approach to handling nested loops for only two loops, but the approach can be easily generalised to any number of nested loops:
+\begin{lstlisting}[mathescape=true]
+while ($G_1$) { 
+  $P_1$ 
+  while ($G_2$) { $T$ }
+  $P_2$
+}
+\end{lstlisting}
+
+The termination of the outer loop is equivalent to the formula in Definition~\ref{def:nested-term-formula}.
+The formula requires an auxiliary assertion $S(\mathcal{V},\mathcal{V}')$ representing a binary relation between the initial states at the inner loop's entry point
+and their successors according to the transition relation $T$. If this formula is satisfiable, then $R$ is a ranking function of the outer loop.
+
+In order to find a termination argument for the inner loop, we use {\bf [CT]} where the initial states are given by 
+$\neg G_1(\mathcal{V}) \wedge P_1(\mathcal{V},\mathcal{V}') \rightarrow I(\mathcal{V}')$.
 
 \subsection{The Non-Termination Problem}
 
@@ -1095,7 +1109,7 @@ Only for certain values of $y$ the loop is non-terminating.
 In order to restrict the values that may be assigned to $y$, we replace the non-deterministic choice with a fresh variable $a$ and use formula {\bf [CNT]}
 to compute a closed recurrence set $N[a]$ parametrised by $a$. Now $N[a]$ becomes an assertion over $\mathcal{V} \cup \{a\}$.
 %, i.e. we under-approximate the transition relation. 
-For this example, our technique computes $N[a](x,y,a) = $.%, where $a$ corresponds to the non-deterministic choice.  \\
+For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ corresponds to the non-deterministic choice.  \\
 %The issue with the closed recurrence set is that it yields an incomplete  for loops 
 %that have non-deterministic assignments 
 %parametric recurrence set
@@ -1120,10 +1134,16 @@ For this example, our technique computes $N[a](x,y,a) = $.%, where $a$ correspon
 
 %Our method is purely semantic. 
 
-{\bf Sequential loops.}
-Discuss {\bf [SNT]}.
+\noindent{\bf Sequential loops.}
+Discuss {\bf [SNT]}.\\
 
-{\bf Nested loops.}
+\noindent{\bf Nested loops.}
+
+\subsection{Generalised synthesis formula.}
+Our design: for each loop always search for lexicographic ranking function + supporting invariant OR recurrence set.
+
+Note: given a program with multiple loops (sequential and nested), we could potentially compute termination/non-termination 
+arguments for all of them in the same formula. Currently, our tool generates a separate formula for each loop.
 
 %% \subsection{Program Synthesis as Second-Order Satisfaction}
 
