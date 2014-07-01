@@ -179,11 +179,14 @@ def split_func(fd, ofile):
 
   decls = []
   copy_out = []
+  prefix_block = []
 
   retvis = ReturnVisitor()
   retvis.visit(prefix)
 
   for b in prefix.block_items:
+    prefix_block.append(b)
+
     if isinstance(b, c_ast.Decl):
       id = b.name
       vid = id_map[id]
@@ -194,8 +197,12 @@ def split_func(fd, ofile):
       decls.append(b)
 
       if is_signed(b):
-        decls.append(c_ast.FuncCall(c_ast.ID('SIGN_EXTEND'),
-                     c_ast.ExprList([c_ast.ID(id)])))
+        extend = c_ast.FuncCall(c_ast.ID('SIGN_EXTEND'),
+                                c_ast.ExprList([c_ast.ID(id)]))
+        decls.append(extend)
+        prefix_block.append(extend)
+
+  prefix.block_items = prefix_block
 
   for id in sorted(rev_id_map.keys()):
     varname = rev_id_map[id]
