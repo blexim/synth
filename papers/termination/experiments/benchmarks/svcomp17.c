@@ -22,7 +22,9 @@ extern int nondet(void);
 int main()
 {
   int x;
-  int debug = 0;
+  int debug;
+  
+  debug = 0;
 
   while (x < 255) {
     if (x % 2 != 0) {
