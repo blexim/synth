@@ -16,21 +16,39 @@
 #include "io.h"
 
 
-#define POPSIZE 2000
-#define KEEPLIM (POPSIZE/10)
-#define NEWLIM (POPSIZE/10)
+#ifndef POPSIZE
+ #define POPSIZE 2000
+#endif
 
-#define NEWSIZE 3
-#define TOURNEYSIZE 10
+#ifndef KEEPLIM
+ #define KEEPLIM (POPSIZE/10)
+#endif
 
-#define MUTATION_PROB 0.01
-#define RECOMBINE_PROB 0.1
+#ifndef NEWLIM
+ #define NEWLIM (POPSIZE/10)
+#endif
+
+#ifndef NEWSIZE
+ #define NEWSIZE 15
+#endif
+
+#ifndef TOURNEYSIZE
+ #define TOURNEYSIZE 10
+#endif
+
+#ifndef MUTATION_PROB
+ #define MUTATION_PROB 0.01
+#endif
+
+#ifndef RECOMBINE_PROB
+ #define RECOMBINE_PROB 0.1
+#endif
 
 #define PRINT_GEN 1000
 #define GEN_LIM 0
 
 #ifndef SEED
-#define SEED time(NULL)
+ #define SEED time(NULL)
 #endif
 
 #define SAVEFILE "/tmp/geneticsynth"
