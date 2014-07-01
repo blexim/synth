@@ -16,8 +16,10 @@ def prove_terminates(filename):
 
   os.system(("./kalashnikov.py " +
              "%s ../../papers/termination/experiments/benchmarks/unranking.c " +
-             "--synth-strategy=genetic -c1 -s2 " +
-             "-a%d --evars %d --varnames %s --resnames I --seed=1337 -w4 " +
+             "--synth-strategy=genetic " +
+             "--fastverif=false -c=1 -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
+             "-recombprob=0.05 -tourneysize=10 -w=3 " +
+             "-a%d --evars %d --varnames %s --resnames I --seed=1337 " +
              "%s") % 
               (splitfile.name,
                 nids,
