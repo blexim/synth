@@ -12,11 +12,11 @@ do
   logfile=$logdir/$b.term.log
 
   echo $b termination
-  ./frontend.py $d/$b -v -T 120 --stats $logdir/$b.term.stats > $logfile
+  ./frontend.py $d/$b -v -T 45 --stats $logdir/$b.term.stats > $logfile
 
   if grep -q Timeout $logfile;
   then
     echo $b nontermination
-    ./nonterm.py $d/$b -v -T 120 --stats $logdir/$b.nonterm.stats > $logdir/$b.nonterm.log
+    ./nonterm.py $d/$b -v -T 45 --stats $logdir/$b.nonterm.stats > $logdir/$b.nonterm.log
   fi
 done
