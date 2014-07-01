@@ -175,7 +175,7 @@ def verif(prog, checker, width, codelen):
   bmc = Checker(sz, width, len(prog.consts[0]), verif=True)
   solfile = open("/tmp/solution", "w")
 
-  solfile.write(" ".join(str(x) for x in prog.evars) + "\n")
+  solfile.write(" ".join(hex(x) for x in prog.evars) + "\n")
 
   for i in xrange(args.args.progs):
     nops = len(prog.ops[i])
@@ -190,7 +190,7 @@ def verif(prog, checker, width, codelen):
     nconsts = len(prog.consts[i])
 
     for j in xrange(nconsts):
-      solfile.write("%d\n" % prog.consts[i][j])
+      solfile.write("0x%x\n" % prog.consts[i][j])
 
   solfile.close()
 
@@ -483,6 +483,10 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
       expanded = expand(prog.consts[i][j], width, targetwidth)
       expansions.append(expanded)
 
+  for i in xrange(len(prog.evars)):
+    expanded = expand(prog.evars[i], width, targetwidth)
+    expansions.append(expanded)
+
   for newconsts in itertools.product(*expansions):
     const_lists = []
     n = 0 
@@ -496,7 +500,12 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
 
       const_lists.append(l)
 
-    newprog = Prog(prog.ops, prog.params, const_lists, prog.evars)
+    newevars = []
+    for i in xrange(len(prog.evars)):
+      newevars.append(newconsts[n])
+      n += 1
+
+    newprog = Prog(prog.ops, prog.params, const_lists, newevars)
 
     if args.args.verbose > 1:
       print "Trying %s" % (str(newprog))

@@ -17,7 +17,7 @@ int numtests;
 } while (0)
 
 #define getint(x) do { \
-  (x) = strtol(p, &q, 0); \
+  (x) = strtoul(p, &q, 0); \
   assert(q > p); \
   p = q; \
 } while(0)
@@ -102,7 +102,7 @@ void load_solution(solution_t *solution) {
 
   for (i = 0; i < NEVARS; i++) {
     getint(solution->evars[i]);
-    printf("%d ", solution->evars[i]);
+    printf("0x%x ", solution->evars[i]);
   }
 
   for (i = 0; i < NPROGS; i++) {
@@ -121,7 +121,7 @@ void load_solution(solution_t *solution) {
       getint(prog->params[3*j + 1]);
       getint(prog->params[3*j + 2]);
 
-      printf("%d %d %d %d\n",
+      printf("0x%x 0x%x 0x%x 0x%x\n",
           prog->ops[j],
           prog->params[3*j],
           prog->params[3*j + 1],
@@ -132,7 +132,7 @@ void load_solution(solution_t *solution) {
       getline(solfile);
       getint(prog->consts[j]);
 
-      printf("Const: %d\n", prog->consts[j]);
+      printf("Const: 0x%x\n", prog->consts[j]);
     }
   }
 
