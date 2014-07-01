@@ -175,7 +175,7 @@ def verif(prog, checker, width, codelen):
   bmc = Checker(sz, width, len(prog.consts[0]), verif=True)
   solfile = open("/tmp/solution", "w")
 
-  solfile.write(" ".join(hex(x) for x in prog.evars) + "\n")
+  solfile.write(" ".join("0x%x" % x for x in prog.evars) + "\n")
 
   for i in xrange(args.args.progs):
     nops = len(prog.ops[i])
