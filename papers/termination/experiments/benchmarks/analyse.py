@@ -70,35 +70,36 @@ def load_benchmark(cfile):
 def print_benchmark(benchmark):
   (benchname, props, termstats, nontermstats) = benchmark
 
-  loc = props.get('loc', 'unk')
-  linprog = props.get('linear-program', 'unk')
-  linrank = props.get('linear-rank', 'unk')
-  iscond = props.get('conditional', 'unk')
-  isfloat = props.get('float', 'unk')
-  lexdim = props.get('lexicographic', 'unk')
-  isterm = props.get('terminates', 'unk')
+  loc = props.get('loc', '')
+  linprog = props.get('linear-program', '')
+  linrank = props.get('linear-rank', '')
+  iscond = props.get('conditional', '')
+  isfloat = props.get('float', '')
+  lexdim = props.get('lexicographic', '')
+  isterm = props.get('terminates', '')
 
-  res = 'unk'
+  res = '?'
   elapsed = 'T/O'
   iters = '0'
 
   if termstats: 
     (counters, timers) = termstats
+    iters = str(counters['iterations'])
 
     if 'timeout' not in counters:
       (start, end) = timers['_'][0]
       elapsed = '%.01fs' % (end - start)
       res = 'term'
-      iters = str(counters['iterations'])
     elif nontermstats:
       (counters, timers) = nontermstats
+      iters = str(counters['iterations'])
 
       if 'timeout' not in counters:
         (start, end) = timers['_'][0]
         elapsed = '%.01fs' % (end - start)
         res = 'nonterm'
-        iters = str(counters['iterations'])
   else:
+    return ""
     res = 'err'
     elapsed = '--'
 
