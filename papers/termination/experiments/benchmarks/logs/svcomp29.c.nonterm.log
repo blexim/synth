@@ -11,7 +11,7 @@ Timeout
 Perf counters:
 {'timeout': 1, 'iterations': 1}
 Perf timers:
-checker: 120.00s
-gcc: 0.20s
-_: 120.00s
-synth: 120.00s
+checker: 45.00s
+gcc: 0.26s
+_: 45.00s
+synth: 45.00s

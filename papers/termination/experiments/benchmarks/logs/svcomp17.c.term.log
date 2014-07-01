@@ -2,13 +2,26 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = -debug;
+t1 = 0x2 s< 0x2;
+I = 0x2 + x;
 Program 1:
-t1 = x == 0x2;
-I = x << debug;
+t1 = x & x;
+I = t1 == t1;
 
 Fastest checker: explicit
-Fails for (0, 11)
+Fails for (6, 3)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = debug != x;
+t2 = -x;
+I = t1 ==> 0x2;
+Program 1:
+I = min(0x7, x);
+
+Fastest checker: explicit
+Fails for (0, 4)
 
 []
 
@@ -20,10 +33,10 @@ Fails for (0, 11)
 
 Timeout
 Perf counters:
-{'genetic': 1, 'explicit': 1, 'timeout': 1, 'iterations': 2}
+{'genetic': 2, 'explicit': 2, 'timeout': 1, 'iterations': 3}
 Perf timers:
-verify: 0.20s
-checker: 120.00s
-gcc: 0.50s
-_: 120.00s
-synth: 119.80s
+verify: 0.19s
+checker: 45.00s
+gcc: 0.47s
+_: 45.00s
+synth: 44.81s

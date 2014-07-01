@@ -515,93 +515,6 @@ Fastest checker: explicit
 Fails for (1, 0, 8, 6)
 
 []
-Fastest checker: genetic
-Evars: 8, 12, 0, 1
-Program 0:
-t1 = nondet_0 | y;
-t2 = -x;
-I = 0x8 == t1;
-
-Fastest checker: explicit
-Fails for (8, 0, 8, 6)
-
-[]
-Fastest checker: genetic
-Evars: 3, 8, 4, 9
-Program 0:
-t1 = y ^ nondet_0;
-t2 = max(nondet_0, t1);
-t3 = x == y;
-I = 0x9 == N;
-
-Fastest checker: explicit
-Fails for (0, 9, 0, 9)
-
-[]
-Fastest checker: genetic
-Evars: 0, 14, 14, 2
-Program 0:
-t1 = nondet_0 ? y : x;
-t2 = min(y, x);
-I = t2 / 0xd;
-
-Fastest checker: explicit
-Fails for (0, 13, 13, 13)
-
-[]
-Fastest checker: genetic
-Evars: 14, 1, 4, 2
-Program 0:
-t1 = nondet_0 | y;
-t2 = -x;
-I = 0xe == t1;
-
-Fastest checker: explicit
-Fails for (2, 8, 14, 13)
-
-[]
-Fastest checker: genetic
-Evars: 14, 10, 15, 10
-Program 0:
-I = N == 0xa;
-
-Fastest checker: explicit
-Fails for (0, 10, 0, 10)
-
-[]
-Fastest checker: genetic
-Evars: 10, 3, 6, 3
-Program 0:
-t1 = min(y, x);
-t2 = 0xd >> y;
-I = t2 == t1;
-
-Fastest checker: explicit
-Fails for (0, 1, 3, 1)
-
-[]
-Fastest checker: genetic
-Evars: 9, 2, 14, 5
-Program 0:
-t1 = ~nondet_0;
-t2 = x | t1;
-I = 0x6 == t2;
-
-Fastest checker: explicit
-Fails for (9, 0, 4, 1)
-
-[]
-Fastest checker: genetic
-Evars: 9, 10, 4, 7
-Program 0:
-t1 = N s<= nondet_0;
-t2 = t1 - N;
-I = nondet_0 == t2;
-
-Fastest checker: explicit
-Fails for (15, 0, 4, 1)
-
-[]
 
 
 
@@ -611,10 +524,10 @@ Fails for (15, 0, 4, 1)
 
 Timeout
 Perf counters:
-{'genetic': 57, 'explicit': 57, 'timeout': 1, 'iterations': 58}
+{'genetic': 49, 'explicit': 49, 'timeout': 1, 'iterations': 50}
 Perf timers:
-verify: 0.73s
-checker: 119.86s
-gcc: 0.43s
-_: 120.00s
-synth: 119.23s
+verify: 0.66s
+checker: 44.88s
+gcc: 0.45s
+_: 45.00s
+synth: 44.31s

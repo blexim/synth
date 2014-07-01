@@ -2,66 +2,26 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x8 ? nondet_0 : nondet_0;
-I = t1 * t1;
+t1 = max(0x2, nondet_0);
+t2 = t1 - nondet_0;
+I = nondet_0 / t1;
 Program 1:
-t1 = x & x;
-t2 = nondet_0 == t1;
-I = t2 << t1;
+I = min(0x4, x);
 
 Fastest checker: explicit
-Fails for (0, 11)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x >> 0x2;
-I = x | x;
-Program 1:
-t1 = 0x9 == x;
-t2 = t1 + x;
-I = x s< t1;
-
-Fastest checker: explicit
-Fails for (0, 0)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = max(0xf, x);
-Program 1:
-t1 = x << x;
-t2 = t1 < t1;
-I = 0x0 >> t1;
-
-Fastest checker: explicit
-Fails for (0, 3)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x & 0xf;
-t2 = x - 0xf;
-I = nondet_0 ==> t1;
-Program 1:
-t1 = x >> 0xf;
-t2 = min(t1, t1);
-I = x + x;
-
-Fastest checker: explicit
-Fails for (1, 0)
+Fails for (0, 4)
 
 []
 Fastest checker: genetic
 Program 0:
 I = ~x;
 Program 1:
-t1 = 0xc >> x;
-t2 = x | 0xc;
+t1 = 0x4 >> x;
+t2 = x | 0x4;
 I = x + x;
 
 Fastest checker: explicit
-Fails for (0, 15)
+Fails for (0, 7)
 
 []
 Fastest checker: genetic
@@ -73,7 +33,7 @@ t2 = min(x, x);
 I = x <= t1;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -83,7 +43,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.82s
+Finished in 2.57s
 
 Program 0:
 I = 0x0 s<= 0x0;
@@ -94,10 +54,10 @@ I = x <= t1;
 
 
 Perf counters:
-{'genetic': 6, 'cbmc': 1, 'explicit': 6, 'iterations': 6}
+{'genetic': 3, 'cbmc': 1, 'explicit': 3, 'iterations': 3}
 Perf timers:
-verify: 2.33s
-checker: 2.78s
-gcc: 0.64s
-_: 2.82s
-synth: 0.49s
+verify: 2.29s
+checker: 2.56s
+gcc: 0.60s
+_: 2.57s
+synth: 0.27s

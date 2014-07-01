@@ -11,32 +11,7 @@ t2 = N | t1;
 I = t1 != t2;
 
 Fastest checker: explicit
-Fails for (5, 11)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x9 ? N : 0x9;
-t2 = N == 0x9;
-I = t1 >> 0x9;
-Program 1:
-I = x * 0xe;
-
-Fastest checker: explicit
-Fails for (8, 11)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = N s<= 0x7;
-I = -N;
-Program 1:
-t1 = 0x0 ^ x;
-t2 = -x;
-I = -t1;
-
-Fastest checker: explicit
-Fails for (0, 12)
+Fails for (0, 4)
 
 []
 Fastest checker: genetic
@@ -57,10 +32,10 @@ t1 = ~N;
 I = x ==> x;
 Program 1:
 t1 = ~x;
-I = 0xc >> N;
+I = 0x4 >> N;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -70,21 +45,21 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.68s
+Finished in 2.55s
 
 Program 0:
 t1 = ~N;
 I = x ==> x;
 Program 1:
 t1 = ~x;
-I = 0xc >> N;
+I = 0x4 >> N;
 
 
 Perf counters:
-{'genetic': 5, 'cbmc': 1, 'explicit': 5, 'iterations': 5}
+{'genetic': 3, 'cbmc': 1, 'explicit': 3, 'iterations': 3}
 Perf timers:
-verify: 2.23s
-checker: 2.63s
-gcc: 0.62s
-_: 2.68s
-synth: 0.44s
+verify: 2.22s
+checker: 2.54s
+gcc: 0.65s
+_: 2.55s
+synth: 0.32s

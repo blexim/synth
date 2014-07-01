@@ -9,7 +9,7 @@ t2 = min(x, nondet_0);
 I = 0x0 s<= 0x0;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0, 0, 15)
+Fails for (0, 0, 0, 1, 1, 1)
 
 []
 Fastest checker: genetic
@@ -39,9 +39,9 @@ Fails for (0, 2, 0, 2, 1, 1)
 Fastest checker: genetic
 Program 0:
 t1 = nondet_2 <= nondet_1;
-I = 0xa ^ t1;
+I = 0x2 ^ t1;
 Program 1:
-t1 = nondet_1 ? 0x9 : x;
+t1 = nondet_1 ? 0x1 : x;
 I = d & t1;
 
 Fastest checker: explicit
@@ -60,8 +60,8 @@ Fails for (0, 1, 0, 1, 2, 1)
 []
 Fastest checker: genetic
 Program 0:
-t1 = y | 0x9;
-t2 = max(0x9, t1);
+t1 = y | 0x1;
+t2 = max(0x1, t1);
 I = t1 ? t2 : nondet_1;
 Program 1:
 t1 = nondet_0 s< d;
@@ -87,11 +87,10 @@ Fails for (0, 3, 0, 2, 2, 1)
 []
 Fastest checker: genetic
 Program 0:
-I = min(0x9, 0x9);
+t1 = x ^ nondet_0;
+I = ~d;
 Program 1:
-t1 = x + nondet_0;
-t2 = d << y;
-I = nondet_2 s<= y;
+I = d * x;
 
 Fastest checker: explicit
 Fails for (2, 0, 1, 2, 2, 1)
@@ -99,228 +98,151 @@ Fails for (2, 0, 1, 2, 2, 1)
 []
 Fastest checker: genetic
 Program 0:
-I = x <= x;
+I = ~d;
 Program 1:
-t1 = nondet_2 >>> d;
-t2 = nondet_1 == 0xa;
-I = y * x;
+t1 = d + nondet_0;
+t2 = nondet_1 | x;
+I = -0x6;
 
 Fastest checker: explicit
-Fails for (0, 6, 0, 3, 2, 1)
+Fails for (7, 0, 1, 2, 2, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xc >>> d;
+t1 = nondet_2 << nondet_2;
+I = 0x5 + d;
+Program 1:
+t1 = d - nondet_0;
+t2 = nondet_2 | y;
+I = y + x;
+
+Fastest checker: explicit
+Fails for (3, 1, 1, 2, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x7 << d;
+Program 1:
+t1 = d - nondet_2;
+I = y + x;
+
+Fastest checker: explicit
+Fails for (1, 4, 0, 3, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y << nondet_2;
+t2 = nondet_2 + nondet_0;
+I = nondet_2 ==> nondet_2;
+Program 1:
+t1 = d - nondet_0;
+t2 = nondet_0 | y;
+I = y + x;
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 3, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = ~x;
+Program 1:
+t1 = y << d;
+t2 = y + x;
+t3 = y + t2;
+I = nondet_2 s< x;
+
+Fastest checker: explicit
+Fails for (3, 5, 0, 3, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~d;
+I = 0x6 | nondet_1;
+Program 1:
+t1 = nondet_1 << d;
 t2 = nondet_2 + x;
-t3 = max(t2, x);
-I = ~nondet_1;
-Program 1:
-t1 = y s<= nondet_2;
-t2 = nondet_0 + x;
-I = max(d, y);
+t3 = 0x4 < nondet_0;
+I = t1 s< x;
 
 Fastest checker: explicit
-Fails for (0, 15, 0, 3, 2, 1)
+Fails for (5, 0, 1, 3, 2, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x5 >>> d;
-t2 = x + nondet_2;
-I = t2 | 0x5;
+t1 = ~y;
+I = t1 | nondet_1;
 Program 1:
-t1 = y s<= nondet_2;
-t2 = min(x, nondet_0);
-t3 = 0x0 s<= 0x0;
-t4 = x + x;
-I = nondet_2 + y;
-
-Fastest checker: explicit
-Fails for (14, 15, 0, 3, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x >> nondet_2;
-I = max(0x5, nondet_1);
-Program 1:
-t1 = y s<= nondet_2;
-t2 = min(x, nondet_0);
-t3 = nondet_0 + x;
-I = y + nondet_1;
-
-Fastest checker: explicit
-Fails for (0, 0, 13, 3, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = 0x5 | d;
-Program 1:
-t1 = y s<= nondet_2;
-t2 = min(x, nondet_0);
-t3 = x + y;
-I = y + nondet_1;
-
-Fastest checker: explicit
-Fails for (0, 14, 0, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x5 >>> d;
-I = x + 0x5;
-Program 1:
-t1 = nondet_1 == x;
-t2 = 0x0 ? x : y;
-I = max(nondet_1, x);
-
-Fastest checker: explicit
-Fails for (0, 5, 1, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = d - nondet_1;
-t2 = x ==> nondet_0;
-I = t2 + nondet_1;
-Program 1:
-t1 = nondet_1 | nondet_1;
-t2 = y + nondet_2;
-t3 = x s<= nondet_0;
-t4 = min(nondet_2, nondet_1);
-t5 = y + x;
-I = y + 0xd;
-
-Fastest checker: explicit
-Fails for (0, 15, 1, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x6 >>> d;
-I = 0x6 + d;
-Program 1:
-t1 = nondet_1 | nondet_1;
-t2 = nondet_0 | nondet_2;
-t3 = x + nondet_0;
-t4 = 0xd + 0xd;
-t5 = min(0xd, d);
-t6 = t5 s<= x;
-I = nondet_0 + nondet_2;
-
-Fastest checker: explicit
-Fails for (2, 15, 1, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = d - nondet_1;
-I = 0x6 + d;
-Program 1:
-t1 = nondet_1 | nondet_1;
-t2 = nondet_0 | nondet_2;
-t3 = t1 | nondet_2;
-t4 = nondet_1 + x;
-I = nondet_0 + y;
-
-Fastest checker: explicit
-Fails for (10, 15, 1, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = d - nondet_1;
-t2 = d + nondet_1;
-I = 0x6 - d;
-Program 1:
-t1 = nondet_1 | nondet_1;
-t2 = nondet_0 | nondet_2;
-t3 = t1 + nondet_2;
-t4 = nondet_1 + x;
-I = nondet_0 | y;
-
-Fastest checker: explicit
-Fails for (6, 0, 2, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x ==> nondet_0;
-I = nondet_0 + 0x6;
-Program 1:
-t1 = nondet_1 | nondet_1;
-t2 = nondet_0 | nondet_2;
-t3 = nondet_1 | y;
-t4 = nondet_0 + nondet_2;
-t5 = x + nondet_2;
-I = nondet_2 | d;
-
-Fastest checker: explicit
-Fails for (0, 0, 10, 4, 2, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = x <= x;
-Program 1:
-t1 = x == nondet_0;
+t1 = nondet_2 != x;
 t2 = d + nondet_2;
-t3 = nondet_0 + nondet_2;
-t4 = t2 | nondet_2;
-t5 = y | nondet_2;
-t6 = x | nondet_0;
-I = y + nondet_0;
+I = x * nondet_0;
 
 Fastest checker: explicit
-Fails for (0, 0, 12, 4, 2, 1)
+Fails for (0, 0, 3, 3, 2, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x <= x;
-I = nondet_0 + 0xa;
+t1 = 0x7 | nondet_1;
+t2 = x >> d;
+I = -0x7;
 Program 1:
-t1 = x == nondet_0;
-t2 = d | nondet_2;
-t3 = nondet_1 + nondet_1;
-t4 = nondet_0 + nondet_2;
-t5 = nondet_0 | nondet_2;
-t6 = nondet_1 | nondet_1;
-t7 = nondet_0 + nondet_2;
-t8 = x + nondet_2;
-I = nondet_2 | d;
+t1 = nondet_2 s< d;
+t2 = 0x0 ^ x;
+t3 = y + nondet_2;
+t4 = nondet_2 + y;
+I = t3 != y;
 
 Fastest checker: explicit
-Fails for (11, 0, 0, 5, 2, 1)
+Fails for (5, 0, 0, 1, 3, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-I = x <= x;
+I = ~0x2;
 Program 1:
-t1 = nondet_1 | nondet_1;
-t2 = x + nondet_0;
-t3 = d == nondet_2;
-I = nondet_2 | d;
+t1 = d + nondet_0;
+t2 = nondet_1 | x;
+I = -0x6;
 
 Fastest checker: explicit
-Fails for (3, 5, 0, 5, 2, 1)
+Fails for (1, 1, 1, 1, 3, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-I = x <= x;
+t1 = x ^ x;
+t2 = t1 | 0x6;
+I = nondet_0 | t2;
 Program 1:
-t1 = x == nondet_0;
-t2 = d | nondet_2;
-t3 = nondet_0 < 0xd;
-t4 = x + x;
-I = t3 + y;
+t1 = nondet_1 ? nondet_2 : y;
+t2 = nondet_1 & t1;
+t3 = y * x;
+I = 0x5 ? 0x5 : nondet_1;
 
-Fastest checker: cbmc
-Correct for wordlen=4
+Fastest checker: explicit
+Fails for (0, 3, 0, 2, 3, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x & x;
+t2 = y ==> x;
+t3 = max(nondet_0, t2);
+I = -0x4;
+Program 1:
+t1 = min(nondet_0, nondet_0);
+t2 = nondet_2 + nondet_1;
+t3 = -nondet_2;
+I = t1 ? x : y;
+
+Fastest checker: explicit
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -330,23 +252,25 @@ Also correct for wordlen=32!
 
 
 
-Finished in 7.91s
+Finished in 3.41s
 
 Program 0:
-I = x <= x;
+t1 = x & x;
+t2 = y ==> x;
+t3 = max(nondet_0, t2);
+I = -0x4;
 Program 1:
-t1 = x == nondet_0;
-t2 = d | nondet_2;
-t3 = nondet_0 < 0xd;
-t4 = x + x;
-I = t3 + y;
+t1 = min(nondet_0, nondet_0);
+t2 = nondet_2 + nondet_1;
+t3 = -nondet_2;
+I = t1 ? x : y;
 
 
 Perf counters:
-{'genetic': 23, 'cbmc': 2, 'explicit': 22, 'iterations': 23}
+{'genetic': 19, 'cbmc': 1, 'explicit': 19, 'iterations': 19}
 Perf timers:
-verify: 6.26s
-checker: 7.85s
-gcc: 0.64s
-_: 7.91s
-synth: 1.63s
+verify: 2.61s
+checker: 3.37s
+gcc: 0.65s
+_: 3.41s
+synth: 0.80s

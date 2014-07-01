@@ -489,102 +489,6 @@ Fastest checker: explicit
 Fails for (1, 1, 5)
 
 []
-Fastest checker: genetic
-Evars: 7, 13, 3
-Program 0:
-t1 = y % x;
-t2 = max(0x5, z);
-I = t2 < t1;
-
-Fastest checker: explicit
-Fails for (7, 6, 5)
-
-[]
-Fastest checker: genetic
-Evars: 7, 8, 7
-Program 0:
-t1 = 0x8 == y;
-t2 = 0x8 * y;
-t3 = t1 << z;
-I = t3 & y;
-
-Fastest checker: explicit
-Fails for (1, 8, 7)
-
-[]
-Fastest checker: genetic
-Evars: 2, 1, 0
-Program 0:
-t1 = 0x7 < x;
-t2 = ~0x7;
-t3 = x >>> y;
-I = t3 == y;
-
-Fastest checker: explicit
-Fails for (2, 1, 8)
-
-[]
-Fastest checker: genetic
-Evars: 4, 8, 11
-Program 0:
-t1 = 0x5 / 0x5;
-t2 = t1 >>> x;
-I = t2 >>> y;
-
-Fastest checker: explicit
-Fails for (4, 4, 8)
-
-[]
-Fastest checker: genetic
-Evars: 6, 10, 6
-Program 0:
-t1 = z % 0x6;
-t2 = x * z;
-t3 = y >>> y;
-t4 = z == 0x6;
-t5 = z + t4;
-t6 = x == x;
-I = min(t4, y);
-
-Fastest checker: explicit
-Fails for (1, 1, 6)
-
-[]
-Fastest checker: genetic
-Evars: 4, 9, 4
-Program 0:
-t1 = min(z, x);
-t2 = z == x;
-I = t2 >> t1;
-
-Fastest checker: explicit
-Fails for (4, 0, 4)
-
-[]
-Fastest checker: genetic
-Evars: 5, 15, 2
-Program 0:
-t1 = min(z, y);
-t2 = 0xd + t1;
-I = y == t2;
-
-Fastest checker: explicit
-Fails for (1, 13, 0)
-
-[]
-Fastest checker: genetic
-Evars: 5, 4, 14
-Program 0:
-t1 = y >>> y;
-t2 = z == 0xe;
-t3 = z + t2;
-t4 = x == x;
-I = min(t2, y);
-
-Fastest checker: explicit
-Fails for (1, 1, 14)
-
-[]
 
 
 
@@ -594,10 +498,10 @@ Fails for (1, 1, 14)
 
 Timeout
 Perf counters:
-{'genetic': 54, 'explicit': 54, 'timeout': 1, 'iterations': 55}
+{'genetic': 46, 'explicit': 46, 'timeout': 1, 'iterations': 47}
 Perf timers:
-verify: 0.42s
-checker: 119.87s
-gcc: 0.46s
-_: 120.00s
-synth: 119.56s
+verify: 0.37s
+checker: 44.91s
+gcc: 0.45s
+_: 45.00s
+synth: 44.61s

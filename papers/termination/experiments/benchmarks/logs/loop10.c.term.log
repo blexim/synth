@@ -10,7 +10,7 @@ t2 = -x;
 I = -t1;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -20,7 +20,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.49s
+Finished in 2.48s
 
 Program 0:
 t1 = x s<= x;
@@ -36,6 +36,6 @@ Perf counters:
 Perf timers:
 verify: 2.20s
 checker: 2.48s
-gcc: 0.61s
-_: 2.49s
-synth: 0.29s
+gcc: 0.63s
+_: 2.48s
+synth: 0.28s

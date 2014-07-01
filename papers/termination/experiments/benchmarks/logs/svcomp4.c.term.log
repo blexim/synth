@@ -2,42 +2,30 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x7 != 0x7;
-I = max(t1, y1);
+I = y2 ==> y1;
 Program 1:
-t1 = y1 | 0x8;
-I = y2 << y2;
+t1 = y1 s<= y2;
+t2 = min(0x0, t1);
+t3 = y1 + y1;
+t4 = y2 + y2;
+I = max(t2, y2);
 
 Fastest checker: explicit
-Fails for (1, 11)
+Fails for (1, 4)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xe >> y2;
-t2 = t1 & y2;
-I = y2 <= y2;
+t1 = 0x3 >>> 0x3;
+t2 = t1 + 0x3;
+I = 0x3 >>> 0x3;
 Program 1:
-t1 = y1 == y1;
-t2 = y2 - y2;
-t3 = y1 * 0x9;
-I = min(y2, t3);
+t1 = y1 s<= y2;
+t2 = y1 + y2;
+I = t2 <= t1;
 
 Fastest checker: explicit
-Fails for (2, 11)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = 0xd + 0xd;
-Program 1:
-t1 = y1 | 0x9;
-t2 = y2 < t1;
-t3 = ~t2;
-I = y2 | t2;
-
-Fastest checker: explicit
-Fails for (4, 11)
+Fails for (5, 4)
 
 []
 
@@ -49,10 +37,10 @@ Fails for (4, 11)
 
 Timeout
 Perf counters:
-{'genetic': 3, 'explicit': 3, 'timeout': 1, 'iterations': 4}
+{'genetic': 2, 'explicit': 2, 'timeout': 1, 'iterations': 3}
 Perf timers:
-verify: 0.20s
-checker: 119.90s
-gcc: 0.46s
-_: 120.00s
-synth: 119.71s
+verify: 0.18s
+checker: 45.00s
+gcc: 0.43s
+_: 45.00s
+synth: 44.82s

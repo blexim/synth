@@ -2,17 +2,6 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = -tmp;
-Program 1:
-t1 = tmp == a;
-I = tmp << tmp;
-
-Fastest checker: explicit
-Fails for (2, 9, 12)
-
-[]
-Fastest checker: genetic
-Program 0:
 I = count - tmp;
 Program 1:
 t1 = a == tmp;
@@ -20,67 +9,19 @@ t2 = a - a;
 I = a - 0x5;
 
 Fastest checker: explicit
-Fails for (5, 9, 12)
+Fails for (0, 0, 6)
 
 []
 Fastest checker: genetic
 Program 0:
-I = a ==> a;
+t1 = tmp ? a : a;
+t2 = count == t1;
+I = 0x1 >> count;
 Program 1:
-I = 0xf ? tmp : count;
+I = tmp * 0x6;
 
 Fastest checker: explicit
-Fails for (2, 0, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = max(a, a);
-Program 1:
-t1 = max(tmp, tmp);
-t2 = count < a;
-I = t1 | a;
-
-Fastest checker: explicit
-Fails for (3, 0, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = count != count;
-I = count + a;
-Program 1:
-t1 = a >>> count;
-t2 = 0xf | 0xf;
-I = -count;
-
-Fastest checker: explicit
-Fails for (4, 0, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = a ^ a;
-t2 = a >> 0x6;
-I = max(tmp, 0x6);
-Program 1:
-t1 = 0xb >>> a;
-t2 = a + count;
-I = t1 <= a;
-
-Fastest checker: explicit
-Fails for (6, 0, 10)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = count * a;
-I = max(tmp, a);
-Program 1:
-I = a >> count;
-
-Fastest checker: explicit
-Fails for (2, 1, 10)
+Fails for (2, 0, 6)
 
 []
 Fastest checker: genetic
@@ -89,11 +30,11 @@ t1 = tmp & count;
 I = ~a;
 Program 1:
 t1 = count == a;
-t2 = count ? t1 : 0x9;
+t2 = count ? t1 : 0x1;
 I = max(t2, a);
 
 Fastest checker: explicit
-Fails for (15, 1, 10)
+Fails for (7, 0, 6)
 
 []
 Fastest checker: genetic
@@ -106,16 +47,6 @@ I = 0x7 ^ count;
 
 Fastest checker: explicit
 Fails for (2, 0, 7)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = a << 0x8;
-Program 1:
-I = count ? a : count;
-
-Fastest checker: explicit
-Fails for (0, 1, 7)
 
 []
 Fastest checker: genetic
@@ -133,14 +64,14 @@ Fails for (2, 0, 0)
 []
 Fastest checker: genetic
 Program 0:
-I = -0xb;
+I = -0x3;
 Program 1:
 t1 = -a;
 t2 = 0x0 | a;
 I = t2 s<= a;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -150,10 +81,10 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.11s
+Finished in 2.61s
 
 Program 0:
-I = -0xb;
+I = -0x3;
 Program 1:
 t1 = -a;
 t2 = 0x0 | a;
@@ -161,10 +92,10 @@ I = t2 s<= a;
 
 
 Perf counters:
-{'genetic': 12, 'cbmc': 1, 'explicit': 12, 'iterations': 12}
+{'genetic': 6, 'cbmc': 1, 'explicit': 6, 'iterations': 6}
 Perf timers:
-verify: 2.37s
-checker: 3.06s
+verify: 2.25s
+checker: 2.60s
 gcc: 0.66s
-_: 3.11s
-synth: 0.74s
+_: 2.61s
+synth: 0.36s

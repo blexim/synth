@@ -2,63 +2,56 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x9 ? m : 0x9;
-t2 = m == 0x9;
-I = t1 >> 0x9;
+t1 = m s<= 0x7;
+I = -m;
 Program 1:
-I = x * 0xe;
+t1 = 0x0 ^ x;
+t2 = -x;
+I = -t1;
 
 Fastest checker: explicit
-Fails for (0, 11)
+Fails for (0, 4)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~m;
-t2 = max(t1, t1);
-I = 0x1 | m;
+t1 = x % m;
+I = min(m, m);
 Program 1:
-I = 0x3 - x;
-
-Fastest checker: explicit
-Fails for (3, 11)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xe - x;
-t2 = x < t1;
-I = 0xe >> x;
-Program 1:
-t1 = 0x2 - x;
-I = 0x2 >>> m;
-
-Fastest checker: explicit
-Fails for (2, 12)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x7 ^ m;
-I = m | x;
-Program 1:
-t1 = m * 0x5;
-t2 = m >> m;
-I = t2 - x;
-
-Fastest checker: explicit
-Fails for (6, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = max(0xf, m);
-Program 1:
-t1 = m < 0x0;
+t1 = 0x0 >> m;
+t2 = x ==> 0x0;
 I = m - x;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x5 % 0x5;
+t2 = min(0x5, m);
+I = m <= t2;
+Program 1:
+t1 = x >> x;
+t2 = 0x7 + x;
+t3 = x ^ t2;
+I = -t2;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = m <= m;
+Program 1:
+t1 = 0x5 * m;
+t2 = 0x5 + 0x5;
+t3 = m >> 0x5;
+I = m - x;
+
+Fastest checker: explicit
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -68,20 +61,22 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.84s
+Finished in 2.70s
 
 Program 0:
-I = max(0xf, m);
+I = m <= m;
 Program 1:
-t1 = m < 0x0;
+t1 = 0x5 * m;
+t2 = 0x5 + 0x5;
+t3 = m >> 0x5;
 I = m - x;
 
 
 Perf counters:
-{'genetic': 5, 'cbmc': 1, 'explicit': 5, 'iterations': 5}
+{'genetic': 4, 'cbmc': 1, 'explicit': 4, 'iterations': 4}
 Perf timers:
-verify: 2.34s
-checker: 2.80s
-gcc: 0.64s
-_: 2.84s
-synth: 0.49s
+verify: 2.30s
+checker: 2.69s
+gcc: 0.63s
+_: 2.70s
+synth: 0.40s

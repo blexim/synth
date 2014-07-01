@@ -2,16 +2,55 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = x << x;
-t2 = x - t1;
-t3 = 0xf <= x;
-I = t3 <= t3;
+t1 = 0x7 & 0x7;
+t2 = 0x7 - 0x7;
+I = 0x7 ==> t1;
 Program 1:
-t1 = -x;
-I = min(x, t1);
+t1 = x >> 0x7;
+t2 = min(t1, x);
+I = t1 + x;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 6
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x - 0x1;
+t2 = t1 | t1;
+t3 = x % t1;
+t4 = 0x1 != 0x1;
+I = t1 + t4;
+Program 1:
+t1 = 0x11 ^ 0x11;
+t2 = -x;
+I = min(t2, x);
+
+Fastest checker: explicit
+Fails for (62,)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x14 + 0x14;
+Program 1:
+t1 = -x;
+I = min(t1, x);
+
+Fastest checker: explicit
+Correct for wordlen=6
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -21,23 +60,21 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.33s
+Finished in 3.61s
 
 Program 0:
-t1 = x << x;
-t2 = x - t1;
-t3 = 0xf <= x;
-I = t3 <= t3;
+I = 0x14 + 0x14;
 Program 1:
 t1 = -x;
-I = min(x, t1);
+I = min(t1, x);
 
 
 Perf counters:
-{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+{'genetic': 3, 'cbmc': 1, 'explicit': 13, 'iterations': 3}
 Perf timers:
-verify: 2.40s
-checker: 3.32s
-gcc: 0.64s
-_: 3.33s
-synth: 0.92s
+gcc: 1.03s
+verify: 2.59s
+checker: 3.59s
+generalize: 0.03s
+synth: 1.02s
+_: 3.61s

@@ -8,7 +8,7 @@ t1 = 0x5 ^ 0x5;
 I = 0x5 ? x : 0x5;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -18,7 +18,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.46s
+Finished in 2.50s
 
 Program 0:
 I = 0x4 == 0x4;
@@ -30,8 +30,8 @@ I = 0x5 ? x : 0x5;
 Perf counters:
 {'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
 Perf timers:
-verify: 2.15s
-checker: 2.46s
-gcc: 0.63s
-_: 2.46s
-synth: 0.31s
+verify: 2.22s
+checker: 2.50s
+gcc: 0.61s
+_: 2.50s
+synth: 0.28s

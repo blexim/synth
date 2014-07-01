@@ -15,15 +15,37 @@ Fails for (0, 0, 0, 1)
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x9 & 0x9;
-I = t1 >> y;
+I = max(y, x);
 Program 1:
-t1 = x + x;
-t2 = 0xb - z;
-I = x <= t1;
+t1 = z << i;
+t2 = z < z;
+I = t2 >> t1;
 
 Fastest checker: explicit
-Fails for (0, 0, 11, 1)
+Fails for (1, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = x >> x;
+Program 1:
+t1 = z != 0x6;
+t2 = x ^ z;
+I = 0x6 * z;
+
+Fastest checker: explicit
+Fails for (3, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y + 0x7;
+I = ~y;
+Program 1:
+I = i << i;
+
+Fastest checker: explicit
+Fails for (1, 7, 0, 1)
 
 []
 Fastest checker: genetic
@@ -36,7 +58,7 @@ t2 = -x;
 I = -x;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -46,7 +68,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.80s
+Finished in 2.63s
 
 Program 0:
 t1 = z s<= 0x7;
@@ -58,10 +80,10 @@ I = -x;
 
 
 Perf counters:
-{'genetic': 3, 'cbmc': 1, 'explicit': 3, 'iterations': 3}
+{'genetic': 5, 'cbmc': 1, 'explicit': 5, 'iterations': 5}
 Perf timers:
-verify: 2.44s
-checker: 2.79s
+verify: 2.28s
+checker: 2.62s
 gcc: 0.65s
-_: 2.80s
-synth: 0.36s
+_: 2.63s
+synth: 0.35s

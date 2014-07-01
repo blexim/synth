@@ -2,20 +2,71 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = 0x5 + 0x5;
+t1 = 0x4 s<= x;
+t2 = max(t1, 0x4);
+I = t2 s<= 0x4;
 Program 1:
-t1 = min(x, x);
-t2 = x * 0x8;
-t3 = t2 << x;
-t4 = -x;
-I = min(0x8, x);
+t1 = x == x;
+t2 = t1 << 0x1;
+t3 = x >> x;
+t4 = t3 + x;
+I = x ==> t4;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: explicit
 Trying to generalize...
 Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 6
+[]
+Fastest checker: genetic
+Program 0:
+I = max(x, x);
+Program 1:
+t1 = 0x37 - x;
+t2 = x << 0x37;
+I = min(t1, x);
+
+Fastest checker: explicit
+Fails for (55,)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = -x;
+Program 1:
+t1 = x % x;
+t2 = t1 - x;
+I = min(t2, x);
+
+Fastest checker: explicit
+Fails for (63,)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = -0x13;
+Program 1:
+t1 = -x;
+t2 = 0x16 != x;
+I = min(t1, x);
+
+Fastest checker: explicit
+Correct for wordlen=6
 Fastest checker: cbmc
+Also correct for wordlen=32!
 
 
 
@@ -23,24 +74,22 @@ Fastest checker: cbmc
 
 
 
-Finished in 3.31s
+Finished in 3.76s
 
 Program 0:
-I = 0x50000000 + 0x50000000;
+I = -0x13;
 Program 1:
-t1 = min(x, x);
-t2 = x * 0x80000000L;
-t3 = t2 << x;
-t4 = -x;
-I = min(0x80000000L, x);
+t1 = -x;
+t2 = 0x16 != x;
+I = min(t1, x);
 
 
 Perf counters:
-{'genetic': 1, 'cbmc': 1, 'explicit': 3, 'iterations': 1}
+{'genetic': 4, 'cbmc': 1, 'explicit': 17, 'iterations': 4}
 Perf timers:
-gcc: 0.62s
-verify: 2.44s
-checker: 3.30s
-generalize: 2.08s
-synth: 0.87s
-_: 3.31s
+gcc: 1.10s
+verify: 2.64s
+checker: 3.72s
+generalize: 0.05s
+synth: 1.12s
+_: 3.76s

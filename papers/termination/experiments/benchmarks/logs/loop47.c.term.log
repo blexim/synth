@@ -2,16 +2,133 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xb << x;
-t2 = t1 & t1;
-I = t1 s<= t2;
+t1 = 0x7 & 0x7;
+t2 = 0x7 - 0x7;
+I = 0x7 ==> t1;
 Program 1:
-t1 = x ^ x;
-t2 = -x;
-I = min(x, t2);
+t1 = x >> 0x7;
+t2 = min(t1, x);
+I = t1 + x;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 6
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x < x;
+t2 = x ==> t1;
+I = x + x;
+Program 1:
+t1 = x ^ 0x3a;
+I = min(t1, x);
+
+Fastest checker: explicit
+Fails for (56,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~x;
+t2 = 0x3c s<= 0x3c;
+I = max(t1, t1);
+Program 1:
+t1 = ~x;
+I = min(t1, x);
+
+Fastest checker: explicit
+Fails for (62,)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x16 | x;
+Program 1:
+t1 = x >> 0x2a;
+t2 = 0x2a | x;
+t3 = -x;
+I = min(t1, t3);
+
+Fastest checker: explicit
+Correct for wordlen=6
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 12
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x23 - x;
+I = min(x, t1);
+Program 1:
+t1 = -x;
+t2 = -t1;
+t3 = 0x3c == x;
+I = min(x, t1);
+
+Fastest checker: explicit
+Fails for (4025,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~x;
+t2 = 0x3c s<= 0x3c;
+I = max(t1, t1);
+Program 1:
+t1 = ~x;
+I = min(t1, x);
+
+Fastest checker: explicit
+Fails for (4094,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x87d | 0x87d;
+t2 = t1 >> t1;
+I = 0x87d ^ x;
+Program 1:
+t1 = 0x34 == 0x34;
+t2 = t1 - x;
+t3 = 0x34 % 0x34;
+I = min(t2, x);
+
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x | 0xa63;
+I = max(0xa63, 0xa63);
+Program 1:
+t1 = -x;
+I = min(t1, x);
+
+Fastest checker: explicit
+Correct for wordlen=12
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -21,23 +138,22 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.05s
+Finished in 4.35s
 
 Program 0:
-t1 = 0xb << x;
-t2 = t1 & t1;
-I = t1 s<= t2;
+t1 = x | 0xa63;
+I = max(0xa63, 0xa63);
 Program 1:
-t1 = x ^ x;
-t2 = -x;
-I = min(x, t2);
+t1 = -x;
+I = min(t1, x);
 
 
 Perf counters:
-{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+{'genetic': 8, 'cbmc': 1, 'explicit': 28, 'iterations': 8}
 Perf timers:
-verify: 2.25s
-checker: 3.04s
-gcc: 0.60s
-_: 3.05s
-synth: 0.80s
+gcc: 1.54s
+verify: 2.84s
+checker: 4.30s
+generalize: 0.07s
+synth: 1.50s
+_: 4.35s

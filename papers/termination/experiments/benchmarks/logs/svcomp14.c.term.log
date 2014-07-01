@@ -2,14 +2,23 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = nondet_2 <= nondet_1;
+I = id ^ nondet_2;
 Program 1:
-t1 = max(maxId, nondet_1);
-t2 = min(nondet_0, nondet_2);
-I = nondet_0 ==> t2;
+I = 0x0 <= nondet_0;
 
 Fastest checker: explicit
-Fails for (1, 9, 5, 9, 2, 13)
+Fails for (5, 4, 2, 4, 1, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = -maxId;
+Program 1:
+t1 = 0x2 == id;
+I = nondet_2 << tmp;
+
+Fastest checker: explicit
+Fails for (1, 5, 2, 4, 1, 6)
 
 []
 Fastest checker: genetic
@@ -21,7 +30,7 @@ t1 = nondet_1 ==> nondet_1;
 I = tmp >> maxId;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0, 3, 13)
+Fails for (0, 0, 0, 0, 2, 6)
 
 []
 Fastest checker: genetic
@@ -32,45 +41,23 @@ t1 = nondet_1 s<= tmp;
 I = nondet_0 >> tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 0, 3, 13)
+Fails for (1, 0, 0, 0, 2, 6)
 
 []
 Fastest checker: genetic
 Program 0:
-I = maxId & 0xb;
+I = maxId & 0x3;
 Program 1:
 t1 = maxId - tmp;
-I = maxId < 0x8;
+I = maxId < 0x0;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0, 4, 13)
+Fails for (0, 0, 0, 0, 4, 6)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = nondet_1 - 0x3;
-I = nondet_1 s<= maxId;
-Program 1:
-I = maxId >> tmp;
-
-Fastest checker: explicit
-Fails for (0, 5, 0, 0, 4, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = maxId + nondet_0;
-Program 1:
-t1 = id < nondet_1;
-I = tmp << tmp;
-
-Fastest checker: explicit
-Fails for (0, 0, 12, 0, 4, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = maxId == 0xe;
+t1 = maxId == 0x6;
 t2 = t1 * nondet_1;
 I = tmp != id;
 Program 1:
@@ -79,19 +66,7 @@ t2 = id s<= nondet_1;
 I = maxId - tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 14, 4, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = nondet_1 ==> tmp;
-I = t1 <= maxId;
-Program 1:
-t1 = -maxId;
-I = 0x7 - tmp;
-
-Fastest checker: cbmc
-Fails for (2, 0, 0, 2, 6, 7)
+Fails for (1, 0, 0, 0, 4, 6)
 
 []
 Fastest checker: genetic
@@ -104,71 +79,66 @@ t1 = id + tmp;
 I = maxId - tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 0, 7, 7)
+Fails for (1, 0, 0, 0, 6, 6)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = ~tmp;
-t2 = max(nondet_0, t1);
-I = nondet_1 | t1;
+t1 = 0x5 >>> tmp;
+I = ~maxId;
 Program 1:
-I = nondet_1 - tmp;
+t1 = maxId ? nondet_0 : maxId;
+t2 = min(maxId, maxId);
+t3 = nondet_0 - tmp;
+I = id ==> id;
 
 Fastest checker: explicit
-Fails for (1, 7, 0, 0, 7, 7)
+Fails for (1, 0, 6, 0, 6, 6)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = nondet_2 & nondet_0;
-t2 = nondet_0 ==> id;
-I = maxId << t2;
+I = maxId >> id;
 Program 1:
-t1 = id ==> tmp;
+t1 = maxId s<= nondet_2;
+I = tmp + nondet_2;
+
+Fastest checker: explicit
+Fails for (2, 0, 6, 0, 6, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x5 >>> tmp;
+Program 1:
+t1 = maxId << tmp;
 I = -tmp;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0, 8, 7)
+Fails for (1, 0, 0, 1, 0, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-I = tmp s<= tmp;
+I = 0x7 s<= 0x7;
 Program 1:
-t1 = tmp >>> nondet_0;
-t2 = t1 * maxId;
-I = -tmp;
-
-Fastest checker: cbmc
-Fails for (1, 0, 4, 2, 0, 0)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = nondet_1 | tmp;
-t2 = maxId != nondet_0;
-I = t2 << t2;
-Program 1:
-t1 = nondet_0 - tmp;
-I = nondet_1 >> maxId;
+t1 = id + id;
+I = t1 - tmp;
 
 Fastest checker: explicit
-Fails for (0, 0, 1, 0, 1, 0)
+Fails for (1, 0, 0, 4, 0, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = nondet_2 < 0x9;
-t2 = id >>> maxId;
-I = tmp | 0x9;
+t1 = max(0x7, nondet_1);
+I = maxId + id;
 Program 1:
-t1 = tmp s<= maxId;
-t2 = 0x0 <= nondet_0;
-I = nondet_2 - tmp;
+t1 = -maxId;
+I = 0x1 - tmp;
 
 Fastest checker: explicit
-Fails for (1, 0, 0, 1, 8, 0)
+Fails for (1, 0, 0, 1, 4, 0)
 
 []
 
@@ -180,10 +150,10 @@ Fails for (1, 0, 0, 1, 8, 0)
 
 Timeout
 Perf counters:
-{'genetic': 14, 'cbmc': 2, 'explicit': 12, 'timeout': 1, 'iterations': 15}
+{'genetic': 12, 'explicit': 12, 'timeout': 1, 'iterations': 13}
 Perf timers:
-verify: 5.46s
-checker: 119.96s
-gcc: 0.45s
-_: 120.00s
-synth: 114.53s
+verify: 0.36s
+checker: 44.97s
+gcc: 0.41s
+_: 45.00s
+synth: 44.63s

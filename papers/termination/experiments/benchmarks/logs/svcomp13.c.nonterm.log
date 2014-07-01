@@ -380,60 +380,6 @@ Fastest checker: explicit
 Fails for (13, 17)
 
 []
-Fastest checker: genetic
-Evars: 249, 48
-Program 0:
-t1 = ~j;
-t2 = t1 + i;
-I = j < t2;
-
-Fastest checker: explicit
-Fails for (135, 17)
-
-[]
-Fastest checker: genetic
-Evars: 105, 49
-Program 0:
-t1 = i - j;
-I = t1 >>> 0xc3;
-
-Fastest checker: explicit
-Fails for (9, 18)
-
-[]
-Fastest checker: genetic
-Evars: 151, 46
-Program 0:
-t1 = j - i;
-I = t1 s<= 0xf6;
-
-Fastest checker: explicit
-Fails for (8, 19)
-
-[]
-Fastest checker: genetic
-Evars: 255, 156
-Program 0:
-t1 = -j;
-t2 = ~i;
-t3 = j << 0xf4;
-t4 = t3 == i;
-I = j & t4;
-
-Fastest checker: explicit
-Fails for (3, 48)
-
-[]
-Fastest checker: genetic
-Evars: 8, 130
-Program 0:
-t1 = j + i;
-I = t1 == 0x11;
-
-Fastest checker: explicit
-Fails for (136, 137)
-
-[]
 
 
 
@@ -443,11 +389,11 @@ Fails for (136, 137)
 
 Timeout
 Perf counters:
-{'genetic': 41, 'explicit': 45, 'timeout': 1, 'iterations': 42}
+{'genetic': 36, 'explicit': 40, 'timeout': 1, 'iterations': 37}
 Perf timers:
-gcc: 1.10s
-verify: 0.78s
-checker: 119.89s
+gcc: 1.07s
+verify: 0.72s
+checker: 44.91s
 generalize: 0.01s
-synth: 119.19s
-_: 120.00s
+synth: 44.26s
+_: 45.00s

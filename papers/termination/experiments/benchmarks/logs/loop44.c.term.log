@@ -2,14 +2,15 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x9 ? m : 0x9;
-t2 = m == 0x9;
-I = t1 >> 0x9;
+t1 = m s<= 0x7;
+I = -m;
 Program 1:
-I = x * 0xe;
+t1 = 0x0 ^ x;
+t2 = -x;
+I = -t1;
 
 Fastest checker: explicit
-Fails for (0, 11)
+Fails for (0, 4)
 
 []
 
@@ -23,8 +24,8 @@ Timeout
 Perf counters:
 {'genetic': 1, 'explicit': 1, 'timeout': 1, 'iterations': 2}
 Perf timers:
-verify: 0.17s
-checker: 120.00s
-gcc: 0.46s
-_: 120.00s
-synth: 119.83s
+verify: 0.19s
+checker: 45.00s
+gcc: 0.47s
+_: 45.00s
+synth: 44.81s

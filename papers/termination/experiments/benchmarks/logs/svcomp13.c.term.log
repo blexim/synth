@@ -2,7 +2,7 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x9 + 0x9;
+t1 = 0x1 + 0x1;
 t2 = t1 - t1;
 I = t2 == i;
 Program 1:
@@ -10,12 +10,12 @@ t1 = max(0x4, i);
 I = i - 0x4;
 
 Fastest checker: explicit
-Fails for (8, 0)
+Fails for (4, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x8 ? j : j;
+t1 = 0x0 ? j : j;
 I = t1 * t1;
 Program 1:
 t1 = i & i;
@@ -23,7 +23,7 @@ t2 = j == t1;
 I = t2 << t1;
 
 Fastest checker: explicit
-Fails for (9, 0)
+Fails for (5, 0)
 
 []
 Fastest checker: genetic
@@ -35,19 +35,19 @@ t2 = min(i, i);
 I = i <= t1;
 
 Fastest checker: explicit
-Fails for (8, 14)
+Fails for (4, 6)
 
 []
 Fastest checker: genetic
 Program 0:
 t1 = i s<= j;
-t2 = 0xa | 0xa;
+t2 = 0x2 | 0x2;
 I = t1 >>> i;
 Program 1:
-I = j ? 0xc : j;
+I = j ? 0x4 : j;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: explicit
 Trying to generalize...
 Fastest checker: explicit
@@ -59,18 +59,25 @@ Fastest checker: explicit
 Fastest checker: explicit
 Fastest checker: explicit
 Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
 Couldn't generalize :-(
-Increasing wordlen to 8
+Increasing wordlen to 6
 []
 Fastest checker: genetic
 Program 0:
-t1 = j ^ i;
-I = j | 0x5;
+t1 = i ? j : i;
+I = i >>> j;
 Program 1:
-I = j * j;
+I = i < j;
 
 Fastest checker: explicit
-Fails for (128, 27)
+Fails for (32, 43)
 
 []
 Fastest checker: genetic
@@ -84,41 +91,17 @@ t2 = i | t1;
 I = t1 != t2;
 
 Fastest checker: explicit
-Fails for (140, 27)
+Fails for (36, 43)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = j s<= i;
-I = j % i;
+t1 = j / 0x5;
+I = i >>> j;
 Program 1:
-t1 = i == 0x0;
-I = i | t1;
-
-Fastest checker: explicit
-Fails for (155, 27)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i <= i;
-I = 0xa ^ t1;
-Program 1:
-t1 = j ? 0x9 : i;
-I = i & t1;
-
-Fastest checker: explicit
-Fails for (255, 27)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i >> 0x2;
-I = i | i;
-Program 1:
-t1 = 0x9 == i;
-t2 = t1 + i;
-I = i s< t1;
+t1 = min(i, i);
+t2 = ~0x5;
+I = 0x5 - t2;
 
 Fastest checker: explicit
 Fails for (0, 1)
@@ -126,26 +109,28 @@ Fails for (0, 1)
 []
 Fastest checker: genetic
 Program 0:
-I = max(0xf, i);
+I = ~i;
 Program 1:
-t1 = i << i;
-t2 = t1 < t1;
-I = 0x0 >> t1;
+t1 = 0x4 >> i;
+t2 = i | 0x4;
+I = i + i;
 
 Fastest checker: explicit
-Fails for (0, 6)
+Fails for (32, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-I = ~i;
+t1 = 0x5 == i;
+t2 = 0x5 ^ 0x5;
+I = j | t1;
 Program 1:
-t1 = 0xc >> i;
-t2 = i | 0xc;
-I = i + i;
+t1 = -j;
+t2 = t1 >> 0x5;
+I = j ^ 0x5;
 
 Fastest checker: explicit
-Fails for (128, 0)
+Fails for (33, 0)
 
 []
 Fastest checker: genetic
@@ -157,31 +142,7 @@ t2 = min(i, i);
 I = i <= t1;
 
 Fastest checker: explicit
-Fails for (128, 254)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x4 * 0x4;
-I = 0x4 >>> j;
-Program 1:
-t1 = 0x1 s<= 0x1;
-t2 = t1 & j;
-I = t2 ^ 0x1;
-
-Fastest checker: explicit
-Fails for (129, 254)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = 0xd < i;
-Program 1:
-t1 = -j;
-I = 0xe ==> i;
-
-Fastest checker: explicit
-Fails for (0, 14)
+Fails for (32, 62)
 
 []
 Fastest checker: genetic
@@ -191,70 +152,55 @@ t2 = i ? j : i;
 I = -0x4;
 Program 1:
 t1 = max(i, i);
-I = j ^ 0xf;
+I = j ^ 0x7;
 
 Fastest checker: explicit
-Fails for (143, 14)
+Fails for (39, 62)
 
 []
 Fastest checker: genetic
 Program 0:
-I = 0x9 ? 0x9 : 0x9;
+I = 0x19 ? 0x19 : 0x19;
 Program 1:
-t1 = min(0xf, 0xf);
-I = i - 0xf;
+t1 = min(0x3f, 0x3f);
+I = i - 0x3f;
 
 Fastest checker: explicit
-Fails for (0, 15)
+Fails for (32, 63)
 
 []
 Fastest checker: genetic
 Program 0:
 t1 = ~i;
 t2 = max(t1, t1);
-I = 0x1 | i;
+I = 0x11 | i;
 Program 1:
-I = 0x3 - j;
+I = 0x13 - j;
 
 Fastest checker: explicit
-Fails for (3, 15)
+Fails for (19, 20)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = j >>> j;
-t2 = j << t1;
-I = t1 < t2;
+t1 = j < j;
+I = i ? 0x15 : j;
 Program 1:
-t1 = 0x7 == i;
-I = i >> j;
+t1 = j s< i;
+t2 = min(0x38, t1);
+t3 = j >>> i;
+I = i + 0x38;
 
 Fastest checker: explicit
-Fails for (4, 15)
+Fails for (63, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = i + 0xc;
-t2 = -0xc;
-I = 0xc s< i;
+I = i >>> 0x14;
 Program 1:
-t1 = j s<= 0xc;
-t2 = i * i;
-I = t1 != t2;
-
-Fastest checker: explicit
-Fails for (0, 16)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j <= i;
-t2 = j + t1;
-I = 0x3 < i;
-Program 1:
-t1 = 0x5 >> 0x5;
-I = i << t1;
+t1 = i + i;
+I = 0x0 + i;
 
 Fastest checker: explicit
 Fails for (0, 4)
@@ -262,164 +208,329 @@ Fails for (0, 4)
 []
 Fastest checker: genetic
 Program 0:
-t1 = j << i;
-I = t1 ==> t1;
-Program 1:
-t1 = i s<= 0x6;
-I = 0x6 + i;
-
-Fastest checker: explicit
-Fails for (128, 250)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = -j;
-I = j == 0x1;
-Program 1:
-t1 = 0x8 << 0x8;
-t2 = max(j, i);
-I = min(j, 0x8);
-
-Fastest checker: explicit
-Fails for (1, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i - 0x7;
-I = t1 ==> 0x7;
-Program 1:
-t1 = i * 0xf;
-I = i ? 0xf : j;
-
-Fastest checker: explicit
-Fails for (0, 18)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = max(j, 0x6);
-t2 = max(j, t1);
-I = max(i, j);
-Program 1:
-t1 = j ? 0x4 : i;
-t2 = i / 0x4;
-I = i + 0x4;
-
-Fastest checker: explicit
-Fails for (128, 252)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j < j;
-t2 = ~0x4;
-I = t2 | j;
-Program 1:
-t1 = 0xf == 0xf;
+t1 = j s<= 0x27;
 t2 = j <= i;
-I = i + t1;
+t3 = i << j;
+t4 = j + 0x27;
+I = t4 >>> 0x27;
+Program 1:
+t1 = 0x8 s< j;
+t2 = 0x8 + 0x8;
+I = 0x8 + i;
 
 Fastest checker: explicit
-Fails for (128, 255)
+Fails for (24, 25)
 
 []
 Fastest checker: genetic
 Program 0:
-I = max(0x3, i);
+t1 = j | 0x27;
+t2 = j <= j;
+t3 = i != 0x27;
+t4 = t1 + i;
+I = ~0x27;
 Program 1:
-I = i + 0xf;
+I = 0x8 - j;
 
 Fastest checker: explicit
-Fails for (128, 241)
+Fails for (8, 26)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x5 >>> 0x5;
-I = 0x5 + 0x5;
+t1 = 0x27 | 0x27;
+I = j + i;
 Program 1:
-t1 = j s<= i;
-t2 = min(0x9, t1);
-I = 0x9 + i;
+t1 = 0x32 s< j;
+t2 = i + 0x32;
+I = t2 == j;
 
 Fastest checker: explicit
-Fails for (128, 247)
+Fails for (10, 26)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x5 >>> 0x5;
-t2 = 0x5 + 0x5;
-I = t2 / 0x5;
+t1 = j | 0x27;
+I = j + i;
 Program 1:
-t1 = j s<= i;
-t2 = min(0x0, t1);
-t3 = j s<= j;
-t4 = j + i;
-t5 = j + 0x0;
-I = t4 + i;
+t1 = 0x8 s< j;
+t2 = 0x8 + t1;
+t3 = i * j;
+t4 = j s<= j;
+I = i + 0x8;
 
 Fastest checker: explicit
-Fails for (254, 1)
+Fails for (32, 56)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = j >>> j;
-t2 = j << t1;
-I = t1 < t2;
+t1 = 0x2 != 0x2;
+t2 = j <= 0x2;
+I = t1 s< t2;
 Program 1:
-t1 = j s<= i;
-t2 = min(0x7, t1);
-t3 = 0x7 + i;
-I = i + j;
+t1 = i >>> j;
+I = t1 & i;
 
 Fastest checker: explicit
-Fails for (7, 8)
+Fails for (2, 3)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x15;
+t2 = t1 + i;
+I = j < 0x15;
+Program 1:
+I = i & i;
+
+Fastest checker: explicit
+Fails for (20, 21)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j != 0x27;
+t2 = j <= i;
+I = t1 == j;
+Program 1:
+I = j + i;
+
+Fastest checker: explicit
+Fails for (1, 22)
 
 []
 Fastest checker: genetic
 Program 0:
 t1 = ~j;
-I = t1 s<= j;
+t2 = j <= i;
+t3 = i + i;
+I = j + t1;
 Program 1:
-t1 = j s<= i;
-t2 = min(0x0, t1);
-t3 = 0x0 + 0x0;
-I = i + i;
+t1 = i s<= j;
+t2 = 0x32 | j;
+I = i - 0x32;
 
 Fastest checker: explicit
-Correct for wordlen=8
+Fails for (32, 50)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j | 0x27;
+Program 1:
+t1 = i - 0x34;
+t2 = min(t1, t1);
+t3 = j ==> i;
+I = 0x34 + i;
+
+Fastest checker: explicit
+Fails for (0, 12)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x8;
+t2 = j <= 0x8;
+t3 = t1 % t1;
+I = 0x8 <= i;
+Program 1:
+t1 = min(0x11, 0x11);
+t2 = j ==> i;
+I = 0x11 + i;
+
+Fastest checker: explicit
+Fails for (32, 47)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j | 0x27;
+Program 1:
+t1 = j + j;
+I = i - 0x8;
+
+Fastest checker: explicit
+Fails for (0, 8)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j + 0x1a;
+t2 = j <= i;
+t3 = t1 << j;
+t4 = t2 + t3;
+t5 = j + 0x1a;
+I = 0x1a + j;
+Program 1:
+t1 = 0xe s< j;
+I = i - 0xe;
+
+Fastest checker: explicit
+Fails for (37, 8)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = i <= i;
+Program 1:
+t1 = 0x2f s< j;
+t2 = t1 / 0x2f;
+t3 = 0x2f + i;
+t4 = t3 + i;
+t5 = 0x2f s< i;
+t6 = 0x2f / 0x2f;
+I = 0x2f & t6;
+
+Fastest checker: explicit
+Fails for (0, 9)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j ^ 0x39;
+Program 1:
+I = 0x1b + i;
+
+Fastest checker: explicit
+Fails for (56, 9)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j + i;
+t2 = i + j;
+I = 0x27 | i;
+Program 1:
+t1 = 0x3b | 0x3b;
+I = i + 0x3b;
+
+Fastest checker: explicit
+Fails for (0, 5)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x27 | 0x27;
+Program 1:
+t1 = i + 0x1c;
+I = t1 == j;
+
+Fastest checker: explicit
+Fails for (32, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i <= i;
+I = 0x27 + 0x27;
+Program 1:
+t1 = 0x8 s< j;
+t2 = i * j;
+t3 = 0x8 + i;
+I = t3 + i;
+
+Fastest checker: explicit
+Fails for (0, 28)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | i;
+I = j + i;
+Program 1:
+t1 = 0x20 s< j;
+t2 = 0x20 / 0x20;
+t3 = j << t1;
+t4 = i + t2;
+t5 = ~0x20;
+t6 = i + 0x20;
+I = 0x20 + 0x20;
+
+Fastest checker: explicit
+Correct for wordlen=6
 Fastest checker: cbmc
 Trying to generalize...
 Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
 Couldn't generalize :-(
-Increasing wordlen to 16
+Increasing wordlen to 12
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xec + 0xec;
-t2 = t1 >> i;
-I = 0xec | 0xec;
+t1 = 0xe >>> j;
+t2 = -t1;
+I = min(0xe, i);
 Program 1:
-I = i | 0x0;
+t1 = ~j;
+I = i | 0x26;
+
+Fastest checker: explicit
+Fails for (2048, 3278)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x19 ? 0x19 : 0x19;
+Program 1:
+t1 = min(0x3f, 0x3f);
+I = i - 0x3f;
 
 Fastest checker: cbmc
-Fails for (65528, 0)
+Fails for (4095, 63)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xb5 >> i;
-t2 = j ^ 0xb5;
-I = j < 0xb5;
+t1 = ~i;
+t2 = max(t1, t1);
+I = 0x11 | i;
 Program 1:
-t1 = i << 0x0;
-I = i <= 0x0;
+I = 0x13 - j;
+
+Fastest checker: explicit
+Fails for (19, 64)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j | 0x15;
+Program 1:
+t1 = j | 0x17;
+I = j ^ 0x17;
+
+Fastest checker: explicit
+Fails for (23, 64)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i == 0x18;
+I = i / i;
+Program 1:
+t1 = i + 0x19;
+t2 = 0x19 s<= i;
+I = t2 s<= t1;
+
+Fastest checker: cbmc
+Fails for (2048, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x6 + j;
+t2 = ~j;
+I = t2 * i;
+Program 1:
+I = i & i;
 
 Fastest checker: explicit
 Fails for (0, 1)
@@ -427,706 +538,311 @@ Fails for (0, 1)
 []
 Fastest checker: genetic
 Program 0:
-t1 = i ? j : 0x92;
-t2 = i * i;
-I = t2 >>> t2;
-Program 1:
-I = i * 0x7c;
-
-Fastest checker: explicit
-Fails for (0, 4)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = -j;
-Program 1:
-t1 = j - 0x58;
-I = 0x58 + i;
-
-Fastest checker: explicit
-Fails for (65535, 4)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xc9 < i;
-I = t1 >> i;
-Program 1:
-t1 = i ^ i;
-I = i - t1;
-
-Fastest checker: cbmc
-Fails for (32768, 31376)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = 0xaf <= i;
-Program 1:
-t1 = max(i, i);
-I = min(0xf4, 0xf4);
-
-Fastest checker: cbmc
-Fails for (0, 175)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j <= 0xf5;
-t2 = j != 0xf5;
-I = j <= 0xf5;
-Program 1:
-I = i * i;
-
-Fastest checker: cbmc
-Fails for (245, 7056)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~i;
-t2 = max(t1, t1);
-I = 0x1 | i;
-Program 1:
-I = 0x3 - j;
-
-Fastest checker: explicit
-Fails for (3, 7057)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j >>> j;
-t2 = j << t1;
-I = t1 < t2;
-Program 1:
-t1 = 0x7 == i;
-I = i >> j;
-
-Fastest checker: explicit
-Fails for (13, 7057)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xa < 0xa;
-t2 = i == t1;
-I = 0xa << j;
-Program 1:
-t1 = 0xe + j;
-I = ~t1;
-
-Fastest checker: explicit
-Fails for (14, 7057)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j << i;
-I = t1 ==> t1;
-Program 1:
-t1 = i s<= 0x6;
-I = 0x6 + i;
-
-Fastest checker: cbmc
-Fails for (61440, 65530)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = -j;
-I = j == 0x1;
-Program 1:
-t1 = 0x8 << 0x8;
-t2 = max(j, i);
-I = min(j, 0x8);
-
-Fastest checker: explicit
-Fails for (1, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j ? i : 0x9;
-t2 = t1 + t1;
-I = ~j;
-Program 1:
-I = ~j;
-
-Fastest checker: explicit
-Fails for (65534, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i - 0x7;
-I = t1 ==> 0x7;
-Program 1:
-t1 = i * 0xf;
-I = i ? 0xf : j;
-
-Fastest checker: cbmc
-Fails for (0, 8739)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = max(j, 0x6);
-t2 = max(j, t1);
-I = max(i, j);
-Program 1:
-t1 = j ? 0x4 : i;
-t2 = i / 0x4;
-I = i + 0x4;
-
-Fastest checker: cbmc
-Fails for (65535, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = i / 0xa;
-Program 1:
-t1 = -j;
-I = j <= 0x0;
-
-Fastest checker: explicit
-Fails for (0, 10)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = j < j;
-t2 = ~0x4;
-I = t2 | j;
-Program 1:
-t1 = 0xf == 0xf;
-t2 = j <= i;
-I = i + t1;
-
-Fastest checker: cbmc
-Fails for (33277, 65535)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = max(0x3, i);
-Program 1:
-I = i + 0xf;
-
-Fastest checker: cbmc
-Fails for (48993, 65521)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x5 >>> 0x5;
-I = 0x5 + 0x5;
+I = i | 0x3;
 Program 1:
 t1 = j s<= i;
-t2 = min(0x9, t1);
-I = 0x9 + i;
-
-Fastest checker: explicit
-Fails for (32768, 65527)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x5 >>> 0x5;
-t2 = 0x5 + 0x5;
-I = t2 / 0x5;
-Program 1:
-t1 = j s<= i;
-t2 = min(0x0, t1);
+t2 = min(0x1, t1);
 t3 = j s<= j;
-t4 = j + i;
-t5 = j + 0x0;
-I = t4 + i;
+I = 0x1 + i;
 
-Fastest checker: explicit
-Fails for (65534, 1)
+Fastest checker: cbmc
+Fails for (2302, 4095)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = j >>> j;
-t2 = j << t1;
-I = t1 < t2;
+I = i >>> 0x14;
 Program 1:
-t1 = j s<= i;
-t2 = min(0x7, t1);
-t3 = 0x7 + i;
-I = i + j;
-
-Fastest checker: explicit
-Fails for (32977, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-I = i >>> 0x5;
-Program 1:
-t1 = j s<= i;
-t2 = min(0x0, t1);
-t3 = j s<= j;
-t4 = 0x0 + i;
-t5 = 0x0 + j;
+t1 = i + i;
 I = 0x0 + i;
 
 Fastest checker: explicit
-Fails for (0, 32)
+Fails for (0, 256)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j s<= 0x27;
+t2 = j <= i;
+t3 = i << j;
+t4 = j + 0x27;
+I = t4 >>> 0x27;
+Program 1:
+t1 = 0x8 s< j;
+t2 = 0x8 + 0x8;
+I = 0x8 + i;
+
+Fastest checker: explicit
+Fails for (4056, 256)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x27;
+t2 = j <= j;
+t3 = i != 0x27;
+t4 = t1 + i;
+I = ~0x27;
+Program 1:
+I = 0x8 - j;
+
+Fastest checker: explicit
+Fails for (8, 257)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x27 | 0x27;
+I = j + i;
+Program 1:
+t1 = 0x32 s< j;
+t2 = i + 0x32;
+I = t2 == j;
+
+Fastest checker: cbmc
+Fails for (3070, 4046)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x27;
+I = j + i;
+Program 1:
+t1 = 0x8 s< j;
+t2 = 0x8 + t1;
+t3 = i * j;
+t4 = j s<= j;
+I = i + 0x8;
+
+Fastest checker: explicit
+Fails for (2048, 4088)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x15;
+t2 = t1 + i;
+I = j < 0x15;
+Program 1:
+I = i & i;
+
+Fastest checker: explicit
+Fails for (20, 21)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j != 0x27;
+t2 = j <= i;
+I = t1 == j;
+Program 1:
+I = j + i;
+
+Fastest checker: explicit
+Fails for (1, 22)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x3b;
+t2 = i + 0x3b;
+I = i != j;
+Program 1:
+t1 = 0x8 s< j;
+t2 = i / 0x8;
+t3 = 0x8 + j;
+t4 = 0x8 + 0x8;
+t5 = t4 - j;
+I = t4 / t4;
+
+Fastest checker: explicit
+Fails for (16, 22)
 
 []
 Fastest checker: genetic
 Program 0:
 t1 = ~j;
-I = t1 s<= j;
+t2 = j <= i;
+t3 = i + i;
+I = j + t1;
 Program 1:
-t1 = j s<= i;
-t2 = min(0x0, t1);
-t3 = 0x0 + 0x0;
-I = i + i;
-
-Fastest checker: cbmc
-Correct for wordlen=16
-Fastest checker: cbmc
-Trying to generalize...
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: cbmc
-Couldn't generalize :-(
-Increasing wordlen to 32
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xec + 0xec;
-t2 = t1 >> i;
-I = 0xec | 0xec;
-Program 1:
-I = i | 0x0;
-
-Fastest checker: cbmc
-Fails for (3221225471L, 0)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xec + 0xec;
-t2 = t1 >> i;
-I = 0xec | 0xec;
-Program 1:
-I = i | 0x0;
+t1 = i s<= j;
+t2 = 0x32 | j;
+I = i - 0x32;
 
 Fastest checker: explicit
-Fails for (-2147483647, 0)
+Fails for (0, 50)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xb5 >> i;
-t2 = j ^ 0xb5;
-I = j < 0xb5;
+I = j | 0x27;
 Program 1:
-t1 = i << 0x0;
-I = i <= 0x0;
+t1 = i - 0x34;
+t2 = min(t1, t1);
+t3 = j ==> i;
+I = 0x34 + i;
 
 Fastest checker: cbmc
-Fails for (180, 2147483648L)
+Fails for (3090, 4044)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
+t1 = j + 0x1a;
+t2 = j <= i;
+t3 = t1 << j;
+t4 = t2 + t3;
+t5 = j + 0x1a;
+I = 0x1a + j;
 Program 1:
-I = j ? i : j;
+t1 = 0xe s< j;
+I = i - 0xe;
+
+Fastest checker: explicit
+Fails for (4069, 4070)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j < 0x27;
+Program 1:
+t1 = 0x8 >>> j;
+t2 = 0x8 / 0x8;
+I = 0x8 + i;
+
+Fastest checker: explicit
+Fails for (38, 39)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i <= i;
+I = 0x27 + 0x27;
+Program 1:
+t1 = 0x8 s< j;
+t2 = i * j;
+t3 = 0x8 + i;
+I = t3 + i;
 
 Fastest checker: cbmc
-Fails for (4294967295L, 2)
+Fails for (2080, 4092)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
+I = j | i;
 Program 1:
-I = j ? i : j;
+t1 = i s<= j;
+t2 = min(0x8, j);
+I = i - 0x8;
+
+Fastest checker: explicit
+Fails for (4095, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j s< i;
+I = i >>> i;
+Program 1:
+t1 = 0x8 ^ j;
+t2 = i + i;
+I = j >>> 0x8;
+
+Fastest checker: explicit
+Fails for (0, 12)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x27;
+I = i + t1;
+Program 1:
+t1 = i - j;
+I = 0x3b + t1;
+
+Fastest checker: explicit
+Fails for (4039, 18)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | i;
+I = j + i;
+Program 1:
+t1 = 0x20 s< j;
+t2 = 0x20 / 0x20;
+t3 = j << t1;
+t4 = i + t2;
+t5 = ~0x20;
+t6 = i + 0x20;
+I = 0x20 + 0x20;
 
 Fastest checker: cbmc
-Fails for (4294967295L, 2)
+Fails for (2124, 4064)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
+t1 = j | 0x2b;
+t2 = j ==> i;
+t3 = t1 <= j;
+t4 = 0x2b == t3;
+I = 0x2b + j;
 Program 1:
-I = j ? i : j;
+I = 0x4 - j;
+
+Fastest checker: explicit
+Fails for (4052, 4064)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | i;
+t2 = j + 0x1;
+I = 0x1 + j;
+Program 1:
+t1 = 0x8 ==> i;
+I = i - 0x8;
+
+Fastest checker: explicit
+Fails for (4094, 4095)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x27 | 0x27;
+t2 = j == 0x27;
+t3 = j | 0x27;
+I = 0x27 <= 0x27;
+Program 1:
+t1 = 0x27 s<= j;
+t2 = 0x27 + i;
+I = 0x27 s< t2;
 
 Fastest checker: cbmc
-Fails for (4294967295L, 2)
+Fails for (2081, 4057)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
+t1 = j | 0x27;
+I = 0x27 + 0x27;
 Program 1:
-I = j ? i : j;
+t1 = min(0x8, 0x8);
+I = i - 0x8;
 
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
+Fastest checker: explicit
+Fails for (0, 8)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
+I = 0x199 ? 0x199 : 0x199;
 Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
-
-Fastest checker: cbmc
-Fails for (4294967295L, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = i / j;
-t2 = 0x3 ^ t1;
-I = i * t2;
-Program 1:
-I = j ? i : j;
+t1 = min(0x47f, 0x47f);
+I = i - 0x47f;
 
 
 
@@ -1137,11 +853,11 @@ I = j ? i : j;
 
 Timeout
 Perf counters:
-{'genetic': 89, 'cbmc': 52, 'explicit': 54, 'timeout': 1, 'iterations': 89}
+{'genetic': 62, 'cbmc': 18, 'explicit': 70, 'timeout': 1, 'iterations': 62}
 Perf timers:
-gcc: 1.86s
-verify: 116.00s
-checker: 119.73s
-generalize: 12.35s
-synth: 3.94s
-_: 120.00s
+gcc: 1.56s
+verify: 43.05s
+checker: 44.81s
+generalize: 19.79s
+synth: 1.91s
+_: 45.01s

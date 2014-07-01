@@ -2,71 +2,54 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = nondet_0 * x;
-I = nondet_0 * 0x2;
+t1 = 0x4 == nondet_0;
+t2 = x & 0x4;
+I = t2 ==> nondet_0;
 Program 1:
-I = x % 0x7;
+t1 = max(nondet_0, nondet_0);
+t2 = ~x;
+I = nondet_0 ==> x;
 
 Fastest checker: explicit
-Fails for (0, 11)
+Fails for (0, 4)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x2 & 0x2;
-I = nondet_0 ? x : t1;
+t1 = max(nondet_0, nondet_0);
+t2 = nondet_0 >> nondet_0;
+I = t2 <= t2;
 Program 1:
-t1 = nondet_0 >>> nondet_0;
-t2 = 0x3 + x;
-I = 0x3 s< x;
+t1 = nondet_0 + x;
+I = x << 0x2;
 
 Fastest checker: explicit
-Fails for (1, 11)
+Fails for (4, 4)
 
 []
 Fastest checker: genetic
 Program 0:
-I = ~x;
+t1 = 0x6 s<= 0x6;
+I = t1 >> 0x6;
 Program 1:
-t1 = 0xe ? x : nondet_0;
-t2 = x | x;
-t3 = x * 0xe;
-I = t3 s<= x;
+t1 = 0x7 ^ x;
+I = min(x, t1);
 
 Fastest checker: explicit
-Fails for (0, 13)
+Fails for (0, 6)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0xb | nondet_0;
-t2 = nondet_0 >>> x;
-t3 = 0xb % 0xb;
-t4 = 0xb ==> 0xb;
-I = ~nondet_0;
+I = 0x5 == 0x5;
 Program 1:
-t1 = x s< 0x3;
-t2 = 0x3 + x;
-t3 = x s< 0x3;
-I = x << 0x3;
+t1 = 0x4 == x;
+t2 = x - t1;
+t3 = nondet_0 + t2;
+I = x * 0x4;
 
 Fastest checker: explicit
-Fails for (15, 13)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0xb * 0xb;
-I = min(x, 0xb);
-Program 1:
-t1 = x + 0x3;
-t2 = 0x3 >>> 0x3;
-t3 = t2 == nondet_0;
-t4 = x << 0x3;
-I = t4 & x;
-
-Fastest checker: explicit
-Fails for (0, 14)
+Fails for (1, 6)
 
 []
 
@@ -78,10 +61,10 @@ Fails for (0, 14)
 
 Timeout
 Perf counters:
-{'genetic': 5, 'explicit': 5, 'timeout': 1, 'iterations': 6}
+{'genetic': 4, 'explicit': 4, 'timeout': 1, 'iterations': 5}
 Perf timers:
-verify: 0.21s
-checker: 119.99s
+verify: 0.19s
+checker: 44.99s
 gcc: 0.45s
-_: 120.00s
-synth: 119.79s
+_: 45.00s
+synth: 44.80s
