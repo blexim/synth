@@ -216,17 +216,17 @@ def split_func(fd, ofile):
   prefix.block_items += copy_out
   prefix.block_items.append(c_ast.Return(c_ast.Constant('int', str('1'))))
 
-  ofile.write("int prefix(word_t in_vars[%d], word_t out_vars[%d]) {\n" % (nids, nids))
+  ofile.write("int prefix(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
   ofile.write(cgen.visit(prefix))
   ofile.write("}\n\n")
 
-  ofile.write("int guard(word_t in_vars[%d]) {\n" % nids)
+  ofile.write("int guard(word_t in_vars[NARGS]) {\n")
   guard_body = c_ast.Compound(copy.copy(decls))
   guard_body.block_items.append(c_ast.Return(loop.cond))
   ofile.write(cgen.visit(guard_body))
   ofile.write("}\n\n")
 
-  ofile.write("void body(word_t in_vars[%d], word_t out_vars[%d]) {\n" % (nids, nids))
+  ofile.write("void body(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
   loop_body = c_ast.Compound(copy.copy(decls))
   loop_body.block_items.append(loop.stmt)
   loop_body.block_items += copy_out
