@@ -6,6 +6,7 @@ import cPickle
 
 args.argparser.add_argument("--stats", default=None, type=str,
     help="file to serialize statistics to")
+args.argparser.add_argument("--paramils", default=False, type=bool)
 
 counters = {}
 timers = {}
@@ -56,8 +57,21 @@ def summary():
 
   print "Perf timers:"
 
+  runtime = 0
+
   for (key, times) in timers.iteritems():
     total = sum(end - start for (start, end) in times if end is not None)
     total += sum(time.time() - start for (start, end) in times if end is None)
     print "%s: %.02fs" % (key, total)
 
+    if key == "_":
+      runtime = total
+
+  if "timeout" in counters:
+    res = "TIMEOUT"
+  else:
+    res = "SAT"
+
+  if args.args.paramils:
+    print "Result for ParamILS: %s, %f, %d, 0, %d" % (
+       res, runtime, counters['iterations'], args.args.seed)
