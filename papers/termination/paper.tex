@@ -888,7 +888,7 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 \label{def:conditional-termination-formula}
  \begin{align*}
   \exists R, Inv . \forall \mathcal{V}, \mathcal{V'} . & I(\mathcal{V}) \wedge G(\mathcal{V}) \rightarrow Inv(\mathcal{V}) ~ \wedge \\
-                                 & G(\mathcal{V}) \wedge V(\mathcal{V}) \wedge T(\mathcal{V}, \mathcal{V'}) \rightarrow Inv(\mathcal{V'}) \wedge R(\mathcal{V}) > 0 
+                                 & G(\mathcal{V}) \wedge Inv(\mathcal{V}) \wedge T(\mathcal{V}, \mathcal{V'}) \rightarrow Inv(\mathcal{V'}) \wedge R(\mathcal{V}) > 0 
   \wedge R(\mathcal{V}) > R(\mathcal{V'})
  \end{align*}
 \end{definition}
@@ -903,6 +903,18 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
  & Inv_n(\mathcal{V}_n) \wedge G_n(\mathcal{V}_n) \wedge T(\mathcal{V}_n, \mathcal{V}_n') \rightarrow Inv_n(\mathcal{V}_n') \wedge R(\mathcal{V}_n) > 0 \wedge R(\mathcal{V}_n) > R(\mathcal{V}_n')
  \end{align*}
 \end{definition}
+
+\begin{definition}[ Nested Loops Termination Formula {\bf [NT]}]
+\label{def:deterministic-nonterm-formula}
+ \begin{align*}
+  \exists R, S . \forall \mathcal{V}, \mathcal{V}' . & G_1(\mathcal{V}) \wedge P_1(\mathcal{V},\mathcal{V}') \rightarrow S(\mathcal{V}',\mathcal{V}') ~ \wedge \\
+                                & G_2(\mathcal{V}') \wedge S(\mathcal{V},\mathcal{V}') \wedge T(\mathcal{V}',\mathcal{V}'')\rightarrow S(\mathcal{V},\mathcal{V}'') ~ \wedge \\
+				& G_1(\mathcal{V}) \wedge P_1(\mathcal{V},\mathcal{V}') \wedge \neg G_2(\mathcal{V}') \wedge S(\mathcal{V}',\mathcal{V}'') \wedge 
+                                P_2(\mathcal{V}'',\mathcal{V}''') \wedge 
+                                  R(\mathcal{V}) > 0 \wedge R(\mathcal{V}) > R(\mathcal{V}''') 
+ \end{align*} 
+\end{definition}
+
 
 \begin{definition}[Non-Termination Formula - Open Recurrence Set  {\bf [ONT]}]
 \label{def:nonterm-formula}
@@ -1059,34 +1071,59 @@ we make use of the notion of \emph{closed recurrence set} introduced by Chen et 
 As opposed to a closed recurrence set, this is a  purely universal property: for each state in the recurrence set $N$, each of its successors 
 must be in $N$. Thus, the non-termination problem becomes equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
+As our formulation is with respect to a given loop $L=(\mathcal{V},I,G,t)$, we require the  
+recurrence set to include the loop's guard, $N(\mathcal{V}) \rightarrow G(\mathcal{V})$. In other words, the loop's guard needs to be satisfied in order for the 
+infinite execution to happen.
 
-\todo{non-determinism?}\\
+Given that our state space is finite, a transition relation induces a infinite execution if and only if some state is 
+visited infinitely many times in the course of the execution. Hence, an alternative formulation of the non-termination problem 
+for bit-vectors may search for singleton recurrence sets (the recurrence set contains only the state visited infinitely many times).
+However, this would require reasoning about the transitive closure of the transition relation.\\
 
-According to \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}, a transition relation is non-terminating iff it has a recurrence set of states.
-Candidate transition relations are 
-\emph{lassos} in the program's CFG. %(they  make use of the syntactic notion of lasso).
-A lasso at a cutpoint location consists of two sequences
-of transitions, the stem and the loop.
-The stem is a finite path from an initial location to the cutpoint location. 
-The loop is a finite path that starts and ends at the cutpoint
-location by following a cyclic path through the CFG. 
-A lasso induces an infinite execution if the infinite path obtained by traversing the stem and then unrolling
-the loop infinitely many times is feasible. In this case, the lasso is said to be non-terminating.
+\noindent {\bf Non-determinism.} A non-termination diagnosis procedure searching for a closed recurrence set under-approximates the transition relation, i.e. 
+the closed recurrence set together with the under-approximation characterise non-termination \cite{DBLP:conf/tacas/ChenCFNO14}.
+A potential difficulty with such a procedure lies in the handling of non-deterministic assignments. For illustration, consider the following loop:
+
+\begin{lstlisting}[language=C]
+while(x != 0) {
+  y = nondet();
+  x = x-y;
+}
+\end{lstlisting}
+
+Only for certain values of $y$ the loop is non-terminating.
+In order to restrict the values that may be assigned to $y$, we replace the non-deterministic choice with a fresh variable $a$ and use formula {\bf [CNT]}
+to compute a closed recurrence set $N[a]$ parametrised by $a$. Now $N[a]$ becomes an assertion over $\mathcal{V} \cup \{a\}$.
+%, i.e. we under-approximate the transition relation. 
+For this example, our technique computes $N[a](x,y,a) = $.%, where $a$ corresponds to the non-deterministic choice.  \\
+%The issue with the closed recurrence set is that it yields an incomplete  for loops 
+%that have non-deterministic assignments 
+%parametric recurrence set
+
+%% According to \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}, a transition relation is non-terminating iff it has a recurrence set of states.
+%% Candidate transition relations are 
+%% \emph{lassos} in the program's CFG.
+%% A lasso at a cutpoint location consists of two sequences
+%% of transitions, the stem and the loop.
+%% The stem is a finite path from an initial location to the cutpoint location. 
+%% The loop is a finite path that starts and ends at the cutpoint
+%% location by following a cyclic path through the CFG. 
+%% A lasso induces an infinite execution if the infinite path obtained by traversing the stem and then unrolling
+%% the loop infinitely many times is feasible. In this case, the lasso is said to be non-terminating.
 %% We observe that in the case that $T$ is deterministic (that is, each state has
 %% exactly one successor),  the non-termination problem is equivalent to the
 %% satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 
+%% The method is incomplete as not all non-terminating
+%% program executions are induced by lassos. An infinite behaviour
+%% that is not periodic is illustrated by the following program:
 
-The method is incomplete as not all non-terminating
-program executions are induced by lassos. An infinite behaviour
-that is not periodic is illustrated by the following program:
-
-Our method is purely semantic. %We extend the notion of recurrence set in order to formulate the 
-We formulate the non-termination problem at the loop level.%, rather than transition relation.
-In our design, a loop $L=(\mathcal{V},I,G,t)$ is non-terminating iff it has a recurrence set of states.\\
+%Our method is purely semantic. 
 
 {\bf Sequential loops.}
 Discuss {\bf [SNT]}.
+
+{\bf Nested loops.}
 
 %% \subsection{Program Synthesis as Second-Order Satisfaction}
 
