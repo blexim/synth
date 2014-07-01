@@ -20,7 +20,7 @@ def prove_terminates(filename):
              "-P3 " +
              "--seed=1337 " +
              "--synth-strategy=genetic -a%d --evars %d --varnames %s --resnames I " +
-             "--fastverif=false -c=1 -keepfrac=15 -mutprob=0.1 -newfrac=2 -popsize=500 " +
+             "--fastverif=false -c=1 -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
              "-recombprob=0.05 -tourneysize=10 -w=3 " +
              "%s") % 
               (splitfile.name,
