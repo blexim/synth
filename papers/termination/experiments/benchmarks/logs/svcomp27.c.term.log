@@ -420,6 +420,45 @@ Fastest checker: explicit
 Fails for (0, 0, 0, 7, 0, 2, 5)
 
 []
+Fastest checker: genetic
+Program 0:
+I = -N;
+Program 1:
+t1 = N + N;
+t2 = i >> 0x0;
+I = t1 - i;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 4, 1, 2, 5)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = max(0x1, j);
+Program 1:
+t1 = i - b;
+t2 = N == t1;
+I = 0x5 - t1;
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 4, 1, 2, 5)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i ==> a;
+t2 = max(0x2, a);
+I = ~0x2;
+Program 1:
+t1 = c <= i;
+t2 = ~c;
+t3 = a >>> N;
+I = t1 + M;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 7, 2, 5)
+
+[]
 
 
 
@@ -429,10 +468,10 @@ Fails for (0, 0, 0, 7, 0, 2, 5)
 
 Timeout
 Perf counters:
-{'genetic': 33, 'explicit': 33, 'timeout': 1, 'iterations': 34}
+{'genetic': 36, 'explicit': 36, 'timeout': 1, 'iterations': 37}
 Perf timers:
-verify: 0.84s
-checker: 44.92s
-gcc: 0.48s
-_: 45.00s
-synth: 44.14s
+verify: 0.92s
+checker: 59.91s
+gcc: 0.47s
+_: 60.00s
+synth: 59.05s

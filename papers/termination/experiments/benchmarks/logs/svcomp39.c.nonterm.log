@@ -1,338 +1,35 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 4, 8, 3, 7, 11, 12
+Evars: 4, 0, 3, 7, 3, 4
 Program 0:
 I = 0x5 >>> n;
 
-Fastest checker: cbmc
-Correct for wordlen=4
+Fastest checker: explicit
+Correct for wordlen=3
 Fastest checker: explicit
 Trying to generalize...
-Fastest checker: cbmc
 Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: cbmc
-Couldn't generalize :-(
-Increasing wordlen to 8
-[]
-Fastest checker: genetic
-Evars: 13, 3, 15, 6, 1, 14
+
+
+
+
+
+
+
+Finished in 1.01s
+
+Evars: 2147483648, 0, 32, 3758096384, 32, 2147483648
 Program 0:
-t1 = x != z;
-t2 = min(n, 0xc);
-I = m | y;
+I = 0xa0000000L >>> n;
 
-Fastest checker: explicit
-Fails for (0, 207, 235, 78, 254, 52)
 
-[]
-Fastest checker: genetic
-Evars: 14, 2, 1, 4, 4, 7
-Program 0:
-t1 = z ? y : n;
-I = z s<= x;
-
-Fastest checker: explicit
-Fails for (0, 120, 236, 78, 254, 52)
-
-[]
-Fastest checker: genetic
-Evars: 3, 15, 3, 4, 7, 5
-Program 0:
-t1 = x / n;
-I = z s< m;
-
-Fastest checker: cbmc
-Fails for (0, 3, 0, 128, 124, 0)
-
-[]
-Fastest checker: genetic
-Evars: 15, 6, 2, 14, 8, 15
-Program 0:
-I = m ==> nondet_0;
-
-Fastest checker: explicit
-Fails for (1, 100, 0, 128, 124, 0)
-
-[]
-Fastest checker: genetic
-Evars: 5, 6, 7, 15, 2, 10
-Program 0:
-t1 = m << z;
-t2 = nondet_0 ^ n;
-I = n << m;
-
-Fastest checker: cbmc
-Fails for (105, 251, 136, 96, 32, 121)
-
-[]
-Fastest checker: genetic
-Evars: 2, 6, 7, 3, 11, 4
-Program 0:
-t1 = z s<= 0xa;
-I = n * t1;
-
-Fastest checker: cbmc
-Fails for (0, 254, 128, 9, 0, 243)
-
-[]
-Fastest checker: genetic
-Evars: 9, 7, 14, 4, 14, 10
-Program 0:
-t1 = x - m;
-I = y == m;
-
-Fastest checker: cbmc
-Fails for (0, 255, 20, 0, 20, 0)
-
-[]
-Fastest checker: genetic
-Evars: 6, 2, 3, 2, 3, 13
-Program 0:
-t1 = z ^ y;
-t2 = m % t1;
-I = t2 s< m;
-
-Fastest checker: cbmc
-Fails for (0, 130, 210, 214, 4, 0)
-
-[]
-Fastest checker: genetic
-Evars: 7, 1, 11, 3, 8, 13
-Program 0:
-t1 = y == m;
-t2 = m != nondet_0;
-I = nondet_0 s< y;
-
-Fastest checker: explicit
-Fails for (128, 174, 210, 214, 4, 0)
-
-[]
-Fastest checker: genetic
-Evars: 9, 12, 14, 9, 9, 14
-Program 0:
-I = nondet_0 s<= y;
-
-Fastest checker: explicit
-Fails for (129, 174, 210, 214, 4, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 14, 7, 4, 6, 15
-Program 0:
-t1 = y | n;
-I = 0x7 s< t1;
-
-Fastest checker: cbmc
-Fails for (0, 255, 8, 0, 0, 3)
-
-[]
-Fastest checker: genetic
-Evars: 14, 5, 1, 11, 15, 3
-Program 0:
-t1 = nondet_0 < n;
-t2 = -0xd;
-I = y < n;
-
-Fastest checker: cbmc
-Fails for (118, 250, 3, 0, 0, 117)
-
-[]
-Fastest checker: genetic
-Evars: 6, 3, 13, 13, 9, 2
-Program 0:
-t1 = ~x;
-I = z == y;
-
-Fastest checker: cbmc
-Fails for (0, 255, 1, 1, 0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 2, 15, 10, 12, 5, 10
-Program 0:
-I = m <= 0x6;
-
-Fastest checker: explicit
-Fails for (0, 98, 2, 1, 0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 11, 15, 0, 12, 7
-Program 0:
-t1 = 0xb ^ n;
-I = 0xb s< y;
-
-Fastest checker: explicit
-Fails for (0, 88, 12, 1, 0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 12, 1, 6, 0, 1, 13
-Program 0:
-I = 0xd == n;
-
-Fastest checker: cbmc
-Fails for (0, 251, 8, 96, 0, 13)
-
-[]
-Fastest checker: genetic
-Evars: 62, 11, 198, 142, 246, 148
-Program 0:
-I = n s<= 0x96;
-
-Fastest checker: cbmc
-Fails for (0, 251, 8, 96, 0, 128)
-
-[]
-Fastest checker: genetic
-Evars: 4, 8, 3, 7, 5, 12
-Program 0:
-t1 = 0x5 >>> n;
-t2 = m + n;
-I = m == 0x5;
-
-Fastest checker: cbmc
-Fails for (0, 251, 8, 96, 5, 5)
-
-[]
-Fastest checker: genetic
-Evars: 4, 8, 3, 7, 12, 13
-Program 0:
-t1 = y * 0x5;
-I = x <= n;
-
-Fastest checker: cbmc
-Fails for (0, 253, 128, 0, 0, 255)
-
-[]
-Fastest checker: genetic
-Evars: 4, 8, 3, 7, 12, 13
-Program 0:
-t1 = y * 0x5;
-I = x <= n;
-
-Fastest checker: explicit
-Fails for (0, 129, 129, 0, 0, 255)
-
-[]
-Fastest checker: genetic
-Evars: 22, 226, 202, 195, 119, 70
-Program 0:
-t1 = z s<= 0xd6;
-I = n * t1;
-
-Fastest checker: cbmc
-Fails for (0, 123, 232, 128, 0, 235)
-
-[]
-Fastest checker: genetic
-Evars: 219, 168, 174, 232, 7, 223
-Program 0:
-t1 = n >>> 0xe6;
-t2 = t1 < z;
-I = 0xe6 < z;
-
-Fastest checker: cbmc
-Fails for (0, 128, 128, 231, 0, 128)
-
-[]
-Fastest checker: genetic
-Evars: 5, 79, 43, 225, 232, 126
-Program 0:
-t1 = y >>> m;
-t2 = y >>> 0x25;
-I = 0x25 s<= y;
-
-Fastest checker: cbmc
-Fails for (0, 253, 38, 0, 5, 0)
-
-[]
-Fastest checker: genetic
-Evars: 22, 226, 202, 195, 119, 70
-Program 0:
-t1 = 0xd6 * n;
-I = x < nondet_0;
-
-Fastest checker: explicit
-Fails for (62, 61, 39, 0, 5, 0)
-
-[]
-Fastest checker: genetic
-Evars: 22, 226, 25, 225, 119, 214
-Program 0:
-t1 = 0xd6 * n;
-t2 = n + nondet_0;
-t3 = t1 s< n;
-I = 0xd6 == n;
-
-Fastest checker: cbmc
-Fails for (84, 255, 128, 0, 0, 214)
-
-[]
-Fastest checker: genetic
-Evars: 22, 226, 25, 225, 119, 214
-Program 0:
-t1 = 0xd6 * n;
-t2 = n + nondet_0;
-t3 = t1 s< n;
-I = 0xd6 == n;
-
-Fastest checker: explicit
-Fails for (0, 129, 129, 0, 0, 214)
-
-[]
-Fastest checker: genetic
-Evars: 227, 114, 73, 173, 23, 204
-Program 0:
-t1 = 0xd6 * n;
-I = 0xd6 < nondet_0;
-
-Fastest checker: explicit
-Fails for (215, 129, 129, 0, 0, 214)
-
-[]
-Fastest checker: genetic
-Evars: 223, 34, 10, 131, 251, 172
-Program 0:
-t1 = -n;
-I = 0xd8 <= nondet_0;
-
-Fastest checker: explicit
-Fails for (216, 129, 129, 0, 0, 214)
-
-[]
-Fastest checker: genetic
-Evars: 208, 244, 202, 11, 107, 64
-Program 0:
-t1 = n + n;
-I = x < 0x26;
-
-Fastest checker: cbmc
-Fails for (0, 21, 0, 138, 0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 208, 244, 202, 11, 107, 64
-Program 0:
-t1 = n + n;
-I = x < 0x26;
-
-
-
-
-
-
-
-
-Timeout
 Perf counters:
-{'genetic': 31, 'cbmc': 20, 'explicit': 15, 'timeout': 1, 'iterations': 31}
+{'genetic': 1, 'explicit': 3, 'iterations': 1}
 Perf timers:
-gcc: 1.05s
-verify: 43.01s
-checker: 44.92s
-generalize: 4.06s
-synth: 1.98s
-_: 45.00s
+gcc: 0.62s
+verify: 0.73s
+checker: 1.01s
+generalize: 0.09s
+synth: 0.29s
+_: 1.01s

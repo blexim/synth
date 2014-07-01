@@ -61,7 +61,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.70s
+Finished in 2.67s
 
 Program 0:
 I = m <= m;
@@ -75,8 +75,8 @@ I = m - x;
 Perf counters:
 {'genetic': 4, 'cbmc': 1, 'explicit': 4, 'iterations': 4}
 Perf timers:
-verify: 2.30s
-checker: 2.69s
-gcc: 0.63s
-_: 2.70s
-synth: 0.40s
+verify: 2.28s
+checker: 2.66s
+gcc: 0.62s
+_: 2.67s
+synth: 0.39s

@@ -74,7 +74,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.76s
+Finished in 3.73s
 
 Program 0:
 I = -0x13;
@@ -88,8 +88,8 @@ Perf counters:
 {'genetic': 4, 'cbmc': 1, 'explicit': 17, 'iterations': 4}
 Perf timers:
 gcc: 1.10s
-verify: 2.64s
-checker: 3.72s
+verify: 2.62s
+checker: 3.70s
 generalize: 0.05s
-synth: 1.12s
-_: 3.76s
+synth: 1.10s
+_: 3.73s

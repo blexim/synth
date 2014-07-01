@@ -135,7 +135,7 @@ Fastest checker: cbmc
 
 
 
-Finished in 18.25s
+Finished in 18.20s
 
 Program 0:
 t1 = y - 0x20000000;
@@ -149,9 +149,9 @@ I = q < 0x80000000L;
 Perf counters:
 {'genetic': 10, 'cbmc': 1, 'explicit': 11, 'iterations': 10}
 Perf timers:
-gcc: 0.65s
-verify: 2.48s
-checker: 18.18s
+gcc: 0.63s
+verify: 2.44s
+checker: 18.17s
 generalize: 2.04s
-synth: 15.76s
-_: 18.25s
+synth: 15.75s
+_: 18.20s

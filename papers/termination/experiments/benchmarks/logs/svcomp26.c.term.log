@@ -144,7 +144,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.93s
+Finished in 2.95s
 
 Program 0:
 I = ~0x1;
@@ -155,8 +155,8 @@ I = min(x, y);
 Perf counters:
 {'genetic': 11, 'cbmc': 1, 'explicit': 11, 'iterations': 11}
 Perf timers:
-verify: 2.52s
-checker: 2.90s
-gcc: 0.61s
-_: 2.93s
-synth: 0.40s
+verify: 2.50s
+checker: 2.93s
+gcc: 0.62s
+_: 2.95s
+synth: 0.44s

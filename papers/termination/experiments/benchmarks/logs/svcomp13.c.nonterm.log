@@ -1,383 +1,387 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 14, 12
+Evars: 6, 4
 Program 0:
-t1 = 0x9 + 0x9;
+t1 = 0x1 + 0x1;
 t2 = t1 - t1;
 I = t2 == i;
 
 Fastest checker: explicit
-Fails for (8, 0)
+Fails for (4, 0)
 
 []
 Fastest checker: genetic
-Evars: 2, 10
+Evars: 2, 2
 Program 0:
 I = i s<= j;
 
 Fastest checker: explicit
-Correct for wordlen=4
+Correct for wordlen=3
 Fastest checker: explicit
 Trying to generalize...
 Fastest checker: explicit
 Fastest checker: explicit
 Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
 Couldn't generalize :-(
-Increasing wordlen to 8
+Increasing wordlen to 6
 []
 Fastest checker: genetic
 Evars: 6, 0
 Program 0:
-t1 = i >>> 0xa;
-I = j != 0xa;
+t1 = i >>> 0x2;
+I = j != 0x2;
 
 Fastest checker: explicit
-Fails for (9, 28)
+Fails for (41, 43)
 
 []
 Fastest checker: genetic
-Evars: 9, 4
+Evars: 2, 0
 Program 0:
-I = i * 0x8;
-
-Fastest checker: explicit
-Fails for (26, 28)
-
-[]
-Fastest checker: genetic
-Evars: 1, 8
-Program 0:
-t1 = 0x7 ^ i;
-I = i % 0x7;
-
-Fastest checker: explicit
-Fails for (0, 29)
-
-[]
-Fastest checker: genetic
-Evars: 14, 11
-Program 0:
-t1 = -j;
-I = 0xf >> i;
-
-Fastest checker: explicit
-Fails for (0, 32)
-
-[]
-Fastest checker: genetic
-Evars: 13, 12
-Program 0:
-t1 = min(j, 0x6);
-I = t1 != 0x6;
-
-Fastest checker: explicit
-Fails for (5, 32)
-
-[]
-Fastest checker: genetic
-Evars: 3, 10
-Program 0:
-I = j <= 0x1;
-
-Fastest checker: explicit
-Fails for (1, 33)
-
-[]
-Fastest checker: genetic
-Evars: 4, 7
-Program 0:
-I = j s< 0x3;
-
-Fastest checker: explicit
-Fails for (2, 33)
-
-[]
-Fastest checker: genetic
-Evars: 8, 11
-Program 0:
-t1 = j < 0x5;
-I = min(t1, i);
-
-Fastest checker: explicit
-Fails for (4, 33)
-
-[]
-Fastest checker: genetic
-Evars: 15, 15
-Program 0:
-I = j s<= 0x7;
-
-Fastest checker: explicit
-Fails for (7, 33)
-
-[]
-Fastest checker: genetic
-Evars: 8, 11
-Program 0:
-I = j s<= 0xa;
-
-Fastest checker: explicit
-Fails for (10, 33)
-
-[]
-Fastest checker: genetic
-Evars: 10, 9
-Program 0:
-t1 = i ^ j;
-t2 = t1 >> i;
-I = j s<= t1;
-
-Fastest checker: explicit
-Fails for (31, 33)
-
-[]
-Fastest checker: genetic
-Evars: 1, 13
-Program 0:
-t1 = j < j;
-t2 = j * i;
-I = t1 s< t2;
-
-Fastest checker: explicit
-Fails for (32, 33)
-
-[]
-Fastest checker: genetic
-Evars: 7, 10
-Program 0:
-t1 = j != i;
-I = j s<= 0x3;
-
-Fastest checker: explicit
-Fails for (3, 34)
-
-[]
-Fastest checker: genetic
-Evars: 3, 15
-Program 0:
-I = j < 0x9;
-
-Fastest checker: explicit
-Fails for (8, 34)
-
-[]
-Fastest checker: genetic
-Evars: 6, 2
-Program 0:
-t1 = 0xe == 0xe;
-I = j s< 0xe;
-
-Fastest checker: explicit
-Fails for (13, 34)
-
-[]
-Fastest checker: genetic
-Evars: 1, 5
-Program 0:
-t1 = -0xc;
-I = j s<= 0xc;
-
-Fastest checker: explicit
-Fails for (12, 35)
-
-[]
-Fastest checker: genetic
-Evars: 2, 11
-Program 0:
-t1 = j + j;
-t2 = t1 % i;
-I = t1 s<= i;
-
-Fastest checker: explicit
-Fails for (17, 35)
-
-[]
-Fastest checker: genetic
-Evars: 12, 0
-Program 0:
-I = j s<= 0xe;
-
-Fastest checker: explicit
-Fails for (14, 36)
-
-[]
-Fastest checker: genetic
-Evars: 52, 69
-Program 0:
-I = i s<= 0x13;
-
-Fastest checker: explicit
-Fails for (128, 129)
-
-[]
-Fastest checker: genetic
-Evars: 161, 116
-Program 0:
-t1 = min(i, 0x17);
-t2 = 0x17 >>> t1;
-I = max(t2, t2);
-
-Fastest checker: explicit
-Fails for (128, 0)
-
-[]
-Fastest checker: genetic
-Evars: 139, 218
-Program 0:
-t1 = max(0xf9, 0xf9);
-t2 = j + 0xf9;
-I = j < t2;
-
-Fastest checker: explicit
-Fails for (0, 1)
-
-[]
-Fastest checker: genetic
-Evars: 227, 39
-Program 0:
-t1 = 0xda ? i : i;
-t2 = i & 0xda;
-t3 = t2 != i;
-I = j s< t2;
-
-Fastest checker: explicit
-Fails for (255, 1)
-
-[]
-Fastest checker: genetic
-Evars: 154, 181
-Program 0:
-t1 = 0xf9 + j;
-I = 0xf9 < t1;
+t1 = 0x2 s< 0x2;
+I = t1 s< j;
 
 Fastest checker: explicit
 Fails for (1, 2)
 
 []
 Fastest checker: genetic
-Evars: 43, 8
+Evars: 4, 0
 Program 0:
-t1 = j ? i : j;
-t2 = j << t1;
-t3 = j == t2;
-I = j == t3;
-
-Fastest checker: explicit
-Fails for (1, 8)
-
-[]
-Fastest checker: genetic
-Evars: 81, 147
-Program 0:
-t1 = 0x1a - i;
-I = t1 <= i;
-
-Fastest checker: explicit
-Fails for (0, 13)
-
-[]
-Fastest checker: genetic
-Evars: 39, 176
-Program 0:
-t1 = 0x14 - i;
-I = t1 <= i;
-
-Fastest checker: explicit
-Fails for (11, 13)
-
-[]
-Fastest checker: genetic
-Evars: 23, 205
-Program 0:
-t1 = i * 0x36;
-t2 = 0x36 ==> j;
-t3 = t2 s<= t1;
-I = t3 >> i;
+t1 = max(0x5, 0x5);
+t2 = i + i;
+I = t2 s<= i;
 
 Fastest checker: explicit
 Fails for (0, 16)
 
 []
 Fastest checker: genetic
-Evars: 157, 126
+Evars: 51, 52
 Program 0:
-t1 = i & 0x14;
-I = j < t1;
-
-Fastest checker: explicit
-Fails for (3, 16)
-
-[]
-Fastest checker: genetic
-Evars: 78, 239
-Program 0:
-t1 = i s< 0x42;
-t2 = i - j;
-I = t2 >> 0x42;
-
-Fastest checker: explicit
-Fails for (11, 16)
-
-[]
-Fastest checker: genetic
-Evars: 46, 187
-Program 0:
-t1 = i <= i;
-t2 = 0x3a << i;
-t3 = t2 - t2;
-I = t2 <= 0x3a;
+I = 0x3 s<= i;
 
 Fastest checker: explicit
 Fails for (14, 16)
 
 []
 Fastest checker: genetic
-Evars: 23, 186
+Evars: 18, 61
 Program 0:
-t1 = j < 0xb8;
-t2 = i - j;
-I = 0xb8 & t2;
+t1 = j ==> i;
+t2 = j << i;
+I = t2 == i;
 
 Fastest checker: explicit
-Fails for (199, 16)
+Fails for (33, 16)
 
 []
 Fastest checker: genetic
-Evars: 62, 116
+Evars: 51, 52
 Program 0:
-t1 = j - i;
-t2 = i != t1;
-t3 = t1 ^ 0xbe;
-I = t3 & 0xbe;
+t1 = min(0x27, i);
+t2 = i >>> i;
+t3 = t2 % i;
+I = j == t2;
 
 Fastest checker: explicit
-Fails for (204, 16)
+Fails for (9, 19)
 
 []
 Fastest checker: genetic
-Evars: 67, 224
+Evars: 63, 37
 Program 0:
-t1 = j <= i;
-t2 = j | 0xc;
-t3 = i >> 0xc;
-t4 = j == t3;
-I = j & t4;
+t1 = j ^ i;
+t2 = t1 >> j;
+t3 = t2 << t2;
+I = t3 s< j;
 
 Fastest checker: explicit
-Fails for (1, 17)
+Fails for (11, 19)
 
 []
 Fastest checker: genetic
-Evars: 204, 246
+Evars: 46, 12
 Program 0:
-t1 = i != i;
-t2 = j == 0xfd;
-t3 = j - i;
-I = t3 s<= 0xfd;
+t1 = i >> j;
+I = 0x7 <= t1;
 
 Fastest checker: explicit
-Fails for (13, 17)
+Fails for (13, 19)
+
+[]
+Fastest checker: genetic
+Evars: 19, 18
+Program 0:
+t1 = 0xe < i;
+I = j == t1;
+
+Fastest checker: explicit
+Fails for (1, 20)
+
+[]
+Fastest checker: genetic
+Evars: 34, 7
+Program 0:
+t1 = i s<= 0x4;
+t2 = 0x4 <= j;
+t3 = -t2;
+I = t3 == t1;
+
+Fastest checker: explicit
+Fails for (3, 20)
+
+[]
+Fastest checker: genetic
+Evars: 52, 62
+Program 0:
+t1 = j + 0x17;
+t2 = j & 0x17;
+I = i & t1;
+
+Fastest checker: explicit
+Fails for (8, 20)
+
+[]
+Fastest checker: genetic
+Evars: 16, 63
+Program 0:
+t1 = max(i, i);
+t2 = i >> t1;
+I = j <= t2;
+
+Fastest checker: explicit
+Fails for (0, 24)
+
+[]
+Fastest checker: genetic
+Evars: 21, 49
+Program 0:
+t1 = j < 0x8;
+t2 = i / 0x8;
+t3 = i / i;
+I = j <= t2;
+
+Fastest checker: explicit
+Fails for (2, 24)
+
+[]
+Fastest checker: genetic
+Evars: 12, 10
+Program 0:
+t1 = 0x3 - 0x3;
+t2 = ~i;
+t3 = 0x3 + j;
+I = t3 <= i;
+
+Fastest checker: explicit
+Fails for (20, 24)
+
+[]
+Fastest checker: genetic
+Evars: 59, 21
+Program 0:
+t1 = i - j;
+I = t1 / 0xe;
+
+Fastest checker: explicit
+Fails for (10, 25)
+
+[]
+Fastest checker: genetic
+Evars: 46, 9
+Program 0:
+t1 = 0x18 >>> i;
+I = j == t1;
+
+Fastest checker: explicit
+Fails for (12, 25)
+
+[]
+Fastest checker: genetic
+Evars: 33, 37
+Program 0:
+t1 = j <= j;
+t2 = 0x3 < t1;
+t3 = j * 0x3;
+I = t3 < i;
+
+Fastest checker: explicit
+Fails for (23, 25)
+
+[]
+Fastest checker: genetic
+Evars: 36, 17
+Program 0:
+t1 = 0x6 % i;
+t2 = i ^ i;
+I = j < t1;
+
+Fastest checker: explicit
+Fails for (5, 26)
+
+[]
+Fastest checker: genetic
+Evars: 46, 26
+Program 0:
+t1 = 0x11 >> i;
+I = t1 == j;
+
+Fastest checker: explicit
+Fails for (2, 27)
+
+[]
+Fastest checker: genetic
+Evars: 39, 43
+Program 0:
+t1 = j ^ 0x11;
+I = i == t1;
+
+Fastest checker: explicit
+Fails for (13, 28)
+
+[]
+Fastest checker: genetic
+Evars: 11, 0
+Program 0:
+t1 = i + j;
+t2 = t1 & 0x11;
+I = i < t2;
+
+Fastest checker: explicit
+Fails for (33, 0)
+
+[]
+Fastest checker: genetic
+Evars: 41, 51
+Program 0:
+t1 = j | 0xe;
+t2 = i >> 0xe;
+I = j <= t2;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 52, 37
+Program 0:
+t1 = i <= i;
+t2 = 0x20 >> j;
+I = t2 == i;
+
+Fastest checker: explicit
+Fails for (35, 1)
+
+[]
+Fastest checker: genetic
+Evars: 15, 13
+Program 0:
+t1 = j ==> 0x11;
+t2 = j / 0x11;
+t3 = j + i;
+I = t3 == 0x11;
+
+Fastest checker: explicit
+Fails for (8, 9)
+
+[]
+Fastest checker: genetic
+Evars: 45, 3
+Program 0:
+t1 = j >> 0x8;
+t2 = i >>> j;
+I = t2 == 0x8;
+
+Fastest checker: explicit
+Fails for (1, 16)
+
+[]
+Fastest checker: genetic
+Evars: 60, 7
+Program 0:
+t1 = 0x6 * i;
+t2 = t1 != i;
+t3 = 0x6 | j;
+t4 = min(0x6, i);
+t5 = t4 >>> i;
+t6 = j <= 0x6;
+I = t6 >> t4;
+
+Fastest checker: explicit
+Fails for (6, 16)
+
+[]
+Fastest checker: genetic
+Evars: 7, 25
+Program 0:
+t1 = min(0x8, j);
+t2 = 0x8 <= i;
+t3 = t2 == i;
+t4 = j < 0x8;
+I = min(t4, t2);
+
+Fastest checker: explicit
+Fails for (7, 16)
+
+[]
+Fastest checker: genetic
+Evars: 51, 45
+Program 0:
+t1 = j | i;
+t2 = t1 << j;
+t3 = 0x1a - t1;
+t4 = t3 < i;
+I = min(0x1a, t4);
+
+Fastest checker: explicit
+Fails for (16, 17)
 
 []
 
@@ -389,11 +393,11 @@ Fails for (13, 17)
 
 Timeout
 Perf counters:
-{'genetic': 36, 'explicit': 40, 'timeout': 1, 'iterations': 37}
+{'genetic': 30, 'explicit': 79, 'timeout': 1, 'iterations': 31}
 Perf timers:
-gcc: 1.07s
-verify: 0.72s
-checker: 44.91s
-generalize: 0.01s
-synth: 44.26s
-_: 45.00s
+gcc: 1.09s
+verify: 0.84s
+checker: 59.89s
+generalize: 0.19s
+synth: 59.14s
+_: 60.00s

@@ -404,8 +404,8 @@ Timeout
 Perf counters:
 {'genetic': 31, 'explicit': 31, 'timeout': 1, 'iterations': 32}
 Perf timers:
-verify: 11.12s
-checker: 44.91s
-gcc: 0.40s
-_: 45.00s
-synth: 33.87s
+verify: 11.15s
+checker: 59.89s
+gcc: 0.46s
+_: 60.00s
+synth: 48.83s

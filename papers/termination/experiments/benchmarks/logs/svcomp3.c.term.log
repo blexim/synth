@@ -540,7 +540,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 36.87s
+Finished in 36.77s
 
 Program 0:
 I = -0x3;
@@ -554,8 +554,8 @@ I = min(t1, x);
 Perf counters:
 {'genetic': 36, 'cbmc': 1, 'explicit': 36, 'iterations': 36}
 Perf timers:
-verify: 2.54s
-checker: 36.78s
+verify: 2.48s
+checker: 36.69s
 gcc: 0.64s
-_: 36.87s
-synth: 34.31s
+_: 36.77s
+synth: 34.27s

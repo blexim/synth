@@ -485,7 +485,7 @@ t1 = min(0x3f, 0x3f);
 I = i - 0x3f;
 
 Fastest checker: cbmc
-Fails for (4095, 63)
+Fails for (2048, 63)
 
 []
 Fastest checker: genetic
@@ -526,14 +526,27 @@ Fails for (2048, 0)
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x6 + j;
-t2 = ~j;
-I = t2 * i;
+I = min(j, i);
 Program 1:
-I = i & i;
+t1 = 0x5 - 0x5;
+t2 = max(i, t1);
+I = t2 ? t2 : j;
 
 Fastest checker: explicit
-Fails for (0, 1)
+Fails for (2048, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i ==> i;
+I = i >> t1;
+Program 1:
+t1 = j <= i;
+t2 = t1 - j;
+I = 0x5 + t2;
+
+Fastest checker: explicit
+Fails for (0, 2)
 
 []
 Fastest checker: genetic
@@ -547,6 +560,19 @@ I = 0x1 + i;
 
 Fastest checker: cbmc
 Fails for (2302, 4095)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(i, 0x5);
+I = i + j;
+Program 1:
+t1 = j != i;
+t2 = j ==> 0x27;
+I = ~j;
+
+Fastest checker: explicit
+Fails for (4095, 0)
 
 []
 Fastest checker: genetic
@@ -644,23 +670,6 @@ Fails for (1, 22)
 []
 Fastest checker: genetic
 Program 0:
-t1 = j | 0x3b;
-t2 = i + 0x3b;
-I = i != j;
-Program 1:
-t1 = 0x8 s< j;
-t2 = i / 0x8;
-t3 = 0x8 + j;
-t4 = 0x8 + 0x8;
-t5 = t4 - j;
-I = t4 / t4;
-
-Fastest checker: explicit
-Fails for (16, 22)
-
-[]
-Fastest checker: genetic
-Program 0:
 t1 = ~j;
 t2 = j <= i;
 t3 = i + i;
@@ -684,7 +693,7 @@ t3 = j ==> i;
 I = 0x34 + i;
 
 Fastest checker: cbmc
-Fails for (3090, 4044)
+Fails for (2179, 4044)
 
 []
 Fastest checker: genetic
@@ -726,7 +735,7 @@ t3 = 0x8 + i;
 I = t3 + i;
 
 Fastest checker: cbmc
-Fails for (2080, 4092)
+Fails for (3962, 4092)
 
 []
 Fastest checker: genetic
@@ -780,7 +789,7 @@ t6 = i + 0x20;
 I = 0x20 + 0x20;
 
 Fastest checker: cbmc
-Fails for (2124, 4064)
+Fails for (2088, 4064)
 
 []
 Fastest checker: genetic
@@ -822,7 +831,7 @@ t2 = 0x27 + i;
 I = 0x27 s< t2;
 
 Fastest checker: cbmc
-Fails for (2081, 4057)
+Fails for (2048, 4057)
 
 []
 Fastest checker: genetic
@@ -844,6 +853,194 @@ Program 1:
 t1 = min(0x47f, 0x47f);
 I = i - 0x47f;
 
+Fastest checker: cbmc
+Fails for (1088, 1151)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~i;
+t2 = max(t1, t1);
+I = 0x891 | i;
+Program 1:
+I = 0x953 - j;
+
+Fastest checker: explicit
+Fails for (2387, 1151)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j | 0x27;
+Program 1:
+t1 = 0x2b9 >>> j;
+I = 0x2b9 + i;
+
+Fastest checker: cbmc
+Fails for (2867, 3399)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x27 | 0x27;
+t2 = 0x27 <= i;
+t3 = max(t1, j);
+t4 = j + i;
+I = j + t3;
+Program 1:
+t1 = 0x8 & j;
+t2 = 0x8 s< 0x8;
+t3 = j << t1;
+t4 = i + t2;
+t5 = ~0x8;
+t6 = i + t2;
+I = t6 + 0x8;
+
+Fastest checker: cbmc
+Fails for (3583, 4088)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = j + 0x3e7;
+Program 1:
+t1 = j s< j;
+t2 = j % 0x848;
+t3 = i < t1;
+t4 = 0x848 & 0x848;
+t5 = i - 0x848;
+I = 0x848 + 0x848;
+
+Fastest checker: explicit
+Fails for (3096, 4089)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | i;
+t2 = i <= i;
+I = j + i;
+Program 1:
+t1 = 0xb37 s< j;
+t2 = 0xb37 / 0xb37;
+I = 0xb37 + i;
+
+Fastest checker: cbmc
+Fails for (2175, 1225)
+
+[]
+Fastest checker: genetic
+Program 0:
+I = 0x90d ? 0x90d : 0x90d;
+Program 1:
+t1 = 0x848 s< j;
+I = i + 0x848;
+
+Fastest checker: cbmc
+Fails for (1405, 1976)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0x3e7;
+t2 = i <= i;
+t3 = i + 0x3e7;
+I = 0x3e7 + t3;
+Program 1:
+t1 = 0x3d6 s< j;
+t2 = 0x3d6 / 0x3d6;
+t3 = i + j;
+t4 = 0x3d6 + t2;
+t5 = i + 0x3d6;
+I = t5 + 0x3d6;
+
+Fastest checker: explicit
+Fails for (2048, 2099)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | j;
+I = i <= i;
+Program 1:
+t1 = 0x659 s< j;
+t2 = i + 0x659;
+I = 0x659 + 0x659;
+
+Fastest checker: explicit
+Fails for (2048, 2471)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | 0xeb7;
+t2 = t1 <= i;
+t3 = j + 0xeb7;
+t4 = t2 + t3;
+t5 = i | i;
+I = t5 + t3;
+Program 1:
+I = 0x5d7 + i;
+
+Fastest checker: explicit
+Fails for (2048, 2601)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | i;
+t2 = j <= i;
+t3 = t1 + j;
+I = 0x3e7 + 0x3e7;
+Program 1:
+t1 = 0xde5 == j;
+t2 = 0xde5 / 0xde5;
+t3 = 0xde5 + 0xde5;
+I = i + 0xde5;
+
+Fastest checker: cbmc
+Fails for (3840, 539)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0xc53 | 0xc53;
+I = 0xc53 != i;
+Program 1:
+t1 = min(0xdb1, j);
+t2 = 0xdb1 <= 0xdb1;
+t3 = j + j;
+I = i + 0xdb1;
+
+Fastest checker: explicit
+Fails for (0, 591)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = j | i;
+t2 = max(0x1f, 0x1f);
+t3 = j + i;
+I = i >> t2;
+Program 1:
+t1 = j s< i;
+I = i + 0x4bd;
+
+Fastest checker: cbmc
+Fails for (4095, 128)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = i | 0xe09;
+I = j + i;
+Program 1:
+t1 = 0x848 s< j;
+t2 = 0x848 / 0x848;
+t3 = 0x848 + i;
+t4 = t3 + i;
+I = t4 & t4;
+
 
 
 
@@ -853,11 +1050,11 @@ I = i - 0x47f;
 
 Timeout
 Perf counters:
-{'genetic': 62, 'cbmc': 18, 'explicit': 70, 'timeout': 1, 'iterations': 62}
+{'genetic': 76, 'cbmc': 25, 'explicit': 77, 'timeout': 1, 'iterations': 76}
 Perf timers:
-gcc: 1.56s
-verify: 43.05s
-checker: 44.81s
-generalize: 19.79s
-synth: 1.91s
-_: 45.01s
+gcc: 1.46s
+verify: 57.74s
+checker: 59.77s
+generalize: 19.42s
+synth: 2.21s
+_: 60.01s

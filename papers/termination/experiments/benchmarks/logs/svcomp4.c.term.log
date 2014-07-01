@@ -2,13 +2,27 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-I = y2 ==> y1;
+t1 = 0x7 >>> 0x7;
+I = t1 + 0x7;
 Program 1:
-t1 = y1 s<= y2;
-t2 = min(0x0, t1);
+t1 = y1 s<= 0x0;
+t2 = min(y2, y2);
 t3 = y1 + y1;
-t4 = y2 + y2;
-I = max(t2, y2);
+I = 0x0 + t3;
+
+Fastest checker: explicit
+Fails for (0, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~y1;
+t2 = y2 * 0x2;
+t3 = t1 & 0x2;
+t4 = t2 + y2;
+I = y1 + y1;
+Program 1:
+I = y2 * y1;
 
 Fastest checker: explicit
 Fails for (1, 4)
@@ -16,16 +30,34 @@ Fails for (1, 4)
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x3 >>> 0x3;
-t2 = t1 + 0x3;
-I = 0x3 >>> 0x3;
+t1 = 0x7 | 0x7;
+t2 = y1 <= 0x7;
+t3 = y2 / 0x7;
+I = 0x7 s< y2;
 Program 1:
-t1 = y1 s<= y2;
-t2 = y1 + y2;
-I = t2 <= t1;
+t1 = y1 s< y1;
+t2 = y2 + y1;
+I = -y2;
 
 Fastest checker: explicit
-Fails for (5, 4)
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y1 < y2;
+t2 = y2 - y2;
+t3 = 0x0 < y2;
+t4 = y2 s<= y1;
+t5 = t4 == y1;
+I = t5 s<= y2;
+Program 1:
+t1 = y1 >>> 0x6;
+t2 = y2 >> 0x6;
+I = max(y1, t2);
+
+Fastest checker: explicit
+Fails for (2, 0)
 
 []
 
@@ -37,10 +69,10 @@ Fails for (5, 4)
 
 Timeout
 Perf counters:
-{'genetic': 2, 'explicit': 2, 'timeout': 1, 'iterations': 3}
+{'genetic': 4, 'explicit': 4, 'timeout': 1, 'iterations': 5}
 Perf timers:
-verify: 0.18s
-checker: 45.00s
-gcc: 0.43s
-_: 45.00s
-synth: 44.82s
+verify: 0.20s
+checker: 59.99s
+gcc: 0.45s
+_: 60.00s
+synth: 59.80s

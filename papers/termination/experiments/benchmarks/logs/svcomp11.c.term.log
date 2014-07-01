@@ -347,7 +347,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 5.43s
+Finished in 5.49s
 
 Program 0:
 I = nondet_3 | 0x1;
@@ -363,8 +363,8 @@ I = min(y, y);
 Perf counters:
 {'genetic': 27, 'cbmc': 1, 'explicit': 27, 'iterations': 27}
 Perf timers:
-verify: 4.24s
-checker: 5.36s
-gcc: 0.61s
-_: 5.43s
-synth: 1.17s
+verify: 4.28s
+checker: 5.42s
+gcc: 0.64s
+_: 5.49s
+synth: 1.19s

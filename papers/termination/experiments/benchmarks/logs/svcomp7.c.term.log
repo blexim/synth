@@ -101,7 +101,7 @@ Fastest checker: cbmc
 
 
 
-Finished in 9.57s
+Finished in 9.68s
 
 Program 0:
 I = y ==> 0x40000000;
@@ -114,9 +114,9 @@ I = t2 << t2;
 Perf counters:
 {'genetic': 7, 'cbmc': 2, 'explicit': 7, 'iterations': 7}
 Perf timers:
-gcc: 0.58s
-verify: 4.32s
-checker: 9.55s
-generalize: 2.04s
-synth: 5.25s
-_: 9.57s
+gcc: 0.62s
+verify: 4.33s
+checker: 9.65s
+generalize: 2.07s
+synth: 5.34s
+_: 9.68s

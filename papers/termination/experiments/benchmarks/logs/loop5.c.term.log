@@ -109,7 +109,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.90s
+Finished in 2.95s
 
 Program 0:
 I = ~0x5;
@@ -125,8 +125,8 @@ I = nondet_0 + nondet_0;
 Perf counters:
 {'genetic': 8, 'cbmc': 1, 'explicit': 8, 'iterations': 8}
 Perf timers:
-verify: 2.55s
-checker: 2.88s
-gcc: 0.62s
-_: 2.90s
-synth: 0.35s
+verify: 2.56s
+checker: 2.92s
+gcc: 0.64s
+_: 2.95s
+synth: 0.38s

@@ -251,6 +251,19 @@ Fastest checker: explicit
 Fails for (0, 6, 0, 2, 2, 6)
 
 []
+Fastest checker: genetic
+Program 0:
+I = x & 0x1;
+Program 1:
+t1 = ~y;
+t2 = z - n;
+t3 = x * t1;
+I = x >>> nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 1, 7, 2, 2, 6)
+
+[]
 
 
 
@@ -260,10 +273,10 @@ Fails for (0, 6, 0, 2, 2, 6)
 
 Timeout
 Perf counters:
-{'genetic': 19, 'explicit': 19, 'timeout': 1, 'iterations': 20}
+{'genetic': 20, 'explicit': 20, 'timeout': 1, 'iterations': 21}
 Perf timers:
 verify: 0.27s
-checker: 44.96s
-gcc: 0.47s
-_: 45.00s
-synth: 44.72s
+checker: 59.96s
+gcc: 0.46s
+_: 60.00s
+synth: 59.72s

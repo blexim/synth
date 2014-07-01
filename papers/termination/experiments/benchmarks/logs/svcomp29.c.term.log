@@ -245,6 +245,46 @@ Fastest checker: explicit
 Fails for (1370,)
 
 []
+Fastest checker: genetic
+Program 0:
+t1 = x >>> 0xc19;
+I = 0xc19 >> 0xc19;
+Program 1:
+t1 = 0x85a >> x;
+t2 = x <= 0x85a;
+I = x & t2;
+
+Fastest checker: explicit
+Fails for (1374,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x + 0x1a3;
+I = min(0x1a3, 0x1a3);
+Program 1:
+t1 = 0x7ce - x;
+t2 = -t1;
+I = t2 | t1;
+
+Fastest checker: explicit
+Fails for (1422,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x - 0x815;
+t2 = max(0x815, x);
+I = t2 >> t2;
+Program 1:
+t1 = 0xae2 ==> 0xae2;
+t2 = 0xae2 ^ x;
+I = x ? t1 : t2;
+
+Fastest checker: explicit
+Fails for (1536,)
+
+[]
 
 
 
@@ -254,11 +294,11 @@ Fails for (1370,)
 
 Timeout
 Perf counters:
-{'genetic': 16, 'cbmc': 13, 'explicit': 26, 'timeout': 1, 'iterations': 17}
+{'genetic': 19, 'cbmc': 13, 'explicit': 29, 'timeout': 1, 'iterations': 20}
 Perf timers:
-gcc: 1.57s
-verify: 27.03s
-checker: 44.93s
-generalize: 24.37s
-synth: 17.96s
-_: 45.00s
+gcc: 1.45s
+verify: 26.93s
+checker: 59.93s
+generalize: 24.32s
+synth: 33.06s
+_: 60.00s

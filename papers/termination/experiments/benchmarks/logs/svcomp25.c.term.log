@@ -64,7 +64,7 @@ Perf counters:
 {'genetic': 4, 'explicit': 4, 'timeout': 1, 'iterations': 5}
 Perf timers:
 verify: 0.19s
-checker: 44.99s
-gcc: 0.45s
-_: 45.00s
-synth: 44.80s
+checker: 59.99s
+gcc: 0.38s
+_: 60.00s
+synth: 59.81s

@@ -252,7 +252,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.38s
+Finished in 3.39s
 
 Program 0:
 t1 = x & x;
@@ -269,8 +269,8 @@ I = t1 ? x : y;
 Perf counters:
 {'genetic': 19, 'cbmc': 1, 'explicit': 19, 'iterations': 19}
 Perf timers:
-verify: 2.57s
-checker: 3.34s
+verify: 2.58s
+checker: 3.35s
 gcc: 0.65s
-_: 3.38s
+_: 3.39s
 synth: 0.80s

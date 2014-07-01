@@ -45,7 +45,7 @@ Program 1:
 I = i << i;
 
 Fastest checker: explicit
-Fails for (1, 7, 0, 1)
+Fails for (0, 0, 0, 2)
 
 []
 Fastest checker: genetic
@@ -68,7 +68,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.63s
+Finished in 2.62s
 
 Program 0:
 t1 = z s<= 0x7;
@@ -83,7 +83,7 @@ Perf counters:
 {'genetic': 5, 'cbmc': 1, 'explicit': 5, 'iterations': 5}
 Perf timers:
 verify: 2.28s
-checker: 2.62s
-gcc: 0.65s
-_: 2.63s
-synth: 0.35s
+checker: 2.60s
+gcc: 0.64s
+_: 2.62s
+synth: 0.34s

@@ -149,6 +149,20 @@ Fastest checker: explicit
 Fails for (1, 7, 0)
 
 []
+Fastest checker: genetic
+Program 0:
+t1 = y - z;
+I = 0x6 ==> 0x6;
+Program 1:
+t1 = x * z;
+t2 = z s< x;
+t3 = y != t1;
+I = z == y;
+
+Fastest checker: explicit
+Fails for (2, 7, 0)
+
+[]
 
 
 
@@ -158,10 +172,10 @@ Fails for (1, 7, 0)
 
 Timeout
 Perf counters:
-{'genetic': 11, 'explicit': 11, 'timeout': 1, 'iterations': 12}
+{'genetic': 12, 'explicit': 12, 'timeout': 1, 'iterations': 13}
 Perf timers:
-verify: 0.21s
-checker: 44.98s
-gcc: 0.44s
-_: 45.00s
-synth: 44.78s
+verify: 0.23s
+checker: 59.98s
+gcc: 0.48s
+_: 60.00s
+synth: 59.77s

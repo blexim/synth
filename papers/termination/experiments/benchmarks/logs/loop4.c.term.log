@@ -226,7 +226,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.14s
+Finished in 3.15s
 
 Program 0:
 I = x | 0x7;
@@ -240,8 +240,8 @@ I = max(x, t3);
 Perf counters:
 {'genetic': 17, 'cbmc': 1, 'explicit': 17, 'iterations': 17}
 Perf timers:
-verify: 2.58s
-checker: 3.10s
-gcc: 0.62s
-_: 3.14s
-synth: 0.54s
+verify: 2.59s
+checker: 3.12s
+gcc: 0.65s
+_: 3.15s
+synth: 0.55s
