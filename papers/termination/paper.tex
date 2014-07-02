@@ -1060,7 +1060,7 @@ executing in a state that guarantees its termination.
 Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
 i.e. a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$. 
-For our case, given a loop $L = (I,x,G,T)$, the notion of open recurrent set is encoded by Definition~\ref{def:nonterm-formula}.
+For our case, given a loop $L = \langle I,G,T \rangle$, the notion of open recurrent set is encoded by Definition~\ref{def:nonterm-formula}.
 
 If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
@@ -1071,7 +1071,7 @@ we make use of the notion of \emph{closed recurrence set} introduced by Chen et 
 As opposed to a closed recurrence set, this is a  purely universal property: for each state in the recurrence set $N$, each of its successors 
 must be in $N$. Thus, the non-termination problem becomes equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
-As our formulation is with respect to a given loop $L=(x,I,G,t)$, we require the  
+As our formulation is with respect to a given loop $L=\langle I,G,t \rangle$, we require the  
 recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
 infinite execution to happen.
 
