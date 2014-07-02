@@ -270,6 +270,8 @@ We empirically show that this claim holds in practice, causing our technique to 
 %Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
 
  The main contributions of our work can be summarised as follows:
+
+
 \begin{itemize}
 \item We designed a technique for computing ranking functions that correctly accounts for the wrap-around behavior caused by under- and overflows in bit-vector and floating point arithmetic. To the best of our knowledge, this is the first approach able to compute ranking functions for programs handling floats. Our technique is not restricted to finding linear ranking functions, but can also compute (lexicographic) non-linear  ones. We justified the need for such a non restrictive procedure by computing the probability ... .
 \item  We rephrased the termination problem as a second-order satisfaction problem and made 
@@ -286,6 +288,10 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 \item Our proposed termination proving procedure can also prove non-termination. Alternating termination and non-termination? 
 
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
+
+\item bit level termination and non-termination analysis. This enables
+  the precise treatment of bit-wise operations and arithmetic modulo
+  fixed widths.
 
 \end{itemize}
 % unified approach to termination and non-termination
