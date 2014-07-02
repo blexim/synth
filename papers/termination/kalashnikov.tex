@@ -1,7 +1,7 @@
 \algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
 \algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
 
-\newcommand{\newC}{C$^-$\xspace}
+
 \newcommand*\Let[2]{\State #1 $\gets$ #2}
 
 \newcommand{\bv}[2]{\mathcal{BV}(#1, #2)}
@@ -198,17 +198,17 @@ When the quantifier free first-order fragment of the logic is efficiently decida
 $P$ is expressible as a ground term of the logic, we can use
 Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
 check the validity of the synthesis formula. The core of the CEGIS algorithm is
-the refinement loop in Fig.~\ref{fig:abstract-refinement} and
+the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
 detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
 
 The algorithm is divided into two
-components: {\sc synth} and {\sc verif}. We track a finite set of test
-inputs and {\sc synth} synthesises a candidate program that is correct on just those tests.
-{\sc Verif} then tries to verify the candidate program by searching for an input on
+components: {\sc synth} and {\sc verif}. For a finite set of test
+inputs that we track, {\sc synth} synthesises a candidate program that is correct on just those tests.
+Subsequently, {\sc Verif} tries to verify the candidate program by searching for an input on
 which the candidate program does not satisfy the specification.  If no such input
 can be found, the candidate program is correct.  Otherwise, the new input is added
-to the set we must check in {\sc synth}.  If the input set is finite, this
-procedure is guaranteed to terminate.
+to the setof tracked inputs.  
+%If the input set is finite, this procedure is guaranteed to terminate.
 
 \begin{algorithm*}
  \caption{Abstract refinement algorithm
@@ -333,93 +333,93 @@ However we propose a slightly different tack, which is to use a decidable
 fragment of C as a ``high level'' logic.
 \fi
 
-\subsection{\newC}
-\label{sec:logic}
+%\label{sec:logic}
 
-We will now describe the logic we use to express our synthesis formula.
-The logic is a subset of C that we call \newC.  The characteristic property of a
-\newC  program is that safety can be decided for
-it using a single query to a Bounded Model Checker.  A \newC program is
-just a C program with the following syntactic restrictions:
- all loops in the program must have a constant bound;
- all recursion in the program must be limited to a constant depth;
- all arrays must be statically allocated (i.e. not using \texttt{malloc}),
- and be of constant size.
-Additionally, \newC programs may use nondeterministic values, assumptions
-and arbitrary-width types.
+The logic used to express our synthesis formula is \newC discussed in Section~\ref{sec:logic}.
+%% The logic is a subset of C that we call \newC.  
+%% The characteristic property of a
+%% \newC  program is that safety can be decided for
+%% it using a single query to a Bounded Model Checker.  A \newC program is
+%% just a C program with the following syntactic restrictions:
+%%  all loops in the program must have a constant bound;
+%%  all recursion in the program must be limited to a constant depth;
+%%  all arrays must be statically allocated (i.e. not using \texttt{malloc}),
+%%  and be of constant size.
+%% Additionally, \newC programs may use nondeterministic values, assumptions
+%% and arbitrary-width types.
 
-\iffalse
-Two example \newC programs are shown 
-in Fig.~\ref{fig:c-}.
+%% \iffalse
+%% Two example \newC programs are shown 
+%% in Fig.~\ref{fig:c-}.
 
-\begin{figure}
-\begin{minipage}[scale=0.8]{0.45\linewidth}
- \begin{lstlisting}[language=c]
-int count_bits(int x) {
-  int i, ret = 0;
+%% \begin{figure}
+%% \begin{minipage}[scale=0.8]{0.45\linewidth}
+%%  \begin{lstlisting}[language=c]
+%% int count_bits(int x) {
+%%   int i, ret = 0;
   
-  for (i = 0; i < 32; i++)
-    if (x & (1 << i))
-      ret++;
+%%   for (i = 0; i < 32; i++)
+%%     if (x & (1 << i))
+%%       ret++;
   
-  return ret;
-}
- \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.54\linewidth}
- \begin{lstlisting}[language=C]
-int common_factor(int A[10]) {
-  int i, factor = nondet();
+%%   return ret;
+%% }
+%%  \end{lstlisting}
+%% \end{minipage}
+%% \begin{minipage}{0.54\linewidth}
+%%  \begin{lstlisting}[language=C]
+%% int common_factor(int A[10]) {
+%%   int i, factor = nondet();
 
-  for (i = 0; i < 10; i++)
-    assume((A[i] % factor) == 0);
+%%   for (i = 0; i < 10; i++)
+%%     assume((A[i] % factor) == 0);
 
-  assume(factor > 1);
-  return factor;
-}
+%%   assume(factor > 1);
+%%   return factor;
+%% }
 
- \end{lstlisting}
-\end{minipage}
+%%  \end{lstlisting}
+%% \end{minipage}
 
- \caption{Two \newC programs}
- \label{fig:c-}
+%%  \caption{Two \newC programs}
+%%  \label{fig:c-}
 
-\end{figure}
-\fi
+%% \end{figure}
+%% \fi
 
-Since each loop is bounded by a constant, and each recursive function call is
-limited to a constant depth, a \newC program necessarily terminates and in
-fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
-a Bounded Model Checker with an unrolling bound of $k$ will be a complete
-decision procedure for the safety of the program.  For a \newC program of
-size $l$ and with largest loop bound~$k$, a Bounded Model Checker will
-create a SAT problem of size $O(lk)$.  Conversely, a SAT problem
-of size $s$ can be converted trivially into a loop-free \newC program
-of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
-which means it can be decided fairly efficiently for many practical
-instances.
+%% Since each loop is bounded by a constant, and each recursive function call is
+%% limited to a constant depth, a \newC program necessarily terminates and in
+%% fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
+%% a Bounded Model Checker with an unrolling bound of $k$ will be a complete
+%% decision procedure for the safety of the program.  For a \newC program of
+%% size $l$ and with largest loop bound~$k$, a Bounded Model Checker will
+%% create a SAT problem of size $O(lk)$.  Conversely, a SAT problem
+%% of size $s$ can be converted trivially into a loop-free \newC program
+%% of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
+%% which means it can be decided fairly efficiently for many practical
+%% instances.
 
 
 \subsection{Encoding into \newC}
-To instantiate the abstract synthesis algorithm in \newC we must express $I, O,
-\sigma$ and $P$ in \newC, then ensure that we can express the validity of the
-synthesis formula as a safety property of the resulting \newC program.
+%% To instantiate the abstract synthesis algorithm in \newC we must express $I, O,
+%% \sigma$ and $P$ in \newC, then ensure that we can express the validity of the
+%% synthesis formula as a safety property of the resulting \newC program.
 
-Our encoding is the following:
-%
-\begin{itemize}
- \item $I$ is the set of $N$-tuples of 32-bit bitvectors.  This is written in \newC as the type \verb|int[N]|.
- \item $O$ is the set of $M$-tuples of 32-bit bitvectors, which is written in \newC as the type \verb|int[M]|.
- \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
- \verb|int check(int in[N], int out[M])|. This function is the only component supplied
- by the user.
- \item $P$ is written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  Programs in $\mathcal{L}$
- have type $I \rightarrow O$ and
- are represented in \newC as objects of type \verb|prog_t|, shown in Fig.~\ref{fig:c-l-encoding}.
- \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
- this interpreter is $(I \rightarrow O) \times I \rightarrow O$ and the \newC signature is \\
- \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
-\end{itemize}
+%% Our encoding is the following:
+%% %
+%% \begin{itemize}
+%%  \item $I$ is the set of $N$-tuples of 32-bit bitvectors.  This is written in \newC as the type \verb|int[N]|.
+%%  \item $O$ is the set of $M$-tuples of 32-bit bitvectors, which is written in \newC as the type \verb|int[M]|.
+%%  \item $\sigma$ is a pure function with type $I \times O \rightarrow \mathrm{Bool}$.  The \newC signature of this function is
+%%  \verb|int check(int in[N], int out[M])|. This function is the only component supplied
+%%  by the user.
+%%  \item $P$ is written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  Programs in $\mathcal{L}$
+%%  have type $I \rightarrow O$ and
+%%  are represented in \newC as objects of type \verb|prog_t|, shown in Fig.~\ref{fig:c-l-encoding}.
+%%  \item We supply an interpreter for $\mathcal{L}$ which is written in \newC.  The type of
+%%  this interpreter is $(I \rightarrow O) \times I \rightarrow O$ and the \newC signature is \\
+%%  \verb|void exec(prog_t p, int in[N], int out[M])|.  Here, \verb|out| is an output parameter.
+%% \end{itemize}
 
 \begin{figure}
 {\small
@@ -456,48 +456,48 @@ Unsigned and signed comparison instructions:
 \end{figure}
 
 
-The exact details of how we encode an $\mathcal{L}$-program are given in Sec.~\ref{sec:encode-l}.
-We must now express the {\sc synth} and {\sc verif} formulae as safety properties
-of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
+%% The exact details of how we encode an $\mathcal{L}$-program are given in Sec.~\ref{sec:encode-l}.
+%% We must now express the {\sc synth} and {\sc verif} formulae as safety properties
+%% of \newC programs, which is given in Fig.~\ref{fig:c-synthverif}.
 
-\begin{figure}
-\centering
-\begin{minipage}[t]{.45\textwidth}
-\begin{lstlisting}[language=C++]
-void synth() {
-  prog_t p = nondet();
-  int in[N], out[M];
+%% \begin{figure}
+%% \centering
+%% \begin{minipage}[t]{.45\textwidth}
+%% \begin{lstlisting}[language=C++]
+%% void synth() {
+%%   prog_t p = nondet();
+%%   int in[N], out[M];
 
-  assume(wellformed(p));
+%%   assume(wellformed(p));
 
-  in = test1;
-  exec(p, in, out);
-  assume(check(in, out));
-  ...
-  in = testN;
-  exec(p, in, out);
-  assume(check(in, out));
+%%   in = test1;
+%%   exec(p, in, out);
+%%   assume(check(in, out));
+%%   ...
+%%   in = testN;
+%%   exec(p, in, out);
+%%   assume(check(in, out));
   
-  assert(false);
-}
-\end{lstlisting}
-%\end{minipage}
-%\hfill
-%\begin{minipage}[t]{.45\linewidth}
-\begin{lstlisting}[language=C++]
-void verif(prog_t p) {
-  int in[N] = nondet();
-  int out[M];
+%%   assert(false);
+%% }
+%% \end{lstlisting}
+%% %\end{minipage}
+%% %\hfill
+%% %\begin{minipage}[t]{.45\linewidth}
+%% \begin{lstlisting}[language=C++]
+%% void verif(prog_t p) {
+%%   int in[N] = nondet();
+%%   int out[M];
 
-  exec(p, in, out);
-  assert(check(in, out));
-}
-\end{lstlisting}
-\end{minipage}
+%%   exec(p, in, out);
+%%   assert(check(in, out));
+%% }
+%% \end{lstlisting}
+%% \end{minipage}
 
- \caption{The {\sc synth} and {\sc verif} formulae expressed as a \newC program.}
- \label{fig:c-synthverif}
-\end{figure}
+%%  \caption{The {\sc synth} and {\sc verif} formulae expressed as a \newC program.}
+%%  \label{fig:c-synthverif}
+%% \end{figure}
 
 In order to determine the validity of the {\sc synth} formula, we can
 check the {\sc synth} program for safety.  The {\sc synth} program is a
@@ -560,46 +560,46 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \end{figure}
 
 %\subsubsection{Encoding an $\mathcal{L}$-Program in \newC}
-\label{sec:encode-l}
+%% \label{sec:encode-l}
 
-\begin{figure}
-\begin{lstlisting}[language=c++,mathescape]
-typedef $\mathcal{BV}(4)$ op_t;                  // An opcode
-typedef $\mathcal{BV}(w)$ word_t;                // An $\mathcal{L}$-word
-typedef $\mathcal{BV}(\log_2 \lceil c+l+a \rceil)$ param_t;  // An operand
+%% \begin{figure}
+%% \begin{lstlisting}[language=c++,mathescape]
+%% typedef $\mathcal{BV}(4)$ op_t;                  // An opcode
+%% typedef $\mathcal{BV}(w)$ word_t;                // An $\mathcal{L}$-word
+%% typedef $\mathcal{BV}(\log_2 \lceil c+l+a \rceil)$ param_t;  // An operand
 
-struct prog_t {
-  op_t ops[$l$];          // The opcodes
-  param_t params[$l$*2];  // The operands
-  word_t consts[$c$];     // The program constants
-}
-\end{lstlisting}
+%% struct prog_t {
+%%   op_t ops[$l$];          // The opcodes
+%%   param_t params[$l$*2];  // The operands
+%%   word_t consts[$c$];     // The program constants
+%% }
+%% \end{lstlisting}
 
- \caption{The \newC structure we use to encode an $\mathcal{L}$ program
-  \label{fig:c-l-encoding}}
-\end{figure}
+%%  \caption{The \newC structure we use to encode an $\mathcal{L}$ program
+%%   \label{fig:c-l-encoding}}
+%% \end{figure}
 
-The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
-The \verb|prog_t| structure encodes a program, which is a sequence of instructions.
-The parameter $a$ is the number of arguments the program takes.
-The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
-right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
-a program argument or the result of a previous instruction, and its value
-is determined at runtime as follows:
-\[
- val(x) = \begin{cases}
-           x < a & \text{the } x^{\text{th}} \text{ program argument} \\
-           a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
-           x \geq a + c & \text{the result of instruction } (x - a - c)
-          \end{cases}
-\]
+%% The exact \newC encoding of an $\mathcal{L}$ program is shown in Fig.~\ref{fig:c-l-encoding}.
+%% The \verb|prog_t| structure encodes a program, which is a sequence of instructions.
+%% The parameter $a$ is the number of arguments the program takes.
+%% The $i$th instruction has opcode \verb|ops[i]|, left operand \verb|params[i*2]| and
+%% right operand \verb|params[i*2 + 1]|.  An operand refers to either a program constant,
+%% a program argument or the result of a previous instruction, and its value
+%% is determined at runtime as follows:
+%% \[
+%%  val(x) = \begin{cases}
+%%            x < a & \text{the } x^{\text{th}} \text{ program argument} \\
+%%            a \leq x < a+c & \mathtt{consts[} x-a \mathtt{]} \\
+%%            x \geq a + c & \text{the result of instruction } (x - a - c)
+%%           \end{cases}
+%% \]
 
 
-A program is well formed if
-no operand refers to the result of an instruction that has not been computed yet, and if
-each opcode is valid.  We add a well-formedness constraint of the form \verb|params[i] <= (a+c+2*i)|
-for each instruction.  It should be noted that this requires a linear number of well-formedness
-constraints.  If all of these constraints are satisfied, the program is well-formed in the sense.
+%% A program is well formed if
+%% no operand refers to the result of an instruction that has not been computed yet, and if
+%% each opcode is valid.  We add a well-formedness constraint of the form \verb|params[i] <= (a+c+2*i)|
+%% for each instruction.  It should be noted that this requires a linear number of well-formedness
+%% constraints.  If all of these constraints are satisfied, the program is well-formed in the sense.
 
 
 
@@ -618,6 +618,8 @@ low down the lattice are very easy to decide safety for.  If a program
 can be synthesised in a low-complexity language, the whole procedure
 finishes much faster than if synthesis had been attempted in a
 high-complexity language.
+
+We consider the following parameters:
 
 \subsubsection{Program Length: $l$}
 The first parameter we introduce is program length, denoted by $l$.
