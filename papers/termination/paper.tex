@@ -325,12 +325,16 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 %This paper is organised as follows:
 
 {\bf Limitations.}
-For ease of exposition, this language ignores features
-such as dynamic memory allocation and function calls. 
+Our algorithm decides termination of transition systems with finite state spaces.
+The (non-)termination proofs take the form of ranking functions and program invariants
+that are expressed in a quantifier free language.  This formalism is powerful
+enough to handle a large fragment of C, but is not rich enough to analyse
+code using any of the following features:
+
 \begin{itemize}
-\item No procedures (this could be handled by computing function summaries).
+\item Recursion (could probably do this).
 \item Heap (Thor).
-\item Nested loops.
+\item Arrays.
 \end{itemize}
 
 \section{Related Work}
