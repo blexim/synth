@@ -99,8 +99,19 @@ Floating Point Ranking Functions.
 
 \section{Introduction}\label{sec:intro}
 
+
+The halting problem has been of central interest to computer scientists since it was first
+considered by Turing in 1936~\cite{turing}.  Informally, we can say that the halting problem
+is concerned with answering the question ``does this
+program run forever, or will it eventually terminate?''
+
 Proving program termination is typically done by finding a \emph{ranking function}
-for the program states, i.e. a map from the program's state space to a well-ordered set.
+for the program states, i.e. a monotone map from the program's state space to a well-ordered set.
+Historically, the search for ranking functions has been constrained in various syntactic ways, leading to
+incompleteness, and
+is performed over abstractions that do not soundly capture the behaviour of physical computers.
+In this paper, we present a sound and complete method for deciding whether a program terminates.
+
 %% As this definition of a ranking function is very general, research is often limited to some
 %% convenient and tractable form of ranking functions, most frequently \emph{linear ranking functions} (see Section~\ref{sec:ranking.functions}). 
 %% In doing so, an analysis ensures that such a ranking function will be found if one  exists, 
@@ -1097,70 +1108,13 @@ which is encoded as:
             T(\langle x, y \rangle, \langle x', y' \rangle) & \triangleq x' = x - y \wedge y' = y \\
 \end{align*}
 
-If the initial states $I$ are ignored, this loop cannot be shown to terminate (e.g. any state with $y = 0$ would lead to a
-non-terminating execution).
+If the initial states $I$ are ignored this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
+would lead to a non-terminating execution.
 
 However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
-$R(\langle x,y\rangle ) = x$ and supporting invariant $W(\langle x, y \rangle ) \trangleq y = 1$.\\
-
-
-\noindent {\bf Sequential loops.}
-Conditional termination allows us to
-prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
-reachable after leaving a previous loop.
-%The conditional termination formula becomes more complex in the presence of multiple loops.
-For illustration, consider the following program with $n$ sequential loops $\forall i=1..n. ~L_i=(x_i,G_i,T_i)$ and
-the assertions $\forall i=1..n. ~P_i$ modelling the program statements in between loops. 
-
-\begin{lstlisting}[mathescape=true]
-$P_1$
-while ($G_1$) { $T_1$ }
-$P_2$
-while ($G_2$) { $T_2$ }
-...
-$P_n$
-while ($G_n$) { $T_n$ }
-\end{lstlisting}
-
-In order to prove that the $n^{th}$ loop terminates, we need to apply the {\bf [CT]} formula for $L_n$.
-The challenge is determining the initial states  $I(x_n)$ at the loop's entry point.  
-The termination problem for $L_n$ is thus equivalent to the satisfiability of
-Definition~\ref{def:multi-termination-formula}.  If this formula is satisfiable:
-\begin{itemize}
-\item $Inv_i$ is an inductive invariant of $L_i$ for $i=1..{n-1}$ as established by the conjuncts:
-$$\bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) $$
-
-\item Each loop invariant $Inv_i$ with $i=1..{n-2}$ is strong enough to establish $Inv_{i+1}$:
-$$\bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) {\rightarrow} Inv_{i+1}(x_{i+1})) ~$$
-
-\item When $L_n$'s guard holds, $Inv_{n-1}$ 
-is strong enough to establish $Inv_n$, i.e. $Inv_n$ holds for the program states after $L_n$'s entry point:
-$$ Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) $$
-$$\qquad\qquad\rightarrow Inv_n(x_n)$$
-
-\item $Inv_n$ is a supporting termination invariant of $L_n$ and $R$ is a ranking function relative to $Inv_n$:
-$$Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n')$$
-$$ \qquad \qquad \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')$$
-\end{itemize}
-
-\todo{add example?}\\
-
-\noindent{\bf Nested loops.}
-For brevity reasons, we illustrate our approach to handling nested loops for only two loops, but the approach can be easily generalised to any number of nested loops:
-\begin{lstlisting}[mathescape=true]
-while ($G_1$) { 
-  $P_1$ 
-  while ($G_2$) { $T$ }
-  $P_2$
-}
-\end{lstlisting}
-
-The termination of the outer loop is equivalent to the formula in Definition~\ref{def:nested-term-formula}.
-The formula requires an auxiliary assertion $S(x,x')$ representing a binary relation between the initial states at the inner loop's entry point
-and their successors according to the transition relation $T$. If this formula is satisfiable, then $R$ is a ranking function of the outer loop.
-
-In order to find a termination argument for the inner loop, we use {\bf [CT]} where the initial states are given by 
-$\neg G_1(x) \wedge P_1(x,x') \rightarrow I(x')$.
+$R(\langle x,y\rangle ) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
+This constitutes a proof that the program as whole terminates, since the loop always begins
+executing in a state that guarantees its termination.
 
 \subsection{The Non-Termination Problem}
 
@@ -1226,6 +1180,65 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
 %% that is not periodic is illustrated by the following program:
 
 %Our method is purely semantic. 
+
+\noindent {\bf Sequential loops.}
+Conditional termination allows us to
+prove that programs with multiple loops terminate, even if the termination of some loop depends on the states
+reachable after leaving a previous loop.
+%The conditional termination formula becomes more complex in the presence of multiple loops.
+For illustration, consider the following program with $n$ sequential loops $\forall i=1..n. ~L_i=(x_i,G_i,T_i)$ and
+the assertions $\forall i=1..n. ~P_i$ modelling the program statements in between loops. 
+
+\begin{lstlisting}[mathescape=true]
+$P_1$
+while ($G_1$) { $T_1$ }
+$P_2$
+while ($G_2$) { $T_2$ }
+...
+$P_n$
+while ($G_n$) { $T_n$ }
+\end{lstlisting}
+
+In order to prove that the $n^{th}$ loop terminates, we need to apply the {\bf [CT]} formula for $L_n$.
+The challenge is determining the initial states  $I(x_n)$ at the loop's entry point.  
+The termination problem for $L_n$ is thus equivalent to the satisfiability of
+Definition~\ref{def:multi-termination-formula}.  If this formula is satisfiable:
+\begin{itemize}
+\item $Inv_i$ is an inductive invariant of $L_i$ for $i=1..{n-1}$ as established by the conjuncts:
+$$\bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) $$
+
+\item Each loop invariant $Inv_i$ with $i=1..{n-2}$ is strong enough to establish $Inv_{i+1}$:
+$$\bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) {\rightarrow} Inv_{i+1}(x_{i+1})) ~$$
+
+\item When $L_n$'s guard holds, $Inv_{n-1}$ 
+is strong enough to establish $Inv_n$, i.e. $Inv_n$ holds for the program states after $L_n$'s entry point:
+$$ Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) $$
+$$\qquad\qquad\rightarrow Inv_n(x_n)$$
+
+\item $Inv_n$ is a supporting termination invariant of $L_n$ and $R$ is a ranking function relative to $Inv_n$:
+$$Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n')$$
+$$ \qquad \qquad \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')$$
+\end{itemize}
+
+\todo{add example?}\\
+
+\noindent{\bf Nested loops.}
+For brevity reasons, we illustrate our approach to handling nested loops for only two loops, but the approach can be easily generalised to any number of nested loops:
+\begin{lstlisting}[mathescape=true]
+while ($G_1$) { 
+  $P_1$ 
+  while ($G_2$) { $T$ }
+  $P_2$
+}
+\end{lstlisting}
+
+The termination of the outer loop is equivalent to the formula in Definition~\ref{def:nested-term-formula}.
+The formula requires an auxiliary assertion $S(x,x')$ representing a binary relation between the initial states at the inner loop's entry point
+and their successors according to the transition relation $T$. If this formula is satisfiable, then $R$ is a ranking function of the outer loop.
+
+In order to find a termination argument for the inner loop, we use {\bf [CT]} where the initial states are given by 
+$\neg G_1(x) \wedge P_1(x,x') \rightarrow I(x')$.
+
 
 \noindent{\bf Sequential loops.}
 Discuss {\bf [SNT]}.\\
