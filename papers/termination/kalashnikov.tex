@@ -180,7 +180,7 @@ In this section we present a solver for the synthesis fragment. An
 important characteristic of our solver is that is models bit accurate
 semantics. This enables the precise treatment of bit-wise operations and
 arithmetic modulo fixed widths.
- 
+% 
 %We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
 %have a program synthesiser kicking around, we present the design of one synthesiser
 %that can be used to solve the problem.
@@ -194,20 +194,40 @@ We start by recalling the synthesis fragment:
 where $P$ ranges over sets, while $x$ and $y$ range over ground terms (we have dropped
  the vector symbols for brevity reasons).
 
-When the quantifier free first-order fragment of the logic is efficiently decidable and
+\subsection{\newC}
+\label{sec:logic}
+In order to obtain bit-level accuracy, the logic we use to express the synthesis formula is a subset of C that we call \newC.  
+The characteristic property of a
+\newC  program is that safety can be decided for
+it using a single query to a Bounded Model Checker.  A \newC program is
+just a C program with the following syntactic restrictions:
+ all loops in the program must have a constant bound;
+ all recursion in the program must be limited to a constant depth;
+ all arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ and be of constant size.
+Additionally, \newC programs may use nondeterministic values, assumptions
+and arbitrary-width types.
+
+
+The proofs found by our solver are arbitrary expressions over the grammar given in Figure~\ref{fig:l-language}.  
+%written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
+\todo{update the figure and make it look more like a grammar}
+
+As the quantifier free first-order fragment of the logic is efficiently decidable and
 $P$ is expressible as a ground term of the logic, we can use
 Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
-check the validity of the synthesis formula. The core of the CEGIS algorithm is
+check the validity of the synthesis formula. 
+
+The core of the CEGIS algorithm is
 the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
 detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
-
 The algorithm is divided into two
 components: {\sc synth} and {\sc verif}. For a finite set of test
-inputs that we track, {\sc synth} synthesises a candidate program that is correct on just those tests.
-Subsequently, {\sc Verif} tries to verify the candidate program by searching for an input on
-which the candidate program does not satisfy the specification.  If no such input
+inputs that we track, {\sc synth} synthesises a candidate program that is correct for those tests.
+Subsequently, {\sc Verif} verifies the candidate program by searching for an input on
+which it does not satisfy the specification. If no such input
 can be found, the candidate program is correct.  Otherwise, the new input is added
-to the setof tracked inputs.  
+to the set of tracked inputs.  
 %If the input set is finite, this procedure is guaranteed to terminate.
 
 \begin{algorithm*}
@@ -333,74 +353,8 @@ However we propose a slightly different tack, which is to use a decidable
 fragment of C as a ``high level'' logic.
 \fi
 
-%\label{sec:logic}
-
-The logic used to express our synthesis formula is \newC discussed in Section~\ref{sec:logic}.
-%% The logic is a subset of C that we call \newC.  
-%% The characteristic property of a
-%% \newC  program is that safety can be decided for
-%% it using a single query to a Bounded Model Checker.  A \newC program is
-%% just a C program with the following syntactic restrictions:
-%%  all loops in the program must have a constant bound;
-%%  all recursion in the program must be limited to a constant depth;
-%%  all arrays must be statically allocated (i.e. not using \texttt{malloc}),
-%%  and be of constant size.
-%% Additionally, \newC programs may use nondeterministic values, assumptions
-%% and arbitrary-width types.
-
-%% \iffalse
-%% Two example \newC programs are shown 
-%% in Fig.~\ref{fig:c-}.
-
-%% \begin{figure}
-%% \begin{minipage}[scale=0.8]{0.45\linewidth}
-%%  \begin{lstlisting}[language=c]
-%% int count_bits(int x) {
-%%   int i, ret = 0;
-  
-%%   for (i = 0; i < 32; i++)
-%%     if (x & (1 << i))
-%%       ret++;
-  
-%%   return ret;
-%% }
-%%  \end{lstlisting}
-%% \end{minipage}
-%% \begin{minipage}{0.54\linewidth}
-%%  \begin{lstlisting}[language=C]
-%% int common_factor(int A[10]) {
-%%   int i, factor = nondet();
-
-%%   for (i = 0; i < 10; i++)
-%%     assume((A[i] % factor) == 0);
-
-%%   assume(factor > 1);
-%%   return factor;
-%% }
-
-%%  \end{lstlisting}
-%% \end{minipage}
-
-%%  \caption{Two \newC programs}
-%%  \label{fig:c-}
-
-%% \end{figure}
-%% \fi
-
-%% Since each loop is bounded by a constant, and each recursive function call is
-%% limited to a constant depth, a \newC program necessarily terminates and in
-%% fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
-%% a Bounded Model Checker with an unrolling bound of $k$ will be a complete
-%% decision procedure for the safety of the program.  For a \newC program of
-%% size $l$ and with largest loop bound~$k$, a Bounded Model Checker will
-%% create a SAT problem of size $O(lk)$.  Conversely, a SAT problem
-%% of size $s$ can be converted trivially into a loop-free \newC program
-%% of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
-%% which means it can be decided fairly efficiently for many practical
-%% instances.
 
 
-\subsection{Encoding into \newC}
 %% To instantiate the abstract synthesis algorithm in \newC we must express $I, O,
 %% \sigma$ and $P$ in \newC, then ensure that we can express the validity of the
 %% synthesis formula as a safety property of the resulting \newC program.
@@ -619,6 +573,29 @@ can be synthesised in a low-complexity language, the whole procedure
 finishes much faster than if synthesis had been attempted in a
 high-complexity language.
 
+---
+We require the user to supply a program specification written in C, but then
+ask nothing more of her.  We parametrise the space of programs in such a way
+that it can be explored automatically, rather than asking a human for hints.
+Our program encoding generates an $\exists
+\forall$ formula that is \emph{linear} in the length of the shortest program
+satisfying the user's specification.  This formula is then checked for satisfiability
+using the CEGIS algorithm.
+---
+
+We introduce a novel parametrisation of the programming language
+used to express our synthesised programs.
+This parametrisation allows us to efficiently explore the program space
+without relying on human guidance and also ensures that our programs
+are of minimal length.
+
+Our tool is the first we are aware of that is able to effectively
+synthesise floating-point programs.  We demonstrate this by
+synthesising {\sc Fast2Sum} using Knuth's {\sc 2Sum}~\cite{taocp2} as
+a specification.
+------
+
+
 We consider the following parameters:
 \begin{itemize}
 \item{Program Length: $l$}
@@ -770,55 +747,55 @@ is able to find a correct program, we are done.  Otherwise,
 we need to increase the word width of the $\mathcal{L}$-machine
 we are currently synthesising for.
 
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[scale=0.65, transform shape, node distance=2cm, auto]
-\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
-    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
-\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
-    text width=5em, text centered, rounded corners, minimum height=4em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
-    minimum height=2em]
+%% \begin{figure}[t]
+%% \centering
+%% \begin{tikzpicture}[scale=0.65, transform shape, node distance=2cm, auto]
+%% \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+%%     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+%% \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+%%     text width=5em, text centered, rounded corners, minimum height=4em]
+%% \tikzstyle{line} = [draw, -latex']
+%% \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+%%     minimum height=2em]
 
- \node [decision] (synthsucc) {{\sc Synth} succeeds?};
+%%  \node [decision] (synthsucc) {{\sc Synth} succeeds?};
 
- \node [decision, below of=synthsucc, node distance=2.5cm] (verif) {{\sc Verif} succeeds?};
- \node [decision, right of=verif] (ck) {$c < l$?};
+%%  \node [decision, below of=synthsucc, node distance=2.5cm] (verif) {{\sc Verif} succeeds?};
+%%  \node [decision, right of=verif] (ck) {$c < l$?};
 
- \node [block, below of=verif, node distance=3cm]   (done) {Done!};
- \node [decision, left of=verif] (verifw) {{\sc Verif} succeeds for small words?};
+%%  \node [block, below of=verif, node distance=3cm]   (done) {Done!};
+%%  \node [decision, left of=verif] (verifw) {{\sc Verif} succeeds for small words?};
 
- \node [block, below of=ck, node distance=2.5cm] (incc) {$c := c+1$};
- \node [block, right of=incc, node distance=2cm] (incl) {$c := 0$\\ $l := l+1$};
+%%  \node [block, below of=ck, node distance=2.5cm] (incc) {$c := c+1$};
+%%  \node [block, right of=incc, node distance=2cm] (incl) {$c := 0$\\ $l := l+1$};
 
- \node [decision, below of=verifw, node distance=3cm] (gen) {Extend succeeds?};
- \node [block, left of=verifw, node distance=3cm] (iterate) {Parameters unchanged};
+%%  \node [decision, below of=verifw, node distance=3cm] (gen) {Extend succeeds?};
+%%  \node [block, left of=verifw, node distance=3cm] (iterate) {Parameters unchanged};
 
- \node [block, left of=gen, node distance=3cm] (incw) {$w := w+1$};
+%%  \node [block, left of=gen, node distance=3cm] (incw) {$w := w+1$};
 
- \path [line] (synthsucc) -- node [left] {Yes} (verif);
- \path [line] (synthsucc) -| node [above, near start] {No} (ck);
+%%  \path [line] (synthsucc) -- node [left] {Yes} (verif);
+%%  \path [line] (synthsucc) -| node [above, near start] {No} (ck);
 
- \path [line] (verif) -- node [left] {Yes} (done);
- \path [line] (verif) -- node [above, near start] {No} (verifw);
+%%  \path [line] (verif) -- node [left] {Yes} (done);
+%%  \path [line] (verif) -- node [above, near start] {No} (verifw);
 
- \path [line] (ck) -- node [left] {Yes} (incc);
- \path [line] (ck) -| node  [above, near start]  {No} (incl);
+%%  \path [line] (ck) -- node [left] {Yes} (incc);
+%%  \path [line] (ck) -| node  [above, near start]  {No} (incl);
 
- \path [line] (verifw) -- node [right] {Yes} (gen);
- \path [line] (verifw) -- node [above] {No} (iterate);
+%%  \path [line] (verifw) -- node [right] {Yes} (gen);
+%%  \path [line] (verifw) -- node [above] {No} (iterate);
  
- \path [line] (gen) -- node [below] {Yes} (done);
- \path [line] (gen) -- node [below] {No} (incw);
+%%  \path [line] (gen) -- node [below] {Yes} (done);
+%%  \path [line] (gen) -- node [below] {No} (incw);
 
- %\path [dotted, line] (iterate.west) |- (synthsucc);
-\end{tikzpicture}
+%%  %\path [dotted, line] (iterate.west) |- (synthsucc);
+%% \end{tikzpicture}
 
- \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
- \label{fig:paramsflow}
+%%  \caption{Decision tree for increasing parameters of $\mathcal{L}$.}
+%%  \label{fig:paramsflow}
 
-\end{figure}
+%% \end{figure}
 
 \iffalse
 
