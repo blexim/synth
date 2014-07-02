@@ -851,7 +851,7 @@ define the syntax of a language we will work over.
 
 
 \section{Termination as Second-Order Satisfaction} \label{sec:second.order}
-Program model? Programs: transition systems? Constraint generation? No CFG?
+%Program model? Programs: transition systems? Constraint generation? No CFG?
 
 %% One difference from previous approaches is that our method is fully semantic. As a consequence, 
 %% we do not care about the CFG (we do not need to encode the CFG 
@@ -898,7 +898,23 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 %% Following the framing of the halting problem as a program synthesis problem, 
 %% we show how we solve this problem in Section~\ref{sec:synthesis}.
 
-\subsection{The Termination Problem}
+\subsection{An Isolated Loop}
+
+We will begin our discussion by showing how to encode the (non-)termination of a single loop
+in the synthesis fragment.  For the time being, a loop is a pair ${L= \langle G,T \rangle}$,
+where the states $x$ satisfying the loop's guard are given by the predicate $G(x)$.
+The body of the loop is encoded as the transition relation $T(x, x')$, meaning that
+state $x'$ is reachable from state $x$ via a single iteration of the loop body.
+For example, the loop in Figure~\ref{fig:motivation.a} is encoded as:
+\begin{align*}
+G(x) & = \{ x \mid x>0 \} \\
+T(x,x') &= \{ \langle x, x' \rangle \mid x' = (x - 1) \, \& \, x \}
+\end{align*}
+We will abbreviate this with the notation:
+\begin{align*}
+G(x) & \triangleq x > 0 \\
+T(x, x') & \triangleq x' = (x - 1) \, \& \, x
+\end{align*}
 
 \begin{figure*}
 \begin{framed}
@@ -908,16 +924,6 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
  \exists R . \forall x, x' . & G(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
-
-\begin{definition}[Conditional Termination Formula {\bf [CT]}]
-\label{def:conditional-termination-formula}
- \begin{align*}
-  \exists R, Inv . \forall x, x' . & I(x) \wedge G(x) \rightarrow Inv(x) ~ \wedge \\
-                                 & G(x) \wedge Inv(x) \wedge T(x, x') \rightarrow Inv(x') \wedge R(x) > 0 
-  \wedge R(x) > R(x')
- \end{align*}
-\end{definition}
-
 
 \begin{definition}[Non-Termination Formula - Open Recurrence Set  {\bf [ONT]}]
 \label{def:nonterm-formula}
@@ -940,46 +946,6 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 \end{framed}
 \end{figure*}
 
-\begin{figure*}
- \begin{framed}
- \begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
-  \begin{align*}
-\label{def:multi-termination-formula}
-  \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
- & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
- & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
- & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) \rightarrow Inv_n(x_n) ~ \wedge \\
- & Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n') \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')
- \end{align*}
-\end{definition}
-
-\begin{definition}[ Nested Loops Termination Formula {\bf [NT]}]
-\label{def:nested-term-formula}
- \begin{align*}
-  \exists R, S . \forall x, x' . & G_1(x) \wedge P_1(x,x') \rightarrow S(x',x') ~ \wedge \\
-                                & G_2(x') \wedge S(x,x') \wedge T(x',x'')\rightarrow S(x,x'') ~ \wedge \\
-				& G_1(x) \wedge P_1(x,x') \wedge \neg G_2(x') \wedge S(x',x'') \wedge 
-                                P_2(x'',x''') \wedge 
-                                  R(x) > 0 \wedge R(x) > R(x''') 
- \end{align*} 
-\end{definition}
-
-\begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
-\label{def:multi-termination-formula}
- \begin{align*}
-  \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
- & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
- & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
- & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge N(x_n)  ~ \wedge \\
-                                                        & N(x_n) \rightarrow G_n(x_n) ~ \wedge 
-							 N(x_n) \wedge T_n(x_n, x_n') \rightarrow N(x_n') 
- \end{align*}
-\end{definition}
- \end{framed}
-
-\end{figure*}
-
-
 \iffalse
 Many loops do not terminate for all starting states, but are contained in programs that guarantee the loop will
 terminate.  Traditional termination provers have difficulty reasoning about such conditionally-terminating loops.
@@ -994,69 +960,18 @@ Any termination guarantees?
 
 
 \noindent {\bf Unconditional termination.}
-We start by considering a program consisting of a single loop ${L= \langle G,T \rangle}$,
-where the states $x$ satisfying the loop's guard are given by the predicate $G(x)$.
-The body of the loop is encoded as the transition relation $T(x, x')$, meaning that
-state $x'$ is reachable from state $x$ via a single iteration of the loop body.
-%where the initial states of the program 
-%just before the loop are given as an assertion init(V )
-%satisfy $I : X \rightarrow \mathbb{B}$, $G : X \rightarrow \mathbb{B} $ is the loop guard and $T : X \rightarrow X$ is the loop body. 
-%We use predicates over program states $x$ and their successors $x'$ to model program
-%statements as binary relations over states. For loop $L$, $T(x, x')$
-%represents the body of the loop. 
-%
-%Subsequently, we show how to generalise our formulation of termination and non-termination to handle sequential loops. \\
-%
-The existence of a ranking function for $L$ is equivalent to the satisfiability
-of the formula from Definition~\ref{def:termination-formula}.  If this formula is satisfiable,
-then there exists a ranking function $R$ that proves loop $L$ terminates.
+To show that $L$ is unconditionally terminating (i.e. it eventually terminates regardless of the
+state it starts in), we can find a ranking function for $L$.
+The existence of a ranking function is equivalent to the satisfiability
+of the formula from Definition~\ref{def:termination-formula}, so a witness to the satisfiability
+of formula {\bf [UT]} is also a ranking function and thus a proof of $L$'s unconditional termination.
 
-Our formalism is illustrated by the unconditionally terminating program shown
-in Figure~\ref{fig:motivation.a}, which is encoded as:
-\begin{align*}
-G(x) & = \{ x \mid x>0 \} \\
-T(x,x') &= \{ \langle x, x' \rangle \mid x' = (x - 1) \, \& \, x \}
-\end{align*}
+Continuing the example of the program in Figure~\ref{fig:motivation.a}, we can see that
+the corresponding synthesis formula {\bf [UT]} is satisfiable, as witnessed by the function $R(x) = x$.
+So $R(x) = x$ constitutes a proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
+terminating.
 
-We will abbreviate this with the notation $G(x) \triangleq x > 0$ and $T(x, x') \triangleq x' = (x - 1) \, \& \, x$.
-The corresponding synthesis formula {\bf [UT]} is satisfiable, as witnessed by the function $R(x) = x$.\\
-
-\noindent {\bf Conditional termination.}
-A slightly more involved case occurs if $L$'s termination depends on the state it begins
-executing in, i.e. $L$ is \emph{conditionally terminating}. 
-The loop we consider now is $L=\langle I,G,T \rangle$ and has an additional predicate $I(x)$ 
-representing the states in which the loop can begin executing.
-Conditional termination is equivalent to the
-formula of Defintion~\ref{def:conditional-termination-formula}. If this formula is satisfiable,
-two witnesses are returned:
-\begin{itemize}
-\item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
-guard $G$ is met.
-\item $R$ is a ranking function for $L$ as restricted by $W$ -- that is to say, $R$ need only
-be well founded on those states satisfying $W \wedge G$.  Since $W$ is an inductive invariant of $L$,
-$R$ is strong enough to show that $L$ terminates from any of its initial states.
-\end{itemize}
-
-$W$ is called a \emph{supporting invariant} for $L$ and $R$ proves termination relative to $W$.
-
-Conditional termination is illustrated by the loop in Figure~\ref{fig:motivation.h}, 
-which is encoded as:
-\begin{align*}
-            I(\langle x, y \rangle) & \triangleq y = 1 \\
-            G(\langle x, y \rangle) & \triangleq x > 0 \\
-            T(\langle x, y \rangle, \langle x', y' \rangle) & \triangleq x' = x - y \wedge y' = y \\
-\end{align*}
-
-If the initial states $I$ are ignored this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
-would lead to a non-terminating execution.
-
-However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
-$R(\langle x,y\rangle ) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
-This constitutes a proof that the program as whole terminates, since the loop always begins
-executing in a state that guarantees its termination.
-
-\subsection{The Non-Termination Problem}
-
+\noindent{\bf Non-termination.}
 Dually to termination, we might want to consider the non-termination of a program.  If a program terminates,
 we can prove this by finding a ranking function and supporting invariant witnessing the satisfiability
 of formula {\bf[CT]}.  What then would a proof of non-termination look like?
@@ -1064,7 +979,7 @@ of formula {\bf[CT]}.  What then would a proof of non-termination look like?
 Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
 i.e. a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$. 
-For our case, given a loop $L = \langle I,G,T \rangle$, the notion of open recurrent set is encoded by Definition~\ref{def:nonterm-formula}.
+For our case, given a loop $L = \langle I,G,T \rangle$, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
 
 If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
@@ -1075,13 +990,13 @@ we make use of the notion of \emph{closed recurrence set} introduced by Chen et 
 As opposed to a closed recurrence set, this is a $\exists \forall$ property: for each state in the recurrence set $N$, all of its successors 
 must be in $N$. We note that if $T$ is deterministic, every open recurrence set is also a closed recurrence set (since each
 state has at most one successor).  Thus, the non-termination problem for deterministic transition systems is equivalent to the
-satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
-As our formulation is with respect to a given loop $L=\langle I,G,t \rangle$, we require the  
-recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
-infinite execution to happen.
+satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonterm-formula}.
+%As our formulation is with respect to a given loop $L=\langle I,G,T \rangle$, we require the  
+%recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
+%infinite execution to happen.
 
 Given that our program's state space is finite, a transition relation induces a infinite execution if and only if some state is 
-visited infinitely often, or equivalently if the state is visitied twice in the course of the execution.
+visited infinitely often, or equivalently the state is visited twice in the course of the execution.
 This gives us an alternative way of expression a non-termination proof: we can can try to find a witness $x$ to the satisfiability
 of the formula
 $$ \exists x . T^+(x, x)$$
@@ -1127,6 +1042,98 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
 %% that is not periodic is illustrated by the following program:
 
 %Our method is purely semantic. 
+
+\subsection{Composing a Loop with its Environment}
+
+
+\begin{figure*}
+ \begin{framed}
+
+\begin{definition}[Conditional Termination Formula {\bf [CT]}]
+\label{def:conditional-termination-formula}
+ \begin{align*}
+  \exists R, W . \forall x, x' . & I(x) \wedge G(x) \rightarrow W(x) ~ \wedge \\
+                                 & G(x) \wedge W(x) \wedge T(x, x') \rightarrow W(x') \wedge R(x) > 0 
+  \wedge R(x) > R(x')
+ \end{align*}
+\end{definition}
+
+ \begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
+  \begin{align*}
+\label{def:multi-termination-formula}
+  \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
+ & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
+ & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
+ & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) \rightarrow Inv_n(x_n) ~ \wedge \\
+ & Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n') \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')
+ \end{align*}
+\end{definition}
+
+\begin{definition}[Nested Loops Termination Formula {\bf [NT]}]
+\label{def:nested-term-formula}
+ \begin{align*}
+  \exists R, S . \forall x, x' . & G_1(x) \wedge P_1(x,x') \rightarrow S(x',x') ~ \wedge \\
+                                & G_2(x') \wedge S(x,x') \wedge T(x',x'')\rightarrow S(x,x'') ~ \wedge \\
+				& G_1(x) \wedge P_1(x,x') \wedge \neg G_2(x') \wedge S(x',x'') \wedge 
+                                P_2(x'',x''') \wedge 
+                                  R(x) > 0 \wedge R(x) > R(x''') 
+ \end{align*} 
+\end{definition}
+
+\begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
+\label{def:multi-termination-formula}
+ \begin{align*}
+  \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
+ & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
+ & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
+ & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge N(x_n)  ~ \wedge \\
+                                                        & N(x_n) \rightarrow G_n(x_n) ~ \wedge 
+							 N(x_n) \wedge T_n(x_n, x_n') \rightarrow N(x_n') 
+ \end{align*}
+\end{definition}
+ \end{framed}
+
+\end{figure*}
+
+Sometimes the termination behaviour of a loop depends on its environment.  That is to say,
+the loop may not terminate if started in some particular state, but the rest of the program
+ensures that such a state cannot be reached on entry to the loop.  The program as a whole
+terminates, but if the loop were considered in isolation we would not be able to prove that
+it terminates.  We will now consider the problem of encoding the loop's environment as
+a synthesis formula.
+
+\noindent {\bf Conditional termination.}
+If $L$'s termination depends on the state it begins
+executing in, we say that $L$ is \emph{conditionally terminating}. 
+The loop we consider now is $L=\langle I,G,T \rangle$; it has an additional predicate $I(x)$ 
+representing the states in which the loop can begin executing.
+Conditional termination is equivalent to the
+formula of Defintion~\ref{def:conditional-termination-formula}. If this formula is satisfiable,
+two witnesses are returned:
+\begin{itemize}
+\item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
+guard $G$ is met.
+\item $R$ is a ranking function for $L$ as restricted by $W$ -- that is to say, $R$ need only
+be well founded on those states satisfying $W \wedge G$.  Since $W$ is an inductive invariant of $L$,
+$R$ is strong enough to show that $L$ terminates from any of its initial states.
+\end{itemize}
+
+$W$ is called a \emph{supporting invariant} for $L$ and $R$ proves termination relative to $W$.
+
+Conditional termination is illustrated by the program in Figure~\ref{fig:motivation.h},
+which is encoded as:
+\begin{align*}
+            I(\langle x, y \rangle) & \triangleq y = 1 \\
+            G(\langle x, y \rangle) & \triangleq x > 0 \\
+            T(\langle x, y \rangle, \langle x', y' \rangle) & \triangleq x' = x - y \wedge y' = y 
+\end{align*}
+If the initial states $I$ are ignored this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
+would lead to a non-terminating execution.
+
+However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
+$R(\langle x,y\rangle ) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
+This constitutes a proof that the program as a whole terminates, since the loop always begins
+executing in a state that guarantees its termination.
 
 \noindent {\bf Sequential loops.}
 Conditional termination allows us to
