@@ -1080,10 +1080,13 @@ As our formulation is with respect to a given loop $L=\langle I,G,t \rangle$, we
 recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
 infinite execution to happen.
 
-Given that our state space is finite, a transition relation induces a infinite execution if and only if some state is 
-visited twice in the course of the execution. Hence, an alternative formulation of the non-termination problem 
-for bit-vectors may search for a state that is visited twice.
-However, this would require reasoning about the transitive closure of the transition relation.\\
+Given that our program's state space is finite, a transition relation induces a infinite execution if and only if some state is 
+visited infinitely often, or equivalently if the state is visitied twice in the course of the execution.
+This gives us an alternative way of expression a non-termination proof: we can can try to find a witness $x$ to the satisfiability
+of the formula
+$$ \exists x . T^+(x, x)$$
+However, deciding satisfiability of this formula directly requires a logic that includes a transitive closure operator, which
+ours does not have.\\
 
 \noindent {\bf Non-determinism.} A non-termination diagnosis procedure searching for a closed recurrence set under-approximates the transition relation, i.e. 
 the closed recurrence set together with the under-approximation characterise non-termination \cite{DBLP:conf/tacas/ChenCFNO14}.
