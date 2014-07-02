@@ -1057,6 +1057,10 @@ executing in a state that guarantees its termination.
 
 \subsection{The Non-Termination Problem}
 
+Dually to termination, we might want to consider the non-termination of a program.  If a program terminates,
+we can prove this by finding a ranking function and supporting invariant witnessing the satisfiability
+of formula {\bf[CT]}.  What then would a proof of non-termination look like?
+
 Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
 i.e. a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$. 
@@ -1068,8 +1072,9 @@ $L$'s non-termination. The issue with this formula is the additional level of qu
 
 In order to formulate the non-termination problem inside the synthesis fragment, 
 we make use of the notion of \emph{closed recurrence set} introduced by Chen et al. in \cite{DBLP:conf/tacas/ChenCFNO14}. 
-As opposed to a closed recurrence set, this is a  purely universal property: for each state in the recurrence set $N$, each of its successors 
-must be in $N$. Thus, the non-termination problem becomes equivalent to the
+As opposed to a closed recurrence set, this is a $\exists \forall$ property: for each state in the recurrence set $N$, all of its successors 
+must be in $N$. We note that if $T$ is deterministic, every open recurrence set is also a closed recurrence set (since each
+state has at most one successor).  Thus, the non-termination problem for deterministic transition systems is equivalent to the
 satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
 As our formulation is with respect to a given loop $L=\langle I,G,t \rangle$, we require the  
 recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
