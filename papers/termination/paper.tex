@@ -39,6 +39,7 @@
 
 \newcommand{\xmark}{\ding{55}}
 \newcommand{\todo}[1]{{\bf TODO:} #1}
+\newcommand{\newC}{C$^-$\xspace}
 
 \lstset{language=c++}
 
@@ -665,6 +666,73 @@ we first formalise its termination argument as a ranking function (Section~\ref{
 Subsequently, we discus bit-vector semantics and illustrate 
 differences between machine arithmetic and integer arithmetic that
 make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
+
+\subsection{\newC} \todo{revise this}
+\label{sec:logic}
+
+We will now describe the logic we use to express our synthesis formula.
+The logic is a subset of C that we call \newC.  The characteristic property of a
+\newC  program is that safety can be decided for
+it using a single query to a Bounded Model Checker.  A \newC program is
+just a C program with the following syntactic restrictions:
+ all loops in the program must have a constant bound;
+ all recursion in the program must be limited to a constant depth;
+ all arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ and be of constant size.
+Additionally, \newC programs may use nondeterministic values, assumptions
+and arbitrary-width types.
+
+\iffalse
+Two example \newC programs are shown 
+in Fig.~\ref{fig:c-}.
+
+\begin{figure}
+\begin{minipage}[scale=0.8]{0.45\linewidth}
+ \begin{lstlisting}[language=c]
+int count_bits(int x) {
+  int i, ret = 0;
+  
+  for (i = 0; i < 32; i++)
+    if (x & (1 << i))
+      ret++;
+  
+  return ret;
+}
+ \end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.54\linewidth}
+ \begin{lstlisting}[language=C]
+int common_factor(int A[10]) {
+  int i, factor = nondet();
+
+  for (i = 0; i < 10; i++)
+    assume((A[i] % factor) == 0);
+
+  assume(factor > 1);
+  return factor;
+}
+
+ \end{lstlisting}
+\end{minipage}
+
+ \caption{Two \newC programs}
+ \label{fig:c-}
+
+\end{figure}
+\fi
+
+Since each loop is bounded by a constant, and each recursive function call is
+limited to a constant depth, a \newC program necessarily terminates and in
+fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
+a Bounded Model Checker with an unrolling bound of $k$ will be a complete
+decision procedure for the safety of the program.  For a \newC program of
+size $l$ and with largest loop bound~$k$, a Bounded Model Checker will
+create a SAT problem of size $O(lk)$.  Conversely, a SAT problem
+of size $s$ can be converted trivially into a loop-free \newC program
+of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
+which means it can be decided fairly efficiently for many practical
+instances.
+
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 A programs $P$ is represented as a transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $x$. 
