@@ -175,21 +175,35 @@ current 2-QBF solvers are much less efficient in practice than SAT solvers.
 \subsubsection{CEGIS}
 
 \fi
-We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
-have a program synthesiser kicking around, we present the design of one synthesiser
-that can be used to solve the problem.
-We start by recalling the synthesis formula:
- $$\exists P, x . \forall y . \sigma(P, x, y)$$
+
+In this section we present a solver for the synthesis fragment. An
+important characteristic of our solver is that is models bit accurate
+semantics. This enables the precise treatment of bit-wise operations and
+arithmetic modulo fixed widths.
+ 
+%We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
+%have a program synthesiser kicking around, we present the design of one synthesiser
+%that can be used to solve the problem.
+%We start by recalling the synthesis formula:
+% $$\exists P, x . \forall y . \sigma(P, x, y)$$
+We start by recalling the synthesis fragment:
+ \[
+  \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
+ \]
+
+where $P$ ranges over sets, while $x$ and $y$ range over ground terms (we have dropped
+ the vector symbols for brevity reasons).
 
 When the quantifier free first-order fragment of the logic is efficiently decidable and
-$P$ can be expressed as a ground term of the logic, we can use
+$P$ is expressible as a ground term of the logic, we can use
 Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
-check the validity of the synthesis formula.  The core of the CEGIS algorithm is
-a refinement loop to check the
-validity of the synthesis formula as shown in Fig.~\ref{fig:abstract-refinement} and
-Algorithm~\ref{fig:abstract-refinement-code}.  The algorithm is divided into two
-components: {\sc synth} and {\sc verif}.  We track a finite (small) subset of test inputs
-and {\sc synth} synthesises a candidate program that is correct on just those tests.
+check the validity of the synthesis formula. The core of the CEGIS algorithm is
+the refinement loop in Fig.~\ref{fig:abstract-refinement} and
+detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
+
+The algorithm is divided into two
+components: {\sc synth} and {\sc verif}. We track a finite set of test
+inputs and {\sc synth} synthesises a candidate program that is correct on just those tests.
 {\sc Verif} then tries to verify the candidate program by searching for an input on
 which the candidate program does not satisfy the specification.  If no such input
 can be found, the candidate program is correct.  Otherwise, the new input is added
