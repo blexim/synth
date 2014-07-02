@@ -39,6 +39,7 @@
 
 \newcommand{\xmark}{\ding{55}}
 \newcommand{\todo}[1]{{\bf TODO:} #1}
+\newcommand{\newC}{C$^-$\xspace}
 
 \lstset{language=c++}
 
@@ -281,6 +282,8 @@ We empirically show that this claim holds in practice, causing our technique to 
 %Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
 
  The main contributions of our work can be summarised as follows:
+
+
 \begin{itemize}
 \item We designed a technique for computing ranking functions that correctly accounts for the wrap-around behavior caused by under- and overflows in bit-vector and floating point arithmetic. To the best of our knowledge, this is the first approach able to compute ranking functions for programs handling floats. Our technique is not restricted to finding linear ranking functions, but can also compute (lexicographic) non-linear  ones. We justified the need for such a non restrictive procedure by computing the probability ... .
 \item  We rephrased the termination problem as a second-order satisfaction problem and made 
@@ -297,6 +300,10 @@ This is opposed to tools that alternate between calls to a safety prover and cal
 \item Our proposed termination proving procedure can also prove non-termination. Alternating termination and non-termination? 
 
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
+
+\item bit level termination and non-termination analysis. This enables
+  the precise treatment of bit-wise operations and arithmetic modulo
+  fixed widths.
 
 \end{itemize}
 % unified approach to termination and non-termination
@@ -670,6 +677,8 @@ we first formalise its termination argument as a ranking function (Section~\ref{
 Subsequently, we discus bit-vector semantics and illustrate 
 differences between machine arithmetic and integer arithmetic that
 make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
+
+
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 A programs $P$ is represented as a transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $x$. 
@@ -1063,8 +1072,8 @@ recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other wo
 infinite execution to happen.
 
 Given that our state space is finite, a transition relation induces a infinite execution if and only if some state is 
-visited infinitely many times in the course of the execution. Hence, an alternative formulation of the non-termination problem 
-for bit-vectors may search for singleton recurrence sets (the recurrence set contains only the state visited infinitely many times).
+visited twice in the course of the execution. Hence, an alternative formulation of the non-termination problem 
+for bit-vectors may search for a state that is visited twice.
 However, this would require reasoning about the transitive closure of the transition relation.\\
 
 \noindent {\bf Non-determinism.} A non-termination diagnosis procedure searching for a closed recurrence set under-approximates the transition relation, i.e. 
