@@ -297,7 +297,7 @@ we only need a bounded model checker that performs a single unwinding of a loop.
 \item We iteratively construct a termination argument as a pair of a ranking function and supporting invariant through a single refinement loop.
 This is opposed to tools that alternate between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.
 
-\item Our proposed termination proving procedure can also prove non-termination. Alternating termination and non-termination? 
+\item Our proposed termination proving procedure can also prove non-termination: (non-)termination analysis.
 
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 
@@ -1218,7 +1218,7 @@ arguments for all of them in the same formula. Currently, our tool generates a s
 %% \end{definition}
 
 
-\section{Solving the Synthesis Formula} \label{sec:synthesis}
+\section{Satisfiability of a Formula in the Synthesis Fragment} \label{sec:synthesis}
 %
 \iffalse
 \subsection{The Search Space and the Kolmogorov Complexity of a Ranking Function}
