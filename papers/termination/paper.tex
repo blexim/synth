@@ -1105,10 +1105,12 @@ terminates, but if the loop were considered in isolation we would not be able to
 it terminates.  We must therefore somehow encode a loop's interaction with the rest of
 the program in order to do a sound termination analysis.
 
+\iffalse
 Let us assume that we have done some preprocessing of our program which has identified
 loops, straight line code blocks and the control flow between these.  In particular,
 the control flow analysis has determined which order these code blocks execute in,
 and the nesting structure of the loops.
+\fi
 
 \noindent {\bf Conditional termination.}
 If $L$'s termination depends on the state it begins
@@ -1180,6 +1182,69 @@ while (x > 0) {
 \caption{A nested loop\label{fig:nested}}
 \end{figure}
 
+\noindent {\bf Composing the environment with a loop.}
+While proving that loop $L$ terminates, we create constraints on the environment in the
+form of the predicate $I$ and the summary relation $S$.  For each loop $L'$ nested in the body
+of $L$, we must add some more constraints saying that $S$ overapproximates $L'$.
+Similarly, for each loop $L''$ appearing before $L$ in the program's control flow, we
+must add constraints saying that $I$ overapproximates the states reachable via $L''$.
+The details of how to create these constraints are beyond the scope of this paper, so
+rather than presenting the algorithm for generating the constraints, we direct the
+reader's attention to Figure~\ref{fig:environment-model}.  This figure contains a non-trivial program
+along with the constraint system
+encoding the termination of the outer loop.  Since the program contains sequential composition
+of loops and nested loops, the constraint
+system involves termination invariants $W_1, W_2, W_3$ and the inner loop summary $S$.
+Note that despite its complexity, the constraint system is still a formula in the synthesis fragment.
+Since the outer loop of this program does indeed terminate, the system is satisfiable, as witnessed by:
+\begin{align*}
+W_1(\langle v, x, y, z \rangle ) & \triangleq x \leq y + 1 \\
+W_2(\langle v, x, y, z \rangle ) & \triangleq x = y + 1 \\
+W_1(\langle v, x, y, z \rangle ) & \triangleq x = y + 1 \\
+S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) & \triangleq x ' = x \wedge y' = y \wedge z' + v' = x \\
+R(x) & = x
+\end{align*}
+
+
+\begin{figure*}
+\begin{minipage}{0.2\textwidth}
+\begin{lstlisting}
+x = 0;
+while (x <= y)
+  x++;
+
+while (x > 0) {
+  z = x;
+  v = 0;
+
+  while (v < y) {
+    z--;
+    v++;
+  }
+
+  x -= z;
+  y -= z;
+}
+\end{lstlisting}
+\end{minipage}
+\vline
+\begin{minipage}{0.8\textwidth}
+\begin{align*}
+ \exists W_1, W_2, W_3, R, S . \forall v, x, y, z, v', x', y', z' . \\
+   x = 1 & \rightarrow W_1(v, x, y, z) \, \wedge \\
+   x \leq y \wedge W_1(v, x, y, z) & \rightarrow W_1(v, x+1, x, y, z) \, \wedge \\
+   x > 0 \wedge x > y \wedge W_1(v, x, y, z) & \rightarrow W_2(v, x+1, y, z) \, \wedge \\
+   x > 0 \wedge W_2(v, x, y, z) & \rightarrow W_3(0, x, y, x) \, \wedge \\
+   v < y \wedge W_3(v, x, y, z) & \rightarrow W_3(v+1, x, y, z-1) \, \wedge \\
+   v \geq y \wedge W_3(v, x, y, z) & \rightarrow W_2(v, x-z, y-z, z) \, \wedge \\
+   S(\langle v, x, y, z, \rangle, \langle v', x', y', z' \rangle) \wedge v < y & \rightarrow S(\langle v, x, y, z \rangle, \langle v+1, x, y, z-1 \rangle) \, \wedge \\
+   x > 0 \wedge W_2(v, x, y, z) & \rightarrow S(\langle v, x, y, z \rangle, \langle 0, x, y, x \rangle) \, \wedge \\
+   x > 0 \wedge W_2(v, x, y, z) \wedge S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) \wedge v' \geq y' & \rightarrow \\
+   R(v, x, y, z) > 0 \wedge R(v, x, y, z) > R(v', x' - z', y'-z', z')
+\end{align*}
+\end{minipage}
+\caption{A non-trivial program and its constraint system\label{fig:environment-model}}
+\end{figure*}
 
 \iffalse
 
