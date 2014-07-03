@@ -900,7 +900,7 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 
 \subsection{An Isolated Loop}
 
-We will begin our discussion by showing how to encode the (non-)termination of a single loop
+We will begin our discussion by showing how to encode the (non-)termination of program consisting of a single loop 
 in the synthesis fragment.  For the time being, a loop is a pair ${L= \langle G,T \rangle}$,
 where the states $x$ satisfying the loop's guard are given by the predicate $G(x)$.
 The body of the loop is encoded as the transition relation $T(x, x')$, meaning that
@@ -928,8 +928,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{definition}[Non-Termination Formula - Open Recurrence Set  {\bf [ONT]}]
 \label{def:nonterm-formula}
  \begin{align*}
-  \exists N, x_0 . \forall x . \exists x' . & I(x_0) \wedge N(x_0) ~ \wedge \\
-                                                        & N(x) \rightarrow G(x) ~ \wedge \\
+  \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \rightarrow T(x, x') \wedge N(x') 
  \end{align*}
 \end{definition}
@@ -937,8 +936,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{definition}[Non-Termination Formula - Closed Recurrence Set {\bf [CNT]}]
 \label{def:deterministic-nonterm-formula}
  \begin{align*}
-  \exists N, x_0 . \forall x, x' . & I(x_0) \wedge N(x_0) ~ \wedge \\
-                                                        & N(x) \rightarrow G(x) ~ \wedge \\
+  \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \wedge T(x, x') \rightarrow N(x') 
  \end{align*}
 \end{definition}
@@ -969,17 +967,17 @@ of formula {\bf [UT]} is also a ranking function and thus a proof of $L$'s uncon
 Continuing the example of the program in Figure~\ref{fig:motivation.a}, we can see that
 the corresponding synthesis formula {\bf [UT]} is satisfiable, as witnessed by the function $R(x) = x$.
 So $R(x) = x$ constitutes a proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
-terminating.
+terminating.\\
 
 \noindent{\bf Non-termination.}
 Dually to termination, we might want to consider the non-termination of a program.  If a program terminates,
-we can prove this by finding a ranking function and supporting invariant witnessing the satisfiability
-of formula {\bf[CT]}.  What then would a proof of non-termination look like?
+we can prove this by finding a ranking function %and supporting invariant 
+witnessing the satisfiability of formula {\bf[UT]}.  What then would a proof of non-termination look like?
 
 Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
 i.e. a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$. 
-For our case, given a loop $L = \langle I,G,T \rangle$, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
+For our case, given a loop $L = \langle G,T \rangle$, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
 
 If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
@@ -987,7 +985,7 @@ $L$'s non-termination. The issue with this formula is the additional level of qu
 
 In order to formulate the non-termination problem inside the synthesis fragment, 
 we make use of the notion of \emph{closed recurrence set} introduced by Chen et al. in \cite{DBLP:conf/tacas/ChenCFNO14}. 
-As opposed to a closed recurrence set, this is a $\exists \forall$ property: for each state in the recurrence set $N$, all of its successors 
+As opposed to an open recurrence set, this is a $\exists \forall$ property: for each state in the recurrence set $N$, all of its successors 
 must be in $N$. We note that if $T$ is deterministic, every open recurrence set is also a closed recurrence set (since each
 state has at most one successor).  Thus, the non-termination problem for deterministic transition systems is equivalent to the
 satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonterm-formula}.
@@ -1061,39 +1059,39 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
  \end{align*}
 \end{definition}
 
- \begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
-  \begin{align*}
-\label{def:multi-termination-formula}
-  \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
- & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
- & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
- & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) \rightarrow Inv_n(x_n) ~ \wedge \\
- & Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n') \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')
- \end{align*}
-\end{definition}
+%%  \begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
+%%   \begin{align*}
+%% \label{def:multi-termination-formula}
+%%   \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
+%%  & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
+%%  & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
+%%  & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) \rightarrow Inv_n(x_n) ~ \wedge \\
+%%  & Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n') \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')
+%%  \end{align*}
+%% \end{definition}
 
-\begin{definition}[Nested Loops Termination Formula {\bf [NT]}]
-\label{def:nested-term-formula}
- \begin{align*}
-  \exists R, S . \forall x, x' . & G_1(x) \wedge P_1(x,x') \rightarrow S(x',x') ~ \wedge \\
-                                & G_2(x') \wedge S(x,x') \wedge T(x',x'')\rightarrow S(x,x'') ~ \wedge \\
-				& G_1(x) \wedge P_1(x,x') \wedge \neg G_2(x') \wedge S(x',x'') \wedge 
-                                P_2(x'',x''') \wedge 
-                                  R(x) > 0 \wedge R(x) > R(x''') 
- \end{align*} 
-\end{definition}
+%% \begin{definition}[Nested Loops Termination Formula {\bf [NT]}]
+%% \label{def:nested-term-formula}
+%%  \begin{align*}
+%%   \exists R, S . \forall x, x' . & G_1(x) \wedge P_1(x,x') \rightarrow S(x',x') ~ \wedge \\
+%%                                 & G_2(x') \wedge S(x,x') \wedge T(x',x'')\rightarrow S(x,x'') ~ \wedge \\
+%% 				& G_1(x) \wedge P_1(x,x') \wedge \neg G_2(x') \wedge S(x',x'') \wedge 
+%%                                 P_2(x'',x''') \wedge 
+%%                                   R(x) > 0 \wedge R(x) > R(x''') 
+%%  \end{align*} 
+%% \end{definition}
 
-\begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
-\label{def:multi-termination-formula}
- \begin{align*}
-  \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
- & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
- & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
- & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge N(x_n)  ~ \wedge \\
-                                                        & N(x_n) \rightarrow G_n(x_n) ~ \wedge 
-							 N(x_n) \wedge T_n(x_n, x_n') \rightarrow N(x_n') 
- \end{align*}
-\end{definition}
+%% \begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
+%% \label{def:multi-termination-formula}
+%%  \begin{align*}
+%%   \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
+%%  & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
+%%  & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
+%%  & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge N(x_n)  ~ \wedge \\
+%%                                                         & N(x_n) \rightarrow G_n(x_n) ~ \wedge 
+%% 							 N(x_n) \wedge T_n(x_n, x_n') \rightarrow N(x_n') 
+%%  \end{align*}
+%% \end{definition}
  \end{framed}
 
 \end{figure*}
@@ -1102,8 +1100,8 @@ Sometimes the termination behaviour of a loop depends on its environment.  That 
 the loop may not terminate if started in some particular state, but the rest of the program
 ensures that such a state cannot be reached on entry to the loop.  The program as a whole
 terminates, but if the loop were considered in isolation we would not be able to prove that
-it terminates.  We must therefore somehow encode a loop's interaction with the rest of
-the program in order to do a sound termination analysis.
+it terminates.  We must therefore encode a loop's interaction with the rest of
+the program in order to do a sound termination analysis.\\
 
 \iffalse
 Let us assume that we have done some preprocessing of our program which has identified
@@ -1147,7 +1145,7 @@ would lead to a non-terminating execution.
 However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
 $R(\langle x,y\rangle) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
 This constitutes a proof that the program as a whole terminates, since the loop always begins
-executing in a state that guarantees its termination.
+executing in a state that guarantees its termination.\\
 
 \noindent {\bf Nested loops.}
 If $L$'s body contains another loop $L'$, we cannot directly apply either formula {\bf [UT]} or
@@ -1166,7 +1164,7 @@ it suffices to summarise the inner loop with the relation:
 \begin{align*}
 S(\langle x, y, z \rangle, \langle x', y', z' \rangle) & \triangleq x' = x \wedge y = 1
 \end{align*}
-Then the ranking function $R(x, y, z) = x$ proves termination of the outer loop $L(G, S)$.
+Then the ranking function $R(x, y, z) = x$ proves termination of the outer loop $L(G, S)$.\\
 
 
 \begin{figure}
