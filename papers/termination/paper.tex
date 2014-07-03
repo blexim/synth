@@ -1200,14 +1200,14 @@ Since the outer loop of this program does indeed terminate, the system is satisf
 \begin{align*}
 W_1(\langle v, x, y, z \rangle ) & \triangleq x \leq y + 1 \\
 W_2(\langle v, x, y, z \rangle ) & \triangleq x = y + 1 \\
-W_1(\langle v, x, y, z \rangle ) & \triangleq x = y + 1 \\
 S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) & \triangleq x ' = x \wedge y' = y \wedge z' + v' = x \\
 R(x) & = x
 \end{align*}
 
 
 \begin{figure*}
-\begin{minipage}{0.2\textwidth}
+\begin{framed}
+\begin{minipage}{0.19\textwidth}
 \begin{lstlisting}
 x = 0;
 while (x <= y)
@@ -1228,22 +1228,25 @@ while (x > 0) {
 \end{lstlisting}
 \end{minipage}
 \vline
-\begin{minipage}{0.8\textwidth}
+\begin{minipage}{0.82\textwidth}
 \begin{align*}
- \exists W_1, W_2, W_3, R, S . \forall v, x, y, z, v', x', y', z' . \\
+ \exists W_1, W_2, R, S . \forall v, x, y, z, v', x', y', z' . \\
    x = 1 & \rightarrow W_1(v, x, y, z) \, \wedge \\
    x \leq y \wedge W_1(v, x, y, z) & \rightarrow W_1(v, x+1, x, y, z) \, \wedge \\
    x > 0 \wedge x > y \wedge W_1(v, x, y, z) & \rightarrow W_2(v, x+1, y, z) \, \wedge \\
-   x > 0 \wedge W_2(v, x, y, z) & \rightarrow W_3(0, x, y, x) \, \wedge \\
-   v < y \wedge W_3(v, x, y, z) & \rightarrow W_3(v+1, x, y, z-1) \, \wedge \\
-   v \geq y \wedge W_3(v, x, y, z) & \rightarrow W_2(v, x-z, y-z, z) \, \wedge \\
+   %x > 0 \wedge W_2(v, x, y, z) & \rightarrow W_3(0, x, y, x) \, \wedge \\
+   %v < y \wedge W_3(v, x, y, z) & \rightarrow W_3(v+1, x, y, z-1) \, \wedge \\
+   %v \geq y \wedge W_3(v, x, y, z) & \rightarrow W_2(v, x-z, y-z, z) \, \wedge \\
    S(\langle v, x, y, z, \rangle, \langle v', x', y', z' \rangle) \wedge v < y & \rightarrow S(\langle v, x, y, z \rangle, \langle v+1, x, y, z-1 \rangle) \, \wedge \\
    x > 0 \wedge W_2(v, x, y, z) & \rightarrow S(\langle v, x, y, z \rangle, \langle 0, x, y, x \rangle) \, \wedge \\
    x > 0 \wedge W_2(v, x, y, z) \wedge S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) \wedge v' \geq y' & \rightarrow \\
-   R(v, x, y, z) > 0 \wedge R(v, x, y, z) > R(v', x' - z', y'-z', z')
+   & W_2(v', x' - z', y' - z', z') \, \wedge \\
+   & R(v, x, y, z) > 0 \, \wedge \\
+   & R(v, x, y, z) > R(v', x' - z', y'-z', z')
 \end{align*}
 \end{minipage}
 \caption{A non-trivial program and its constraint system\label{fig:environment-model}}
+\end{framed}
 \end{figure*}
 
 \iffalse
