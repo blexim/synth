@@ -73,12 +73,16 @@ The synthesiser must therefore be able to compute (non-termination) proofs
 over machine integers and floating-point numbers from the specifications detailed in Section~\ref{sec:second.order}.
 
 
+
+
+
+
 %\subsection{\newC}
 %\label{sec:logic}
 \subsection{The Synthesis Specification}
-Our (non-)termination specifications are given as program fragments
+The logic we use to express the synthesis formula, i.e. the (non-)termination specifications, % are given as program fragments
 %More specifically, the logic we use to express the synthesis formula
-in a subset of C that we call \newC.  
+is a subset of C that we call \newC.  
 The characteristic property of a \newC  program is that safety can be decided for
 it using a single query to a Bounded Model Checker.  A \newC program is
 just a C program with the following syntactic restrictions:
@@ -93,24 +97,6 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 %written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
 \todo{update the figure and make it look more like a grammar.}
 
-
-\subsection{The Synthesis Algorithm}
-As the quantifier free first-order fragment of the logic is efficiently decidable and
-$P$ is expressible as a ground term of the logic, we can use
-Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
-check the validity of the synthesis formula. 
-
-The core of the CEGIS algorithm is
-the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
-detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
-The algorithm is divided into two
-components: {\sc synth} and {\sc verif}. For a finite set of test
-inputs that we track, {\sc synth} synthesises a candidate program that is correct for those tests.
-Subsequently, {\sc Verif} verifies the candidate program by searching for an input on
-which it does not satisfy the specification. If no such input
-can be found, the candidate program is correct.  Otherwise, the new input is added
-to the set of tracked inputs.  
-%If the input set is finite, this procedure is guaranteed to terminate.
 
 \begin{algorithm*}
  \caption{Abstract refinement algorithm
@@ -223,24 +209,74 @@ Unsigned and signed comparison instructions:
 \end{figure}
 
 
+\subsection{The Synthesis Algorithm}
+As safety of a \newC program is efficiently 
+%the quantifier free first-order fragment of the logic is efficiently 
+decidable and a termination proof is expressible as a ground term of the \newC logic, we use
+Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
+check the validity of the synthesis formula. 
+The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
+detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
+The algorithm is divided into two
+components: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}.% described next. 
 
-In order to determine the validity of the {\sc synth} formula, we can
-check the {\sc synth} program for safety.  The {\sc synth} program is a
-\newC program, which means we can check its safety by invoking a Bounded
-Model Checker, such as {\sc cbmc}.
+Given a (non-)termination specification (in the synthesis fragment)    
+and a finite set of test inputs tracked so far, {\sc synth} generates a program \texttt{synth.c} asserting that some non-deterministic proof taken as input  
+is incorrect on at least one of the tracked inputs.
+Thus, \texttt{synth.c} is unsafe iff there is some (non-)termination proof that is correct for all of the tracked inputs.  
+By using testing techniques, we search for such a proof, i.e. 
+we synthesise a candidate (non-)termination proof that is correct for all the tracked inputs.  
+The testing techniques we use are: model checking,
+exhaustive search and genetic programming (see Section~\ref{sec:gp}).  
+%For the latter 2 techniques, we combine SYNTH with another program
+%(GP or EXPLICIT respectively) to create a program that searches for test vectors (proofs) that cause SYNTH
+%to crash.
+As \texttt{synth.c}
+is a \newC program, we can check its safety by invoking a Bounded
+Model Checker, such as {\sc cbmc} \cite{}.
+We run the three available testing techniques %explicit-state model checker
+in parallel and take the answer of whichever happens
+to terminate first, stopping the other processes.  
 
-In some cases, it is faster to use an explicit-state model checker rather
-than a Bounded Model Checker.  This is particularly true when we are checking
-the {\sc verif} formula, where we have observed that incorrect programs tend
-to be incorrect on a large fraction of the input space.  Counterexamples
-are then very easy to find by explicit enumeration of a few inputs.
-Since \newC is a fragment of C, we can generate an explicit-state
-model checker using the same source files that we pass to {\sc cbmc}
-and adding a small function to enumerate possible inputs.
-We can run the explicit-state model checker
-in parallel with {\sc cbmc} and take the answer of whichever happens
-to terminate first, stopping the other process.  This procedure is
-depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc verif}.
+
+Subsequently, {\sc Verif} uses model checking or exhaustive search to verify the candidate proof by searching for an input on
+which it does not satisfy the specification. If no such input
+can be found, the candidate proof is correct.  Otherwise, the new input is added
+to the set of tracked inputs and the CEGIS loop is reiterated.  
+
+
+%If the input set is finite, this procedure is guaranteed to terminate.
+
+
+
+%% In some cases, it is faster to use an explicit-state model checker rather than a Bounded Model Checker.  
+%% This is particularly true for the {\sc verif} component, 
+%% where we have observed that incorrect programs tend
+%% to be incorrect on a large fraction of the input space.  Counterexamples
+%% are then very easy to find by explicit enumeration of a few inputs.
+%% Since \newC is a fragment of C, we can generate an explicit-state
+%% model checker using the same source files that we pass to {\sc cbmc}
+%% and adding a small function to enumerate possible inputs.
+
+
+
+%% ---  We begin with the program under analysis (the PUA).  From this we produce a specification (in second order logic)
+%% encoding the termination of the PUA.  From the logical specification, we produce a program SYNTH.
+%% SYNTH takes as input a proof and asserts that the proof is incorrect on at least one of the inputs being tracked so far.
+%% Therefore, SYNTH is unsafe iff there is some proof that is correct for all of the tracked inputs.  Now we use testing
+%% techniques to try to find a proof that causes SYNTH to crash.  The testing techniques we use are: model checking,
+%% exhaustive search and genetic programming.  For the latter 2 techniques, we combine SYNTH with another program
+%% (GP or EXPLICIT respectively) to create a program that searches for test vectors (proofs) that cause SYNTH
+%% to crash.
+
+
+%% In the {\sc synth} component, in order to find a candidate proof $P$ satisfying
+%% $\sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$
+%% for the tracked inputs $(i_1, \ldots, i_N)$, 
+%% we attempt a safety proof.
+%In order to determine the validity of the {\sc synth} formula, we can
+%check the {\sc synth} program for safety.  
+
 
 \begin{figure}
 \begin{center}
@@ -253,24 +289,30 @@ depicted for {\sc synth} in Fig.~\ref{fig:synth-dfd}, and is similar for {\sc ve
 \resizebox{\linewidth}{!}{
 \begin{tikzpicture}[font=\sffamily]
 
-\node [file] (spec) {\sc Specification};
+\node [file] (spec) {\sc Termination Specification};
+\path (spec.south)+(0.0, -1) node [file] (inputs) {\sc Tracked Inputs};
 %% \path (synth.south)+(0.0, -0.5) node [file] (tests) {\sc tests.c};
 %% \path (tests.south)+(0.0, -0.5) node [file] (interpreter) {\sc interpreter.c};
 %% \path (interpreter.south)+(0.0, -0.5) node [file] (spec) {\sc spec.c};
 
 %% \path (spec.east)+(2.0, -0.25) node [process] (merged) {merge};
+\path (spec.east)+(2.0, -0.75) node [file] (file) {synth.c};
 
-\path (spec.east)+(2.0, 1.5) node [process] (cbmc) {\sc cbmc};
-\path (spec.east)+(2.0, 0.0) node [process] (gcc) {\sc gcc};
-\path (spec.east)+(2.0, -1.5) node [process] (gp) {\sc GP};
+\path (file.east)+(2.0, 1.5) node [process] (cbmc) {\sc cbmc};
+\path (file.east)+(2.0, 0.0) node [process] (gcc) {\sc Search};
+\path (file.east)+(2.0, -1.5) node [process] (gp) {\sc GP};
 
-\path (gcc.east)+(2.5, 0.0) node [file] (out) {Proof};
+\path (gcc.east)+(2.5, 0.0) node [file] (out) {Candidate Proof};
 
 %\path [line] (spec) -- (merged);
 
-\path [line] (spec) -- (cbmc);
-\path [line] (spec) -- (gcc);
-\path [line] (spec) -- (gp);
+\path [line] (spec) -- (file);
+\path [line] (inputs) -- (file);
+
+\path [line] (file) -- (cbmc);
+\path [line] (file) -- (gcc);
+\path [line] (file) -- (gp);
+
 
 \path [line] (cbmc) -- (out);
 \path [line] (gcc) -- (out);
