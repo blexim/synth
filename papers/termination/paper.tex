@@ -1003,6 +1003,7 @@ $$ \exists x . T^+(x, x)$$
 However, deciding satisfiability of this formula directly requires a logic that includes a transitive closure operator, which
 ours does not have.\\
 
+\iffalse
 \noindent {\bf Non-determinism.} A non-termination diagnosis procedure searching for a closed recurrence set under-approximates the transition relation, i.e. 
 the closed recurrence set together with the under-approximation characterise non-termination \cite{DBLP:conf/tacas/ChenCFNO14}.
 A potential difficulty with such a procedure lies in the handling of non-deterministic assignments. For illustration, consider the following loop:
@@ -1022,6 +1023,8 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
 %The issue with the closed recurrence set is that it yields an incomplete  for loops 
 %that have non-deterministic assignments 
 %parametric recurrence set
+
+\fi
 
 %% According to \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}, a transition relation is non-terminating iff it has a recurrence set of states.
 %% Candidate transition relations are 
@@ -1099,16 +1102,24 @@ Sometimes the termination behaviour of a loop depends on its environment.  That 
 the loop may not terminate if started in some particular state, but the rest of the program
 ensures that such a state cannot be reached on entry to the loop.  The program as a whole
 terminates, but if the loop were considered in isolation we would not be able to prove that
-it terminates.  We will now consider the problem of encoding the loop's environment as
-a synthesis formula.
+it terminates.  We must therefore somehow encode a loop's interaction with the rest of
+the program in order to do a sound termination analysis.
+
+Let us assume that we have done some preprocessing of our program which has identified
+loops, straight line code blocks and the control flow between these.  In particular,
+the control flow analysis has determined which order these code blocks execute in,
+and the nesting structure of the loops.
 
 \noindent {\bf Conditional termination.}
 If $L$'s termination depends on the state it begins
-executing in, we say that $L$ is \emph{conditionally terminating}. 
-The loop we consider now is $L=\langle I,G,T \rangle$; it has an additional predicate $I(x)$ 
-representing the states in which the loop can begin executing.
-Conditional termination is equivalent to the
-formula of Defintion~\ref{def:conditional-termination-formula}. If this formula is satisfiable,
+executing in, we say that $L$ is \emph{conditionally terminating}.
+The information we require of the environment is a predicate $I$ which
+overapproximates the set of states that $L$ may begin executing in.
+That is to say, for each state $x$ that is reachable on entry to $L$,
+we have $I(x)$.
+
+Conditional termination is then equivalent to the
+formula {\bf [CT]} of Defintion~\ref{def:conditional-termination-formula}. If this formula is satisfiable,
 two witnesses are returned:
 \begin{itemize}
 \item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
@@ -1119,6 +1130,7 @@ $R$ is strong enough to show that $L$ terminates from any of its initial states.
 \end{itemize}
 
 $W$ is called a \emph{supporting invariant} for $L$ and $R$ proves termination relative to $W$.
+We require that $I \wedge G$ is strong enough to establish the base case of $W$'s inductiveness.
 
 Conditional termination is illustrated by the program in Figure~\ref{fig:motivation.h},
 which is encoded as:
@@ -1131,9 +1143,45 @@ If the initial states $I$ are ignored this loop cannot be shown to terminate, si
 would lead to a non-terminating execution.
 
 However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
-$R(\langle x,y\rangle ) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
+$R(\langle x,y\rangle) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
 This constitutes a proof that the program as a whole terminates, since the loop always begins
 executing in a state that guarantees its termination.
+
+\noindent {\bf Nested loops.}
+If $L$'s body contains another loop $L'$, we cannot directly apply either formula {\bf [UT]} or
+{\bf [CT]} or prove that $L$ terminates.  This is because we don't have direct access to the
+single step transition relation for $L$'s body.  Instead, we consider $L'$ to be part of
+$L$'s environment, which we model with a relation $S$.  We require that $S$ overapproximates
+$L'$ in the sense that it satisfies the following formula:
+\begin{align*}
+ \forall x, x'. G(x) \wedge W(x) \wedge T'^*(x, x') \wedge \lnot G'(x') \rightarrow S(x, x')
+\end{align*}
+Where $G$ and $G'$ are respectively $L$ and $L'$'s guards, and $T'^*$ is the reflexive transitive closure of
+the inner loop ($L'$)'s transition relation.
+
+To give an example, if we wish to prove that the outer loop in Figure~\ref{fig:nested} terminates,
+it suffices to summarise the inner loop with the relation:
+\begin{align*}
+S(\langle x, y, z \rangle, \langle x', y', z' \rangle) & \triangleq x' = x \wedge y = 1
+\end{align*}
+Then the ranking function $R(x, y, z) = x$ proves termination of the outer loop $L(G, S)$.
+
+
+\begin{figure}
+\begin{lstlisting}
+while (x > 0) {
+  z = x, y = z + 1;
+  while (z > 0) {
+    z--, y--;
+  }
+  x -= y;
+}
+\end{lstlisting}
+\caption{A nested loop\label{fig:nested}}
+\end{figure}
+
+
+\iffalse
 
 \noindent {\bf Sequential loops.}
 Conditional termination allows us to
@@ -1198,6 +1246,7 @@ $\neg G_1(x) \wedge P_1(x,x') \rightarrow I(x')$.
 Discuss {\bf [SNT]}.\\
 
 \noindent{\bf Nested loops.}
+\fi
 
 \subsection{Generalised synthesis formula.}
 Our design: for each loop always search for lexicographic ranking function + supporting invariant OR recurrence set.
