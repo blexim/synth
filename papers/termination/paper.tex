@@ -1349,7 +1349,19 @@ conduct independent searches for each possible form of the ranking function with
 \input{kalashnikov}
 
 \subsection{Genetic Programming and Incremental Evolution} \label{sec:gp}
+To generate candidate solutions in the synthesise phase of the refinement loop,
+we can use genetic programming (GP).  The general idea is to start with a population
+of random programs and evolve a good one.  ``Good'' in this case means that the program
+satisfies our specification.  To do this evolution, we compute a fitness for each program
+and repeatedly apply genetic operators to the population based on this fitness.  The operators
+used are {\sc crossover} and {\sc mutate}.  The crossover operator takes two programs
+and combines their code in some what to create a new program.  The mutate operator takes a single
+program and randomly changes parts of its code, again creating a new program.  We arrange
+things so that the fitter a program is, the more likely it is to be selected as a parent
+that will be crossover'd to produce a child in the next generation.  Our fitness function
+is just the number of test cases on which the program met the specification.
 
+\iffalse
 We begin by observing that the asymptotic complexity of all of our synthesis
 backends are equal, assuming $P \neq NP$.  This complexity is:
 
@@ -1378,6 +1390,7 @@ so the complexity is doubly exponential in the width of $X$.
 
  But it does.
 \end{conjecture}
+\fi
 
 
 \section{Soundness, Completeness and Complexity}
