@@ -1043,12 +1043,6 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
 
 %Our method is purely semantic. 
 
-\subsection{Composing a Loop with its Environment} \label{sec:env}
-
-synthesizing environment abstractions: underapp for termination and underapp for non-termination.
-
-\cite{} addresses the problem of automatically underapproximating weakest preconditions.
-
 
 \begin{figure*}
  \begin{framed}
@@ -1057,7 +1051,7 @@ synthesizing environment abstractions: underapp for termination and underapp for
 \label{def:ct}
  \begin{align*}
   \exists R, W . \forall x, x' . & I(x) \wedge G(x) \rightarrow W(x) ~ \wedge \\
-                                 & G(x) \wedge W(x) \wedge T(x, x') \rightarrow W(x') \wedge R(x) > 0 
+                                 & G(x) \wedge W(x) \wedge T_o(x, x') \rightarrow W(x') \wedge R(x) > 0 
   \wedge R(x) > R(x')
  \end{align*}
 \end{definition}
@@ -1099,6 +1093,8 @@ synthesizing environment abstractions: underapp for termination and underapp for
 
 \end{figure*}
 
+\subsection{Composing a Loop with its Environment} \label{sec:env}
+
 Sometimes the termination behaviour of a loop depends on its environment.  That is to say,
 the loop may not terminate if started in some particular state, but the rest of the program
 ensures that such a state cannot be reached on entry to the loop.  The program as a whole
@@ -1114,7 +1110,8 @@ and the nesting structure of the loops.
 \fi
 
 \noindent {\bf Conditional termination.}
-If $L$'s termination depends on the state it begins
+Given a loop $L=(G,T_o)$, where $T_o$ is an over-approximation of its transition relation, 
+if $L$'s termination depends on the state it begins
 executing in, we say that $L$ is \emph{conditionally terminating}.
 The information we require of the environment is a predicate $I$ which
 overapproximates the set of states that $L$ may begin executing in.
@@ -1126,7 +1123,7 @@ formula {\bf [CT]} of Defintion~\ref{def:ct}.
 
 \begin{theorem}
 \label{thm:ct}
- The loop $L(G, T)$ terminates when started in any state satisfying $I(x)$ iff
+ The loop $L(G, T_o)$ terminates when started in any state satisfying $I(x)$ iff
  Defintion~\ref{def:ct} is satisfiable.
 \end{theorem}
 
@@ -1161,7 +1158,27 @@ $R(\langle x,y\rangle) = x$ and supporting invariant $W(\langle x, y \rangle ) \
 This constitutes a proof that the program as a whole terminates, since the loop always begins
 executing in a state that guarantees its termination.\\
 
-\noindent {\bf Nested loops.}
+\noindent {\bf Environment abstractions.}
+For a loop $L=(G,T)$, the formulae {\bf [CT]} and {\bf [CNT]} defined in Definition\ref{def:ct} and Definition~\ref{def:cnt} are in terms of 
+$T_o$ and $T_u$, which over-approximate and under-approximate the transition relation $T$, respectively. Moreover, in formula {\bf [CT]},  
+$I$ over-approximates the set of states that $L$ may begin executing in.
+The reason for using over- and under-approximations [instead of exact relations] when formulating the (non-)termination of an isolated loop 
+is so that we can use the same formulae regardless of the environment the loop is executing in, or 
+the complexity of its body, i.e. if it contains nested loops.
+
+All we need to do in order to use {\bf [CT]} and {\bf [CNT]} in any environment and in the presence of nested loops is generate constraints abstracting 
+the environment and the loop's body: for termination, we need over-approximating abstractions, whereas for non-termination 
+we need under-approximations. 
+
+As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}...
+
+- when analysing a loop, we assume that the nested ones and the one preceding it in program order terminate.
+
+%synthesizing environment abstractions: underapp for termination and underapp for non-termination.
+% \cite{} addresses the problem of automatically underapproximating weakest preconditions.
+
+
+%\noindent {\bf Nested loops.}
 If $L$'s body contains another loop $L'$, we cannot directly apply either formula {\bf [UT]} or
 {\bf [CT]} or prove that $L$ terminates.  This is because we don't have direct access to the
 single step transition relation for $L$'s body.  Instead, we consider $L'$ to be part of
@@ -1202,7 +1219,10 @@ Similarly, for each loop $L''$ appearing before $L$ in the program's control flo
 must add constraints saying that $I$ overapproximates the states reachable via $L''$.
 The details of how to create these constraints are standard, so
 rather than presenting the algorithm for generating the constraints, we direct the
-reader's attention to Figure~\ref{fig:environment-model}.  This figure contains a non-trivial program
+reader's attention to Figure~\ref{fig:environment-model}.  
+
+
+Figure~\ref{fig:environment-model} contains a non-trivial program
 along with the constraint system
 encoding the termination of the outer loop.  Since the program contains sequential composition
 of loops and nested loops, the constraint
