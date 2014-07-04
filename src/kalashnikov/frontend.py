@@ -20,7 +20,7 @@ def prove_terminates(filename):
     nargs = nids*2
     varnames += ' ' + ' '.join("%s\\'" % id_map[k] for k in xrange(nids)) 
   else:
-    skeleton = "../../papers/termination/experiments/benchmarks/ranking.c.c"
+    skeleton = "../../papers/termination/experiments/benchmarks/ranking.c"
     nprogs = 2
     nargs = nids
 
@@ -30,8 +30,9 @@ def prove_terminates(filename):
              "-P%d  " +
              "--seed=1337 " +
              "--synth-strategy=genetic -a%d --varnames %s " +
-             "--fastverif=false -c=1 -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
-             "-recombprob=0.05 -tourneysize=10 -w=3 " +
+             "-c1 " +
+             "--fastverif=false -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
+             "-recombprob=0.05 -tourneysize=10 -w=5 " +
              "%s") % 
               (splitfile.name,
                 skeleton,

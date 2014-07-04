@@ -273,13 +273,10 @@ def split_func(fd, ofile):
     f.write(outer_guard)
     f.write("}\n\n")
   else:
-    ofile.write("void body(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
-    loop_body = c_ast.Compound(copy.copy(decls))
-    loop_body.block_items.append(loop.stmt)
-    ofile.write(cgen.visit(loop.stmt))
-    loop_body.block_items += copy_out
-    ofile.write(cgen.visit(loop_body))
-    ofile.write("}\n\n")
+    f.write("void body(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
+    loop_body = c_ast.Compound(copy.copy(decls) + loop.stmt.block_items + copy_out)
+    f.write(loop_body)
+    f.write("}\n\n")
 
   return (rev_id_map, has_nested)
 
