@@ -6,6 +6,10 @@
 #include <time.h>
 #include <assert.h>
 
+#include <set>
+
+using namespace std;
+
 #ifndef SEARCH
  #define SEARCH
 #endif
@@ -65,6 +69,11 @@ int generation;
 int correct;
 
 unsigned int **test_vectors;
+
+typedef struct {
+  solution_t solution;
+  int fitness;
+} individual_t;
 
 void check_solution(solution_t *solution) {
   int i, j;
@@ -149,24 +158,25 @@ void load_seed(solution_t *pop) {
 #endif
 }
 
-void save(solution_t *pop) {
+void save(individual_t *pop) {
 #ifdef SAVEFILE
   FILE *savefile = fopen(SAVEFILE, "wb");
   size_t written = 0;
 
   while (written < POPSIZE) {
-    written += fwrite(&pop[written], sizeof(solution_t), POPSIZE - written, savefile);
+    written += fwrite(&pop[written], sizeof(individual_t), POPSIZE - written, savefile);
   }
 
   fclose(savefile);
 #endif // SAVEFILE
 }
 
-void load(solution_t *pop) {
+void load(individual_t *pop) {
+  size_t nread = 0;
+
 #ifdef SAVEFILE
   FILE *savefile = fopen(SAVEFILE, "rb");
   size_t sz;
-  size_t nread = 0;
 
   if (savefile == NULL) {
     load_seed(pop);
@@ -177,20 +187,22 @@ void load(solution_t *pop) {
   sz = ftell(savefile);
   fseek(savefile, 0, SEEK_SET);
 
-  if (sz != POPSIZE * sizeof(solution_t)) {
+  if (sz != POPSIZE * sizeof(individual_t)) {
     load_seed(pop);
   }
 
   while (nread < POPSIZE && !feof(savefile)) {
-    nread += fread(&pop[nread], sizeof(solution_t), POPSIZE - nread, savefile);
+    nread += fread(&pop[nread], sizeof(individual_t), POPSIZE - nread, savefile);
   }
 
   fclose(savefile);
+#endif
 
   while (nread < POPSIZE) {
-    rand_solution(&pop[nread++]);
+    individual_t *i = &pop[nread++];
+    rand_solution(&i->solution);
+    i->fitness = fitness(&i->solution);
   }
-#endif
 }
 
 
@@ -315,8 +327,6 @@ void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
   }
 }
 
-int fitnesses[POPSIZE];
-
 int fitness(solution_t *solution) {
   correct = 0;
 
@@ -331,34 +341,32 @@ int fitness(solution_t *solution) {
   return correct;
 }
 
-solution_t *pick_parent(solution_t *pop, int *fitnesses, int maxfit, int minfit, int popsize) {
-  solution_t *tourney[TOURNEYSIZE];
-  int cutoffs[TOURNEYSIZE];
-  int total = 0;
+void tournament(solution_t *pop,
+    individual_t **a,
+    individual_t **b,
+    individual_t **c,
+    individual_t **d) {
+  individual_t *tourney[TOURNEYSIZE];
+  individual_t *ind;
+  int i, j, idx;
+  int already_picked;
 
-  for (int i = 0; i < TOURNEYSIZE; i++) {
-    int idx = rand() % popsize;
-    solution_t *s = &pop[idx];
-    int fit = fitnesses[idx];
+  for (i = 0; i < TOURNEYSIZE; i++) {
+    idx = rand() % popsize;
+    ind = &pop[idx];
 
-    tourney[i] = s;
-    cutoffs[i] = total + fit;
-    total += fit;
+
+
+      for (j = 0; j < j; j++) {
+        if (tourney[j] == ind) {
+          already_picked = 1;
+          break;
+        }
+      }
+    } while (already_picked);
+
+    tourney[i] = ind;
   }
-
-  if (total == 0) {
-    return tourney[0];
-  }
-
-  int winner = rand() % total;
-
-  for (int i = 0; i < TOURNEYSIZE; i++) {
-    if (winner < cutoffs[i]) {
-      return tourney[i];
-    }
-  }
-
-  assert(0);
 }
 
 int sol_len(solution_t *s) {
@@ -372,96 +380,6 @@ int sol_len(solution_t *s) {
   return ret;
 }
 
-int next_gen(solution_t *previous, solution_t *next) {
-  int i, j;
-  int maxfit, minfit;
-  int maxlen, minlen;
-  int nprogs;
-
-  //check_population(previous);
-
-  nprogs = POPSIZE;
-  maxfit = -1;
-  minfit = -1;
-  maxlen = -1;
-  minlen = -1;
-
-  for (i = 0; i < nprogs; i++) {
-    int fit = fitness(&previous[i]);
-    int len = sol_len(&previous[i]);
-
-    if (fit == numtests) {
-      printf("Found a program with fitness=%d\n", correct);
-      save(previous);
-
-      print_solution(&previous[i]);
-
-      free(previous);
-      free(next);
-      free_tests();
-
-      exit(10);
-    }
-
-    //fit = (fit * 10) - len;
-
-    if (fit < 0) {
-      fit = 0;
-    }
-
-    if (maxfit == -1 || fit > maxfit) {
-      maxfit = fit;
-    }
-
-    if (minfit == -1 || fit < minfit) {
-      minfit = fit;
-    }
-
-    if (maxlen == -1 || len > maxlen) {
-      maxlen = len;
-    }
-
-    if (minlen == -1 || len < minlen) {
-      minlen = len;
-    }
-
-    fitnesses[i] = fit;
-  }
-
-  if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
-    printf("Unique programs: %d\n", nprogs);
-    printf("Fittest: %d, least fit: %d\n", maxfit, minfit);
-    printf("Target: %d\n", numtests);
-  }
-
-  for (i = 0; i < NEWLIM; i++) {
-    rand_solution(&next[i]);
-  }
-
-  for (j = 0; j < nprogs && i < NEWLIM + KEEPLIM; j++) {
-    if (fitnesses[j] == maxfit) {
-      memcpy(&next[i], &previous[j], sizeof(solution_t));
-      i++;
-    }
-  }
-
-
-  for (; i < POPSIZE; i++) {
-    solution_t *a = pick_parent(previous, fitnesses, maxfit, minfit, nprogs);
-    solution_t *b = pick_parent(previous, fitnesses, maxfit, minfit, nprogs);
-    solution_t *c = &next[i];
-
-    a = &previous[0];
-
-    crossover(a, b, c);
-    mutate(c);
-  }
-
-  //check_population(next);
-
-  return maxfit;
-}
-
 void test(solution_t *solution, word_t args[NARGS]) {
   execok = 1;
 
@@ -470,44 +388,50 @@ void test(solution_t *solution, word_t args[NARGS]) {
   }
 }
 
+int check_fitness(individual_t *i, int best) {
+  i->fitness = fitness(i->solution);
+
+  if (i->fitness > best) {
+    printf("New best fitness: %d\n", i->fitness);
+  }
+
+  if (i->fitness == numtests) {
+    print_solution(i->solution);
+  }
+
+  return i->fitness;
+}
+
 int main(void) {
-  solution_t *pop_a = malloc(POPSIZE * sizeof(solution_t));
-  solution_t *pop_b = malloc(POPSIZE * sizeof(solution_t));
   int i;
   int seed = SEED;
   int bestfitness = 0;
   int currfitness = 0;
+  individual_t *pop = malloc(POPSIZE * sizeof(individual_t));
 
   printf("Genetic programming using random seed: %d\n", seed);
   srand(seed);
 
-  for (i = 0; i < POPSIZE; i++) {
-    rand_solution(&pop_a[i]);
-  }
-
-  load(pop_a);
+  load(pop);
   load_tests();
 
-  for (generation = 0;
-       GEN_LIM == 0 || generation < GEN_LIM;
-       generation++) {
-    if (PRINT_GEN && (generation % PRINT_GEN) == 0) {
-      printf("Generation %d, best=%d\n", generation, bestfitness);
-    }
+  while (bestfitness < numtests) {
+    individual_t *a, *b, *c, *d;
+    tournament(pop, &a, &b, &c, &d);
 
-    if (generation & 1) {
-      currfitness = next_gen(pop_b, pop_a);
+    if (do_crossover()) {
+      crossover(a, b, c, d);
+
+      bestfitness = max(bestfitness, check_fitness(c, bestfitness));
+      bestfitness = max(bestfitness, check_fitness(d, bestfitness));
     } else {
-      currfitness = next_gen(pop_a, pop_b);
-    }
-
-    if (currfitness > bestfitness) {
-      printf("Best fitness: %d\n", currfitness);
-      bestfitness = currfitness;
-      generation = 0;
+      mutate(a, d);
+      bestfitness = max(bestfitness, check_fitness(d, bestfitness));
     }
   }
 
-  // NOTREACHED
-  return 0;
+  save(pop);
+  free(pop);
+
+  return 10;
 }

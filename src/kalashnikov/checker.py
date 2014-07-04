@@ -11,6 +11,8 @@ args.argparser.add_argument("--cbmc", default="cbmc", type=str,
     help="path to CBMC")
 args.argparser.add_argument("--gcc", default="gcc", type=str,
     help="path to GCC")
+args.argparser.add_argument("--gpp", default="g++", type=str,
+    help="path to G++")
 args.argparser.add_argument("--z3", default=False, type=bool,
     help="use Z3 as the backend")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
@@ -152,7 +154,8 @@ class Checker(object):
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
-      self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+      self.gccargs["genetic"] = [args.args.gpp,
+          "-DSEARCH",
           "-DSZ=128",
           "-DNRES=128",
           "-DPOPSIZE=%d" % args.args.popsize,
@@ -165,7 +168,7 @@ class Checker(object):
           "-DSAVEFILE=\"%s\"" % geneticsave.name,
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
-          os.path.join("genetic", "synth.c"), "-lm"] + genericargs
+          os.path.join("genetic", "synth.cpp"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=%d" % sz,
           "-DNRES=%d" % sz,
