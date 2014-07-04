@@ -84,8 +84,6 @@ void check_population(solution_t *pop) {
 }
 
 int rand_const() {
-  //return rand() & WORDMASK;
-
   int r = rand() % 4;
 
   switch (r) {
@@ -226,7 +224,7 @@ void mutate(solution_t *solution) {
 
     for (i = 0; i < CONSTS; i++) {
       if (should_mutate()) {
-        b->consts[i] = rand() & WORDMASK;
+        b->consts[i] = rand_const();
       }
     }
   }
