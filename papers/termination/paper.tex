@@ -1395,6 +1395,41 @@ so the complexity is doubly exponential in the width of $X$.
 
 \section{Soundness, Completeness and Complexity}
 \begin{theorem}
+ \label{thm:synth-sound}
+ Algorithm~\ref{alg:abstract-refinement-code} is sound -- if it terminates with witness $P$ then
+ $P \models \sigma$.
+\end{theorem}
+
+\begin{proof}
+ The procedure {\sc RefinementLoop} terminates only if {\sc Verif} returns ``valid''.  In that
+ case, $\exists x . \lnot \sigma(x, P)$ is unsatisfiable and so $\forall x . \sigma(x, P)$ holds.
+\end{proof}
+
+\begin{theorem}
+ \label{thm:synth-semicomplete}
+ If the existential first-order theory used to express the specification $\sigma$ is decidable,
+ algorithm~\ref{alg:abstract-refinement-code} is semi-complete -- if a program $P \models \sigma$
+ exists then algorithm~\ref{alg:abstract-refinement-code} will terminate.  However if no program
+ satisfies the specification, the algorithm may not terminate.  Furthermore if the domain of inputs $X$
+ is finite, the algorithm is guaranteed to terminate.
+\end{theorem}
+
+\begin{proof}
+ Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
+ the program length $l$), it will eventually enumerate a program that meets the specification
+ in whatever set of inputs are currently being tracked.  Since the first order theory is
+ decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
+ The set of correct programs is therefore recursively enumerable and algorithm~\ref{alg:abstract-refinement-code}
+ enumerates this set, so it is semi-complete.
+
+ If the domain $X$ is finite then the loop in procedure {\sc RefinementLoop} can only
+ iterate $\| X \|$ times, since by this time all of the elements of $X$ would have been
+ added to the inputs set.  Therefore if the {\sc Synth} procedure always terminates (which it does
+ by assumption of decidability), the whole algorithm terminates.
+\end{proof}
+
+
+\begin{theorem}
 \label{thm:sound}
  {\sc Headshot} is sound -- if it returns a verdict of termination, the program under
  analysis terminates on all inputs.  Similarly if it returns a verdict of non-termination,
