@@ -877,6 +877,19 @@ Any termination guarantees?
 \noindent {\bf Unconditional termination.}
 To show that $L$ is unconditionally terminating (i.e. it eventually terminates regardless of the
 state it starts in), we can find a ranking function for $L$.
+
+\begin{theorem}
+\label{thm:ut}
+ The loop $L(G, T)$ terminates from every start state iff Definition~\ref{def:UT} is
+ satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Then the codomain of $R$ is a well founded set and $R$ is an order homomorphism.
+
+ (Do this proof properly).
+\end{proof}
+
 The existence of a ranking function is equivalent to the satisfiability
 of the formula from Definition~\ref{def:UT}, so a witness to the satisfiability
 of formula {\bf [UT]} is also a ranking function and thus a proof of $L$'s unconditional termination.
@@ -896,6 +909,17 @@ i.e. a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$. 
 For our case, given a loop $L = \langle G,T \rangle$, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
 
+\begin{theorem}
+\label{thm:ont}
+ The loop $L(G, T)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Then $x_0$ is an underapproximation to the reachable states on entry to $L$, and $N$ is an open recurrence set.
+ 
+ (Do this proof properly).
+\end{proof}
+
 If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula). %This means that we will not be able to use the solver for the synthesis fragment to solve it.
@@ -909,6 +933,20 @@ satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonter
 %As our formulation is with respect to a given loop $L=\langle I,G,T \rangle$, we require the  
 %recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
 %infinite execution to happen.
+
+\begin{theorem}
+\label{thm:cnt}
+ If $T$ is deterministic, i.e. each state $x$ has exactly one successor $x'$ such that $T(x, x')$, then
+ Definition~\ref{def:ont} is equivalent to Definition~\ref{def:cnt}.
+\end{theorem}
+
+\begin{proof}
+ If $T$ is deterministic, then each $x$ has a unique successor $S(x)$, so $\forall x, x' . T(x, x') \leftrightarrow x' = S(x)$.
+ 
+ (Finish this proof).
+\end{proof}
+
+
 
 Given that our program's state space is finite, a transition relation induces a infinite execution if and only if some state is 
 visited infinitely often, or equivalently the state is visited twice in the course of the execution.
@@ -1036,8 +1074,19 @@ That is to say, for each state $x$ that is reachable on entry to $L$,
 we have $I(x)$.
 
 Conditional termination is then equivalent to the
-formula {\bf [CT]} of Defintion~\ref{def:ct}. If this formula is satisfiable,
-two witnesses are returned:
+formula {\bf [CT]} of Defintion~\ref{def:ct}.
+
+\begin{theorem}
+\label{thm:ct}
+ The loop $L(G, T)$ terminates when started in any state satisfying $I(x)$ iff
+ Defintion~\ref{def:ct} is satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Do this proof.
+\end{proof}
+
+If this formula is satisfiable, two witnesses are returned:
 \begin{itemize}
 \item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
 guard $G$ is met.
@@ -1380,7 +1429,7 @@ so the complexity is doubly exponential in the width of $X$.
 \end{theorem}
 
 \begin{proof}
- {\sc Headshot}'s output constitutes a constructive, machine checked proof of (non-)termination.
+ This is a direct consequence of Theorems~\ref{thm:ut}, \ref{thm:ct}, \ref{thm:ont}, \ref{thm:cnt} and \ref{thm:synth-sound}.
 \end{proof}
 
 \begin{theorem}
