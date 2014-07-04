@@ -68,6 +68,7 @@ def log2(x):
   return i+extra
 
 compiled = {}
+geneticsave = tempfile.NamedTemporaryFile(delete=False)
 
 class Checker(object):
   cbmcargs = []
@@ -161,6 +162,7 @@ class Checker(object):
           "-DTOURNEYSIZE=%d" % args.args.tourneysize,
           "-DMUTATION_PROB=%.03f" % args.args.mutprob,
           "-DRECOMBINE_PROB=%.03f" % args.args.recombprob,
+          "-DSAVEFILE=\"%s\"" % geneticsave.name,
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
           os.path.join("genetic", "synth.c"), "-lm"] + genericargs

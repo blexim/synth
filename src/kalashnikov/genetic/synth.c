@@ -51,7 +51,10 @@
  #define SEED time(NULL)
 #endif
 
-#define SAVEFILE "/tmp/geneticsynth"
+#ifndef SAVEFILE
+ #define SAVEFILE "/tmp/geneticsynth"
+#endif
+
 #define TESTFILE "/tmp/testvectors"
 
 #define ISTMP(x) ((x) >= NARGS + CONSTS)
