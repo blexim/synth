@@ -83,6 +83,23 @@ void check_population(solution_t *pop) {
   }
 }
 
+int rand_const() {
+  //return rand() & WORDMASK;
+
+  int r = rand() % 4;
+
+  switch (r) {
+  case 0:
+    return 0;
+  case 1:
+    return 1;
+  case 2:
+    return WORDMASK;
+  case 3:
+    return 1 << (WIDTH - 1);
+  }
+}
+
 
 void rand_solution(solution_t *solution) {
   int i, j;
@@ -101,7 +118,7 @@ void rand_solution(solution_t *solution) {
     }
 
     for (i = 0; i < CONSTS; i++) {
-      prog->consts[i] = rand() & WORDMASK;
+      prog->consts[i] = rand_const();
     }
   }
 
