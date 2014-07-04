@@ -340,93 +340,7 @@ code using any of the following features:
 \item Arrays.
 \end{itemize}
 
-\section{Related Work}
-%\subsection{Termination analysis}
-Automated program termination is a research topic that has received a fair amount of attention from the software verification community.
-In order to compare our technique to the rest of the area, 
-Figure~\ref{fig:handletable} summarises the related works with respect to the restrictions they impose on the transition relations as well as the form of the computed ranking functions. 
 
-
-Somehow expected, most of the techniques are specialised in the synthesis of linear ranking functions for linear programs over integers (or rationals) \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13}. 
-Among them, 
-Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures to compute transition
-invariants as proofs for the termination of linear programs \cite{DBLP:conf/cav/LeeWY12}.
-Leike and Heizmann present a new method for the constraint-based synthesis
-of termination arguments for linear loop programs based on
-linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
-Linear ranking functions supported by inductive linear invariants for loops with linear guards and transitions: \cite{DBLP:conf/cav/BradleyMS05}. 
-Learning: \cite{DBLP:journals/corr/HeizmannHP14}
-
-
-%A program is lasso-shaped if it is composed by a stem followed by a single loop without branching, i.e. there is only one path. 
-%Consequently, the termination argument can be very simple. There are numerous techniques specialised in
-%proving termination of lasso-shaped programs efficiently \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/P04}. 
-
-While the synthesis of termination arguments for linear programs over integers is indeed well-covered in the literature, 
-there is very limited work for programs over machine integers.
-Cook et al. present a method based on a reduction to Presburger
-arithmetic, and a template-matching approach for predefined classes of
-ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
-Similarly, the only work we are aware of that can compute non-linear ranking functions  
-for imperative loops with polynomial guards and polynomial assignments
-is \cite{DBLP:conf/vmcai/BradleyMS05}. However, this work extends only to polynomials.
-
-Given the lack of research in handling \emph{not-linear programs}, as well as \emph{programs over bit-vectors and floats},  
-our work focuses on covering these areas. 
-One of the obvious conclusions that can be reached from observing Figure~\ref{fig:handletable}, 
-is that most of the works tend to specialise on a certain aspect of termination proving that they can solve efficiently. 
-Conversely to this view, we aim for \emph{generality}, as we do not restrict the form of the synthesised ranking functions, nor the form of the input programs.
-
-
-As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's theorem compute a set of local termination conditions that decrease as execution follows through the loop
-and require expensive reachability analyses
-\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}.
-In an attempt to reduce the complexity of checking the validity of the termination argument, 
-Cook et al present an iterative termination proving procedure that searches for 
-lexicographic termination arguments \cite{DBLP:conf/tacas/CookSZ13}, 
-whereas Kroening et al. strengthen the termination argument such that it becomes a transitive relation \cite{DBLP:conf/cav/KroeningSTW10}.
-
-Proving program termination implies the simultaneous search for a termination argument and a supporting invariant.
-For this purpose, several tools alternate 
-between calls to a safety prover and calls to a ranking function synthesis tool \cite{}. 
-In order to share more information about the state of the termination proofs between the two tools, 
-Brockschmidt et al. use a single representation of the state of the termination proof search that both tools operate over, 
-resulting in performance improvements \cite{DBLP:conf/cav/BrockschmidtCF13}.
-In \cite{DBLP:conf/cav/BradleyMS05}, Bradley et al. combine the generation of ranking functions with the generation of invariants to
-form one constraint solving problem such that the necessary supporting invariants for the ranking function are discovered on demand.
-In our setting, both the ranking function and the supporting invariant are iteratively constructed through the same refinement loop.
-
- 
-%In our setting, a candidate termination argument is iteratively constructed. 
-%A candidate termination argument is composed out of a ranking function 
-%and a supporting invariant. 
-
-%% The safety prover proves or disproves the
-%% validity of the current argument via the search for invariants. Refinement of the
-%% current termination argument is performed using the output of a rank function
-%% synthesis tool when applied to counterexamples found by the safety prover.
-
-%The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
-%For example, terminationg of term rewriting systems is largely structural, whereas DWF analysis (cf. Terminator) is more semantic. While it deals
-%with transition relations, it also uses some amount of syntax in that it identifies loops \& looping paths.
-
-
-
-%-- Usually the termination argument for the program LOOPS
-%on Figure 1 is based on a lexicographic combination
-%of well-founded orderings.
-
-While program termination has been extensively studied, much less research has been conducted in the area of proving nontermination.
-% A counterexample to termination is an infinite program execution. 
-Gupta et al. dynamically enumerate lasso-shaped candidate
-paths for counterexamples, and then statically prove their feasibility \cite{DBLP:conf/popl/GuptaHMRX08}. 
-In \cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al. prove nontermination via
-reduction to safety proving. Their iterative algorithm uses counterexamples to a fixed safety property
-to refine an underapproximation of a program. 
-
-% program analysis as constraint solving:
-%% how the constraint-based approach can be used to model a wide spectrum of program analyses in an 
-%%expressive domain containing disjunctions and conjunctions of linear inequalities.
 
 
 \section{Motivational Examples} \label{sec:motivation}
@@ -963,6 +877,19 @@ Any termination guarantees?
 \noindent {\bf Unconditional termination.}
 To show that $L$ is unconditionally terminating (i.e. it eventually terminates regardless of the
 state it starts in), we can find a ranking function for $L$.
+
+\begin{theorem}
+\label{thm:ut}
+ The loop $L(G, T)$ terminates from every start state iff Definition~\ref{def:UT} is
+ satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Then the codomain of $R$ is a well founded set and $R$ is an order homomorphism.
+
+ (Do this proof properly).
+\end{proof}
+
 The existence of a ranking function is equivalent to the satisfiability
 of the formula from Definition~\ref{def:UT}, so a witness to the satisfiability
 of formula {\bf [UT]} is also a ranking function and thus a proof of $L$'s unconditional termination.
@@ -982,6 +909,17 @@ i.e. a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$. 
 For our case, given a loop $L = \langle G,T \rangle$, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
 
+\begin{theorem}
+\label{thm:ont}
+ The loop $L(G, T)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Then $x_0$ is an underapproximation to the reachable states on entry to $L$, and $N$ is an open recurrence set.
+ 
+ (Do this proof properly).
+\end{proof}
+
 If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula). %This means that we will not be able to use the solver for the synthesis fragment to solve it.
@@ -995,6 +933,20 @@ satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonter
 %As our formulation is with respect to a given loop $L=\langle I,G,T \rangle$, we require the  
 %recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
 %infinite execution to happen.
+
+\begin{theorem}
+\label{thm:cnt}
+ If $T$ is deterministic, i.e. each state $x$ has exactly one successor $x'$ such that $T(x, x')$, then
+ Definition~\ref{def:ont} is equivalent to Definition~\ref{def:cnt}.
+\end{theorem}
+
+\begin{proof}
+ If $T$ is deterministic, then each $x$ has a unique successor $S(x)$, so $\forall x, x' . T(x, x') \leftrightarrow x' = S(x)$.
+ 
+ (Finish this proof).
+\end{proof}
+
+
 
 Given that our program's state space is finite, a transition relation induces a infinite execution if and only if some state is 
 visited infinitely often, or equivalently the state is visited twice in the course of the execution.
@@ -1122,8 +1074,19 @@ That is to say, for each state $x$ that is reachable on entry to $L$,
 we have $I(x)$.
 
 Conditional termination is then equivalent to the
-formula {\bf [CT]} of Defintion~\ref{def:ct}. If this formula is satisfiable,
-two witnesses are returned:
+formula {\bf [CT]} of Defintion~\ref{def:ct}.
+
+\begin{theorem}
+\label{thm:ct}
+ The loop $L(G, T)$ terminates when started in any state satisfying $I(x)$ iff
+ Defintion~\ref{def:ct} is satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Do this proof.
+\end{proof}
+
+If this formula is satisfiable, two witnesses are returned:
 \begin{itemize}
 \item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
 guard $G$ is met.
@@ -1466,7 +1429,7 @@ so the complexity is doubly exponential in the width of $X$.
 \end{theorem}
 
 \begin{proof}
- {\sc Headshot}'s output constitutes a constructive, machine checked proof of (non-)termination.
+ This is a direct consequence of Theorems~\ref{thm:ut}, \ref{thm:ct}, \ref{thm:ont}, \ref{thm:cnt} and \ref{thm:synth-sound}.
 \end{proof}
 
 \begin{theorem}
@@ -1697,6 +1660,94 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 \caption{\textsc{Headshot} termination for nonlinear programs with nonlinear ranking functions\label{fig:nonlinear}}
  \end{figure*}
 
+ \section{Conclusions and Related Work}
+%\subsection{Termination analysis}
+Automated program termination is a research topic that has received a fair amount of attention from the software verification community.
+In order to compare our technique to the rest of the area, 
+Figure~\ref{fig:handletable} summarises the related works with respect to the restrictions they impose on the transition relations as well as the form of the computed ranking functions. 
+
+
+Somehow expected, most of the techniques are specialised in the synthesis of linear ranking functions for linear programs over integers (or rationals) \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13}. 
+Among them, 
+Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures to compute transition
+invariants as proofs for the termination of linear programs \cite{DBLP:conf/cav/LeeWY12}.
+Leike and Heizmann present a new method for the constraint-based synthesis
+of termination arguments for linear loop programs based on
+linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
+Linear ranking functions supported by inductive linear invariants for loops with linear guards and transitions: \cite{DBLP:conf/cav/BradleyMS05}. 
+Learning: \cite{DBLP:journals/corr/HeizmannHP14}
+
+
+%A program is lasso-shaped if it is composed by a stem followed by a single loop without branching, i.e. there is only one path. 
+%Consequently, the termination argument can be very simple. There are numerous techniques specialised in
+%proving termination of lasso-shaped programs efficiently \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/P04}. 
+
+While the synthesis of termination arguments for linear programs over integers is indeed well-covered in the literature, 
+there is very limited work for programs over machine integers.
+Cook et al. present a method based on a reduction to Presburger
+arithmetic, and a template-matching approach for predefined classes of
+ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
+Similarly, the only work we are aware of that can compute non-linear ranking functions  
+for imperative loops with polynomial guards and polynomial assignments
+is \cite{DBLP:conf/vmcai/BradleyMS05}. However, this work extends only to polynomials.
+
+Given the lack of research in handling \emph{not-linear programs}, as well as \emph{programs over bit-vectors and floats},  
+our work focuses on covering these areas. 
+One of the obvious conclusions that can be reached from observing Figure~\ref{fig:handletable}, 
+is that most of the works tend to specialise on a certain aspect of termination proving that they can solve efficiently. 
+Conversely to this view, we aim for \emph{generality}, as we do not restrict the form of the synthesised ranking functions, nor the form of the input programs.
+
+
+As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's theorem compute a set of local termination conditions that decrease as execution follows through the loop
+and require expensive reachability analyses
+\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}.
+In an attempt to reduce the complexity of checking the validity of the termination argument, 
+Cook et al present an iterative termination proving procedure that searches for 
+lexicographic termination arguments \cite{DBLP:conf/tacas/CookSZ13}, 
+whereas Kroening et al. strengthen the termination argument such that it becomes a transitive relation \cite{DBLP:conf/cav/KroeningSTW10}.
+
+Proving program termination implies the simultaneous search for a termination argument and a supporting invariant.
+For this purpose, several tools alternate 
+between calls to a safety prover and calls to a ranking function synthesis tool \cite{}. 
+In order to share more information about the state of the termination proofs between the two tools, 
+Brockschmidt et al. use a single representation of the state of the termination proof search that both tools operate over, 
+resulting in performance improvements \cite{DBLP:conf/cav/BrockschmidtCF13}.
+In \cite{DBLP:conf/cav/BradleyMS05}, Bradley et al. combine the generation of ranking functions with the generation of invariants to
+form one constraint solving problem such that the necessary supporting invariants for the ranking function are discovered on demand.
+In our setting, both the ranking function and the supporting invariant are iteratively constructed through the same refinement loop.
+
+ 
+%In our setting, a candidate termination argument is iteratively constructed. 
+%A candidate termination argument is composed out of a ranking function 
+%and a supporting invariant. 
+
+%% The safety prover proves or disproves the
+%% validity of the current argument via the search for invariants. Refinement of the
+%% current termination argument is performed using the output of a rank function
+%% synthesis tool when applied to counterexamples found by the safety prover.
+
+%The existing work on termination is primarily divided into structural (syntactic) vs. semantic approaches.  
+%For example, terminationg of term rewriting systems is largely structural, whereas DWF analysis (cf. Terminator) is more semantic. While it deals
+%with transition relations, it also uses some amount of syntax in that it identifies loops \& looping paths.
+
+
+
+%-- Usually the termination argument for the program LOOPS
+%on Figure 1 is based on a lexicographic combination
+%of well-founded orderings.
+
+While program termination has been extensively studied, much less research has been conducted in the area of proving nontermination.
+% A counterexample to termination is an infinite program execution. 
+Gupta et al. dynamically enumerate lasso-shaped candidate
+paths for counterexamples, and then statically prove their feasibility \cite{DBLP:conf/popl/GuptaHMRX08}. 
+In \cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al. prove nontermination via
+reduction to safety proving. Their iterative algorithm uses counterexamples to a fixed safety property
+to refine an underapproximation of a program. 
+
+% program analysis as constraint solving:
+%% how the constraint-based approach can be used to model a wide spectrum of program analyses in an 
+%%expressive domain containing disjunctions and conjunctions of linear inequalities.
+ 
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
