@@ -1193,7 +1193,7 @@ along with the constraint system
 encoding the termination of the outer loop.  Since the program contains sequential composition
 of loops and nested loops, the constraint
 system involves termination invariants $W_1, W_2, W_3$ and the inner loop summary $S$.
-Note that despite its complexity, the constraint system is still a formula in the synthesis fragment.
+Note that despite its intricacy, the constraint system is still a formula in the synthesis fragment.
 Since the outer loop of this program does indeed terminate, the system is satisfiable, as witnessed by:
 \begin{align*}
 W_1(\langle v, x, y, z \rangle ) & \triangleq x \leq y + 1 \\
@@ -1620,7 +1620,7 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 
 \begin{figure*}
 \centering
-\small
+\footnotesize
 \begin{tabular}{|l|r|c|c|c|c|c|r|r|c|r|r|}
 \hline
     & LOC & Terminates? & \shortstack{Linear \\ program?} & \shortstack{Linear ranking \\ function?}  & Conditional? & Float? & Dimension & \shortstack{Ranking \\ program size} & Res & Time (s) & Iterations\\
