@@ -32,7 +32,7 @@ def prove_terminates(filename):
              "--synth-strategy=genetic -a%d --varnames %s " +
              "-c1 " +
              "--fastverif=false -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
-             "-recombprob=0.05 -tourneysize=10 -w=5 " +
+             "-recombprob=0.05 -tourneysize=10 -w=3 " +
              "%s") % 
               (splitfile.name,
                 skeleton,
