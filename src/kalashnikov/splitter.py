@@ -149,6 +149,7 @@ class FileWriter(object):
 
 def split_func(fd, ofile):
   prog = FlatProgram()
+  has_nested = False
 
   (fd, nondet) = replace_nondet(fd)
   fd_body = fd.body
@@ -238,6 +239,8 @@ def split_func(fd, ofile):
   ofile.write("}\n\n")
 
   if is_nested_loop(loop):
+    has_nested = True
+
     nested_prog = FlatProgram()
     flatten(loop.stmt, nested_prog)
     inner_prefix = nested_prog.blocks[0]
@@ -278,7 +281,7 @@ def split_func(fd, ofile):
     ofile.write(cgen.visit(loop_body))
     ofile.write("}\n\n")
 
-  return rev_id_map
+  return (rev_id_map, has_nested)
 
 def split(filename, ofile=sys.stdout):
   ast = parse_file_libc(filename)
