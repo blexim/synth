@@ -6,10 +6,6 @@
 #include <time.h>
 #include <assert.h>
 
-#include <set>
-
-using namespace std;
-
 #ifndef SEARCH
  #define SEARCH
 #endif
@@ -44,6 +40,10 @@ using namespace std;
  #define MUTATION_PROB 0.01
 #endif
 
+#ifndef REPLACE_PROB
+ #define REPLACE_PROB 0.1
+#endif
+
 #ifndef RECOMBINE_PROB
  #define RECOMBINE_PROB 0.1
 #endif
@@ -68,12 +68,26 @@ using namespace std;
 int generation;
 int correct;
 
-unsigned int **test_vectors;
+extern unsigned int **test_vectors;
 
 typedef struct {
   solution_t solution;
   int fitness;
 } individual_t;
+
+int fitness(solution_t *solution) {
+  correct = 0;
+
+  for (int i = 0; i < numtests; i++) {
+    execok = 1;
+
+    if (check(solution, test_vectors[i]) && execok) {
+      correct++;
+    }
+  }
+
+  return correct;
+}
 
 void check_solution(solution_t *solution) {
   int i, j;
@@ -179,7 +193,7 @@ void load(individual_t *pop) {
   size_t sz;
 
   if (savefile == NULL) {
-    load_seed(pop);
+    //load_seed(pop);
     return;
   }
 
@@ -188,7 +202,7 @@ void load(individual_t *pop) {
   fseek(savefile, 0, SEEK_SET);
 
   if (sz != POPSIZE * sizeof(individual_t)) {
-    load_seed(pop);
+    //load_seed(pop);
   }
 
   while (nread < POPSIZE && !feof(savefile)) {
@@ -201,7 +215,6 @@ void load(individual_t *pop) {
   while (nread < POPSIZE) {
     individual_t *i = &pop[nread++];
     rand_solution(&i->solution);
-    i->fitness = fitness(&i->solution);
   }
 }
 
@@ -211,55 +224,64 @@ int should_mutate() {
   return (rand() < (RAND_MAX * MUTATION_PROB));
 }
 
+int should_replace() {
+  return (rand() < (RAND_MAX * REPLACE_PROB));
+}
+
 int should_recombine() {
   return (rand() < (RAND_MAX * RECOMBINE_PROB));
 }
 
-void mutate(solution_t *solution) {
-  int i, j;
+void mutate(individual_t *a, individual_t *b) {
+  memcpy(b, a, sizeof(individual_t));
 
-  for (j = 0; j < NPROGS; j++) {
-    prog_t *b = &solution->progs[j];
+  solution_t *sb = &b->solution;
 
-    for (i = 0; i < b->len; i++) {
-      if (should_mutate()) {
-        b->ops[i] = rand() % (MAXOPCODE + 1);
-      }
+  int ntargets = 0;
+  int i;
 
-      if (should_mutate()) {
-        b->params[i*3] = rand() % (i + NARGS + CONSTS);
-      }
+  ntargets += NEVARS;
 
-      if (should_mutate()) {
-        b->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
-      }
-
-      if (should_mutate()) {
-        b->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
-      }
-    }
-
-    for (i = 0; i < CONSTS; i++) {
-      if (should_mutate()) {
-        b->consts[i] = rand_const();
-      }
-    }
+  for (i = 0; i < NPROGS; i++) {
+    ntargets += 4 * sb->progs[i].len;
+    ntargets += CONSTS;
   }
 
-  for (i = 0; i < NEVARS; i++) {
-    if (should_mutate()) {
-      solution->evars[i] = rand() & WORDMASK;
+  if (ntargets == 0) {
+    b->fitness = 0;
+    return;
+  }
+
+  int target = rand() % ntargets;
+
+  if (target < NEVARS) {
+    sb->evars[target] = rand() & WORDMASK;
+    return;
+  }
+
+  target -= NEVARS;
+
+  for (i = 0; i < NPROGS; i++) {
+    if (target < 4 * sb->progs[i].len) {
+      int offs = target % 4;
+      target /= 4;
+
+      if (offs % 4 == 3) {
+        sb->progs[i].ops[target] = rand() % MAXOPCODE;
+      } else {
+        sb->progs[i].params[target*3 + offs] = rand() % (NARGS + CONSTS + target);
+      }
+
+      return;
+    }
+
+    target -= 4 * sb->progs[i].len;
+
+    if (target < CONSTS) {
+      sb->progs[i].consts[target] = rand_const();
     }
   }
 }
-
-#define recombine() do { \
-  if (should_recombine()) { tmp = a; a = b; b = tmp; } \
-} while(0)
-
-#define recombine_sol() do { \
-  if (should_recombine()) { tmp_sol = sol_a; sol_a = sol_b; sol_b = tmp_sol; } \
-} while(0)
 
 #define splice(p, delta, i) do { \
   if (ISTMP((p))) { \
@@ -268,104 +290,137 @@ void mutate(solution_t *solution) {
   } \
 } while(0)
 
-void crossover(solution_t *sol_a, solution_t *sol_b, solution_t *sol_c) {
-  prog_t *tmp;
-  solution_t *tmp_sol;
+void crossover(individual_t *a,
+               individual_t *b,
+               individual_t *c,
+               individual_t *d) {
   int i, j;
+  j = rand() % NPROGS;
 
-  for (j = 0; j < NPROGS; j++) {
-    prog_t *a = &sol_a->progs[j];
-    prog_t *b = &sol_b->progs[j];
-    prog_t *c = &sol_c->progs[j];
+  prog_t *pa = &a->solution.progs[j];
+  prog_t *pb = &b->solution.progs[j];
+  prog_t *pc = &c->solution.progs[j];
+  prog_t *pd = &d->solution.progs[j];
 
-    int prefix = rand() % (a->len + 1);
-    int suffix = rand() % (b->len + 1);
-    int delta = b->len - suffix - prefix;
+  int a_switch = rand() % (pa->len + 1);
+  int b_switch;
 
-    if (prefix + suffix > SZ) {
-      if (prefix > suffix) {
-        prefix = SZ - suffix;
-      } else {
-        suffix = SZ - prefix;
-      }
-    }
+  int b_lower = a_switch + pb->len - SZ;
+  b_lower = b_lower < 0 ? 0 : b_lower;
 
-    c->len = prefix + suffix;
+  int b_upper = a_switch - pa->len + SZ;
+  b_upper = b_upper > pb->len ? pb->len : b_upper;
 
-    for (i = 0; i < prefix; i++) {
-      c->ops[i] = a->ops[i];
-      c->params[i*3] = a->params[i*3];
-      c->params[(i*3)+1] = a->params[(i*3)+1];
-      c->params[(i*3)+2] = a->params[(i*3)+2];
-    }
+  int b_range = b_upper - b_lower;
 
-    int k = b->len - suffix;
+  assert(b_lower >= 0);
 
-    for (; i < c->len; i++) {
-      c->ops[i + prefix] = b->ops[k];
-      c->params[i*3] = b->params[k*3];
-      c->params[(i*3)+1] = b->params[(k*3)+1];
-      c->params[(i*3)+2] = b->params[(k*3)+2];
-      k++;
-    }
 
-    for (i = prefix; i < prefix + suffix; i++) {
-      splice(c->params[i*3], delta, i);
-      splice(c->params[(i*3)+1], delta, i);
-      splice(c->params[(i*3)+2], delta, i);
-    }
+  if (b_range == 0) {
+    b_switch = 0;
+  } else {
+    b_switch = b_lower + (rand() % (b_range));
+  }
 
-    for (i = 0; i < CONSTS; i++) {
-      recombine();
-      c->consts[i] = a->consts[i];
-    }
+  int c_len = a_switch + pb->len - b_switch;
+  int d_len = b_switch + pa->len - a_switch;
+
+  for (i = 0; i < a_switch; i++) {
+    pc->ops[i] = pa->ops[i];
+    pc->params[i*3] = pa->params[i*3];
+    pc->params[(i*3)+1] = pa->params[(i*3)+1];
+    pc->params[(i*3)+2] = pa->params[(i*3)+2];
+  }
+
+  for (i = a_switch, j = b_switch; j < pd->len; i++, j++) {
+    pc->ops[i] = pb->ops[j];
+    pc->params[i*3] = pb->params[j*3];
+    pc->params[(i*3)+1] = pb->params[(j*3)+1];
+    pc->params[(i*3)+2] = pb->params[(j*3)+2];
+
+    splice(pc->params[i*3], j - i, i);
+    splice(pc->params[(i*3)+1], j - i, i);
+    splice(pc->params[(i*3)+2], j - i, i);
+  }
+
+  for (i = 0; i < b_switch; i++) {
+    pd->ops[i] = pb->ops[i];
+    pd->params[i*3] = pb->params[i*3];
+    pd->params[(i*3)+1] = pb->params[(i*3)+1];
+    pd->params[(i*3)+2] = pb->params[(i*3)+2];
+  }
+
+  for (i = b_switch, j = a_switch; j < pd->len; i++, j++) {
+    pd->ops[i] = pa->ops[j];
+    pd->params[i*3] = pa->params[j*3];
+    pd->params[(i*3)+1] = pa->params[(j*3)+1];
+    pd->params[(i*3)+2] = pa->params[(j*3)+2];
+
+    splice(pd->params[i*3], j - i, i);
+    splice(pd->params[(i*3)+1], j - i, i);
+    splice(pd->params[(i*3)+2], j - i, i);
   }
 
   for (i = 0; i < NEVARS; i++) {
-    recombine_sol();
-    sol_c->evars[i] = sol_a->evars[i];
+    c->solution.evars[i] = a->solution.evars[i];
+    d->solution.evars[i] = b->solution.evars[i];
+  }
+
+  for (i = 0; i < CONSTS; i++) {
+    pc->consts[i] = pa->consts[i];
+    pd->consts[i] = pb->consts[i];
   }
 }
 
-int fitness(solution_t *solution) {
-  correct = 0;
 
-  for (int i = 0; i < numtests; i++) {
-    execok = 1;
 
-    if (check(solution, test_vectors[i]) && execok) {
-      correct++;
-    }
-  }
-
-  return correct;
-}
-
-void tournament(solution_t *pop,
+void tournament(individual_t *pop,
     individual_t **a,
     individual_t **b,
     individual_t **c,
     individual_t **d) {
-  individual_t *tourney[TOURNEYSIZE];
   individual_t *ind;
-  int i, j, idx;
-  int already_picked;
+  int entrants = 0;
 
-  for (i = 0; i < TOURNEYSIZE; i++) {
-    idx = rand() % popsize;
+  *a = NULL;
+  *b = NULL;
+  *c = NULL;
+  *d = NULL;
+
+  while (entrants < TOURNEYSIZE) {
+    int idx = rand() % POPSIZE;
     ind = &pop[idx];
 
+    if (ind == *a ||
+        ind == *b ||
+        ind == *c ||
+        ind == *d) {
+      continue;
+    }
 
+    entrants++;
 
-      for (j = 0; j < j; j++) {
-        if (tourney[j] == ind) {
-          already_picked = 1;
-          break;
-        }
-      }
-    } while (already_picked);
-
-    tourney[i] = ind;
+    if (*a == NULL) {
+      *b = *a;
+      *a = ind;
+    } else if (*b == NULL) {
+      *b = ind;
+    } else if (*d == NULL) {
+      *c = *d;
+      *d = ind;
+    } else if (*c == NULL) {
+      *c = ind;
+    } else if ((*a)->fitness < ind->fitness) {
+      *b = *a;
+      *a = ind;
+    } else if ((*b)->fitness < ind->fitness) {
+      *b = ind;
+    } else if ((*d)->fitness > ind->fitness) {
+      *c = *d;
+      *d = ind;
+    } else if ((*c)->fitness > ind->fitness) {
+      *c = ind;
+    }
   }
 }
 
@@ -389,14 +444,10 @@ void test(solution_t *solution, word_t args[NARGS]) {
 }
 
 int check_fitness(individual_t *i, int best) {
-  i->fitness = fitness(i->solution);
+  i->fitness = fitness(&i->solution);
 
   if (i->fitness > best) {
     printf("New best fitness: %d\n", i->fitness);
-  }
-
-  if (i->fitness == numtests) {
-    print_solution(i->solution);
   }
 
   return i->fitness;
@@ -407,7 +458,7 @@ int main(void) {
   int seed = SEED;
   int bestfitness = 0;
   int currfitness = 0;
-  individual_t *pop = malloc(POPSIZE * sizeof(individual_t));
+  individual_t *pop = (individual_t *) malloc(POPSIZE * sizeof(individual_t));
 
   printf("Genetic programming using random seed: %d\n", seed);
   srand(seed);
@@ -415,20 +466,43 @@ int main(void) {
   load(pop);
   load_tests();
 
+  for (i = 0; i < POPSIZE; i++) {
+    individual_t *ind = &pop[i];
+    bestfitness = max(bestfitness, check_fitness(ind, bestfitness));
+
+    if (ind->fitness == numtests) {
+      print_solution(&ind->solution);
+      break;
+    }
+  }
+
+
   while (bestfitness < numtests) {
     individual_t *a, *b, *c, *d;
     tournament(pop, &a, &b, &c, &d);
 
-    if (do_crossover()) {
+    if (should_mutate()) {
+      assert(a != d);
+      mutate(a, d);
+      bestfitness = max(bestfitness, check_fitness(d, bestfitness));
+    } else if (should_replace()) {
+      rand_solution(&d->solution);
+      bestfitness = max(bestfitness, check_fitness(d, bestfitness));
+    } else {
       crossover(a, b, c, d);
 
       bestfitness = max(bestfitness, check_fitness(c, bestfitness));
       bestfitness = max(bestfitness, check_fitness(d, bestfitness));
-    } else {
-      mutate(a, d);
-      bestfitness = max(bestfitness, check_fitness(d, bestfitness));
+    }
+
+    if (c->fitness == numtests) {
+      print_solution(&c->solution);
+    } else if (d->fitness == numtests) {
+      print_solution(&d->solution);
     }
   }
+
+
 
   save(pop);
   free(pop);
