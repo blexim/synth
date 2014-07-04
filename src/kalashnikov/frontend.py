@@ -28,8 +28,8 @@ def prove_terminates(filename):
   cmd = (("./kalashnikov.py " +
              "%s %s " +
              "-P%d  " +
-             "--seed=1337 " +
-             "--synth-strategy=genetic -a%d --varnames %s " +
+             "--seed=1337 -a%d --varnames %s " +
+             "--synth-strategy=genetic " +
              "-c1 " +
              "--fastverif=false -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
              "-recombprob=0.05 -tourneysize=10 -w=3 " +
