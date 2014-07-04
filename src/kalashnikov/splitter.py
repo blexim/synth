@@ -248,7 +248,13 @@ def split_func(fd, ofile):
     inner_suffix = nested_prog.blocks[2]
 
     inner_guard = c_ast.Compound(copy.copy(decls) + [c_ast.Return(inner_body.cond)])
-    inner_body = c_ast.Compound(copy.copy(decls) + inner_body.stmt.block_items + copy_out)
+
+    if isinstance(inner_body.stmt, c_ast.Compound):
+      inner_body = inner_body.stmt.block_items
+    else:
+      inner_body = [inner_body.stmt]
+
+    inner_body = c_ast.Compound(copy.copy(decls) + inner_body + copy_out)
     outer_guard = c_ast.Compound(copy.copy(decls) + [c_ast.Return(loop.cond)])
 
     f.write("int inner_prefix(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
