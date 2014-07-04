@@ -302,6 +302,10 @@ To verify our proofs, we only require a single call to a SAT solver.
 %% \item Our technique is able to uniformly handle conditionally-terminating loops, as well as programs with
 %% multiple loops.
 
+\item Our procedure is based on a series of source-to-source transformations.  As well as leading to a concise implementation,
+this has the side effect of ensuring that our proof is correct for the exact binary produced by a particular compiler,
+rather than for an abstraction of the program.
+
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 
 \end{itemize}
