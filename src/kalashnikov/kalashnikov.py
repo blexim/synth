@@ -426,11 +426,11 @@ def expand(x, narrow, wide):
   if x == 0:
     return [0]
   elif x == 1:
-    return 1
+    return [1]
   elif x == (1 << narrow) - 1:
-    return [x, (1 << wide) - 1]
+    return [(1 << wide) - 1, x]
   elif x == 1 << (narrow - 1):
-    return [x, 1 << (narrow - 1)]
+    return [1 << (narrow - 1), x]
   else:
     return [x]
 
