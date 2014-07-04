@@ -919,14 +919,14 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{figure*}
 \begin{framed}
 \begin{definition}[Second-order Unconditional Termination Formula {\bf [UT]}]
-\label{def:termination-formula}
+\label{def:UT}
 \begin{align*}
  \exists R . \forall x, x' . & G(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
 \begin{definition}[Non-Termination Formula - Open Recurrence Set  {\bf [ONT]}]
-\label{def:nonterm-formula}
+\label{def:ont}
  \begin{align*}
   \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \rightarrow T(x, x') \wedge N(x') 
@@ -934,7 +934,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \end{definition}
 
 \begin{definition}[Non-Termination Formula - Closed Recurrence Set {\bf [CNT]}]
-\label{def:deterministic-nonterm-formula}
+\label{def:cnt}
  \begin{align*}
   \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \wedge T(x, x') \rightarrow N(x') 
@@ -961,7 +961,7 @@ Any termination guarantees?
 To show that $L$ is unconditionally terminating (i.e. it eventually terminates regardless of the
 state it starts in), we can find a ranking function for $L$.
 The existence of a ranking function is equivalent to the satisfiability
-of the formula from Definition~\ref{def:termination-formula}, so a witness to the satisfiability
+of the formula from Definition~\ref{def:UT}, so a witness to the satisfiability
 of formula {\bf [UT]} is also a ranking function and thus a proof of $L$'s unconditional termination.
 
 Continuing the example of the program in Figure~\ref{fig:motivation.a}, we can see that
@@ -1051,7 +1051,7 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
  \begin{framed}
 
 \begin{definition}[Conditional Termination Formula {\bf [CT]}]
-\label{def:conditional-termination-formula}
+\label{def:ct}
  \begin{align*}
   \exists R, W . \forall x, x' . & I(x) \wedge G(x) \rightarrow W(x) ~ \wedge \\
                                  & G(x) \wedge W(x) \wedge T(x, x') \rightarrow W(x') \wedge R(x) > 0 
@@ -1119,7 +1119,7 @@ That is to say, for each state $x$ that is reachable on entry to $L$,
 we have $I(x)$.
 
 Conditional termination is then equivalent to the
-formula {\bf [CT]} of Defintion~\ref{def:conditional-termination-formula}. If this formula is satisfiable,
+formula {\bf [CT]} of Defintion~\ref{def:ct}. If this formula is satisfiable,
 two witnesses are returned:
 \begin{itemize}
 \item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
@@ -1395,14 +1395,18 @@ so the complexity is doubly exponential in the width of $X$.
 
 \section{Soundness, Completeness and Complexity}
 \begin{theorem}
- {\sc Headshot} is sound -- if it says a program terminates then it does.
+\label{thm:sound}
+ {\sc Headshot} is sound -- if it returns a verdict of termination, the program under
+ analysis terminates on all inputs.  Similarly if it returns a verdict of non-termination,
+ the program under analysis has at least one infinite execution.
 \end{theorem}
 
 \begin{proof}
- The ranking function constitutes a constructive, machine checked proof that the program terminates.
+ {\sc Headshot}'s output constitutes a constructive, machine checked proof of (non-)termination.
 \end{proof}
 
 \begin{theorem}
+\label{thm:complete-termination}
  {\sc Headshot} is complete for terminating programs -- if a program terminates, {\sc Headshot} will find a proof that it does.
 \end{theorem}
 
@@ -1414,11 +1418,12 @@ so the complexity is doubly exponential in the width of $X$.
  Since $\mathcal{S}$ already comes equipped with a natural well ordering we can also construct $R'' = \iota \circ R'$
  where $\iota: \mathcal{D'} \to \mathcal{S}$ is the unique order isomorphism from $\mathcal{D'}$ to $\mathcal{S}$.
  So assuming that $P$ terminates, there is some ranking function $R''$ that is just a permutation of $\mathcal{S}$.
+ If the number of variables $k > 1$ then in general the ranking function will be lexicographic with dimension $\leq k$
+ and each co-ordinate of the output being a single $b$-bit value.
 
  It is fairly easy to see that any finite permutation is computed by a finite program in the proof language generated
  by {\sc Kalashnikov}.  A very inefficient construction which computes the permutation $R(x) = x+1$ for one variable
  is:
- 
  \begin{verbatim}
 t1 = 0
 t2 = v1 == 0
@@ -1427,8 +1432,7 @@ t4 = v1 == 1
 t5 = ITE(t4, 2, t3)
 ...
  \end{verbatim}
-
-If the number of variables $k > 1$ then in general the ranking function will be lexicographic with dimension $\leq k$.
+It is easy to see how this generalises to computing an arbitrary permutation.
 
 So we can see that every permutation is computed a program of size at most $b \times 2^{bk + 1}$.  Since
 {\sc Kalashnikov} enumerates all programs in order of length, it will eventually check
@@ -1437,10 +1441,23 @@ computing the ranking function $R''$.  Checking that a single program satisfies 
 is a decidable problem, and the search as a whole terminates.
 \end{proof}
 
-
 \begin{theorem}
- {\sc Headshot} is a decision procedure -- it always terminates.
+ {\sc Headshot} is complete for deterministic programs -- {\sc Headshot} will terminate when run on
+ any program with a deterministic transition relation.
 \end{theorem}
+
+\begin{proof}
+ If the program under analysis is terminating, then by Theorem~\ref{thm:complete-termination} {\sc Headshot}
+ will terminate having computed a ranking function.
+
+ Conversely if the program is non-terminating, {\sc Headshot} will terminate
+ having computed a recurrence set.  Since, by assumption, the program under analysis is determinstic,
+ Definition~\ref{def:ont} is equivalent to Definition~\ref{def:cnt}.
+ That is to say, each open recurrence set is also a closed recurrence set.  Since the specification for a predicate
+ to encode a closed recurrence set is in the synthesis fragment, {\sc Kalashnikov} will find a program computing
+ such a predicate if one exists.  The proof is similar to the proof of Theorem~\ref{thm:complete-termination}.
+\end{proof}
+
 
 \begin{theorem}
  {\sc Kalashnikov} has time complexity $NP^{NP}(K(\sigma))$
@@ -1451,8 +1468,6 @@ is a decidable problem, and the search as a whole terminates.
  overhead.  It therefore has time complexity $NP^{NP}(K(\tau(P))$ where $\tau(P)$ is the
  termination specification for program $P$.
 \end{theorem}
-
-
 
 
 In Section~\ref{sec:synthesis} we will describe a procedure for solving the synthesis formula.
