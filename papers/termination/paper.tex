@@ -1398,9 +1398,45 @@ so the complexity is doubly exponential in the width of $X$.
  {\sc Headshot} is sound -- if it says a program terminates then it does.
 \end{theorem}
 
+\begin{proof}
+ The ranking function constitutes a constructive, machine checked proof that the program terminates.
+\end{proof}
+
 \begin{theorem}
- {\sc Headshot} is complete -- if a program terminates, {\sc Headshot} will find a proof that it does.
+ {\sc Headshot} is complete for terminating programs -- if a program terminates, {\sc Headshot} will find a proof that it does.
 \end{theorem}
+
+\begin{proof}
+ If the program under analysis $P$ has variables $v_1, \ldots, v_k$ each of which is $b$ bits wide, its state space $\mathcal{S}$ is of size $2^{bk}$.
+ A ranking function $R: \mathcal{S} \to \mathcal{D}$ for $P$ exists iff $P$ terminates.  Since $R$ is injective, we have that
+ $\| \mathcal{D} \| \geq \| \mathcal{S} \|$.  If $\| \mathcal{D} \| > \| \mathcal{S} \|$, we can construct a function $R': \mathcal{S} \to \mathcal{D'}$
+ with $ \| \mathcal{D'} = \| \mathcal{S} \|$ by just setting $R' = R|_\mathcal{S}$, i.e. $R'$ is just the restriction of $R$ to $\mathcal{S}$
+ Since $\mathcal{S}$ already comes equipped with a natural well ordering we can also construct $R'' = \iota \circ R'$
+ where $\iota: \mathcal{D'} \to \mathcal{S}$ is the unique order isomorphism from $\mathcal{D'}$ to $\mathcal{S}$.
+ So assuming that $P$ terminates, there is some ranking function $R''$ that is just a permutation of $\mathcal{S}$.
+
+ It is fairly easy to see that any finite permutation is computed by a finite program in the proof language generated
+ by {\sc Kalashnikov}.  A very inefficient construction which computes the permutation $R(x) = x+1$ for one variable
+ is:
+ 
+ \begin{verbatim}
+t1 = 0
+t2 = v1 == 0
+t3 = ITE(t2, 1, t1)
+t4 = v1 == 1
+t5 = ITE(t4, 2, t3)
+...
+ \end{verbatim}
+
+If the number of variables $k > 1$ then in general the ranking function will be lexicographic with dimension $\leq k$.
+
+So we can see that every permutation is computed a program of size at most $b \times 2^{bk + 1}$.  Since
+{\sc Kalashnikov} enumerates all programs in order of length, it will eventually check
+a program computing each permutation of $\mathcal{S}$ and so will eventually check a program
+computing the ranking function $R''$.  Checking that a single program satisfies the specification
+is a decidable problem, and the search as a whole terminates.
+\end{proof}
+
 
 \begin{theorem}
  {\sc Headshot} is a decision procedure -- it always terminates.
