@@ -1349,17 +1349,46 @@ conduct independent searches for each possible form of the ranking function with
 \input{kalashnikov}
 
 \subsection{Genetic Programming and Incremental Evolution} \label{sec:gp}
-To generate candidate solutions in the synthesise phase of the refinement loop,
-we can use genetic programming (GP).  The general idea is to start with a population
-of random programs and evolve a good one.  ``Good'' in this case means that the program
-satisfies our specification.  To do this evolution, we compute a fitness for each program
-and repeatedly apply genetic operators to the population based on this fitness.  The operators
-used are {\sc crossover} and {\sc mutate}.  The crossover operator takes two programs
+To generate candidate (non-)termination proofs in the synthesise phase of the refinement loop,
+we make use of genetic programming (GP) \cite{langdon:fogp} as an alternative to model checking and exhaustive search.  
+Genetic programming provides an intelligent and adaptive way of searching through the space of computer programs
+for an individual that is highly fit in solving the problem at hand
+by using the Darwinian principle of survival and reproduction of the fittest.
+Thus, the program that emerges from the genetic programming paradigm is a consequence of fitness. 
+
+In our setting, we start with a population of random programs of size ..
+We then genetically breed the population of these programs by applying the genetic operators 
+{\sc crossover} and {\sc mutate}. The crossover operator takes two programs
 and combines their code in some what to create a new program.  The mutate operator takes a single
-program and randomly changes parts of its code, again creating a new program.  We arrange
-things so that the fitter a program is, the more likely it is to be selected as a parent
-that will be crossover'd to produce a child in the next generation.  Our fitness function
-is just the number of test cases on which the program met the specification.
+program and randomly changes parts of its code, again creating a new program. 
+Both these operators are applied to programs selected from the population in 
+proportion to their observed fitness, i.e. a program is fit if it satisfies the (non-)termination specification.
+Thus, our fitness function counts the number of test cases on which a program met the given specification.
+Essentially, we plan a trajectory through the space of computer programs that will lead to programs with improved fitness.
+%by considering those that meet the (non-)termination specification on more inputs until.
+
+\todo{Talk about the fitness landscape?}
+
+\begin{definition}
+ A \emph{fitness landscape} is the space of all programs along with their fitness.
+\end{definition}
+
+A potential issue might be that, in our setting, a fitness landscape isn't really very smooth, e.g. small changes in program representation
+don't correspond to small changes in fitness. However, genetic programming's efficiency was shown to be unrelated to the smoothness 
+of the fitness landscape \cite{langdon:fogp}.
+
+\todo{mention incremental GP?}
+
+%% The general idea is to start with a population
+%% of random programs and evolve a good one.  ``Good'' in this case means that the program
+%% satisfies our specification.  To do this evolution, we compute a fitness for each program
+%% and repeatedly apply genetic operators to the population based on this fitness.  The operators
+%% used are {\sc crossover} and {\sc mutate}.  The crossover operator takes two programs
+%% and combines their code in some what to create a new program.  The mutate operator takes a single
+%% program and randomly changes parts of its code, again creating a new program.  We arrange
+%% things so that the fitter a program is, the more likely it is to be selected as a parent
+%% that will be crossover'd to produce a child in the next generation.  Our fitness function
+%% is just the number of test cases on which the program met the specification.
 
 \iffalse
 We begin by observing that the asymptotic complexity of all of our synthesis
@@ -1370,9 +1399,6 @@ $$O\left(2^{K(f)}\right)$$
 Where $K(f)$ is the Kolmogorov complexity of $f$, which is $O(\log Y^X) = O(X)$
 so the complexity is doubly exponential in the width of $X$.
 
-\begin{definition}
- A \emph{fitness landscape} is the space of all programs along with their fitness.
-\end{definition}
 
 \begin{theorem}
  Fitness landscapes form a lattice.  Adding test vectors corresponds to abstraction refinement on this
