@@ -95,10 +95,6 @@ def flatten(ast, program):
   if not contains_loop(ast):
     program.accumulate(ast)
   elif is_loop(ast):
-    if is_nested_loop(ast):
-      print "ERROR: nested loop"
-      sys.exit(10)
-
     program.accumulate(ast)
   else:
     # The AST contains a loop.  Recurse on its children.
@@ -137,6 +133,20 @@ def replace_nondet(ast, nondet_idx=0):
 def is_signed(decl):
   return decl.type.type.names in (['int'], ['long'])
 
+class FileWriter(object):
+  def __init__(self, ofile, cgen):
+    self.ofile = ofile
+    self.cgen = cgen
+
+  def write(self, ast):
+    if isinstance(ast, list):
+      for a in ast:
+        self.write_c(self, a)
+    elif isinstance(ast, c_ast.Node):
+      self.ofile.write(self.cgen.visit(ast))
+    else:
+      self.ofile.write(str(ast))
+
 def split_func(fd, ofile):
   prog = FlatProgram()
 
@@ -159,14 +169,15 @@ def split_func(fd, ofile):
   flatten(fd_body, prog)
   cgen = c_generator.CGenerator()
   (id_map, rev_id_map) = number_ids(fd)
+  f = FileWriter(ofile, cgen)
 
-  ofile.write('#include "synth.h"\n')
-  ofile.write("/*\n")
+  f.write('#include "synth.h"\n')
+  f.write("/*\n")
 
   for id in sorted(rev_id_map.keys()):
-    ofile.write(" * %s -> %d\n" % (rev_id_map[id], id))
+    f.write(" * %s -> %d\n" % (rev_id_map[id], id))
 
-  ofile.write("*/\n\n");
+  f.write("*/\n\n");
 
   nids = len(id_map)
 
@@ -212,29 +223,62 @@ def split_func(fd, ofile):
 
     copy_out.append(c_ast.Assignment("=", arr, var))
 
+  copy_out.append(c_ast.Return(c_ast.Constant('int', str('1'))))
 
   prefix.block_items += copy_out
-  prefix.block_items.append(c_ast.Return(c_ast.Constant('int', str('1'))))
 
-  ofile.write("int prefix(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
-  ofile.write(cgen.visit(prefix))
-  ofile.write("}\n\n")
+  f.write("int prefix(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
+  f.write(prefix)
+  f.write("}\n\n")
 
-  ofile.write("int guard(word_t in_vars[NARGS]) {\n")
+  f.write("int guard(word_t in_vars[NARGS]) {\n")
   guard_body = c_ast.Compound(copy.copy(decls))
   guard_body.block_items.append(c_ast.Return(loop.cond))
-  ofile.write(cgen.visit(guard_body))
+  f.write(guard_body)
   ofile.write("}\n\n")
 
-  ofile.write("void body(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
-  loop_body = c_ast.Compound(copy.copy(decls))
-  loop_body.block_items.append(loop.stmt)
-  loop_body.block_items += copy_out
-  ofile.write(cgen.visit(loop_body))
-  ofile.write("}\n\n")
+  if is_nested_loop(loop):
+    nested_prog = FlatProgram()
+    flatten(loop.stmt, nested_prog)
+    inner_prefix = nested_prog.blocks[0]
+    inner_body = nested_prog.blocks[1]
+    inner_suffix = nested_prog.blocks[2]
+
+    inner_guard = c_ast.Compound(copy.copy(decls) + [c_ast.Return(inner_body.cond)])
+    inner_body = c_ast.Compound(copy.copy(decls) + inner_body.stmt.block_items + copy_out)
+    outer_guard = c_ast.Compound(copy.copy(decls) + [c_ast.Return(loop.cond)])
+
+    f.write("int inner_prefix(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
+    inner_prefix.block_items = decls + inner_prefix.block_items + copy_out
+    f.write(inner_prefix)
+    f.write("}\n\n")
+
+    f.write("int inner_guard(word_t in_vars[NARGS]) {\n")
+    f.write(inner_guard)
+    f.write("}\n\n")
+
+    f.write("int inner_body(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
+    f.write(inner_body)
+    f.write("}\n\n")
+
+    f.write("int inner_suffix(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
+    inner_suffix.block_items = decls + inner_suffix.block_items + copy_out
+    f.write(inner_suffix)
+    f.write("}\n\n")
+
+    f.write("int outer_guard(word_t in_vars[NARGS]) {\n")
+    f.write(outer_guard)
+    f.write("}\n\n")
+  else:
+    ofile.write("void body(word_t in_vars[NARGS], word_t out_vars[NARGS]) {\n")
+    loop_body = c_ast.Compound(copy.copy(decls))
+    loop_body.block_items.append(loop.stmt)
+    ofile.write(cgen.visit(loop.stmt))
+    loop_body.block_items += copy_out
+    ofile.write(cgen.visit(loop_body))
+    ofile.write("}\n\n")
 
   return rev_id_map
-
 
 def split(filename, ofile=sys.stdout):
   ast = parse_file_libc(filename)
