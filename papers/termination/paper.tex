@@ -344,6 +344,8 @@ code using any of the following features:
 
 
 \section{Motivational Examples} \label{sec:motivation}
+- see phase change programs.
+
 Figure~\ref{fig:handletable} illustrates the most common assumptions made by existent termination analyses:
 \begin{itemize}
 \item[(i)] programs are linear.
@@ -807,7 +809,7 @@ If a pair $(\vec{P_0}, \vec{x})$ is a solution to the synthesis problem, then we
 For the remainder of the presentation, we drop the $\vec{x}$ and instead just write $x$, with the understanding
 that all variables range over vectors.
 
-In the remainder of this section, we show that the synthesis fragment 
+In the rest of this section, we show that the synthesis fragment 
 is expressive enough to encode both termination and non-termination. %allow the formulation of both the termination and the non-termination problem. 
 Following our formulation as second order satisfaction, %the framing of the halting problem as a program synthesis problem,
 in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment that models bit-accurate semantics. 
@@ -835,10 +837,10 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 
 \begin{figure*}
 \begin{framed}
-\begin{definition}[Second-order Unconditional Termination Formula {\bf [UT]}]
+\begin{definition}[Unconditional Termination Formula {\bf [UT]}]
 \label{def:UT}
 \begin{align*}
- \exists R . \forall x, x' . & G(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
+ \exists R . \forall x, x' . & G(x) \wedge T_o(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
@@ -846,7 +848,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \label{def:ont}
  \begin{align*}
   \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
-							& N(x) \rightarrow T(x, x') \wedge N(x') 
+							& N(x) \rightarrow T_u(x, x') \wedge N(x') 
  \end{align*}
 \end{definition}
 
@@ -854,9 +856,17 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \label{def:cnt}
  \begin{align*}
   \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
-							& N(x) \wedge T(x, x') \rightarrow N(x') 
+							& N(x) \wedge T_u(x, x') \rightarrow N(x') 
  \end{align*}
 \end{definition}
+
+%% \begin{definition}[Non-deterministic Non-Termination Formula - Closed Recurrence Set {\bf [Nondet-CNT]}]
+%% \label{def:nondet-cnt}
+%%  \begin{align*}
+%%   \exists N, x_0 . \forall x, x' . \exists y_0. & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
+%% 							& N(x) \wedge T_u(x, x') \wedge A(x') \rightarrow N(x')~
+%%  \end{align*}
+%% \end{definition}
 
 \end{framed}
 \end{figure*}
@@ -876,11 +886,15 @@ Any termination guarantees?
 
 \noindent {\bf Unconditional termination.}
 To show that $L$ is unconditionally terminating (i.e. it eventually terminates regardless of the
-state it starts in), we can find a ranking function for $L$.
+state it starts in), we try to find a ranking function for it. When defining $L$'s termination 
+formula, we need only consider the over-approximation of its transition relation $T$, which we call $T_o$.
+Note that this distinction is only important if $L$'s body contains nested loops, for which we'll have to 
+consider the over-approximation of their transition relation's transitive closure
+as shown in Section~\ref{sec:env}. For any other statements, $T_o$ and $T$ are equivalent.
 
 \begin{theorem}
 \label{thm:ut}
- The loop $L(G, T)$ terminates from every start state iff Definition~\ref{def:UT} is
+ The loop $L(G, T_o)$ terminates from every start state iff formula {\bf [UT]} (Definition~\ref{def:UT}) is
  satisfiable.
 \end{theorem}
 
@@ -890,14 +904,19 @@ state it starts in), we can find a ranking function for $L$.
  (Do this proof properly).
 \end{proof}
 
-The existence of a ranking function is equivalent to the satisfiability
-of the formula from Definition~\ref{def:UT}, so a witness to the satisfiability
-of formula {\bf [UT]} is also a ranking function and thus a proof of $L$'s unconditional termination.
+As the existence of a ranking function is equivalent to the satisfiability
+of the formula {\bf [UT]}, a satisfiality witness 
+is also a ranking function and thus a proof of $L$'s unconditional termination.
 
 Continuing the example of the program in Figure~\ref{fig:motivation.a}, we can see that
 the corresponding synthesis formula {\bf [UT]} is satisfiable, as witnessed by the function $R(x) = x$.
 So $R(x) = x$ constitutes a proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
-terminating.\\
+terminating.
+
+Note that different formulations for unconditional termination are possible. We are aware of a proof rule based on 
+transition invariants, i.e. supersets of the transition relation's transitive closure \cite{DBLP:conf/pldi/GrebenshchikovLPR12}.
+This formulation assumes that the second order logic has a primitive predicate for disjunctive well-foundedness. 
+Conversely, our formulation in Definition~\ref{def:UT} does not require a transitive closure operator, nor a disjunctive well-foundedness predicate. \\
 
 \noindent{\bf Non-termination.}
 Dually to termination, we might want to consider the non-termination of a program.  If a program terminates,
@@ -906,12 +925,16 @@ witnessing the satisfiability of formula {\bf[UT]}.  What then would a proof of 
 
 Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
 i.e. a nonempty set of states $N$ such that for each $s \in N$ there
-exists a transition to some $s'\in N$. 
-For our case, given a loop $L = \langle G,T \rangle$, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
+exists a transition to some $s'\in N$.
+For our case, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
+Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition relation, $T_u$. 
+%$L = \langle G,T \rangle$
+Again, this distinction is mostly important when dealing with nested loops, as illustrated in Section~\ref{sec:env}.
+
 
 \begin{theorem}
 \label{thm:ont}
- The loop $L(G, T)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
+ The loop $L(G, T_u)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
 \end{theorem}
 
 \begin{proof}
@@ -936,17 +959,18 @@ satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonter
 
 \begin{theorem}
 \label{thm:cnt}
- If $T$ is deterministic, i.e. each state $x$ has exactly one successor $x'$ such that $T(x, x')$, then
+ If $T_u$ is deterministic, i.e. each state $x$ for which the guard $G(x)$ holds has exactly one successor $x'$ such that $T_u(x, x')$, then
  Definition~\ref{def:ont} is equivalent to Definition~\ref{def:cnt}.
 \end{theorem}
 
 \begin{proof}
- If $T$ is deterministic, then each $x$ has a unique successor $S(x)$, so $\forall x, x' . T(x, x') \leftrightarrow x' = S(x)$.
+ If $T_u$ is deterministic, then each $x$ satisfying $G(x)$ has a unique successor $S(x)$, so $\forall x, x' . G(x) \wedge T_u(x, x') \leftrightarrow x' = S(x)$.
  
  (Finish this proof).
 \end{proof}
 
-
+Note that by defining $T_u$'s determinism as the existence of exactly one successor for any state satisfying $L$'s guard, 
+we eliminate the possibility of $T_u$ being $false$, which would otherwise constitute a counter-example for Theorem~\ref{thm:cnt}.
 
 Given that our program's state space is finite, a transition relation induces a infinite execution if and only if some state is 
 visited infinitely often, or equivalently the state is visited twice in the course of the execution.
@@ -955,6 +979,26 @@ of the formula
 $$ \exists x . T^+(x, x)$$
 However, deciding satisfiability of this formula directly requires a logic that includes a transitive closure operator, which
 ours does not have.\\
+
+\noindent {\bf Non-determinism.} A non-termination diagnosis procedure based on checking the satisfiability of formula {\bf [CNT]}
+may fail to find a closed recurrence set for a loop $L=(G, T_u)$ when $T_u$ is non-deterministic.  
+To understand the issue, imagine the following loop with an non-deterministic assignment:
+
+\begin{lstlisting}[language=C]
+while(x != 0) {
+  y = nondet();
+  x = x-y;
+}
+\end{lstlisting}
+
+Only for certain values of \texttt{y} the loop is non-terminating.
+In order to restrict the values that may be assigned to \texttt{y}, we need an assumption associated with the non-deterministic choice. 
+However, such an assumption may cause a reachable state at the non-deterministic assignment to not have any successor. In such a case
+the termination formula would be satisfiable, although the execution halts. This situation can be avoided by checking the existence of 
+at least one successor for each reachable state at the non-deterministic assignment. Although we did put a reasonable amount of effort into it, 
+we failed to come up with a formulation for the non-termination of such non-deterministic transition relations 
+inside the synthesis fragment.
+%formula {\bf [Nondet-CNT]} in Definition~\ref{def:nondet-cnt}.
 
 \iffalse
 \noindent {\bf Non-determinism.} A non-termination diagnosis procedure searching for a closed recurrence set under-approximates the transition relation, i.e. 
@@ -999,7 +1043,11 @@ For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ cor
 
 %Our method is purely semantic. 
 
-\subsection{Composing a Loop with its Environment}
+\subsection{Composing a Loop with its Environment} \label{sec:env}
+
+synthesizing environment abstractions: underapp for termination and underapp for non-termination.
+
+\cite{} addresses the problem of automatically underapproximating weakest preconditions.
 
 
 \begin{figure*}
