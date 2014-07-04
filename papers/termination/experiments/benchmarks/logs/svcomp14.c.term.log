@@ -1,0 +1,417 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id ^ nondet_2;
+Program 1:
+res1 = 0x0 <= nondet_0;
+
+Fastest checker: explicit
+Fails for (5, 4, 2, 4, 1, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = -maxId;
+Program 1:
+t1 = 0x2 == id;
+res1 = nondet_2 << tmp;
+
+Fastest checker: explicit
+Fails for (1, 5, 2, 4, 1, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = tmp >> nondet_0;
+res1 = nondet_0 < nondet_0;
+Program 1:
+t1 = nondet_1 ==> nondet_1;
+res1 = tmp >> maxId;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 2, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_1 != 0x5;
+Program 1:
+t1 = nondet_1 s<= tmp;
+res1 = nondet_0 >> tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 2, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = maxId & 0x3;
+Program 1:
+t1 = maxId - tmp;
+res1 = maxId < 0x0;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 6, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 - 0x3;
+res1 = nondet_1 s<= maxId;
+Program 1:
+res1 = maxId >> tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 0, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 ==> tmp;
+res1 = t1 <= maxId;
+Program 1:
+t1 = -maxId;
+res1 = 0x7 - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 1, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x5 >>> tmp;
+Program 1:
+t1 = maxId ? nondet_2 : maxId;
+t2 = nondet_2 >> id;
+res1 = -tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_0 + maxId;
+Program 1:
+res1 = nondet_1 - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 1, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x7 & maxId;
+Program 1:
+res1 = nondet_1 - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x7 | nondet_1;
+Program 1:
+res1 = nondet_2 - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 4, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = tmp & nondet_2;
+res1 = id <= t1;
+Program 1:
+t1 = nondet_1 ^ nondet_1;
+t2 = 0x5 >> tmp;
+res1 = t2 < tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x1 != id;
+Program 1:
+t1 = 0x5 & id;
+t2 = 0x5 * tmp;
+res1 = nondet_2 * t1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = tmp * id;
+res1 = t1 == id;
+Program 1:
+t1 = -tmp;
+t2 = tmp <= tmp;
+t3 = nondet_0 >> t2;
+res1 = nondet_1 | nondet_0;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 2, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id ==> tmp;
+Program 1:
+t1 = max(0x2, id);
+res1 = -tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 2, 4, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id s<= maxId;
+Program 1:
+t1 = ~nondet_1;
+t2 = id - tmp;
+t3 = nondet_2 & t1;
+res1 = nondet_2 + 0x7;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 4, 4, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 <= nondet_0;
+t2 = tmp <= 0x4;
+res1 = maxId % 0x4;
+Program 1:
+res1 = 0x3 - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 5, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_1 s< maxId;
+Program 1:
+t1 = tmp >> id;
+t2 = tmp ^ 0x3;
+res1 = nondet_2 ? nondet_0 : 0x3;
+
+Fastest checker: explicit
+Fails for (1, 4, 0, 0, 5, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id s< maxId;
+Program 1:
+t1 = tmp >> id;
+t2 = tmp ^ 0x3;
+res1 = nondet_2 ? nondet_0 : 0x3;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 4, 5, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = id <= 0x7;
+res1 = id s< maxId;
+Program 1:
+res1 = -tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 4, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_0 s< maxId;
+Program 1:
+t1 = maxId & maxId;
+res1 = maxId - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 4, 4, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = id << nondet_0;
+res1 = nondet_1 s< maxId;
+Program 1:
+res1 = id - tmp;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id <= tmp;
+Program 1:
+t1 = 0x1 ^ tmp;
+t2 = -tmp;
+res1 = -id;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 2, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_2 s<= maxId;
+Program 1:
+t1 = 0x1 - 0x1;
+res1 = id - tmp;
+
+Fastest checker: explicit
+Fails for (3, 0, 0, 1, 2, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x6 s<= maxId;
+Program 1:
+res1 = id - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 6, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = tmp * 0x2;
+res1 = maxId <= 0x2;
+Program 1:
+res1 = id - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 2, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_0 s< maxId;
+Program 1:
+res1 = id - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 4, 2, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~nondet_0;
+t2 = id != tmp;
+res1 = 0x0 s< maxId;
+Program 1:
+t1 = id - tmp;
+res1 = max(maxId, t1);
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 3, 1, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = maxId s< nondet_0;
+t2 = -nondet_1;
+res1 = 0x1 s<= maxId;
+Program 1:
+res1 = maxId - tmp;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id s< maxId;
+Program 1:
+t1 = nondet_2 - tmp;
+t2 = tmp ? maxId : t1;
+res1 = maxId ==> t2;
+
+Fastest checker: explicit
+Fails for (2, 0, 0, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id s< maxId;
+Program 1:
+t1 = id * id;
+t2 = 0x3 <= nondet_0;
+t3 = max(tmp, t1);
+t4 = nondet_2 - tmp;
+t5 = t4 - maxId;
+res1 = nondet_0 s< t5;
+
+Fastest checker: explicit
+Fails for (4, 0, 0, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x5 ? 0x5 : nondet_2;
+t2 = t1 << tmp;
+res1 = id s< maxId;
+Program 1:
+t1 = id < 0x5;
+t2 = 0x5 ^ tmp;
+t3 = nondet_2 <= tmp;
+t4 = t3 ==> maxId;
+res1 = maxId - t4;
+
+Fastest checker: explicit
+Fails for (3, 1, 0, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = id s< maxId;
+Program 1:
+t1 = nondet_2 - tmp;
+t2 = tmp == maxId;
+res1 = t1 ==> t2;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 0, 3, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~nondet_0;
+t2 = id != nondet_0;
+res1 = t2 s< maxId;
+Program 1:
+t1 = id - tmp;
+res1 = max(maxId, 0x0);
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 0, 1, 3)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 34, 'explicit': 34, 'timeout': 1, 'iterations': 35}
+Perf timers:
+verify: 0.70s
+checker: 59.88s
+gcc: 0.45s
+_: 60.00s
+synth: 59.28s

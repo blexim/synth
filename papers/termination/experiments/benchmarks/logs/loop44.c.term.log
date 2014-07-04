@@ -1,0 +1,31 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = m s<= 0x7;
+res1 = -m;
+Program 1:
+t1 = 0x0 ^ x;
+t2 = -x;
+res1 = -t1;
+
+Fastest checker: explicit
+Fails for (0, 4)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 1, 'explicit': 1, 'timeout': 1, 'iterations': 2}
+Perf timers:
+verify: 0.18s
+checker: 60.00s
+gcc: 0.47s
+_: 60.00s
+synth: 59.82s

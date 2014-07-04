@@ -1,0 +1,57 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4
+Program 0:
+I = 0x5 >>> n;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 1, 'cbmc': 29, 'explicit': 2, 'timeout': 1, 'iterations': 1}
+Perf timers:
+gcc: 0.61s
+verify: 59.71s
+checker: 59.96s
+generalize: 59.09s
+synth: 0.28s
+_: 60.00s

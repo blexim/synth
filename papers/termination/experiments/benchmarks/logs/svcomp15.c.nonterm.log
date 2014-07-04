@@ -1,0 +1,266 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+Fastest checker: cbmc
+Fails for (0, 0, 0, 0, 0, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 7, 3, 4, 3, 4
+Program 0:
+I = y >>> 0x5;
+
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 28, 'cbmc': 27, 'timeout': 1, 'iterations': 28}
+Perf timers:
+verify: 59.58s
+checker: 59.95s
+gcc: 0.47s
+_: 60.01s
+synth: 0.41s

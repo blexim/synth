@@ -1,0 +1,102 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1 + 0x1;
+t2 = t1 - t1;
+res1 = t2 == debug;
+Program 1:
+t1 = max(0x4, debug);
+res1 = debug - 0x4;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 >>> x;
+res1 = 0x7 + 0x7;
+Program 1:
+t1 = x s<= debug;
+t2 = 0x4 + t1;
+t3 = 0x4 s<= x;
+res1 = min(x, debug);
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(0x0, debug);
+t2 = x s<= 0x0;
+res1 = debug <= t1;
+Program 1:
+res1 = x - 0x2;
+
+Fastest checker: explicit
+Fails for (2, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x == x;
+t2 = 0x4 ^ debug;
+t3 = max(x, x);
+res1 = t2 & 0x4;
+Program 1:
+t1 = -x;
+t2 = debug == x;
+res1 = x << 0x5;
+
+Fastest checker: explicit
+Fails for (6, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = debug ? debug : debug;
+res1 = debug s<= 0x1;
+Program 1:
+t1 = ~x;
+t2 = min(debug, x);
+res1 = x << x;
+
+Fastest checker: explicit
+Fails for (7, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x <= x;
+t2 = t1 == 0x0;
+t3 = 0x0 s< 0x0;
+res1 = debug ==> 0x0;
+Program 1:
+t1 = 0x4 | x;
+t2 = 0x4 - x;
+t3 = 0x4 * x;
+t4 = t3 | t3;
+res1 = t3 * t3;
+
+Fastest checker: explicit
+Fails for (4, 0)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 6, 'explicit': 6, 'timeout': 1, 'iterations': 7}
+Perf timers:
+verify: 0.22s
+checker: 59.99s
+gcc: 0.43s
+_: 60.00s
+synth: 59.78s

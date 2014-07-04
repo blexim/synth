@@ -1,0 +1,247 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(y, x);
+t2 = 0x7 == nondet_0;
+res1 = b ? 0x7 : a;
+Program 1:
+t1 = y * 0x0;
+res1 = x | nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 5, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = a == x;
+Program 1:
+t1 = 0x5 ^ x;
+res1 = 0x5 ? x : a;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 1, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~a;
+res1 = y s<= b;
+Program 1:
+t1 = nondet_0 < x;
+t2 = b s< nondet_0;
+res1 = t2 * a;
+
+Fastest checker: explicit
+Fails for (0, 0, 2, 1, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 s< a;
+res1 = nondet_0 s< t1;
+Program 1:
+t1 = y ^ nondet_0;
+res1 = a - 0x4;
+
+Fastest checker: explicit
+Fails for (1, 0, 2, 1, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a & 0x7;
+t2 = y - 0x7;
+res1 = x ==> a;
+Program 1:
+t1 = y >> 0x7;
+t2 = min(t1, y);
+res1 = a + nondet_0;
+
+Fastest checker: explicit
+Fails for (1, 1, 2, 1, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 * x;
+res1 = y <= 0x7;
+Program 1:
+t1 = x - y;
+res1 = nondet_0 s<= y;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = b >>> y;
+t2 = x + y;
+res1 = ~x;
+Program 1:
+t1 = nondet_0 s<= x;
+t2 = y + y;
+res1 = 0x0 + x;
+
+Fastest checker: explicit
+Fails for (0, 7, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x >>> 0x5;
+res1 = nondet_0 ^ 0x5;
+Program 1:
+t1 = 0x0 s<= y;
+t2 = min(y, x);
+res1 = x + y;
+
+Fastest checker: explicit
+Fails for (5, 7, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = ~0x3;
+Program 1:
+t1 = nondet_0 s<= y;
+t2 = a + y;
+t3 = 0x0 * a;
+res1 = x * t1;
+
+Fastest checker: explicit
+Fails for (0, 6, 1, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = b >>> nondet_0;
+t2 = x ==> 0x7;
+res1 = 0x7 == 0x7;
+Program 1:
+t1 = nondet_0 ^ y;
+t2 = y + nondet_0;
+t3 = max(nondet_0, x);
+res1 = x - 0x0;
+
+Fastest checker: explicit
+Fails for (6, 6, 1, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x | 0x4;
+Program 1:
+t1 = 0x0 s< x;
+res1 = y + x;
+
+Fastest checker: explicit
+Fails for (1, 7, 1, 2, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = a | 0x7;
+Program 1:
+t1 = 0x0 s< b;
+t2 = t1 / y;
+t3 = nondet_0 + y;
+t4 = y + y;
+res1 = 0x0 | x;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = a | 0x3;
+Program 1:
+t1 = 0x0 s< x;
+t2 = 0x0 + b;
+res1 = x * y;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x | 0x7;
+Program 1:
+t1 = min(y, y);
+res1 = a + x;
+
+Fastest checker: explicit
+Fails for (1, 6, 0, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y - y;
+t2 = -x;
+t3 = x * x;
+res1 = x + 0x6;
+Program 1:
+t1 = x << y;
+res1 = x + nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 2, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a != x;
+res1 = x + 0x3;
+Program 1:
+t1 = nondet_0 * 0x6;
+t2 = y ^ nondet_0;
+t3 = b + y;
+res1 = nondet_0 + x;
+
+Fastest checker: explicit
+Fails for (0, 5, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x | 0x7;
+Program 1:
+t1 = 0x0 + y;
+t2 = min(y, nondet_0);
+t3 = t2 + x;
+res1 = max(x, t3);
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 3.14s
+
+Program 0:
+res1 = x | 0x7;
+Program 1:
+t1 = 0x0 + y;
+t2 = min(y, nondet_0);
+t3 = t2 + x;
+res1 = max(x, t3);
+
+
+Perf counters:
+{'genetic': 17, 'cbmc': 1, 'explicit': 17, 'iterations': 17}
+Perf timers:
+verify: 2.58s
+checker: 3.11s
+gcc: 0.63s
+_: 3.14s
+synth: 0.55s

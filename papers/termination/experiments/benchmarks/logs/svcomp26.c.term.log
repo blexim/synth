@@ -1,0 +1,162 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x5 >>> z;
+Program 1:
+t1 = y s<= nondet_2;
+t2 = min(x, nondet_0);
+res1 = 0x0 s<= 0x0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 2, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_1 + y;
+t2 = nondet_0 - t1;
+res1 = y == y;
+Program 1:
+t1 = max(z, x);
+res1 = z - 0x4;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 2, 2, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_2 <= nondet_1;
+Program 1:
+t1 = max(y, nondet_1);
+t2 = min(nondet_0, nondet_2);
+res1 = nondet_0 ==> t2;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 2, 2, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = nondet_1 == y;
+Program 1:
+t1 = 0x3 >>> z;
+t2 = max(0x3, y);
+res1 = x << t2;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 2, 2, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x ==> x;
+res1 = z >> t1;
+Program 1:
+t1 = x <= 0x5;
+t2 = t1 - y;
+res1 = nondet_1 + nondet_0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 3, 3, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x <= nondet_0;
+Program 1:
+t1 = y + z;
+res1 = nondet_0 == nondet_2;
+
+Fastest checker: explicit
+Fails for (0, 0, 3, 3, 3, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y ^ nondet_2;
+res1 = y s<= nondet_1;
+Program 1:
+t1 = x * z;
+t2 = nondet_2 * 0x4;
+res1 = 0x4 | nondet_1;
+
+Fastest checker: explicit
+Fails for (0, 3, 3, 3, 3, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = max(z, nondet_1);
+Program 1:
+t1 = nondet_0 s<= nondet_2;
+t2 = min(x, nondet_0);
+t3 = y + y;
+res1 = z + nondet_2;
+
+Fastest checker: explicit
+Fails for (2, 3, 3, 3, 3, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 | nondet_1;
+t2 = y < z;
+res1 = t1 s< t2;
+Program 1:
+t1 = nondet_2 s< z;
+t2 = z / x;
+t3 = t2 + z;
+res1 = y + y;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 1, 1, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = nondet_2 << 0x1;
+res1 = max(0x1, nondet_1);
+Program 1:
+t1 = 0x1 s< y;
+t2 = z & nondet_0;
+res1 = 0x1 | z;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1, 1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = ~0x1;
+Program 1:
+res1 = min(x, y);
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.93s
+
+Program 0:
+res1 = ~0x1;
+Program 1:
+res1 = min(x, y);
+
+
+Perf counters:
+{'genetic': 11, 'cbmc': 1, 'explicit': 11, 'iterations': 11}
+Perf timers:
+verify: 2.48s
+checker: 2.90s
+gcc: 0.62s
+_: 2.93s
+synth: 0.44s

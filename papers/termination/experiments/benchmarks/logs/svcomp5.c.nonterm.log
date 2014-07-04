@@ -1,0 +1,492 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 0, 7, 3, 1
+Program 0:
+I = y ==> N;
+
+Fastest checker: explicit
+Fails for (0, 5, 5, 5)
+
+[]
+Fastest checker: genetic
+Evars: 7, 2, 0, 3
+Program 0:
+I = y s< N;
+
+Fastest checker: explicit
+Fails for (0, 6, 4, 6)
+
+[]
+Fastest checker: genetic
+Evars: 7, 7, 2, 3
+Program 0:
+t1 = 0x2 < x;
+I = 0x2 == y;
+
+Fastest checker: explicit
+Fails for (1, 4, 2, 7)
+
+[]
+Fastest checker: genetic
+Evars: 7, 0, 3, 2
+Program 0:
+t1 = nondet_0 * N;
+I = t1 ? t1 : t1;
+
+Fastest checker: explicit
+Fails for (1, 7, 2, 7)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 1
+Program 0:
+I = nondet_0 >>> N;
+
+Fastest checker: explicit
+Fails for (2, 7, 2, 7)
+
+[]
+Fastest checker: genetic
+Evars: 4, 0, 3, 3
+Program 0:
+t1 = x >>> N;
+t2 = nondet_0 + N;
+I = nondet_0 / N;
+
+Fastest checker: explicit
+Fails for (7, 7, 2, 7)
+
+[]
+Fastest checker: genetic
+Evars: 4, 7, 1, 0
+Program 0:
+t1 = nondet_0 & x;
+t2 = t1 - N;
+t3 = t2 << y;
+I = nondet_0 s< x;
+
+Fastest checker: explicit
+Fails for (4, 7, 3, 7)
+
+[]
+Fastest checker: genetic
+Evars: 1, 7, 3, 1
+Program 0:
+I = N <= 0x1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 4, 3, 7, 3
+Program 0:
+t1 = max(x, x);
+t2 = N + y;
+I = N < y;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 1, 2, 3
+Program 0:
+I = 0x2 s< N;
+
+Fastest checker: explicit
+Fails for (1, 3, 2, 3)
+
+[]
+Fastest checker: genetic
+Evars: 3, 7, 3, 1
+Program 0:
+I = N < nondet_0;
+
+Fastest checker: explicit
+Fails for (4, 3, 2, 3)
+
+[]
+Fastest checker: genetic
+Evars: 7, 2, 0, 3
+Program 0:
+t1 = 0x6 < y;
+t2 = t1 < N;
+t3 = max(y, t2);
+I = y < t2;
+
+Fastest checker: explicit
+Fails for (0, 4, 0, 4)
+
+[]
+Fastest checker: genetic
+Evars: 3, 7, 3, 1
+Program 0:
+t1 = max(0x2, 0x2);
+I = t1 s< nondet_0;
+
+Fastest checker: explicit
+Fails for (3, 4, 5, 4)
+
+[]
+Fastest checker: genetic
+Evars: 6, 6, 3, 7
+Program 0:
+t1 = max(x, 0x6);
+t2 = y >> N;
+I = t1 < N;
+
+Fastest checker: explicit
+Fails for (0, 6, 0, 7)
+
+[]
+Fastest checker: genetic
+Evars: 6, 0, 1, 1
+Program 0:
+t1 = N * y;
+I = nondet_0 == 0x6;
+
+Fastest checker: explicit
+Fails for (6, 7, 2, 7)
+
+[]
+Fastest checker: genetic
+Evars: 1, 1, 7, 1
+Program 0:
+t1 = max(y, N);
+I = t1 s< N;
+
+Fastest checker: explicit
+Fails for (0, 0, 4, 0)
+
+[]
+Fastest checker: genetic
+Evars: 1, 1, 7, 1
+Program 0:
+I = 0x6 < y;
+
+Fastest checker: explicit
+Fails for (0, 0, 7, 0)
+
+[]
+Fastest checker: genetic
+Evars: 2, 5, 3, 6
+Program 0:
+t1 = N != y;
+t2 = x != N;
+t3 = max(y, N);
+I = t2 >> N;
+
+Fastest checker: explicit
+Fails for (0, 7, 7, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 1, 2, 3
+Program 0:
+t1 = max(x, 0x4);
+t2 = y >> N;
+I = t1 < nondet_0;
+
+Fastest checker: explicit
+Fails for (5, 1, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 7, 5, 3, 1
+Program 0:
+t1 = nondet_0 != 0x5;
+I = t1 == N;
+
+Fastest checker: explicit
+Fails for (6, 1, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 2, 6, 3
+Program 0:
+t1 = N == 0x3;
+I = t1 >> y;
+
+Fastest checker: explicit
+Fails for (1, 0, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 6, 2, 1, 2
+Program 0:
+t1 = min(x, N);
+t2 = y + N;
+I = 0x2 == N;
+
+Fastest checker: explicit
+Fails for (0, 2, 0, 2)
+
+[]
+Fastest checker: genetic
+Evars: 2, 3, 6, 3
+Program 0:
+t1 = ~0x6;
+t2 = nondet_0 * t1;
+t3 = 0x6 ==> x;
+I = y == 0x6;
+
+Fastest checker: explicit
+Fails for (1, 0, 6, 2)
+
+[]
+Fastest checker: genetic
+Evars: 1, 0, 2, 0
+Program 0:
+t1 = N == nondet_0;
+I = N == t1;
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 5, 3, 2
+Program 0:
+t1 = y & nondet_0;
+t2 = 0x2 != t1;
+I = 0x2 < t1;
+
+Fastest checker: explicit
+Fails for (3, 0, 3, 0)
+
+[]
+Fastest checker: genetic
+Evars: 1, 6, 2, 2
+Program 0:
+t1 = x == y;
+t2 = N ? N : t1;
+t3 = N + 0x4;
+I = x == t3;
+
+Fastest checker: explicit
+Fails for (0, 4, 3, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 7, 1, 2
+Program 0:
+t1 = x >>> x;
+t2 = N >>> t1;
+I = t2 s< N;
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 2, 6, 3
+Program 0:
+t1 = y | y;
+t2 = min(y, nondet_0);
+I = t2 s< 0x0;
+
+Fastest checker: explicit
+Fails for (4, 0, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 1, 7, 3, 1
+Program 0:
+t1 = N - x;
+I = t1 >> 0x7;
+
+Fastest checker: explicit
+Fails for (1, 5, 7, 1)
+
+[]
+Fastest checker: genetic
+Evars: 6, 1, 7, 3
+Program 0:
+t1 = 0x6 == nondet_0;
+t2 = t1 == 0x6;
+I = t1 >>> N;
+
+Fastest checker: explicit
+Fails for (6, 3, 2, 3)
+
+[]
+Fastest checker: genetic
+Evars: 1, 5, 3, 0
+Program 0:
+t1 = N ^ 0x5;
+I = x == t1;
+
+Fastest checker: explicit
+Fails for (0, 6, 2, 3)
+
+[]
+Fastest checker: genetic
+Evars: 6, 5, 3, 1
+Program 0:
+t1 = y * y;
+t2 = x s<= nondet_0;
+I = t2 == N;
+
+Fastest checker: explicit
+Fails for (4, 6, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 1, 1, 3, 1
+Program 0:
+t1 = nondet_0 < 0x5;
+I = t1 == N;
+
+Fastest checker: explicit
+Fails for (5, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 6, 2, 6
+Program 0:
+t1 = 0x7 == nondet_0;
+t2 = t1 & 0x7;
+I = t1 >>> N;
+
+Fastest checker: explicit
+Fails for (7, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 0, 1, 7, 3
+Program 0:
+t1 = x << N;
+t2 = N ==> 0x1;
+I = t1 == 0x1;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 5, 5, 3, 6
+Program 0:
+t1 = nondet_0 < nondet_0;
+t2 = nondet_0 ? N : y;
+I = 0x6 == t2;
+
+Fastest checker: explicit
+Fails for (0, 4, 6, 4)
+
+[]
+Fastest checker: genetic
+Evars: 2, 1, 7, 3
+Program 0:
+t1 = 0x2 == nondet_0;
+t2 = t1 - 0x2;
+I = t1 >>> N;
+
+Fastest checker: explicit
+Fails for (2, 6, 3, 6)
+
+[]
+Fastest checker: genetic
+Evars: 0, 1, 1, 2
+Program 0:
+t1 = y != 0x1;
+t2 = ~0x1;
+t3 = 0x1 == x;
+I = min(y, t3);
+
+Fastest checker: explicit
+Fails for (0, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 7, 0, 3, 3
+Program 0:
+t1 = nondet_0 / 0x7;
+I = t1 >> y;
+
+Fastest checker: explicit
+Fails for (7, 0, 3, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 3, 3, 3
+Program 0:
+t1 = x << y;
+t2 = t1 != 0x3;
+t3 = 0x3 != t1;
+I = 0x3 s<= t1;
+
+Fastest checker: explicit
+Fails for (0, 3, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 2, 5, 3, 5
+Program 0:
+t1 = N == 0x5;
+I = t1 >> y;
+
+Fastest checker: explicit
+Fails for (1, 4, 0, 5)
+
+[]
+Fastest checker: genetic
+Evars: 3, 6, 2, 3
+Program 0:
+t1 = N * N;
+t2 = nondet_0 * t1;
+t3 = nondet_0 >>> y;
+I = 0x3 == t2;
+
+Fastest checker: explicit
+Fails for (3, 5, 4, 5)
+
+[]
+Fastest checker: genetic
+Evars: 2, 0, 0, 3
+Program 0:
+t1 = 0x3 <= N;
+I = x < t1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 3, 5, 3, 6
+Program 0:
+t1 = 0x5 == x;
+t2 = t1 & y;
+I = t1 >>> N;
+
+Fastest checker: explicit
+Fails for (0, 5, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 7, 3, 5, 3
+Program 0:
+t1 = min(y, nondet_0);
+I = t1 / 0x5;
+
+Fastest checker: explicit
+Fails for (5, 0, 7, 3)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 45, 'explicit': 45, 'timeout': 1, 'iterations': 46}
+Perf timers:
+verify: 0.39s
+checker: 59.89s
+gcc: 0.46s
+_: 60.00s
+synth: 59.59s

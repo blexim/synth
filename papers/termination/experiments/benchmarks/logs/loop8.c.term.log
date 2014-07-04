@@ -1,0 +1,37 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x4 == 0x4;
+Program 1:
+t1 = 0x5 ^ 0x5;
+res1 = 0x5 ? f : 0x5;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.44s
+
+Program 0:
+res1 = 0x4 == 0x4;
+Program 1:
+t1 = 0x5 ^ 0x5;
+res1 = 0x5 ? f : 0x5;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 2.17s
+checker: 2.44s
+gcc: 0.61s
+_: 2.44s
+synth: 0.27s

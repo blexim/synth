@@ -1,0 +1,82 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = m s<= 0x7;
+res1 = -m;
+Program 1:
+t1 = 0x0 ^ x;
+t2 = -x;
+res1 = -t1;
+
+Fastest checker: explicit
+Fails for (0, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x % m;
+res1 = min(m, m);
+Program 1:
+t1 = 0x0 >> m;
+t2 = x ==> 0x0;
+res1 = m - x;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x5 % 0x5;
+t2 = min(0x5, m);
+res1 = m <= t2;
+Program 1:
+t1 = x >> x;
+t2 = 0x7 + x;
+t3 = x ^ t2;
+res1 = -t2;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = m <= m;
+Program 1:
+t1 = 0x5 * m;
+t2 = 0x5 + 0x5;
+t3 = m >> 0x5;
+res1 = m - x;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.69s
+
+Program 0:
+res1 = m <= m;
+Program 1:
+t1 = 0x5 * m;
+t2 = 0x5 + 0x5;
+t3 = m >> 0x5;
+res1 = m - x;
+
+
+Perf counters:
+{'genetic': 4, 'cbmc': 1, 'explicit': 4, 'iterations': 4}
+Perf timers:
+verify: 2.28s
+checker: 2.67s
+gcc: 0.64s
+_: 2.69s
+synth: 0.41s

@@ -1,0 +1,157 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = q ==> q;
+res1 = y s<= y;
+Program 1:
+t1 = y & 0x6;
+res1 = -y;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y | y;
+t2 = y ^ y;
+res1 = 0x4 - t2;
+Program 1:
+t1 = ~y;
+t2 = t1 s<= t1;
+res1 = 0x5 != 0x5;
+
+Fastest checker: explicit
+Fails for (0, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 | y;
+res1 = t1 <= t1;
+Program 1:
+res1 = 0x4 - y;
+
+Fastest checker: explicit
+Fails for (0, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 == y;
+res1 = 0x7 >>> 0x7;
+Program 1:
+t1 = 0x6 + 0x6;
+t2 = y * 0x6;
+res1 = 0x6 - y;
+
+Fastest checker: explicit
+Fails for (0, 6)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = min(0x1, 0x1);
+Program 1:
+t1 = q != q;
+t2 = -y;
+res1 = t2 == q;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = max(0x2, 0x2);
+Program 1:
+t1 = y s<= q;
+t2 = ~y;
+t3 = 0x6 & 0x6;
+res1 = t1 != q;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y s<= 0x5;
+t2 = ~y;
+res1 = ~t1;
+Program 1:
+t1 = 0x5 - y;
+t2 = q < 0x5;
+res1 = y <= y;
+
+Fastest checker: explicit
+Fails for (0, 5)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y - q;
+res1 = 0x6 << 0x6;
+Program 1:
+t1 = 0x7 - y;
+res1 = q == t1;
+
+Fastest checker: explicit
+Fails for (1, 7)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = y | 0x5;
+Program 1:
+t1 = 0x4 == q;
+t2 = q & 0x4;
+t3 = 0x4 - y;
+res1 = 0x4 != q;
+
+Fastest checker: explicit
+Fails for (1, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = y - 0x1;
+t2 = 0x1 s< t1;
+res1 = 0x1 + 0x1;
+Program 1:
+t1 = 0x4 - y;
+res1 = q < 0x4;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Finished in 18.16s
+
+Program 0:
+t1 = y - 0x20000000;
+t2 = 0x20000000 s< t1;
+res1 = 0x20000000 + 0x20000000;
+Program 1:
+t1 = 0x80000000L - y;
+res1 = q < 0x80000000L;
+
+
+Perf counters:
+{'genetic': 10, 'cbmc': 1, 'explicit': 11, 'iterations': 10}
+Perf timers:
+gcc: 0.64s
+verify: 2.41s
+checker: 18.13s
+generalize: 2.01s
+synth: 15.74s
+_: 18.16s
