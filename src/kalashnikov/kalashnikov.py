@@ -423,6 +423,17 @@ def expand(x, narrow, wide):
   if args.args and args.args.verbose > 1:
     print "Expanding %x from %d to %d bits" % (x, narrow, wide)
 
+  if x == 0:
+    return [0]
+  elif x == 1:
+    return [1]
+  elif x == (1 << narrow) - 1:
+    return [(1 << wide) - 1, x]
+  elif x == 1 << (narrow - 1):
+    return [1 << (wide - 1), x]
+  elif x == (1 << (narrow - 1)) - 1:
+    return [(1 << (wide - 1)) - 1, x]
+
   lo = x & 1
   hi = (x >> (narrow - 1)) & 1
   mid = (x & ((1 << (narrow - 1)) - 1)) >> 1
@@ -506,7 +517,11 @@ def heuristic_generalize(prog, checker, width, targetwidth, codelen):
 
   for i in xrange(len(prog.consts)):
     for j in xrange(len(prog.consts[i])):
-      expanded = expand(prog.consts[i][j], width, targetwidth)
+      if prog.const_used(i, j):
+        expanded = expand(prog.consts[i][j], width, targetwidth)
+      else:
+        expanded = [0]
+
       expansions.append(expanded)
 
   for i in xrange(len(prog.evars)):

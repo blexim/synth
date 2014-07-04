@@ -84,9 +84,7 @@ void check_population(solution_t *pop) {
 }
 
 int rand_const() {
-  //return rand() & WORDMASK;
-
-  int r = rand() % 4;
+  int r = rand() % 5;
 
   switch (r) {
   case 0:
@@ -97,6 +95,8 @@ int rand_const() {
     return WORDMASK;
   case 3:
     return 1 << (WIDTH - 1);
+  case 4:
+    return (1 << (WIDTH -1)) - 1;
   }
 }
 
@@ -226,7 +226,7 @@ void mutate(solution_t *solution) {
 
     for (i = 0; i < CONSTS; i++) {
       if (should_mutate()) {
-        b->consts[i] = rand() & WORDMASK;
+        b->consts[i] = rand_const();
       }
     }
   }
