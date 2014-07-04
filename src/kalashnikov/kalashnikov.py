@@ -423,6 +423,17 @@ def expand(x, narrow, wide):
   if args.args and args.args.verbose > 1:
     print "Expanding %x from %d to %d bits" % (x, narrow, wide)
 
+  if x == 0:
+    return [0]
+  elif x == 1:
+    return 1
+  elif x == (1 << narrow) - 1:
+    return [x, (1 << wide) - 1]
+  elif x == 1 << (narrow - 1):
+    return [x, 1 << (narrow - 1)]
+  else:
+    return [x]
+
   lo = x & 1
   hi = (x >> (narrow - 1)) & 1
   mid = (x & ((1 << (narrow - 1)) - 1)) >> 1
