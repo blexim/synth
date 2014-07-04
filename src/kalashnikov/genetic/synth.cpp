@@ -219,7 +219,6 @@ void load(individual_t *pop) {
   while (nread < POPSIZE) {
     individual_t *i = &pop[nread++];
     rand_solution(&i->solution);
-    i->fitness = fitness(&i->solution);
   }
 }
 
@@ -402,15 +401,25 @@ void tournament(individual_t *pop,
 
     tourney.insert(ind);
 
-    if (*a == NULL || (*a)->fitness < ind->fitness) {
+    if (*a == NULL) {
       *b = *a;
       *a = ind;
-    } else if (*b == NULL || (*b)->fitness < ind->fitness) {
+    } else if (*b == NULL) {
       *b = ind;
-    } else if (*d == NULL || (*d)->fitness > ind->fitness) {
+    } else if (*d == NULL) {
       *c = *d;
       *d = ind;
-    } else if (*c == NULL || (*c)->fitness > ind->fitness) {
+    } else if (*c == NULL) {
+      *c = ind;
+    } else if ((*a)->fitness < ind->fitness) {
+      *b = *a;
+      *a = ind;
+    } else if ((*b)->fitness < ind->fitness) {
+      *b = ind;
+    } else if ((*d)->fitness > ind->fitness) {
+      *c = *d;
+      *d = ind;
+    } else if ((*c)->fitness > ind->fitness) {
       *c = ind;
     }
   }
@@ -442,10 +451,6 @@ int check_fitness(individual_t *i, int best) {
     printf("New best fitness: %d\n", i->fitness);
   }
 
-  if (i->fitness == numtests) {
-    print_solution(&i->solution);
-  }
-
   return i->fitness;
 }
 
@@ -461,6 +466,17 @@ int main(void) {
 
   load(pop);
   load_tests();
+
+  for (i = 0; i < POPSIZE; i++) {
+    individual_t *ind = &pop[i];
+    bestfitness = max(bestfitness, check_fitness(ind, bestfitness));
+
+    if (ind->fitness == numtests) {
+      print_solution(&ind->solution);
+      break;
+    }
+  }
+
 
   while (bestfitness < numtests) {
     individual_t *a, *b, *c, *d;
@@ -479,7 +495,15 @@ int main(void) {
       bestfitness = max(bestfitness, check_fitness(c, bestfitness));
       bestfitness = max(bestfitness, check_fitness(d, bestfitness));
     }
+
+    if (c->fitness == numtests) {
+      print_solution(&c->solution);
+    } else if (d->fitness == numtests) {
+      print_solution(&d->solution);
+    }
   }
+
+
 
   save(pop);
   free(pop);
