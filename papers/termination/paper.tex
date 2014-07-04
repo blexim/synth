@@ -285,25 +285,24 @@ We empirically show that this claim holds in practice, causing our technique to 
 
 
 \begin{itemize}
-\item We designed a technique for computing ranking functions that correctly accounts for the wrap-around behavior caused by under- and overflows in bit-vector and floating point arithmetic. To the best of our knowledge, this is the first approach able to compute ranking functions for programs handling floats. Our technique is not restricted to finding linear ranking functions, but can also compute (lexicographic) non-linear  ones. We justified the need for such a non restrictive procedure by computing the probability ... .
-\item  We rephrased the termination problem as a second-order satisfaction problem and made 
-use of results in genetic programming to efficiently solve it. We have also investigated the effects of genetic operators on the search space for ranking functions and computed theoretical 
-bounds on the convergence time ...
-\item We present a formulation that allows us to prove termination without an expensive reachability check (as we don't use Ramsey-based termination arguments).  In particular,
-we only need a bounded model checker that performs a single unwinding of a loop.
+\item We designed a bit-level accurate technique for computing ranking functions that correctly accounts for the wrap-around behavior
+caused by under- and overflows in bit-vector and floating point arithmetic. Our technique is not restricted to finding linear ranking functions,
+but can also compute lexicographic non-linear  ones.
+
+\item  We rephrased the termination and non-termination problems as second-order satisfaction problems and used
+program synthesis techniques to solve them. In contrast to previous approaches to program synthesis, we found that
+using genetic programming was very effective at generating candidate termination and non-termination proofs.
+
+\item Our procedure does not require the enumeration of lassos, or directly reasoning about the transitive closure of the transition relation.
+To verify our proofs, we only require a single call to a SAT solver.
+
+%\item We present a formulation that allows us to prove termination without an expensive reachability check (as we don't use Ramsey-based termination arguments).  In particular,
+%we only need a bounded model checker that performs a single unwinding of a loop.
+
 %% \item Our technique is able to uniformly handle conditionally-terminating loops, as well as programs with
 %% multiple loops.
 
-\item We iteratively construct a termination argument as a pair of a ranking function and supporting invariant through a single refinement loop.
-This is opposed to tools that alternate between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.
-
-\item Our proposed termination proving procedure can also prove non-termination: (non-)termination analysis.
-
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
-
-\item bit level termination and non-termination analysis. This enables
-  the precise treatment of bit-wise operations and arithmetic modulo
-  fixed widths.
 
 \end{itemize}
 % unified approach to termination and non-termination
