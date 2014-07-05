@@ -104,7 +104,8 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 
  \begin{multicols}{2}
  \begin{algorithmic}[1]
-\Statex
+\label{alg:cegis}
+ \Statex
 \Function{synth}{inputs}
   \Let{$(i_1, \ldots, i_N)$}{inputs}
   \Let{query}{$\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$}
