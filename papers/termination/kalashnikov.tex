@@ -278,18 +278,25 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 %check the {\sc synth} program for safety.  
 
 
-\begin{figure}
+\begin{figure*}
 \begin{center}
 \tikzstyle{file}=[draw, text width=7.0em, text centered,
   minimum height=1.5em]
 \tikzstyle{process} = [draw, minimum height=3em, circle]
 \tikzstyle{line} = [draw, color=black, -latex']
 
+\def\Divide#1#2{%
+ \coordinate(a) at ($(#1.east) !.5! (#2.west)$);
+ \coordinate(b) at (a |- 0,-3);
+ \draw[dotted] (b) -- ++(0, 4.5);
+}
 
 \resizebox{\linewidth}{!}{
 \begin{tikzpicture}[font=\sffamily]
 
-\node [file] (spec) {\sc Termination Specification};
+\node [file] (pua) {input.c};
+
+\path (pua.east)+(2,0) node [file] (spec) {\sc Termination Specification};
 \path (spec.south)+(0.0, -1) node [file] (inputs) {\sc Tracked Inputs};
 %% \path (synth.south)+(0.0, -0.5) node [file] (tests) {\sc tests.c};
 %% \path (tests.south)+(0.0, -0.5) node [file] (interpreter) {\sc interpreter.c};
@@ -306,6 +313,8 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 
 %\path [line] (spec) -- (merged);
 
+\path [line] (pua) -- (spec);
+
 \path [line] (spec) -- (file);
 \path [line] (inputs) -- (file);
 
@@ -318,13 +327,24 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 \path [line] (gcc) -- (out);
 \path [line] (gp) -- (out);
 
+\Divide{pua}{spec}{puaspec}
+\Divide{spec}{file}{specfile}
+\Divide{file}{gcc}{filegcc}
+\Divide{gcc}{out}{gccout}
+
+\draw (pua |- 0,-3) node {Input};
+\draw (spec |- 0,-3) node {Specification};
+\draw (file |- 0,-3) node {Spec};
+\draw (gcc |- 0,-3) node {Test generator};
+\draw (out |- 0,-3) node {Proof};
+
 \end{tikzpicture}
 }
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
 \label{fig:synth-dfd}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Parameterising the Program Space}
