@@ -2,34 +2,36 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-res1 = nondet_1 - x;
+t1 = x + nondet_1;
+res1 = t1 - nondet_1;
 Program 1:
-t1 = 0x5 == x;
-t2 = x - y;
-res1 = x - x;
+t1 = y == x;
+t2 = max(x, t1);
+res1 = nondet_0 - nondet_1;
 
 Fastest checker: explicit
-Fails for (5, 4, 5, 5)
+Fails for (0, 0, 0, 12)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = nondet_1 + x;
-res1 = y + y;
+res1 = nondet_1 ==> nondet_0;
 Program 1:
-t1 = -x;
-t2 = -nondet_1;
-res1 = y % y;
+res1 = x ^ nondet_0;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 0)
+Fails for (1, 0, 0, 12)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = x ==> 0x2;
+t1 = nondet_0 == nondet_0;
+t2 = 0x8 + nondet_0;
+t3 = x >>> t1;
+res1 = 0x8 & 0x8;
 Program 1:
-res1 = x ? 0x7 : nondet_1;
+t1 = nondet_0 < 0x8;
+res1 = x + nondet_0;
 
 Fastest checker: explicit
 Fails for (1, 0, 1, 1)
@@ -37,25 +39,54 @@ Fails for (1, 0, 1, 1)
 []
 Fastest checker: genetic
 Program 0:
-t1 = y ? 0x2 : y;
-t2 = y ? y : 0x2;
-res1 = t1 + 0x2;
+res1 = ~y;
 Program 1:
-t1 = -nondet_0;
-t2 = x + 0x2;
-res1 = -y;
+t1 = x s<= nondet_0;
+t2 = 0x1 < x;
+res1 = y << t2;
 
 Fastest checker: explicit
-Fails for (0, 0, 1, 2)
+Fails for (0, 1, 1, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = nondet_0 s<= nondet_0;
+t1 = y ==> 0x8;
+t2 = t1 + nondet_0;
+res1 = nondet_1 != 0x8;
 Program 1:
-t1 = max(nondet_0, 0x4);
-t2 = x != nondet_0;
-res1 = y * x;
+t1 = ~y;
+t2 = x & y;
+t3 = max(t1, x);
+t4 = nondet_0 + nondet_1;
+res1 = 0x7 & t2;
+
+Fastest checker: explicit
+Fails for (8, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x1 << nondet_1;
+Program 1:
+t1 = y & y;
+t2 = min(y, x);
+t3 = y == 0x8;
+t4 = min(t2, t3);
+res1 = t4 < t3;
+
+Fastest checker: explicit
+Fails for (0, 1, 2, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x ==> nondet_1;
+t2 = y s<= x;
+t3 = 0x1 ^ t1;
+res1 = nondet_0 ==> y;
+Program 1:
+res1 = x * y;
 
 Fastest checker: explicit
 Fails for (2, 0, 1, 2)
@@ -63,87 +94,16 @@ Fails for (2, 0, 1, 2)
 []
 Fastest checker: genetic
 Program 0:
-t1 = x >>> y;
-t2 = nondet_1 + nondet_1;
-t3 = 0x5 s<= x;
-res1 = x | 0x5;
+t1 = 0x1 << x;
+t2 = y & nondet_0;
+res1 = ~t1;
 Program 1:
-t1 = nondet_0 s<= 0x0;
-t2 = min(nondet_0, x);
-res1 = y + t1;
+t1 = x | 0x0;
+t2 = t1 != 0x0;
+res1 = min(y, y);
 
 Fastest checker: explicit
-Fails for (0, 1, 2, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = nondet_0 s< y;
-res1 = x + 0x5;
-Program 1:
-t1 = ~nondet_0;
-t2 = min(x, x);
-t3 = y s<= nondet_1;
-t4 = 0x0 + y;
-res1 = nondet_1 + t1;
-
-Fastest checker: explicit
-Fails for (0, 0, 3, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = nondet_1 | x;
-t2 = t1 >>> 0x1;
-res1 = 0x1 + nondet_0;
-Program 1:
-t1 = min(y, x);
-res1 = y >>> nondet_0;
-
-Fastest checker: explicit
-Fails for (0, 1, 3, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x s< nondet_1;
-t2 = x ^ x;
-t3 = nondet_1 == nondet_0;
-res1 = nondet_0 s<= nondet_0;
-Program 1:
-t1 = nondet_0 >>> x;
-t2 = x + nondet_1;
-res1 = y + y;
-
-Fastest checker: explicit
-Fails for (5, 1, 3, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = 0x5 >>> x;
-Program 1:
-t1 = nondet_1 >> y;
-t2 = 0x5 & x;
-res1 = y + x;
-
-Fastest checker: explicit
-Fails for (3, 0, 1, 3)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~y;
-res1 = 0x7 + 0x7;
-Program 1:
-t1 = 0x0 s< 0x0;
-t2 = x + 0x0;
-t3 = t1 + t1;
-t4 = t3 | y;
-res1 = 0x0 + y;
-
-Fastest checker: explicit
-Correct for wordlen=3
+Correct for wordlen=4
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -153,24 +113,23 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.76s
+Finished in 1.52s
 
 Program 0:
-t1 = ~y;
-res1 = 0x7 + 0x7;
+t1 = 0x1 << x;
+t2 = y & nondet_0;
+res1 = ~t1;
 Program 1:
-t1 = 0x0 s< 0x0;
-t2 = x + 0x0;
-t3 = t1 + t1;
-t4 = t3 | y;
-res1 = 0x0 + y;
+t1 = x | 0x0;
+t2 = t1 != 0x0;
+res1 = min(y, y);
 
 
 Perf counters:
-{'genetic': 11, 'cbmc': 1, 'explicit': 11, 'iterations': 11}
+{'genetic': 8, 'cbmc': 1, 'explicit': 8, 'iterations': 8}
 Perf timers:
-verify: 2.27s
-checker: 2.73s
-gcc: 0.65s
-_: 2.76s
-synth: 0.49s
+verify: 1.16s
+checker: 1.50s
+gcc: 0.54s
+_: 1.52s
+synth: 0.36s

@@ -27,7 +27,7 @@
 \usepackage{multirow}
 \usepackage{framed}
 \usepackage{tikz}
-\usetikzlibrary{arrows, automata, shapes}
+\usetikzlibrary{arrows, automata, shapes, calc}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -1699,7 +1699,7 @@ is a decidable problem, and the search as a whole terminates.
 \end{proof}
 
 
-Since termination for bitvector programs is known to be PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10} it
+Since termination for bitvector programs is known to be PSPACE-complete \cite{DBLP:conf/tacas/CookKRW10} it
 is perhaps unsurprising that we are able to decide it.  We will now show that our time complexity is
 asymptotically a function of the Kolmogorov complexity of the (non-)termination proof, and argue heuristically
 that this gives our procedure various desirable qualities.

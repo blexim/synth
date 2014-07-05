@@ -44,10 +44,10 @@ void load_tests() {
   getline(testfile);
   getint(numtests);
 
-  test_vectors = malloc(numtests * sizeof(int *));
+  test_vectors = (unsigned int **) malloc(numtests * sizeof(int *));
 
   for (i = 0; i < numtests; i++) {
-    test_vectors[i] = malloc(NARGS * sizeof(int));
+    test_vectors[i] = (unsigned int *) malloc(NARGS * sizeof(int));
 
     getline(testfile);
 

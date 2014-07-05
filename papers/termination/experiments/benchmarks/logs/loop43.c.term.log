@@ -2,71 +2,22 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x4 s<= x;
-t2 = max(t1, 0x4);
-res1 = t2 s<= 0x4;
+t1 = x <= 0x8;
+t2 = t1 | x;
+t3 = t2 ^ x;
+res1 = 0x8 ^ t1;
 Program 1:
-t1 = x == x;
-t2 = t1 << 0x1;
-t3 = x >> x;
-t4 = t3 + x;
-res1 = x ==> t4;
+t1 = 0x7 == 0x7;
+t2 = min(0x7, x);
+t3 = t2 - x;
+t4 = x ^ t3;
+res1 = t1 / t1;
 
 Fastest checker: explicit
-Correct for wordlen=3
+Correct for wordlen=4
 Fastest checker: explicit
 Trying to generalize...
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Couldn't generalize :-(
-Increasing wordlen to 6
-[]
-Fastest checker: genetic
-Program 0:
-res1 = max(x, x);
-Program 1:
-t1 = 0x37 - x;
-t2 = x << 0x37;
-res1 = min(t1, x);
-
-Fastest checker: explicit
-Fails for (55,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = -x;
-Program 1:
-t1 = x % x;
-t2 = t1 - x;
-res1 = min(t2, x);
-
-Fastest checker: explicit
-Fails for (63,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = -0x13;
-Program 1:
-t1 = -x;
-t2 = 0x16 != x;
-res1 = min(t1, x);
-
-Fastest checker: explicit
-Correct for wordlen=6
 Fastest checker: cbmc
-Also correct for wordlen=32!
 
 
 
@@ -74,22 +25,27 @@ Also correct for wordlen=32!
 
 
 
-Finished in 3.66s
+Finished in 1.50s
 
 Program 0:
-res1 = -0x13;
+t1 = x <= 0x88888888;
+t2 = t1 | x;
+t3 = t2 ^ x;
+res1 = 0x88888888 ^ t1;
 Program 1:
-t1 = -x;
-t2 = 0x16 != x;
-res1 = min(t1, x);
+t1 = 0x7fffffff == 0x7fffffff;
+t2 = min(0x7fffffff, x);
+t3 = t2 - x;
+t4 = x ^ t3;
+res1 = t1 / t1;
 
 
 Perf counters:
-{'genetic': 4, 'cbmc': 1, 'explicit': 17, 'iterations': 4}
+{'genetic': 1, 'cbmc': 1, 'explicit': 2, 'iterations': 1}
 Perf timers:
-gcc: 1.07s
-verify: 2.55s
-checker: 3.64s
-generalize: 0.02s
-synth: 1.10s
-_: 3.66s
+gcc: 0.53s
+verify: 1.29s
+checker: 1.50s
+generalize: 0.94s
+synth: 0.21s
+_: 1.50s

@@ -11,6 +11,8 @@ args.argparser.add_argument("--cbmc", default="cbmc", type=str,
     help="path to CBMC")
 args.argparser.add_argument("--gcc", default="gcc", type=str,
     help="path to GCC")
+args.argparser.add_argument("--gpp", default="g++", type=str,
+    help="path to G++")
 args.argparser.add_argument("--z3", default=False, type=bool,
     help="use Z3 as the backend")
 args.argparser.add_argument("--interpreter", "-I", default="interpreter",
@@ -43,8 +45,8 @@ args.argparser.add_argument("--nonops", default=False,
 args.argparser.add_argument("--noconsts", default=False,
     action="store_const", const=True,
     help="don't remove const instructions")
-args.argparser.add_argument("--fastverif", default=True, type=bool,
-    help="don't use fast verification")
+args.argparser.add_argument("--fastverif", default=False, type=bool,
+    help="use fast verification")
 
 args.argparser.add_argument("-popsize", default=2000, type=int)
 args.argparser.add_argument("-keepfrac", default=200, type=int)
@@ -53,6 +55,8 @@ args.argparser.add_argument("-newsize", default=3, type=int)
 args.argparser.add_argument("-tourneysize", default=10, type=int)
 args.argparser.add_argument("-mutprob", default=0.01, type=float)
 args.argparser.add_argument("-recombprob", default=0.1, type=float)
+args.argparser.add_argument("-replaceprob", default=0.1, type=float)
+
 
 def log2(x):
   i = 0
@@ -68,6 +72,7 @@ def log2(x):
   return i+extra
 
 compiled = {}
+geneticsave = tempfile.NamedTemporaryFile(delete=False)
 
 class Checker(object):
   cbmcargs = []
@@ -123,10 +128,10 @@ class Checker(object):
       genericargs.append("-DSEED=%d" % args.args.seed)
 
     if verif:
-      if not args.args.fastverif:
-        execcfile = os.path.join("interpreter", "exec.c")
-      else:
+      if args.args.fastverif == True:
         execcfile = "/tmp/exec.c"
+      else:
+        execcfile = os.path.join("interpreter", "exec.c")
 
       self.cbmcargs = [args.args.cbmc,
           "-DSZ=%d" % sz,
@@ -151,7 +156,9 @@ class Checker(object):
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
-      self.gccargs["genetic"] = [args.args.gcc, "-DSEARCH", "-std=c99",
+      self.gccargs["genetic"] = [args.args.gcc,
+          "-std=c99",
+          "-DSEARCH",
           "-DSZ=128",
           "-DNRES=128",
           "-DPOPSIZE=%d" % args.args.popsize,
@@ -161,6 +168,8 @@ class Checker(object):
           "-DTOURNEYSIZE=%d" % args.args.tourneysize,
           "-DMUTATION_PROB=%.03f" % args.args.mutprob,
           "-DRECOMBINE_PROB=%.03f" % args.args.recombprob,
+          "-DREPLACE_PROB=%.03f" % args.args.replaceprob,
+          "-DSAVEFILE=\"%s\"" % geneticsave.name,
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
           os.path.join("genetic", "synth.c"), "-lm"] + genericargs

@@ -1,37 +1,25 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 4, 0
+Evars: 13, 3
 Program 0:
-I = 0x5 >>> 0x5;
+t1 = min(x, x);
+I = x | x;
 
 Fastest checker: explicit
-Correct for wordlen=3
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: cbmc
-Fastest checker: cbmc
-Couldn't generalize :-(
-Increasing wordlen to 6
+Fails for (1, 1)
+
 []
 Fastest checker: genetic
-Evars: 6, 0
+Evars: 4, 14
 Program 0:
-t1 = x >>> 0x2;
-I = nondet_0 != 0x2;
+t1 = x == x;
+t2 = x < 0x7;
+t3 = t1 s< nondet_0;
+I = t2 s<= t1;
 
 Fastest checker: explicit
-Correct for wordlen=6
+Correct for wordlen=4
 Fastest checker: cbmc
 Trying to generalize...
 Fastest checker: cbmc
@@ -46,142 +34,401 @@ Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: cbmc
 Couldn't generalize :-(
-Increasing wordlen to 12
+Increasing wordlen to 8
 []
 Fastest checker: genetic
-Evars: 5, 0
+Evars: 13, 3
 Program 0:
-t1 = 0x3 >>> nondet_0;
-I = x <= 0x3;
+t1 = min(x, x);
+I = x | x;
+
+Fastest checker: explicit
+Fails for (1, 129)
+
+[]
+Fastest checker: genetic
+Evars: 4, 14
+Program 0:
+t1 = x == x;
+t2 = x < 0x7;
+t3 = t1 s< nondet_0;
+I = t2 s<= t1;
+
+Fastest checker: explicit
+Correct for wordlen=8
+Fastest checker: cbmc
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Couldn't generalize :-(
+Increasing wordlen to 16
+[]
+Fastest checker: genetic
+Evars: 10, 7
+Program 0:
+t1 = 0x0 * nondet_0;
+I = x <= nondet_0;
+
+Fastest checker: explicit
+Fails for (43499, 43499)
+
+[]
+Fastest checker: genetic
+Evars: 1, 10
+Program 0:
+t1 = nondet_0 << 0x8;
+t2 = t1 <= nondet_0;
+t3 = nondet_0 ==> nondet_0;
+I = t3 s< x;
+
+Fastest checker: cbmc
+Fails for (0, 512)
+
+[]
+Fastest checker: genetic
+Evars: 0, 2
+Program 0:
+t1 = 0x8 >>> 0x8;
+t2 = t1 - nondet_0;
+I = t2 <= 0x8;
+
+Fastest checker: cbmc
+Fails for (65529, 57345)
+
+[]
+Fastest checker: genetic
+Evars: 7, 5
+Program 0:
+I = x < 0x8;
+
+Fastest checker: cbmc
+Fails for (1, 6)
+
+[]
+Fastest checker: genetic
+Evars: 0, 7
+Program 0:
+t1 = 0x0 <= x;
+t2 = 0x0 | t1;
+t3 = nondet_0 - nondet_0;
+I = nondet_0 <= t3;
+
+Fastest checker: cbmc
+Fails for (0, 65201)
+
+[]
+Fastest checker: genetic
+Evars: 14, 0
+Program 0:
+t1 = 0x0 - x;
+t2 = -x;
+t3 = -t1;
+I = t1 <= 0x0;
 
 Fastest checker: cbmc
 Fails for (0, 0)
 
 []
 Fastest checker: genetic
-Evars: 5, 4
+Evars: 14, 1
 Program 0:
-t1 = min(nondet_0, 0x6);
-I = t1 != 0x6;
+t1 = 0x1 * 0x1;
+t2 = nondet_0 ==> x;
+t3 = x <= t2;
+t4 = 0x1 | x;
+I = min(t3, nondet_0);
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 8, 12
+Program 0:
+t1 = max(0x8, nondet_0);
+t2 = 0x8 s<= nondet_0;
+I = 0x8 == nondet_0;
 
 Fastest checker: cbmc
-Fails for (0, 2389)
+Fails for (8, 57342)
 
 []
 Fastest checker: genetic
-Evars: 7, 3
+Evars: 2, 15
 Program 0:
-t1 = nondet_0 >>> 0x0;
-t2 = nondet_0 s< x;
-I = 0x0 s< x;
+I = 0xf == x;
 
 Fastest checker: cbmc
-Fails for (0, 213)
+Fails for (0, 15)
 
 []
 Fastest checker: genetic
-Evars: 6, 2
+Evars: 7, 2
 Program 0:
-t1 = nondet_0 s< x;
-t2 = min(t1, t1);
-I = x < nondet_0;
-
-Fastest checker: explicit
-Fails for (214, 213)
-
-[]
-Fastest checker: genetic
-Evars: 2070, 642
-Program 0:
-t1 = x & 0x140;
-I = 0x140 s< x;
-
-Fastest checker: explicit
-Fails for (0, 321)
-
-[]
-Fastest checker: genetic
-Evars: 2142, 168
-Program 0:
-t1 = -x;
-I = nondet_0 s< 0x87c;
+I = 0x7 == nondet_0;
 
 Fastest checker: cbmc
-Fails for (2048, 3595)
+Fails for (7, 63487)
 
 []
 Fastest checker: genetic
-Evars: 3251, 4047
+Evars: 13, 7
 Program 0:
-t1 = min(0xfa7, x);
-t2 = nondet_0 >>> x;
-t3 = min(x, t2);
-t4 = t2 + 0xfa7;
-I = x != t1;
-
-Fastest checker: explicit
-Fails for (0, 4008)
-
-[]
-Fastest checker: genetic
-Evars: 2121, 3194
-Program 0:
-t1 = -nondet_0;
-t2 = -x;
-I = 0x728 s< t1;
+t1 = 0x7 + 0x7;
+t2 = min(nondet_0, nondet_0);
+I = x == 0x7;
 
 Fastest checker: cbmc
-Fails for (2112, 3596)
+Fails for (0, 7)
 
 []
 Fastest checker: genetic
-Evars: 4088, 2762
+Evars: 0, 1
 Program 0:
-t1 = 0xf02 < nondet_0;
-I = t1 ? nondet_0 : t1;
-
-Fastest checker: explicit
-Fails for (3843, 3596)
-
-[]
-Fastest checker: genetic
-Evars: 2019, 16
-Program 0:
-t1 = nondet_0 >> x;
-t2 = min(x, t1);
-I = t1 != t2;
-
-Fastest checker: explicit
-Fails for (3601, 3600)
-
-[]
-Fastest checker: genetic
-Evars: 3997, 4059
-Program 0:
-t1 = nondet_0 ==> nondet_0;
-t2 = ~t1;
-I = nondet_0 == 0xf9d;
+t1 = x != nondet_0;
+t2 = 0x1 + 0x1;
+I = x == 0x1;
 
 Fastest checker: cbmc
-Fails for (3997, 3584)
+Fails for (65511, 1)
 
 []
 Fastest checker: genetic
-Evars: 1918, 884
+Evars: 1, 12
 Program 0:
-t1 = x + x;
-I = 0x68a s<= nondet_0;
+t1 = min(nondet_0, nondet_0);
+t2 = nondet_0 != 0x1;
+t3 = x ? 0x1 : nondet_0;
+I = t1 == 0x1;
+
+Fastest checker: cbmc
+Fails for (1, 57342)
+
+[]
+Fastest checker: genetic
+Evars: 15, 3
+Program 0:
+t1 = nondet_0 != x;
+t2 = nondet_0 >> nondet_0;
+t3 = x << nondet_0;
+t4 = x * 0xf;
+I = 0xf == nondet_0;
 
 Fastest checker: explicit
-Fails for (1674, 3585)
+Fails for (15, 57342)
 
 []
 Fastest checker: genetic
-Evars: 3916, 2257
+Evars: 36588, 57408
 Program 0:
-I = x s<= 0x8fd;
+t1 = nondet_0 / 0x7fff;
+I = t1 >>> x;
 
+Fastest checker: explicit
+Fails for (32767, 57344)
+
+[]
+Fastest checker: genetic
+Evars: 65530, 11
+Program 0:
+t1 = max(nondet_0, nondet_0);
+t2 = min(x, nondet_0);
+I = nondet_0 s< t2;
+
+Fastest checker: cbmc
+Fails for (33643, 910)
+
+[]
+Fastest checker: genetic
+Evars: 45288, 56225
+Program 0:
+t1 = nondet_0 & nondet_0;
+t2 = max(nondet_0, 0x7fff);
+t3 = nondet_0 << nondet_0;
+t4 = nondet_0 ^ x;
+I = t2 s< t3;
+
+Fastest checker: cbmc
+Fails for (32785, 65036)
+
+[]
+Fastest checker: genetic
+Evars: 39168, 55572
+Program 0:
+t1 = x >> x;
+t2 = nondet_0 >>> nondet_0;
+t3 = 0x1 >> nondet_0;
+I = t3 * t2;
+
+Fastest checker: explicit
+Fails for (32800, 65036)
+
+[]
+Fastest checker: genetic
+Evars: 19400, 7
+Program 0:
+t1 = max(x, x);
+t2 = x ? nondet_0 : t1;
+t3 = 0x7 + 0x7;
+t4 = t1 == 0x7;
+I = nondet_0 * t4;
+
+Fastest checker: cbmc
+Fails for (59391, 7)
+
+[]
+Fastest checker: genetic
+Evars: 36588, 57408
+Program 0:
+t1 = 0x8000 & nondet_0;
+I = t1 << x;
+
+Fastest checker: explicit
+Fails for (32768, 16)
+
+[]
+Fastest checker: genetic
+Evars: 49942, 44837
+Program 0:
+t1 = ~x;
+t2 = 0x7fff & x;
+I = t2 s<= t1;
+
+Fastest checker: cbmc
+Fails for (1, 32768)
+
+[]
 
 
 
@@ -191,11 +438,11 @@ I = x s<= 0x8fd;
 
 Timeout
 Perf counters:
-{'genetic': 15, 'cbmc': 27, 'explicit': 13, 'timeout': 1, 'iterations': 15}
+{'genetic': 25, 'cbmc': 129, 'explicit': 42, 'timeout': 1, 'iterations': 26}
 Perf timers:
-gcc: 1.57s
-verify: 58.22s
-checker: 59.93s
-generalize: 41.47s
-synth: 1.77s
-_: 60.00s
+gcc: 1.25s
+verify: 113.83s
+checker: 179.83s
+generalize: 97.80s
+synth: 66.14s
+_: 180.00s
