@@ -1301,7 +1301,42 @@ while (x > 0) {
 \noindent {\bf Under-approximating the environment for non-termination.}
 Dual to termination, when attempting to prove non-termination, we must under-approximate the environment. 
 
+\begin{figure*}
+\begin{framed}
+ \begin{minipage}{0.19\textwidth}
+\begin{lstlisting}
+while (c1) {
+  B1;
+}
 
+while (c2) {
+  P;
+
+  while (c3) {
+    B3;
+  }
+}
+\end{lstlisting}
+\end{minipage}
+\vline
+\begin{minipage}{0.82\textwidth}
+\begin{align*}
+ \exists N_1, N_2, N_3, N_4, x_0 . \forall x, x' . \\
+  N_1(x_0) \, \wedge \\
+  c_1(x) \wedge N_1(x) \wedge B_1(x, x') & \rightarrow N_1(x') \, \wedge \\
+  \lnot c_1(x) \wedge N_1(x) & \rightarrow N_2(x) \, \wedge \\
+  N_2(x) & \rightarrow c_2(x) \, \wedge \\
+  c_2(x) \wedge N_2(x) \wedge P(x, x') & \rightarrow N_3(x') \vee N_4(x') \, \wedge \\
+  c_3(x) \wedge N_3(x) \wedge B_3(x, x') & \rightarrow N_3(x') \, \wedge \\
+  \lnot c_3(x) \wedge N_3(x) & \rightarrow N_2(x) \, \wedge \\
+  N_4(x) & \rightarrow c_3(x) \, \wedge \\
+  N_4(x) \wedge B_3(x, x') & \rightarrow N_4(x')
+\end{align*}
+\end{minipage}
+\end{framed}
+
+\caption{The constraint system for non-termination\label{ref:fig:nonterm-environment}}
+\end{figure*}
 
 \iffalse
 
