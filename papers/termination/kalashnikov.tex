@@ -218,31 +218,41 @@ check the validity of the synthesis formula.
 The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
 detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
 The algorithm is divided into two
-components: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}.% described next. 
+procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
+a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
 
-Given a (non-)termination specification (in the synthesis fragment)    
-and a finite set of test inputs tracked so far, {\sc synth} generates a program \texttt{synth.c} asserting that some non-deterministic proof taken as input  
-is incorrect on at least one of the tracked inputs.
-Thus, \texttt{synth.c} is unsafe iff there is some (non-)termination proof that is correct for all of the tracked inputs.  
-By using testing techniques, we search for such a proof, i.e. 
-we synthesise a candidate (non-)termination proof that is correct for all the tracked inputs.  
-The testing techniques we use are: model checking,
-exhaustive search and genetic programming (see Section~\ref{sec:gp}).  
-%For the latter 2 techniques, we combine SYNTH with another program
-%(GP or EXPLICIT respectively) to create a program that searches for test vectors (proofs) that cause SYNTH
-%to crash.
-As \texttt{synth.c}
-is a \newC program, we can check its safety by invoking a Bounded
-Model Checker, such as {\sc cbmc} \cite{}.
-We run the three available testing techniques %explicit-state model checker
-in parallel and take the answer of whichever happens
-to terminate first, stopping the other processes.  
+The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$ which satisfy the partial specification:
+\[
+ \exists P, x_0 . \forall x \in \text{\sc inputs} . \sigma(P, x_0, x)
+\]
 
+If {\sc synth} succeeds in finding a witness $(P, x_0)$, this witness is a candidate solution to the full
+synthesis formula.  We pass this candidate solution to {\sc verif} which determines whether the candidate
+does satisfy the specification on all inputs by checking satisfiability of the verification formula:
+\[
+ \exists x . \lnot \sigma(P, x_0, x)
+\]
 
-Subsequently, {\sc Verif} uses model checking or exhaustive search to verify the candidate proof by searching for an input on
-which it does not satisfy the specification. If no such input
-can be found, the candidate proof is correct.  Otherwise, the new input is added
-to the set of tracked inputs and the CEGIS loop is reiterated.  
+If this formula is unsatisfiable, the candidate solution is in fact a solution to the synthesis formula
+and so the algorithm terminates.  Otherwise, the witness $x$ is an input on which the candidate solution fails
+to meet the specification.  This witness $x$ is added to the {\sc inputs} set and the loop iterates again.
+
+Concretely, {\sc synth} is implemented as shown in Figure~\ref{fig:synth-dfd}.  We start by taking the termination
+specification and generating a C program which takes as input a candidate $(P, x_0)$ and asserts that the candidate
+fails to meet the specification on at least on of the elements of {\sc inputs}.  So this program is unsafe iff there
+is some candidate $(P, x_0)$ satisfying the specification for all the elements of {\sc inputs}.  Finding a new
+candidate solution is therefore reduced to model checking this C program, which by construction is loop free.
+The model checking is done using a combination of bounded model checking, explicit state enumeration and
+genetic programming (GP).  The latter two techniques involve combining the previously generated C program,
+along with code that searches for candidate solutions.  As well as efficiency, this has the side effect of
+guaranteeing that we are verifying the exact semantics of the program under analysis as understood by a
+compiler, rather than some ad-hoc abstraction of its semantics.  Finally, if any of the model checkers
+finds a candidate solution it returns it.  The form of this candidate solution is yet another program,
+this time written in the proof language $\mathcal{L}$.
+
+Similarly, the {\sc verif} procedure is implemented by creating a C program that is unsafe iff
+some input exists on which the candidate solution fails to meet the specification.  Again, symbolic
+and explicit state model checking are used to decide the satisfiability of the verification formula.
 
 
 %If the input set is finite, this procedure is guaranteed to terminate.
@@ -337,7 +347,7 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 \coordinate (midspec) at ($(spec) !.5! (file)$);
 \draw (midspec |- 0,-3) node [align=center] {Automatically generated specification \\ (written in C)};
 %\draw (file |- 0,-3) node {Spec};
-\draw (gcc |- 0,-3) node [align=center] {Test generator};
+\draw (gcc |- 0,-3) node [align=center] {Model checker};
 \draw (out |- 0,-3) node [align=center] {Proof \\ (written in $\mathcal{L}$)};
 
 \end{tikzpicture}
