@@ -421,18 +421,18 @@ def kalashnikov(checker):
 
 def expand(x, narrow, wide):
   if args.args and args.args.verbose > 1:
-    print "Expanding %x from %d to %d bits" % (x, narrow, wide)
+    print "Expanding 0x%x from %d to %d bits" % (x, narrow, wide)
 
-  if x == 0:
-    return [0]
-  elif x == 1:
-    return [1]
-  elif x == (1 << narrow) - 1:
-    return [(1 << wide) - 1, x]
-  elif x == 1 << (narrow - 1):
-    return [1 << (wide - 1), x]
-  elif x == (1 << (narrow - 1)) - 1:
-    return [(1 << (wide - 1)) - 1, x]
+  ret = [x, 0]
+
+  if x == (1 << narrow) - 1:
+    ret.append((1 << wide) - 1)
+
+  if x == 1 << (narrow - 1):
+    ret.append(1 << (wide - 1))
+
+  if x == (1 << (narrow - 1)) - 1:
+    ret.append((1 << (wide - 1)) - 1)
 
   lo = x & 1
   hi = (x >> (narrow - 1)) & 1
@@ -455,23 +455,23 @@ def expand(x, narrow, wide):
   z &= (1 << (wide - 1)) - 1
   z |= (hi << (wide - 1))
 
-  ret = [x, z]
-  ret = [x]
+  #ret = [x, z]
+  #ret = [x]
 
   if x == (1 << narrow):
-    ret.append(1 << wide)
+    #ret.append(1 << wide)
     pass
 
   if x == narrow:
-    ret.append(wide)
+    #ret.append(wide)
     pass
 
   if x == narrow-1:
-    ret.append(wide-1)
+    #ret.append(wide-1)
     pass
 
   if x == narrow+1:
-    ret.append(wide+1)
+    #ret.append(wide+1)
     pass
 
   ret.append(x << (wide-narrow))
@@ -498,7 +498,7 @@ def expand(x, narrow, wide):
   if args.args and args.args.verbose > 1:
     print "Expanded to %s" % str(ret)
 
-  return list(set(ret))
+  return sorted(list(set(ret)), reverse=True)
 
 def generalize(prog, checker, width, targetwidth, tests, codelen):
   perf.start("generalize")
