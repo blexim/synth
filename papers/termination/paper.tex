@@ -308,6 +308,8 @@ rather than for an abstraction of the program.
 
 \item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
 
+%\item We propose a non-trivial formulation of the (non-)termination problem inside a second order logic fragment with only one quantifier alternation.
+
 \end{itemize}
 % unified approach to termination and non-termination
 %. only non-strict inequalities can be transformed using Farkas’ Lemma
@@ -1171,9 +1173,7 @@ is generate constraints abstracting
 the environment and the loop's body: for termination, we need over-approximating abstractions, whereas for non-termination 
 we need under-approximations. 
 As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
-we will not provide the full algorithm, but rather illustrate it through examples.
-
-- when analysing a loop, we assume that the nested ones and the one preceding it in program order terminate.\\
+we will not provide the full algorithm, but rather illustrate it through examples.\\
 
 %synthesizing environment abstractions: underapp for termination and underapp for non-termination.
 % \cite{} addresses the problem of automatically underapproximating weakest preconditions.
@@ -1224,49 +1224,47 @@ we will not provide the full algorithm, but rather illustrate it through example
 %rather than presenting the algorithm for generating the constraints, we direct the
 %reader's attention to Figure~\ref{fig:environment-model}.  
 %
-The example in Figure~\ref{fig:environment-model} contains three loops, which we will number 1 to 3 according to their program order.
-Let us assume that we have already proven the termination of loops 1 and 3, and we are now trying to prove that loop 2 terminates. The 
-termination of loop 2 is encoded as the conjunction of constraints on the right of Figure~\ref{fig:environment-model}:
-the lines marked as $*$ over-approximate the states in which loop 2 can start execute.
+The example in Figure~\ref{fig:environment-model} contains three loops. %, which we will number 1 to 3 according to their program order.
+Let us assume that we have already proven the termination of $L_1$ and $L_3$, and we are now trying to prove that $L_2$ terminates, which we encode
+as the conjunction of constraints on the right side of the figure:
+\begin{itemize}
+\item $W_1$, $W_2$ and $W_3$ are (over-approximating) inductive invariants for $L_1$, $L_2$ and $L_3$, respectively.
+\item $S$ is a summary of $L_3$ that over-approximates the transitive closure of its transition relation.
+\item If the formula is satisfiable, then $R$ is a ranking function for $L_2$.
+ \end{itemize}
 
 
-
-
-
-
-
-contains a non-trivial program
-along with the constraint system
-encoding the termination of the outer loop.  Since the program contains sequential composition
-of loops and nested loops, the constraint
-system involves termination invariants $W_1, W_2, W_3$ and the inner loop summary $S$.
-
-
-
+%the lines marked as $*$ over-approximate the states in which loop 2 can start execute.
+%% contains a non-trivial program
+%% along with the constraint system
+%% encoding the termination of the outer loop.  Since the program contains sequential composition
+%% of loops and nested loops, the constraint
+%% system involves termination invariants $W_1, W_2, W_3$ and the inner loop summary $S$.
 
 Note that despite its intricacy, the constraint system is still a formula in the synthesis fragment.
 Since the outer loop of this program does indeed terminate, the system is satisfiable, as witnessed by:
 \begin{align*}
 W_1(\langle v, x, y, z \rangle ) & \triangleq x \leq y + 1 \\
 W_2(\langle v, x, y, z \rangle ) & \triangleq x = y + 1 \\
-S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) & \triangleq x ' = x \wedge y' = y \wedge z' + v' = x' \wedge v' \leq y' \\
+S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) & \triangleq x ' = x \wedge y' = y \wedge \\
+& z' + v' = x' \wedge v' \leq y' \\
 R(x) & = x
 \end{align*}
 
 
 \begin{figure*}
 \begin{framed}
-\begin{minipage}{0.19\textwidth}
-\begin{lstlisting}
+\begin{minipage}{0.22\textwidth}
+\begin{lstlisting}[mathescape=true]
 x = 0;
-while (x <= y)
+$L_1:$ while (x <= y)
   x++;
 
-while (x > 0) {
+$L_2:$ while (x > 0) {
   z = x;
   v = 0;
 
-  while (v < y) {
+$L_3:$  while (v < y) {
     z--;
     v++;
   }
@@ -1294,60 +1292,137 @@ while (x > 0) {
    & R(v, x, y, z) > R(v', x' - z', y'-z', z')
 \end{align*}
 \end{minipage}
-\caption{A non-trivial program and its constraint system\label{fig:environment-model}}
 \end{framed}
+\caption{A non-trivial program and its constraint system\label{fig:environment-model}}
 \end{figure*}
 
 \noindent {\bf Under-approximating the environment for non-termination.}
-Dual to termination, when attempting to prove non-termination, we must under-approximate the environment.
-Consider the example in Figure~\ref{fig:nonterm-environment}.  We are attempting to prove non-termination
-of the innermost loop, which we do by finding a recurrence set $N_4$.  We will assume that the other two
-loops iterate only a finite number of times.  If the constraint system is satisfiable, $x_0$ is some initial
-state in which the program begins executing.  Then $N_1$ is an inductive invariant of $L_1$ that is strong
-enough to establish $N_2$ if $L_1$ exits (which it does by assumption).  Now, $N_2$ is an inductive invariant
-of $L_2$ that is strong enough to establish either $N_3$ or $N_4$ on entry to $L_3$.  Recall that $N_4$ is
-a recurrence set for $L_3$, so if a state $x \in N_4$ is reached, the loop $L_3$ will execute forever.
-Otherwise, $N_3$ holds on entry to $L_3$.  $N_3$ is an inductive invariant of $L_3$ that is strong enough to
-re-establish $N_2$ when $L_3$ exits.  Since we assumed that $L_2$ iterated only a finite number of times,
-$N_3$ must be established only a finite number of times, which means that $N_4$ will eventually be reached,
-at which point $L_3$ will loop forever since $N_4$ is a recurrence set for $L_3$.
+Dual to termination, when attempting to prove non-termination, we must under-approximate the environment and the loop body's and apply 
+formula {\bf [CNT]}. However, there is one more constraint that we must obey when doing so: we must stay inside the synthesis fragment! 
+This can be achieved for the environment as its under-approximation $I$ and the loop under consideration are at the same level of nestedness and do not therefore 
+require another quantifier alternation. 
+
+However, when dealing with nested loops, computing the under-approximation of the loop's body 
+requires an extra quantifier alternation. The origin of the problem comes from the fact that an under-approximation is an existential property and therefore
+requires an extra existential quantifier, resulting in the $\exists \forall \exists$ alternation. This situation is similar to the one encountered when proving non-termination of non-deterministic loops. 
+To go around this limitation, we treat nested loops as a special case and give a separate formula for them in Figure~\ref{fig:nonterm-nested}. If the formula on the right of the figure is satisfiable, then $L_1$ is non-terminating as witnessed by the recurrence set $N_1$ and
+the initial state $x_0$ in which the program begins executing. There are two possible scenarios for $L_2$'s termination:
+\begin{itemize}
+\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x) \wedge P_2(x,x') \rightarrow N_1(x') $. 
+\item If $L_2$ is non-terminating, then $N_2$ is its recurrence set.
+\end{itemize}
+
+
+%% The issue appears when we try to under-approximate the body of the loop. 
+%% Here we encounter a similar problem with the one for non-determinism mentioned above. 
+
+%% Consider the generic example in Figure~\ref{fig:nonterm-environment}, where we are attempting to prove non-termination
+%% of the innermost loop $L_3$ by finding a closed recurrence set $N_3$. 
+%% -- We will assume that the other two loops iterate only a finite number of times.  
+
+%% We now explain the constraints on the right of the figure.
+%% Given that we prove non-termination, we try to  under-approximate the states from which $L_3$ can start executing. 
+%% We do this in several steps:
+
+%% $W_1$, $W_2$ and $W_3$ are inductive invariants corresponding to $L_1$, $L_2$ and $L_3$, respectively, such that:
+
+%% - $W_1$ is an inductive invariant of $L_1$ that is strong enough to establish $W_2$ if $L_1$ exits (which it does by assumption).
+%% - $W_2$ is an inductive invariant of $L_2$ that is strong enough to establish either $W_3$ or $N_3$ on entry to $L_3$, depending on whether $L_3$ terminates or not.
+%% - Recall that $N_3$ is a recurrence set for $L_3$, so if a state $x \in N_3$ is reached, the loop $L_3$ will execute forever. Otherwise, $W_3$ holds on entry to $L_3$.
+%% - $W_3$ is an inductive invariant of $L_3$ that is strong enough to re-establish $W_2$ when $L_3$ exits.
+
+
+%% If the non-termination formula is satisfiable, $x_0$ is some initial state in which the program begins executing.  
+
+
+
+%% First, we under-approximate the states in which $L_2$ can start executing through $W_2$.
+%% Then $N_1$ is an inductive invariant of $L_1$ that is strong
+%% enough to establish $N_2$ if $L_1$ exits (which it does by assumption).  Now, $N_2$ is an inductive invariant
+%% of $L_2$ that is strong enough to establish either $N_3$ or $N_4$ on entry to $L_3$.  Recall that $N_4$ is
+%% a recurrence set for $L_3$, so if a state $x \in N_4$ is reached, the loop $L_3$ will execute forever.
+%% Otherwise, $N_3$ holds on entry to $L_3$.  $N_3$ is an inductive invariant of $L_3$ that is strong enough to
+%% re-establish $N_2$ when $L_3$ exits.
+
+
+  
+
+%% If the constraint system is satisfiable, $x_0$ is some initial
+%% state in which the program begins executing.  
+
+
+%%   Since we assumed that $L_2$ iterated only a finite number of times,
+%% $N_3$ must be established only a finite number of times, which means that $N_4$ will eventually be reached,
+%% at which point $L_3$ will loop forever since $N_4$ is a recurrence set for $L_3$.
+
+%% \begin{figure*}
+%% \begin{framed}
+%%  \begin{minipage}{0.19\textwidth}
+%% \begin{lstlisting}
+%% L1: while (c1) {
+%%      B1;
+%%     }
+
+%% L2: while (c2) {
+%%      P;
+
+%% L3:  while (c3) {
+%%        B3;
+%%      }
+%%     }
+%% \end{lstlisting}
+%% \end{minipage}
+%% \vline
+%% \begin{minipage}{0.82\textwidth}
+%% \begin{align*}
+%%  \exists W_1, W_2, W_3, N_3, x_0 . \forall x, x' . \\
+%%   W_1(x_0) \, \wedge \\
+%%   c_1(x) \wedge W_1(x) \wedge B_1(x, x') & \rightarrow W_1(x') \, \wedge \\
+%%   \lnot c_1(x) \wedge W_1(x) & \rightarrow W_2(x) \, \wedge \\
+%%   W_2(x) & \rightarrow c_2(x) \, \wedge \\
+%%   W_2(x) \wedge P(x, x') & \rightarrow W_3(x') \vee N_3(x') \, \wedge \\
+%%   c_3(x) \wedge W_3(x) \wedge B_3(x, x') & \rightarrow W_3(x') \, \wedge \\
+%%   \lnot c_3(x) \wedge W_3(x) & \rightarrow W_2(x) \, \wedge \\
+%%   N_3(x) & \rightarrow c_3(x) \, \wedge \\
+%%   N_3(x) \wedge B_3(x, x') & \rightarrow N_3(x')
+%% \end{align*}
+%% \end{minipage}
+%% \end{framed}
+
+%% \caption{The constraint system for non-termination\label{fig:nonterm-environment}}
+%% \end{figure*}
 
 \begin{figure*}
 \begin{framed}
  \begin{minipage}{0.19\textwidth}
-\begin{lstlisting}
-L1: while (c1) {
-     B1;
-    }
+\begin{lstlisting}[mathescape=true]
+$L_1$: while ($G_1$) {
+     $P_1$;
 
-L2: while (c2) {
-     P;
+$L_2$:  while ($G_2$) {
+       $B_2$;
+       }
 
-L3:  while (c3) {
-       B3;
+     $P_2$;
      }
-    }
 \end{lstlisting}
 \end{minipage}
 \vline
 \begin{minipage}{0.82\textwidth}
 \begin{align*}
- \exists N_1, N_2, N_3, N_4, x_0 . \forall x, x' . \\
-  N_1(x_0) \, \wedge \\
-  c_1(x) \wedge N_1(x) \wedge B_1(x, x') & \rightarrow N_1(x') \, \wedge \\
-  \lnot c_1(x) \wedge N_1(x) & \rightarrow N_2(x) \, \wedge \\
-  N_2(x) & \rightarrow c_2(x) \, \wedge \\
-  c_2(x) \wedge N_2(x) \wedge P(x, x') & \rightarrow N_3(x') \vee N_4(x') \, \wedge \\
-  c_3(x) \wedge N_3(x) \wedge B_3(x, x') & \rightarrow N_3(x') \, \wedge \\
-  \lnot c_3(x) \wedge N_3(x) & \rightarrow N_2(x) \, \wedge \\
-  N_4(x) & \rightarrow c_3(x) \, \wedge \\
-  N_4(x) \wedge B_3(x, x') & \rightarrow N_4(x')
+ \exists N_1, N_2, x_0 . \forall x, x' . \\
+  N_1(x_0) & \, \wedge \\
+  N_1(x) & \rightarrow G_1(x) \, \wedge \\
+  N_1(x) \wedge P_1(x,x') & \rightarrow N_2(x') \, \wedge \\
+  G_2(x) \wedge N_2(x) \wedge B_2(x,x') & \rightarrow N_2(x') \, \wedge \\
+  \lnot G_2(x) \wedge N_2(x) \wedge P_2(x,x') & \rightarrow N_1(x') 
 \end{align*}
 \end{minipage}
 \end{framed}
 
-\caption{The constraint system for non-termination\label{fig:nonterm-environment}}
+\caption{The non-termination formula for nested loops \label{fig:nonterm-nested}}
 \end{figure*}
+
 
 \iffalse
 
@@ -1423,6 +1498,7 @@ Our design: for each loop always search for lexicographic ranking function + sup
 Note: given a program with multiple loops (sequential and nested), we could potentially compute termination/non-termination 
 arguments for all of them in the same formula. Currently, our tool generates a separate formula for each loop.
 
+- when analysing a loop, we assume that the nested ones and the one preceding it in program order terminate.\\
 %% \subsection{Program Synthesis as Second-Order Satisfaction}
 
 %% With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae above
