@@ -43,6 +43,40 @@
 
 \lstset{language=c++}
 
+\algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
+\algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
+
+
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+
+\newcommand{\bv}[2]{\mathcal{BV}(#1, #2)}
+
+\makeatletter
+\pgfdeclareshape{datastore}{
+  \inheritsavedanchors[from=rectangle]
+  \inheritanchorborder[from=rectangle]
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchor[from=rectangle]{base}
+  \inheritanchor[from=rectangle]{north}
+  \inheritanchor[from=rectangle]{north east}
+  \inheritanchor[from=rectangle]{east}
+  \inheritanchor[from=rectangle]{south east}
+  \inheritanchor[from=rectangle]{south}
+  \inheritanchor[from=rectangle]{south west}
+  \inheritanchor[from=rectangle]{west}
+  \inheritanchor[from=rectangle]{north west}
+  \backgroundpath{
+    %  store lower right in xa/ya and upper right in xb/yb
+    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+ }
+}
+\makeatother
+
 
 
 \begin{document}
@@ -1576,7 +1610,472 @@ conduct independent searches for each possible form of the ranking function with
 \fi
 %
 %
-\input{kalashnikov}
+
+
+
+%\todo{add related work for synthesis.}
+
+In this section we present a solver for the synthesis fragment:
+ \[
+  \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
+ \]
+%
+where $P$ ranges over sets, while $x$ and $y$ range over ground terms (as mentioned before, for brevity reasons we drop
+ the vector symbol and write  $x$ for $\vec{x}$).
+
+By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to \mathbb{B}$ as a specification function
+that  returns true iff $P$ computes appropriate outputs for the inputs $x$ and $y$, we can   
+regard the satisfaction problem for the synthesis fragment as \emph{program synthesis}, i.e.
+the mechanised construction of software that provably satisfies a given specification.
+Research in the area of program synthesis has been particularly fruitful beginning with Alonzo Church's work on the
+\emph{Circuit Synthesis Problem} in the sixties~\cite{church-synth}, and continuing with works such as 
+{\sc Brahma}~\cite{brahma} and program sketching~\cite{lezama-thesis,sketch,modular-sketch}.
+
+% 
+%We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
+%have a program synthesiser kicking around, we present the design of one synthesiser
+%that can be used to solve the problem.
+%We start by recalling the synthesis formula:
+% $$\exists P, x . \forall y . \sigma(P, x, y)$$
+  
+
+%% Our program encoding generates an $\exists\forall$ formula that is \emph{linear} in the length of the shortest program
+%% satisfying the user's specification.  This formula is then checked for satisfiability
+%% using the CEGIS algorithm.
+
+
+In the context of (non-)termination analysis, a witnesses to the satisfiability of a formula in the synthesis fragment 
+is a (non-)termination proof. 
+As mentioned earlier in the paper, our analysis must ensure precise treatment of bit-wise operations and arithmetic modulo fixed widths
+%Consequently, a compulsory characteristic of our solver is that it must 
+by modelling bit accurate semantics.
+The synthesiser must therefore be able to compute (non-termination) proofs 
+%loop-free programs 
+over machine integers and floating-point numbers from the specifications detailed in Section~\ref{sec:second.order}.
+
+
+
+
+
+
+%\subsection{\newC}
+%\label{sec:logic}
+\subsection{The Synthesis Specification}
+The logic we use to express the synthesis formula, i.e. the (non-)termination specifications, % are given as program fragments
+%More specifically, the logic we use to express the synthesis formula
+is a subset of C that we call \newC.  
+The characteristic property of a \newC  program is that safety can be decided for
+it using a single query to a Bounded Model Checker.  A \newC program is
+just a C program with the following syntactic restrictions:
+ all loops in the program must have a constant bound;
+ all recursion in the program must be limited to a constant depth;
+ all arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ and be of constant size.
+Additionally, \newC programs may use nondeterministic values, assumptions
+and arbitrary-width types.
+
+The (non-)termination proofs are arbitrary expressions over the grammar given in Figure~\ref{fig:l-language}.  
+%written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
+\todo{update the figure and make it look more like a grammar.}
+
+
+\begin{algorithm*}
+ \caption{Abstract refinement algorithm
+ \label{alg:cegis}}
+ \vspace{-1.5em}
+ \begin{multicols}{2}
+ \begin{algorithmic}[1]
+ \Statex
+\Function{synth}{inputs}
+  \Let{$(i_1, \ldots, i_N)$}{inputs}
+  \Let{query}{$\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{unsatisfiable}
+  \EndIf
+\EndFunction
+\Statex
+\Function{verif}{P}
+  \Let{query}{$\exists x . \lnot \sigma(x, P(x))$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{valid}
+  \EndIf
+\EndFunction
+\columnbreak
+\Statex
+\Function{refinement loop}{}
+  \Let{inputs}{$\emptyset$}
+  \Loop
+    \Let{candidate}{\Call{synth}{inputs}}
+    \If{candidate = UNSAT}
+      \State \Return{unsatisfiable}
+    \EndIf
+    \Let{res}{\Call{verif}{candidate}}
+    \If{res = valid}
+      \State \Return{candidate}
+    \Else
+      \Let{inputs}{inputs $\cup$ res}
+    \EndIf
+  \EndLoop
+\EndFunction
+ \end{algorithmic}
+ \end{multicols}
+\end{algorithm*}
+
+
+\begin{figure}
+ \begin{center}
+ \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
+ semithick, initial text=]
+
+  \matrix[nodes={draw, fill=none, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
+          row sep=2cm, column sep=2.5cm, ampersand replacement=\&] {
+   \node (synth) {Synthesise};
+   \&
+   \node (verif) {Verify}; %\\
+   %\node[draw=none] {};
+   \&
+   \node[ellipse] (done) {Done}; \\
+  };
+
+   \path
+    (synth) edge [bend left] node {Candidate program} (verif)
+    (verif) edge [bend left] node {Counterexample input} (synth)
+    (verif) edge node {Valid} (done);
+ \end{tikzpicture}
+ }
+ \end{center}
+ 
+ \caption{Abstract synthesis refinement loop
+ \label{fig:abstract-refinement}}
+\end{figure}
+
+
+
+\begin{figure}
+{\small
+\begin{center}
+\setlength{\tabcolsep}{16pt}
+Integer arithmetic instructions:
+
+\begin{tabular}{llll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
+ \verb|neg a| &   \verb|mod a b| & \verb|min a b| & \verb|max a b|
+\end{tabular}
+
+\medskip
+
+Bitwise logical and shift instructions:
+
+\begin{tabular}{lll}
+ \verb|and  a b| & \verb|or   a b| & \verb|xor a b| \\
+ \verb|lshr a b| & \verb|ashr a b| & \verb|not a|
+\end{tabular}
+
+\medskip
+
+Unsigned and signed comparison instructions:
+
+\begin{tabular}{lll}
+ \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
+ \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b|
+\end{tabular}
+
+Miscellaneous logical instructions:
+
+\begin{tabular}{lll}
+ \verb|implies a b| & \verb|ite a b c| & 
+\end{tabular}
+
+Floating point arithmetic:
+
+\begin{tabular}{llll}
+ \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b| 
+\end{tabular}
+
+
+\end{center}
+}
+ \caption{The language $\mathcal{L}$}
+ \label{fig:l-language}
+\end{figure}
+
+
+\subsection{The Synthesis Algorithm}
+As safety of a \newC program is efficiently 
+%the quantifier free first-order fragment of the logic is efficiently 
+decidable and a termination proof is expressible as a ground term of the \newC logic, we use
+Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
+check the validity of the synthesis formula. 
+The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
+detailed in Algorithm~\ref{alg:cegis}.  
+The algorithm is divided into two
+procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
+a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
+
+The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$ which satisfy the partial specification:
+\[
+ \exists P, x_0 . \forall x \in \text{\sc inputs} . \sigma(P, x_0, x)
+\]
+
+If {\sc synth} succeeds in finding a witness $(P, x_0)$, this witness is a candidate solution to the full
+synthesis formula.  We pass this candidate solution to {\sc verif} which determines whether the candidate
+does satisfy the specification on all inputs by checking satisfiability of the verification formula:
+\[
+ \exists x . \lnot \sigma(P, x_0, x)
+\]
+
+If this formula is unsatisfiable, the candidate solution is in fact a solution to the synthesis formula
+and so the algorithm terminates.  Otherwise, the witness $x$ is an input on which the candidate solution fails
+to meet the specification.  This witness $x$ is added to the {\sc inputs} set and the loop iterates again.
+
+Concretely, {\sc synth} is implemented as shown in Figure~\ref{fig:synth-dfd}.  We start by taking the termination
+specification and generating a C program which takes as input a candidate $(P, x_0)$ and asserts that the candidate
+fails to meet the specification on at least on of the elements of {\sc inputs}.  So this program is unsafe iff there
+is some candidate $(P, x_0)$ satisfying the specification for all the elements of {\sc inputs}.  Finding a new
+candidate solution is therefore reduced to model checking this C program, which by construction is loop free.
+The model checking is done using a combination of bounded model checking, explicit state enumeration and
+genetic programming (GP).  The latter two techniques involve combining the previously generated C program,
+along with code that searches for candidate solutions.  Finally, if any of the model checkers
+finds a candidate solution it returns it.  The form of this candidate solution is yet another program,
+this time written in the proof language $\mathcal{L}$.
+
+As well as efficiency, compiling the original source code of the program under analysis has the advantage of
+guaranteeing that we are verifying the exact semantics of the program as understood by a
+compiler, rather than some ad-hoc abstraction of its semantics.
+
+Similarly to {\sc synth}, the {\sc verif} procedure is implemented by creating a C program that is unsafe iff
+some input exists on which the candidate solution fails to meet the specification.  Again, symbolic
+and explicit state model checking are used to decide the satisfiability of the verification formula.
+
+
+%If the input set is finite, this procedure is guaranteed to terminate.
+
+
+
+%% In some cases, it is faster to use an explicit-state model checker rather than a Bounded Model Checker.  
+%% This is particularly true for the {\sc verif} component, 
+%% where we have observed that incorrect programs tend
+%% to be incorrect on a large fraction of the input space.  Counterexamples
+%% are then very easy to find by explicit enumeration of a few inputs.
+%% Since \newC is a fragment of C, we can generate an explicit-state
+%% model checker using the same source files that we pass to {\sc cbmc}
+%% and adding a small function to enumerate possible inputs.
+
+
+
+%% ---  We begin with the program under analysis (the PUA).  From this we produce a specification (in second order logic)
+%% encoding the termination of the PUA.  From the logical specification, we produce a program SYNTH.
+%% SYNTH takes as input a proof and asserts that the proof is incorrect on at least one of the inputs being tracked so far.
+%% Therefore, SYNTH is unsafe iff there is some proof that is correct for all of the tracked inputs.  Now we use testing
+%% techniques to try to find a proof that causes SYNTH to crash.  The testing techniques we use are: model checking,
+%% exhaustive search and genetic programming.  For the latter 2 techniques, we combine SYNTH with another program
+%% (GP or EXPLICIT respectively) to create a program that searches for test vectors (proofs) that cause SYNTH
+%% to crash.
+
+
+%% In the {\sc synth} component, in order to find a candidate proof $P$ satisfying
+%% $\sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$
+%% for the tracked inputs $(i_1, \ldots, i_N)$, 
+%% we attempt a safety proof.
+%In order to determine the validity of the {\sc synth} formula, we can
+%check the {\sc synth} program for safety.  
+
+
+\begin{figure*}
+\begin{center}
+\tikzstyle{file}=[draw, text width=7.0em, text centered,
+  minimum height=1.5em]
+\tikzstyle{process} = [draw, minimum height=3em, circle]
+\tikzstyle{line} = [draw, color=black, -latex']
+
+\def\Divide#1#2{%
+ \coordinate(a) at ($(#1.east) !.5! (#2.west)$);
+ \coordinate(b) at (a |- 0,-3);
+ \draw[dotted] (b) -- ++(0, 4.5);
+}
+
+%\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[font=\sffamily]
+
+\node [file] (pua) {input.c};
+
+\path (pua.east)+(2,0) node [file] (spec) {\sc Termination Specification};
+\path (spec.south)+(0.0, -1) node [file] (inputs) {\sc Tracked Inputs};
+%% \path (synth.south)+(0.0, -0.5) node [file] (tests) {\sc tests.c};
+%% \path (tests.south)+(0.0, -0.5) node [file] (interpreter) {\sc interpreter.c};
+%% \path (interpreter.south)+(0.0, -0.5) node [file] (spec) {\sc spec.c};
+
+%% \path (spec.east)+(2.0, -0.25) node [process] (merged) {merge};
+\path (spec.east)+(2.0, -0.75) node [file] (file) {synth.c};
+
+\path (file.east)+(2.0, 1.5) node [process] (cbmc) {\sc cbmc};
+\path (file.east)+(2.0, 0.0) node [process] (gcc) {\sc Search};
+\path (file.east)+(2.0, -1.5) node [process] (gp) {\sc GP};
+
+\path (gcc.east)+(2.5, 0.0) node [file] (out) {Candidate Proof};
+
+%\path [line] (spec) -- (merged);
+
+\path [line] (pua) -- (spec);
+
+\path [line] (spec) -- (file);
+\path [line] (inputs) -- (file);
+
+\path [line] (file) -- (cbmc);
+\path [line] (file) -- (gcc);
+\path [line] (file) -- (gp);
+
+
+\path [line] (cbmc) -- (out);
+\path [line] (gcc) -- (out);
+\path [line] (gp) -- (out);
+
+\Divide{pua}{spec}{puaspec}
+%\Divide{spec}{file}{specfile}
+\Divide{file}{gcc}{filegcc}
+\Divide{gcc}{out}{gccout}
+
+\draw (pua |- 0,-3) node [align=center] {Input program \\ (written in C)};
+
+\coordinate (midspec) at ($(spec) !.5! (file)$);
+\draw (midspec |- 0,-3) node [align=center] {Automatically generated specification \\ (written in C)};
+%\draw (file |- 0,-3) node {Spec};
+\draw (gcc |- 0,-3) node [align=center] {Model checker};
+\draw (out |- 0,-3) node [align=center] {Proof \\ (written in $\mathcal{L}$)};
+
+\end{tikzpicture}
+%}
+\end{center}
+
+\caption{Schematic diagram of {\sc synth}}
+\label{fig:synth-dfd}
+\end{figure*}
+
+
+
+\iffalse
+\subsection{Parameterising the Program Space}
+
+
+In order to search the space of candidate programs, we parametrise
+the language~$\mathcal{L}$ by program length, word width and number of constants,
+inducing a lattice of progressively
+more expressive languages.  We start by attempting to synthesise
+a program at the lowest point on this lattice and increase the
+parameters of~$\mathcal{L}$ until we reach a point at which
+the synthesis succeeds.
+
+As well as giving us an automatic search procedure, this parametrisation
+greatly increases the efficiency of our system since languages
+low down the lattice are very easy to decide safety for.  If a program
+can be synthesised in a low-complexity language, the whole procedure
+finishes much faster than if synthesis had been attempted in a
+high-complexity language.
+
+
+We introduce a novel parametrisation of the programming language
+used to express our synthesised programs.
+This parametrisation allows us to efficiently explore the program space
+without relying on human guidance and also ensures that our programs
+are of minimal length.
+
+Our tool is the first we are aware of that is able to effectively
+synthesise floating-point programs. We demonstrate this by
+synthesising {\sc Fast2Sum} using Knuth's {\sc 2Sum}~\cite{taocp2} as
+a specification.
+
+---Our exploration of the program space ensures that our programs are minimal in size.
+--- We parametrise the space of programs in such a way that it can be explored automatically, rather than asking a human for hints.
+
+
+We consider the following parameters:
+\begin{itemize}
+\item{Program Length: $l$}
+The first parameter we introduce is program length, denoted by $l$.
+At each iteration we synthesise programs of length exactly $l$.
+We start with $l = 1$ and increment $l$ whenever we determine
+that no program of length $l$ can satisfy the specification.  When we do
+successfully synthesise a program, we are \emph{guaranteed that it
+is of minimal length} since we have previously established that no
+shorter program is correct.
+\item{Word Width: $w$}
+An $\mathcal{L}$-program runs on a virtual machine (the $\mathcal{L}$-machine) that
+has its own set of parameters.  The only relevant parameter is
+the \emph{word width} of the $\mathcal{L}$-machine, that is, the number of bits
+in each internal register and immediate constant.  This parameter is denoted by
+$w$.  The size of the final SAT problem generated by {\sc cbmc} scales
+polynomially with $w$, since each intermediate C variable corresponds
+to $w$ propositional variables.
+
+
+\item{Number of Constants: $c$}
+Instructions in $\mathcal{L}$ take either one or two operands.
+Since any instruction whose operands are all constants can always be
+eliminated (since its result is a constant), we know that a loop-free program
+of minimal length will not contain any instructions with two constant
+operands.  Therefore the number of constants that can appear in
+a minimal program of length $l$ is at most $l$.  By minimising the number
+of constants appearing in a program, we are able to use a particularly
+efficient program encoding that speeds up the synthesis procedure
+substantially.  The number of constants used in a program is the parameter $c$.
+
+\end{itemize}
+\subsubsection{Searching the Program Space}
+
+The key to our automation approach is to come up with a sensible way in which to
+adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
+After each round of {\sc synth}, we may need to adjust the parameters.  
+The
+logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
+Whenever {\sc synth} fails, we consider which parameter might have caused the
+failure.  
+There are two possibilities: either the program length $l$ was too small,
+or the number of allowed constants $c$ was.  If $c < l$, we just increment $c$ and
+try another round of synthesis, but allowing ourselves an extra program constant.
+If $c = l$, there is no point in increasing $c$ any further.  This is because
+no minimal $\mathcal{L}$-program has $c > l$, for if it did there would
+have to be at least one instruction with two constant operands.  This
+instruction could be removed (at the expense of adding its result as
+a constant), contradicting the assumed minimality of the program.  So
+if $c = l$, we set $c$ to 0 and increment $l$, before attempting
+synthesis again.
+
+If {\sc synth} succeeds but {\sc verif} fails, we have a candidate
+program that is correct for some inputs but incorrect on at least
+one input.  However, it may be the case that the candidate program
+is correct for \emph{all} inputs when run on an $\mathcal{L}$-machine
+with a small word size.  For example, we may have synthesised a
+program which is correct for all 8-bit inputs, but incorrect for
+some 32-bit input.  If this is the case (which we can determine
+by running the candidate program through {\sc verif} using the smaller
+word size), we may be able to produce a correct program for
+the full $\mathcal{L}$-machine by using the constant extension rules
+shown in Fig.~\ref{fig:generalize}.  If constant generalization
+is able to find a correct program, we are done.  Otherwise,
+we need to increase the word width of the $\mathcal{L}$-machine
+we are currently synthesising for.
+
+
+\section{Conclusion}
+
+By expressing the program synthesis problem as a safety property for a
+program interpreter, we have been able to harness the power of
+state-of-the-art program analysis tools and reuse them in a new problem
+domain.  We have implemented our algorithm as a freely downloadable tool
+whose performance compares favourably to a recent program synthesiser. 
+Finally, we have taken advantage of the expressiveness of our specification
+language to make an initial step towards practical synthesis of
+floating-point programs.
+
+\fi
+
 
 \subsection{Genetic Programming and Incremental Evolution} \label{sec:gp}
 To generate candidate (non-)termination proofs in the synthesise phase of the refinement loop,
