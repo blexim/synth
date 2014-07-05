@@ -180,9 +180,9 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
 
-\begin{tabular}{lll}
- \verb|add a b| & \verb|sub a b| & \verb|mul a b| \\
- \verb|neg a| & \verb|div a b|  & 
+\begin{tabular}{llll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
+ \verb|neg a| &   \verb|mod a b| & \verb|min a b| & \verb|max a b|
 \end{tabular}
 
 \medskip
@@ -190,8 +190,8 @@ Integer arithmetic instructions:
 Bitwise logical and shift instructions:
 
 \begin{tabular}{lll}
- \verb|and  a b| & \verb|or a b| & \verb|xor a b| \\
- \verb|lshr a b| & \verb|ashr a b| & \verb|not  a| 
+ \verb|and  a b| & \verb|or   a b| & \verb|xor a b| \\
+ \verb|lshr a b| & \verb|ashr a b| & \verb|not a|
 \end{tabular}
 
 \medskip
@@ -200,8 +200,22 @@ Unsigned and signed comparison instructions:
 
 \begin{tabular}{lll}
  \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
- \verb|slt a b| & &
+ \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b|
 \end{tabular}
+
+Miscellaneous logical instructions:
+
+\begin{tabular}{lll}
+ \verb|implies a b| & \verb|ite a b c| & 
+\end{tabular}
+
+Floating point arithmetic:
+
+\begin{tabular}{llll}
+ \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b| 
+\end{tabular}
+
+
 \end{center}
 }
  \caption{The language $\mathcal{L}$}
