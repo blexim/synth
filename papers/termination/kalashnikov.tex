@@ -328,15 +328,17 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 \path [line] (gp) -- (out);
 
 \Divide{pua}{spec}{puaspec}
-\Divide{spec}{file}{specfile}
+%\Divide{spec}{file}{specfile}
 \Divide{file}{gcc}{filegcc}
 \Divide{gcc}{out}{gccout}
 
-\draw (pua |- 0,-3) node {Input};
-\draw (spec |- 0,-3) node {Specification};
-\draw (file |- 0,-3) node {Spec};
-\draw (gcc |- 0,-3) node {Test generator};
-\draw (out |- 0,-3) node {Proof};
+\draw (pua |- 0,-3) node [align=center] {Input program \\ (written in C)};
+
+\coordinate (midspec) at ($(spec) !.5! (file)$);
+\draw (midspec |- 0,-3) node [align=center] {Automatically generated specification \\ (written in C)};
+%\draw (file |- 0,-3) node {Spec};
+\draw (gcc |- 0,-3) node [align=center] {Test generator};
+\draw (out |- 0,-3) node [align=center] {Proof \\ (written in $\mathcal{L}$)};
 
 \end{tikzpicture}
 }
