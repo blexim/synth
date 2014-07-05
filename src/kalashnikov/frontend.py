@@ -45,8 +45,6 @@ def prove_terminates(filename):
                 nargs,
                 varnames,
                 ' '.join(sys.argv[2:])))
-  print cmd
-
   os.system(cmd)
 
 if __name__ == '__main__':
