@@ -45,8 +45,8 @@ args.argparser.add_argument("--nonops", default=False,
 args.argparser.add_argument("--noconsts", default=False,
     action="store_const", const=True,
     help="don't remove const instructions")
-args.argparser.add_argument("--fastverif", default=True, type=bool,
-    help="don't use fast verification")
+args.argparser.add_argument("--fastverif", default=False, type=bool,
+    help="use fast verification")
 
 args.argparser.add_argument("-popsize", default=2000, type=int)
 args.argparser.add_argument("-keepfrac", default=200, type=int)
@@ -126,10 +126,10 @@ class Checker(object):
       genericargs.append("-DSEED=%d" % args.args.seed)
 
     if verif:
-      if not args.args.fastverif:
-        execcfile = os.path.join("interpreter", "exec.c")
-      else:
+      if args.args.fastverif == True:
         execcfile = "/tmp/exec.c"
+      else:
+        execcfile = os.path.join("interpreter", "exec.c")
 
       self.cbmcargs = [args.args.cbmc,
           "-DSZ=%d" % sz,
@@ -154,7 +154,8 @@ class Checker(object):
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
           os.path.join("explicit", "synth.c"), "-lm"] + genericargs
-      self.gccargs["genetic"] = [args.args.gpp,
+      self.gccargs["genetic"] = [args.args.gcc,
+          "-std=c99",
           "-DSEARCH",
           "-DSZ=128",
           "-DNRES=128",
@@ -168,7 +169,7 @@ class Checker(object):
           "-DSAVEFILE=\"%s\"" % geneticsave.name,
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
-          os.path.join("genetic", "synth.cpp"), "-lm"] + genericargs
+          os.path.join("genetic", "synth.c"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=%d" % sz,
           "-DNRES=%d" % sz,
