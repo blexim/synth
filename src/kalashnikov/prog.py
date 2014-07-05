@@ -57,8 +57,8 @@ execbinops[19] = "!%s || %s"
 revbinops = { v: k for (k, v) in binops.items() }
 
 unops = {
-    4: "-%s",
-    8: "~%s"
+    4: "-(%s)",
+    8: "~(%s)"
 }
 
 execunops = copy.copy(unops)
