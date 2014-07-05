@@ -436,6 +436,12 @@ With our technique we can find the non-linear ranking function $R(x) = |x|$.
 %a lower index decreases. Additionally, at every step, there must be at least one
 %function that decreases.
 
+\item Program (h) illustrates conditional termination.
+When proving program termination we are simultaneously solving two problems:
+the search for a termination argument, and the search for a supporting invariant~\cite{DBLP:conf/cav/BrockschmidtCF13}.
+For this loop, we find the ranking function $R(x) = x$ together with the supporting invariant $y=1$.
+
+
 \item In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, program (i) admits a multiphase ranking function computed from a multiphase ranking template.
 A multiphase ranking template is targeted at programs that go through a
 finite number of phases in their execution. Each phase is ranked with
@@ -452,10 +458,10 @@ $z$ cannot decrease indefinitely, and so $R$ proves that the loop is well founde
 
 As with all of the termination proofs presented in this paper, the ranking function above was found completely automatically.
 
-\item Program (h) illustrates conditional termination.
-When proving program termination we are simultaneously solving two problems:
-the search for a termination argument, and the search for a supporting invariant~\cite{DBLP:conf/cav/BrockschmidtCF13}.
-For this loop, we find the ranking function $R(x) = x$ together with the supporting invariant $y=1$.
+\iffalse
+\item Program (j) illustrates a nested loop.  This construction can cause difficulties for provers based on
+enumerating lassos
+\fi
 \end{itemize}
 
 \begin{figure*}
@@ -587,29 +593,28 @@ while (x > 0 && y > 0 && z > 0) {
 \caption{Taken from~\cite{BA:mcs}}
  \label{fig:motivation.i}
 \end{subfigure} 
-
-\\
-
-\hline
-
-&
-
-\begin{subfigure}[b]{0.3\textwidth}
-\begin{lstlisting}
-while (i < n) {
-  j = 0;
-  while (j <= i) {
-    j = j + 1;
-  }
-  i = i + 1;
-}
-\end{lstlisting}
-\caption{Taken from~\cite{DBLP:conf/cav/BrockschmidtCF13}}
-\end{subfigure}
-
+% 
+% \\
+% 
+% \hline
+% 
+% &
+% 
+% \begin{subfigure}[b]{0.3\textwidth}
+% \begin{lstlisting}
+% while (i < n) {
+%   j = 0;
+%   while (j <= i) {
+%     j = j + 1;
+%   }
+%   i = i + 1;
+% }
+% \end{lstlisting}
+% \caption{Taken from~\cite{DBLP:conf/cav/BrockschmidtCF13}}
+% \end{subfigure}
 
 \end{tabular}
-\caption{Sample programs}\label{fig:motivation}
+\caption{Motivational examples, mostly taken from the literature.\label{fig:motivation}}
 \end{figure*}
 
 %\subsection{Differences in the termination behaviour for integers and bit-vectors.}
@@ -1297,17 +1302,20 @@ R(x) & = x
 
 \begin{figure*}
 \begin{framed}
-\begin{minipage}{0.22\textwidth}
+\begin{minipage}{0.17\textwidth}
 \begin{lstlisting}[mathescape=true]
 x = 0;
-$L_1:$ while (x <= y)
+$L_1:$
+while(x <= y)
   x++;
 
-$L_2:$ while (x > 0) {
+$L_2:$
+while(x > 0){
   z = x;
   v = 0;
 
-$L_3:$  while (v < y) {
+$L_3:$
+  while(v < y){
     z--;
     v++;
   }
@@ -1318,16 +1326,16 @@ $L_3:$  while (v < y) {
 \end{lstlisting}
 \end{minipage}
 \vline
-\begin{minipage}{0.82\textwidth}
+\begin{minipage}{0.85\textwidth}
 \begin{align*}
  \exists W_1, W_2, R, S . \forall v, x, y, z, v', x', y', z' . \\
    x = 0 & \rightarrow W_1(v, x, y, z) \, \wedge \\
    x \leq y \wedge W_1(v, x, y, z) & \rightarrow W_1(v, x+1, x, y, z) \, \wedge \\
-   x > 0 \wedge x > y \wedge W_1(v, x, y, z) & \rightarrow W_2(v, x+1, y, z) \, \wedge \\
+   x > 0 \wedge x > y \wedge W_1(v, x, y, z) & \rightarrow W_2(v, x, y, z) \, \wedge \\
    %x > 0 \wedge W_2(v, x, y, z) & \rightarrow W_3(0, x, y, x) \, \wedge \\
    %v < y \wedge W_3(v, x, y, z) & \rightarrow W_3(v+1, x, y, z-1) \, \wedge \\
    %v \geq y \wedge W_3(v, x, y, z) & \rightarrow W_2(v, x-z, y-z, z) \, \wedge \\
-   S(\langle v, x, y, z, \rangle, \langle v', x', y', z' \rangle) \wedge v < y & \rightarrow S(\langle v, x, y, z \rangle, \langle v+1, x, y, z-1 \rangle) \, \wedge \\
+   S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) \wedge v' < y' & \rightarrow S(\langle v, x, y, z \rangle, \langle v'+1, x', y', z'-1 \rangle) \, \wedge \\
    x > 0 \wedge W_2(v, x, y, z) & \rightarrow S(\langle v, x, y, z \rangle, \langle 0, x, y, x \rangle) \, \wedge \\
    x > 0 \wedge W_2(v, x, y, z) \wedge S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) \wedge v' \geq y' & \rightarrow \\
    & W_2(v', x' - z', y' - z', z') \, \wedge \\
