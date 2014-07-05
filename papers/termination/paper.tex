@@ -121,15 +121,16 @@ When surveying the area of program termination chronologically, we observe an in
 over all program paths %(syntactic characterisation of loops) 
 \cite{DBLP:conf/vmcai/P04,DBLP:conf/cav/BradleyMS05}, followed by 
 more recent techniques moving towards termination arguments based on Ramsey's theorem \cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}.
-The latter approach aims to find a set of local termination conditions that decrease as execution follows through the loop. %(semantic characterisation of loops).
+This proof style proves that a transition relation is disjunctively well founded by finding a set of simple
+functions, each of which proves well foundedness for part of the transition relation.
 The main justification for this paradigm shift lies in the simplicity of the local termination measures when compared to the global ones, e.g.
-there are cases in which proofs based on local measures involve applying linear functions while corresponding global
-measures involve nonlinear functions or lexicographic orders. 
-This explains why approaches based on Ramsey's theorem are restricted to searching for linear termination arguments.
+there are cases in which proofs based on local measures involve linear functions while corresponding global
+measures require non-linear functions or lexicographic orders. 
+%This explains why approaches based on Ramsey's theorem are restricted to searching for linear termination arguments.
 
 
-The downside of a Ramsey-based approach is the fact that a valid termination argument must hold for the \emph{transitive closure}
-of the program's transitions, rather than only for individual transitions. 
+One difficulty with a Ramsey-based approach is that validity of the termination argument can only be checked by considering the \emph{transitive closure}
+of the program, rather than a single step.
 As such, there is experimental evidence that most of the time is spent in reachability analysis \cite{DBLP:conf/pldi/CookPR06}, 
 requiring the support of powerful safety checkers.
 Basically, these approaches opt for simpler termination arguments in the detriment of complex validity checking.
