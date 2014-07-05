@@ -1,0 +1,102 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp41.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp41.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-6-26),data(A,B)), p(pc(main-0-24),data(C,D)), {1=1,A=<1,1=1,1=1,1=1,D=B+1,C=A}, [1=1,A=<1,1=1,1=1,1=1], [D=B+1,C=A], tid([10,9,13,7,5])).
+transition(p(pc(main-6-26),data(A,B)), p(pc(main-6-26),data(C,D)), {1=1,A>=1+1,1=1,D=B,C=A-1}, [1=1,A>=1+1,1=1], [D=B,C=A-1], tid([8,6,5])).
+transition(p(pc(main-0-24),data(A,B)), p(pc(main-ret-0),data(C,D)), {1=1,B>=1+10,1=1,1=1,1=1,D=B,C=A}, [1=1,B>=1+10,1=1,1=1,1=1], [D=B,C=A], tid([12,11,14,3,1])).
+transition(p(pc(main-0-24),data(_,A)), p(pc(main-6-26),data(B,C)), {1=1,A=<10,1=1,C=A,B=10}, [1=1,A=<10,1=1], [C=A,B=10], tid([4,2,1])).
+transition(p(pc(main-0-24),data(A,B)), p(pc(main-ret-0),data(C,D)), {1=1,B>=1+10,1=1,1=1,1=1,D=B,C=A}, [1=1,B>=1+10,1=1,1=1,1=1], [D=B,C=A], tid([12,11,14,3,1])).
+transition(p(pc(main-0-24),data(_,A)), p(pc(main-6-26),data(B,C)), {1=1,A=<10,1=1,C=A,B=10}, [1=1,A=<10,1=1], [C=A,B=10], tid([4,2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([4,2,1])], loop [tid([8,6,5])]
+trans preds: _9232->_9235:	#0:	
+x2=<1
+x2-x2'=<0
+refining loop
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): x2-x2'>=1
+
+refining stem
+
+cutting step 2 at pc(main-6-26)
+unsat suffix not yet reached
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): _8425-x2'>=1
+
+refining loop
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): x2>=10
+
+refining stem
+
+cutting step 2 at pc(main-6-26)
+unsat suffix not yet reached
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): _8425>=10
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([4,2,1])], loop [tid([8,6,5])]
+trans preds: _78666->_78669:	#2:	x2>=10, x2-x2'>=1
+x2=<1
+x2-x2'=<0
+refining loop
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): x2-x2'>=1
+
+refining stem
+
+cutting step 2 at pc(main-6-26)
+unsat suffix not yet reached
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): _77840-x2'>=1
+
+refining loop
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): x2>=10
+
+refining stem
+
+cutting step 2 at pc(main-6-26)
+unsat suffix not yet reached
+cutting step 1 at pc(main-6-26)
+LI at pc(main-6-26): _1355>=10
+
+
+
+
+==================================================
+No new transition predicates found
+_10489->_10492:	#2:	x2>=10, x2-x2'>=1
+abstract_trans_state(0, pc(main-0-24), pc(main-0-24), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-24), pc(main-ret-0), [], stem, 2, (1,tid([12,11,14,3,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-ret-0), [], loop, 3, (1,tid([12,11,14,3,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-6-26), [], stem, 4, (1,tid([4,2,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-6-26), [], loop, 5, (1,tid([4,2,1]))).
+abstract_trans_state(2, pc(main-6-26), pc(main-0-24), [], loop, 6, (4,tid([10,9,13,7,5]))).
+abstract_trans_state(2, pc(main-6-26), pc(main-6-26), [2], loop, 7, (4,tid([8,6,5]))).
+
+frontier 0: stem 1 (pc(main-0-24)->pc(main-0-24)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-24)->pc(main-ret-0)) from 1 by applying tid([12,11,14,3,1]): 	T
+frontier 1: loop 3 (pc(main-0-24)->pc(main-ret-0)) from 1 by applying tid([12,11,14,3,1]): 	T
+frontier 1: stem 4 (pc(main-0-24)->pc(main-6-26)) from 1 by applying tid([4,2,1]): 	T
+frontier 1: loop 5 (pc(main-0-24)->pc(main-6-26)) from 1 by applying tid([4,2,1]): 	T
+frontier 2: loop 6 (pc(main-6-26)->pc(main-0-24)) from 4 by applying tid([10,9,13,7,5]): 	T
+frontier 2: loop 7 (pc(main-6-26)->pc(main-6-26)) from 4 by applying tid([8,6,5]): 	x2-x2'>=1
+
+Stem: [0,tid([4,2,1])]
+Loop: [tid([8,6,5])]
+SPINS

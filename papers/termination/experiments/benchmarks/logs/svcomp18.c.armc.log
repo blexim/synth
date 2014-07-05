@@ -1,0 +1,275 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp18.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp18.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-14-32),data(A,B,C)), p(pc(main-1-30),data(D,E,F)), {1=1,B>=A,1=1,1=1,1=1,F=C,E=C+B,D=A}, [1=1,B>=A,1=1,1=1,1=1], [F=C,E=C+B,D=A], tid([23,22,26,19,17])).
+transition(p(pc(main-14-32),data(A,B,C)), p(pc(main-14-32),data(D,E,F)), {1=1,B+1=<A,1=1,1=1,F=C+1,E=B,D=A-1}, [1=1,B+1=<A,1=1,1=1], [F=C+1,E=B,D=A-1], tid([21,20,18,17])).
+transition(p(pc(main-1-30),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {1=1,B+1=<1,1=1,1=1,1=1,F=C,E=B,D=A}, [1=1,B+1=<1,1=1,1=1,1=1], [F=C,E=B,D=A], tid([25,24,27,15,13])).
+transition(p(pc(main-1-30),data(A,B,C)), p(pc(main-14-32),data(D,E,F)), {1=1,B>=1,1=1,F=C-1,E=B,D=A}, [1=1,B>=1,1=1], [F=C-1,E=B,D=A], tid([16,14,13])).
+transition(p(pc(main-0-27),data(A,B,C)), p(pc(main-1-30),data(D,E,F)), {C=<10000,C>= -10000,B=<10000,A=<10000,F=C,E=B,D=A}, [C=<10000,C>= -10000,B=<10000,A=<10000], [F=C,E=B,D=A], tid([12,9,6,3])).
+transition(p(pc(main-0-27),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {C=<10000,C>= -10000,B=<10000,A>=1+10000,1=1,F=C,E=B,D=A}, [C=<10000,C>= -10000,B=<10000,A>=1+10000,1=1], [F=C,E=B,D=A], tid([11,10,9,6,3])).
+transition(p(pc(main-0-27),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {C=<10000,C>= -10000,B>=1+10000,1=1,F=C,E=B,D=A}, [C=<10000,C>= -10000,B>=1+10000,1=1], [F=C,E=B,D=A], tid([8,7,6,3])).
+transition(p(pc(main-0-27),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {C=<10000,C+1=< -10000,1=1,F=C,E=B,D=A}, [C=<10000,C+1=< -10000,1=1], [F=C,E=B,D=A], tid([5,4,3])).
+transition(p(pc(main-0-27),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {C>=1+10000,1=1,F=C,E=B,D=A}, [C>=1+10000,1=1], [F=C,E=B,D=A], tid([2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([12,9,6,3]),tid([16,14,13])], loop [tid([21,20,18,17])]
+trans preds: _10589->_10592:	#0:	
+z-y=<0
+z-y-z'+y'=<0
+refining loop
+cutting step 1 at pc(main-14-32)
+LI at pc(main-14-32): z-y-z'+y'>=1
+
+refining stem
+
+cutting step 3 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 2 at pc(main-14-32)
+unsat suffix not yet reached
+cutting step 1 at pc(main-14-32)
+LI at pc(main-14-32): _9525-_9526-z'+y'>=1
+
+refining loop
+cutting step 1 at pc(main-14-32)
+LI at pc(main-14-32): z-y>=1
+
+refining stem
+
+cutting step 3 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 2 at pc(main-14-32)
+unsat suffix not yet reached
+cutting step 1 at pc(main-14-32)
+LI at pc(main-14-32): _849-_850>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([12,9,6,3])], loop [tid([16,14,13]),tid([23,22,26,19,17])]
+trans preds: _44644->_44647:	#2:	z-y>=1, z-y-z'+y'>=1
+projected loop:
+z'=z, y'= -1+y+x, z-y=<0, y>=1, y=<10000, x'= -1+x, x>= -10000, x=<10000
+x=< -10001
+x'-x>=0
+refining loop
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): x'-x=< -1
+cutting step 1 at pc(main-1-30)
+LI at pc(main-1-30): x'-x=< -1
+
+refining stem
+
+cutting step 3 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): x'-_43758=< -1
+cutting step 1 at pc(main-1-30)
+
+refining loop
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): x>= -10000
+cutting step 1 at pc(main-1-30)
+LI at pc(main-1-30): x>= -10000
+
+refining stem
+
+cutting step 3 at pc(main-1-30)
+LI at pc(main-1-30): x'>= -10000
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): _3805>= -10000
+cutting step 1 at pc(main-1-30)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 1 2 3 
+abstract counterexample: stem [0,tid([12,9,6,3]),tid([16,14,13])], loop [tid([23,22,26,19,17]),tid([16,14,13])]
+trans preds: _85017->_85020:	#5:	x'>= -10000, x>= -10000, x'-x=< -1, z-y>=1, z-y-z'+y'>=1
+projected loop:
+z'=z, y'=y+x, x'= -1+x, y+x>=1, z-y=<0, y>=1, y=<10000, x=<9999
+x=< -10000
+x'-x>=0
+refining loop
+cutting step 2 at pc(main-1-30)
+LI at pc(main-1-30): x'-x=<0
+cutting step 1 at pc(main-14-32)
+LI at pc(main-14-32): x'-x=< -1
+
+refining stem
+
+cutting step 4 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 3 at pc(main-14-32)
+unsat suffix not yet reached
+cutting step 2 at pc(main-1-30)
+LI at pc(main-1-30): x'-_7415=<0
+cutting step 1 at pc(main-14-32)
+
+refining loop
+cutting step 2 at pc(main-1-30)
+LI at pc(main-1-30): y'-x=<10000
+cutting step 1 at pc(main-14-32)
+LI at pc(main-14-32): x>= -9999
+
+refining stem
+
+cutting step 4 at pc(main-1-30)
+LI at pc(main-1-30): y'=<10000
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): y'=<10000
+cutting step 2 at pc(main-1-30)
+LI at pc(main-1-30): y'-_7385=<10000
+cutting step 1 at pc(main-14-32)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 3:
+lfp iteration 0 1 2 3 
+abstract counterexample: stem [0,tid([12,9,6,3])], loop [tid([16,14,13]),tid([21,20,18,17]),tid([23,22,26,19,17])]
+trans preds: _30441->_30444:	#9:	y'=<10000, x>= -9999, y'-x=<10000, x'-x=<0, x'>= -10000, x>= -10000, x'-x=< -1, z-y>=1, z-y-z'+y'>=1
+z=<1
+z'-z>=0
+refining loop
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-z=<0
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): y'-z=< -1
+cutting step 1 at pc(main-1-30)
+LI at pc(main-1-30): z'-z=< -1
+
+refining stem
+
+cutting step 4 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-_29470=<0
+cutting step 2 at pc(main-14-32)
+cutting step 1 at pc(main-1-30)
+
+refining loop
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-y'-9999/10000*z=<0
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): z>=2
+cutting step 1 at pc(main-1-30)
+LI at pc(main-1-30): z>=2
+
+refining stem
+
+cutting step 4 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-y'-9999/10000*_12255=<0
+cutting step 2 at pc(main-14-32)
+cutting step 1 at pc(main-1-30)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 4:
+lfp iteration 0 1 2 3 
+abstract counterexample: stem [0,tid([12,9,6,3])], loop [tid([16,14,13]),tid([21,20,18,17]),tid([23,22,26,19,17])]
+trans preds: _186987->_186990:	#14:	z>=2, z'-y'-9999/10000*z=<0, z'-z=< -1, y'-z=< -1, z'-z=<0, y'=<10000, x>= -9999, y'-x=<10000, x'-x=<0, x'>= -10000, x>= -10000, x'-x=< -1, z-y>=1, z-y-z'+y'>=1
+z=<1
+z'-z>=0
+refining loop
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-z=<0
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): y'-z=< -1
+cutting step 1 at pc(main-1-30)
+LI at pc(main-1-30): z'-z=< -1
+
+refining stem
+
+cutting step 4 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-_62208=<0
+cutting step 2 at pc(main-14-32)
+cutting step 1 at pc(main-1-30)
+
+refining loop
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-y'-9999/10000*z=<0
+cutting step 2 at pc(main-14-32)
+LI at pc(main-14-32): z>=2
+cutting step 1 at pc(main-1-30)
+LI at pc(main-1-30): z>=2
+
+refining stem
+
+cutting step 4 at pc(main-1-30)
+unsat suffix not yet reached
+cutting step 3 at pc(main-14-32)
+LI at pc(main-14-32): z'-y'-9999/10000*_62208=<0
+cutting step 2 at pc(main-14-32)
+cutting step 1 at pc(main-1-30)
+
+
+
+
+==================================================
+No new transition predicates found
+_243031->_243034:	#14:	z>=2, z'-y'-9999/10000*z=<0, z'-z=< -1, y'-z=< -1, z'-z=<0, y'=<10000, x>= -9999, y'-x=<10000, x'-x=<0, x'>= -10000, x>= -10000, x'-x=< -1, z-y>=1, z-y-z'+y'>=1
+abstract_trans_state(0, pc(main-0-27), pc(main-0-27), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-27), pc(main-1-30), [6,10], stem, 2, (1,tid([12,9,6,3]))).
+abstract_trans_state(1, pc(main-0-27), pc(main-ret-0), [6,10], stem, 3, (1,tid([11,10,9,6,3]))).
+abstract_trans_state(1, pc(main-0-27), pc(main-ret-0), [10], stem, 4, (1,tid([8,7,6,3]))).
+abstract_trans_state(1, pc(main-0-27), pc(main-ret-0), [], stem, 5, (1,tid([5,4,3]))).
+abstract_trans_state(2, pc(main-1-30), pc(main-ret-0), [5,6,8,9,10,11], loop, 6, (2,tid([25,24,27,15,13]))).
+abstract_trans_state(2, pc(main-0-27), pc(main-14-32), [6], stem, 7, (2,tid([16,14,13]))).
+abstract_trans_state(2, pc(main-1-30), pc(main-14-32), [5,6,9,11,12], loop, 8, (2,tid([16,14,13]))).
+abstract_trans_state(3, pc(main-0-27), pc(main-1-30), [], stem, 9, (7,tid([23,22,26,19,17]))).
+abstract_trans_state(3, pc(main-14-32), pc(main-1-30), [5,8,9], loop, 10, (7,tid([23,22,26,19,17]))).
+abstract_trans_state(3, pc(main-14-32), pc(main-14-32), [3,4,5,6,13,14], loop, 11, (7,tid([21,20,18,17]))).
+abstract_trans_state(3, pc(main-1-30), pc(main-1-30), [5,8,9,11,12], loop, 12, (8,tid([23,22,26,19,17]))).
+abstract_trans_state(3, pc(main-1-30), pc(main-14-32), [3,4,5,6,9,11], loop, 13, (8,tid([21,20,18,17]))).
+abstract_trans_state(4, pc(main-1-30), pc(main-ret-0), [5,6,9], loop, 14, (9,tid([25,24,27,15,13]))).
+abstract_trans_state(4, pc(main-0-27), pc(main-14-32), [], stem, 15, (9,tid([16,14,13]))).
+abstract_trans_state(4, pc(main-1-30), pc(main-14-32), [5,9,12], loop, 16, (9,tid([16,14,13]))).
+abstract_trans_state(4, pc(main-14-32), pc(main-ret-0), [5,6,8,9], loop, 17, (10,tid([25,24,27,15,13]))).
+abstract_trans_state(4, pc(main-14-32), pc(main-14-32), [5,7,8,9,11,12], loop, 18, (10,tid([16,14,13]))).
+abstract_trans_state(4, pc(main-14-32), pc(main-1-30), [3,5,13], loop, 19, (11,tid([23,22,26,19,17]))).
+abstract_trans_state(4, pc(main-1-30), pc(main-1-30), [3,5,8,9,11], loop, 20, (13,tid([23,22,26,19,17]))).
+
+frontier 0: stem 1 (pc(main-0-27)->pc(main-0-27)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-27)->pc(main-1-30)) from 1 by applying tid([12,9,6,3]): 	y'=<10000, x'>= -10000
+frontier 1: stem 3 (pc(main-0-27)->pc(main-ret-0)) from 1 by applying tid([11,10,9,6,3]): 	y'=<10000, x'>= -10000
+frontier 1: stem 4 (pc(main-0-27)->pc(main-ret-0)) from 1 by applying tid([8,7,6,3]): 	x'>= -10000
+frontier 1: stem 5 (pc(main-0-27)->pc(main-ret-0)) from 1 by applying tid([5,4,3]): 	T
+frontier 2: loop 6 (pc(main-1-30)->pc(main-ret-0)) from 2 by applying tid([25,24,27,15,13]): 	z'-z=<0, y'=<10000, y'-x=<10000, x'-x=<0, x'>= -10000, x>= -10000
+frontier 2: stem 7 (pc(main-0-27)->pc(main-14-32)) from 2 by applying tid([16,14,13]): 	y'=<10000
+frontier 2: loop 8 (pc(main-1-30)->pc(main-14-32)) from 2 by applying tid([16,14,13]): 	z'-z=<0, y'=<10000, x'-x=<0, x>= -10000, x'-x=< -1
+frontier 3: stem 9 (pc(main-0-27)->pc(main-1-30)) from 7 by applying tid([23,22,26,19,17]): 	T
+frontier 3: loop 10 (pc(main-14-32)->pc(main-1-30)) from 7 by applying tid([23,22,26,19,17]): 	z'-z=<0, y'-x=<10000, x'-x=<0
+frontier 3: loop 11 (pc(main-14-32)->pc(main-14-32)) from 7 by applying tid([21,20,18,17]): 	z'-z=< -1, y'-z=< -1, z'-z=<0, y'=<10000, z-y>=1, z-y-z'+y'>=1
+frontier 3: loop 12 (pc(main-1-30)->pc(main-1-30)) from 8 by applying tid([23,22,26,19,17]): 	z'-z=<0, y'-x=<10000, x'-x=<0, x>= -10000, x'-x=< -1
+frontier 3: loop 13 (pc(main-1-30)->pc(main-14-32)) from 8 by applying tid([21,20,18,17]): 	z'-z=< -1, y'-z=< -1, z'-z=<0, y'=<10000, x'-x=<0, x>= -10000
+frontier 4: loop 14 (pc(main-1-30)->pc(main-ret-0)) from 9 by applying tid([25,24,27,15,13]): 	z'-z=<0, y'=<10000, x'-x=<0
+frontier 4: stem 15 (pc(main-0-27)->pc(main-14-32)) from 9 by applying tid([16,14,13]): 	T
+frontier 4: loop 16 (pc(main-1-30)->pc(main-14-32)) from 9 by applying tid([16,14,13]): 	z'-z=<0, x'-x=<0, x'-x=< -1
+frontier 4: loop 17 (pc(main-14-32)->pc(main-ret-0)) from 10 by applying tid([25,24,27,15,13]): 	z'-z=<0, y'=<10000, y'-x=<10000, x'-x=<0
+frontier 4: loop 18 (pc(main-14-32)->pc(main-14-32)) from 10 by applying tid([16,14,13]): 	z'-z=<0, x>= -9999, y'-x=<10000, x'-x=<0, x>= -10000, x'-x=< -1
+frontier 4: loop 19 (pc(main-14-32)->pc(main-1-30)) from 11 by applying tid([23,22,26,19,17]): 	z'-z=< -1, z'-z=<0, z-y>=1
+frontier 4: loop 20 (pc(main-1-30)->pc(main-1-30)) from 13 by applying tid([23,22,26,19,17]): 	z'-z=< -1, z'-z=<0, y'-x=<10000, x'-x=<0, x>= -10000
+
+Stem: [0,tid([12,9,6,3])]
+Loop: [tid([16,14,13]),tid([21,20,18,17]),tid([23,22,26,19,17])]
+SPINS

@@ -1,0 +1,99 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/loop48.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/loop48.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-1-18),data(A,B)), p(pc(main-ret-0),data(C,D)), {1=1,B=<0,1=1,1=1,1=1,D=B,C=A}, [1=1,B=<0,1=1,1=1,1=1], [D=B,C=A], tid([7,6,8,4,2])).
+transition(p(pc(main-1-18),data(A,B)), p(pc(main-1-18),data(C,D)), {1=1,B>=1+0,1=1,D=B-A,C=A}, [1=1,B>=1+0,1=1], [D=B-A,C=A], tid([5,3,2])).
+transition(p(pc(main-0-16),data(_,A)), p(pc(main-1-18),data(B,C)), {1=1,C=A,B=1}, [1=1], [C=A,B=1], tid([1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([1])], loop [tid([5,3,2])]
+trans preds: _7608->_7611:	#0:	
+projected loop:
+y=1, y'=1, x=1+x', x'>=0
+x=<0
+x-x'=<0
+refining loop
+cutting step 1 at pc(main-1-18)
+LI at pc(main-1-18): x-x'>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-18)
+LI at pc(main-1-18): y'>=1
+cutting step 1 at pc(main-1-18)
+LI at pc(main-1-18): _6840-x'>=1
+
+refining loop
+cutting step 1 at pc(main-1-18)
+LI at pc(main-1-18): x>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-18)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-18)
+LI at pc(main-1-18): _6840>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 2 3 
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+abstract trans fixpoint
+abstract_trans_state(0, pc(main-0-16), pc(main-0-16), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-16), pc(main-1-18), [2], stem, 2, (1,tid([1]))).
+abstract_trans_state(2, pc(main-0-16), pc(main-ret-0), [2], stem, 3, (2,tid([7,6,8,4,2]))).
+abstract_trans_state(2, pc(main-1-18), pc(main-ret-0), [2], loop, 4, (2,tid([7,6,8,4,2]))).
+abstract_trans_state(2, pc(main-1-18), pc(main-1-18), [1,2,3], loop, 5, (2,tid([5,3,2]))).
+
+frontier 0: stem 1 (pc(main-0-16)->pc(main-0-16)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-16)->pc(main-1-18)) from 1 by applying tid([1]): 	y'>=1
+frontier 2: stem 3 (pc(main-0-16)->pc(main-ret-0)) from 2 by applying tid([7,6,8,4,2]): 	y'>=1
+frontier 2: loop 4 (pc(main-1-18)->pc(main-ret-0)) from 2 by applying tid([7,6,8,4,2]): 	y'>=1
+frontier 2: loop 5 (pc(main-1-18)->pc(main-1-18)) from 2 by applying tid([5,3,2]): 	x>=1, y'>=1, x-x'>=1
+
+_83272->_83275:	#3:	x>=1, y'>=1, x-x'>=1
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.01     |     0.01     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.01     |     0.01     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.01     |     0.01     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+TERMINATES

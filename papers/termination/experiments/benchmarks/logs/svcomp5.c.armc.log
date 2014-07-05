@@ -1,0 +1,286 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp5.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp5.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-9-23),data(A,B,C,D)), p(pc(main-ret-0),data(E,F,G,H)), {1=1,B>=1+D,1=1,1=1,1=1,H=D,G=C,F=B,E=A}, [1=1,B>=1+D,1=1,1=1,1=1], [H=D,G=C,F=B,E=A], tid([27,26,28,18,16])).
+transition(p(pc(main-9-23),data(A,B,_,C)), p(pc(main-9-23),data(D,E,F,G)), {1=1,B=<C,1=1,H=0,1=1,G=C,F=H,E=B+1,D=A}, [1=1,B=<C,1=1,H=0,1=1], [G=C,F=H,E=B+1,D=A], tid([25,24,19,17,16])).
+transition(p(pc(main-9-23),data(A,B,_,C)), p(pc(main-9-23),data(D,E,F,G)), {1=1,B=<C,1=1,H>=1+0,1=1,1=1,G=C,F=H,E=2*B+A,D=A+1}, [1=1,B=<C,1=1,H>=1+0,1=1,1=1], [G=C,F=H,E=2*B+A,D=A+1], tid([23,22,21,19,17,16])).
+transition(p(pc(main-9-23),data(A,B,_,C)), p(pc(main-9-23),data(D,E,F,G)), {1=1,B=<C,1=1,H+1=<0,1=1,1=1,G=C,F=H,E=2*B+A,D=A+1}, [1=1,B=<C,1=1,H+1=<0,1=1,1=1], [G=C,F=H,E=2*B+A,D=A+1], tid([23,22,20,19,17,16])).
+transition(p(pc(main-0-15),data(A,B,C,D)), p(pc(main-9-23),data(E,F,G,H)), {D+1=<536870912,B+1=<536870912,A+1=<536870912,B>= -1073741824,B+A>=0,H=D,G=C,F=B,E=A}, [D+1=<536870912,B+1=<536870912,A+1=<536870912,B>= -1073741824,B+A>=0], [H=D,G=C,F=B,E=A], tid([15,12,9,6,3])).
+transition(p(pc(main-0-15),data(A,B,C,D)), p(pc(main-ret-0),data(E,F,G,H)), {D+1=<536870912,B+1=<536870912,A+1=<536870912,B>= -1073741824,B+A+1=<0,1=1,H=D,G=C,F=B,E=A}, [D+1=<536870912,B+1=<536870912,A+1=<536870912,B>= -1073741824,B+A+1=<0,1=1], [H=D,G=C,F=B,E=A], tid([14,13,12,9,6,3])).
+transition(p(pc(main-0-15),data(A,B,C,D)), p(pc(main-ret-0),data(E,F,G,H)), {D+1=<536870912,B+1=<536870912,A+1=<536870912,B+1=< -1073741824,1=1,H=D,G=C,F=B,E=A}, [D+1=<536870912,B+1=<536870912,A+1=<536870912,B+1=< -1073741824,1=1], [H=D,G=C,F=B,E=A], tid([11,10,9,6,3])).
+transition(p(pc(main-0-15),data(A,B,C,D)), p(pc(main-ret-0),data(E,F,G,H)), {D+1=<536870912,B+1=<536870912,A>=536870912,1=1,H=D,G=C,F=B,E=A}, [D+1=<536870912,B+1=<536870912,A>=536870912,1=1], [H=D,G=C,F=B,E=A], tid([8,7,6,3])).
+transition(p(pc(main-0-15),data(A,B,C,D)), p(pc(main-ret-0),data(E,F,G,H)), {D+1=<536870912,B>=536870912,1=1,H=D,G=C,F=B,E=A}, [D+1=<536870912,B>=536870912,1=1], [H=D,G=C,F=B,E=A], tid([5,4,3])).
+transition(p(pc(main-0-15),data(A,B,C,D)), p(pc(main-ret-0),data(E,F,G,H)), {D>=536870912,1=1,H=D,G=C,F=B,E=A}, [D>=536870912,1=1], [H=D,G=C,F=B,E=A], tid([2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([15,12,9,6,3])], loop [tid([25,24,19,17,16])]
+trans preds: _11258->_11261:	#0:	
+x-N>=1
+x-N-x'+N'>=0
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): x-N-x'+N'=< -1
+
+refining stem
+
+cutting step 2 at pc(main-9-23)
+unsat suffix not yet reached
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _10323-_10325-x'+N'=< -1
+
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): x-N=<0
+
+refining stem
+
+cutting step 2 at pc(main-9-23)
+unsat suffix not yet reached
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _950-_952=<0
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([15,12,9,6,3])], loop [tid([23,22,21,19,17,16])]
+trans preds: _53619->_53622:	#2:	x-N=<0, x-N-x'+N'=< -1
+projected loop:
+y'-x'+2*N'>=1, N=N', N'=<536870911, y= -1+y', x=1/2-1/2*y'+1/2*x', y'+x'>=1, y'=<536870912, tmp'>=1
+y>=536870912
+y-y'>=0
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): y-y'=< -1
+
+refining stem
+
+cutting step 2 at pc(main-9-23)
+unsat suffix not yet reached
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _52631-y'=< -1
+
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): y=<536870911
+
+refining stem
+
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): y'=<536870911
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _4102=<536870911
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([15,12,9,6,3])], loop [tid([25,24,19,17,16]),tid([23,22,21,19,17,16])]
+trans preds: _88843->_88846:	#5:	y'=<536870911, y=<536870911, y-y'=< -1, x-N=<0, x-N-x'+N'=< -1
+projected loop:
+y'=1+y, x'=2+y+2*x, N'=N, x-N=< -1, N=<536870911, y+x>=0, y=<536870911, tmp'>=1
+x-N>=0
+x'-N'-x+N=<1
+refining loop
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): y'+2*x'-N'-x+N>=2
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): x'-N'-x+N>=2
+
+refining stem
+
+cutting step 3 at pc(main-9-23)
+LI at pc(main-9-23): y'+x'>=0
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): y'+2*x'-N'-_7974+_7976>=2
+cutting step 1 at pc(main-9-23)
+
+refining loop
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): x'-N'-x+N>=1
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): x-N=< -1
+
+refining stem
+
+cutting step 3 at pc(main-9-23)
+unsat suffix not yet reached
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): x'-N'-_7944+_7946>=1
+cutting step 1 at pc(main-9-23)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 3:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([15,12,9,6,3]),tid([23,22,21,19,17,16])], loop [tid([23,22,21,19,17,16])]
+trans preds: _56363->_56366:	#9:	x-N=< -1, y'+x'>=0, x'-N'-x+N>=2, y'+2*x'-N'-x+N>=2, y'=<536870911, y=<536870911, y-y'=< -1, x-N=<0, x-N-x'+N'=< -1
+projected loop:
+y'-x'+2*N'>=1, y= -1+y', x=1/2-1/2*y'+1/2*x', N=N', N'=<536870911, y'+x'>=3, y'=<536870913, tmp>=1, tmp'>=1
+y>=536870913
+y-y'>=0
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): y-y'=< -1
+
+refining stem
+
+cutting step 3 at pc(main-9-23)
+unsat suffix not yet reached
+cutting step 2 at pc(main-9-23)
+unsat suffix not yet reached
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _12677-y'=< -1
+
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): y=<536870912
+
+refining stem
+
+cutting step 3 at pc(main-9-23)
+LI at pc(main-9-23): y'=<536870911
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): y'=<536870912
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _12648=<536870912
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 4:
+lfp iteration 0 1 2 3 
+abstract counterexample: stem [0,tid([15,12,9,6,3]),tid([23,22,21,19,17,16]),tid([23,22,21,19,17,16])], loop [tid([23,22,21,19,17,16])]
+trans preds: _35161->_35164:	#11:	y'=<536870912, y=<536870912, x-N=< -1, y'+x'>=0, x'-N'-x+N>=2, y'+2*x'-N'-x+N>=2, y'=<536870911, y=<536870911, y-y'=< -1, x-N=<0, x-N-x'+N'=< -1
+projected loop:
+y'-x'+2*N'>=1, y= -1+y', x=1/2-1/2*y'+1/2*x', N=N', N'=<536870911, y'+x'>=7, y'=<536870914, tmp>=1, tmp'>=1
+x>=1073741823/2
+x-x'>= -5/2
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): x-x'=< -3
+
+refining stem
+
+cutting step 4 at pc(main-9-23)
+LI at pc(main-9-23): y'+x'>=0
+cutting step 3 at pc(main-9-23)
+LI at pc(main-9-23): y'+x'>=1
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): y'+x'>=3
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _17612-x'=< -3
+
+refining loop
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): x=<536870911
+
+refining stem
+
+cutting step 4 at pc(main-9-23)
+LI at pc(main-9-23): N'=<536870911
+cutting step 3 at pc(main-9-23)
+LI at pc(main-9-23): N'=<536870911
+cutting step 2 at pc(main-9-23)
+LI at pc(main-9-23): N'=<536870911
+cutting step 1 at pc(main-9-23)
+LI at pc(main-9-23): _17598=<536870911
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 5:
+lfp iteration 0 1 2 3 4 5 
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+abstract trans fixpoint
+abstract_trans_state(0, pc(main-0-15), pc(main-0-15), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-15), pc(main-9-23), [1,6,9,12], stem, 2, (1,tid([15,12,9,6,3]))).
+abstract_trans_state(1, pc(main-0-15), pc(main-ret-0), [1,6,12], stem, 3, (1,tid([14,13,12,9,6,3]))).
+abstract_trans_state(1, pc(main-0-15), pc(main-ret-0), [1], stem, 4, (1,tid([8,7,6,3]))).
+abstract_trans_state(1, pc(main-0-15), pc(main-ret-0), [], stem, 5, (1,tid([2,1]))).
+abstract_trans_state(2, pc(main-9-23), pc(main-ret-0), [1,6,7,9,12,13], loop, 6, (2,tid([27,26,28,18,16]))).
+abstract_trans_state(2, pc(main-9-23), pc(main-9-23), [1,2,4,6,7,9,11,12,13,15,16], loop, 7, (2,tid([25,24,19,17,16]))).
+abstract_trans_state(2, pc(main-0-15), pc(main-9-23), [1,4,6,9], stem, 8, (2,tid([23,22,21,19,17,16]))).
+abstract_trans_state(2, pc(main-9-23), pc(main-9-23), [1,2,4,6,7,9,13,14,15], loop, 9, (2,tid([23,22,21,19,17,16]))).
+abstract_trans_state(3, pc(main-9-23), pc(main-9-23), [1,2,3,4,6,7,8,9,10,11,13,15,16], loop, 10, (7,tid([23,22,21,19,17,16]))).
+abstract_trans_state(3, pc(main-9-23), pc(main-ret-0), [1,4,6,7,9], loop, 11, (8,tid([27,26,28,18,16]))).
+abstract_trans_state(3, pc(main-9-23), pc(main-9-23), [1,2,4,6,7,9,11,15,16], loop, 12, (8,tid([25,24,19,17,16]))).
+abstract_trans_state(3, pc(main-0-15), pc(main-9-23), [1,3,4,9], stem, 13, (8,tid([23,22,21,19,17,16]))).
+abstract_trans_state(3, pc(main-9-23), pc(main-9-23), [1,2,3,4,7,9,11,14,15,16], loop, 14, (8,tid([23,22,21,19,17,16]))).
+abstract_trans_state(3, pc(main-9-23), pc(main-9-23), [1,2,3,4,7,9,13,14,15], loop, 15, (9,tid([23,22,21,19,17,16]))).
+abstract_trans_state(4, pc(main-9-23), pc(main-9-23), [1,2,3,4,7,8,9,10,11,13,15,16], loop, 16, (10,tid([23,22,21,19,17,16]))).
+abstract_trans_state(4, pc(main-9-23), pc(main-9-23), [1,2,3,4,7,8,9,10,11,15,16], loop, 17, (12,tid([23,22,21,19,17,16]))).
+abstract_trans_state(4, pc(main-9-23), pc(main-ret-0), [1,3,4,9,11], loop, 18, (13,tid([27,26,28,18,16]))).
+abstract_trans_state(4, pc(main-9-23), pc(main-9-23), [1,2,3,4,9,11,15,16], loop, 19, (13,tid([25,24,19,17,16]))).
+
+frontier 0: stem 1 (pc(main-0-15)->pc(main-0-15)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-15)->pc(main-9-23)) from 1 by applying tid([15,12,9,6,3]): 	N'=<536870911, y'=<536870912, y'+x'>=0, y'=<536870911
+frontier 1: stem 3 (pc(main-0-15)->pc(main-ret-0)) from 1 by applying tid([14,13,12,9,6,3]): 	N'=<536870911, y'=<536870912, y'=<536870911
+frontier 1: stem 4 (pc(main-0-15)->pc(main-ret-0)) from 1 by applying tid([8,7,6,3]): 	N'=<536870911
+frontier 1: stem 5 (pc(main-0-15)->pc(main-ret-0)) from 1 by applying tid([2,1]): 	T
+frontier 2: loop 6 (pc(main-9-23)->pc(main-ret-0)) from 2 by applying tid([27,26,28,18,16]): 	N'=<536870911, y'=<536870912, y=<536870912, y'+x'>=0, y'=<536870911, y=<536870911
+frontier 2: loop 7 (pc(main-9-23)->pc(main-9-23)) from 2 by applying tid([25,24,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=1, y'=<536870912, y=<536870912, y'+x'>=0, y'+2*x'-N'-x+N>=2, y'=<536870911, y=<536870911, x-N=<0, x-N-x'+N'=< -1
+frontier 2: stem 8 (pc(main-0-15)->pc(main-9-23)) from 2 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, y'+x'>=1, y'=<536870912, y'+x'>=0
+frontier 2: loop 9 (pc(main-9-23)->pc(main-9-23)) from 2 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=1, y'=<536870912, y=<536870912, y'+x'>=0, y=<536870911, y-y'=< -1, x-N=<0
+frontier 3: loop 10 (pc(main-9-23)->pc(main-9-23)) from 7 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, y'=<536870912, y=<536870912, x-N=< -1, y'+x'>=0, x'-N'-x+N>=2, y'+2*x'-N'-x+N>=2, y=<536870911, x-N=<0, x-N-x'+N'=< -1
+frontier 3: loop 11 (pc(main-9-23)->pc(main-ret-0)) from 8 by applying tid([27,26,28,18,16]): 	N'=<536870911, y'+x'>=1, y'=<536870912, y=<536870912, y'+x'>=0
+frontier 3: loop 12 (pc(main-9-23)->pc(main-9-23)) from 8 by applying tid([25,24,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=1, y'=<536870912, y=<536870912, y'+x'>=0, y'+2*x'-N'-x+N>=2, x-N=<0, x-N-x'+N'=< -1
+frontier 3: stem 13 (pc(main-0-15)->pc(main-9-23)) from 8 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, y'+x'>=3, y'+x'>=1, y'+x'>=0
+frontier 3: loop 14 (pc(main-9-23)->pc(main-9-23)) from 8 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, y=<536870912, y'+x'>=0, y'+2*x'-N'-x+N>=2, y-y'=< -1, x-N=<0, x-N-x'+N'=< -1
+frontier 3: loop 15 (pc(main-9-23)->pc(main-9-23)) from 9 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, y=<536870912, y'+x'>=0, y=<536870911, y-y'=< -1, x-N=<0
+frontier 4: loop 16 (pc(main-9-23)->pc(main-9-23)) from 10 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, y=<536870912, x-N=< -1, y'+x'>=0, x'-N'-x+N>=2, y'+2*x'-N'-x+N>=2, y=<536870911, x-N=<0, x-N-x'+N'=< -1
+frontier 4: loop 17 (pc(main-9-23)->pc(main-9-23)) from 12 by applying tid([23,22,21,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, y=<536870912, x-N=< -1, y'+x'>=0, x'-N'-x+N>=2, y'+2*x'-N'-x+N>=2, x-N=<0, x-N-x'+N'=< -1
+frontier 4: loop 18 (pc(main-9-23)->pc(main-ret-0)) from 13 by applying tid([27,26,28,18,16]): 	N'=<536870911, y'+x'>=3, y'+x'>=1, y'+x'>=0, y'+2*x'-N'-x+N>=2
+frontier 4: loop 19 (pc(main-9-23)->pc(main-9-23)) from 13 by applying tid([25,24,19,17,16]): 	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, y'+x'>=0, y'+2*x'-N'-x+N>=2, x-N=<0, x-N-x'+N'=< -1
+
+_25309->_25312:	#16:	N'=<536870911, x=<536870911, y'+x'>=3, y'+x'>=1, x-x'=< -3, y'=<536870912, y=<536870912, x-N=< -1, y'+x'>=0, x'-N'-x+N>=2, y'+2*x'-N'-x+N>=2, y'=<536870911, y=<536870911, y-y'=< -1, x-N=<0, x-N-x'+N'=< -1
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.04     |     0.08     |
+Time on cli constraint preparation           |     0.00     |     0.01     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.14     |     0.16     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.20     |     0.21     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.01     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+TERMINATES

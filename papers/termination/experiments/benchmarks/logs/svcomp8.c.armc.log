@@ -1,0 +1,62 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp8.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp8.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-0-24),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {1=1,C=<0,1=1,1=1,1=1,F=C,E=B,D=A}, [1=1,C=<0,1=1,1=1,1=1], [F=C,E=B,D=A], tid([8,7,9,3,1])).
+transition(p(pc(main-0-24),data(A,B,C)), p(pc(main-0-24),data(D,E,F)), {1=1,C>=1+0,1=1,1=1,1=1,F=C+B,E=A,D= -(A)-1}, [1=1,C>=1+0,1=1,1=1,1=1], [F=C+B,E=A,D= -(A)-1], tid([6,5,4,2,1])).
+transition(p(pc(main-0-24),data(A,B,C)), p(pc(main-ret-0),data(D,E,F)), {1=1,C=<0,1=1,1=1,1=1,F=C,E=B,D=A}, [1=1,C=<0,1=1,1=1,1=1], [F=C,E=B,D=A], tid([8,7,9,3,1])).
+transition(p(pc(main-0-24),data(A,B,C)), p(pc(main-0-24),data(D,E,F)), {1=1,C>=1+0,1=1,1=1,1=1,F=C+B,E=A,D= -(A)-1}, [1=1,C>=1+0,1=1,1=1,1=1], [F=C+B,E=A,D= -(A)-1], tid([6,5,4,2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 
+abstract counterexample: stem [0], loop [tid([6,5,4,2,1])]
+trans preds: _8977->_8980:	#0:	
+projected loop:
+z'= -1-y', z=y', y= -(x)+x', x>=1
+
+
+
+==================================================
+ARMC-Live: cannot find rank:
+	stem [0]
+	loop [tid([6,5,4,2,1])]
+Stem:
+0:	unknown
+Loop:
+1:	skip;
+2:	assume(x > 0);
+4:	x=x + y;
+5:	y=z;
+6:	z=- z - 1;
+halt
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.00     |     0.00     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.00     |     0.00     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.00     |     0.00     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+SPINS

@@ -1,0 +1,2967 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp14.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp14.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-9-31),data(A,B,C,D,E,F)), p(pc(main-ret-0),data(G,H,I,J,K,L)), {1=1,B=F,1=1,1=1,1=1,L=F,K=E,J=D,I=C,H=B,G=A}, [1=1,B=F,1=1,1=1,1=1], [L=F,K=E,J=D,I=C,H=B,G=A], tid([25,24,26,19,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J,K)), {1=1,A>=1+E,1=1,L=0,1=1,1=1,1=1,K=E,J=D,I=C,H=B,G=A,F=L}, [1=1,A>=1+E,1=1,L=0,1=1,1=1,1=1], [K=E,J=D,I=C,H=B,G=A,F=L], tid([25,24,27,18,15,14,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A>=1+E,1=1,L>=1+0,A>=1+D,1=1,K=E,J=D,I=C,H=B,G=0,F=L}, [1=1,A>=1+E,1=1,L>=1+0,A>=1+D,1=1], [K=E,J=D,I=C,H=B,G=0,F=L], tid([23,22,17,15,14,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A>=1+E,1=1,L>=1+0,A=<D,1=1,K=E,J=D,I=C,H=B,G=A+1,F=L}, [1=1,A>=1+E,1=1,L>=1+0,A=<D,1=1], [K=E,J=D,I=C,H=B,G=A+1,F=L], tid([21,20,17,15,14,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A>=1+E,1=1,L+1=<0,A>=1+D,1=1,K=E,J=D,I=C,H=B,G=0,F=L}, [1=1,A>=1+E,1=1,L+1=<0,A>=1+D,1=1], [K=E,J=D,I=C,H=B,G=0,F=L], tid([23,22,16,15,14,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A>=1+E,1=1,L+1=<0,A=<D,1=1,K=E,J=D,I=C,H=B,G=A+1,F=L}, [1=1,A>=1+E,1=1,L+1=<0,A=<D,1=1], [K=E,J=D,I=C,H=B,G=A+1,F=L], tid([21,20,16,15,14,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J,K)), {1=1,A+1=<E,1=1,L=0,1=1,1=1,1=1,K=E,J=D,I=C,H=B,G=A,F=L}, [1=1,A+1=<E,1=1,L=0,1=1,1=1,1=1], [K=E,J=D,I=C,H=B,G=A,F=L], tid([25,24,27,18,15,13,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A+1=<E,1=1,L>=1+0,A>=1+D,1=1,K=E,J=D,I=C,H=B,G=0,F=L}, [1=1,A+1=<E,1=1,L>=1+0,A>=1+D,1=1], [K=E,J=D,I=C,H=B,G=0,F=L], tid([23,22,17,15,13,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A+1=<E,1=1,L>=1+0,A=<D,1=1,K=E,J=D,I=C,H=B,G=A+1,F=L}, [1=1,A+1=<E,1=1,L>=1+0,A=<D,1=1], [K=E,J=D,I=C,H=B,G=A+1,F=L], tid([21,20,17,15,13,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A+1=<E,1=1,L+1=<0,A>=1+D,1=1,K=E,J=D,I=C,H=B,G=0,F=L}, [1=1,A+1=<E,1=1,L+1=<0,A>=1+D,1=1], [K=E,J=D,I=C,H=B,G=0,F=L], tid([23,22,16,15,13,12])).
+transition(p(pc(main-9-31),data(_,A,B,C,D,E)), p(pc(main-9-31),data(F,G,H,I,J,K)), {1=1,A+1=<E,1=1,L+1=<0,A=<D,1=1,K=E,J=D,I=C,H=B,G=A+1,F=L}, [1=1,A+1=<E,1=1,L+1=<0,A=<D,1=1], [K=E,J=D,I=C,H=B,G=A+1,F=L], tid([21,20,16,15,13,12])).
+transition(p(pc(main-0-23),data(A,_,_,_,_,_)), p(pc(main-9-31),data(B,C,D,E,F,G)), {1=1,1=1,1=1,1=1,0=<H,H+1=<I,1=1,G=H,F=I,E=H,D=I,C=H+1,B=A}, [1=1,1=1,1=1,1=1,0=<H,H+1=<I,1=1], [G=H,F=I,E=H,D=I,C=H+1,B=A], tid([11,10,7,4,3,2,1])).
+transition(p(pc(main-0-23),data(A,B,_,_,_,_)), p(pc(main-ret-0),data(C,D,E,F,G,H)), {1=1,1=1,1=1,1=1,0=<I,I>=J,1=1,H=I,G=J,F=I,E=J,D=B,C=A}, [1=1,1=1,1=1,1=1,0=<I,I>=J,1=1], [H=I,G=J,F=I,E=J,D=B,C=A], tid([9,8,7,4,3,2,1])).
+transition(p(pc(main-0-23),data(A,B,_,_,_,_)), p(pc(main-ret-0),data(C,D,E,F,G,H)), {1=1,1=1,1=1,1=1,0>=1+I,1=1,H=I,G=J,F=I,E=J,D=B,C=A}, [1=1,1=1,1=1,1=1,0>=1+I,1=1], [H=I,G=J,F=I,E=J,D=B,C=A], tid([6,5,4,3,2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([23,22,17,15,14,12])]
+trans preds: _14963->_14966:	#0:	
+projected loop infeasible:
+1=1
+1=1
+refining stem
+
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'=<0
+
+refining stem
+
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'=<0
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12])]
+trans preds: _83582->_83585:	#1:	tmp___1'-maxId'=<0
+tmp___1-maxId>=1
+tmp___1-maxId-tmp___1'+maxId'>=0
+refining loop
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId-tmp___1'+maxId'=< -1
+
+refining stem
+
+cutting step 2 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): _3927-_3930-tmp___1'+maxId'=< -1
+
+refining loop
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId=<0
+
+refining stem
+
+cutting step 2 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): _3426-_3429=<0
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1]),tid([21,20,17,15,14,12])], loop [tid([23,22,17,15,14,12])]
+trans preds: _54753->_54756:	#3:	tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+projected loop:
+tmp___1'=0, tmp___0'=1+id', tmp'=id', maxId'=1+id', tmp___1=2+id', tmp___0=1+id', tmp=id', maxId=1+id', id=id', id'>=0, tmp___2>=1, tmp___2'>=1
+tmp___1=<1
+tmp___1-tmp___1'=<1
+refining loop
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-tmp___1'>=2
+
+refining stem
+
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'=<0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): _28079-tmp___1'>=2
+
+refining loop
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1>=2
+
+refining stem
+
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'=<0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): _28064>=2
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 3:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12])]
+trans preds: _143608->_143611:	#7:	tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+projected loop:
+tmp___1'=0, tmp___2'>=1, tmp___0'=1+id, tmp'=id, maxId'=1+id, id'=id, tmp___1=1+id, tmp___0=1+id, tmp=id, maxId=1+id, id>=0
+tmp___1=<0
+tmp___1'-tmp___1>=0
+refining loop
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'-2*tmp___1=<0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-tmp___1=< -1
+
+refining stem
+
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'-2*_94480=<0
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'-2*tmp___1=<0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1>=1
+
+refining stem
+
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'-2*_94450=<0
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 4:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1]),tid([21,20,17,15,13,12])], loop [tid([23,22,17,15,13,12])]
+trans preds: _187113->_187116:	#10:	tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+projected loop infeasible:
+1=1
+1=1
+refining stem
+
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'>=1
+
+refining stem
+
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 5:
+lfp iteration 0 1 2 3 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,14,12])]
+trans preds: _261943->_261946:	#11:	tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+projected loop infeasible:
+1=1
+1=1
+refining loop
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'=<0
+
+refining stem
+
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'=<0
+
+refining loop
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'=<0
+
+refining stem
+
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): id'>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-id'=<0
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 6:
+lfp iteration 0 1 2 3 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _537032->_537035:	#12:	tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -1
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 4 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-_275297+_275300=<0
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>=0
+
+refining stem
+
+cutting step 4 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_275265+_275268=<1
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 7:
+lfp iteration 0 1 2 3 4 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])], loop [tid([23,22,17,15,13,12])]
+trans preds: _421385->_421388:	#17:	tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+projected loop infeasible:
+1=1
+1=1
+refining stem
+
+cutting step 4 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'=<0
+
+refining stem
+
+cutting step 4 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'>=0
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'=<0
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 8:
+lfp iteration 0 1 2 3 4 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _445128->_445131:	#18:	maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -2
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 5 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_442189+2*_442192=<0
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -1
+
+refining stem
+
+cutting step 5 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_442155+_442158=<1
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 9:
+lfp iteration 0 1 2 3 4 5 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _586808->_586811:	#21:	tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -3
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 6 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_550375+2*_550378=<0
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -2
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -2
+
+refining stem
+
+cutting step 6 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_550339+_550342=<1
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 10:
+lfp iteration 0 1 2 3 4 5 6 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _797801->_797804:	#24:	tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -4
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 7 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_136849+2*_136852=<0
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -3
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -3
+
+refining stem
+
+cutting step 7 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_136825+_136828=<1
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 11:
+lfp iteration 0 1 2 3 4 5 6 7 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _608972->_608975:	#27:	tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -5
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 8 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_346936+2*_346939=<0
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -4
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -4
+
+refining stem
+
+cutting step 8 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_346896+_346899=<1
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 12:
+lfp iteration 0 1 2 3 4 5 6 7 8 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _724344->_724347:	#30:	tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -6
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 9 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_213531+2*_213534=<0
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -5
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -5
+
+refining stem
+
+cutting step 9 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_213489+_213492=<1
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 13:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _714853->_714856:	#33:	tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -7
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 10 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_264799+2*_264802=<0
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -6
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -6
+
+refining stem
+
+cutting step 10 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_264755+_264758=<1
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 14:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _633562->_633565:	#36:	tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -8
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 11 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_325605+2*_325608=<0
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -7
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -7
+
+refining stem
+
+cutting step 11 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_325559+_325562=<1
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 15:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _458897->_458900:	#39:	tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -9
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 12 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_396653+2*_396656=<0
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -8
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -8
+
+refining stem
+
+cutting step 12 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_396605+_396608=<1
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 16:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1195837->_1195840:	#42:	tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -10
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 13 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_478647+2*_478650=<0
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -9
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -9
+
+refining stem
+
+cutting step 13 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_478597+_478600=<1
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 17:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1735929->_1735932:	#45:	tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -11
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 14 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_572291+2*_572294=<0
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -10
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -10
+
+refining stem
+
+cutting step 14 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_572239+_572242=<1
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 18:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1575815->_1575818:	#48:	tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -12
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 15 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_678289+2*_678292=<0
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -11
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -11
+
+refining stem
+
+cutting step 15 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_678235+_678238=<1
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 19:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1816531->_1816534:	#51:	tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -13
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 16 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_1797110+2*_1797113=<0
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -12
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -12
+
+refining stem
+
+cutting step 16 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_797289+_797292=<1
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 20:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1875591->_1875594:	#54:	tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -14
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 17 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_1043032+2*_1043035=<0
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -13
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -13
+
+refining stem
+
+cutting step 17 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_1042974+_1042977=<1
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 21:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1099885->_1099888:	#57:	tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -15
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 18 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_1077447+2*_1077450=<0
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -14
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -14
+
+refining stem
+
+cutting step 18 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_1077401+_1077404=<1
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 22:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _1476080->_1476083:	#60:	tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -16
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 19 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_1239901+2*_1239904=<0
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -15
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -15
+
+refining stem
+
+cutting step 19 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_1239839+_1239842=<1
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 23:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _2896854->_2896857:	#63:	tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -17
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 20 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_2871283+2*_2871286=<0
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -16
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -16
+
+refining stem
+
+cutting step 20 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_1418165+_1418168=<1
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 24:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _3686396->_3686399:	#66:	tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -18
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 21 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_2342721+2*_2342724=<0
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -17
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -17
+
+refining stem
+
+cutting step 21 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_1613083+_1613086=<1
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 25:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _2817716->_2817719:	#69:	tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -19
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 22 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_2788896+2*_2788899=<0
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<19
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -18
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -18
+
+refining stem
+
+cutting step 22 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_2788828+_2788831=<1
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 26:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _9032855->_9032858:	#72:	tmp___1-maxId>= -18, tmp___1'-maxId'-tmp___1+maxId=<19, tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0, tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -20
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 23 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_8467784+2*_8467787=<0
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<19
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<20
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -19
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -19
+
+refining stem
+
+cutting step 23 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_8467714+_8467717=<1
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 27:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _15017607->_15017610:	#75:	tmp___1-maxId>= -19, tmp___1'-maxId'-tmp___1+maxId=<20, tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0, tmp___1-maxId>= -18, tmp___1'-maxId'-tmp___1+maxId=<19, tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0, tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -21
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 24 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_14985422+2*_14985425=<0
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<19
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<20
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<21
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -20
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -20
+
+refining stem
+
+cutting step 24 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_14985350+_14985353=<1
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 28:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _24255082->_24255085:	#78:	tmp___1-maxId>= -20, tmp___1'-maxId'-tmp___1+maxId=<21, tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0, tmp___1-maxId>= -19, tmp___1'-maxId'-tmp___1+maxId=<20, tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0, tmp___1-maxId>= -18, tmp___1'-maxId'-tmp___1+maxId=<19, tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0, tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -22
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-22*maxId'+21*id'-22*tmp___1+22*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 25 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_22431707+2*_22431710=<0
+cutting step 23 at pc(main-9-31)
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<19
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<20
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<21
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<22
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -21
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -21
+
+refining stem
+
+cutting step 25 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_22431647+_22431650=<1
+cutting step 23 at pc(main-9-31)
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 29:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _34211966->_34211969:	#81:	tmp___1-maxId>= -21, tmp___1'-maxId'-tmp___1+maxId=<22, tmp___1'-22*maxId'+21*id'-22*tmp___1+22*maxId=<0, tmp___1-maxId>= -20, tmp___1'-maxId'-tmp___1+maxId=<21, tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0, tmp___1-maxId>= -19, tmp___1'-maxId'-tmp___1+maxId=<20, tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0, tmp___1-maxId>= -18, tmp___1'-maxId'-tmp___1+maxId=<19, tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0, tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -23
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 25 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-22*maxId'+21*id'-22*tmp___1+22*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-23*maxId'+22*id'-23*tmp___1+23*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 26 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 25 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_30904294+2*_30904297=<0
+cutting step 24 at pc(main-9-31)
+cutting step 23 at pc(main-9-31)
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 25 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<19
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<20
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<21
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<22
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<23
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -22
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -22
+
+refining stem
+
+cutting step 26 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 25 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_30904218+_30904221=<1
+cutting step 24 at pc(main-9-31)
+cutting step 23 at pc(main-9-31)
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 30:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _42700392->_42700395:	#84:	tmp___1-maxId>= -22, tmp___1'-maxId'-tmp___1+maxId=<23, tmp___1'-23*maxId'+22*id'-23*tmp___1+23*maxId=<0, tmp___1-maxId>= -21, tmp___1'-maxId'-tmp___1+maxId=<22, tmp___1'-22*maxId'+21*id'-22*tmp___1+22*maxId=<0, tmp___1-maxId>= -20, tmp___1'-maxId'-tmp___1+maxId=<21, tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0, tmp___1-maxId>= -19, tmp___1'-maxId'-tmp___1+maxId=<20, tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0, tmp___1-maxId>= -18, tmp___1'-maxId'-tmp___1+maxId=<19, tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0, tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1-maxId>=0, tmp___1'-maxId'-tmp___1+maxId=<1, tmp___1'-maxId'-tmp___1+maxId=< -1, maxId'-id'+tmp___1-maxId>=1, tmp___1'-2*maxId'+id'-tmp___1+maxId=<0, tmp___1'-id'=<0, tmp___1'-id'>=1, tmp___1>=1, tmp___1'-tmp___1=< -1, tmp___1'-id'-2*tmp___1=<0, tmp___1>=2, tmp___1'-2*maxId'=<0, id'>=0, tmp___1-tmp___1'>=2, tmp___1-maxId=<0, tmp___1-maxId-tmp___1'+maxId'=< -1, tmp___1'-maxId'=<0
+tmp___1-maxId=< -24
+tmp___1'-maxId'-tmp___1+maxId>=0
+refining loop
+cutting step 26 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0
+cutting step 25 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-22*maxId'+21*id'-22*tmp___1+22*maxId=<0
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-23*maxId'+22*id'-23*tmp___1+23*maxId=<0
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-24*maxId'+23*id'-24*tmp___1+24*maxId=<0
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-tmp___1+maxId=<0
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): maxId'-id'+tmp___1-maxId>=1
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=< -1
+
+refining stem
+
+cutting step 27 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 26 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-2*maxId'+id'-2*_3170133+2*_3170136=<0
+cutting step 25 at pc(main-9-31)
+cutting step 24 at pc(main-9-31)
+cutting step 23 at pc(main-9-31)
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+refining loop
+cutting step 26 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<1
+cutting step 25 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<2
+cutting step 24 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<3
+cutting step 23 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<4
+cutting step 22 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<5
+cutting step 21 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<6
+cutting step 20 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<7
+cutting step 19 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<8
+cutting step 18 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<9
+cutting step 17 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<10
+cutting step 16 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<11
+cutting step 15 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<12
+cutting step 14 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<13
+cutting step 13 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<14
+cutting step 12 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<15
+cutting step 11 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<16
+cutting step 10 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<17
+cutting step 9 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<18
+cutting step 8 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<19
+cutting step 7 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<20
+cutting step 6 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<21
+cutting step 5 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<22
+cutting step 4 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<23
+cutting step 3 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-tmp___1+maxId=<24
+cutting step 2 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -23
+cutting step 1 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1-maxId>= -23
+
+refining stem
+
+cutting step 27 at pc(main-9-31)
+unsat suffix not yet reached
+cutting step 26 at pc(main-9-31)
+LI at pc(main-9-31): tmp___1'-maxId'-_3170133+_3170136=<1
+cutting step 25 at pc(main-9-31)
+cutting step 24 at pc(main-9-31)
+cutting step 23 at pc(main-9-31)
+cutting step 22 at pc(main-9-31)
+cutting step 21 at pc(main-9-31)
+cutting step 20 at pc(main-9-31)
+cutting step 19 at pc(main-9-31)
+cutting step 18 at pc(main-9-31)
+cutting step 17 at pc(main-9-31)
+cutting step 16 at pc(main-9-31)
+cutting step 15 at pc(main-9-31)
+cutting step 14 at pc(main-9-31)
+cutting step 13 at pc(main-9-31)
+cutting step 12 at pc(main-9-31)
+cutting step 11 at pc(main-9-31)
+cutting step 10 at pc(main-9-31)
+cutting step 9 at pc(main-9-31)
+cutting step 8 at pc(main-9-31)
+cutting step 7 at pc(main-9-31)
+cutting step 6 at pc(main-9-31)
+cutting step 5 at pc(main-9-31)
+cutting step 4 at pc(main-9-31)
+cutting step 3 at pc(main-9-31)
+cutting step 2 at pc(main-9-31)
+cutting step 1 at pc(main-9-31)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 31:
+lfp iteration 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 
+abstract counterexample: stem [0,tid([11,10,7,4,3,2,1])], loop [tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([21,20,17,15,14,12]),tid([23,22,17,15,14,12]),tid([21,20,17,15,13,12])]
+trans preds: _38917168->_38917171:	#87:	tmp___1-maxId>= -23, tmp___1'-maxId'-tmp___1+maxId=<24, tmp___1'-24*maxId'+23*id'-24*tmp___1+24*maxId=<0, tmp___1-maxId>= -22, tmp___1'-maxId'-tmp___1+maxId=<23, tmp___1'-23*maxId'+22*id'-23*tmp___1+23*maxId=<0, tmp___1-maxId>= -21, tmp___1'-maxId'-tmp___1+maxId=<22, tmp___1'-22*maxId'+21*id'-22*tmp___1+22*maxId=<0, tmp___1-maxId>= -20, tmp___1'-maxId'-tmp___1+maxId=<21, tmp___1'-21*maxId'+20*id'-21*tmp___1+21*maxId=<0, tmp___1-maxId>= -19, tmp___1'-maxId'-tmp___1+maxId=<20, tmp___1'-20*maxId'+19*id'-20*tmp___1+20*maxId=<0, tmp___1-maxId>= -18, tmp___1'-maxId'-tmp___1+maxId=<19, tmp___1'-19*maxId'+18*id'-19*tmp___1+19*maxId=<0, tmp___1-maxId>= -17, tmp___1'-maxId'-tmp___1+maxId=<18, tmp___1'-18*maxId'+17*id'-18*tmp___1+18*maxId=<0, tmp___1-maxId>= -16, tmp___1'-maxId'-tmp___1+maxId=<17, tmp___1'-17*maxId'+16*id'-17*tmp___1+17*maxId=<0, tmp___1-maxId>= -15, tmp___1'-maxId'-tmp___1+maxId=<16, tmp___1'-16*maxId'+15*id'-16*tmp___1+16*maxId=<0, tmp___1-maxId>= -14, tmp___1'-maxId'-tmp___1+maxId=<15, tmp___1'-15*maxId'+14*id'-15*tmp___1+15*maxId=<0, tmp___1-maxId>= -13, tmp___1'-maxId'-tmp___1+maxId=<14, tmp___1'-14*maxId'+13*id'-14*tmp___1+14*maxId=<0, tmp___1-maxId>= -12, tmp___1'-maxId'-tmp___1+maxId=<13, tmp___1'-13*maxId'+12*id'-13*tmp___1+13*maxId=<0, tmp___1-maxId>= -11, tmp___1'-maxId'-tmp___1+maxId=<12, tmp___1'-12*maxId'+11*id'-12*tmp___1+12*maxId=<0, tmp___1-maxId>= -10, tmp___1'-maxId'-tmp___1+maxId=<11, tmp___1'-11*maxId'+10*id'-11*tmp___1+11*maxId=<0, tmp___1-maxId>= -9, tmp___1'-maxId'-tmp___1+maxId=<10, tmp___1'-10*maxId'+9*id'-10*tmp___1+10*maxId=<0, tmp___1-maxId>= -8, tmp___1'-maxId'-tmp___1+maxId=<9, tmp___1'-9*maxId'+8*id'-9*tmp___1+9*maxId=<0, tmp___1-maxId>= -7, tmp___1'-maxId'-tmp___1+maxId=<8, tmp___1'-8*maxId'+7*id'-8*tmp___1+8*maxId=<0, tmp___1-maxId>= -6, tmp___1'-maxId'-tmp___1+maxId=<7, tmp___1'-7*maxId'+6*id'-7*tmp___1+7*maxId=<0, tmp___1-maxId>= -5, tmp___1'-maxId'-tmp___1+maxId=<6, tmp___1'-6*maxId'+5*id'-6*tmp___1+6*maxId=<0, tmp___1-maxId>= -4, tmp___1'-maxId'-tmp___1+maxId=<5, tmp___1'-5*maxId'+4*id'-5*tmp___1+5*maxId=<0, tmp___1-maxId>= -3, tmp___1'-maxId'-tmp___1+maxId=<4, tmp___1'-4*maxId'+3*id'-4*tmp___1+4*maxId=<0, tmp___1-maxId>= -2, tmp___1'-maxId'-tmp___1+maxId=<3, tmp___1'-3*maxId'+2*id'-3*tmp___1+3*maxId=<0, tmp___1-maxId>= -1, tmp___1'-maxId'-tmp___1+maxId=<2, tmp___1'-2*maxId'+id'-2*tmp___1+2*maxId=<0, maxId'-id'>=0, tmp___1SPINS

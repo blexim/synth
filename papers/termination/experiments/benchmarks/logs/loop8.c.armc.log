@@ -1,0 +1,95 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/loop8.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/loop8.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-1-14),data(A)), p(pc(main-ret-0),data(B)), {1=1,A=<0.0,1=1,1=1,1=1,B=A}, [1=1,A=<0.0,1=1,1=1,1=1], [B=A], tid([7,6,8,4,2])).
+transition(p(pc(main-1-14),data(A)), p(pc(main-1-14),data(B)), {1=1,A>=1+0.0,1=1,B=A*0.5}, [1=1,A>=1+0.0,1=1], [B=A*0.5], tid([5,3,2])).
+transition(p(pc(main-0-12),data(_)), p(pc(main-1-14),data(A)), {1=1,A=100.0}, [1=1], [A=100.0], tid([1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([1])], loop [tid([5,3,2])]
+trans preds: _7500->_7503:	#0:	
+f=<1/2
+f-f'=<0
+refining loop
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): f-f'>=50
+
+refining stem
+
+cutting step 2 at pc(main-1-14)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): _6748-f'>=50
+
+refining loop
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): f>=100
+
+refining stem
+
+cutting step 2 at pc(main-1-14)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): _6748>=100
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([1])], loop [tid([5,3,2])]
+trans preds: _51173->_51176:	#2:	f>=100, f-f'>=50
+f=<1/2
+f-f'=<0
+refining loop
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): f-f'>=50
+
+refining stem
+
+cutting step 2 at pc(main-1-14)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): _50402-f'>=50
+
+refining loop
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): f>=100
+
+refining stem
+
+cutting step 2 at pc(main-1-14)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-14)
+LI at pc(main-1-14): _50402>=100
+
+
+
+
+==================================================
+No new transition predicates found
+_92602->_92605:	#2:	f>=100, f-f'>=50
+abstract_trans_state(0, pc(main-0-12), pc(main-0-12), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-12), pc(main-1-14), [], stem, 2, (1,tid([1]))).
+abstract_trans_state(2, pc(main-0-12), pc(main-ret-0), [], stem, 3, (2,tid([7,6,8,4,2]))).
+abstract_trans_state(2, pc(main-1-14), pc(main-ret-0), [], loop, 4, (2,tid([7,6,8,4,2]))).
+abstract_trans_state(2, pc(main-1-14), pc(main-1-14), [], loop, 5, (2,tid([5,3,2]))).
+
+frontier 0: stem 1 (pc(main-0-12)->pc(main-0-12)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-12)->pc(main-1-14)) from 1 by applying tid([1]): 	T
+frontier 2: stem 3 (pc(main-0-12)->pc(main-ret-0)) from 2 by applying tid([7,6,8,4,2]): 	T
+frontier 2: loop 4 (pc(main-1-14)->pc(main-ret-0)) from 2 by applying tid([7,6,8,4,2]): 	T
+frontier 2: loop 5 (pc(main-1-14)->pc(main-1-14)) from 2 by applying tid([5,3,2]): 	T
+
+Stem: [0,tid([1])]
+Loop: [tid([5,3,2])]
+SPINS

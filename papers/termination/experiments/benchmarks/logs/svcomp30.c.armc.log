@@ -1,0 +1,5 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp30.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp30.c.main.pl...Input error error(existence_error(source_sink,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp30.c.main.pl),existence_error([user:/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp30.c.main.pl],1,file,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp30.c.main.pl,0))
+SPINS

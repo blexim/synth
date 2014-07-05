@@ -1,0 +1,137 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp4.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp4.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-1-20),data(A,B)), p(pc(main-ret-0),data(C,D)), {1=1,B=A,1=1,1=1,1=1,D=B,C=A}, [1=1,B=A,1=1,1=1,1=1], [D=B,C=A], tid([16,15,17,10,7])).
+transition(p(pc(main-1-20),data(A,B)), p(pc(main-1-20),data(C,D)), {1=1,B>=1+A,B>=1+A,1=1,D=B-A,C=A}, [1=1,B>=1+A,B>=1+A,1=1], [D=B-A,C=A], tid([12,11,9,7])).
+transition(p(pc(main-1-20),data(A,B)), p(pc(main-1-20),data(C,D)), {1=1,B+1=<A,B=<A,1=1,D=B,C=A-A}, [1=1,B+1=<A,B=<A,1=1], [D=B,C=A-A], tid([14,13,8,7])).
+transition(p(pc(main-0-16),data(A,B)), p(pc(main-1-20),data(C,D)), {B>=1+0,A>=1+0,D=B,C=A}, [B>=1+0,A>=1+0], [D=B,C=A], tid([6,3])).
+transition(p(pc(main-0-16),data(A,B)), p(pc(main-ret-0),data(C,D)), {B>=1+0,A=<0,1=1,D=B,C=A}, [B>=1+0,A=<0,1=1], [D=B,C=A], tid([5,4,3])).
+transition(p(pc(main-0-16),data(A,B)), p(pc(main-ret-0),data(C,D)), {B=<0,1=1,D=B,C=A}, [B=<0,1=1], [D=B,C=A], tid([2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([6,3])], loop [tid([12,11,9,7])]
+trans preds: _9220->_9223:	#0:	
+projected loop:
+y1'>=1, y1=y2'+y1', y2=y2', y2'>=1
+y1=<1
+y1-y1'=<0
+refining loop
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): y1-y1'>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-20)
+LI at pc(main-1-20): y2'>=1
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): _8409-y1'>=1
+
+refining loop
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): y1>=2
+
+refining stem
+
+cutting step 2 at pc(main-1-20)
+LI at pc(main-1-20): y2'>=1
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): _8409>=2
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([6,3])], loop [tid([14,13,8,7])]
+trans preds: _126672->_126675:	#3:	y1>=2, y2'>=1, y1-y1'>=1
+projected loop:
+y2'=0, y2-y1'>=1, y1=y1', y1'>=1
+y2=<1
+y2-y2'=<1
+refining loop
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): y2-y2'>=2
+
+refining stem
+
+cutting step 2 at pc(main-1-20)
+LI at pc(main-1-20): y1'>=1
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): _4766-y2'>=2
+
+refining loop
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): y2>=2
+
+refining stem
+
+cutting step 2 at pc(main-1-20)
+LI at pc(main-1-20): y1'>=1
+cutting step 1 at pc(main-1-20)
+LI at pc(main-1-20): _4766>=2
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([6,3]),tid([14,13,8,7])], loop [tid([12,11,9,7])]
+trans preds: _115606->_115609:	#6:	y2>=2, y1'>=1, y2-y2'>=2, y1>=2, y2'>=1, y1-y1'>=1
+projected loop:
+y2=0, y2'=0, y1=y1', y1'>=1
+
+
+
+==================================================
+ARMC-Live: feasible counterexample:
+	stem [0,tid([6,3]),tid([14,13,8,7])]
+	loop [tid([12,11,9,7])]
+Stem:
+0:	unknown
+3:	assume(y1 > 0);
+6:	assume(y2 > 0);
+7:	skip;
+8:	assume(y1 < y2);
+13:	assume(y1 <= y2);
+14:	y2=y2 - y2;
+Loop:
+7:	skip;
+9:	assume(y1 > y2);
+11:	assume(y1 > y2);
+12:	y1=y1 - y2;
+halt
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.01     |     0.01     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.02     |     0.03     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.03     |     0.04     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+SPINS

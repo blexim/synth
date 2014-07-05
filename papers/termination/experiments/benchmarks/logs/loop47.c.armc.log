@@ -1,0 +1,204 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/loop47.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/loop47.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-0-16),data(A)), p(pc(main-ret-0),data(B)), {1=1,A=0,1=1,1=1,1=1,B=A}, [1=1,A=0,1=1,1=1,1=1], [B=A], tid([7,6,8,4,1])).
+transition(p(pc(main-0-16),data(A)), p(pc(main-0-16),data(B)), {1=1,A>=1+0,1=1,B= -(A)/2}, [1=1,A>=1+0,1=1], [B= -(A)/2], tid([5,3,1])).
+transition(p(pc(main-0-16),data(A)), p(pc(main-0-16),data(B)), {1=1,A+1=<0,1=1,B= -(A)/2}, [1=1,A+1=<0,1=1], [B= -(A)/2], tid([5,2,1])).
+transition(p(pc(main-0-16),data(A)), p(pc(main-ret-0),data(B)), {1=1,A=0,1=1,1=1,1=1,B=A}, [1=1,A=0,1=1,1=1,1=1], [B=A], tid([7,6,8,4,1])).
+transition(p(pc(main-0-16),data(A)), p(pc(main-0-16),data(B)), {1=1,A>=1+0,1=1,B= -(A)/2}, [1=1,A>=1+0,1=1], [B= -(A)/2], tid([5,3,1])).
+transition(p(pc(main-0-16),data(A)), p(pc(main-0-16),data(B)), {1=1,A+1=<0,1=1,B= -(A)/2}, [1=1,A+1=<0,1=1], [B= -(A)/2], tid([5,2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 
+abstract counterexample: stem [0], loop [tid([5,3,1])]
+trans preds: _8442->_8445:	#0:	
+x=<1/2
+x-x'=<1
+refining loop
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x-x'>=3/2
+
+refining stem
+
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x-x'>=3/2
+
+refining loop
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 
+abstract counterexample: stem [0], loop [tid([5,2,1])]
+trans preds: _43796->_43799:	#2:	x>=1, x-x'>=3/2
+x>= -1/2
+x-x'>= -1
+refining loop
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x-x'=< -3/2
+
+refining stem
+
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x-x'=< -3/2
+
+refining loop
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x=< -1
+
+refining stem
+
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x=< -1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 1 
+abstract counterexample: stem [0], loop [tid([5,3,1]),tid([5,2,1])]
+trans preds: _78391->_78394:	#4:	x=< -1, x-x'=< -3/2, x>=1, x-x'>=3/2
+x=<7/4
+x'-x>= -5/4
+refining loop
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x>=0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x'-x=< -3/2
+
+refining stem
+
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x>=0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x'-x=< -3/2
+
+refining loop
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x>=0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x>=2
+
+refining stem
+
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x>=0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x>=2
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 3:
+lfp iteration 0 1 
+abstract counterexample: stem [0], loop [tid([5,2,1]),tid([5,3,1])]
+trans preds: _34509->_34512:	#6:	x>=2, x'+1/2*x>=0, x=< -1, x-x'=< -3/2, x>=1, x-x'>=3/2
+x>= -7/4
+x'-x=<5/4
+refining loop
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x=<0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x'-x>=3/2
+
+refining stem
+
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x=<0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x'-x>=3/2
+
+refining loop
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x=<0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x=< -2
+
+refining stem
+
+cutting step 2 at pc(main-0-16)
+LI at pc(main-0-16): x'+1/2*x=<0
+cutting step 1 at pc(main-0-16)
+LI at pc(main-0-16): x=< -2
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 4:
+lfp iteration 0 1 2 3 
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+abstract trans fixpoint
+abstract_trans_state(0, pc(main-0-16), pc(main-0-16), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-16), pc(main-ret-0), [], stem, 2, (1,tid([7,6,8,4,1]))).
+abstract_trans_state(1, pc(main-0-16), pc(main-ret-0), [2,4], loop, 3, (1,tid([7,6,8,4,1]))).
+abstract_trans_state(1, pc(main-0-16), pc(main-0-16), [2,4,7,8], loop, 4, (1,tid([5,3,1]))).
+abstract_trans_state(1, pc(main-0-16), pc(main-0-16), [2,4,5,6], loop, 5, (1,tid([5,2,1]))).
+abstract_trans_state(2, pc(main-0-16), pc(main-0-16), [3,4,7,8], loop, 6, (4,tid([5,2,1]))).
+abstract_trans_state(2, pc(main-0-16), pc(main-0-16), [1,2,5,6], loop, 7, (5,tid([5,3,1]))).
+abstract_trans_state(3, pc(main-0-16), pc(main-ret-0), [3,4,7,8], loop, 8, (6,tid([7,6,8,4,1]))).
+abstract_trans_state(3, pc(main-0-16), pc(main-ret-0), [1,2,5,6], loop, 9, (7,tid([7,6,8,4,1]))).
+
+frontier 0: stem 1 (pc(main-0-16)->pc(main-0-16)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-16)->pc(main-ret-0)) from 1 by applying tid([7,6,8,4,1]): 	T
+frontier 1: loop 3 (pc(main-0-16)->pc(main-ret-0)) from 1 by applying tid([7,6,8,4,1]): 	x'+1/2*x=<0, x'+1/2*x>=0
+frontier 1: loop 4 (pc(main-0-16)->pc(main-0-16)) from 1 by applying tid([5,3,1]): 	x'+1/2*x=<0, x'+1/2*x>=0, x>=1, x-x'>=3/2
+frontier 1: loop 5 (pc(main-0-16)->pc(main-0-16)) from 1 by applying tid([5,2,1]): 	x'+1/2*x=<0, x'+1/2*x>=0, x=< -1, x-x'=< -3/2
+frontier 2: loop 6 (pc(main-0-16)->pc(main-0-16)) from 4 by applying tid([5,2,1]): 	x>=2, x'+1/2*x>=0, x>=1, x-x'>=3/2
+frontier 2: loop 7 (pc(main-0-16)->pc(main-0-16)) from 5 by applying tid([5,3,1]): 	x=< -2, x'+1/2*x=<0, x=< -1, x-x'=< -3/2
+frontier 3: loop 8 (pc(main-0-16)->pc(main-ret-0)) from 6 by applying tid([7,6,8,4,1]): 	x>=2, x'+1/2*x>=0, x>=1, x-x'>=3/2
+frontier 3: loop 9 (pc(main-0-16)->pc(main-ret-0)) from 7 by applying tid([7,6,8,4,1]): 	x=< -2, x'+1/2*x=<0, x=< -1, x-x'=< -3/2
+
+_125215->_125218:	#8:	x=< -2, x'+1/2*x=<0, x>=2, x'+1/2*x>=0, x=< -1, x-x'=< -3/2, x>=1, x-x'>=3/2
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.02     |     0.03     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.01     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.03     |     0.03     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.03     |     0.04     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+TERMINATES

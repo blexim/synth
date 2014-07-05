@@ -1,0 +1,240 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/svcomp11.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/svcomp11.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-0-24),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,C=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,C=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([22,21,23,7,1])).
+transition(p(pc(main-0-24),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,C>=1+0,B=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,C>=1+0,B=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([22,21,24,6,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,C>=1+0,B>=1+0,A=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,C>=1+0,B>=1+0,A=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([22,21,25,5,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,_)), p(pc(main-0-24),data(D,E,F,G,H)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J=0,1=1,1=1,H=J,G=I,F=K,E=B,D=A-1}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J=0,1=1,1=1], [H=J,G=I,F=K,E=B,D=A-1], tid([20,19,18,13,12,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,_)), p(pc(main-0-24),data(D,E,F,G,H)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J>=1+0,1=1,1=1,H=J,G=I,F=C,E=B-1,D=K}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J>=1+0,1=1,1=1], [H=J,G=I,F=C,E=B-1,D=K], tid([17,16,15,13,12,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,_)), p(pc(main-0-24),data(D,E,F,G,H)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J+1=<0,1=1,1=1,H=J,G=I,F=C,E=B-1,D=K}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J+1=<0,1=1,1=1], [H=J,G=I,F=C,E=B-1,D=K], tid([17,16,14,13,12,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,D)), p(pc(main-0-24),data(E,F,G,H,I)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J>=1+0,1=1,I=D,H=J,G=C-1,F=B,E=A}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J>=1+0,1=1], [I=D,H=J,G=C-1,F=B,E=A], tid([11,10,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,D)), p(pc(main-0-24),data(E,F,G,H,I)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J+1=<0,1=1,I=D,H=J,G=C-1,F=B,E=A}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J+1=<0,1=1], [I=D,H=J,G=C-1,F=B,E=A], tid([11,9,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,C=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,C=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([22,21,23,7,1])).
+transition(p(pc(main-0-24),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,C>=1+0,B=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,C>=1+0,B=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([22,21,24,6,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,C>=1+0,B>=1+0,A=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,C>=1+0,B>=1+0,A=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([22,21,25,5,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,_)), p(pc(main-0-24),data(D,E,F,G,H)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J=0,1=1,1=1,H=J,G=I,F=K,E=B,D=A-1}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J=0,1=1,1=1], [H=J,G=I,F=K,E=B,D=A-1], tid([20,19,18,13,12,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,_)), p(pc(main-0-24),data(D,E,F,G,H)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J>=1+0,1=1,1=1,H=J,G=I,F=C,E=B-1,D=K}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J>=1+0,1=1,1=1], [H=J,G=I,F=C,E=B-1,D=K], tid([17,16,15,13,12,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,_)), p(pc(main-0-24),data(D,E,F,G,H)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J+1=<0,1=1,1=1,H=J,G=I,F=C,E=B-1,D=K}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,I=0,1=1,J+1=<0,1=1,1=1], [H=J,G=I,F=C,E=B-1,D=K], tid([17,16,14,13,12,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,D)), p(pc(main-0-24),data(E,F,G,H,I)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J>=1+0,1=1,I=D,H=J,G=C-1,F=B,E=A}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J>=1+0,1=1], [I=D,H=J,G=C-1,F=B,E=A], tid([11,10,8,4,3,2,1])).
+transition(p(pc(main-0-24),data(A,B,C,_,D)), p(pc(main-0-24),data(E,F,G,H,I)), {1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J+1=<0,1=1,I=D,H=J,G=C-1,F=B,E=A}, [1=1,C>=1+0,B>=1+0,A>=1+0,1=1,J+1=<0,1=1], [I=D,H=J,G=C-1,F=B,E=A], tid([11,9,8,4,3,2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 
+abstract counterexample: stem [0], loop [tid([20,19,18,13,12,8,4,3,2,1])]
+trans preds: _16813->_16816:	#0:	
+z=<0
+z-z'=<0
+refining loop
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z-z'>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z-z'>=1
+
+refining loop
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 
+abstract counterexample: stem [0], loop [tid([17,16,15,13,12,8,4,3,2,1])]
+trans preds: _13448->_13451:	#2:	z>=1, z-z'>=1
+y=<0
+y-y'=<0
+refining loop
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y-y'>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y-y'>=1
+
+refining loop
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 
+abstract counterexample: stem [0], loop [tid([11,10,8,4,3,2,1])]
+trans preds: _7236->_7239:	#4:	y>=1, y-y'>=1, z>=1, z-z'>=1
+x=<0
+x-x'=<0
+refining loop
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): x-x'>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): x-x'>=1
+
+refining loop
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): x>=1
+
+refining stem
+
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): x>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 3:
+lfp iteration 0 1 
+abstract counterexample: stem [0], loop [tid([20,19,18,13,12,8,4,3,2,1]),tid([17,16,15,13,12,8,4,3,2,1])]
+trans preds: _126556->_126559:	#6:	x>=1, x-x'>=1, y>=1, y-y'>=1, z>=1, z-z'>=1
+y=<0
+y'-y>=0
+refining loop
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): y'-y=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y'-y=< -1
+
+refining stem
+
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): y'-y=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y'-y=< -1
+
+refining loop
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): y'-y=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y>=1
+
+refining stem
+
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): y'-y=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): y>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 4:
+lfp iteration 0 1 
+abstract counterexample: stem [0], loop [tid([11,10,8,4,3,2,1]),tid([20,19,18,13,12,8,4,3,2,1])]
+trans preds: _21277->_21280:	#7:	y'-y=<0, x>=1, x-x'>=1, y>=1, y-y'>=1, z>=1, z-z'>=1
+z=<0
+z'-z>=0
+refining loop
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): z'-z=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z'-z=< -1
+
+refining stem
+
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): z'-z=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z'-z=< -1
+
+refining loop
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): z'-z=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z>=1
+
+refining stem
+
+cutting step 2 at pc(main-0-24)
+LI at pc(main-0-24): z'-z=<0
+cutting step 1 at pc(main-0-24)
+LI at pc(main-0-24): z>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 5:
+lfp iteration 0 1 2 
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+abstract trans fixpoint
+abstract_trans_state(0, pc(main-0-24), pc(main-0-24), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-24), pc(main-ret-0), [], stem, 2, (1,tid([22,21,23,7,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-ret-0), [1,2], loop, 3, (1,tid([22,21,23,7,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-0-24), [1,2,3,5,7,8], loop, 4, (1,tid([20,19,18,13,12,8,4,3,2,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-0-24), [2,3,5,6,7], loop, 5, (1,tid([17,16,15,13,12,8,4,3,2,1]))).
+abstract_trans_state(1, pc(main-0-24), pc(main-0-24), [1,2,3,4,5,7], loop, 6, (1,tid([11,10,8,4,3,2,1]))).
+abstract_trans_state(2, pc(main-0-24), pc(main-ret-0), [2,3,4,5,6,7], loop, 7, (5,tid([22,21,23,7,1]))).
+abstract_trans_state(2, pc(main-0-24), pc(main-ret-0), [2,3,5,6,7], loop, 8, (5,tid([22,21,24,6,2,1]))).
+
+frontier 0: stem 1 (pc(main-0-24)->pc(main-0-24)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-24)->pc(main-ret-0)) from 1 by applying tid([22,21,23,7,1]): 	T
+frontier 1: loop 3 (pc(main-0-24)->pc(main-ret-0)) from 1 by applying tid([22,21,23,7,1]): 	z'-z=<0, y'-y=<0
+frontier 1: loop 4 (pc(main-0-24)->pc(main-0-24)) from 1 by applying tid([20,19,18,13,12,8,4,3,2,1]): 	z'-z=<0, y'-y=<0, x>=1, y>=1, z>=1, z-z'>=1
+frontier 1: loop 5 (pc(main-0-24)->pc(main-0-24)) from 1 by applying tid([17,16,15,13,12,8,4,3,2,1]): 	y'-y=<0, x>=1, y>=1, y-y'>=1, z>=1
+frontier 1: loop 6 (pc(main-0-24)->pc(main-0-24)) from 1 by applying tid([11,10,8,4,3,2,1]): 	z'-z=<0, y'-y=<0, x>=1, x-x'>=1, y>=1, z>=1
+frontier 2: loop 7 (pc(main-0-24)->pc(main-ret-0)) from 5 by applying tid([22,21,23,7,1]): 	y'-y=<0, x>=1, x-x'>=1, y>=1, y-y'>=1, z>=1
+frontier 2: loop 8 (pc(main-0-24)->pc(main-ret-0)) from 5 by applying tid([22,21,24,6,2,1]): 	y'-y=<0, x>=1, y>=1, y-y'>=1, z>=1
+
+_164381->_164384:	#8:	z'-z=<0, y'-y=<0, x>=1, x-x'>=1, y>=1, y-y'>=1, z>=1, z-z'>=1
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.05     |     0.03     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.01     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.06     |     0.07     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.09     |     0.09     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+TERMINATES

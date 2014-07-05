@@ -1,0 +1,172 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,/users/matlew/synth/papers/termination/experiments/benchmarks/loop4.c.main.pl,-straight]
+reading input from /users/matlew/synth/papers/termination/experiments/benchmarks/loop4.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-1-17),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,B=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,B=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([16,15,17,7,3])).
+transition(p(pc(main-1-17),data(A,B,C,D,E)), p(pc(main-ret-0),data(F,G,H,I,J)), {1=1,B>=1+0,A=<0,1=1,1=1,1=1,J=E,I=D,H=C,G=B,F=A}, [1=1,B>=1+0,A=<0,1=1,1=1,1=1], [J=E,I=D,H=C,G=B,F=A], tid([16,15,18,6,4,3])).
+transition(p(pc(main-1-17),data(A,B,_,C,D)), p(pc(main-1-17),data(E,F,G,H,I)), {1=1,B>=1+0,A>=1+0,1=1,J>=1+1,1=1,I=D,H=C,G=J,F=B,E=A-1}, [1=1,B>=1+0,A>=1+0,1=1,J>=1+1,1=1], [I=D,H=C,G=J,F=B,E=A-1], tid([14,13,8,5,4,3])).
+transition(p(pc(main-1-17),data(A,B,_,C,D)), p(pc(main-1-17),data(E,F,G,H,I)), {1=1,B>=1+0,A>=1+0,1=1,J+1=<1,1=1,I=D,H=C,G=J,F=B,E=A-1}, [1=1,B>=1+0,A>=1+0,1=1,J+1=<1,1=1], [I=D,H=C,G=J,F=B,E=A-1], tid([14,12,8,5,4,3])).
+transition(p(pc(main-1-17),data(A,B,_,C,D)), p(pc(main-1-17),data(E,F,G,H,I)), {1=1,B>=1+0,A>=1+0,1=1,J=1,1=1,1=1,I=D,H=C,G=J,F=B-1,E=A+1}, [1=1,B>=1+0,A>=1+0,1=1,J=1,1=1,1=1], [I=D,H=C,G=J,F=B-1,E=A+1], tid([11,10,9,8,5,4,3])).
+transition(p(pc(main-0-15),data(_,_,A,B,C)), p(pc(main-1-17),data(D,E,F,G,H)), {1=1,1=1,H=C,G=B,F=A,E=C,D=B}, [1=1,1=1], [H=C,G=B,F=A,E=C,D=B], tid([2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([2,1])], loop [tid([14,13,8,5,4,3])]
+trans preds: _10106->_10109:	#0:	
+y=<0
+y-y'=<0
+refining loop
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): y-y'>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-17)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): _9189-y'>=1
+
+refining loop
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): y>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-17)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): _759>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 1:
+lfp iteration 0 1 
+abstract counterexample: stem [0,tid([2,1])], loop [tid([11,10,9,8,5,4,3])]
+trans preds: _42401->_42404:	#2:	y>=1, y-y'>=1
+x=<0
+x-x'=<0
+refining loop
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): x-x'>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-17)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): _41451-x'>=1
+
+refining loop
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): x>=1
+
+refining stem
+
+cutting step 2 at pc(main-1-17)
+unsat suffix not yet reached
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): _41451>=1
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 2:
+lfp iteration 0 1 2 
+abstract counterexample: stem [0,tid([2,1])], loop [tid([14,13,8,5,4,3]),tid([11,10,9,8,5,4,3])]
+trans preds: _205029->_205032:	#4:	x>=1, x-x'>=1, y>=1, y-y'>=1
+x=<0
+x'-x>=0
+refining loop
+cutting step 2 at pc(main-1-17)
+LI at pc(main-1-17): x'-x=<0
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): x'-x=< -1
+
+refining stem
+
+cutting step 3 at pc(main-1-17)
+unsat suffix not yet reached
+cutting step 2 at pc(main-1-17)
+LI at pc(main-1-17): x'-_6866=<0
+cutting step 1 at pc(main-1-17)
+
+refining loop
+cutting step 2 at pc(main-1-17)
+LI at pc(main-1-17): x'-x=<0
+cutting step 1 at pc(main-1-17)
+LI at pc(main-1-17): x>=1
+
+refining stem
+
+cutting step 3 at pc(main-1-17)
+unsat suffix not yet reached
+cutting step 2 at pc(main-1-17)
+LI at pc(main-1-17): x'-_6332=<0
+cutting step 1 at pc(main-1-17)
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 3:
+lfp iteration 0 1 2 3 
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+abstract trans fixpoint
+abstract_trans_state(0, pc(main-0-15), pc(main-0-15), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-15), pc(main-1-17), [], stem, 2, (1,tid([2,1]))).
+abstract_trans_state(2, pc(main-0-15), pc(main-ret-0), [], stem, 3, (2,tid([16,15,17,7,3]))).
+abstract_trans_state(2, pc(main-1-17), pc(main-ret-0), [1], loop, 4, (2,tid([16,15,17,7,3]))).
+abstract_trans_state(2, pc(main-1-17), pc(main-1-17), [1,2,4,5], loop, 5, (2,tid([14,13,8,5,4,3]))).
+abstract_trans_state(2, pc(main-1-17), pc(main-1-17), [1,2,3,4], loop, 6, (2,tid([11,10,9,8,5,4,3]))).
+
+frontier 0: stem 1 (pc(main-0-15)->pc(main-0-15)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-15)->pc(main-1-17)) from 1 by applying tid([2,1]): 	T
+frontier 2: stem 3 (pc(main-0-15)->pc(main-ret-0)) from 2 by applying tid([16,15,17,7,3]): 	T
+frontier 2: loop 4 (pc(main-1-17)->pc(main-ret-0)) from 2 by applying tid([16,15,17,7,3]): 	x'-x=<0
+frontier 2: loop 5 (pc(main-1-17)->pc(main-1-17)) from 2 by applying tid([14,13,8,5,4,3]): 	x'-x=<0, x>=1, y>=1, y-y'>=1
+frontier 2: loop 6 (pc(main-1-17)->pc(main-1-17)) from 2 by applying tid([11,10,9,8,5,4,3]): 	x'-x=<0, x>=1, x-x'>=1, y>=1
+
+_105347->_105350:	#5:	x'-x=<0, x>=1, x-x'>=1, y>=1, y-y'>=1
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.03     |     0.04     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.04     |     0.06     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.06     |     0.06     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+TERMINATES
