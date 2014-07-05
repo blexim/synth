@@ -228,8 +228,6 @@ class Prog(object):
     return ret
 
   def const_used(self, i, j):
-    target = j + args.args.args
-
     for k in xrange(len(self.ops[i])):
       op = self.ops[i][k]
 
@@ -241,7 +239,7 @@ class Prog(object):
         nargs = 3
 
       for l in xrange(nargs):
-        if self.params[i][k*3 + l] == target:
+        if self.params[i][k*3 + l] == j:
           return True
 
     return False

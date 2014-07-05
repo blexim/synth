@@ -2,13 +2,12 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-res1 = 0x4 == 0x4;
+res1 = x ==> 0x8;
 Program 1:
-t1 = 0x5 ^ 0x5;
-res1 = 0x5 ? x : 0x5;
+res1 = x ^ 0x0;
 
 Fastest checker: explicit
-Correct for wordlen=3
+Correct for wordlen=4
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -18,20 +17,19 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.45s
+Finished in 1.27s
 
 Program 0:
-res1 = 0x4 == 0x4;
+res1 = x ==> 0x8;
 Program 1:
-t1 = 0x5 ^ 0x5;
-res1 = 0x5 ? x : 0x5;
+res1 = x ^ 0x0;
 
 
 Perf counters:
 {'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
 Perf timers:
-verify: 2.16s
-checker: 2.45s
-gcc: 0.62s
-_: 2.45s
-synth: 0.29s
+verify: 1.04s
+checker: 1.27s
+gcc: 0.52s
+_: 1.27s
+synth: 0.23s

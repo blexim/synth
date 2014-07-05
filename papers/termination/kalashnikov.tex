@@ -180,9 +180,9 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
 
-\begin{tabular}{lll}
- \verb|add a b| & \verb|sub a b| & \verb|mul a b| \\
- \verb|neg a| & \verb|div a b|  & 
+\begin{tabular}{llll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
+ \verb|neg a| &   \verb|mod a b| & \verb|min a b| & \verb|max a b|
 \end{tabular}
 
 \medskip
@@ -190,8 +190,8 @@ Integer arithmetic instructions:
 Bitwise logical and shift instructions:
 
 \begin{tabular}{lll}
- \verb|and  a b| & \verb|or a b| & \verb|xor a b| \\
- \verb|lshr a b| & \verb|ashr a b| & \verb|not  a| 
+ \verb|and  a b| & \verb|or   a b| & \verb|xor a b| \\
+ \verb|lshr a b| & \verb|ashr a b| & \verb|not a|
 \end{tabular}
 
 \medskip
@@ -200,8 +200,22 @@ Unsigned and signed comparison instructions:
 
 \begin{tabular}{lll}
  \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
- \verb|slt a b| & &
+ \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b|
 \end{tabular}
+
+Miscellaneous logical instructions:
+
+\begin{tabular}{lll}
+ \verb|implies a b| & \verb|ite a b c| & 
+\end{tabular}
+
+Floating point arithmetic:
+
+\begin{tabular}{llll}
+ \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b| 
+\end{tabular}
+
+
 \end{center}
 }
  \caption{The language $\mathcal{L}$}
@@ -218,31 +232,41 @@ check the validity of the synthesis formula.
 The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
 detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
 The algorithm is divided into two
-components: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}.% described next. 
+procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
+a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
 
-Given a (non-)termination specification (in the synthesis fragment)    
-and a finite set of test inputs tracked so far, {\sc synth} generates a program \texttt{synth.c} asserting that some non-deterministic proof taken as input  
-is incorrect on at least one of the tracked inputs.
-Thus, \texttt{synth.c} is unsafe iff there is some (non-)termination proof that is correct for all of the tracked inputs.  
-By using testing techniques, we search for such a proof, i.e. 
-we synthesise a candidate (non-)termination proof that is correct for all the tracked inputs.  
-The testing techniques we use are: model checking,
-exhaustive search and genetic programming (see Section~\ref{sec:gp}).  
-%For the latter 2 techniques, we combine SYNTH with another program
-%(GP or EXPLICIT respectively) to create a program that searches for test vectors (proofs) that cause SYNTH
-%to crash.
-As \texttt{synth.c}
-is a \newC program, we can check its safety by invoking a Bounded
-Model Checker, such as {\sc cbmc} \cite{}.
-We run the three available testing techniques %explicit-state model checker
-in parallel and take the answer of whichever happens
-to terminate first, stopping the other processes.  
+The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$ which satisfy the partial specification:
+\[
+ \exists P, x_0 . \forall x \in \text{\sc inputs} . \sigma(P, x_0, x)
+\]
 
+If {\sc synth} succeeds in finding a witness $(P, x_0)$, this witness is a candidate solution to the full
+synthesis formula.  We pass this candidate solution to {\sc verif} which determines whether the candidate
+does satisfy the specification on all inputs by checking satisfiability of the verification formula:
+\[
+ \exists x . \lnot \sigma(P, x_0, x)
+\]
 
-Subsequently, {\sc Verif} uses model checking or exhaustive search to verify the candidate proof by searching for an input on
-which it does not satisfy the specification. If no such input
-can be found, the candidate proof is correct.  Otherwise, the new input is added
-to the set of tracked inputs and the CEGIS loop is reiterated.  
+If this formula is unsatisfiable, the candidate solution is in fact a solution to the synthesis formula
+and so the algorithm terminates.  Otherwise, the witness $x$ is an input on which the candidate solution fails
+to meet the specification.  This witness $x$ is added to the {\sc inputs} set and the loop iterates again.
+
+Concretely, {\sc synth} is implemented as shown in Figure~\ref{fig:synth-dfd}.  We start by taking the termination
+specification and generating a C program which takes as input a candidate $(P, x_0)$ and asserts that the candidate
+fails to meet the specification on at least on of the elements of {\sc inputs}.  So this program is unsafe iff there
+is some candidate $(P, x_0)$ satisfying the specification for all the elements of {\sc inputs}.  Finding a new
+candidate solution is therefore reduced to model checking this C program, which by construction is loop free.
+The model checking is done using a combination of bounded model checking, explicit state enumeration and
+genetic programming (GP).  The latter two techniques involve combining the previously generated C program,
+along with code that searches for candidate solutions.  As well as efficiency, this has the side effect of
+guaranteeing that we are verifying the exact semantics of the program under analysis as understood by a
+compiler, rather than some ad-hoc abstraction of its semantics.  Finally, if any of the model checkers
+finds a candidate solution it returns it.  The form of this candidate solution is yet another program,
+this time written in the proof language $\mathcal{L}$.
+
+Similarly, the {\sc verif} procedure is implemented by creating a C program that is unsafe iff
+some input exists on which the candidate solution fails to meet the specification.  Again, symbolic
+and explicit state model checking are used to decide the satisfiability of the verification formula.
 
 
 %If the input set is finite, this procedure is guaranteed to terminate.
@@ -278,18 +302,25 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 %check the {\sc synth} program for safety.  
 
 
-\begin{figure}
+\begin{figure*}
 \begin{center}
 \tikzstyle{file}=[draw, text width=7.0em, text centered,
   minimum height=1.5em]
 \tikzstyle{process} = [draw, minimum height=3em, circle]
 \tikzstyle{line} = [draw, color=black, -latex']
 
+\def\Divide#1#2{%
+ \coordinate(a) at ($(#1.east) !.5! (#2.west)$);
+ \coordinate(b) at (a |- 0,-3);
+ \draw[dotted] (b) -- ++(0, 4.5);
+}
 
 \resizebox{\linewidth}{!}{
 \begin{tikzpicture}[font=\sffamily]
 
-\node [file] (spec) {\sc Termination Specification};
+\node [file] (pua) {input.c};
+
+\path (pua.east)+(2,0) node [file] (spec) {\sc Termination Specification};
 \path (spec.south)+(0.0, -1) node [file] (inputs) {\sc Tracked Inputs};
 %% \path (synth.south)+(0.0, -0.5) node [file] (tests) {\sc tests.c};
 %% \path (tests.south)+(0.0, -0.5) node [file] (interpreter) {\sc interpreter.c};
@@ -306,6 +337,8 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 
 %\path [line] (spec) -- (merged);
 
+\path [line] (pua) -- (spec);
+
 \path [line] (spec) -- (file);
 \path [line] (inputs) -- (file);
 
@@ -318,13 +351,26 @@ to the set of tracked inputs and the CEGIS loop is reiterated.
 \path [line] (gcc) -- (out);
 \path [line] (gp) -- (out);
 
+\Divide{pua}{spec}{puaspec}
+%\Divide{spec}{file}{specfile}
+\Divide{file}{gcc}{filegcc}
+\Divide{gcc}{out}{gccout}
+
+\draw (pua |- 0,-3) node [align=center] {Input program \\ (written in C)};
+
+\coordinate (midspec) at ($(spec) !.5! (file)$);
+\draw (midspec |- 0,-3) node [align=center] {Automatically generated specification \\ (written in C)};
+%\draw (file |- 0,-3) node {Spec};
+\draw (gcc |- 0,-3) node [align=center] {Model checker};
+\draw (out |- 0,-3) node [align=center] {Proof \\ (written in $\mathcal{L}$)};
+
 \end{tikzpicture}
 }
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
 \label{fig:synth-dfd}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Parameterising the Program Space}

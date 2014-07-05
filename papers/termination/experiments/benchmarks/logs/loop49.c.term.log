@@ -1,5 +1,20 @@
 Using seed: 1337
 []
+Fastest checker: genetic
+Program 0:
+t1 = ~0xf;
+res1 = 0xf + 0xf;
+Program 1:
+t1 = nondet_0 * x;
+t2 = x s< nondet_0;
+t3 = nondet_0 >>> 0x0;
+t4 = x ? nondet_0 : x;
+res1 = x ? 0x0 : 0x0;
+
+Fastest checker: explicit
+Fails for (0, 11)
+
+[]
 
 
 
@@ -9,9 +24,10 @@ Using seed: 1337
 
 Timeout
 Perf counters:
-{'timeout': 1, 'iterations': 1}
+{'genetic': 1, 'explicit': 1, 'timeout': 1, 'iterations': 2}
 Perf timers:
-checker: 60.00s
-gcc: 0.28s
-_: 60.00s
-synth: 60.00s
+verify: 0.17s
+checker: 180.00s
+gcc: 0.36s
+_: 180.00s
+synth: 179.83s

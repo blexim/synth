@@ -2,287 +2,139 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x2 s< x;
-t2 = min(0x2, 0x2);
-res1 = -0x2;
+t1 = max(0x8, x);
+res1 = 0x8 <= t1;
 Program 1:
-t1 = 0x6 s< 0x6;
-t2 = x ^ 0x6;
-res1 = t1 s<= x;
+t1 = ~0x7;
+t2 = 0x7 - x;
+t3 = x * t2;
+t4 = 0x7 + 0x7;
+res1 = t2 <= 0x7;
 
 Fastest checker: explicit
-Correct for wordlen=3
-Fastest checker: cbmc
+Correct for wordlen=4
+Fastest checker: explicit
 Trying to generalize...
 Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
 Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
 Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
 Fastest checker: cbmc
 Fastest checker: cbmc
 Fastest checker: cbmc
-Couldn't generalize :-(
-Increasing wordlen to 6
-[]
-Fastest checker: genetic
-Program 0:
-res1 = ~0x4;
-Program 1:
-t1 = 0x0 - x;
-t2 = t1 ==> 0x0;
-res1 = t2 | t1;
-
-Fastest checker: explicit
-Fails for (0,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = 0x7 s<= 0x7;
-Program 1:
-t1 = x == 0x5;
-t2 = ~x;
-t3 = -t1;
-t4 = t1 + t3;
-res1 = 0x5 | t3;
-
-Fastest checker: explicit
-Fails for (4,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x19 | x;
-t2 = t1 - 0x19;
-res1 = t2 <= t2;
-Program 1:
-t1 = x & 0x28;
-t2 = x ^ 0x28;
-res1 = x ==> x;
-
-Fastest checker: explicit
-Fails for (24,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = x == x;
-Program 1:
-t1 = x ^ 0x3a;
-res1 = 0x3a ? 0x3a : x;
-
-Fastest checker: explicit
-Fails for (26,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = min(x, x);
-t2 = x <= t1;
-t3 = -0x22;
-res1 = t2 | 0x22;
-Program 1:
-t1 = x + 0x22;
-res1 = t1 & 0x22;
-
-Fastest checker: explicit
-Fails for (27,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = max(x, 0x2);
-t2 = x >>> x;
-res1 = -0x2;
-Program 1:
-t1 = x >>> x;
-t2 = 0x3e - x;
-t3 = -t2;
-res1 = t3 | t2;
-
-Fastest checker: explicit
-Fails for (30,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = -0x37;
-Program 1:
-t1 = 0x2e - x;
-t2 = -t1;
-res1 = t2 | t1;
-
-Fastest checker: explicit
-Correct for wordlen=6
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
 Fastest checker: explicit
 Fastest checker: explicit
 Couldn't generalize :-(
-Increasing wordlen to 12
+Increasing wordlen to 8
 []
 Fastest checker: genetic
 Program 0:
-res1 = x >>> 0x6;
+res1 = 0xf + 0xf;
 Program 1:
-t1 = x << 0x1b;
-res1 = t1 & 0x1b;
+t1 = x >>> 0x8;
+t2 = 0x8 s<= t1;
+t3 = 0x8 + 0x8;
+t4 = x * x;
+res1 = 0x8 + 0x8;
 
 Fastest checker: explicit
-Fails for (0,)
+Fails for (54,)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = max(x, 0x2);
-t2 = x >>> x;
-res1 = -0x2;
-Program 1:
-t1 = x >>> x;
-t2 = 0x3e - x;
-t3 = -t2;
-res1 = t3 | t2;
-
-Fastest checker: explicit
-Fails for (30,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = -0x37;
-Program 1:
-t1 = 0x2e - x;
-t2 = -t1;
-res1 = t2 | t1;
-
-Fastest checker: explicit
-Fails for (46,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x == x;
-res1 = 0x5ac + 0x5ac;
-Program 1:
-t1 = 0x96e - x;
-t2 = -t1;
-res1 = t2 | t1;
-
-Fastest checker: explicit
-Fails for (110,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x s< x;
-t2 = t1 - x;
-t3 = t2 / 0xaf9;
-t4 = 0xaf9 << t3;
-t5 = 0xaf9 + x;
-res1 = t5 + t3;
-Program 1:
-t1 = min(x, 0xa38);
-t2 = -x;
-t3 = x + x;
-res1 = 0xa38 ^ x;
-
-Fastest checker: explicit
-Fails for (1286,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x3dc & x;
-t2 = t1 ^ x;
-t3 = ~0x3dc;
-t4 = 0x3dc + t3;
-res1 = t4 | t1;
+res1 = x | 0x8;
 Program 1:
 t1 = -x;
-t2 = t1 >> x;
-res1 = 0xaec ^ x;
+t2 = min(x, x);
+t3 = x ^ 0xf;
+t4 = x * x;
+res1 = x <= t4;
 
 Fastest checker: explicit
-Fails for (1368,)
+Fails for (56,)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x1f1 == x;
-res1 = 0x1f1 + x;
+t1 = x / 0x8;
+t2 = x s<= x;
+res1 = max(0x8, x);
 Program 1:
-t1 = ~0xa9b;
-t2 = x == 0xa9b;
-t3 = 0xa9b ^ x;
-t4 = t3 == 0xa9b;
-res1 = t1 % t3;
+t1 = -x;
+res1 = t1 >>> t1;
 
 Fastest checker: explicit
-Fails for (1369,)
+Fails for (71,)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = 0xdc4 | 0xdc4;
+t1 = 0x1 + 0x1;
+res1 = x | 0x1;
 Program 1:
-t1 = 0x8d9 - x;
-t2 = x <= 0x8d9;
-res1 = x & t2;
+t1 = x * x;
+t2 = 0x0 s<= x;
+res1 = 0x0 + 0x0;
 
 Fastest checker: explicit
-Fails for (1370,)
+Fails for (74,)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x >>> 0xc19;
-res1 = 0xc19 >> 0xc19;
+res1 = min(x, 0x80);
 Program 1:
-t1 = 0x85a >> x;
-t2 = x <= 0x85a;
-res1 = x & t2;
+t1 = x * x;
+t2 = x * 0xff;
+t3 = t1 >> t2;
+t4 = -x;
+res1 = x <= t1;
 
 Fastest checker: explicit
-Fails for (1374,)
+Fails for (80,)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x + 0x1a3;
-res1 = min(0x1a3, 0x1a3);
+t1 = max(x, 0x0);
+t2 = max(t1, 0x0);
+res1 = 0x0 + x;
 Program 1:
-t1 = 0x7ce - x;
-t2 = -t1;
-res1 = t2 | t1;
+t1 = x ==> x;
+t2 = x + x;
+t3 = ~0x7f;
+t4 = t1 - x;
+res1 = min(t2, t4);
 
 Fastest checker: explicit
-Fails for (1422,)
+Fails for (89,)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x - 0x815;
-t2 = max(0x815, x);
-res1 = t2 >> t2;
+t1 = -x;
+res1 = max(0xf, 0xf);
 Program 1:
-t1 = 0xae2 ==> 0xae2;
-t2 = 0xae2 ^ x;
-res1 = x ? t1 : t2;
+t1 = ~x;
+t2 = ~x;
+t3 = 0x80 << t1;
+t4 = t1 >>> t1;
+res1 = 0x80 * x;
 
 Fastest checker: explicit
-Fails for (1536,)
+Fails for (92,)
 
 []
 
@@ -294,11 +146,11 @@ Fails for (1536,)
 
 Timeout
 Perf counters:
-{'genetic': 19, 'cbmc': 13, 'explicit': 29, 'timeout': 1, 'iterations': 20}
+{'genetic': 8, 'cbmc': 12, 'explicit': 17, 'timeout': 1, 'iterations': 9}
 Perf timers:
-gcc: 1.56s
-verify: 26.85s
-checker: 59.93s
-generalize: 24.18s
-synth: 33.13s
-_: 60.00s
+gcc: 0.90s
+verify: 12.62s
+checker: 179.95s
+generalize: 12.03s
+synth: 167.37s
+_: 180.00s

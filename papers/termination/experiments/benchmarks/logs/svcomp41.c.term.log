@@ -2,407 +2,470 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-res1 = 0x6 == x2';
+res1 = min(x2, x1);
 Program 1:
-t1 = 0x2 << x2';
-t2 = x1 / x1;
-res1 = x2' <= x1;
+res1 = max(x1', x2');
 Program 2:
-t1 = x2' < x2;
-res1 = t1 ^ x2';
+t1 = x1 | x1';
+t2 = x2' & t1;
+t3 = t1 << x1;
+res1 = x2' - t3;
 
 Fastest checker: explicit
-Fails for (5, 4, 5, 5)
+Fails for (12, 8, 12, 11)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x2' >> x2';
-t2 = min(t1, x1);
-res1 = x2 + x1';
+t1 = x2 * 0x7;
+t2 = x2' << x1;
+res1 = min(0x7, x1');
 Program 1:
-res1 = x2' >> 0x6;
+res1 = x2' s<= 0xf;
 Program 2:
-res1 = 0x5 != x2;
+t1 = x1 >>> x2;
+res1 = x1 >> x2;
 
 Fastest checker: explicit
-Fails for (0, 5, 5, 5)
+Fails for (0, 9, 12, 11)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x5 | x2';
-res1 = x2 >>> x1;
+t1 = x1' | 0xf;
+t2 = x2 / 0xf;
+t3 = -x1;
+res1 = x1 / 0xf;
 Program 1:
-t1 = 0x0 == x1';
-t2 = 0x0 >> t1;
-res1 = 0x0 s< x2';
+t1 = x2' + x2';
+t2 = x2' >>> x2;
+res1 = x2' >>> x2;
 Program 2:
-res1 = x1' % x2';
+t1 = ~x2;
+res1 = x2' - 0x0;
 
 Fastest checker: explicit
-Fails for (0, 0, 0, 1)
+Fails for (0, 11, 12, 11)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = x2' % x1';
+res1 = x2' s< x1;
 Program 1:
-t1 = x1 s<= 0x6;
-t2 = x2' | 0x6;
-res1 = ~t2;
-Program 2:
-res1 = x1' ? 0x0 : 0x0;
-
-Fastest checker: explicit
-Fails for (0, 0, 0, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x1 >> x1;
-t2 = x1 == x2';
-res1 = -x1;
-Program 1:
-t1 = x2' * x1';
-t2 = x1' < t1;
-res1 = x1' == x1;
-Program 2:
-t1 = min(x1', x2);
-t2 = 0x2 - x1;
-res1 = -0x2;
-
-Fastest checker: explicit
-Fails for (2, 0, 2, 4)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = max(x1, x2');
-Program 1:
-t1 = 0x3 < x2;
-t2 = x1 ==> x1;
-res1 = 0x3 + x2';
-Program 2:
-t1 = 0x5 << x2;
-t2 = x2 < x2;
-res1 = x1 == x2;
-
-Fastest checker: explicit
-Fails for (0, 1, 2, 4)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = max(x2, 0x1);
-Program 1:
-res1 = 0x3 + x2';
-Program 2:
-t1 = -0x5;
-t2 = 0x5 - x2;
-res1 = x1 + t2;
-
-Fastest checker: explicit
-Fails for (4, 1, 2, 4)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = x1' <= x2;
-Program 1:
-t1 = -0x2;
-res1 = t1 s<= x2';
-Program 2:
-t1 = 0x3 s<= x2;
-t2 = x1' + x1';
-t3 = x1 >>> x2;
-res1 = x1 <= t1;
-
-Fastest checker: explicit
-Fails for (1, 0, 0, 6)
-
-[]
-Fastest checker: genetic
-Program 0:
-
-Program 1:
-t1 = x1 < x2;
-res1 = t1 s<= x2';
-Program 2:
-t1 = 0x7 s< x2;
-t2 = x1' s< x2;
-t3 = 0x7 ^ x1;
-res1 = max(t1, x2');
-
-Fastest checker: explicit
-Fails for (1, 0, 0, 0)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~x1;
-t2 = 0x2 >> 0x2;
-res1 = x2 ^ x1;
-Program 1:
-t1 = x2 ^ x2;
-res1 = t1 s< x2';
-Program 2:
-res1 = x1 == x1';
-
-Fastest checker: explicit
-Fails for (1, 0, 0, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x2 & x1;
-res1 = x1 >>> x1;
-Program 1:
-res1 = x1 == x1';
-Program 2:
-res1 = ~x1;
-
-Fastest checker: explicit
-Fails for (7, 0, 7, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = 0x7 * x2';
-t2 = x1 >> x2';
-res1 = x2 + x1;
-Program 1:
-t1 = x1' >> x2;
+t1 = 0xf | x1;
 res1 = x1 <= x1';
 Program 2:
-t1 = x1 << x2';
-t2 = x1 - x2;
-res1 = ~x2;
+t1 = ~x2;
+t2 = x1 <= 0x7;
+res1 = 0x7 s<= x2';
 
 Fastest checker: explicit
-Fails for (0, 1, 7, 1)
+Fails for (8, 11, 12, 11)
 
 []
 Fastest checker: genetic
 Program 0:
-
+t1 = x1 / x2';
+t2 = x1' * x1';
+res1 = t2 ==> t1;
 Program 1:
-t1 = x2 + x2;
-t2 = t1 ==> x2;
+t1 = -x2;
+res1 = x1' <= x1;
+Program 2:
+t1 = x1 / x2;
+t2 = x1' ? x1 : 0x1;
+t3 = 0x1 - x2;
+t4 = -t2;
+res1 = t4 >>> t3;
+
+Fastest checker: explicit
+Fails for (12, 11, 12, 11)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x1 < x1';
+Program 1:
+res1 = x2' ==> 0x7;
+Program 2:
+t1 = x2 s<= x2';
+t2 = 0x7 >>> x1;
+t3 = t1 - x2;
+res1 = x1' * x1;
+
+Fastest checker: explicit
+Fails for (13, 11, 12, 11)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2 | x1;
+t2 = x1 + x2;
+res1 = x1' s<= t2;
+Program 1:
+t1 = x2' >>> x2';
+t2 = x2' + 0x0;
+t3 = ~x2;
+t4 = x1 s< x2;
+res1 = ~t1;
+Program 2:
+t1 = min(x2, x1');
+t2 = -x2';
+t3 = t2 + t1;
+res1 = x1 >> x1';
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 12)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' s< x2';
+res1 = x2 ? x1 : x2';
+Program 1:
+t1 = x2 >>> 0x7;
+t2 = min(x1, x1);
+t3 = t1 + t2;
+res1 = 0x7 >>> x2';
+Program 2:
+t1 = max(x1', 0xf);
+t2 = t1 ^ x2;
+t3 = 0xf | x1';
+t4 = x2 & x1';
+res1 = t1 <= t4;
+
+Fastest checker: explicit
+Fails for (0, 12, 0, 12)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(x2, x2);
+res1 = x1 ^ 0x1;
+Program 1:
+t1 = min(x1', x2);
 res1 = x1 == x1';
 Program 2:
-t1 = x1 << x2';
-t2 = x1 == x1;
-t3 = ~x2;
-res1 = x2' * x1';
+t1 = x1 / 0xf;
+t2 = 0xf + 0xf;
+t3 = ~x1;
+res1 = 0xf + 0xf;
 
 Fastest checker: explicit
-Fails for (7, 2, 7, 1)
+Fails for (15, 0, 15, 12)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x7 / 0x7;
-res1 = 0x7 - x2';
+t1 = x2 ? x2 : 0x8;
+res1 = x2 >> x1;
 Program 1:
+t1 = x2' << x2';
+t2 = x1' == x1;
+res1 = t2 + 0x0;
+Program 2:
+t1 = 0x7 - x1;
+t2 = 0x7 + 0x7;
+t3 = 0x7 ^ x1;
+t4 = 0x7 + 0x7;
+res1 = 0x7 + 0x7;
+
+Fastest checker: explicit
+Fails for (7, 0, 7, 13)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 + 0x0;
+t2 = 0x0 + 0x0;
+t3 = 0x0 + 0x0;
+res1 = 0x0 + 0x0;
+Program 1:
+t1 = max(x1, x1);
 res1 = x1' == x1;
 Program 2:
-t1 = 0x1 != x1';
-res1 = 0x1 - x1;
+t1 = x2 >>> x2;
+t2 = x2 >> x1;
+res1 = t2 < 0x1;
 
 Fastest checker: explicit
-Fails for (1, 0, 1, 4)
+Fails for (7, 8, 7, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = max(x1', x1);
-res1 = -x2';
+t1 = x2 << x2;
+t2 = ~x1;
+t3 = x1 == x2;
+res1 = x2 >>> t2;
 Program 1:
-t1 = x1' == x2;
-res1 = x1' == x1;
+res1 = x1 == x1';
 Program 2:
-t1 = 0x6 - x1;
-res1 = -x2';
+t1 = ~x1;
+t2 = ~x2;
+t3 = x2' >> 0xf;
+res1 = 0xf + 0xf;
 
 Fastest checker: explicit
-Fails for (6, 0, 6, 4)
+Fails for (7, 14, 7, 13)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = x1' s<= x2;
+t1 = max(x1, x2');
+t2 = 0x8 + 0x8;
+t3 = 0x8 + 0x8;
+res1 = x2 >>> x2';
 Program 1:
-res1 = x1' == x1;
+t1 = 0x1 + 0x1;
+t2 = 0x1 + 0x1;
+t3 = -x1;
+res1 = x1 == x1';
 Program 2:
-t1 = min(x1, x1');
-t2 = 0x4 - x1;
-res1 = -0x4;
-
-Fastest checker: explicit
-Fails for (4, 0, 4, 5)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = 0x4 s< x1;
-Program 1:
-res1 = x1' == x1;
-Program 2:
-t1 = min(x1, x2);
-res1 = 0x3 ^ x1;
-
-Fastest checker: explicit
-Fails for (3, 0, 3, 6)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = x1 * x1;
-Program 1:
-t1 = 0x1 <= x2;
-res1 = t1 s< x2';
-Program 2:
-t1 = x2 ==> x2';
-t2 = x2' <= x1';
-t3 = x2' << x2';
-res1 = 0x4 s<= 0x4;
-
-Fastest checker: explicit
-Fails for (0, 1, 0, 2)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x1 >> 0x7;
-t2 = ~0x7;
-t3 = x1 >>> x2;
-res1 = x1 s< x1';
-Program 1:
-t1 = x1' < x2;
-res1 = x1' == x1;
-Program 2:
-t1 = x2 s< 0x5;
-t2 = max(x1', x2);
-t3 = min(0x5, x1);
-res1 = 0x5 ^ t2;
-
-Fastest checker: explicit
-Fails for (0, 4, 0, 4)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x1 / x1;
-t2 = x2 s< x2;
-res1 = t2 >>> x1';
-Program 1:
-t1 = x1 < x1';
-t2 = 0x1 * t1;
-res1 = t1 s< x2';
-Program 2:
-t1 = -x1';
-t2 = 0x6 & x2;
-t3 = x2 | x2;
-t4 = 0x6 <= x1';
-res1 = t3 <= x1';
-
-Fastest checker: explicit
-Fails for (0, 1, 0, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x1' >>> x1';
-t2 = x1 != x1;
-t3 = x2 % 0x2;
-t4 = x1' + x2;
-res1 = x2 << 0x2;
-Program 1:
-t1 = 0x2 < x1';
-res1 = t1 s< x2';
-Program 2:
-t1 = x1' & 0x1;
-t2 = max(x1', x1');
-t3 = x2 s< x1;
-t4 = x2' - t3;
-t5 = 0x1 ^ x1;
-res1 = x2 % 0x1;
-
-Fastest checker: explicit
-Fails for (1, 1, 0, 1)
-
-[]
-Fastest checker: genetic
-Program 0:
 t1 = -x1;
-res1 = 0x1 >> x1';
-Program 1:
-t1 = x1 ^ x1;
-t2 = 0x3 << x1;
-t3 = t2 >>> 0x3;
-res1 = x1' == x1;
-Program 2:
-t1 = x1 <= x1';
-t2 = x1' ? x2' : x2';
-t3 = x2' ==> x2;
-t4 = max(x1', x2');
-res1 = x2 ^ 0x5;
+t2 = x1' ==> x1;
+t3 = x1 s< x2;
+res1 = t2 - x1;
 
 Fastest checker: explicit
-Fails for (0, 4, 0, 1)
+Fails for (1, 0, 1, 14)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x1' < x2';
-res1 = x2 - x2';
+t1 = x1' & x1;
+t2 = t1 == x1;
+res1 = x2 == x2;
 Program 1:
-res1 = x1' == x1;
+t1 = x1 == x1';
+t2 = 0x0 + 0x0;
+t3 = 0x0 + 0x0;
+t4 = 0x0 + 0x0;
+res1 = t1 << t1;
 Program 2:
-t1 = x1 <= x1;
-t2 = 0x4 - x1;
-res1 = x2 < x1;
+t1 = ~x1;
+res1 = x2 ==> x2';
 
 Fastest checker: explicit
-Fails for (1, 1, 1, 1)
+Fails for (15, 1, 15, 14)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = x2' >> 0x2;
-res1 = x2 <= x2';
+t1 = x1 ==> x2';
+t2 = 0xf + 0xf;
+t3 = 0xf << t2;
+res1 = 0xf + 0xf;
 Program 1:
-res1 = x1' == x1;
+t1 = x1' s<= x1';
+t2 = t1 * t1;
+t3 = ~t1;
+res1 = x1 <= x1';
 Program 2:
-t1 = x1 <= x1;
-t2 = 0x2 - x1;
-res1 = x2 < t1;
+t1 = 0x7 + 0x7;
+t2 = x1 >>> x1';
+t3 = ~x1;
+res1 = x2' s<= x2;
 
 Fastest checker: explicit
-Fails for (2, 1, 2, 1)
+Fails for (0, 8, 15, 14)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x5 >> x1;
-t2 = x1 + x2;
-t3 = t2 s< x2';
-t4 = -t1;
-res1 = 0x5 ? t4 : x2';
+t1 = 0x1 ? x2 : x1;
+res1 = x2 ^ x1;
 Program 1:
-t1 = x1 s< x1;
-t2 = x1 >>> x2';
-t3 = x2' < t1;
-t4 = x1 ==> x1';
-t5 = t1 s< t4;
-res1 = x1' == x1;
+t1 = 0x0 * 0x0;
+res1 = x1 == x1';
 Program 2:
-t1 = 0x5 - x1;
-res1 = x2 != 0x5;
+t1 = x1' + x1;
+t2 = x1' <= t1;
+t3 = t2 >> x1';
+t4 = x1 & 0x8;
+res1 = 0x8 - x1;
 
 Fastest checker: explicit
-Fails for (2, 5, 2, 1)
+Fails for (8, 0, 8, 15)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0xf < x2;
+t2 = x1' - x2';
+res1 = t1 >> t2;
+Program 1:
+t1 = x2 | x2';
+t2 = 0x7 + 0x7;
+res1 = x1' == x1;
+Program 2:
+t1 = ~x1;
+t2 = x2' s<= x2;
+res1 = ~0xf;
+
+Fastest checker: explicit
+Fails for (15, 8, 15, 15)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2 / x2;
+res1 = ~x2';
+Program 1:
+t1 = x2' + x1;
+t2 = 0x7 + 0x7;
+t3 = 0x7 << x2';
+res1 = x2' < t3;
+Program 2:
+t1 = x1' <= x1';
+res1 = 0x7 + x2;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2 >> 0x8;
+t2 = t1 ==> x1';
+res1 = x1 >>> 0x8;
+Program 1:
+res1 = x1 == x1';
+Program 2:
+t1 = 0x8 - x1;
+t2 = x2' < x2';
+t3 = t2 s<= x2;
+res1 = x2' s< x2';
+
+Fastest checker: explicit
+Fails for (0, 8, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' / x1';
+t2 = 0x7 + 0x7;
+t3 = 0x7 <= x1';
+res1 = x2 ^ 0x7;
+Program 1:
+res1 = x1' == x1;
+Program 2:
+t1 = ~x2;
+t2 = ~x1;
+res1 = 0xf == x1;
+
+Fastest checker: explicit
+Fails for (14, 0, 14, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1 + 0x1;
+t2 = x1' ? x2' : x2;
+res1 = x2' s<= x1';
+Program 1:
+t1 = x1 * x2';
+res1 = x1 == x1';
+Program 2:
+t1 = ~x1;
+t2 = ~x2;
+t3 = 0x7 <= x2';
+t4 = x2' != t3;
+res1 = x2 + 0x7;
+
+Fastest checker: explicit
+Fails for (14, 9, 14, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x1 >>> x1';
+Program 1:
+t1 = 0x7 != x1;
+res1 = x1 s<= x1';
+Program 2:
+t1 = 0x7 - x1;
+res1 = t1 ==> x2';
+
+Fastest checker: explicit
+Fails for (0, 0, 6, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0xf != x1';
+t2 = x2' + x1';
+t3 = 0xf + 0xf;
+t4 = 0xf % x1;
+res1 = t4 <= x2';
+Program 1:
+t1 = x1' << x1';
+t2 = 0x1 + 0x1;
+res1 = t2 << x2';
+Program 2:
+t1 = ~x1;
+t2 = x2' - x2;
+t3 = ~x2;
+t4 = 0x8 - x1;
+res1 = -x1';
+
+Fastest checker: explicit
+Fails for (8, 0, 6, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~x1';
+res1 = -x1';
+Program 1:
+t1 = ~x1';
+t2 = t1 - x2';
+res1 = x1 == x1';
+Program 2:
+t1 = x1 / 0x7;
+t2 = 0x7 + 0x7;
+t3 = ~x1;
+res1 = 0x7 + t3;
+
+Fastest checker: explicit
+Fails for (6, 1, 6, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(x1', x2);
+t2 = x2 & x2;
+t3 = 0x7 + 0x7;
+t4 = ~x2;
+res1 = x2 s<= x1';
+Program 1:
+t1 = x2' s< x1;
+t2 = 0x1 + 0x1;
+res1 = x1 == x1';
+Program 2:
+t1 = x1 ^ 0x7;
+t2 = ~x1;
+t3 = x1 + x2;
+res1 = t2 + t1;
+
+Fastest checker: explicit
+Fails for (11, 0, 11, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' != x2;
+res1 = x1 ^ x2;
+Program 1:
+t1 = x2' >>> x2';
+t2 = x2' << t1;
+t3 = 0xf + 0xf;
+res1 = t1 == t3;
+Program 2:
+res1 = -x1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 10)
 
 []
 
@@ -414,10 +477,10 @@ Fails for (2, 5, 2, 1)
 
 Timeout
 Perf counters:
-{'genetic': 25, 'explicit': 25, 'timeout': 1, 'iterations': 26}
+{'genetic': 26, 'explicit': 26, 'timeout': 1, 'iterations': 27}
 Perf timers:
-verify: 0.31s
-checker: 59.94s
-gcc: 0.47s
-_: 60.00s
-synth: 59.67s
+verify: 0.32s
+checker: 179.95s
+gcc: 0.37s
+_: 180.00s
+synth: 179.67s
