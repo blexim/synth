@@ -2090,28 +2090,28 @@ for an individual that is highly fit in solving the problem at hand
 by using the Darwinian principle of survival and reproduction of the fittest.
 Thus, the program that emerges from the genetic programming paradigm is a consequence of fitness. 
 
-In our setting, we start with a population of random programs of size ..
-We then genetically breed the population of these programs by applying the genetic operators 
-{\sc crossover} and {\sc mutate}. The crossover operator takes two programs
-and combines their code in some what to create a new program.  The mutate operator takes a single
-program and randomly changes parts of its code, again creating a new program. 
-Both these operators are applied to programs selected from the population in 
-proportion to their observed fitness, i.e. a program is fit if it satisfies the (non-)termination specification.
-Thus, our fitness function counts the number of test cases on which a program met the given specification.
-Essentially, we plan a trajectory through the space of computer programs that will lead to programs with improved fitness.
-%by considering those that meet the (non-)termination specification on more inputs until.
+We begin with a population of random programs,
+then iteratively evolve this population by applying the genetic operators
+{\sc crossover} and {\sc mutate}. The {\sc crossover} operator takes two programs
+and combines their code in some way to create a new program.  The {\sc mutate} operator takes a single
+program and randomly changes parts of its code, again creating a new program.
+Both these operators are applied to programs selected from the population in
+proportion to their observed fitness, and a program is said to be fitter than another
+if it meets the specification on more test cases.
 
-\todo{Talk about the fitness landscape?}
-
-\begin{definition}
- A \emph{fitness landscape} is the space of all programs along with their fitness.
-\end{definition}
-
-A potential issue might be that, in our setting, a fitness landscape isn't really very smooth, e.g. small changes in program representation
-don't correspond to small changes in fitness. However, genetic programming's efficiency was shown to be unrelated to the smoothness 
-of the fitness landscape \cite{langdon:fogp}.
-
-\todo{mention incremental GP?}
+In the setting of program synthesis, genetic programming can be very usefully combined
+with the concept of incremental evolution.  The idea is that in order to evolve a program
+that is adequate for some difficult task, it is often helpful to first evolve a population
+that as an ensemble is good at some simpler variation of the task.  This principle
+leads us to the observation that each round of the CEGIS loop can be thought of
+as creating a more difficult problem for the GP synthesiser to solve.  Therefore,
+if GP finds a candidate program which is correct for the $k$ inputs so far observed,
+but is not correct for the full specification, that candidate program came from a population
+that was ``good'' for the specification restrict to those $k$ inputs.  The next time round
+the CEGIS loop, the problem GP must solve is slightly harder -- any solution to this new
+problem must be correct for the previous $k$ inputs and also whatever new input was added
+by the previous iteration of {\sc verif}.  It therefore makes sense to begin the $k+1$st
+round of evolution with the population at the end of the $k$th round.
 
 %% The general idea is to start with a population
 %% of random programs and evolve a good one.  ``Good'' in this case means that the program
