@@ -1299,23 +1299,34 @@ while (x > 0) {
 \end{figure*}
 
 \noindent {\bf Under-approximating the environment for non-termination.}
-Dual to termination, when attempting to prove non-termination, we must under-approximate the environment. 
+Dual to termination, when attempting to prove non-termination, we must under-approximate the environment.
+Consider the example in Figure~\ref{fig:nonterm-environment}.  We are attempting to prove non-termination
+of the innermost loop, which we do by finding a recurrence set $N_4$.  We will assume that the other two
+loops iterate only a finite number of times.  If the constraint system is satisfiable, $x_0$ is some initial
+state in which the program begins executing.  Then $N_1$ is an inductive invariant of $L_1$ that is strong
+enough to establish $N_2$ if $L_1$ exits (which it does by assumption).  Now, $N_2$ is an inductive invariant
+of $L_2$ that is strong enough to establish either $N_3$ or $N_4$ on entry to $L_3$.  Recall that $N_4$ is
+a recurrence set for $L_3$, so if a state $x \in N_4$ is reached, the loop $L_3$ will execute forever.
+Otherwise, $N_3$ holds on entry to $L_3$.  $N_3$ is an inductive invariant of $L_3$ that is strong enough to
+re-establish $N_2$ when $L_3$ exits.  Since we assumed that $L_2$ iterated only a finite number of times,
+$N_3$ must be established only a finite number of times, which means that $N_4$ will eventually be reached,
+at which point $L_3$ will loop forever since $N_4$ is a recurrence set for $L_3$.
 
 \begin{figure*}
 \begin{framed}
  \begin{minipage}{0.19\textwidth}
 \begin{lstlisting}
-while (c1) {
-  B1;
-}
+L1: while (c1) {
+     B1;
+    }
 
-while (c2) {
-  P;
+L2: while (c2) {
+     P;
 
-  while (c3) {
-    B3;
-  }
-}
+L3:  while (c3) {
+       B3;
+     }
+    }
 \end{lstlisting}
 \end{minipage}
 \vline
@@ -1335,7 +1346,7 @@ while (c2) {
 \end{minipage}
 \end{framed}
 
-\caption{The constraint system for non-termination\label{ref:fig:nonterm-environment}}
+\caption{The constraint system for non-termination\label{fig:nonterm-environment}}
 \end{figure*}
 
 \iffalse
@@ -1747,7 +1758,7 @@ instances.
 
 
 \section{Experiments}
-We implemented our method by backing onto the {\sc Kalashnikov} program synthesiser.
+We implemented our algorithm in the {\sc Headshot} tool, which uses the {\sc Kalashnikov} program synthesiser for termination.
 We ran the tool on 40 benchmarks taken from the termination category of SVCOMP'15.
 The experiments were performed on a 4-core 3.3GHz i5-2500k with 8GB of RAM.
 
