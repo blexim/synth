@@ -2,70 +2,18 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x7 & 0x7;
-t2 = 0x7 - 0x7;
-res1 = 0x7 ==> t1;
+t1 = x <= x;
+res1 = 0xf ==> 0xf;
 Program 1:
-t1 = x >> 0x7;
-t2 = min(t1, x);
-res1 = t1 + x;
+t1 = 0x7 >>> x;
+t2 = -x;
+t3 = x s< 0x7;
+res1 = min(x, t2);
 
 Fastest checker: explicit
-Correct for wordlen=3
-Fastest checker: explicit
-Trying to generalize...
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Fastest checker: explicit
-Couldn't generalize :-(
-Increasing wordlen to 6
-[]
-Fastest checker: genetic
-Program 0:
-t1 = x < x;
-t2 = x ==> t1;
-res1 = x + x;
-Program 1:
-t1 = x ^ 0x3a;
-res1 = min(t1, x);
-
-Fastest checker: explicit
-Fails for (56,)
-
-[]
-Fastest checker: genetic
-Program 0:
-t1 = ~x;
-t2 = 0x3c s<= 0x3c;
-res1 = max(t1, t1);
-Program 1:
-t1 = ~x;
-res1 = min(t1, x);
-
-Fastest checker: explicit
-Fails for (62,)
-
-[]
-Fastest checker: genetic
-Program 0:
-res1 = 0x16 | x;
-Program 1:
-t1 = x >> 0x2a;
-t2 = 0x2a | x;
-t3 = -x;
-res1 = min(t1, t3);
-
-Fastest checker: explicit
-Correct for wordlen=6
-Fastest checker: explicit
-Trying to generalize...
+Correct for wordlen=4
 Fastest checker: cbmc
+Also correct for wordlen=32!
 
 
 
@@ -73,23 +21,23 @@ Fastest checker: cbmc
 
 
 
-Finished in 3.62s
+Finished in 1.81s
 
 Program 0:
-res1 = 0x58000000 | x;
+t1 = x <= x;
+res1 = 0xf ==> 0xf;
 Program 1:
-t1 = x >> 0xa8000000L;
-t2 = 0xa8000000L | x;
-t3 = -x;
-res1 = min(t1, t3);
+t1 = 0x7 >>> x;
+t2 = -x;
+t3 = x s< 0x7;
+res1 = min(x, t2);
 
 
 Perf counters:
-{'genetic': 4, 'cbmc': 1, 'explicit': 15, 'iterations': 4}
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
 Perf timers:
-gcc: 1.02s
-verify: 2.62s
-checker: 3.59s
-generalize: 2.08s
-synth: 1.00s
-_: 3.62s
+verify: 1.09s
+checker: 1.80s
+gcc: 0.53s
+_: 1.81s
+synth: 0.72s

@@ -1,47 +1,124 @@
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 4, 6
+Evars: 4, 15
 Program 0:
-t1 = ~m;
-t2 = x < t1;
-I = m / 0x6;
+t1 = ~x;
+t2 = x % t1;
+t3 = t1 - m;
+I = t1 s<= x;
 
 Fastest checker: explicit
-Fails for (5, 6)
+Fails for (15, 10)
 
 []
 Fastest checker: genetic
-Evars: 6, 2
+Evars: 5, 7
 Program 0:
-I = 0x1 >>> x;
-
-Fastest checker: explicit
-Fails for (6, 7)
-
-[]
-Fastest checker: genetic
-Evars: 4, 0
-Program 0:
-t1 = 0x0 >>> 0x0;
-t2 = m ^ m;
-I = t1 == m;
+t1 = x >>> x;
+t2 = ~x;
+t3 = t2 ^ m;
+I = x <= t2;
 
 Fastest checker: explicit
 Fails for (1, 0)
 
 []
 Fastest checker: genetic
-Evars: 3, 4
+Evars: 3, 15
 Program 0:
-t1 = min(0x4, m);
-t2 = 0x4 | m;
-I = m s<= 0x4;
+t1 = 0x8 <= x;
+I = 0x8 * m;
 
 Fastest checker: explicit
-Correct for wordlen=3
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 14, 0
+Program 0:
+t1 = x >> 0x7;
+I = m < t1;
+
+Fastest checker: explicit
+Fails for (15, 0)
+
+[]
+Fastest checker: genetic
+Evars: 8, 12
+Program 0:
+t1 = max(0x8, x);
+t2 = 0x8 s<= x;
+I = 0x8 == x;
+
+Fastest checker: explicit
+Fails for (8, 1)
+
+[]
+Fastest checker: genetic
+Evars: 2, 15
+Program 0:
+I = 0xf == m;
+
+Fastest checker: explicit
+Fails for (14, 15)
+
+[]
+Fastest checker: genetic
+Evars: 0, 2
+Program 0:
+t1 = x - 0xf;
+t2 = 0xf + 0xf;
+t3 = x ==> x;
+I = t3 s< m;
+
+Fastest checker: explicit
+Fails for (1, 2)
+
+[]
+Fastest checker: genetic
+Evars: 0, 7
+Program 0:
+t1 = 0x7 + 0x7;
+t2 = x <= 0x7;
+t3 = 0x7 * t1;
+t4 = max(m, t1);
+I = 0x7 s<= m;
+
+Fastest checker: explicit
+Fails for (6, 7)
+
+[]
+Fastest checker: genetic
+Evars: 7, 8
+Program 0:
+I = m s<= 0x8;
+
+Fastest checker: explicit
+Correct for wordlen=4
 Fastest checker: explicit
 Trying to generalize...
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: cbmc
+Fastest checker: cbmc
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
 Fastest checker: cbmc
 
 
@@ -50,21 +127,19 @@ Fastest checker: cbmc
 
 
 
-Finished in 2.64s
+Finished in 10.51s
 
-Evars: 32, 2147483648
+Evars: 2147483647, 2147483648
 Program 0:
-t1 = min(0x80000000L, m);
-t2 = 0x80000000L | m;
-I = m s<= 0x80000000L;
+I = m s<= 0x80000000;
 
 
 Perf counters:
-{'genetic': 4, 'cbmc': 1, 'explicit': 5, 'iterations': 4}
+{'genetic': 9, 'cbmc': 11, 'explicit': 21, 'iterations': 9}
 Perf timers:
-gcc: 0.62s
-verify: 2.30s
-checker: 2.63s
-generalize: 1.94s
-synth: 0.34s
-_: 2.64s
+gcc: 0.53s
+verify: 9.84s
+checker: 10.48s
+generalize: 9.47s
+synth: 0.66s
+_: 10.51s

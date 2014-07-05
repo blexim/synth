@@ -2,54 +2,84 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x4 == nondet_0;
-t2 = x & 0x4;
-res1 = t2 ==> nondet_0;
+t1 = x ? x : x;
+t2 = max(t1, x);
+t3 = max(x, 0xf);
+res1 = 0xf ==> 0xf;
 Program 1:
-t1 = max(nondet_0, nondet_0);
-t2 = ~x;
-res1 = nondet_0 ==> x;
+res1 = x % 0x7;
 
 Fastest checker: explicit
-Fails for (0, 4)
+Fails for (0, 11)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x7 ? x : nondet_0;
+Program 1:
+t1 = -x;
+t2 = t1 < x;
+t3 = t1 s< t2;
+res1 = t2 >>> x;
+
+Fastest checker: explicit
+Fails for (1, 11)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 * x;
+t2 = nondet_0 < t1;
+res1 = t2 - 0x7;
+Program 1:
+t1 = 0x1 ^ x;
+t2 = 0x1 - x;
+res1 = nondet_0 >> t2;
+
+Fastest checker: explicit
+Fails for (2, 11)
 
 []
 Fastest checker: genetic
 Program 0:
 t1 = max(nondet_0, nondet_0);
-t2 = nondet_0 >> nondet_0;
-res1 = t2 <= t2;
+t2 = nondet_0 << 0x1;
+res1 = 0x1 ? 0x1 : x;
 Program 1:
-t1 = nondet_0 + x;
-res1 = x << 0x2;
+t1 = x % 0x7;
+t2 = x != nondet_0;
+res1 = t1 >> t1;
 
 Fastest checker: explicit
-Fails for (4, 4)
+Fails for (0, 14)
 
 []
 Fastest checker: genetic
 Program 0:
-t1 = 0x6 s<= 0x6;
-res1 = t1 >> 0x6;
+res1 = x ==> 0x7;
 Program 1:
-t1 = 0x7 ^ x;
-res1 = min(x, t1);
+t1 = ~x;
+t2 = x << x;
+t3 = t2 * x;
+t4 = 0x0 ==> x;
+res1 = 0x0 + 0x0;
 
 Fastest checker: explicit
-Fails for (0, 6)
+Fails for (1, 14)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = 0x5 == 0x5;
+res1 = x / x;
 Program 1:
-t1 = 0x4 == x;
-t2 = x - t1;
-t3 = nondet_0 + t2;
-res1 = x * 0x4;
+t1 = -x;
+t2 = 0xf >> x;
+t3 = x s< nondet_0;
+t4 = max(t3, t3);
+res1 = t1 << t2;
 
 Fastest checker: explicit
-Fails for (1, 6)
+Fails for (7, 14)
 
 []
 
@@ -61,10 +91,10 @@ Fails for (1, 6)
 
 Timeout
 Perf counters:
-{'genetic': 4, 'explicit': 4, 'timeout': 1, 'iterations': 5}
+{'genetic': 6, 'explicit': 6, 'timeout': 1, 'iterations': 7}
 Perf timers:
-verify: 0.20s
-checker: 59.99s
-gcc: 0.47s
-_: 60.00s
-synth: 59.79s
+verify: 0.19s
+checker: 179.99s
+gcc: 0.36s
+_: 180.00s
+synth: 179.80s

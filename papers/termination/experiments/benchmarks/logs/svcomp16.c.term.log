@@ -2,40 +2,45 @@ Using seed: 1337
 []
 Fastest checker: genetic
 Program 0:
-t1 = max(0x2, nondet_0);
-t2 = t1 - nondet_0;
-res1 = nondet_0 / t1;
+t1 = 0x1 >> nondet_0;
+res1 = t1 ^ x;
 Program 1:
-res1 = min(0x4, x);
+t1 = nondet_0 ? x : 0x0;
+t2 = ~0x0;
+res1 = x <= t2;
 
 Fastest checker: explicit
-Fails for (0, 4)
+Fails for (1, 0)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = ~x;
+t1 = x >> x;
+t2 = x != x;
+t3 = nondet_0 & t2;
+t4 = nondet_0 / 0xf;
+res1 = nondet_0 >>> x;
 Program 1:
-t1 = 0x4 >> x;
-t2 = x | 0x4;
-res1 = x + x;
+res1 = min(x, x);
 
 Fastest checker: explicit
-Fails for (0, 7)
+Fails for (0, 1)
 
 []
 Fastest checker: genetic
 Program 0:
-res1 = 0x0 s<= 0x0;
+t1 = 0xf < 0xf;
+res1 = 0xf | 0xf;
 Program 1:
-t1 = ~0x2;
-t2 = min(x, x);
-res1 = x <= t1;
+t1 = x >>> 0xf;
+t2 = t1 <= x;
+res1 = t1 ^ x;
 
 Fastest checker: explicit
-Correct for wordlen=3
+Correct for wordlen=4
 Fastest checker: cbmc
-Also correct for wordlen=32!
+Trying to generalize...
+Fastest checker: cbmc
 
 
 
@@ -43,21 +48,23 @@ Also correct for wordlen=32!
 
 
 
-Finished in 2.65s
+Finished in 2.25s
 
 Program 0:
-res1 = 0x0 s<= 0x0;
+t1 = 0xffffffff < 0xffffffff;
+res1 = 0xffffffff | 0xffffffff;
 Program 1:
-t1 = ~0x2;
-t2 = min(x, x);
-res1 = x <= t1;
+t1 = x >>> 0xffffffff;
+t2 = t1 <= x;
+res1 = t1 ^ x;
 
 
 Perf counters:
-{'genetic': 3, 'cbmc': 1, 'explicit': 3, 'iterations': 3}
+{'genetic': 3, 'cbmc': 2, 'explicit': 3, 'iterations': 3}
 Perf timers:
-verify: 2.33s
-checker: 2.64s
-gcc: 0.67s
-_: 2.65s
-synth: 0.32s
+gcc: 0.54s
+verify: 2.00s
+checker: 2.24s
+generalize: 0.92s
+synth: 0.24s
+_: 2.25s
