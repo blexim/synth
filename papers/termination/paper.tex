@@ -1854,7 +1854,6 @@ Similarly to {\sc synth}, the {\sc verif} procedure is implemented by creating a
 some input exists on which the candidate solution fails to meet the specification.  Again, symbolic
 and explicit state model checking are used to decide the satisfiability of the verification formula.
 
-
 %If the input set is finite, this procedure is guaranteed to terminate.
 
 
@@ -2076,8 +2075,14 @@ floating-point programs.
 
 \fi
 
+\subsection{Candidate Generation Strategies}
+\noindent{\bf Explicit Proof Search} The simplest strategy for finding candidates
+is to just exhaustively enumerate them all, starting with the shortest and
+progressively increasing the number of instructions.  Since the set of
+$\mathcal{L}$-programs is recursively enumerable, this procedure is complete.
+\\
 
-\subsection{Genetic Programming and Incremental Evolution} \label{sec:gp}
+\noindent {\bf Genetic Programming and Incremental Evolution} \label{sec:gp}
 To generate candidate (non-)termination proofs in the synthesise phase of the refinement loop,
 we make use of genetic programming (GP) \cite{langdon:fogp} as an alternative to model checking and exhaustive search.  
 Genetic programming provides an intelligent and adaptive way of searching through the space of computer programs
