@@ -148,18 +148,19 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 \end{algorithm*}
 
 
-\begin{figure*}
- \centering
- \begin{tikzpicture}[scale=0.5,->,>=stealth',shorten >=1pt,auto,
+\begin{figure}
+ \begin{center}
+ \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
  semithick, initial text=]
 
-  \matrix[nodes={draw, fill=none, scale=1, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
-          row sep=2cm, column sep=3cm] {
+  \matrix[nodes={draw, fill=none, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
+          row sep=2cm, column sep=2.5cm, ampersand replacement=\&] {
    \node (synth) {Synthesise};
-   &
+   \&
    \node (verif) {Verify}; %\\
    %\node[draw=none] {};
-   &
+   \&
    \node[ellipse] (done) {Done}; \\
   };
 
@@ -168,10 +169,12 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
     (verif) edge [bend left] node {Counterexample input} (synth)
     (verif) edge node {Valid} (done);
  \end{tikzpicture}
+ }
+ \end{center}
  
  \caption{Abstract synthesis refinement loop
  \label{fig:abstract-refinement}}
-\end{figure*}
+\end{figure}
 
 
 
