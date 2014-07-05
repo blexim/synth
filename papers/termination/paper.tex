@@ -2082,6 +2082,12 @@ progressively increasing the number of instructions.  Since the set of
 $\mathcal{L}$-programs is recursively enumerable, this procedure is complete.
 \\
 
+\noindent{\bf Symbolic Bounded Model Checking} Another complete method for generating
+candidates is to simply use BMC on the {\sc synth.c} program.  As with explicit
+search, we must progressively increase the length of the solution we search for
+in order to get a complete search procedure.
+\\
+
 \noindent {\bf Genetic Programming and Incremental Evolution} \label{sec:gp}
 To generate candidate (non-)termination proofs in the synthesise phase of the refinement loop,
 we make use of genetic programming (GP) \cite{langdon:fogp} as an alternative to model checking and exhaustive search.  
