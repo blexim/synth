@@ -18,7 +18,7 @@ def prove_terminates(filename):
     skeleton = "../../papers/termination/experiments/benchmarks/nested.c"
     nprogs = 3
     nargs = nids*2
-    varnames += ' ' + ' '.join("%s\\'" % id_map[k] for k in xrange(nids)) 
+    varnames += ' ' + ' '.join("%s\\'" % id_map[k] for k in xrange(nids))
   else:
     skeleton = "../../papers/termination/experiments/benchmarks/ranking.c"
     nprogs = 2
@@ -31,8 +31,13 @@ def prove_terminates(filename):
              "--seed=1337 -a%d --varnames %s " +
              "--synth-strategy=genetic " +
              "-c1 " +
-             "--fastverif=false -keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
-             "-recombprob=0.05 -tourneysize=10 -w=3 " +
+             "--fastverif=True " +
+             "-newsize=5 " +
+             "-replaceprob=0.15 " +
+             "-mutprob=0.1 " +
+             "-tourneysize=5 " +
+             "-popsize=3000 " +
+             "-w4 " +
              "%s") % 
               (splitfile.name,
                 skeleton,
@@ -40,6 +45,8 @@ def prove_terminates(filename):
                 nargs,
                 varnames,
                 ' '.join(sys.argv[2:])))
+  print cmd
+
   os.system(cmd)
 
 if __name__ == '__main__':

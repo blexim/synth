@@ -41,7 +41,7 @@
 #endif
 
 #ifndef REPLACE_PROB
- #define REPLACE_PROB 0.1
+ #define REPLACE_PROB 0.15
 #endif
 
 #ifndef RECOMBINE_PROB

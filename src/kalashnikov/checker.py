@@ -55,6 +55,8 @@ args.argparser.add_argument("-newsize", default=3, type=int)
 args.argparser.add_argument("-tourneysize", default=10, type=int)
 args.argparser.add_argument("-mutprob", default=0.01, type=float)
 args.argparser.add_argument("-recombprob", default=0.1, type=float)
+args.argparser.add_argument("-replaceprob", default=0.1, type=float)
+
 
 def log2(x):
   i = 0
@@ -166,6 +168,7 @@ class Checker(object):
           "-DTOURNEYSIZE=%d" % args.args.tourneysize,
           "-DMUTATION_PROB=%.03f" % args.args.mutprob,
           "-DRECOMBINE_PROB=%.03f" % args.args.recombprob,
+          "-DREPLACE_PROB=%.03f" % args.args.replaceprob,
           "-DSAVEFILE=\"%s\"" % geneticsave.name,
           os.path.join(args.args.interpreter, "exec.c"),
           "-O0", "-g",
