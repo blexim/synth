@@ -6,7 +6,7 @@
  * Float:          false
  * Bitvector:      unk
  * Lexicographic:  unk
- * Terminates:     unk
+ * Terminates:     true
  * Bibtex:         Chen:2012:TPL:2414936.2414966
  */
 
