@@ -110,21 +110,22 @@
 \begin{abstract}
 %
 Proving program termination is typically done by finding a well-founded
-\emph{ranking function} for the program states.  Existing termination
+ranking function for the program states.  Existing termination
 provers typically find ranking functions using either linear algebra or
 templates.  As such they are often restricted to finding linear ranking
-functions over mathematical integers.  This class of ranking functions is
+functions over mathematical integers.  This class of functions is
 insufficient for proving termination of many terminating programs, and
 furthermore a termination argument for a program operating on mathematical
 integers does not always lead to a termination argument for the same program
 operating on fixed-width machine integers.
 
 We present a reduction from program \emph{termination} to program
-\emph{synthesis}.  This reduction allows us to generate nonlinear,
-lexicographic ranking functions that are correct for fixed-width machine
-arithmetic and floating-point arithmetic.  We use this reduction to build a
-sound and complete procedure for the termination of fixed-width and
-floating-point arithmetic programs.
+\emph{synthesis} via a fragment of second-order logic.  This reduction
+allows us to generate nonlinear, lexicographic ranking functions and
+nonlinear recurrence sets that are correct for fixed-width machine arithmetic
+and floating-point arithmetic.  We use this reduction to build a sound and
+complete procedure for the termination of fixed-width and floating-point
+arithmetic programs.
 %
 \end{abstract}
 
@@ -132,7 +133,8 @@ floating-point arithmetic programs.
 
 
 \keywords
-Termination, Program Synthesis, Lexicographic Ranking Functions, Bitvector Ranking Functions,
+Termination, Non-Termination,
+Program Synthesis, Lexicographic Ranking Functions, Bitvector Ranking Functions,
 Floating-Point Ranking Functions.
 
 \section{Introduction}\label{sec:intro}
@@ -148,17 +150,18 @@ state space to a well-ordered set.  Historically, the search for ranking
 functions has been constrained in various syntactic ways, leading to
 incompleteness, and is performed over abstractions that do not soundly
 capture the behaviour of physical computers.  In this paper, we present a
-sound and complete method for deciding whether a program terminates.
+sound and complete method for deciding whether a program with a fixed amount of
+storage terminates.
 
 When surveying the area of program termination chronologically, we observe
 an initial focus on monolithic approaches based on a single measure shown to
 decrease over all program
 paths~\cite{DBLP:conf/vmcai/P04,DBLP:conf/cav/BradleyMS05}, followed by more
 recent techniques that use termination arguments based on Ramsey's
-theorem~\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}. 
-Briefly, the transition relation is shown to be disjunctively well founded
-by finding a set of simple functions, each of which proves well foundedness
-for part of the transition relation.  The main benefit of this approach is
+theorem~\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}.
+The latter proof style builds an argument that a transition relation is disjunctively well founded
+by composing several small well-foundedness arguments.
+The main benefit of this approach is
 the simplicity of local termination measures in contrast to global ones. 
 For instance, there are cases in which linear arithmetic suffices when using
 local measures, while corresponding global measures require non-linear
@@ -180,7 +183,9 @@ check~\cite{DBLP:conf/cav/KroeningSTW10,DBLP:conf/tacas/CookSZ13}.
 Following the same trend, we investigate its extreme: \emph{unrestricted}
 termination arguments.  This means that our ranking functions may involve
 non-linearity and lexicographic orders: we do not commit to any particular
-syntactic form, and do not use templates.
+syntactic form, and do not use templates.  Furthermore, our approach allows
+us to simultaneously search for proofs of non-termination, which take the form
+of recurrence sets.
 
 Figure~\ref{fig:handletable} summarises the related work with respect to the
 restrictions they impose on the transition relations as well as the form of
@@ -198,39 +203,39 @@ techniques ignore the wrap-around behaviour caused by overflows, which can
 be unsound.  In Section~\ref{sec:motivation}, we show that integers and
 bit-vectors exhibit incomparable behaviours with respect to termination,
 i.e.  programs that terminate for integers may \emph{not} terminate for
-bit-vectors and vice versa.  Thus, abstracting bit-vectors to integers may
+bit-vectors and vice versa.  Thus, abstracting bit-vectors with integers may
 give rise to {\em unsound} and {\em incomplete} analyses.
 
-We propose a general framework that uniformly computes lexicographic,
-non-linear ranking functions supported by non-linear inductive invariants
-for loops with arbitrary guards and transitions over bit-vectors and floats. 
-It also computes non-linear recurrence sets, which comprise non-termination
-proofs.  Our encoding treats multiple loops and nested loops uniformly,
-without having to enumerate lassos.
+% we propose a general framework that uniformly computes lexicographic,
+% non-linear ranking functions supported by non-linear inductive invariants
+% for loops with arbitrary guards and transitions over bit-vectors and floats. 
+% it also computes non-linear recurrence sets, which comprise non-termination
+% proofs.  our encoding treats multiple loops and nested loops uniformly,
+% without having to enumerate lassos.
 
 
- For this purpose, we phrase the termination and non-termination problems as
-second-order satisfaction problems.  We identify a fragment of second-order
-logic that is expressive enough to capture our formulation, which we call
-the \emph{synthesis fragment}.  Subsequently, we propose a method for
-checking the satisfiability of a formula in the synthesis fragment by
+Our approach is to phrase the termination and non-termination problems as
+second-order satisfaction.  We identify a fragment of second-order
+logic that is expressive enough to capture both problems, while being
+restrictive enough to admit effective solvers.  Subsequently, we propose a method for
+checking the satisfiability of a formula in this fragment by
 solving an isomorphic program synthesis problem
-(Section~\ref{sec:synthesis}).  Our method is sound and semi-complete, i.e. 
-if a pair of a ranking function and a supporting invariant exist it will be
-found, but if the program does not terminate we may not find a recurrence
-set.  However, if the program's transition relation is deterministic, our
-method is complete.
+(Section~\ref{sec:synthesis}).  Our method is sound and
+complete for deterministic bit-vector programs -- for any program, we will find
+either a proof of its termination or non-termination.  For non-deterministic
+programs, we are only semi-complete -- if the program terminates, we will find a proof,
+but if it does not terminate we may fail to discover a recurrence set.
 
-With respect to the performance of our technique, we show that its runtime is dominated by the size of 
-the shortest termination proof.
-
-This means that our procedure is not directly dependent on the structure of
-the analysed loop (e.g.~the number of variables or the number of lassos),
-but on the \emph{Kolmogorov complexity of its minimal termination argument}. 
-We argue that the length of a program's termination proof is indicative of
-how easy to understand the program is, and thus programmers tend to write
-programs that have relatively short termination proofs.  We empirically show
-that this claim holds in practice, causing our technique to perform well.
+% With respect to the performance of our technique, we show that its runtime is dominated by the size of 
+% the shortest termination proof.
+% 
+% This means that our procedure is not directly dependent on the structure of
+% the analysed loop (e.g.~the number of variables or the number of lassos),
+% but on the \emph{Kolmogorov complexity of its minimal termination argument}. 
+% We argue that the length of a program's termination proof is indicative of
+% how easy to understand the program is, and thus programmers tend to write
+% programs that have relatively short termination proofs.  We empirically show
+% that this claim holds in practice, causing our technique to perform well.
 
 \begin{figure*}
 \centering
@@ -256,50 +261,43 @@ The main contributions of our work can be summarised as follows:
 \begin{itemize}
 
 \item We designed a bit-level accurate technique for computing ranking
-functions that correctly accounts for the wrap-around behavior caused by
-under- and overflows in bit-vector and floating-point arithmetic.  Our
+functions and recurrence sets that correctly accounts for the wrap-around
+behavior caused by under- and overflows in bit-vector and floating-point arithmetic.  Our
 technique is not restricted to finding linear ranking functions, but can
 also compute lexicographic non-linear ones.
 
 \item  We rephrased the termination and non-termination problems as
-second-order satisfaction problems and used program synthesis techniques to
-solve them.  In contrast to previous approaches to program synthesis, we
-found that using genetic programming was very effective at generating
-candidate termination and non-termination proofs.
+second-order $\exists \forall$ satisfaction problems.  This formulation
+captures the (non-)termination
+properties of all of the loops in the program simultaneously, including
+nested loops.
+% In contrast to previous approaches to program synthesis, we
+% found that using genetic programming was very effective at generating
+% candidate termination and non-termination proofs.
 
-\item Our procedure does not require the enumeration of lassos, or directly
-reasoning about the transitive closure of the transition relation.  To
-verify our proofs, we only require a single call to a SAT solver.
+\item We used program synthesis techniques to solve the second-order satisfaction
+problems generated by our encoding.  Our solver requires only a single call to a SAT solver to verify its
+proof.  It is not based on enumerating lassos, nor does it require a safety prover
+that can reason about transitive closure.
 
-\item Our procedure is based on a series of source-to-source
+\item Our solver is based on a series of source-to-source
 transformations.  As well as leading to a concise implementation, this has
-the side effect of ensuring that our proof is correct for the exact binary
+the side effect of ensuring that our proofs are correct for the exact binary
 produced by a particular compiler, rather than for an abstraction of the
 program.
 
 \item We implemented our technique and tried it on a selection of programs
 handling both bit-vectors and floats.
 
-\item We propose a non-trivial formulation of the (non-)termination problem inside a
- second-order logic fragment with only one quantifier alternation.
-
 \end{itemize}
 
 {\bf Limitations.}
-Our algorithm decides termination of transition systems with finite state
+Our algorithm proves termination for transition systems with finite state
 spaces.  The (non-)termination proofs take the form of ranking functions and
 program invariants that are expressed in a quantifier free language.  This
 formalism is powerful enough to handle a large fragment of C, but is not
-rich enough to analyse code using any of the following features:
-
-\begin{itemize}
-\item Recursion (could probably do this).
-\item Heap (Thor).
-\item Arrays.
-\end{itemize}
-
-Additionally, if the program under analysis is non-terminating and has a
-non-deterministic transition relation, our procedure is not guaranteed to find a non-termination proof.
+rich enough to analyse code which uses the heap or arrays.  Also, we have not
+yet added support for recursion to our encoding.
 
 \section{Motivating Examples} \label{sec:motivation}
 
