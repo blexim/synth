@@ -2035,16 +2035,20 @@ In order to compare our technique to the rest of the area,
 Figure~\ref{fig:handletable} summarises the related works with respect to the assumptions they make about programs and ranking functions. 
 
 
-Somehow expected, most of the techniques are specialised in the synthesis of linear ranking functions for linear programs over integers (or rationals) \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13}. 
-Among them, 
-Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures to compute transition
-invariants as proofs for the termination of linear programs \cite{DBLP:conf/cav/LeeWY12}.
-Leike and Heizmann present a new method for the constraint-based synthesis
-of termination arguments for linear loop programs based on
-linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
-Linear ranking functions supported by inductive linear invariants for loops with linear guards and transitions: \cite{DBLP:conf/cav/BradleyMS05}. 
-Learning: \cite{DBLP:conf/cav/HeizmannHP14}
-
+Somehow expected, most of the techniques are specialised in the synthesis of linear ranking functions for linear programs 
+over integers (or rationals) \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,
+DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13}. Among them, 
+Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures 
+%to compute transition invariants as proofs for the termination of linear programs 
+\cite{DBLP:conf/cav/LeeWY12},
+Leike and Heizmann propose linear ranking templates 
+%in order to synthesise
+%termination arguments for linear loop programs 
+\cite{DBLP:conf/tacas/LeikeH14}, whereas
+Bradley et al. compute lexicographic linear ranking functions supported by inductive linear invariants 
+%for loops with linear guards and transitions: 
+\cite{DBLP:conf/cav/BradleyMS05}. 
+%Learning: \cite{DBLP:conf/cav/HeizmannHP14}
 
 
 While the synthesis of termination arguments for linear programs over
