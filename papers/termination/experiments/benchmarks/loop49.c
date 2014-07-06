@@ -12,7 +12,7 @@
 
 
 int main(void) {
-  int x;
+  unsigned int x;
 
   while (x != 0) {
     x = x - nondet();
