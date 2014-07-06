@@ -272,4 +272,4 @@ frontier 4: loop 20 (pc(main-1-30)->pc(main-1-30)) from 13 by applying tid([23,2
 
 Stem: [0,tid([12,9,6,3])]
 Loop: [tid([16,14,13]),tid([21,20,18,17]),tid([23,22,26,19,17])]
-SPINS
+UNK

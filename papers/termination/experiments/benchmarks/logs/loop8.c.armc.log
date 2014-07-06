@@ -92,4 +92,4 @@ frontier 2: loop 5 (pc(main-1-14)->pc(main-1-14)) from 2 by applying tid([5,3,2]
 
 Stem: [0,tid([1])]
 Loop: [tid([5,3,2])]
-SPINS
+UNK
