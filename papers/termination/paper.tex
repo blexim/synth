@@ -406,7 +406,7 @@ Additionally, if the program under analysis has a non-deterministic transition r
 and is non-terminating, our procedure is not guaranteed to find a non-termination proof.
 
 \section{Motivational Examples} \label{sec:motivation}
-- see phase change programs.
+%- see phase change programs.
 
 Figure~\ref{fig:handletable} illustrates the most common assumptions made by existing termination analyses:
 \begin{itemize}
@@ -929,7 +929,7 @@ Function $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to \mathbb{B}
 that  returns true iff the functions $\vec{P}$ compute appropriate outputs
 when fed the inputs $\vec{x}$ and $\vec{y}$.  
 \end{definition}
-
+%
 Checking satisfiability of a formula in the synthesis fragment corresponds to program synthesis and
 %Solving the synthesis problem 
 amounts to finding witnesses for the unknowns $\vec{P}$ and $\vec{x}$ that meet the specification
@@ -1298,20 +1298,6 @@ $R(\langle x,y\rangle) = x$ and supporting invariant $W(\langle x, y \rangle ) \
 This constitutes a proof that the program as a whole terminates, since the loop always begins
 executing in a state that guarantees its termination.\\
 
-\noindent {\bf Environment abstractions.}
-For a loop $L=(G,T)$, the formulae {\bf [CT]} and {\bf [CNT]} from Definition~\ref{def:ct} and Definition~\ref{def:cnt} are in terms of 
-$T_o$ and $T_u$, which over-approximate and under-approximate the transition relation $T$, respectively. Moreover, in formula {\bf [CT]},  
-$I$ over-approximates the set of states that $L$ may begin executing in.
-The reason for using over- and under-approximations [instead of exact relations] when formulating the (non-)termination of an isolated loop 
-is so that we can use the same formulae regardless of the environment the loop is executing in, or 
-the complexity of its body, e.g. if it contains nested loops.
-
-All we need to do in order to use {\bf [CT]} and {\bf [CNT]} in any context %environment and regardless of the complexity of the loops's body 
-is generate constraints abstracting 
-the environment and the loop's body: for termination, we need over-approximating abstractions, whereas for non-termination 
-we need under-approximations. 
-As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
-we will not provide the full algorithm, but rather illustrate it through examples.\\
 
 %synthesizing environment abstractions: underapp for termination and underapp for non-termination.
 % \cite{} addresses the problem of automatically underapproximating weakest preconditions.
@@ -1362,8 +1348,23 @@ we will not provide the full algorithm, but rather illustrate it through example
 %rather than presenting the algorithm for generating the constraints, we direct the
 %reader's attention to Figure~\ref{fig:environment-model}.  
 %
-The example in Figure~\ref{fig:environment-model} contains three loops. %, which we will number 1 to 3 according to their program order.
-Let us assume that we have already proven the termination of $L_1$ and $L_3$, and we are now trying to prove that $L_2$ terminates, which we encode
+%\noindent {\bf Environment abstractions.}
+For a loop $L=(G,T)$, the formulae {\bf [CT]} %and {\bf [CNT]} 
+from Definition~\ref{def:ct} 
+%and Definition~\ref{def:cnt} 
+is in terms of 
+$T_o$ and $I$, which over-approximate the transition relation $T$ and the set of states that $L$ may begin executing in, respectively. 
+The reason for using over-approximations [instead of exact relations] %when formulating the (non-)termination of an isolated loop 
+is so that we can use the same formulae regardless of the environment the loop is executing in, or 
+the complexity of its body, e.g. if it contains nested loops.
+
+All we need to do in order to use {\bf [CT]} in any context %environment and regardless of the complexity of the loops's body 
+is generate constraints over-approximating %abstracting 
+the environment and the loop's body. %: for termination, we need over-approximating abstractions, whereas for non-termination 
+%we need under-approximations. 
+As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
+we will not provide the full algorithm, but rather illustrate it through the example in Figure~\ref{fig:environment-model}.
+Let us assume that we have already proven the termination of loops $L_1$ and $L_3$, and we are now trying to prove that $L_2$ terminates, which we encode
 as the conjunction of constraints on the right side of the figure:
 \begin{itemize}
 \item $W_1$, $W_2$ and $W_3$ are (over-approximating) inductive invariants for $L_1$, $L_2$ and $L_3$, respectively.
@@ -1438,14 +1439,17 @@ $L_3:$
 \end{figure*}
 
 \noindent {\bf Under-approximating the environment for non-termination.}
-Dual to termination, when attempting to prove non-termination, we must under-approximate the environment and the loop body's and apply 
-formula {\bf [CNT]}. However, there is one more constraint that we must obey when doing so: we must stay inside the synthesis fragment! 
-This can be achieved for the environment as its under-approximation $I$ and the loop under consideration are at the same level of nestedness and do not therefore 
-require another quantifier alternation. 
+Dual to termination, when proving non-termination, we need to under-approximate the environment and the loop's body and apply
+formula {\bf [CNT]}. %As opposed to over-approximations 
+%this is not as straightforward as when computing over-approximations in the termination case described above.
+Recall that there is one more constraint that we must obey when doing so: we must stay inside the synthesis fragment! 
+This becomes more challenging now then when dealing with over-approximations due to the existential nature of under-approximations: they require an additional existential quantifier, which might result in an additional quantifier alternation, i.e. $\exists \forall \exists$. 
 
-However, when dealing with nested loops, computing the under-approximation of the loop's body 
-requires an extra quantifier alternation. The origin of the problem comes from the fact that an under-approximation is an existential property and therefore
-requires an extra existential quantifier, resulting in the $\exists \forall \exists$ alternation. This situation is similar to the one encountered when proving non-termination of non-deterministic loops. 
+This issue does not arise when abstracting the environment as its under-approximation and the loop under consideration make use of existential quantification at the same nestedness level. However, when dealing with nested loops, we need to compute the under-approximation of the inner loop, which requires a nested existential quantifier, 
+resulting in the $\exists \forall \exists$ alternation. 
+%% computing the under-approximation of the loop's body requires an extra quantifier alternation. 
+%% The origin of the problem comes from the fact that an under-approximation is an existential property and therefore
+%% requires an extra existential quantifier, resulting in the $\exists \forall \exists$ alternation. This situation is similar to the one encountered when proving non-termination of non-deterministic loops. 
 To go around this limitation, we treat nested loops as a special case and give a separate formula for them in Figure~\ref{fig:nonterm-nested}. If the formula on the right of the figure is satisfiable, then $L_1$ is non-terminating as witnessed by the recurrence set $N_1$ and
 the initial state $x_0$ in which the program begins executing. There are two possible scenarios for $L_2$'s termination:
 \begin{itemize}
@@ -1537,15 +1541,17 @@ the initial state $x_0$ in which the program begins executing. There are two pos
 \begin{framed}
  \begin{minipage}{0.19\textwidth}
 \begin{lstlisting}[mathescape=true]
-$L_1$: while ($G_1$) {
-     $P_1$;
+$L_1$:
+while ($G_1$) {
+  $P_1$;
 
-$L_2$:  while ($G_2$) {
-       $B_2$;
-       }
+$L_2$:
+  while ($G_2$) {
+    $B_2$;
+  }
 
-     $P_2$;
-     }
+  $P_2$;
+}
 \end{lstlisting}
 \end{minipage}
 \vline
