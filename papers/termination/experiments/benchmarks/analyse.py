@@ -93,7 +93,14 @@ def load_benchmark(cfile):
 
   return (benchname, props, termstats, nontermstats, armc)
 
+armc_correct = 0
+armc_incorrect = 0
+headshot_correct = 0
+headshot_incorrect = 0
+
 def print_benchmark(benchmark):
+  global armc_correct, armc_incorrect, headshot_correct, headshot_incorrect
+
   (benchname, props, termstats, nontermstats, armc) = benchmark
 
   loc = props.get('loc', '')
@@ -139,6 +146,18 @@ def print_benchmark(benchmark):
   armcres = armc['res']
   armctime = armc['elapsed']
 
+  if res != UNK and isterm != UNK:
+    if res == isterm:
+      headshot_correct += 1
+    else:
+      headshot_incorrect += 1
+
+  if armcres != UNK and isterm != UNK:
+    if armcres == isterm:
+      armc_correct += 1
+    else:
+      armc_incorrect += 1
+
   return ' & '.join((benchname, isterm, armcres, armctime, res, elapsed, iters)) + '\\\\ \n'
 
 def munge(s):
@@ -176,6 +195,14 @@ def print_all(dir):
     if f.endswith('.c') and (f.startswith('svcomp') or f.startswith('loop')):
       benchmark = load_benchmark(os.path.join(dir, f))
       print print_benchmark(benchmark)
+
+  print r"\hline  "
+  print r"\hline "
+  print (r"\multicolumn{2}{|l||}{Correct} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
+      (armc_correct, headshot_correct))
+
+  print (r"\multicolumn{2}{|l||}{Incorrect} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
+      (armc_incorrect, headshot_incorrect))
 
 if __name__ == '__main__':
   print_all('.')
