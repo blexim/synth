@@ -2068,7 +2068,7 @@ Somehow expected, most of the techniques are specialised in the synthesis of
 linear ranking functions for linear programs over integers (or rationals)
 \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,
 DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}. 
-Among them, Lee et al.  make use of transition predicate abstraction,
+Among them, Lee et al.~make use of transition predicate abstraction,
 algorithmic learning, and decision procedures
 %to compute transition invariants as proofs for the termination of linear programs 
 \cite{DBLP:conf/cav/LeeWY12},
@@ -2076,7 +2076,7 @@ Leike and Heizmann propose linear ranking templates
 %in order to synthesise
 %termination arguments for linear loop programs 
 \cite{DBLP:conf/tacas/LeikeH14}, whereas
-Bradley et al. compute lexicographic linear ranking functions supported by inductive linear invariants 
+Bradley et al.~compute lexicographic linear ranking functions supported by inductive linear invariants 
 %for loops with linear guards and transitions: 
 \cite{DBLP:conf/cav/BradleyMS05}. 
 %Learning: \cite{DBLP:conf/cav/HeizmannHP14}
@@ -2084,7 +2084,7 @@ Bradley et al. compute lexicographic linear ranking functions supported by induc
 
 While the synthesis of termination arguments for linear programs over
 integers is indeed well-covered in the literature, there is very limited
-work for programs over machine integers.  Cook et al.  present a method
+work for programs over machine integers.  Cook et al.~present a method
 based on a reduction to Presburger arithmetic, and a template-matching
 approach for predefined classes of ranking functions based on reduction to
 SAT- and QBF-solving~\cite{DBLP:conf/tacas/CookKRW10}.  Similarly, the only
@@ -2107,10 +2107,10 @@ theorem compute a set of local termination conditions that decrease as
 execution follows through the loop and require expensive reachability
 analyses~\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}. 
 In an attempt to reduce the complexity of checking the validity of the
-termination argument, Cook et al present an iterative termination proving
+termination argument, Cook et al.~present an iterative termination proving
 procedure that searches for lexicographic termination
-arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et al. 
-strengthen the termination argument such that it becomes a transitive
+arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et
+al.~strengthen the termination argument such that it becomes a transitive
 relation~\cite{DBLP:conf/cav/KroeningSTW10}.
 
 Proving program termination implies the simultaneous search for a
@@ -2118,22 +2118,23 @@ termination argument and a supporting invariant.
 %For this purpose, several tools alternate between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.  
 %In order to share more information about
 %the state of the termination proofs between the two tools, 
-Brockschmidt et al. 
-share the same representation of the state of the termination proof
+Brock\-schmidt et al.~share the same representation of the state of the termination proof
 between the safety prover and the ranking function synthesis tool \cite{DBLP:conf/cav/BrockschmidtCF13}.  
 In \cite{DBLP:conf/cav/BradleyMS05},
-Bradley et al.  combine the generation of ranking functions with the
+Bradley et al.~combine the generation of ranking functions with the
 generation of invariants to form one constraint solving problem such that
 the necessary supporting invariants for the ranking function are discovered
 on demand.  In our setting, both the ranking function and the supporting
 invariant are iteratively constructed through the same refinement loop.
 
-While program termination has been extensively studied, much less research has been conducted 
-in the area of proving non-termination. Gupta et al. dynamically enumerate lasso-shaped candidate
-paths for counterexamples, and then statically prove their feasibility \cite{DBLP:conf/popl/GuptaHMRX08}. 
-In \cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al. prove nontermination via
-reduction to safety proving. Their iterative algorithm uses counterexamples to a fixed safety property
-to refine an underapproximation of a program. 
+While program termination has been extensively studied, much less research
+has been conducted in the area of proving non-termination.  Gupta et
+al.~dynamically enumerate lasso-shaped candidate paths for counterexamples,
+and then statically prove their
+feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}. 
+In~\cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al.~prove nontermination via
+reduction to safety proving.  Their iterative algorithm uses counterexamples
+to a fixed safety property to refine an underapproximation of a program.
  
 
 \bibliographystyle{abbrvnat}
