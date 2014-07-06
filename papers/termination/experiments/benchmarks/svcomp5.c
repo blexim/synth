@@ -15,7 +15,7 @@ int main(void)
   int x, y, N;
 
   if (N >= 536870912 || x >= 536870912 || y >= 536870912 || x < -1073741824) {
-    //return 0;
+    return 0;
   }
 
   if (x + y < 0) {

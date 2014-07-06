@@ -6,7 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
- * Terminates:     unk
+ * Terminates:     true
  */
 /*
  * Terminating Program 

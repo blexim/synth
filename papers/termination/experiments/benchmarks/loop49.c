@@ -7,7 +7,6 @@
  * Bitvector:      false
  * Lexicographic:  ?
  * Source:         -
- * Ranking function: |x|
  * Terminates:     false
  */
 
