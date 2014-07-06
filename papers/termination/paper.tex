@@ -38,6 +38,7 @@
 \newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\xmark}{\ding{55}}
+\newcommand{\tick}{\checkmark}
 \newcommand{\todo}[1]{{\bf TODO:} #1}
 \newcommand{\newC}{C$^-$\xspace}
 
@@ -101,7 +102,7 @@
 \title{Deciding Bitvector Termination with Program Synthesis}
 
 \authorinfo{Cristina David\and Daniel Kroening\and Matt Lewis}
-           {Oxford University}
+           {University of Oxford}
            {firstname.lastname@cs.ox.ac.uk}
 
 \maketitle
@@ -113,7 +114,7 @@ Proving program termination is typically done by finding a well-founded
 provers typically find ranking functions using either linear algebra or
 templates.  As such they are often restricted to finding linear ranking
 functions over mathematical integers.  This class of ranking functions is
-insufficient for prove termination for many terminating programs, and
+insufficient for proving termination of many terminating programs, and
 furthermore a termination argument for a program operating on mathematical
 integers does not always lead to a termination argument for the same program
 operating on fixed-width machine integers.
@@ -505,22 +506,19 @@ completed once this function becomes non-positive.
 
 In our setting this type of programs does not need special treatment, as we
 can find a non-linear lexicographic ranking function $R(x, y, z) = (x < y,
-z)$.\footnote{This termination argument is somewhat subtle, but can be understood as
-follows: The Boolean values $\mathit{false}$ and $\mathit{true}$ are
-interpreted as 0 and 1, respectively.  The Boolean $x < y$ thus eventually
-decreases, that is to say once a state with $x \geq y$ is reached, $x$ never
-again becomes greater than $y$.  This means that as soon as the ``else''
-branch of the if statement is taken, it will continue to be taken in each
-subsequent iteration of the loop.  Meanwhile, if $x < y$ has not decreased
-(i.e., we have stayed in the same branch of the ``if''), then $z$ does
-decrease.  Since a Boolean only has two possible values, it cannot decrease
+z)$.\footnote{This termination argument is somewhat subtle.  The Boolean
+values $\mathit{false}$ and $\mathit{true}$ are interpreted as 0 and 1,
+respectively.  The Boolean $x < y$ thus eventually decreases, that is to say
+once a state with $x \geq y$ is reached, $x$ never again becomes greater
+than $y$.  This means that as soon as the ``else'' branch of the if
+statement is taken, it will continue to be taken in each subsequent
+iteration of the loop.  Meanwhile, if $x < y$ has not decreased (i.e., we
+have stayed in the same branch of the ``if''), then $z$ does decrease. 
+Since a Boolean only has two possible values, it cannot decrease
 indefinitely.  Since $z > 0$ is a conjunct of the loop guard, $z$ cannot
 decrease indefinitely, and so $R$ proves that the loop is well founded.}
-\iffalse
-\item Program (j) illustrates a nested loop.  This construction can cause difficulties for provers based on
-enumerating lassos
-\fi
-\end{itemize}
+\iffalse \item Program (j) illustrates a nested loop.  This construction can
+cause difficulties for provers based on enumerating lassos \fi \end{itemize}
 %
 As with all of the termination proofs presented in this paper, the ranking
 functions above were all found completely automatically.
@@ -715,10 +713,11 @@ mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 
-A programs $P$ is represented as a transition systems with state space $X$,
-transition relation $T \subseteq X \times X$, and set of variables $V$.  A
-state of the program is a valuation of the variables from $V$.  For a state
-$x \in X$ with $T(x,x')$ we say $x'$ is the successor of $x$ under $T$.
+A programs $P$ is represented as a transition system with state space $X$ and
+transition relation $T \subseteq X \times X$.  For a state
+$x \in X$ with $T(x,x')$ we say $x'$ is a successor of $x$ under $T$.
+If each state $x$ has at most one successor $x'$, then we say that $T$ is
+deterministic.
 
 \begin{definition}[Unconditional termination]
 %
@@ -789,7 +788,7 @@ for signed values is two's complement, where the most significant bit
 $b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather
 than $2^k - 1$.  Two's complement representation has the property that
 $\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
-is bitwise-negation.  Two's complement also has the property that addition,
+is bitwise negation.  Two's complement also has the property that addition,
 multiplication and subtraction are defined identically for unsigned and
 signed numbers.
 
@@ -798,7 +797,7 @@ of the differences between machine arithmetic and Peano
 arithmetic.\footnote{ISO C requires that unsigned arithmetic is performed
 modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
 In practice, the undefined behaviour is implemented just as if the
-arithmetic had been unsigned}.  To give an example, $(2^k - 1) + 1 \equiv 0
+arithmetic had been unsigned.}.  To give an example, $(2^k - 1) + 1 \equiv 0
 \pmod {2^k}$ provides a counterexample to the statement $\forall x. 
 x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
 arithmetic.  When an arithmetic operation has a result greater than $2^k$,
@@ -811,7 +810,7 @@ arithmetic stems from width conversions.  Many programming languages allow
 numeric variables of different types, which can be represented using words
 of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
 \texttt{int} might occupy 32 bits.  When a $k$-bit variable is assigned to a
-$l$-bit variable with $l < k$, the result is truncated $\mod 2^l$.  For
+$l$-bit variable with $l < k$, the result is truncated $\mathrm{mod}~2^l$.  For
 example, if $x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will
 hold the value $0$ after the following code is executed:
 %
@@ -2434,14 +2433,17 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 \begin{figure*}
 \centering
 \footnotesize
-\begin{tabular}{|l|r|c|c|c|c|c|r|r|c|r|r|}
+\begin{tabular}{|l|l||l|r||l|r|r|}
 \hline
-    & LOC & Terminates? & \shortstack{Linear \\ program?} & \shortstack{Linear ranking \\ function?}  & Conditional? & Float? & Dimension & \shortstack{Ranking \\ program size} & Res & Time (s) & Iterations\\
+    &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Headshot} \\
+    & Expected &  Verdict & Time & Verdict & Time & Iterations\\
     \hline
     \hline
 \input{table}
     \hline
 \end{tabular}
+
+Key: \tick = terminating, \xmark = non-terminating.
 
 \caption{\textsc{Headshot} termination for nonlinear programs with nonlinear ranking functions\label{fig:nonlinear}}
  \end{figure*}
@@ -2461,7 +2463,7 @@ Leike and Heizmann present a new method for the constraint-based synthesis
 of termination arguments for linear loop programs based on
 linear ranking templates \cite{DBLP:conf/tacas/LeikeH14}.
 Linear ranking functions supported by inductive linear invariants for loops with linear guards and transitions: \cite{DBLP:conf/cav/BradleyMS05}. 
-Learning: \cite{DBLP:journals/corr/HeizmannHP14}
+Learning: \cite{DBLP:conf/cav/HeizmannHP14}
 
 
 %A program is lasso-shaped if it is composed by a stem followed by a single loop without branching, i.e. there is only one path. 

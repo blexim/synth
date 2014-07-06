@@ -6,6 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
  */
 /*
  * Terminating program that has no linear lexicographic ranking function.
