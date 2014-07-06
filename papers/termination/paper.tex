@@ -298,8 +298,8 @@ rich enough to analyse code using any of the following features:
 \item Arrays.
 \end{itemize}
 
-Additionally, if the program under analysis has a non-deterministic transition relation
-and is non-terminating, our procedure is not guaranteed to find a non-termination proof.
+Additionally, if the program under analysis is non-terminating and has a
+non-deterministic transition relation, our procedure is not guaranteed to find a non-termination proof.
 
 \section{Motivating Examples} \label{sec:motivation}
 
@@ -523,7 +523,7 @@ while (x > 0) {
 
 \begin{subfigure}[b]{0.3\textwidth}
 \begin{lstlisting}
-while (x > 0 && y > 0 && z > 0) {
+while (x>0 && y>0 && z>0) {
   if (y > x) {
     y = z;
     x = nondet();
@@ -1219,20 +1219,20 @@ R_3 & = ..
 
 \begin{figure*}
 \begin{framed}
-\begin{minipage}{0.17\textwidth}
+\begin{minipage}{0.145\textwidth}
 \begin{lstlisting}[mathescape=true]
 x = 0;
 $L_1:$
-while(x <= y)
+while(x<=y)
   x++;
 
 $L_2:$
-while(x > 0){
+while(x>0){
   z = x;
   v = 0;
 
 $L_3:$
-  while(v < y){
+  while(v<y){
     z--;
     v++;
   }
@@ -1306,7 +1306,7 @@ reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x)
 
 \begin{figure*}
 \begin{framed}
- \begin{minipage}{0.19\textwidth}
+ \begin{minipage}{0.16\textwidth}
 \begin{lstlisting}[mathescape=true]
 $L_1$:
 while ($G_1$) {
