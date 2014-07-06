@@ -2056,34 +2056,24 @@ Key: \tick = terminating, \xmark = non-terminating, ? = unknown (tool terminated
  \end{figure}
 
 \section{Conclusions and Related Work}
-%\subsection{Termination analysis}
 
-Automated program termination is a research topic that has received a fair
-amount of attention from the software verification community.  In order to
-compare our technique to the rest of the area, Figure~\ref{fig:handletable}
-summarises the related works with respect to the assumptions they make about
-programs and ranking functions.
-
-Somehow expected, most of the techniques are specialised in the synthesis of
-linear ranking functions for linear programs over integers (or rationals)
-\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,
-DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}. 
-Among them, Lee et al.~make use of transition predicate abstraction,
-algorithmic learning, and decision procedures
-%to compute transition invariants as proofs for the termination of linear programs 
-\cite{DBLP:conf/cav/LeeWY12},
-Leike and Heizmann propose linear ranking templates 
-%in order to synthesise
-%termination arguments for linear loop programs 
-\cite{DBLP:conf/tacas/LeikeH14}, whereas
-Bradley et al.~compute lexicographic linear ranking functions supported by inductive linear invariants 
-%for loops with linear guards and transitions: 
-\cite{DBLP:conf/cav/BradleyMS05}. 
-%Learning: \cite{DBLP:conf/cav/HeizmannHP14}
-
+There has been substantial prior work on automated program termination
+analysis.  Figure~\ref{fig:handletable} summarises the related work with
+respect to the assumptions they make about programs and ranking functions. 
+Most of the techniques are specialised in the synthesis of linear ranking
+functions for linear programs over integers (or
+rationals)~\cite{DBLP:conf/pldi/CookPR06, DBLP:conf/cav/LeeWY12,
+DBLP:conf/popl/Ben-AmramG13, DBLP:conf/vmcai/P04,
+DBLP:conf/atva/HeizmannHLP13, DBLP:conf/cav/BradleyMS05,
+DBLP:conf/tacas/CookSZ13, DBLP:conf/cav/KroeningSTW10}.  Among them, Lee et
+al.~make use of transition predicate abstraction, algorithmic learning, and
+decision procedures~\cite{DBLP:conf/cav/LeeWY12}, Leike and Heizmann propose
+linear ranking templates~\cite{DBLP:conf/tacas/LeikeH14}, whereas Bradley et
+al.~compute lexicographic linear ranking functions supported by inductive
+linear invariants~\cite{DBLP:conf/cav/BradleyMS05}.
 
 While the synthesis of termination arguments for linear programs over
-integers is indeed well-covered in the literature, there is very limited
+integers is indeed well covered in the literature, there is very limited
 work for programs over machine integers.  Cook et al.~present a method
 based on a reduction to Presburger arithmetic, and a template-matching
 approach for predefined classes of ranking functions based on reduction to
@@ -2093,39 +2083,37 @@ imperative loops with polynomial guards and polynomial assignments
 is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
-Given the lack of research in handling not-linear programs, as well
-as programs over bit vectors and floats, our work focused on covering
-these areas.  One of the obvious conclusions that can be reached from
-observing Figure~\ref{fig:handletable}, is that most of the works tend to
-specialise on a certain aspect of termination proving that they can solve
-efficiently.  Conversely to this view, we aim for generality, as we
-do not restrict the form of the synthesised ranking functions, nor the form
-of the input programs.
+Given the lack of research in handling not-linear programs, as well as
+programs over bit vectors and floats, our work focused on covering these
+areas.  One of the obvious conclusions that can be reached from
+Figure~\ref{fig:handletable} is that most methods tend to specialise on a
+certain aspect of termination proving that they can solve efficiently. 
+Conversely to this view, we aim for generality, as we do not restrict the
+form of the synthesised ranking functions, nor the form of the input
+programs.
 
 As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's
 theorem compute a set of local termination conditions that decrease as
-execution follows through the loop and require expensive reachability
-analyses~\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}. 
-In an attempt to reduce the complexity of checking the validity of the
-termination argument, Cook et al.~present an iterative termination proving
-procedure that searches for lexicographic termination
-arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et
+execution proceeds through the loop and require expensive reachability
+analyses~\cite{DBLP:conf/lpe/CodishG03, DBLP:conf/lics/PodelskiR04,
+DBLP:conf/pldi/CookPR06}.  In an attempt to reduce the complexity of
+checking the validity of the termination argument, Cook et al.~present an
+iterative termination proving procedure that searches for lexicographic
+termination arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et
 al.~strengthen the termination argument such that it becomes a transitive
 relation~\cite{DBLP:conf/cav/KroeningSTW10}.
 
 Proving program termination implies the simultaneous search for a
-termination argument and a supporting invariant.  
-%For this purpose, several tools alternate between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.  
-%In order to share more information about
-%the state of the termination proofs between the two tools, 
-Brock\-schmidt et al.~share the same representation of the state of the termination proof
-between the safety prover and the ranking function synthesis tool \cite{DBLP:conf/cav/BrockschmidtCF13}.  
-In \cite{DBLP:conf/cav/BradleyMS05},
-Bradley et al.~combine the generation of ranking functions with the
-generation of invariants to form one constraint solving problem such that
-the necessary supporting invariants for the ranking function are discovered
-on demand.  In our setting, both the ranking function and the supporting
-invariant are iteratively constructed through the same refinement loop.
+termination argument and a supporting invariant.  Brock\-schmidt et
+al.~share the same representation of the state of the termination proof
+between the safety prover and the ranking function synthesis
+tool~\cite{DBLP:conf/cav/BrockschmidtCF13}. 
+In~\cite{DBLP:conf/cav/BradleyMS05}, Bradley et al.~combine the generation
+of ranking functions with the generation of invariants to form a single
+constraint solving problem such that the necessary supporting invariants for
+the ranking function are discovered on demand.  In our setting, both the
+ranking function and the supporting invariant are iteratively constructed in
+the same refinement loop.
 
 While program termination has been extensively studied, much less research
 has been conducted in the area of proving non-termination.  Gupta et
@@ -2135,7 +2123,6 @@ feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}.
 In~\cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al.~prove nontermination via
 reduction to safety proving.  Their iterative algorithm uses counterexamples
 to a fixed safety property to refine an underapproximation of a program.
- 
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
