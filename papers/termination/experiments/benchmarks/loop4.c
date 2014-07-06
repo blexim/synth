@@ -6,6 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  2
+ * Terminates:     true
  */
 
 int main(void) {

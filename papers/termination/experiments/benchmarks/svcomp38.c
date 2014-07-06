@@ -1,8 +1,8 @@
 /*
  * Name:           name
  * Linear-program: true
- * Linear-rank:    true
- * Conditional:    false
+ * Linear-rank:    false
+ * Conditional:    true
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
@@ -20,13 +20,15 @@ extern int nondet(void);
 
 int main()
 {
-  int x, y, z, m, n;
+  int x, y, z;
+  //int m, n;
+
   if (nondet()) {
     x = 1;
   } else {
     x = -1;
   }
-  while (y < 100 && z < 100) {
+  while (y < 2 && z < 2) {
     y = y + x;
     z = z - x;
   }

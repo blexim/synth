@@ -6,6 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
  */
 /*
  * Program from Fig.1 of

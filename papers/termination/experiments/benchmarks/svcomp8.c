@@ -6,6 +6,7 @@
  * Float:          false
  * Bitvector:      unk
  * Lexicographic:  unk
+ * Terminates:     unk
  */
 
 /*

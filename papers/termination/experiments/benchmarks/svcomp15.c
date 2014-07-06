@@ -6,6 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     unk
  */
 /*
  * Program from Fig.1 of
@@ -31,7 +32,7 @@ int main()
     d = 2;
   }
 
-  if (k > 1073741823) {
+  if (k >= 128) {
     return;
   }
 
