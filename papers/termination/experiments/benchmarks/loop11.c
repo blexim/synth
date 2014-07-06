@@ -1,3 +1,7 @@
+/*
+ * Terminates: false
+ */
+
 int main(void) {
   int x;
 
