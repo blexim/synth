@@ -713,10 +713,11 @@ mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 
-A programs $P$ is represented as a transition systems with state space $X$,
-transition relation $T \subseteq X \times X$, and set of variables $V$.  A
-state of the program is a valuation of the variables from $V$.  For a state
-$x \in X$ with $T(x,x')$ we say $x'$ is the successor of $x$ under $T$.
+A programs $P$ is represented as a transition system with state space $X$ and
+transition relation $T \subseteq X \times X$.  For a state
+$x \in X$ with $T(x,x')$ we say $x'$ is a successor of $x$ under $T$.
+If each state $x$ has at most one successor $x'$, then we say that $T$ is
+deterministic.
 
 \begin{definition}[Unconditional termination]
 %
@@ -2441,6 +2442,8 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 \input{table}
     \hline
 \end{tabular}
+
+Key: \tick = terminating, \xmark = non-terminating.
 
 \caption{\textsc{Headshot} termination for nonlinear programs with nonlinear ranking functions\label{fig:nonlinear}}
  \end{figure*}
