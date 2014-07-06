@@ -1,0 +1,65 @@
+ARMC3: Abstraction Refinement Model Checker, v. 3.20.05 (May-21-2008)
+rybal@mpi-sws.mpg.de
+cmd line: [live,../../papers/termination/experiments/benchmarks/loop11.c.main.pl,-straight]
+reading input from ../../papers/termination/experiments/benchmarks/loop11.c.main.pl...done.
+creating straight line code between cutpoints...done.
+
+transition(p(pc(main-0-4),data(A)), p(pc(main-5-4),data(B)), {1=1,A=<0,B=A}, [1=1,A=<0], [B=A], tid([3,1])).
+transition(p(pc(main-0-4),data(A)), p(pc(main-4-5),data(B)), {1=1,A>=1+0,B=A}, [1=1,A>=1+0], [B=A], tid([2,1])).
+transition(p(pc(main-0-4),data(A)), p(pc(main-5-4),data(B)), {1=1,A=<0,B=A}, [1=1,A=<0], [B=A], tid([3,1])).
+transition(p(pc(main-0-4),data(A)), p(pc(main-4-5),data(B)), {1=1,A>=1+0,B=A}, [1=1,A>=1+0], [B=A], tid([2,1])).
+
+
+
+
+--------------------------------------------------
+abstraction refinement iteration 0:
+lfp iteration 0 1 
+
+
+==================================================
+ARMC-LIVE: program is correct
+
+abstract trans fixpoint
+abstract_trans_state(0, pc(main-0-4), pc(main-0-4), [], stem, 1, (0,0)).
+abstract_trans_state(1, pc(main-0-4), pc(main-5-4), [], stem, 2, (1,tid([3,1]))).
+abstract_trans_state(1, pc(main-0-4), pc(main-5-4), [], loop, 3, (1,tid([3,1]))).
+abstract_trans_state(1, pc(main-0-4), pc(main-4-5), [], stem, 4, (1,tid([2,1]))).
+abstract_trans_state(1, pc(main-0-4), pc(main-4-5), [], loop, 5, (1,tid([2,1]))).
+
+frontier 0: stem 1 (pc(main-0-4)->pc(main-0-4)) from 0 by applying 0: 	T
+frontier 1: stem 2 (pc(main-0-4)->pc(main-5-4)) from 1 by applying tid([3,1]): 	T
+frontier 1: loop 3 (pc(main-0-4)->pc(main-5-4)) from 1 by applying tid([3,1]): 	T
+frontier 1: stem 4 (pc(main-0-4)->pc(main-4-5)) from 1 by applying tid([2,1]): 	T
+frontier 1: loop 5 (pc(main-0-4)->pc(main-4-5)) from 1 by applying tid([2,1]): 	T
+
+_6376->_6379:	#0:	
+---------------------------------------------+----run(s)----+---wall(s)----+
+Time on instantiating uf axioms              |     0.00     |     0.00     |
+Time on cli constraint solving               |     0.00     |     0.00     |
+Time on cli constraint preparation           |     0.00     |     0.00     |
+Time on cli matrix parsing                   |     0.00     |     0.00     |
+Time on cli preprocessing                    |     0.00     |     0.00     |
+Time on concretizing trans rel               |     0.00     |     0.00     |
+Time on concretizing from state              |     0.00     |     0.00     |
+Time on computing the subsumer subtree       |     0.00     |     0.00     |
+Time on finding the location of subsumer in queue|     0.00     |     0.00     |
+Time on path invariant generation            |     0.00     |     0.00     |
+Time on new predicate selection              |     0.00     |     0.00     |
+Time on refinement preprocessing cut         |     0.00     |     0.00     |
+Time on refinement cutting trace             |     0.00     |     0.00     |
+Time on refinement finding unsat subtrace    |     0.00     |     0.00     |
+Time on refinement                           |     0.00     |     0.00     |
+Time on fixpoint abstraction                 |     0.00     |     0.00     |
+Time on fixpoint test                        |     0.00     |     0.00     |
+Time on abstract check                       |     0.00     |     0.00     |
+Time on total including result checking      |     0.00     |     0.00     |
+Time on check result                         |     0.00     |     0.00     |
+Time on total                                |     0.00     |     0.00     |
+---------------------------------------------+--------------+--------------+
+
+
+
+==================================================
+ARMC-LIVE: program is correct
+
