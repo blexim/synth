@@ -282,7 +282,7 @@ solving an isomorphic program synthesis problem
 (Section~\ref{sec:synthesis}).  Our method is sound and semi-complete, i.e. 
 if a pair of a ranking function and a supporting invariant exist it will be
 found, but if the program does not terminate we may not find a recurrence
-set.  However if the program's transition relation is deterministic, our
+set.  However, if the program's transition relation is deterministic, our
 method is complete.
 
 With respect to the performance of our technique, we show that its runtime is dominated by the size of 
@@ -292,18 +292,16 @@ the shortest termination proof.
 %find that our technique  
 %
 This means that our procedure is not directly dependent on the structure of
-the analysed loop, e.g.  number of variable, number of lassos, but on the
-Kolmogorov complexity of its minimal termination argument.  We argue that
-the length of a program's termination proof is indicative of how easy to
-understand the program is, and thus programmers tend to write programs that
-have relatively short termination proofs.  We empirically show that this
-claim holds in practice, causing our technique to perform well.
-
+the analysed loop (e.g.~the number of variables or the number of lassos),
+but on the \emph{Kolmogorov complexity of its minimal termination argument}. 
+We argue that the length of a program's termination proof is indicative of
+how easy to understand the program is, and thus programmers tend to write
+programs that have relatively short termination proofs.  We empirically show
+that this claim holds in practice, causing our technique to perform well.
 
 %% Our approach to proving termination has two distinct features over previous work. 
 %% First, it is \emph{general}, i.e. does not make any assumption about the form of the termination argument.   
 %% Second, it correctly handles bit-vectors and floats without abstracting them to integers and reals, respectively.
-
 
 \begin{figure*}
 \centering
@@ -404,7 +402,7 @@ rich enough to analyse code using any of the following features:
 Additionally, if the program under analysis has a non-deterministic transition relation
 and is non-terminating, our procedure is not guaranteed to find a non-termination proof.
 
-\section{Motivational Examples} \label{sec:motivation}
+\section{Motivating Examples} \label{sec:motivation}
 %- see phase change programs.
 
 Figure~\ref{fig:handletable} illustrates the most common simplifying
@@ -412,77 +410,80 @@ assumptions made by existing termination analyses:
 %
 \begin{itemize}
 \item[(i)] programs use only linear arithmetic.
-\item[(ii)] terminating programs have termination arguments in linear arithmetic.
-\item[(iii)] the semantics of bit-vectors and mathematical integers are equivalent.
-\item[(iv)] the semantics of floats and mathematical reals are equivalent.
+\item[(ii)] terminating programs have termination arguments expressible in linear arithmetic.
+\item[(iii)] the semantics of bit vectors and mathematical integers are equivalent.
+\item[(iv)] the semantics of IEEE floating-point numbers and mathematical reals are equivalent.
 \end{itemize}  
 
 %In the previous sections, we have discussed some of the assumptions made by existent termination analyses (see Figure~\ref{fig:handletable}).
-To show how these assumptions are broken by even simple programs, we draw the reader's attention to the programs in
-Figure~\ref{fig:motivation} and their curious properties:
-
+%
+To show how these assumptions are violated by even simple programs, we draw
+the reader's attention to the programs in Figure~\ref{fig:motivation} and
+their curious properties:
+%
 %We next discus some intricate examples that prove challenging for existent termination analysis.
-
+%
 %\subsection{Program linearity vs. the linearity of its ranking function.}
-
+%
 %Figure~\ref{fig:handletable} shows that the most common assumption existent termination techniques make is that \emph{programs are linear}.
-
+%
 \begin{itemize}
 
 \item Program (a) breaks assumption (i) as it makes use of the bit-wise $\&$ operator.
-%As such, Figure~\ref{} denotes a program with non-linear operations. Given that  many of the existing techniques commit to linear programs, they cannot handle this situation, 
-%although a linear ranking function does exist (see Figure~\ref{fig:handletable}). 
-%In order to find a ranking function for this example, it is necessary to take into account
-%the semantics of the bit-wise AND operator.
-Our technique finds that an admissible ranking function is the linear function
-$R(x) = x$, whose value decreases with
-every iteration, but cannot decrease indefinitely as it is bounded from below.
-This example also illustrates the lack of a direct correlation between the linearity of a program and that of its termination arguments.
+%
+%As such, Figure~\ref{} denotes a program with non-linear operations. Given
+%that many of the existing techniques commit to linear programs, they cannot
+%handle this situation, although a linear ranking function does exist (see
+%Figure~\ref{fig:handletable}).  In order to find a ranking function for
+%this example, it is necessary to take into account the semantics of the
+%bit-wise AND operator.
+%
+Our technique finds that an admissible ranking function is the linear
+function $R(x) = x$, whose value decreases with every iteration, but cannot
+decrease indefinitely as it is bounded from below.  This example also
+illustrates the lack of a direct correlation between the linearity of a
+program and that of its termination arguments.
 
-\item Program (b) break assumption (ii), in that it has no linear ranking function.
-We prove that this loop terminates by finding the non-linear ranking function $R(x) = |x|$.
+\item Program (b) breaks assumption (ii), in that it has no linear ranking
+function.  We prove that this loop terminates by finding the non-linear
+ranking function $R(x) = |x|$.
 
-\item Program (c) breaks assumption (iii).
-This loop is  terminating for bit-vectors since $x$
-will eventually over-flow and become negative. Conversely, the same program is non-terminating using integer
-arithmetic since $x > 0 \rightarrow x+1 > 0$ for any integer $x$.
+\item Program (c) breaks assumption (iii).  This loop is terminating for
+bit-vectors since $x$ will eventually over-flow and become negative. 
+Conversely, the same program is non-terminating using integer arithmetic
+since $x > 0 \rightarrow x+1 > 0$ for any integer $x$.
 
-\item Program (d) also breaks assumption(iii), but ``the other way'' -- it terminates for integers but not for bit-vectors.
-If each of the variables is stored in an unsigned $k$-bit word, the following configuration will
-lead to an infinite loop:
-$$M = 2^k - 1, N = 2^k - 1, i = M, j = N-1$$
+\item Program (d) also breaks assumption (iii), but ``the other way'': it
+terminates for integers but not for bit-vectors.  If each of the variables
+is stored in an unsigned $k$-bit word, the following entry state will lead
+to an infinite loop:
+%
+$$ M = 2^k - 1,\quad N = 2^k - 1,\quad i = M,\quad j = N-1 $$
 
-\item Program (e) breaks assumption (iv) -- it terminates for reals but not for floats.
-If $x$ is sufficiently large, rounding error will cause the subtraction to have no effect.
+\item Program (e) breaks assumption (iv): it terminates for reals but not
+for floats.  If $x$ is sufficiently large, rounding error will cause the
+subtraction to have no effect.
 
-\item Program (f) breaks assumption (iv) ``the other way'' -- it terminates for floats but not for reals.
-Eventually $x$ will become sufficiently small that the nearest representable number is 0.0, at which point
-it will be rounded to 0.0 and the loop will terminate.
+\item Program (f) breaks assumption (iv) ``the other way'': it terminates
+for floats but not for reals.  Eventually $x$ will become sufficiently small
+that the nearest representable number is $0.0$, at which point it will be
+rounded to $0.0$ and the loop will terminate.
+
 \end{itemize}
 
-Up until this point, we looked at examples that are not soundly treated by existing techniques as they 
-don't fit in the range of programs covered by these techniques.
-Next, we look at some programs that are handled by existing termination tools via dedicated analyses. We show that our method 
-uniformly handles them, without the need for any special treatment.
-% we are able to compute termination arguments in several interesting case
-
-% Our technique gains from generality. A possible explanation for this (perhaps initially sur-
-%prising) fact is that, for synthesis, we are interested in the mere existence of a
-%% solution, and the loss of
-%% many solutions does not necessarily mean the loss of
-%% all solutions of the constraint
-% bit-level analysis
-%These non-terminating programs represent an important class of
-%bugs, especially for denial-of-service related vulnerabilities, where
-%an attacker can exploit the overflow. Equally important,
-% equally important
-
-
-
+Up until this point, we considered examples that are not soundly treated by
+existing techniques as they don't fit in the range of programs addressed by
+these techniques.  Next, we look at some programs that are handled by
+existing termination tools via dedicated analyses.  We show that our method
+handles them uniformly, without the need for any special treatment.
+%
 \begin{itemize}
-\item Program (g) is a linear program
-which is shown in~\cite{DBLP:conf/tacas/CookSZ13} not to admit (without prior manipulation) a lexicographic linear function.
-With our technique we can find the non-linear ranking function $R(x) = |x|$.
+
+\item Program (g) is a linear program that is shown
+in~\cite{DBLP:conf/tacas/CookSZ13} not to admit (without prior manipulation)
+a lexicographic linear ranking function.  With our technique we can find the
+non-linear ranking function $R(x) = |x|$.
+
 %As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
 %loop transition leads to a decrease with respect to the lexicographic
 %ordering for this tuple. Therefore no function may increase unless a function of
@@ -496,33 +497,33 @@ invariant~\cite{DBLP:conf/cav/BrockschmidtCF13}.  For this loop, we find the
 ranking function $R(x) = x$ together with the supporting invariant $y=1$.
 
 \item In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, program (i)
-admits a multiphase ranking function computed from a multiphase ranking
-template.  A multiphase ranking template is targeted at programs that go
-through a finite number of phases in their execution.  Each phase is ranked
-with an affine-linear function and the phase is considered to be completed
-once this function becomes non-positive.
+admits a \emph{multiphase} ranking function, computed from a multiphase
+ranking template.  Multiphase ranking templates are targeted at programs
+that go through a finite number of phases in their execution.  Each phase is
+ranked with an affine-linear function and the phase is considered to be
+completed once this function becomes non-positive.
 
 In our setting this type of programs does not need special treatment, as we
 can find a non-linear lexicographic ranking function $R(x, y, z) = (x < y,
-z)$.  This termination argument is somewhat subtle, but can be understood as
-follows: the boolean quantity $x < y$ eventually decreases, that is to say
-once a state with $x \geq y$ is reached, $x$ never again becomes greater
-than $y$.  This means that as soon as the ``else'' branch of the if
-statement is taken, it will continue to be taken in each subsequent
-iteration of the loop.  Meanwhile, if $x < y$ has not decreased (i.e.  we
-have stayed in the same branch of the ``if'') then $z$ does decrease.  Since
-a boolean only has two possible values, it cannot decrease indefinitely. 
-Since $z > 0$ is a conjunct of the loop guard, $z$ cannot decrease
-indefinitely, and so $R$ proves that the loop is well founded.
-
-As with all of the termination proofs presented in this paper, the ranking
-function above was found completely automatically.
-
+z)$.\footnote{This termination argument is somewhat subtle, but can be understood as
+follows: The Boolean values $\mathit{false}$ and $\mathit{true}$ are
+interpreted as 0 and 1, respectively.  The Boolean $x < y$ thus eventually
+decreases, that is to say once a state with $x \geq y$ is reached, $x$ never
+again becomes greater than $y$.  This means that as soon as the ``else''
+branch of the if statement is taken, it will continue to be taken in each
+subsequent iteration of the loop.  Meanwhile, if $x < y$ has not decreased
+(i.e., we have stayed in the same branch of the ``if''), then $z$ does
+decrease.  Since a Boolean only has two possible values, it cannot decrease
+indefinitely.  Since $z > 0$ is a conjunct of the loop guard, $z$ cannot
+decrease indefinitely, and so $R$ proves that the loop is well founded.}
 \iffalse
 \item Program (j) illustrates a nested loop.  This construction can cause difficulties for provers based on
 enumerating lassos
 \fi
 \end{itemize}
+%
+As with all of the termination proofs presented in this paper, the ranking
+functions above were all found completely automatically.
 
 \begin{figure*}
 \centering
@@ -705,30 +706,39 @@ while (x > 0 && y > 0 && z > 0) {
 
 
 \section{Preliminaries}
-Given a program, %with state space $X$ and transition relation $T \subseteq X \times X$, 
-we first formalise its termination argument as a ranking function
-(Section~\ref{sec:ranking.functions}).  Subsequently, we discus bit-vector
-semantics and illustrate differences between machine arithmetic and integer
-arithmetic that make the abstraction of bit-vectors to mathematical integers
-unsound (Section~\ref{sec:machine.arith}).
+
+Given a program, we first formalise its termination argument as a ranking
+function (Section~\ref{sec:ranking.functions}).  Subsequently, we discus
+bit-vector semantics and illustrate differences between machine arithmetic
+and integer arithmetic that show that the abstraction of bit vectors to
+mathematical integers unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
-A programs $P$ is represented as a transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $x$. 
-A state of the program is a valuation of the variables from $x$. For a state $s \in X$ with $T(s,s')$ we say $s'$
-is the successor of $s$ under $T$. 
+
+A programs $P$ is represented as a transition systems with state space $X$,
+transition relation $T \subseteq X \times X$, and set of variables $V$.  A
+state of the program is a valuation of the variables from $V$.  For a state
+$x \in X$ with $T(x,x')$ we say $x'$ is the successor of $x$ under $T$.
 
 \begin{definition}[Unconditional termination]
-A transition system is said to be \emph{unconditionally terminating} if there is no infinite sequence of states
-$x_1, x_2, \ldots \in X$ with $\forall i . T(x_i, x_{i+1})$.  
+%
+A transition system is said to be \emph{unconditionally terminating} if
+there is no infinite sequence of states $x_1, x_2, \ldots \in X$ with
+$\forall i.~T(x_i, x_{i+1})$.
+%
 \end{definition}
 
-We can prove that the transition system is unconditionally terminating by finding a ranking function for its transition relation.
-
+We can prove that the transition system is unconditionally terminating by
+finding a ranking function for its transition relation.
+%
 \begin{definition}[Ranking function]
-An injective function ${R:X\to Y}$ is a \emph{ranking function} for the transition relation $T$ if $Y$ is a well-founded set and 
+%
+An injective function ${R:X\to Y}$ is a \emph{ranking function} for the
+transition relation $T$ if $Y$ is a well-founded set with order $<$ and 
 $R$ is monotonically decreasing with respect to $T$.  That is
 to say:
 $$\forall x, x' \in X. T(x, x') \Rightarrow R(x) < R(x')$$
+%
 \end{definition}
 
 \begin{definition}[Linear ranking function]
@@ -737,8 +747,9 @@ with $\dim(X) = n$ and $\dim(Y) = m$ is of the form: $$f(\vec{x}) = M\vec{x}$$ w
 $M$ is an $n \times m$ matrix.
 \end{definition}
 
-In the case that $\dim(Y) = 1$, this reduces to an inner product:
-$$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c$$
+In the case that $\dim(Y) = 1$, this reduces to the inner product
+%
+$$f(\vec{x}) = \vec{\lambda} \cdotp \vec{x} + c \;.$$
 
 \begin{definition}[Lexicographic ranking function]
 For $Y = Z^m$, we say that a ranking function $R: X \to Y$ is \emph{lexicographic}
@@ -759,7 +770,7 @@ whose co-domain is the ordinals, rather than just $\mathbb{N}$.
 %% \end{definition}
 
 
-\subsection{Machine Arithmetic and Bitvectors} \label{sec:machine.arith} 
+\subsection{Machine Arithmetic and Bit Vectors} \label{sec:machine.arith} 
 
 Physical computers have bounded storage, which means they are unable to
 perform calculations on mathematical integers.  For example, if $A$ is the
@@ -767,19 +778,10 @@ Ackermann function and $G$ is Graham's number, a physical computer capable
 of computing $A(G, G)$ would contain (much!) more matter than is believed to
 exist in the universe.  Fortunately, it is rare for a programmer to need
 such a large number and so modern computers do their arithmetic over
-fixed-width binary words, otherwise known as bit-vectors.  For the remainder
-of this section, we will say that the bit-vectors we are working with are
+fixed-width binary words, otherwise known as bit vectors.  For the remainder
+of this section, we will say that the bit vectors we are working with are
 $k$-bits wide, which means that each word can hold one of $2^k$ bit
 patterns.  Typical values for $k$ are 32 and 64.
-
-Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
-of the differences between machine arithmetic and Peano arithmetic.  To give
-an example: $(2^k - 1) + 1 \equiv 0 \pmod {2^k}$.  This provides a
-counterexample to the statement $\forall x .  x + 1 > x$, which is a theorem
-of Peano arithmetic but not of modular arithmetic.  When an arithmetic
-operation has a result greater than $2^k$, it is said to ``overflow''.  If
-an operation does not overflow, its machine-arithmetic result is the same as
-the result of the same operation performed on integers.
 
 Machine words can be interpreted as ``signed'' or ``unsigned'' values. 
 Signed values can be negative, while unsigned values cannot.  The encoding
@@ -789,40 +791,47 @@ than $2^k - 1$.  Two's complement representation has the property that
 $\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
 is bitwise-negation.  Two's complement also has the property that addition,
 multiplication and subtraction are defined identically for unsigned and
-signed numbers.  Therefore signed and unsigned arithmetic differ only on
-comparison operators\footnote{There is also the difference that signed
-overflow in a C program results in undefined behaviour, but in practice the
-undefined behaviour is implemented just as if the arithmetic had been
-unsigned}.  For example: $$\forall x .  -x \leq_s x \wedge -x \geq_u x$$
-where $\leq_s$ and $\geq_u$ represent signed and unsigned comparisons
-respectively.
+signed numbers.
+
+Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
+of the differences between machine arithmetic and Peano
+arithmetic.\footnote{ISO C requires that unsigned arithmetic is performed
+modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
+In practice, the undefined behaviour is implemented just as if the
+arithmetic had been unsigned}.  To give an example, $(2^k - 1) + 1 \equiv 0
+\pmod {2^k}$ provides a counterexample to the statement $\forall x. 
+x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
+arithmetic.  When an arithmetic operation has a result greater than $2^k$,
+it is said to ``overflow''.  If an operation does not overflow, its
+machine-arithmetic result is the same as the result of the same operation
+performed on integers.
 
 The final source of difference between integer arithmetic and bitvector
-arithmetic stems from width conversions.  Typical computers allow variables
-to have different types, which can be represented using words of different
-widths.  In C a \texttt{short} might occupy 16 bits, while an \texttt{int}
-might occupy 32 bits.  If a $k$-bit variable is assigned to a $l$-bit
-variable with $l < k$, the result is truncated $\mod 2^l$.  For example, if
-$x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will hold the
-value $0$ after the following code is executed:
-
+arithmetic stems from width conversions.  Many programming languages allow
+numeric variables of different types, which can be represented using words
+of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
+\texttt{int} might occupy 32 bits.  When a $k$-bit variable is assigned to a
+$l$-bit variable with $l < k$, the result is truncated $\mod 2^l$.  For
+example, if $x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will
+hold the value $0$ after the following code is executed:
+%
 \begin{lstlisting}
 x = 65536;
 y = x;
 \end{lstlisting}
 
-This gives us a counterexample to the statement $\forall x, y . x = y \Rightarrow (x + 1) = (y + 1)$,
-which is a theorem of Peano arithmetic.
+This gives us a counterexample to the statement $\forall x, y . x = y
+\Rightarrow (x + 1) = (y + 1)$, which is a theorem of Peano arithmetic.
 
 As well as machine arithmetic differing from Peano arithmetic on the
 operators they have in common, computers have several ``bitwise'' operations
 that are not taken as primitive in the theory of integers.  These operations
-include the standard boolean operations \texttt{and, or, not, xor} applied
-to each element of the bit-vector.  Computer programs often make use of
-these operators, which are non-linear when interpreted in the standard model
-of Peano arithmetic\footnote{ Although some of these operators can be seen
-as linear in a different algebraic structure, e.g.  \texttt{xor} corresponds
-to addition in the Galois field $\mathrm{GF}(2^k)$}.
+include the Boolean operators \texttt{and, or, not, xor} applied to each
+element of the bit vector.  Computer programs often make use of these
+operators, which are non-linear when interpreted in the standard model of
+Peano arithmetic\footnote{Some of these operators can be seen as
+linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
+addition in the Galois field $\mathrm{GF}(2^k)$.}.
 
 \iffalse
 \section{Combinatorics of Finite Termination}
@@ -901,7 +910,6 @@ define the syntax of a language we will work over.
 %% we do not care about the CFG (we do not need to encode the CFG 
 %% through program counter in the second-order constraints).
 
-
 The problem of program verification can be reduced to the problem of finding
 solutions to a second-order
 constraint~\cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}. 
@@ -920,15 +928,18 @@ non-termination.  We will suggestively refer to the fragment as the
 % The synthesis fragment is motivated by practical requirements in software verification.
 
 \begin{definition}[Synthesis Fragment]
- A formula is in the synthesis fragment iff it is of the form
+A formula is in the \emph{synthesis fragment} iff it is of the form
+%
  \[
   \exists \vec{P},~ \vec{x} . ~\forall~ \vec{y} . \sigma(\vec{P}, \vec{x}, \vec{y})
  \]
-
-where $\vec{P}$ ranges over sets, while $\vec{x}$ and $\vec{y}$ range over ground terms.
-Function $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to \mathbb{B}$ can be viewed as a specification function
-that  returns true iff the functions $\vec{P}$ compute appropriate outputs
-when fed the inputs $\vec{x}$ and $\vec{y}$.  
+%
+where $\vec{P}$ ranges over sets, while $\vec{x}$ and $\vec{y}$ range over
+ground terms.  Function $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times
+Y^m \to \mathbb{B}$ can be seen as a specification function that returns
+true iff the functions $\vec{P}$ compute appropriate outputs when fed the
+inputs $\vec{x}$ and $\vec{y}$.
+%
 \end{definition}
 %
 Checking satisfiability of a formula in the synthesis fragment corresponds to program synthesis and
@@ -949,13 +960,14 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 
 \subsection{An Isolated Loop}
 
-We will begin our discussion by showing how to encode the (non-)termination
-of program consisting of a single loop in the synthesis fragment.  For the
-time being, a loop is a pair ${L= \langle G,T \rangle}$, where the states
-$x$ satisfying the loop's guard are given by the predicate $G(x)$.  The body
-of the loop is encoded as the transition relation $T(x, x')$, meaning that
-state $x'$ is reachable from state $x$ via a single iteration of the loop
-body.  For example, the loop in Figure~\ref{fig:motivation.a} is encoded as:
+We will begin our discussion by showing how to encode the
+\mbox{(non-)termination} of a program consisting of a single loop in the
+synthesis fragment.  For the time being, a loop is a pair ${L= \langle G,T
+\rangle}$, where the states $x$ satisfying the loop's guard are given by the
+predicate $G(x)$.  The body of the loop is encoded as the transition
+relation $T(x, x')$, meaning that state $x'$ is reachable from state $x$ via
+a single iteration of the loop body.  For example, the loop in
+Figure~\ref{fig:motivation.a} is encoded as:
 %
 \begin{align*}
 G(x) & = \{ x \mid x>0 \} \\
@@ -976,7 +988,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \end{align*}
 \end{definition}
 
-\begin{definition}[Non-Termination Formula - Open Recurrence Set  {\bf [ONT]}]
+\begin{definition}[Non-Termination Formula -- Open Recurrence Set  {\bf [ONT]}]
 \label{def:ont}
  \begin{align*}
   \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
@@ -984,7 +996,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
  \end{align*}
 \end{definition}
 
-\begin{definition}[Non-Termination Formula - Closed Recurrence Set {\bf [CNT]}]
+\begin{definition}[Non-Termination Formula -- Closed Recurrence Set {\bf [CNT]}]
 \label{def:cnt}
  \begin{align*}
   \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
@@ -1037,19 +1049,20 @@ as shown in Section~\ref{sec:env}. For any other statements, $T_o$ and $T$ are e
 \end{proof}
 
 As the existence of a ranking function is equivalent to the satisfiability
-of the formula {\bf [UT]}, a satisfiality witness 
-is also a ranking function and thus a proof of $L$'s unconditional termination.
+of the formula {\bf [UT]}, a satisfiability witness is also a ranking
+function and thus a proof of $L$'s unconditional termination.
 
-Continuing the example of the program in Figure~\ref{fig:motivation.a}, we can see that
-the corresponding synthesis formula {\bf [UT]} is satisfiable, as witnessed by the function $R(x) = x$.
-So $R(x) = x$ constitutes a proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
+Continuing the example of the program in Figure~\ref{fig:motivation.a}, we
+can see that the corresponding synthesis formula {\bf [UT]} is satisfiable,
+as witnessed by the function $R(x) = x$.  Thus, $R(x) = x$ constitutes a
+proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
 terminating.
 
-Note that different formulations for unconditional termination are possible.
+Note that different formulations for unconditional termination are possible. 
 We are aware of a proof rule based on transition invariants, i.e.  supersets
-of the transition relation's transitive closure
-\cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes that
-the second-order logic has a primitive predicate for disjunctive
+of the transition relation's transitive
+closure~\cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes
+that the second-order logic has a primitive predicate for disjunctive
 well-foundedness.  Conversely, our formulation in Definition~\ref{def:UT}
 does not require a transitive closure operator, nor a disjunctive
 well-foundedness predicate.  \\
@@ -1059,13 +1072,16 @@ Dually to termination, we might want to consider the non-termination of a progra
 we can prove this by finding a ranking function %and supporting invariant 
 witnessing the satisfiability of formula {\bf[UT]}.  What then would a proof of non-termination look like?
 
-Gupta et al. \cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination of a transition relation $T$ by the existence of an \emph{(open) recurrence set},
-i.e. a nonempty set of states $N$ such that for each $s \in N$ there
+Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination
+of a transition relation $T$ by the existence of an \emph{(open) recurrence
+set}, i.e.  a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s'\in N$.
 For our case, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
-Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition relation, $T_u$. 
+Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition
+relation~$T_u$. 
 %$L = \langle G,T \rangle$
-Again, this distinction is mostly important when dealing with nested loops, as illustrated in Section~\ref{sec:env}.
+Again, this distinction is mostly important when dealing with nested loops,
+as illustrated in Section~\ref{sec:env}.
 
 
 \begin{theorem}
@@ -1079,18 +1095,24 @@ Again, this distinction is mostly important when dealing with nested loops, as i
  (Do this proof properly).
 \end{proof}
 
-If this formula is satisfiable, $N$ is an open recurrence set for $L$ which proves
+If this formula is satisfiable, $N$ is an open recurrence set for $L$, which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula). %This means that we will not be able to use the solver for the synthesis fragment to solve it.
 
-In order to formulate the non-termination problem inside the synthesis fragment, 
-we make use of the notion of \emph{closed recurrence set} introduced by Chen et al. in \cite{DBLP:conf/tacas/ChenCFNO14}. 
-As opposed to an open recurrence set, this is a $\exists \forall$ property: for each state in the recurrence set $N$, all of its successors 
-must be in $N$. We note that if $T$ is deterministic, every open recurrence set is also a closed recurrence set (since each
-state has at most one successor).  Thus, the non-termination problem for deterministic transition systems is equivalent to the
-satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonterm-formula}.
-%As our formulation is with respect to a given loop $L=\langle I,G,T \rangle$, we require the  
-%recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$. In other words, the loop's guard needs to be satisfied in order for the 
+In order to formulate the non-termination problem inside the synthesis
+fragment, we make use of the notion of \emph{closed recurrence set}
+introduced by Chen et al.~in~\cite{DBLP:conf/tacas/ChenCFNO14}.  As opposed
+to an open recurrence set, this is an $\exists \forall$ property: for each
+state in the recurrence set $N$, all of its successors must be in $N$.  We
+note that if $T$ is deterministic, every open recurrence set is also a
+closed recurrence set (since each state has at most one successor).  Thus,
+the non-termination problem for deterministic transition systems is
+equivalent to the satisfiability of formula {\bf [CNT]}.
+
+%Definition~\ref{def:deterministic-nonterm-formula}.  As our formulation is
+%with respect to a given loop $L=\langle I,G,T \rangle$, we require the
+%recurrence set to include the loop's guard, $N(x) \rightarrow G(x)$.  In
+%other words, the loop's guard needs to be satisfied in order for the
 %infinite execution to happen.
 
 \begin{theorem}
@@ -1105,20 +1127,28 @@ satisfiability of formula {\bf [CNT]}. %Definition~\ref{def:deterministic-nonter
  (Finish this proof).
 \end{proof}
 
-Note that by defining $T_u$'s determinism as the existence of exactly one successor for any state satisfying $L$'s guard, 
-we eliminate the possibility of $T_u$ being $false$, which would otherwise constitute a counter-example for Theorem~\ref{thm:cnt}.
+Note that by defining $T_u$'s determinism as the existence of exactly one
+successor for any state satisfying $L$'s guard, we eliminate the possibility
+of $T_u$ being $\mathit{false}$, which would otherwise constitute a
+counterexample for Theorem~\ref{thm:cnt}.
 
-Given that our program's state space is finite, a transition relation induces a infinite execution if and only if some state is 
-visited infinitely often, or equivalently the state is visited twice in the course of the execution.
-This gives us an alternative way of expression a non-termination proof: we can can try to find a witness $x$ to the satisfiability
-of the formula
+Given that our program's state space is finite, a transition relation
+induces a infinite execution if and only if some state is visited infinitely
+often, or equivalently the state is visited twice in the course of the
+execution.  This gives us an alternative way of expression a non-termination
+proof: we can can try to find a witness $x$ to the satisfiability of the
+formula
+%
 $$ \exists x . T^+(x, x)$$
-However, deciding satisfiability of this formula directly requires a logic that includes a transitive closure operator, which
-ours does not have.\\
+%
+However, deciding satisfiability of this formula directly requires a logic
+that includes a transitive closure operator, which ours does not have.\\
 
-\noindent {\bf Non-determinism.} A non-termination diagnosis procedure based on checking the satisfiability of formula {\bf [CNT]}
-may fail to find a closed recurrence set for a loop $L=(G, T_u)$ when $T_u$ is non-deterministic.  
-To understand the issue, imagine the following loop with an non-deterministic assignment:
+\noindent {\bf Non-determinism.} A non-termination diagnosis procedure based
+on checking the satisfiability of formula {\bf [CNT]} may fail to find a
+closed recurrence set for a loop $L=(G, T_u)$ when $T_u$ is
+non-deterministic.  To understand the issue, imagine the following loop with
+a non-deterministic assignment to \lstinline!y!:
 
 \begin{lstlisting}[language=C]
 while(x != 0) {
@@ -1127,8 +1157,8 @@ while(x != 0) {
 }
 \end{lstlisting}
 
-Only for certain values of \texttt{y} the loop is non-terminating.  In order
-to restrict the values that may be assigned to \texttt{y}, we need an
+Only for certain choices of \texttt{y} the loop is non-terminating.  In
+order to restrict the values that may be assigned to \texttt{y}, we need an
 assumption associated with the non-deterministic choice.  However, such an
 assumption may cause a reachable state at the non-deterministic assignment
 to not have any successor.  In such a case the termination formula would be
@@ -1354,19 +1384,25 @@ For a loop $L=(G,T)$, the formulae {\bf [CT]} %and {\bf [CNT]}
 from Definition~\ref{def:ct} 
 %and Definition~\ref{def:cnt} 
 is in terms of 
-$T_o$ and $I$, which over-approximate the transition relation $T$ and the set of states that $L$ may begin executing in, respectively. 
+$T_o$ and $I$, which over-approximate the transition relation~$T$ and the set of states that $L$ may begin executing in, respectively. 
 The reason for using over-approximations [instead of exact relations] %when formulating the (non-)termination of an isolated loop 
 is so that we can use the same formulae regardless of the environment the loop is executing in, or 
-the complexity of its body, e.g. if it contains nested loops.
+the complexity of its body, e.g.~if it contains nested loops.
 
 All we need to do in order to use {\bf [CT]} in any context %environment and regardless of the complexity of the loops's body 
 is generate constraints over-approximating %abstracting 
 the environment and the loop's body. %: for termination, we need over-approximating abstractions, whereas for non-termination 
 %we need under-approximations. 
-As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
-we will not provide the full algorithm, but rather illustrate it through the example in Figure~\ref{fig:environment-model}.
-Let us assume that we have already proven the termination of loops $L_1$ and $L_3$, and we are now trying to prove that $L_2$ terminates, which we encode
-as the conjunction of constraints on the right side of the figure:
+%
+As the generation of such constraints is standard and covered by several
+other
+works~\cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08},
+we will not provide the full algorithm, but rather illustrate it through the
+example in Figure~\ref{fig:environment-model}.  Let us assume that we have
+already proven the termination of loops $L_1$ and $L_3$, and we are now
+trying to prove that $L_2$ terminates, which we encode as the conjunction of
+constraints on the right-hand side of the figure:
+%
 \begin{itemize}
 \item $W_1$, $W_2$ and $W_3$ are (over-approximating) inductive invariants for $L_1$, $L_2$ and $L_3$, respectively.
 \item $S$ is a summary of $L_3$ that over-approximates the transitive closure of its transition relation.
@@ -1448,14 +1484,26 @@ This becomes more challenging now then when dealing with over-approximations due
 
 This issue does not arise when abstracting the environment as its under-approximation and the loop under consideration make use of existential quantification at the same nestedness level. However, when dealing with nested loops, we need to compute the under-approximation of the inner loop, which requires a nested existential quantifier, 
 resulting in the $\exists \forall \exists$ alternation. 
+%
 %% computing the under-approximation of the loop's body requires an extra quantifier alternation. 
 %% The origin of the problem comes from the fact that an under-approximation is an existential property and therefore
 %% requires an extra existential quantifier, resulting in the $\exists \forall \exists$ alternation. This situation is similar to the one encountered when proving non-termination of non-deterministic loops. 
-To go around this limitation, we treat nested loops as a special case and give a separate formula for them in Figure~\ref{fig:nonterm-nested}. If the formula on the right of the figure is satisfiable, then $L_1$ is non-terminating as witnessed by the recurrence set $N_1$ and
-the initial state $x_0$ in which the program begins executing. There are two possible scenarios for $L_2$'s termination:
+%
+To address this limitation, we treat nested loops as a special case and give
+a separate formula for them in Figure~\ref{fig:nonterm-nested}.  If the
+formula on the right of the figure is satisfiable, then $L_1$ is
+non-terminating as witnessed by the recurrence set $N_1$ and the initial
+state $x_0$ in which the program begins executing.  There are two possible
+scenarios for $L_2$'s termination:
+%
 \begin{itemize}
-\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x) \wedge P_2(x,x') \rightarrow N_1(x') $. 
+
+\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that
+reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x)
+\wedge P_2(x,x') \rightarrow N_1(x') $.
+
 \item If $L_2$ is non-terminating, then $N_2$ is its recurrence set.
+
 \end{itemize}
 
 
@@ -1618,8 +1666,8 @@ $$ \qquad \qquad \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')$$
 
 \noindent{\bf Nested loops.}
 %
-For brevity reasons, we illustrate our approach to handling nested loops for
-only two loops, but the approach can be easily generalised to any number of
+We illustrate our approach to handling nested loops for only two loops for
+sake of brevity, but the approach can be easily generalised to any number of
 nested loops:
 %
 \begin{lstlisting}[mathescape=true]
@@ -1696,8 +1744,8 @@ In this section we present a solver for the synthesis fragment:
   \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
  \]
 %
-where $P$ ranges over sets, while $x$ and $y$ range over ground terms (as mentioned before, for brevity reasons we drop
- the vector symbol and write  $x$ for $\vec{x}$).
+where $P$ ranges over sets, while $x$ and $y$ range over ground terms (as
+mentioned before, we drop the vector notation and write $x$ for $\vec{x}$).
 
 By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 \mathbb{B}$ as a specification function that returns true iff $P$ computes
@@ -1723,29 +1771,25 @@ sketching~\cite{lezama-thesis,sketch,modular-sketch}.
 %% using the CEGIS algorithm.
 
 
-In the context of (non-)termination analysis, a witnesses to the satisfiability of a formula in the synthesis fragment 
-is a (non-)termination proof. 
-As mentioned earlier in the paper, our analysis must ensure precise treatment of bit-wise operations and arithmetic modulo fixed widths
-%Consequently, a compulsory characteristic of our solver is that it must 
-by modelling bit accurate semantics.
-The synthesiser must therefore be able to compute (non-termination) proofs 
-%loop-free programs 
-over machine integers and floating-point numbers from the specifications detailed in Section~\ref{sec:second.order}.
-
-
-
-
-
+In the context of (non-)termination analysis, a witnesses to the
+satisfiability of a formula in the synthesis fragment is a
+\mbox{(non-)termination} proof.  As mentioned earlier in the paper, our
+analysis must ensure precise treatment of bit-wise operations and arithmetic
+modulo fixed widths by modelling bit-accurate semantics.  The synthesiser
+must therefore be able to compute (non-termination) proofs over machine
+integers and floating-point numbers from the specifications detailed in
+Section~\ref{sec:second.order}.
 
 %\subsection{\newC}
 %\label{sec:logic}
+
 \subsection{The Synthesis Specification}
-The logic we use to express the synthesis formula, i.e. the (non-)termination specifications, % are given as program fragments
-%More specifically, the logic we use to express the synthesis formula
-is a subset of C that we call \newC.  
-The characteristic property of a \newC  program is that safety can be decided for
-it using a single query to a Bounded Model Checker.  A \newC program is
-just a C program with the following syntactic restrictions:
+
+The logic we use to express the synthesis formula, i.e.~the
+\mbox{(non-)termination} specifications, is a subset of C that we call
+\newC.  The characteristic property of a \newC program is that safety can be
+decided for it using a single query to a Bounded Model Checker.  A~\newC
+program is just a C program with the following syntactic restrictions:
  all loops in the program must have a constant bound;
  all recursion in the program must be limited to a constant depth;
  all arrays must be statically allocated (i.e. not using \texttt{malloc}),
@@ -1899,15 +1943,18 @@ procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which 
 a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
 
 The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$
-which satisfy the partial specification:
+that satisfy the partial specification:
 %
 \[
  \exists P, x_0 . \forall x \in \text{\sc inputs} . \sigma(P, x_0, x)
 \]
 
-If {\sc synth} succeeds in finding a witness $(P, x_0)$, this witness is a candidate solution to the full
-synthesis formula.  We pass this candidate solution to {\sc verif} which determines whether the candidate
-does satisfy the specification on all inputs by checking satisfiability of the verification formula:
+If {\sc synth} succeeds in finding a witness $(P, x_0)$, this witness is a
+candidate solution to the full synthesis formula.  We pass this candidate
+solution to {\sc verif} which determines whether the candidate does satisfy
+the specification on all inputs by checking satisfiability of the
+verification formula:
+%
 \[
  \exists x . \lnot \sigma(P, x_0, x)
 \]
@@ -2181,8 +2228,8 @@ in order to get a complete search procedure.
 \\
 
 \noindent {\bf Genetic Programming and Incremental Evolution} \label{sec:gp}
-To generate candidate (non-)termination proofs in the synthesise phase of
-the refinement loop, we make use of genetic programming
+To generate candidate (non-)termination proofs in the ``Synthesise'' phase
+of the refinement loop, we make use of genetic programming
 (GP)~\cite{langdon:fogp} as an alternative to model checking and exhaustive
 search.  Genetic programming provides an intelligent and adaptive way of
 searching through the space of computer programs for an individual that is
@@ -2255,12 +2302,16 @@ so the complexity is doubly exponential in the width of $X$.
 \end{conjecture}
 \fi
 
-
 \section{Soundness, Completeness and Complexity}
-\begin{theorem}
- \label{thm:synth-sound}
- Algorithm~\ref{alg:cegis} is sound -- if it terminates with witness $P$ then
- $P \models \sigma$.
+
+Termination for bitvector programs is known to be
+PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10}.  We first record the
+expected results for soundness and completeness of our algorithm for
+deciding it.
+%
+\begin{theorem}\label{thm:synth-sound}
+Algorithm~\ref{alg:cegis} is sound -- if it terminates with witness $P$, then
+$P \models \sigma$.
 \end{theorem}
 
 \begin{proof}
@@ -2272,7 +2323,7 @@ so the complexity is doubly exponential in the width of $X$.
  \label{thm:synth-semicomplete}
  If the existential first-order theory used to express the specification $\sigma$ is decidable,
  algorithm~\ref{alg:cegis} is semi-complete -- if a program $P \models \sigma$
- exists then algorithm~\ref{alg:cegis} will terminate.  However if no program
+ exists then algorithm~\ref{alg:cegis} will terminate.  However, if no program
  satisfies the specification, the algorithm may not terminate.  Furthermore if the domain of inputs $X$
  is finite, the algorithm is guaranteed to terminate.
 \end{theorem}
@@ -2330,13 +2381,15 @@ t4 = v1 == 1
 t5 = ITE(t4, 2, t3)
 ...
  \end{verbatim}
+%
 It is easy to see how this generalises to computing an arbitrary permutation.
-
-So we can see that every permutation is computed a program of size at most $b \times 2^{bk + 1}$.  Since
-{\sc Kalashnikov} enumerates all programs in order of length, it will eventually check
-a program computing each permutation of $\mathcal{S}$ and so will eventually check a program
-computing the ranking function $R''$.  Checking that a single program satisfies the specification
+Thus, every permutation is computed a program of size at most $b \times
+2^{bk + 1}$.  Since {\sc Kalashnikov} enumerates all programs in order of
+length, it will eventually check a program computing each permutation of
+$\mathcal{S}$ and so will eventually check a program computing the ranking
+function $R''$.  Checking that a single program satisfies the specification
 is a decidable problem, and the search as a whole terminates.
+%
 \end{proof}
 
 \begin{theorem}
@@ -2356,14 +2409,13 @@ is a decidable problem, and the search as a whole terminates.
  such a predicate if one exists.  The proof is similar to the proof of Theorem~\ref{thm:complete-termination}.
 \end{proof}
 
-
-Since termination for bitvector programs is known to be PSPACE-complete \cite{DBLP:conf/tacas/CookKRW10} it
-is perhaps unsurprising that we are able to decide it.  We will now show that our time complexity is
-asymptotically a function of the Kolmogorov complexity of the (non-)termination proof, and argue heuristically
-that this gives our procedure various desirable qualities.
-
+We will now show that our time complexity is asymptotically a function of
+the Kolmogorov complexity of the (non-)termination proof, and argue
+that this gives our procedure various desirable qualities in practical
+appliations.
+%
 \begin{theorem}
- {\sc Kalashnikov} has time complexity $NP^{NP}(K(\sigma))$
+ {\sc Kalashnikov} has time complexity $NP^{NP}(K(\sigma))$.
 \end{theorem}
 
 \begin{theorem}
@@ -2371,7 +2423,6 @@ that this gives our procedure various desirable qualities.
  overhead.  It therefore has time complexity $NP^{NP}(K(\tau(P))$ where $\tau(P)$ is the
  termination specification for program $P$.
 \end{theorem}
-
 
 In Section~\ref{sec:synthesis} we will describe a procedure for solving the synthesis formula.
 This procedure has the property that it will find the shortest program meeting the
@@ -2382,7 +2433,7 @@ of a function $f$:
 
 \begin{definition}[Kolmogorov complexity]
  The Kolmogorov complexity $K(f)$ is the length of the shortest program that
- computes $f$.
+ computes~$f$.
 \end{definition}
 
 We can extend this definition slightly to talk about the Kolmogorov complexity of a
@@ -2566,7 +2617,7 @@ is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
 Given the lack of research in handling \emph{not-linear programs}, as well
-as \emph{programs over bit-vectors and floats}, our work focuses on covering
+as \emph{programs over bit vectors and floats}, our work focuses on covering
 these areas.  One of the obvious conclusions that can be reached from
 observing Figure~\ref{fig:handletable}, is that most of the works tend to
 specialise on a certain aspect of termination proving that they can solve
