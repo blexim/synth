@@ -176,7 +176,7 @@ their validity.
 As Ramsey-based approaches are limited by the state of the art in safety
 checking, recent research shifts back to more complex termination arguments
 that are easier to
-check~\cite{DBLP:conf/cav/KroeningSTW10,DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/HeizmannHP14}. 
+check~\cite{DBLP:conf/cav/KroeningSTW10,DBLP:conf/tacas/CookSZ13}. 
 Following the same trend, we investigate its extreme: \emph{unrestricted}
 termination arguments.  This means that our ranking functions may involve
 non-linearity and lexicographic orders: we do not commit to any particular
@@ -241,14 +241,14 @@ that this claim holds in practice, causing our technique to perform well.
   & & L & NL & L & NL & L & NL & L & NL \\
   \hline
   \hline
-  \multirow{4}{*}{Ranking} & Linear lexicographic &  \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} && & &\checkmark&\checkmark&\checkmark&\checkmark\\
-   & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & && \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
-   & Non-linear lexicographic &  &  & &&\checkmark&\checkmark&\checkmark&\checkmark\\
+  \multirow{4}{*}{Ranking} & Linear lexicographic &  \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} & - & & &\checkmark&\checkmark&\checkmark&\checkmark\\
+   & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & && \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
+   & Non-linear lexicographic & - & - & &&\checkmark&\checkmark&\checkmark&\checkmark\\
    & Non-linear non-lexicographic & \cite{DBLP:conf/vmcai/BradleyMS05} &  \cite{DBLP:conf/vmcai/BradleyMS05} & &&\checkmark&\checkmark&\checkmark&\checkmark\\
    \hline
  \end{tabular}
 
- \caption{Legend: \checkmark = we can handle\label{fig:handletable}}
+ \caption{Summary of related termination analyses. Legend: \checkmark = we can handle; - = no available works.} \label{fig:handletable}
 \end{figure*}
 
 The main contributions of our work can be summarised as follows:
@@ -2037,7 +2037,7 @@ Figure~\ref{fig:handletable} summarises the related works with respect to the as
 
 Somehow expected, most of the techniques are specialised in the synthesis of linear ranking functions for linear programs 
 over integers (or rationals) \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,
-DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13}. Among them, 
+DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}. Among them, 
 Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures 
 %to compute transition invariants as proofs for the termination of linear programs 
 \cite{DBLP:conf/cav/LeeWY12},
@@ -2063,7 +2063,7 @@ is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
 Given the lack of research in handling \emph{not-linear programs}, as well
-as \emph{programs over bit vectors and floats}, our work focuses on covering
+as \emph{programs over bit vectors and floats}, our work focused on covering
 these areas.  One of the obvious conclusions that can be reached from
 observing Figure~\ref{fig:handletable}, is that most of the works tend to
 specialise on a certain aspect of termination proving that they can solve
@@ -2083,22 +2083,22 @@ strengthen the termination argument such that it becomes a transitive
 relation~\cite{DBLP:conf/cav/KroeningSTW10}.
 
 Proving program termination implies the simultaneous search for a
-termination argument and a supporting invariant.  For this purpose, several
-tools alternate between calls to a safety prover and calls to a ranking
-function synthesis tool \cite{}.  In order to share more information about
-the state of the termination proofs between the two tools, Brockschmidt et
-al.  use a single representation of the state of the termination proof
-search that both tools operate over, resulting in performance improvements
-\cite{DBLP:conf/cav/BrockschmidtCF13}.  In \cite{DBLP:conf/cav/BradleyMS05},
+termination argument and a supporting invariant.  
+%For this purpose, several tools alternate between calls to a safety prover and calls to a ranking function synthesis tool \cite{}.  
+%In order to share more information about
+%the state of the termination proofs between the two tools, 
+Brockschmidt et al. 
+share the same representation of the state of the termination proof
+between the safety prover and the ranking function synthesis tool \cite{DBLP:conf/cav/BrockschmidtCF13}.  
+In \cite{DBLP:conf/cav/BradleyMS05},
 Bradley et al.  combine the generation of ranking functions with the
 generation of invariants to form one constraint solving problem such that
 the necessary supporting invariants for the ranking function are discovered
 on demand.  In our setting, both the ranking function and the supporting
 invariant are iteratively constructed through the same refinement loop.
 
-
-While program termination has been extensively studied, much less research has been conducted in the area of proving nontermination.
-Gupta et al. dynamically enumerate lasso-shaped candidate
+While program termination has been extensively studied, much less research has been conducted 
+in the area of proving non-termination. Gupta et al. dynamically enumerate lasso-shaped candidate
 paths for counterexamples, and then statically prove their feasibility \cite{DBLP:conf/popl/GuptaHMRX08}. 
 In \cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al. prove nontermination via
 reduction to safety proving. Their iterative algorithm uses counterexamples to a fixed safety property
