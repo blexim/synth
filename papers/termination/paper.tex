@@ -991,7 +991,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{definition}[Non-Termination Formula -- Open Recurrence Set  {\bf [ONT]}]
 \label{def:ont}
  \begin{align*}
-  \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
+  \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~\wedge \\ &  N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \rightarrow T_u(x, x') \wedge N(x') 
  \end{align*}
 \end{definition}
@@ -999,7 +999,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{definition}[Non-Termination Formula -- Closed Recurrence Set {\bf [CNT]}]
 \label{def:cnt}
  \begin{align*}
-  \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge ~ N(x) \rightarrow G(x) ~ \wedge \\
+  \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge \\ & N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \wedge T_u(x, x') \rightarrow N(x') 
  \end{align*}
 \end{definition}
@@ -1142,78 +1142,7 @@ formula
 $$ \exists x . T^+(x, x)$$
 %
 However, deciding satisfiability of this formula directly requires a logic
-that includes a transitive closure operator, which ours does not have.\\
-
-\noindent {\bf Non-determinism.} A non-termination diagnosis procedure based
-on checking the satisfiability of formula {\bf [CNT]} may fail to find a
-closed recurrence set for a loop $L=(G, T_u)$ when $T_u$ is
-non-deterministic.  To understand the issue, imagine the following loop with
-a non-deterministic assignment to \lstinline!y!:
-
-\begin{lstlisting}[language=C]
-while(x != 0) {
-  y = nondet();
-  x = x-y;
-}
-\end{lstlisting}
-
-Only for certain choices of \texttt{y} the loop is non-terminating.  In
-order to restrict the values that may be assigned to \texttt{y}, we need an
-assumption associated with the non-deterministic choice.  However, such an
-assumption may cause a reachable state at the non-deterministic assignment
-to not have any successor.  In such a case the termination formula would be
-satisfiable, although the execution halts.  This situation can be avoided by
-checking the existence of at least one successor for each reachable state at
-the non-deterministic assignment.  Although we did put a reasonable amount
-of effort into it, we failed to come up with a formulation for the
-non-termination of such non-deterministic transition relations inside the
-synthesis fragment.
-%
-%formula {\bf [Nondet-CNT]} in Definition~\ref{def:nondet-cnt}.
-
-\iffalse
-\noindent {\bf Non-determinism.} A non-termination diagnosis procedure searching for a closed recurrence set under-approximates the transition relation, i.e. 
-the closed recurrence set together with the under-approximation characterise non-termination \cite{DBLP:conf/tacas/ChenCFNO14}.
-A potential difficulty with such a procedure lies in the handling of non-deterministic assignments. For illustration, consider the following loop:
-
-\begin{lstlisting}[language=C]
-while(x != 0) {
-  y = nondet();
-  x = x-y;
-}
-\end{lstlisting}
-
-Only for certain values of $y$ the loop is non-terminating.
-In order to restrict the values that may be assigned to $y$, we replace the non-deterministic choice with a fresh variable $a$ and use formula {\bf [CNT]}
-to compute a closed recurrence set $N[a]$ parametrised by $a$. Now $N[a]$ becomes an assertion over $x \cup \{a\}$.
-%, i.e. we under-approximate the transition relation. 
-For this example, our technique computes $N[a](x,y,a) = ...$. \\%, where $a$ corresponds to the non-deterministic choice.  \\
-%The issue with the closed recurrence set is that it yields an incomplete  for loops 
-%that have non-deterministic assignments 
-%parametric recurrence set
-
-\fi
-
-%% According to \cite{DBLP:conf/popl/GuptaHMRX08,DBLP:conf/tacas/ChenCFNO14}, a transition relation is non-terminating iff it has a recurrence set of states.
-%% Candidate transition relations are 
-%% \emph{lassos} in the program's CFG.
-%% A lasso at a cutpoint location consists of two sequences
-%% of transitions, the stem and the loop.
-%% The stem is a finite path from an initial location to the cutpoint location. 
-%% The loop is a finite path that starts and ends at the cutpoint
-%% location by following a cyclic path through the CFG. 
-%% A lasso induces an infinite execution if the infinite path obtained by traversing the stem and then unrolling
-%% the loop infinitely many times is feasible. In this case, the lasso is said to be non-terminating.
-%% We observe that in the case that $T$ is deterministic (that is, each state has
-%% exactly one successor),  the non-termination problem is equivalent to the
-%% satisfiability of Definition~\ref{def:deterministic-nonterm-formula}.
-
-%% The method is incomplete as not all non-terminating
-%% program executions are induced by lassos. An infinite behaviour
-%% that is not periodic is illustrated by the following program:
-
-%Our method is purely semantic. 
-
+that includes a transitive closure operator, which ours does not have.
 
 \begin{figure*}
  \begin{framed}
@@ -1482,109 +1411,25 @@ formula {\bf [CNT]}. %As opposed to over-approximations
 Recall that there is one more constraint that we must obey when doing so: we must stay inside the synthesis fragment! 
 This becomes more challenging now then when dealing with over-approximations due to the existential nature of under-approximations: they require an additional existential quantifier, which might result in an additional quantifier alternation, i.e. $\exists \forall \exists$. 
 
-This issue does not arise when abstracting the environment as its under-approximation and the loop under consideration make use of existential quantification at the same nestedness level. However, when dealing with nested loops, we need to compute the under-approximation of the inner loop, which requires a nested existential quantifier, 
-resulting in the $\exists \forall \exists$ alternation. 
-%
-%% computing the under-approximation of the loop's body requires an extra quantifier alternation. 
-%% The origin of the problem comes from the fact that an under-approximation is an existential property and therefore
-%% requires an extra existential quantifier, resulting in the $\exists \forall \exists$ alternation. This situation is similar to the one encountered when proving non-termination of non-deterministic loops. 
-%
-To address this limitation, we treat nested loops as a special case and give
-a separate formula for them in Figure~\ref{fig:nonterm-nested}.  If the
-formula on the right of the figure is satisfiable, then $L_1$ is
-non-terminating as witnessed by the recurrence set $N_1$ and the initial
-state $x_0$ in which the program begins executing.  There are two possible
-scenarios for $L_2$'s termination:
-%
+This issue does not arise when abstracting the environment as its under-approximation and the loop under consideration make use of existential quantification at the same nestedness level. 
+
+However, when dealing with nested loops, we need to  under-approximate the inner loop, requiring a nested existential quantifier, 
+resulting in the $\exists \forall \exists$ alternation.  At first sight, this seems fatal for our formulation.  Luckily, it is possible to
+reformulate non-termination as an $\exists \forall$ formula by observing that, unlike a ranking function, the defining property of a
+recurrence set is \emph{non relational} -- if we end up in the recurrence set, we don't care exactly where we came from as long as
+we know that it was also somewhere in the recurrence set.  This allows us to cast non-termination of nested loops as the formula
+shown in Figure~\ref{fig:nonterm-nested}.
+
+If the formula on the right of the figure is satisfiable, then $L_1$ is non-terminating as witnessed by the recurrence set $N_1$ and
+the initial state $x_0$ in which the program begins executing. There are two possible scenarios for $L_2$'s termination:
 \begin{itemize}
-
-\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that
-reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x)
-\wedge P_2(x,x') \rightarrow N_1(x') $.
-
-\item If $L_2$ is non-terminating, then $N_2$ is its recurrence set.
-
+\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x) \wedge P_2(x,x') \rightarrow N_1(x') $. 
+\item If $L_2$ is non-terminating, then $N_2 \wedge G_2$ is its recurrence set.
 \end{itemize}
 
 
-%% The issue appears when we try to under-approximate the body of the loop. 
-%% Here we encounter a similar problem with the one for non-determinism mentioned above. 
-
-%% Consider the generic example in Figure~\ref{fig:nonterm-environment}, where we are attempting to prove non-termination
-%% of the innermost loop $L_3$ by finding a closed recurrence set $N_3$. 
-%% -- We will assume that the other two loops iterate only a finite number of times.  
-
-%% We now explain the constraints on the right of the figure.
-%% Given that we prove non-termination, we try to  under-approximate the states from which $L_3$ can start executing. 
-%% We do this in several steps:
-
-%% $W_1$, $W_2$ and $W_3$ are inductive invariants corresponding to $L_1$, $L_2$ and $L_3$, respectively, such that:
-
-%% - $W_1$ is an inductive invariant of $L_1$ that is strong enough to establish $W_2$ if $L_1$ exits (which it does by assumption).
-%% - $W_2$ is an inductive invariant of $L_2$ that is strong enough to establish either $W_3$ or $N_3$ on entry to $L_3$, depending on whether $L_3$ terminates or not.
-%% - Recall that $N_3$ is a recurrence set for $L_3$, so if a state $x \in N_3$ is reached, the loop $L_3$ will execute forever. Otherwise, $W_3$ holds on entry to $L_3$.
-%% - $W_3$ is an inductive invariant of $L_3$ that is strong enough to re-establish $W_2$ when $L_3$ exits.
 
 
-%% If the non-termination formula is satisfiable, $x_0$ is some initial state in which the program begins executing.  
-
-
-
-%% First, we under-approximate the states in which $L_2$ can start executing through $W_2$.
-%% Then $N_1$ is an inductive invariant of $L_1$ that is strong
-%% enough to establish $N_2$ if $L_1$ exits (which it does by assumption).  Now, $N_2$ is an inductive invariant
-%% of $L_2$ that is strong enough to establish either $N_3$ or $N_4$ on entry to $L_3$.  Recall that $N_4$ is
-%% a recurrence set for $L_3$, so if a state $x \in N_4$ is reached, the loop $L_3$ will execute forever.
-%% Otherwise, $N_3$ holds on entry to $L_3$.  $N_3$ is an inductive invariant of $L_3$ that is strong enough to
-%% re-establish $N_2$ when $L_3$ exits.
-
-
-  
-
-%% If the constraint system is satisfiable, $x_0$ is some initial
-%% state in which the program begins executing.  
-
-
-%%   Since we assumed that $L_2$ iterated only a finite number of times,
-%% $N_3$ must be established only a finite number of times, which means that $N_4$ will eventually be reached,
-%% at which point $L_3$ will loop forever since $N_4$ is a recurrence set for $L_3$.
-
-%% \begin{figure*}
-%% \begin{framed}
-%%  \begin{minipage}{0.19\textwidth}
-%% \begin{lstlisting}
-%% L1: while (c1) {
-%%      B1;
-%%     }
-
-%% L2: while (c2) {
-%%      P;
-
-%% L3:  while (c3) {
-%%        B3;
-%%      }
-%%     }
-%% \end{lstlisting}
-%% \end{minipage}
-%% \vline
-%% \begin{minipage}{0.82\textwidth}
-%% \begin{align*}
-%%  \exists W_1, W_2, W_3, N_3, x_0 . \forall x, x' . \\
-%%   W_1(x_0) \, \wedge \\
-%%   c_1(x) \wedge W_1(x) \wedge B_1(x, x') & \rightarrow W_1(x') \, \wedge \\
-%%   \lnot c_1(x) \wedge W_1(x) & \rightarrow W_2(x) \, \wedge \\
-%%   W_2(x) & \rightarrow c_2(x) \, \wedge \\
-%%   W_2(x) \wedge P(x, x') & \rightarrow W_3(x') \vee N_3(x') \, \wedge \\
-%%   c_3(x) \wedge W_3(x) \wedge B_3(x, x') & \rightarrow W_3(x') \, \wedge \\
-%%   \lnot c_3(x) \wedge W_3(x) & \rightarrow W_2(x) \, \wedge \\
-%%   N_3(x) & \rightarrow c_3(x) \, \wedge \\
-%%   N_3(x) \wedge B_3(x, x') & \rightarrow N_3(x')
-%% \end{align*}
-%% \end{minipage}
-%% \end{framed}
-
-%% \caption{The constraint system for non-termination\label{fig:nonterm-environment}}
-%% \end{figure*}
 
 \begin{figure*}
 \begin{framed}
