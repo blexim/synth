@@ -2004,18 +2004,38 @@ instances.
 
 \section{Experiments}
 
-We implemented our algorithm in the {\sc Headshot} tool, which uses the {\sc
-Kalashnikov} program synthesiser for termination.  We ran the tool on 40
-benchmarks taken from the termination category of SVCOMP'15.  The
-experiments were performed on a 4-core 3.3\,GHz i5-2500k with 8\,GB of RAM.
+To evaluate our algorithm, we implemented two tools: one to generate a termination specification
+from a C program, and one to synthesise a proof from the specification.  We ran the resulting
+termination prover on 47 benchmarks taken from the literature and SV-COMP'15~\cite{svcomp}.  To provide a comparison
+point, we also ran {\sc ARMC}~\cite{armc-website} on the same benchmarks.  Each tool was given a time limit of
+180s, and was run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
+results of these experiments are shown in Figure~\ref{fig:experiments}.
 
+It should be noted that the comparison here is imperfect, since {\sc ARMC} is solving a slightly different
+problem -- it checks whether the program under analysis would terminate if run with unbounded integer variables,
+while we are checking whether the program terminates with fixed width integers variables.  This means that
+{\sc ARMC}'s verdict differs from ours in 3 cases (due to the differences between integer and bit-vector semantics).
+There are a further 5 cases where our tool is able to find a proof and {\sc ARMC} cannot, which we believe is due
+to our more expressive proof language.  In 3 cases, {\sc ARMC} times out while our tool is able to find a termination
+proof.  All of these cases have nested loops, which are easy for us to handle, but can be difficult for
+provers based on enumerating lassos.
 
-\begin{figure*}
+On the other hand, {\sc ARMC} is \emph{much} faster than our tool.
+While this difference can partly be explained by much more engineering time being invested in {\sc ARMC},
+we feel that the difference is probably inherent to the difference in the two approaches -- our
+algorithm is complete and bit-vector accurate, which comes at the cost of efficiency.
+
+The final column in Figure~\ref{fig:experiments} shows the number of iterations of the CEGIS loop our
+synthesiser performed.  While the theoretical bound for the number of CEGIS iterations is very large
+(exponential in the amount of space used by the program), these results demonstrate that in practice
+the number of iterations required is usually small.
+
+\begin{figure}
 \centering
-\footnotesize
+\scriptsize
 \begin{tabular}{|l|c||c|r||c|r|r|}
 \hline
-    &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Headshot} \\
+    &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{Us} \\
     & Expected &  Verdict & Time & Verdict & Time & Iterations\\
     \hline
     \hline
@@ -2025,8 +2045,8 @@ experiments were performed on a 4-core 3.3\,GHz i5-2500k with 8\,GB of RAM.
 
 Key: \tick = terminating, \xmark = non-terminating, ? = unknown (tool terminated with an inconclusive verdict).
 
-\caption{\textsc{Headshot} termination for nonlinear programs with nonlinear ranking functions\label{fig:nonlinear}}
- \end{figure*}
+\caption{Experimental results\label{fig:experiments}}
+ \end{figure}
 
  \section{Conclusions and Related Work}
 %\subsection{Termination analysis}
