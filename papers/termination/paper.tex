@@ -85,8 +85,8 @@
 \setlength{\pdfpageheight}{\paperheight}
 \setlength{\pdfpagewidth}{\paperwidth}
 
-\conferenceinfo{POPL '14}{Month d--d, 20yy, City, ST, Country} 
-\copyrightyear{2014} 
+\conferenceinfo{POPL '15}{Month d--d, 20yy, City, ST, Country} 
+\copyrightyear{2015} 
 
 % Uncomment one of the following two, if you are not going for the 
 % traditional copyright transfer agreement.
@@ -107,21 +107,24 @@
 \maketitle
 
 \begin{abstract}
-Proving program termination is typically done by finding a well-founded \emph{ranking function}
-for the program states.
-Existing termination provers typically find ranking functions
-using either linear algebra or templates.  As such they are often restricted to
-finding linear ranking functions over mathematical integers.  This class
-of ranking functions is not large enough to prove termination for all terminating
-programs, and furthermore a termination argument for a program operating on mathematical integers
-does not always lead to a termination argument for the same program operating on
-fixed-width machine integers.
+%
+Proving program termination is typically done by finding a well-founded
+\emph{ranking function} for the program states.  Existing termination
+provers typically find ranking functions using either linear algebra or
+templates.  As such they are often restricted to finding linear ranking
+functions over mathematical integers.  This class of ranking functions is
+not large enough to prove termination for all terminating programs, and
+furthermore a termination argument for a program operating on mathematical
+integers does not always lead to a termination argument for the same program
+operating on fixed-width machine integers.
 
-We present a reduction from program \emph{termination} to program \emph{synthesis}.
-This reduction allows us to generate nonlinear, lexicographic ranking functions that
-are correct for fixed-width machine arithmetic and floating-point arithmetic.
-We use this reduction to build a sound and complete procedure for the termination
-of fixed-width and floating-point arithmetic programs.
+We present a reduction from program \emph{termination} to program
+\emph{synthesis}.  This reduction allows us to generate nonlinear,
+lexicographic ranking functions that are correct for fixed-width machine
+arithmetic and floating-point arithmetic.  We use this reduction to build a
+sound and complete procedure for the termination of fixed-width and
+floating-point arithmetic programs.
+%
 \end{abstract}
 
 %\category{CR-number}{subcategory}{third-level}
@@ -133,18 +136,18 @@ Floating Point Ranking Functions.
 
 \section{Introduction}\label{sec:intro}
 
+The halting problem has been of central interest to computer scientists
+since it was first considered by Turing in 1936~\cite{turing}.  Informally,
+we can say that the halting problem is concerned with answering the question
+``does this program run forever, or will it eventually terminate?''
 
-The halting problem has been of central interest to computer scientists since it was first
-considered by Turing in 1936~\cite{turing}.  Informally, we can say that the halting problem
-is concerned with answering the question ``does this
-program run forever, or will it eventually terminate?''
-
-Proving program termination is typically done by finding a \emph{ranking function}
-for the program states, i.e. a monotone map from the program's state space to a well-ordered set.
-Historically, the search for ranking functions has been constrained in various syntactic ways, leading to
-incompleteness, and
-is performed over abstractions that do not soundly capture the behaviour of physical computers.
-In this paper, we present a sound and complete method for deciding whether a program terminates.
+Proving program termination is typically done by finding a \emph{ranking
+function} for the program states, i.e.  a monotone map from the program's
+state space to a well-ordered set.  Historically, the search for ranking
+functions has been constrained in various syntactic ways, leading to
+incompleteness, and is performed over abstractions that do not soundly
+capture the behaviour of physical computers.  In this paper, we present a
+sound and complete method for deciding whether a program terminates.
 
 %% As this definition of a ranking function is very general, research is often limited to some
 %% convenient and tractable form of ranking functions, most frequently \emph{linear ranking functions} (see Section~\ref{sec:ranking.functions}). 
@@ -162,45 +165,48 @@ there are cases in which proofs based on local measures involve linear functions
 measures require non-linear functions or lexicographic orders. 
 %This explains why approaches based on Ramsey's theorem are restricted to searching for linear termination arguments.
 
+One difficulty with a Ramsey-based approach is that validity of the
+termination argument can only be checked by considering the \emph{transitive
+closure} of the program, rather than a single step.  As such, there is
+experimental evidence that most of the time is spent in reachability
+analysis \cite{DBLP:conf/pldi/CookPR06}, requiring the support of powerful
+safety checkers: there is a tradeoff between the complexity of the
+termination arguments and that of checking their validity.
 
-One difficulty with a Ramsey-based approach is that validity of the termination argument can only be checked by considering the \emph{transitive closure}
-of the program, rather than a single step.
-As such, there is experimental evidence that most of the time is spent in reachability analysis \cite{DBLP:conf/pldi/CookPR06}, 
-requiring the support of powerful safety checkers:
-there is a tradeoff between the complexity of the termination arguments and that of checking their validity.
-
-
-As Ramsey-based approaches are limited by the state of the art in safety checking, 
-recent research shifts back to more complex termination arguments that are easier to check \cite{DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}.
+As Ramsey-based approaches are limited by the state of the art in safety
+checking, recent research shifts back to more complex termination arguments
+that are easier to
+check~\cite{DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}.
+%
 %In \cite{DBLP:conf/tacas/CookSZ13}, Cook et al present an iterative termination proving procedure that searches for 
 %lexicographic termination arguments, whereas Kroening et al. strengthen the termination argument such that it becomes a transitive relation \cite{DBLP:conf/cav/KroeningSTW10}.
 %
 %
 Following the same trend, %of switching the complexity in termination checking back to the termination arguments, 
-we investigate its extreme: \emph{unrestricted} termination arguments. 
-This means that our ranking functions may involve non-linearity and lexicographic orders (we do not commit to any particular syntactic form, and do not use templates).
+we investigate its extreme: \emph{unrestricted} termination arguments.  This
+means that our ranking functions may involve non-linearity and lexicographic
+orders (we do not commit to any particular syntactic form, and do not use
+templates).
 
+While the summary  in Figure~\ref{fig:handletable} supports the observation
+that the majority of existing termination analyses are designed for linear
+programs and linear ranking functions, it also identifies another common
+assumption made by state of the art termination provers: that bit-vector
+semantics and integer semantics give rise to the same termination behaviour. 
+Thus, most of the techniques treat bit-vectors and floats as mathematical
+integers and reals,
+respectively~\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}.
 
-While the summary  in Figure~\ref{fig:handletable} supports the observation that the majority of existing termination analyses are designed for
-linear programs and linear ranking functions, it also identifies another common assumption made by state of the art termination provers: 
-that bit-vector semantics and integer semantics give rise to the same termination behaviour. Thus, most of the techniques treat
-bit-vectors and floats as mathematical integers and reals respectively 
-\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}. 
-
-
-By assuming bit-vector semantics to be identical to integer semantics,
-these techniques ignore the wrap-around behaviour caused by overflows,
-which can be unsound.
-In Section~\ref{sec:motivation}, we show that integers and bit-vectors exhibit
-incomparable behaviours with respect to termination, i.e.
-programs that terminate for integers may \emph{not} terminate for bit-vectors and
-vice-versa.
-Thus, abstracting bit-vectors to integers may give rise to 
-{\em unsound} and {\em incomplete} analyses.
+By assuming bit-vector semantics to be identical to integer semantics, these
+techniques ignore the wrap-around behaviour caused by overflows, which can
+be unsound.  In Section~\ref{sec:motivation}, we show that integers and
+bit-vectors exhibit incomparable behaviours with respect to termination,
+i.e.  programs that terminate for integers may \emph{not} terminate for
+bit-vectors and vice-versa.  Thus, abstracting bit-vectors to integers may
+give rise to {\em unsound} and {\em incomplete} analyses.
+%
 %design decisions
 %which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
-
-
 
 %% \noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
 %% The abstraction of bit-vectors to mathematical integers ignores
@@ -263,6 +269,7 @@ arbitrary guards and transitions over bit-vectors and floats.
 It also computes non-linear recurrence sets, which comprise non-termination proofs.
 Our encoding uniformly multiple loops and nested loops, without having to enumerate
 lassos.
+%
 %Our technique is {\emph complete} and can handle programs with non-linear operations, e.g. logical and.
 %--In our design, the termination problem becomes as hard as finding ranking functions, rather than as hard as
 %checking the validity of a termination argument. 
@@ -270,24 +277,31 @@ lassos.
 %supporting invariants and the ranking function are discovered at the same time.
 
  
-For this purpose, we phrase the termination and non-termination problems as second order satisfaction problems.
-We identify a fragment of second-order logic that is expressive enough to capture our formulation,
-which we call the \emph{synthesis fragment}. Subsequently, we propose a method
-for checking the satisfiability of a formula in the synthesis fragment by solving an isomorphic program synthesis problem (Section~\ref{sec:synthesis}).
-Our method is sound and semi-complete, i.e. if a pair of a ranking function and a supporting invariant 
-exist it will be found, but if the program does not terminate we may not find a recurrence set.  However
-if the program's transition relation is deterministic, our method is complete.
+For this purpose, we phrase the termination and non-termination problems as
+second order satisfaction problems.  We identify a fragment of second-order
+logic that is expressive enough to capture our formulation, which we call
+the \emph{synthesis fragment}.  Subsequently, we propose a method for
+checking the satisfiability of a formula in the synthesis fragment by
+solving an isomorphic program synthesis problem
+(Section~\ref{sec:synthesis}).  Our method is sound and semi-complete, i.e. 
+if a pair of a ranking function and a supporting invariant exist it will be
+found, but if the program does not terminate we may not find a recurrence
+set.  However if the program's transition relation is deterministic, our
+method is complete.
 
 With respect to the performance of our technique, we show that its runtime is dominated by the size of 
 the shortest termination proof.
 %While investigating the search space and the distribution of solutions (Section~\ref{}), we identify factors 
 %influencing our method's performance and
 %find that our technique  
-This means that our procedure is not directly dependent on the structure of the analysed loop, e.g. number of variable, number of lassos, 
-but on the Kolmogorov complexity of its minimal termination argument. 
-We argue that the length of a program's termination proof is indicative of how easy to understand the program is, and thus 
-programmers tend to write programs that have relatively short termination proofs. 
-We empirically show that this claim holds in practice, causing our technique to perform well.
+%
+This means that our procedure is not directly dependent on the structure of
+the analysed loop, e.g.  number of variable, number of lassos, but on the
+Kolmogorov complexity of its minimal termination argument.  We argue that
+the length of a program's termination proof is indicative of how easy to
+understand the program is, and thus programmers tend to write programs that
+have relatively short termination proofs.  We empirically show that this
+claim holds in practice, causing our technique to perform well.
 
 
 %% Our approach to proving termination has two distinct features over previous work. 
@@ -321,20 +335,25 @@ We empirically show that this claim holds in practice, causing our technique to 
 %Church was BIG into program synthesis~\cite{church-synth}, so you know it's good stuff.
 %Something, something, Curry-Howard Isomorphism, something, something, programs-as-proofs.
 
- The main contributions of our work can be summarised as follows:
-
-
+The main contributions of our work can be summarised as follows:
+%
 \begin{itemize}
-\item We designed a bit-level accurate technique for computing ranking functions that correctly accounts for the wrap-around behavior
-caused by under- and overflows in bit-vector and floating point arithmetic. Our technique is not restricted to finding linear ranking functions,
-but can also compute lexicographic non-linear  ones.
 
-\item  We rephrased the termination and non-termination problems as second-order satisfaction problems and used
-program synthesis techniques to solve them. In contrast to previous approaches to program synthesis, we found that
-using genetic programming was very effective at generating candidate termination and non-termination proofs.
+\item We designed a bit-level accurate technique for computing ranking
+functions that correctly accounts for the wrap-around behavior caused by
+under- and overflows in bit-vector and floating point arithmetic.  Our
+technique is not restricted to finding linear ranking functions, but can
+also compute lexicographic non-linear ones.
 
-\item Our procedure does not require the enumeration of lassos, or directly reasoning about the transitive closure of the transition relation.
-To verify our proofs, we only require a single call to a SAT solver.
+\item  We rephrased the termination and non-termination problems as
+second-order satisfaction problems and used program synthesis techniques to
+solve them.  In contrast to previous approaches to program synthesis, we
+found that using genetic programming was very effective at generating
+candidate termination and non-termination proofs.
+
+\item Our procedure does not require the enumeration of lassos, or directly
+reasoning about the transitive closure of the transition relation.  To
+verify our proofs, we only require a single call to a SAT solver.
 
 %\item We present a formulation that allows us to prove termination without an expensive reachability check (as we don't use Ramsey-based termination arguments).  In particular,
 %we only need a bounded model checker that performs a single unwinding of a loop.
@@ -342,11 +361,14 @@ To verify our proofs, we only require a single call to a SAT solver.
 %% \item Our technique is able to uniformly handle conditionally-terminating loops, as well as programs with
 %% multiple loops.
 
-\item Our procedure is based on a series of source-to-source transformations.  As well as leading to a concise implementation,
-this has the side effect of ensuring that our proof is correct for the exact binary produced by a particular compiler,
-rather than for an abstraction of the program.
+\item Our procedure is based on a series of source-to-source
+transformations.  As well as leading to a concise implementation, this has
+the side effect of ensuring that our proof is correct for the exact binary
+produced by a particular compiler, rather than for an abstraction of the
+program.
 
-\item We implemented our technique and tried it on a selection of programs handling both bit-vectors and floats.
+\item We implemented our technique and tried it on a selection of programs
+handling both bit-vectors and floats.
 
 %\item We propose a non-trivial formulation of the (non-)termination problem inside a second order logic fragment with only one quantifier alternation.
 
@@ -370,11 +392,11 @@ rather than for an abstraction of the program.
 %This paper is organised as follows:
 
 {\bf Limitations.}
-Our algorithm decides termination of transition systems with finite state spaces.
-The (non-)termination proofs take the form of ranking functions and program invariants
-that are expressed in a quantifier free language.  This formalism is powerful
-enough to handle a large fragment of C, but is not rich enough to analyse
-code using any of the following features:
+Our algorithm decides termination of transition systems with finite state
+spaces.  The (non-)termination proofs take the form of ranking functions and
+program invariants that are expressed in a quantifier free language.  This
+formalism is powerful enough to handle a large fragment of C, but is not
+rich enough to analyse code using any of the following features:
 
 \begin{itemize}
 \item Recursion (could probably do this).
@@ -384,8 +406,6 @@ code using any of the following features:
 
 Additionally, if the program under analysis has a non-deterministic transition relation
 and is non-terminating, our procedure is not guaranteed to find a non-termination proof.
-
-
 
 \section{Motivational Examples} \label{sec:motivation}
 - see phase change programs.
@@ -470,27 +490,34 @@ With our technique we can find the non-linear ranking function $R(x) = |x|$.
 %a lower index decreases. Additionally, at every step, there must be at least one
 %function that decreases.
 
-\item Program (h) illustrates conditional termination.
-When proving program termination we are simultaneously solving two problems:
-the search for a termination argument, and the search for a supporting invariant~\cite{DBLP:conf/cav/BrockschmidtCF13}.
-For this loop, we find the ranking function $R(x) = x$ together with the supporting invariant $y=1$.
+\item Program (h) illustrates conditional termination.  When proving program
+termination we are simultaneously solving two problems: the search for a
+termination argument, and the search for a supporting
+invariant~\cite{DBLP:conf/cav/BrockschmidtCF13}.  For this loop, we find the
+ranking function $R(x) = x$ together with the supporting invariant $y=1$.
 
+\item In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, program (i)
+admits a multiphase ranking function computed from a multiphase ranking
+template.  A multiphase ranking template is targeted at programs that go
+through a finite number of phases in their execution.  Each phase is ranked
+with an affine-linear function and the phase is considered to be completed
+once this function becomes non-positive.
 
-\item In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, program (i) admits a multiphase ranking function computed from a multiphase ranking template.
-A multiphase ranking template is targeted at programs that go through a
-finite number of phases in their execution. Each phase is ranked with
-an affine-linear function and the phase is considered to be completed once this
-function becomes non-positive.
+In our setting this type of programs does not need special treatment, as we
+can find a non-linear lexicographic ranking function $R(x, y, z) = (x < y,
+z)$.  This termination argument is somewhat subtle, but can be understood as
+follows: the boolean quantity $x < y$ eventually decreases, that is to say
+once a state with $x \geq y$ is reached, $x$ never again becomes greater
+than $y$.  This means that as soon as the ``else'' branch of the if
+statement is taken, it will continue to be taken in each subsequent
+iteration of the loop.  Meanwhile, if $x < y$ has not decreased (i.e.  we
+have stayed in the same branch of the ``if'') then $z$ does decrease.  Since
+a boolean only has two possible values, it cannot decrease indefinitely. 
+Since $z > 0$ is a conjunct of the loop guard, $z$ cannot decrease
+indefinitely, and so $R$ proves that the loop is well founded.
 
-In our setting this type of programs does not need special treatment, as we can find a non-linear lexicographic ranking function
-$R(x, y, z) = (x < y, z)$.  This termination argument is somewhat subtle, but can be understood as follows: the boolean quantity $x < y$
-eventually decreases, that is to say once a state with $x \geq y$ is reached, $x$ never again becomes greater than $y$.  This means
-that as soon as the ``else'' branch of the if statement is taken, it will continue to be taken in each subsequent iteration of the loop.
-Meanwhile, if $x < y$ has not decreased (i.e. we have stayed in the same branch of the ``if'') then $z$ does decrease.  Since
-a boolean only has two possible values, it cannot decrease indefinitely.  Since $z > 0$ is a conjunct of the loop guard,
-$z$ cannot decrease indefinitely, and so $R$ proves that the loop is well founded.
-
-As with all of the termination proofs presented in this paper, the ranking function above was found completely automatically.
+As with all of the termination proofs presented in this paper, the ranking
+function above was found completely automatically.
 
 \iffalse
 \item Program (j) illustrates a nested loop.  This construction can cause difficulties for provers based on
@@ -680,12 +707,11 @@ while (x > 0 && y > 0 && z > 0) {
 
 \section{Preliminaries}
 Given a program, %with state space $X$ and transition relation $T \subseteq X \times X$, 
-we first formalise its termination argument as a ranking function (Section~\ref{sec:ranking.functions}). 
-Subsequently, we discus bit-vector semantics and illustrate 
-differences between machine arithmetic and integer arithmetic that
-make the abstraction of bit-vectors to mathematical integers unsound (Section~\ref{sec:machine.arith}).
-
-
+we first formalise its termination argument as a ranking function
+(Section~\ref{sec:ranking.functions}).  Subsequently, we discus bit-vector
+semantics and illustrate differences between machine arithmetic and integer
+arithmetic that make the abstraction of bit-vectors to mathematical integers
+unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 A programs $P$ is represented as a transition systems with state space $X$, transition relation $T \subseteq X \times X$, and set of variables $x$. 
@@ -735,37 +761,51 @@ whose co-domain is the ordinals, rather than just $\mathbb{N}$.
 
 
 \subsection{Machine Arithmetic and Bitvectors} \label{sec:machine.arith} 
-Physical computers have bounded storage, which means they are unable to perform calculations on mathematical
-integers.  For example, if $A$ is the Ackermann function and $G$ is Graham's number, a physical computer
-capable of computing $A(G, G)$ would contain (much!) more matter than is believed to exist in the universe.
-Fortunately, it is rare for a programmer to need such a large number and so modern computers do their arithmetic
-over fixed-width binary words, otherwise known as bit-vectors.  For the remainder of this section, we will say that
-the bit-vectors we are working with are $k$-bits wide, which means that each word can hold one of $2^k$ bit patterns.
-Typical values for $k$ are 32 and 64.
 
-Bit-vector arithmetic is performed modulo $2^k$, which is the source of many of the differences between
-machine arithmetic and Peano arithmetic.  To give an example: $(2^k - 1) + 1 \equiv 0 \pmod {2^k}$.
-This provides a counterexample to the statement $\forall x . x + 1 > x$, which is a theorem of Peano
-arithmetic but not of modular arithmetic.  When an arithmetic operation has a result greater than $2^k$,
-it is said to ``overflow''.  If an operation does not overflow, its machine-arithmetic result is the same
-as the result of the same operation performed on integers.
+Physical computers have bounded storage, which means they are unable to
+perform calculations on mathematical integers.  For example, if $A$ is the
+Ackermann function and $G$ is Graham's number, a physical computer capable
+of computing $A(G, G)$ would contain (much!) more matter than is believed to
+exist in the universe.  Fortunately, it is rare for a programmer to need
+such a large number and so modern computers do their arithmetic over
+fixed-width binary words, otherwise known as bit-vectors.  For the remainder
+of this section, we will say that the bit-vectors we are working with are
+$k$-bits wide, which means that each word can hold one of $2^k$ bit
+patterns.  Typical values for $k$ are 32 and 64.
 
-Machine words can be interpreted as ``signed'' or ``unsigned'' values.  Signed values can be negative,
-while unsigned values cannot.  The encoding for signed values is two's complement, where the most significant
-bit $b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather than $2^k - 1$.  Two's complement
-representation has the property that $\forall x . -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
-is bitwise-negation.  Two's complement also has the property that addition, multiplication and subtraction are defined
-identically for unsigned and signed numbers.  Therefore signed and unsigned arithmetic differ only on comparison
-operators\footnote{There is also the difference that signed overflow in a C program results in undefined behaviour,
-but in practice the undefined behaviour is implemented just as if the arithmetic had been unsigned}.
-For example: $$\forall x . -x \leq_s x \wedge -x \geq_u x$$ where $\leq_s$ and $\geq_u$ represent signed and unsigned comparisons respectively.
+Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
+of the differences between machine arithmetic and Peano arithmetic.  To give
+an example: $(2^k - 1) + 1 \equiv 0 \pmod {2^k}$.  This provides a
+counterexample to the statement $\forall x .  x + 1 > x$, which is a theorem
+of Peano arithmetic but not of modular arithmetic.  When an arithmetic
+operation has a result greater than $2^k$, it is said to ``overflow''.  If
+an operation does not overflow, its machine-arithmetic result is the same as
+the result of the same operation performed on integers.
 
-The final source of difference between integer arithmetic and bitvector arithmetic stems from width conversions.
-Typical computers allow variables to have different types, which can be represented using words of different widths.
-In C a \texttt{short} might occupy
-16 bits, while an \texttt{int} might occupy 32 bits.  If a $k$-bit variable is assigned to a $l$-bit variable
-with $l < k$, the result is truncated $\mod 2^l$.  For example, if $x$ is a 32-bit variable and $y$ is a 16-bit
-variable, $y$ will hold the value $0$ after the following code is executed:
+Machine words can be interpreted as ``signed'' or ``unsigned'' values. 
+Signed values can be negative, while unsigned values cannot.  The encoding
+for signed values is two's complement, where the most significant bit
+$b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather
+than $2^k - 1$.  Two's complement representation has the property that
+$\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
+is bitwise-negation.  Two's complement also has the property that addition,
+multiplication and subtraction are defined identically for unsigned and
+signed numbers.  Therefore signed and unsigned arithmetic differ only on
+comparison operators\footnote{There is also the difference that signed
+overflow in a C program results in undefined behaviour, but in practice the
+undefined behaviour is implemented just as if the arithmetic had been
+unsigned}.  For example: $$\forall x .  -x \leq_s x \wedge -x \geq_u x$$
+where $\leq_s$ and $\geq_u$ represent signed and unsigned comparisons
+respectively.
+
+The final source of difference between integer arithmetic and bitvector
+arithmetic stems from width conversions.  Typical computers allow variables
+to have different types, which can be represented using words of different
+widths.  In C a \texttt{short} might occupy 16 bits, while an \texttt{int}
+might occupy 32 bits.  If a $k$-bit variable is assigned to a $l$-bit
+variable with $l < k$, the result is truncated $\mod 2^l$.  For example, if
+$x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will hold the
+value $0$ after the following code is executed:
 
 \begin{lstlisting}
 x = 65536;
@@ -775,13 +815,15 @@ y = x;
 This gives us a counterexample to the statement $\forall x, y . x = y \Rightarrow (x + 1) = (y + 1)$,
 which is a theorem of Peano arithmetic.
 
-As well as machine arithmetic differing from Peano arithmetic on the operators they have in common,
-computers have several ``bitwise'' operations that are not taken as primitive in the theory of
-integers.  These operations include the standard boolean operations \texttt{and, or, not, xor}
-applied to each element of the bit-vector.  Computer programs often make use of these operators,
-which are non-linear when interpreted in the standard model of Peano arithmetic\footnote{
-Although some of these operators can be seen as linear in a different algebraic structure,
-e.g. \texttt{xor} corresponds to addition in the Galois field $\mathrm{GF}(2^k)$}.
+As well as machine arithmetic differing from Peano arithmetic on the
+operators they have in common, computers have several ``bitwise'' operations
+that are not taken as primitive in the theory of integers.  These operations
+include the standard boolean operations \texttt{and, or, not, xor} applied
+to each element of the bit-vector.  Computer programs often make use of
+these operators, which are non-linear when interpreted in the standard model
+of Peano arithmetic\footnote{ Although some of these operators can be seen
+as linear in a different algebraic structure, e.g.  \texttt{xor} corresponds
+to addition in the Galois field $\mathrm{GF}(2^k)$}.
 
 \iffalse
 \section{Combinatorics of Finite Termination}
@@ -861,15 +903,20 @@ define the syntax of a language we will work over.
 %% through program counter in the second order constraints).
 
 
-The problem of program verification can be reduced to the problem
-of finding solutions to a second-order constraint \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}. 
-Our intention is to apply this approach to termination analysis. 
-In this section we show how several variations of both the termination and the non-termination problem can be defined in second-order logic.  
+The problem of program verification can be reduced to the problem of finding
+solutions to a second-order
+constraint~\cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}. 
+Our intention is to apply this approach to termination analysis.  In this
+section we show how several variations of both the termination and the
+non-termination problem can be defined in second-order logic.
+%
 %The second-order unknowns in this constraint are the unknown program invariants
 %that are inductive and strong enough to prove the desired assertions. In this section we describe the conversion of programs to constraints
 
-In fact, we identify a fragment of second-order logic with a constrained use of quantification that is expressive enough to encode both termination and non-termination.
-We will suggestively refer to the fragment as the \emph{synthesis fragment}:
+In fact, we identify a fragment of second-order logic with a constrained use
+of quantification that is expressive enough to encode both termination and
+non-termination.  We will suggestively refer to the fragment as the
+\emph{synthesis fragment}:
 
 % The synthesis fragment is motivated by practical requirements in software verification.
 
@@ -903,12 +950,14 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 
 \subsection{An Isolated Loop}
 
-We will begin our discussion by showing how to encode the (non-)termination of program consisting of a single loop 
-in the synthesis fragment.  For the time being, a loop is a pair ${L= \langle G,T \rangle}$,
-where the states $x$ satisfying the loop's guard are given by the predicate $G(x)$.
-The body of the loop is encoded as the transition relation $T(x, x')$, meaning that
-state $x'$ is reachable from state $x$ via a single iteration of the loop body.
-For example, the loop in Figure~\ref{fig:motivation.a} is encoded as:
+We will begin our discussion by showing how to encode the (non-)termination
+of program consisting of a single loop in the synthesis fragment.  For the
+time being, a loop is a pair ${L= \langle G,T \rangle}$, where the states
+$x$ satisfying the loop's guard are given by the predicate $G(x)$.  The body
+of the loop is encoded as the transition relation $T(x, x')$, meaning that
+state $x'$ is reachable from state $x$ via a single iteration of the loop
+body.  For example, the loop in Figure~\ref{fig:motivation.a} is encoded as:
+%
 \begin{align*}
 G(x) & = \{ x \mid x>0 \} \\
 T(x,x') &= \{ \langle x, x' \rangle \mid x' = (x - 1) \, \& \, x \}
@@ -997,10 +1046,14 @@ the corresponding synthesis formula {\bf [UT]} is satisfiable, as witnessed by t
 So $R(x) = x$ constitutes a proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
 terminating.
 
-Note that different formulations for unconditional termination are possible. We are aware of a proof rule based on 
-transition invariants, i.e. supersets of the transition relation's transitive closure \cite{DBLP:conf/pldi/GrebenshchikovLPR12}.
-This formulation assumes that the second order logic has a primitive predicate for disjunctive well-foundedness. 
-Conversely, our formulation in Definition~\ref{def:UT} does not require a transitive closure operator, nor a disjunctive well-foundedness predicate. \\
+Note that different formulations for unconditional termination are possible.
+We are aware of a proof rule based on transition invariants, i.e.  supersets
+of the transition relation's transitive closure
+\cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes that
+the second order logic has a primitive predicate for disjunctive
+well-foundedness.  Conversely, our formulation in Definition~\ref{def:UT}
+does not require a transitive closure operator, nor a disjunctive
+well-foundedness predicate.  \\
 
 \noindent{\bf Non-termination.}
 Dually to termination, we might want to consider the non-termination of a program.  If a program terminates,
@@ -1075,13 +1128,18 @@ while(x != 0) {
 }
 \end{lstlisting}
 
-Only for certain values of \texttt{y} the loop is non-terminating.
-In order to restrict the values that may be assigned to \texttt{y}, we need an assumption associated with the non-deterministic choice. 
-However, such an assumption may cause a reachable state at the non-deterministic assignment to not have any successor. In such a case
-the termination formula would be satisfiable, although the execution halts. This situation can be avoided by checking the existence of 
-at least one successor for each reachable state at the non-deterministic assignment. Although we did put a reasonable amount of effort into it, 
-we failed to come up with a formulation for the non-termination of such non-deterministic transition relations 
-inside the synthesis fragment.
+Only for certain values of \texttt{y} the loop is non-terminating.  In order
+to restrict the values that may be assigned to \texttt{y}, we need an
+assumption associated with the non-deterministic choice.  However, such an
+assumption may cause a reachable state at the non-deterministic assignment
+to not have any successor.  In such a case the termination formula would be
+satisfiable, although the execution halts.  This situation can be avoided by
+checking the existence of at least one successor for each reachable state at
+the non-deterministic assignment.  Although we did put a reasonable amount
+of effort into it, we failed to come up with a formulation for the
+non-termination of such non-deterministic transition relations inside the
+synthesis fragment.
+%
 %formula {\bf [Nondet-CNT]} in Definition~\ref{def:nondet-cnt}.
 
 \iffalse
@@ -1554,7 +1612,11 @@ $$ \qquad \qquad \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')$$
 \todo{add example?}\\
 
 \noindent{\bf Nested loops.}
-For brevity reasons, we illustrate our approach to handling nested loops for only two loops, but the approach can be easily generalised to any number of nested loops:
+%
+For brevity reasons, we illustrate our approach to handling nested loops for
+only two loops, but the approach can be easily generalised to any number of
+nested loops:
+%
 \begin{lstlisting}[mathescape=true]
 while ($G_1$) { 
   $P_1$ 
@@ -1563,9 +1625,12 @@ while ($G_1$) {
 }
 \end{lstlisting}
 
-The termination of the outer loop is equivalent to the formula in Definition~\ref{def:nested-term-formula}.
-The formula requires an auxiliary assertion $S(x,x')$ representing a binary relation between the initial states at the inner loop's entry point
-and their successors according to the transition relation $T$. If this formula is satisfiable, then $R$ is a ranking function of the outer loop.
+The termination of the outer loop is equivalent to the formula in
+Definition~\ref{def:nested-term-formula}.  The formula requires an auxiliary
+assertion $S(x,x')$ representing a binary relation between the initial
+states at the inner loop's entry point and their successors according to the
+transition relation $T$.  If this formula is satisfiable, then $R$ is a
+ranking function of the outer loop.
 
 In order to find a termination argument for the inner loop, we use {\bf [CT]} where the initial states are given by 
 $\neg G_1(x) \wedge P_1(x,x') \rightarrow I(x')$.
@@ -1605,8 +1670,14 @@ arguments for all of them in the same formula. Currently, our tool generates a s
 The lexicographic ordering does not influence the size of the search space. Thus, finding potentially lexicographic termination arguments is not more difficult than finding non-lexicographic ones.   
 \end{conjecture}
 
-As a consequence of the aforementioned conjecture, we do not need to commit to a specific form of the termination argument. While other approaches, e.g. \cite{DBLP:conf/tacas/LeikeH14}, 
-conduct independent searches for each possible form of the ranking function with some of them futile whenever the assumed constrained ranking function does not exist, we have a single search that aims at finding the ranking function with the lowest Kolmogorov complexity. 
+As a consequence of the aforementioned conjecture, we do not need to commit
+to a specific form of the termination argument.  While other approaches,
+e.g.  \cite{DBLP:conf/tacas/LeikeH14}, conduct independent searches for each
+possible form of the ranking function with some of them futile whenever the
+assumed constrained ranking function does not exist, we have a single search
+that aims at finding the ranking function with the lowest Kolmogorov
+complexity.
+%
 \fi
 %
 %
@@ -1623,13 +1694,16 @@ In this section we present a solver for the synthesis fragment:
 where $P$ ranges over sets, while $x$ and $y$ range over ground terms (as mentioned before, for brevity reasons we drop
  the vector symbol and write  $x$ for $\vec{x}$).
 
-By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to \mathbb{B}$ as a specification function
-that  returns true iff $P$ computes appropriate outputs for the inputs $x$ and $y$, we can   
-regard the satisfaction problem for the synthesis fragment as \emph{program synthesis}, i.e.
-the mechanised construction of software that provably satisfies a given specification.
-Research in the area of program synthesis has been particularly fruitful beginning with Alonzo Church's work on the
-\emph{Circuit Synthesis Problem} in the sixties~\cite{church-synth}, and continuing with works such as 
-{\sc Brahma}~\cite{brahma} and program sketching~\cite{lezama-thesis,sketch,modular-sketch}.
+By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
+\mathbb{B}$ as a specification function that returns true iff $P$ computes
+appropriate outputs for the inputs $x$ and $y$, we can regard the
+satisfaction problem for the synthesis fragment as \emph{program synthesis},
+i.e.  the mechanised construction of software that provably satisfies a
+given specification.  Research in the area of program synthesis has been
+particularly fruitful beginning with Alonzo Church's work on the
+\emph{Circuit Synthesis Problem} in the sixties~\cite{church-synth}, and
+continuing with works such as {\sc Brahma}~\cite{brahma} and program
+sketching~\cite{lezama-thesis,sketch,modular-sketch}.
 
 % 
 %We can solve the synthesis problem using any off-the-shelf program synthesiser.  If you don't
@@ -1819,7 +1893,9 @@ The algorithm is divided into two
 procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
 a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
 
-The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$ which satisfy the partial specification:
+The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$
+which satisfy the partial specification:
+%
 \[
  \exists P, x_0 . \forall x \in \text{\sc inputs} . \sigma(P, x_0, x)
 \]
@@ -1831,28 +1907,38 @@ does satisfy the specification on all inputs by checking satisfiability of the v
  \exists x . \lnot \sigma(P, x_0, x)
 \]
 
-If this formula is unsatisfiable, the candidate solution is in fact a solution to the synthesis formula
-and so the algorithm terminates.  Otherwise, the witness $x$ is an input on which the candidate solution fails
-to meet the specification.  This witness $x$ is added to the {\sc inputs} set and the loop iterates again.
+If this formula is unsatisfiable, the candidate solution is in fact a
+solution to the synthesis formula and so the algorithm terminates. 
+Otherwise, the witness $x$ is an input on which the candidate solution fails
+to meet the specification.  This witness $x$ is added to the {\sc inputs}
+set and the loop iterates again.
 
-Concretely, {\sc synth} is implemented as shown in Figure~\ref{fig:synth-dfd}.  We start by taking the termination
-specification and generating a C program which takes as input a candidate $(P, x_0)$ and asserts that the candidate
-fails to meet the specification on at least on of the elements of {\sc inputs}.  So this program is unsafe iff there
-is some candidate $(P, x_0)$ satisfying the specification for all the elements of {\sc inputs}.  Finding a new
-candidate solution is therefore reduced to model checking this C program, which by construction is loop free.
-The model checking is done using a combination of bounded model checking, explicit state enumeration and
-genetic programming (GP).  The latter two techniques involve combining the previously generated C program,
-along with code that searches for candidate solutions.  Finally, if any of the model checkers
-finds a candidate solution it returns it.  The form of this candidate solution is yet another program,
-this time written in the proof language $\mathcal{L}$.
+Concretely, {\sc synth} is implemented as shown in
+Figure~\ref{fig:synth-dfd}.  We start by taking the termination
+specification and generating a C program which takes as input a candidate
+$(P, x_0)$ and asserts that the candidate fails to meet the specification on
+at least on of the elements of {\sc inputs}.  So this program is unsafe iff
+there is some candidate $(P, x_0)$ satisfying the specification for all the
+elements of {\sc inputs}.  Finding a new candidate solution is therefore
+reduced to model checking this C program, which by construction is loop
+free.  The model checking is done using a combination of bounded model
+checking, explicit state enumeration and genetic programming (GP).  The
+latter two techniques involve combining the previously generated C program,
+along with code that searches for candidate solutions.  Finally, if any of
+the model checkers finds a candidate solution it returns it.  The form of
+this candidate solution is yet another program, this time written in the
+proof language $\mathcal{L}$.
 
-As well as efficiency, compiling the original source code of the program under analysis has the advantage of
-guaranteeing that we are verifying the exact semantics of the program as understood by a
-compiler, rather than some ad-hoc abstraction of its semantics.
+As well as efficiency, compiling the original source code of the program
+under analysis has the advantage of guaranteeing that we are verifying the
+exact semantics of the program as understood by a compiler, rather than some
+ad-hoc abstraction of its semantics.
 
-Similarly to {\sc synth}, the {\sc verif} procedure is implemented by creating a C program that is unsafe iff
-some input exists on which the candidate solution fails to meet the specification.  Again, symbolic
-and explicit state model checking are used to decide the satisfiability of the verification formula.
+Similarly to {\sc synth}, the {\sc verif} procedure is implemented by
+creating a C program that is unsafe iff some input exists on which the
+candidate solution fails to meet the specification.  Again, symbolic and
+explicit state model checking are used to decide the satisfiability of the
+verification formula.
 
 %If the input set is finite, this procedure is guaranteed to terminate.
 
@@ -2089,35 +2175,40 @@ in order to get a complete search procedure.
 \\
 
 \noindent {\bf Genetic Programming and Incremental Evolution} \label{sec:gp}
-To generate candidate (non-)termination proofs in the synthesise phase of the refinement loop,
-we make use of genetic programming (GP) \cite{langdon:fogp} as an alternative to model checking and exhaustive search.  
-Genetic programming provides an intelligent and adaptive way of searching through the space of computer programs
-for an individual that is highly fit in solving the problem at hand
-by using the Darwinian principle of survival and reproduction of the fittest.
-Thus, the program that emerges from the genetic programming paradigm is a consequence of fitness. 
+To generate candidate (non-)termination proofs in the synthesise phase of
+the refinement loop, we make use of genetic programming
+(GP)~\cite{langdon:fogp} as an alternative to model checking and exhaustive
+search.  Genetic programming provides an intelligent and adaptive way of
+searching through the space of computer programs for an individual that is
+highly fit in solving the problem at hand by using the Darwinian principle
+of survival and reproduction of the fittest.  Thus, the program that emerges
+from the genetic programming paradigm is a consequence of fitness.
 
-We begin with a population of random programs,
-then iteratively evolve this population by applying the genetic operators
-{\sc crossover} and {\sc mutate}. The {\sc crossover} operator takes two programs
-and combines their code in some way to create a new program.  The {\sc mutate} operator takes a single
-program and randomly changes parts of its code, again creating a new program.
-Both these operators are applied to programs selected from the population in
-proportion to their observed fitness, and a program is said to be fitter than another
-if it meets the specification on more test cases.
+We begin with a population of random programs, then iteratively evolve this
+population by applying the genetic operators {\sc crossover} and {\sc
+mutate}.  The {\sc crossover} operator takes two programs and combines their
+code in some way to create a new program.  The {\sc mutate} operator takes a
+single program and randomly changes parts of its code, again creating a new
+program.  Both these operators are applied to programs selected from the
+population in proportion to their observed fitness, and a program is said to
+be fitter than another if it meets the specification on more test cases.
 
-In the setting of program synthesis, genetic programming can be very usefully combined
-with the concept of incremental evolution.  The idea is that in order to evolve a program
-that is adequate for some difficult task, it is often helpful to first evolve a population
-that as an ensemble is good at some simpler variation of the task.  This principle
-leads us to the observation that each round of the CEGIS loop can be thought of
-as creating a more difficult problem for the GP synthesiser to solve.  Therefore,
-if GP finds a candidate program which is correct for the $k$ inputs so far observed,
-but is not correct for the full specification, that candidate program came from a population
-that was ``good'' for the specification restrict to those $k$ inputs.  The next time round
-the CEGIS loop, the problem GP must solve is slightly harder -- any solution to this new
-problem must be correct for the previous $k$ inputs and also whatever new input was added
-by the previous iteration of {\sc verif}.  It therefore makes sense to begin the $k+1$st
-round of evolution with the population at the end of the $k$th round.
+In the setting of program synthesis, genetic programming can be very
+usefully combined with the concept of incremental evolution.  The idea is
+that in order to evolve a program that is adequate for some difficult task,
+it is often helpful to first evolve a population that as an ensemble is good
+at some simpler variation of the task.  This principle leads us to the
+observation that each round of the CEGIS loop can be thought of as creating
+a more difficult problem for the GP synthesiser to solve.  Therefore, if GP
+finds a candidate program which is correct for the $k$ inputs so far
+observed, but is not correct for the full specification, that candidate
+program came from a population that was ``good'' for the specification
+restrict to those $k$ inputs.  The next time round the CEGIS loop, the
+problem GP must solve is slightly harder -- any solution to this new problem
+must be correct for the previous $k$ inputs and also whatever new input was
+added by the previous iteration of {\sc verif}.  It therefore makes sense to
+begin the $k+1$st round of evolution with the population at the end of the
+$k$-th round.
 
 %% The general idea is to start with a population
 %% of random programs and evolve a good one.  ``Good'' in this case means that the program
@@ -2395,10 +2486,11 @@ instances.
 
 
 \section{Experiments}
-We implemented our algorithm in the {\sc Headshot} tool, which uses the {\sc Kalashnikov} program synthesiser for termination.
-We ran the tool on 40 benchmarks taken from the termination category of SVCOMP'15.
-The experiments were performed on a 4-core 3.3GHz i5-2500k with 8GB of RAM.
 
+We implemented our algorithm in the {\sc Headshot} tool, which uses the {\sc
+Kalashnikov} program synthesiser for termination.  We ran the tool on 40
+benchmarks taken from the termination category of SVCOMP'15.  The
+experiments were performed on a 4-core 3.3\,GHz i5-2500k with 8\,GB of RAM.
 
 \iffalse
 We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig.~\ref{fig:nonlinear}.
@@ -2456,39 +2548,50 @@ Learning: \cite{DBLP:journals/corr/HeizmannHP14}
 %Consequently, the termination argument can be very simple. There are numerous techniques specialised in
 %proving termination of lasso-shaped programs efficiently \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/P04}. 
 
-While the synthesis of termination arguments for linear programs over integers is indeed well-covered in the literature, 
-there is very limited work for programs over machine integers.
-Cook et al. present a method based on a reduction to Presburger
-arithmetic, and a template-matching approach for predefined classes of
-ranking functions based on reduction to SAT- and QBF-solving \cite{DBLP:conf/tacas/CookKRW10}.
-Similarly, the only work we are aware of that can compute non-linear ranking functions  
-for imperative loops with polynomial guards and polynomial assignments
-is \cite{DBLP:conf/vmcai/BradleyMS05}. However, this work extends only to polynomials.
+While the synthesis of termination arguments for linear programs over
+integers is indeed well-covered in the literature, there is very limited
+work for programs over machine integers.  Cook et al.  present a method
+based on a reduction to Presburger arithmetic, and a template-matching
+approach for predefined classes of ranking functions based on reduction to
+SAT- and QBF-solving~\cite{DBLP:conf/tacas/CookKRW10}.  Similarly, the only
+work we are aware of that can compute non-linear ranking functions for
+imperative loops with polynomial guards and polynomial assignments
+is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
+polynomials.
 
-Given the lack of research in handling \emph{not-linear programs}, as well as \emph{programs over bit-vectors and floats},  
-our work focuses on covering these areas. 
-One of the obvious conclusions that can be reached from observing Figure~\ref{fig:handletable}, 
-is that most of the works tend to specialise on a certain aspect of termination proving that they can solve efficiently. 
-Conversely to this view, we aim for \emph{generality}, as we do not restrict the form of the synthesised ranking functions, nor the form of the input programs.
+Given the lack of research in handling \emph{not-linear programs}, as well
+as \emph{programs over bit-vectors and floats}, our work focuses on covering
+these areas.  One of the obvious conclusions that can be reached from
+observing Figure~\ref{fig:handletable}, is that most of the works tend to
+specialise on a certain aspect of termination proving that they can solve
+efficiently.  Conversely to this view, we aim for \emph{generality}, as we
+do not restrict the form of the synthesised ranking functions, nor the form
+of the input programs.
 
+As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's
+theorem compute a set of local termination conditions that decrease as
+execution follows through the loop and require expensive reachability
+analyses~\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}. 
+In an attempt to reduce the complexity of checking the validity of the
+termination argument, Cook et al present an iterative termination proving
+procedure that searches for lexicographic termination
+arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et al. 
+strengthen the termination argument such that it becomes a transitive
+relation~\cite{DBLP:conf/cav/KroeningSTW10}.
 
-As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's theorem compute a set of local termination conditions that decrease as execution follows through the loop
-and require expensive reachability analyses
-\cite{DBLP:conf/lpe/CodishG03,DBLP:conf/lics/PodelskiR04,DBLP:conf/pldi/CookPR06}.
-In an attempt to reduce the complexity of checking the validity of the termination argument, 
-Cook et al present an iterative termination proving procedure that searches for 
-lexicographic termination arguments \cite{DBLP:conf/tacas/CookSZ13}, 
-whereas Kroening et al. strengthen the termination argument such that it becomes a transitive relation \cite{DBLP:conf/cav/KroeningSTW10}.
-
-Proving program termination implies the simultaneous search for a termination argument and a supporting invariant.
-For this purpose, several tools alternate 
-between calls to a safety prover and calls to a ranking function synthesis tool \cite{}. 
-In order to share more information about the state of the termination proofs between the two tools, 
-Brockschmidt et al. use a single representation of the state of the termination proof search that both tools operate over, 
-resulting in performance improvements \cite{DBLP:conf/cav/BrockschmidtCF13}.
-In \cite{DBLP:conf/cav/BradleyMS05}, Bradley et al. combine the generation of ranking functions with the generation of invariants to
-form one constraint solving problem such that the necessary supporting invariants for the ranking function are discovered on demand.
-In our setting, both the ranking function and the supporting invariant are iteratively constructed through the same refinement loop.
+Proving program termination implies the simultaneous search for a
+termination argument and a supporting invariant.  For this purpose, several
+tools alternate between calls to a safety prover and calls to a ranking
+function synthesis tool \cite{}.  In order to share more information about
+the state of the termination proofs between the two tools, Brockschmidt et
+al.  use a single representation of the state of the termination proof
+search that both tools operate over, resulting in performance improvements
+\cite{DBLP:conf/cav/BrockschmidtCF13}.  In \cite{DBLP:conf/cav/BradleyMS05},
+Bradley et al.  combine the generation of ranking functions with the
+generation of invariants to form one constraint solving problem such that
+the necessary supporting invariants for the ranking function are discovered
+on demand.  In our setting, both the ranking function and the supporting
+invariant are iteratively constructed through the same refinement loop.
 
  
 %In our setting, a candidate termination argument is iteratively constructed. 
