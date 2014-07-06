@@ -1341,21 +1341,16 @@ the environment and the loop's body. %: for termination, we need over-approximat
 %we need under-approximations. 
 As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
 we will not provide the full algorithm, but rather illustrate it through the example in Figure~\ref{fig:environment-model}.
-Let us assume that we have already proven the termination of loops $L_1$ and $L_3$, and we are now trying to prove that $L_2$ terminates, which we encode
+Our technique proves the termination of each loop separately and in program order, 
+with the exception of nested loops, whose termination we encode in the same formula.
+Following the same design, let us assume that we have already proven the termination of loop $L_1$, and we are now trying to prove that $L_2$ and $L_3$ terminate, which we encode
 as the conjunction of constraints on the right side of the figure:
 \begin{itemize}
-\item $W_1$, $W_2$ and $W_3$ are (over-approximating) inductive invariants for $L_1$, $L_2$ and $L_3$, respectively.
+\item $W_1$ and $W_2$ are (over-approximating) inductive invariants for $L_1$ and $L_2$, respectively.
 \item $S$ is a summary of $L_3$ that over-approximates the transitive closure of its transition relation.
-\item If the formula is satisfiable, then $R$ is a ranking function for $L_2$.
- \end{itemize}
+\item If the formula is satisfiable, then $R_2$ and $R_3$ are ranking functions for $L_2$ and $L_3$, respectively.
+\end{itemize}
 
-
-%the lines marked as $*$ over-approximate the states in which loop 2 can start execute.
-%% contains a non-trivial program
-%% along with the constraint system
-%% encoding the termination of the outer loop.  Since the program contains sequential composition
-%% of loops and nested loops, the constraint
-%% system involves termination invariants $W_1, W_2, W_3$ and the inner loop summary $S$.
 
 Note that despite its intricacy, the constraint system is still a formula in the synthesis fragment.
 Since the outer loop of this program does indeed terminate, the system is satisfiable, as witnessed by:
@@ -1364,7 +1359,8 @@ W_1(\langle v, x, y, z \rangle ) & \triangleq x \leq y + 1 \\
 W_2(\langle v, x, y, z \rangle ) & \triangleq x = y + 1 \\
 S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) & \triangleq x ' = x \wedge y' = y \wedge \\
 & z' + v' = x' \wedge v' \leq y' \\
-R(x) & = x
+R_2(x) & = x\\
+R_3 & = ..
 \end{align*}
 
 
@@ -1396,7 +1392,7 @@ $L_3:$
 \vline
 \begin{minipage}{0.85\textwidth}
 \begin{align*}
- \exists W_1, W_2, R, S . \forall v, x, y, z, v', x', y', z' . \\
+ \exists W_1, W_2, R_2, R_3, S . \forall v, x, y, z, v', x', y', z' . \\
    x = 0 & \rightarrow W_1(v, x, y, z) \, \wedge \\
    x \leq y \wedge W_1(v, x, y, z) & \rightarrow W_1(v, x+1, x, y, z) \, \wedge \\
    x > 0 \wedge x > y \wedge W_1(v, x, y, z) & \rightarrow W_2(v, x, y, z) \, \wedge \\
@@ -1404,15 +1400,17 @@ $L_3:$
    %v < y \wedge W_3(v, x, y, z) & \rightarrow W_3(v+1, x, y, z-1) \, \wedge \\
    %v \geq y \wedge W_3(v, x, y, z) & \rightarrow W_2(v, x-z, y-z, z) \, \wedge \\
    S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) \wedge v' < y' & \rightarrow S(\langle v, x, y, z \rangle, \langle v'+1, x', y', z'-1 \rangle) \, \wedge \\
+   & R_3(v,x,y,z) > 0 \, \wedge \\
+   & R_3(v,x,y,z) > R_3(v'+1,x',y',z'-1) \, \wedge\\
    x > 0 \wedge W_2(v, x, y, z) & \rightarrow S(\langle v, x, y, z \rangle, \langle 0, x, y, x \rangle) \, \wedge \\
    x > 0 \wedge W_2(v, x, y, z) \wedge S(\langle v, x, y, z \rangle, \langle v', x', y', z' \rangle) \wedge v' \geq y' & \rightarrow \\
    & W_2(v', x' - z', y' - z', z') \, \wedge \\
-   & R(v, x, y, z) > 0 \, \wedge \\
-   & R(v, x, y, z) > R(v', x' - z', y'-z', z')
+   & R_2(v, x, y, z) > 0 \, \wedge \\
+   & R_2(v, x, y, z) > R_2(v', x' - z', y'-z', z')
 \end{align*}
 \end{minipage}
 \end{framed}
-\caption{A non-trivial program and its constraint system\label{fig:environment-model}}
+\caption{A non-trivial program and its termination formula\label{fig:environment-model}}
 \end{figure*}
 
 \noindent {\bf Under-approximating the environment for non-termination.}
