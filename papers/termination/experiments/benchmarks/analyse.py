@@ -7,6 +7,10 @@ import os
 propre = re.compile(r'([a-zA-Z_-]+): *(.*)')
 logdir = "logs"
 
+TERM = "\\tick"
+NONTERM = "\\xmark"
+UNK = "?"
+
 def load_stats(filename):
   try:
     f = open(filename)
@@ -16,6 +20,26 @@ def load_stats(filename):
     return None
 
   return stats
+
+def load_armc(filename):
+  ret = {}
+
+  f = open(filename)
+
+  for l in f:
+    if 'SPINS' in l:
+      ret['res'] = NONTERM
+    elif 'TERMINATES' in l:
+      ret['res'] = TERM
+    elif 'TIMEOUT' in l:
+      ret['res'] = UNK
+      ret['elapsed'] = 'T/O'
+    else:
+      ret['elapsed'] = l.strip() + "s"
+
+  f.close()
+  return ret
+      
 
 def load_props(filename):
   props = {}
@@ -61,14 +85,16 @@ def load_benchmark(cfile):
 
   termfile = os.path.join(logdir, '%s.term.stats' % benchname)
   nontermfile = os.path.join(logdir, '%s.nonterm.stats' % benchname)
+  armcfile = os.path.join(logdir, '%s.armc.res' % benchname)
 
   termstats = load_stats(termfile)
   nontermstats = load_stats(nontermfile)
+  armc = load_armc(armcfile)
 
-  return (benchname, props, termstats, nontermstats)
+  return (benchname, props, termstats, nontermstats, armc)
 
 def print_benchmark(benchmark):
-  (benchname, props, termstats, nontermstats) = benchmark
+  (benchname, props, termstats, nontermstats, armc) = benchmark
 
   loc = props.get('loc', '')
   linprog = props.get('linear-program', '')
@@ -78,7 +104,14 @@ def print_benchmark(benchmark):
   lexdim = props.get('lexicographic', '')
   isterm = props.get('terminates', '')
 
-  res = '?'
+  if isterm == 'true':
+    isterm = TERM
+  elif isterm == 'false':
+    isterm = NONTERM
+  else:
+    isterm = UNK
+
+  res = UNK
   elapsed = 'T/O'
   iters = '0'
 
@@ -89,7 +122,7 @@ def print_benchmark(benchmark):
     if 'timeout' not in counters:
       (start, end) = timers['_'][0]
       elapsed = '%.01fs' % (end - start)
-      res = 'term'
+      res = TERM
     elif nontermstats:
       (counters, timers) = nontermstats
       iters = str(counters['iterations'])
@@ -97,14 +130,16 @@ def print_benchmark(benchmark):
       if 'timeout' not in counters:
         (start, end) = timers['_'][0]
         elapsed = '%.01fs' % (end - start)
-        res = 'nonterm'
+        res = NONTERM
   else:
     return ""
     res = 'err'
     elapsed = '--'
 
-  return ' & '.join((benchname, loc, isterm, linprog, linrank, iscond,
-                     isfloat, lexdim, '5', res, elapsed, iters)) + '\\\\ \n'
+  armcres = armc['res']
+  armctime = armc['elapsed']
+
+  return ' & '.join((benchname, isterm, armcres, armctime, res, elapsed, iters)) + '\\\\ \n'
 
 def munge(s):
   REST = 0
