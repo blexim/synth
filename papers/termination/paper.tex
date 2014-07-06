@@ -1408,31 +1408,46 @@ $L_3:$
 \end{figure*}
 
 \noindent {\bf Under-approximating the environment for non-termination.}
-Dual to termination, when proving non-termination, we need to under-approximate the environment and the loop's body and apply
+Dual to termination, when proving non-termination, we need to
+under-approximate the environment and the loop's body and apply
 formula {\bf [CNT]}. %As opposed to over-approximations 
 %this is not as straightforward as when computing over-approximations in the termination case described above.
-Recall that there is one more constraint that we must obey when doing so: we must stay inside the synthesis fragment! 
-This becomes more challenging now then when dealing with over-approximations due to the existential nature of under-approximations: they require an additional existential quantifier, which might result in an additional quantifier alternation, i.e. $\exists \forall \exists$. 
+Recall that there is one more constraint that we must obey when doing so: we
+must stay inside the synthesis fragment!  This becomes more challenging now
+then when dealing with over-approximations due to the existential nature of
+under-approximations: they require an additional existential quantifier,
+which might result in an additional quantifier alternation, i.e.~$\exists
+\forall \exists$.
 
-This issue does not arise when abstracting the environment as its under-approximation and the loop under consideration make use of existential quantification at the same nestedness level. 
+This issue does not arise when abstracting the environment, as its
+under-approximation and the loop under consideration make use of existential
+quantification at the same nestedness level.
 
-However, when dealing with nested loops, we need to  under-approximate the inner loop, requiring a nested existential quantifier, 
-resulting in the $\exists \forall \exists$ alternation.  At first sight, this seems fatal for our formulation.  Luckily, it is possible to
-reformulate non-termination as an $\exists \forall$ formula by observing that, unlike a ranking function, the defining property of a
-recurrence set is \emph{non relational} -- if we end up in the recurrence set, we don't care exactly where we came from as long as
-we know that it was also somewhere in the recurrence set.  This allows us to cast non-termination of nested loops as the formula
-shown in Figure~\ref{fig:nonterm-nested}.
+However, when dealing with nested loops, we need to under-approximate the
+inner loop, requiring a nested existential quantifier, resulting in the
+$\exists \forall \exists$ alternation.  At first sight, this seems fatal for
+our formulation.  Luckily, it is possible to reformulate non-termination as
+an $\exists \forall$ formula by observing that, unlike a ranking function,
+the defining property of a recurrence set is \emph{non relational} -- if we
+end up in the recurrence set, we do not care exactly where we came from as
+long as we know that it was also somewhere in the recurrence set.  This
+allows us to cast non-termination of nested loops as the formula shown in
+Figure~\ref{fig:nonterm-nested}.
 
-If the formula on the right of the figure is satisfiable, then $L_1$ is non-terminating as witnessed by the recurrence set $N_1$ and
-the initial state $x_0$ in which the program begins executing. There are two possible scenarios for $L_2$'s termination:
+If the formula on the right-hand side of the figure is satisfiable, then
+$L_1$ is non-terminating, as witnessed by the recurrence set $N_1$ and the
+initial state $x_0$ in which the program begins executing.  There are two
+possible scenarios for $L_2$'s termination:
+%
 \begin{itemize}
-\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x) \wedge P_2(x,x') \rightarrow N_1(x') $. 
+%
+\item If $L_2$ is terminating, then $N_2$ is an inductive invariant that
+reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x)
+\wedge P_2(x,x') \rightarrow N_1(x') $.
+%
 \item If $L_2$ is non-terminating, then $N_2 \wedge G_2$ is its recurrence set.
+%
 \end{itemize}
-
-
-
-
 
 \begin{figure*}
 \begin{framed}
