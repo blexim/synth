@@ -6,6 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
  */
 /* 
  * Terminating program which has a r.f. based on minimum

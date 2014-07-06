@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  ?
  * Source:         Ramsey vs. Lexicographic Termination Proving, TACAS'13
+ * Terminates:     true
  */
 
 int main(void) {

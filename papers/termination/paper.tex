@@ -38,6 +38,7 @@
 \newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\xmark}{\ding{55}}
+\newcommand{\tick}{\checkmark}
 \newcommand{\todo}[1]{{\bf TODO:} #1}
 \newcommand{\newC}{C$^-$\xspace}
 
@@ -113,7 +114,7 @@ Proving program termination is typically done by finding a well-founded
 provers typically find ranking functions using either linear algebra or
 templates.  As such they are often restricted to finding linear ranking
 functions over mathematical integers.  This class of ranking functions is
-insufficient for prove termination for many terminating programs, and
+insufficient for proving termination of many terminating programs, and
 furthermore a termination argument for a program operating on mathematical
 integers does not always lead to a termination argument for the same program
 operating on fixed-width machine integers.
@@ -2431,9 +2432,10 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 \begin{figure*}
 \centering
 \footnotesize
-\begin{tabular}{|l|r|c|c|c|c|c|r|r|c|r|r|}
+\begin{tabular}{|l|l||l|r||l|r|r|}
 \hline
-    & LOC & Terminates? & \shortstack{Linear \\ program?} & \shortstack{Linear ranking \\ function?}  & Conditional? & Float? & Dimension & \shortstack{Ranking \\ program size} & Res & Time (s) & Iterations\\
+    &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Headshot} \\
+    & Expected &  Verdict & Time & Verdict & Time & Iterations\\
     \hline
     \hline
 \input{table}
