@@ -51,17 +51,6 @@
     Year = {2008},
     Month = {Dec},
     Number = {UCB/EECS-2008-177},
-    Abstract = {The goal of software synthesis is to generate programs automatically from high-level specifications. However, efficient implementations for challenging programs require a combination of high-level algorithmic insights and low-level implementation details. Deriving the low-level details is a natural job for a computer, but the synthesizer can not replace the human insight. Therefore, one of the central challenges for software synthesis is to establish a synergy between the programmer and the synthesizer, exploiting the programmer's expertise to reduce the burden on the synthesizer.
-
-This thesis introduces \emph{sketching}, a new style of synthesis that offers a fresh approach to the synergy problem. Previous approaches have relied on meta-programming, or variations of interactive theorem proving to help the synthesizer deduce an efficient implementation. The resulting systems are very powerful, but they require the programmer to master new formalisms far removed from traditional programming models. To make synthesis accessible, programmers must be able to provide their insight effortlessly, using formalisms they already understand. 
-
-In Sketching, insight is communicated through a partial program, a \emph{sketch} that expresses the high-level structure of an implementation but leaves holes in place of the low-level details. This form of synthesis is made possible by a new SAT-based inductive synthesis procedure that can efficiently synthesize an implementation from a small number of test cases. This algorithm forms the core of a new counterexample guided inductive synthesis procedure (\cegis{}) which combines the inductive synthesizer with a validation procedure to automatically generate test inputs and ensure that the generated program satisfies its specification. With a few extensions, \cegis{} can even use its sequential inductive synthesizer to generate concurrent programs; all the concurrency related reasoning is delegated to an off-the-shelf validation procedure.
-
-The resulting synthesis system scales to real programming problems from a variety of domains ranging from bit-level ciphers to manipulations of linked datastructures. The system was even used to produce a complete optimized implementation of the AES cipher. The concurrency aware synthesizer was also used to synthesize, in a matter of minutes, the details of a fine-locking scheme for a concurrent set, a sense reversing barrier, and even a solution to the dining philosophers problem. 
-
-The system was also extended with domain specific knowledge to better handle the problem of implementing stencil computations, an important domain in scientific computing. For this domain, we were able to encode domain specific insight as a problem reduction that converted stencil sketches into simplified sketch problems which \cegis{} resolved in a matter of minutes. This specialized synthesizer was used to quickly implement a MultiGrid solver for partial differential equations containing many difficult implementation strategies from the literature. 
-
-In short, this thesis shows that sketching is a viable approach to making synthesis practical in a general programming context.}
 }
 
 @book{taocp2,
@@ -262,7 +251,6 @@ language={English}
   year      = {2006},
   pages     = {270-284},
   ee        = {http://dx.doi.org/10.1007/11799573_21},
-  crossref  = {DBLP:conf/iclp/2006},
   bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
@@ -314,7 +302,6 @@ language={English}
   year      = {2013},
   pages     = {129-136},
   ee        = {http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=6679401},
-  crossref  = {DBLP:conf/fmcad/2013},
   bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
@@ -580,6 +567,121 @@ language={English}
   series    = {LNCS},
   volume    = {8559},
   ee        = {http://dx.doi.org/10.1007/978-3-319-08867-9},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/flops/Avery06,
+  author    = {James Avery},
+  title     = {Size-Change Termination and Bound Analysis},
+  booktitle = {FLOPS},
+  year      = {2006},
+  pages     = {192-207},
+  ee        = {http://dx.doi.org/10.1007/11737414_14},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/icalp/BradleyMS05,
+  author    = {Aaron R. Bradley and
+               Zohar Manna and
+               Henny B. Sipma},
+  title     = {The Polyranking Principle},
+  booktitle = {ICALP},
+  year      = {2005},
+  pages     = {1349-1361},
+  ee        = {http://dx.doi.org/10.1007/11523468_109},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{Chen:2012:TPL:2414936.2414966,
+ author = {Chen, Hong Yi and Flur, Shaked and Mukhopadhyay, Supratik},
+ title = {Termination Proofs for Linear Simple Loops},
+ booktitle = {Proceedings of the 19th International Conference on Static Analysis},
+ series = {SAS'12},
+ year = {2012},
+ isbn = {978-3-642-33124-4},
+ location = {Deauville, France},
+ pages = {422--438},
+ numpages = {17},
+ acmid = {2414966},
+ publisher = {Springer-Verlag},
+ address = {Berlin, Heidelberg},
+} 
+
+@article{DBLP:journals/aaecc/DershowitzLSS01,
+  author    = {Nachum Dershowitz and
+               Naomi Lindenstrauss and
+               Yehoshua Sagiv and
+               Alexander Serebrenik},
+  title     = {A General Framework for Automatic Termination Analysis of
+               Logic Programs},
+  journal   = {Appl. Algebra Eng. Commun. Comput.},
+  volume    = {12},
+  number    = {1/2},
+  year      = {2001},
+  pages     = {117-156},
+  ee        = {http://dx.doi.org/10.1007/s002000100065},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/pldi/GulwaniJK09,
+  author    = {Sumit Gulwani and
+               Sagar Jain and
+               Eric Koskinen},
+  title     = {Control-flow refinement and progress invariants for bound
+               analysis},
+  booktitle = {PLDI},
+  year      = {2009},
+  pages     = {375-385},
+  ee        = {http://doi.acm.org/10.1145/1542476.1542518},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/sas/HarrisLNR10,
+  author    = {William R. Harris and
+               Akash Lal and
+               Aditya V. Nori and
+               Sriram K. Rajamani},
+  title     = {Alternation for Termination},
+  booktitle = {SAS},
+  year      = {2010},
+  pages     = {304-319},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-15769-1_19},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/fmcad/LarrazORR13,
+  author    = {Daniel Larraz and
+               Albert Oliveras and
+               Enric Rodr\'{\i}guez-Carbonell and
+               Albert Rubio},
+  title     = {Proving termination of imperative programs using Max-SMT},
+  booktitle = {FMCAD},
+  year      = {2013},
+  pages     = {218-225},
+  ee        = {http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=6679413},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/popl/LeeJB01,
+  author    = {Chin Soon Lee and
+               Neil D. Jones and
+               Amir M. Ben-Amram},
+  title     = {The size-change principle for program termination},
+  booktitle = {POPL},
+  year      = {2001},
+  pages     = {81-92},
+  ee        = {http://doi.acm.org/10.1145/360204.360210},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+@inproceedings{DBLP:conf/sas/Urban13,
+  author    = {Caterina Urban},
+  title     = {The Abstract Domain of Segmented Ranking Functions},
+  booktitle = {SAS},
+  year      = {2013},
+  pages     = {43-62},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-38856-9_5},
+  crossref  = {DBLP:conf/sas/2013},
   bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 

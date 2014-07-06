@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     true
+ * Bibtex:         DBLP:conf/popl/LeeJB01
  */
 /*
  * Program from Ex.1 of

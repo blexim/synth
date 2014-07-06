@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     unk
+ * Bibtex:         DBLP:conf/sas/HarrisLNR10
  */
 /*
  * Program from Fig.1 of

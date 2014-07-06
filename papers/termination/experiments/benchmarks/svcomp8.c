@@ -7,6 +7,7 @@
  * Bitvector:      unk
  * Lexicographic:  unk
  * Terminates:     unk
+ * Bibtex:         Chen:2012:TPL:2414936.2414966
  */
 
 /*

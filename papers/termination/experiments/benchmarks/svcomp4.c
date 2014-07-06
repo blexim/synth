@@ -7,6 +7,7 @@
  * Bitvector:      unk
  * Lexicographic:  unk
  * Terminates:     false
+ * Bibtex:         DBLP:conf/cav/BradleyMS05
  */
 
 int main(void)

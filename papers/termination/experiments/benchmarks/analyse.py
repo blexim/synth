@@ -68,7 +68,7 @@ def load_props(filename):
 
         if m:
           key = m.group(1).lower()
-          val = m.group(2).lower()
+          val = m.group(2)
           props[key] = val
 
   f.close()
@@ -111,9 +111,12 @@ def print_benchmark(benchmark):
   lexdim = props.get('lexicographic', '')
   isterm = props.get('terminates', '')
 
-  if isterm == 'true':
+  if 'bibtex' in props:
+    benchname += '~\cite{%s}' % props['bibtex']
+
+  if isterm.lower() == 'true':
     isterm = TERM
-  elif isterm == 'false':
+  elif isterm.lower() == 'false':
     isterm = NONTERM
   else:
     isterm = UNK

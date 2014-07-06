@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     true
+ * Bibtex:         DBLP:conf/flops/Avery06
  */
 
 int main(void)

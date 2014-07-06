@@ -7,6 +7,7 @@
  * Bitvector:      unk
  * Lexicographic:  unk
  * Terminates:     true
+ * Bibtex:         DBLP:conf/cav/BrockschmidtCF13
  */
 
 int main(void) {

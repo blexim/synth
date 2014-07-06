@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     true
+ * Bibtex:         DBLP:journals/aaecc/DershowitzLSS01
  */
 /*
  * gcd program (terminating) based on 

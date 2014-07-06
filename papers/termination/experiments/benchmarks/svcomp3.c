@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  unk
  * Terminates:     true
+ * Bibtex:         BA:mcs
  */
 
 int main(void)

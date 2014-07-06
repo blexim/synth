@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     unk
+ * Bibtex:         DBLP:conf/vmcai/P04
  */
 /*
  * Program from Example 2 of

@@ -6,7 +6,7 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
- * Terminates:     unk
+ * Terminates:     true
  */
 /* An example that looks simple, given to me by Genady Trifon
  * Date: 15.12.2013

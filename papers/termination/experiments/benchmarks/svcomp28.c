@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     unk
+ * Bibtex:         DBLP:conf/sigsoft/Nori013
  */
 /*
  * Program from Fig.8 of

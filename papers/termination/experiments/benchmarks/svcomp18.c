@@ -7,6 +7,7 @@
  * Bitvector:      false
  * Lexicographic:  1
  * Terminates:     unk
+ * Bibtex:         DBLP:conf/fmcad/LarrazORR13
  */
 /*
  * Program from Fig.1 of
