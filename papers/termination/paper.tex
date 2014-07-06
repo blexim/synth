@@ -38,6 +38,7 @@
 \newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\xmark}{\ding{55}}
+\newcommand{\tick}{\checkmark}
 \newcommand{\todo}[1]{{\bf TODO:} #1}
 \newcommand{\newC}{C$^-$\xspace}
 
@@ -2520,9 +2521,10 @@ We proved termination for a bunch of programs, see Fig.~\ref{fig:linear} and Fig
 \begin{figure*}
 \centering
 \footnotesize
-\begin{tabular}{|l|r|c|c|c|c|c|r|r|c|r|r|}
+\begin{tabular}{|l|l||l|r||l|r|r|}
 \hline
-    & LOC & Terminates? & \shortstack{Linear \\ program?} & \shortstack{Linear ranking \\ function?}  & Conditional? & Float? & Dimension & \shortstack{Ranking \\ program size} & Res & Time (s) & Iterations\\
+    &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Headshot} \\
+    & Expected &  Verdict & Time & Verdict & Time & Iterations\\
     \hline
     \hline
 \input{table}
