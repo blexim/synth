@@ -6,6 +6,8 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
+ * Bibtex:         DBLP:conf/vmcai/P04
  */
 /*
  * Program from Example 2 of

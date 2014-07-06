@@ -6,6 +6,8 @@
  * Float:          false
  * Bitvector:      unk
  * Lexicographic:  unk
+ * Terminates:     unk
+ * Bibtex:         DBLP:conf/icalp/BradleyMS05
  */
 
 int main(void)

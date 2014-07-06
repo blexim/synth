@@ -8,6 +8,7 @@
  * Lexicographic:  ?
  * Source:         -
  * Ranking function: |x|
+ * Terminates:     true
  */
 
 int main(void) {

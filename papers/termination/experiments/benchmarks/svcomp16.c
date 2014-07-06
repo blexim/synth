@@ -6,6 +6,8 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
+ * Bibtex:         DBLP:conf/sas/HarrisLNR10
  */
 /*
  * Program from Fig.3 of

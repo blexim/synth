@@ -100,11 +100,11 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 
 \begin{algorithm*}
  \caption{Abstract refinement algorithm
- \label{fig:abstract-refinement-code}}
-
+ \label{alg:cegis}}
+ \vspace{-1.5em}
  \begin{multicols}{2}
  \begin{algorithmic}[1]
-\Statex
+ \Statex
 \Function{synth}{inputs}
   \Let{$(i_1, \ldots, i_N)$}{inputs}
   \Let{query}{$\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$}
@@ -147,18 +147,19 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 \end{algorithm*}
 
 
-\begin{figure*}
- \centering
- \begin{tikzpicture}[scale=0.5,->,>=stealth',shorten >=1pt,auto,
+\begin{figure}
+ \begin{center}
+ \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
  semithick, initial text=]
 
-  \matrix[nodes={draw, fill=none, scale=1, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
-          row sep=2cm, column sep=3cm] {
+  \matrix[nodes={draw, fill=none, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
+          row sep=2cm, column sep=2.5cm, ampersand replacement=\&] {
    \node (synth) {Synthesise};
-   &
+   \&
    \node (verif) {Verify}; %\\
    %\node[draw=none] {};
-   &
+   \&
    \node[ellipse] (done) {Done}; \\
   };
 
@@ -167,10 +168,12 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
     (verif) edge [bend left] node {Counterexample input} (synth)
     (verif) edge node {Valid} (done);
  \end{tikzpicture}
+ }
+ \end{center}
  
  \caption{Abstract synthesis refinement loop
  \label{fig:abstract-refinement}}
-\end{figure*}
+\end{figure}
 
 
 
@@ -230,7 +233,7 @@ decidable and a termination proof is expressible as a ground term of the \newC l
 Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch} to
 check the validity of the synthesis formula. 
 The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
-detailed in Algorithm~\ref{fig:abstract-refinement-code}.  
+detailed in Algorithm~\ref{alg:cegis}.  
 The algorithm is divided into two
 procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
 a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
@@ -258,13 +261,15 @@ is some candidate $(P, x_0)$ satisfying the specification for all the elements o
 candidate solution is therefore reduced to model checking this C program, which by construction is loop free.
 The model checking is done using a combination of bounded model checking, explicit state enumeration and
 genetic programming (GP).  The latter two techniques involve combining the previously generated C program,
-along with code that searches for candidate solutions.  As well as efficiency, this has the side effect of
-guaranteeing that we are verifying the exact semantics of the program under analysis as understood by a
-compiler, rather than some ad-hoc abstraction of its semantics.  Finally, if any of the model checkers
+along with code that searches for candidate solutions.  Finally, if any of the model checkers
 finds a candidate solution it returns it.  The form of this candidate solution is yet another program,
 this time written in the proof language $\mathcal{L}$.
 
-Similarly, the {\sc verif} procedure is implemented by creating a C program that is unsafe iff
+As well as efficiency, compiling the original source code of the program under analysis has the advantage of
+guaranteeing that we are verifying the exact semantics of the program as understood by a
+compiler, rather than some ad-hoc abstraction of its semantics.
+
+Similarly to {\sc synth}, the {\sc verif} procedure is implemented by creating a C program that is unsafe iff
 some input exists on which the candidate solution fails to meet the specification.  Again, symbolic
 and explicit state model checking are used to decide the satisfiability of the verification formula.
 
@@ -315,7 +320,7 @@ and explicit state model checking are used to decide the satisfiability of the v
  \draw[dotted] (b) -- ++(0, 4.5);
 }
 
-\resizebox{\linewidth}{!}{
+%\resizebox{\linewidth}{!}{
 \begin{tikzpicture}[font=\sffamily]
 
 \node [file] (pua) {input.c};
@@ -365,7 +370,7 @@ and explicit state model checking are used to decide the satisfiability of the v
 \draw (out |- 0,-3) node [align=center] {Proof \\ (written in $\mathcal{L}$)};
 
 \end{tikzpicture}
-}
+%}
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
@@ -373,6 +378,8 @@ and explicit state model checking are used to decide the satisfiability of the v
 \end{figure*}
 
 
+
+\iffalse
 \subsection{Parameterising the Program Space}
 
 
@@ -392,98 +399,98 @@ finishes much faster than if synthesis had been attempted in a
 high-complexity language.
 
 
-%% We introduce a novel parametrisation of the programming language
-%% used to express our synthesised programs.
-%% This parametrisation allows us to efficiently explore the program space
-%% without relying on human guidance and also ensures that our programs
-%% are of minimal length.
+We introduce a novel parametrisation of the programming language
+used to express our synthesised programs.
+This parametrisation allows us to efficiently explore the program space
+without relying on human guidance and also ensures that our programs
+are of minimal length.
 
-%% Our tool is the first we are aware of that is able to effectively
-%% synthesise floating-point programs. We demonstrate this by
-%% synthesising {\sc Fast2Sum} using Knuth's {\sc 2Sum}~\cite{taocp2} as
-%% a specification.
+Our tool is the first we are aware of that is able to effectively
+synthesise floating-point programs. We demonstrate this by
+synthesising {\sc Fast2Sum} using Knuth's {\sc 2Sum}~\cite{taocp2} as
+a specification.
 
-%% ---Our exploration of the program space ensures that our programs are minimal in size.
-%% --- We parametrise the space of programs in such a way that it can be explored automatically, rather than asking a human for hints.
-
-
-%% We consider the following parameters:
-%% \begin{itemize}
-%% \item{Program Length: $l$}
-%% The first parameter we introduce is program length, denoted by $l$.
-%% At each iteration we synthesise programs of length exactly $l$.
-%% We start with $l = 1$ and increment $l$ whenever we determine
-%% that no program of length $l$ can satisfy the specification.  When we do
-%% successfully synthesise a program, we are \emph{guaranteed that it
-%% is of minimal length} since we have previously established that no
-%% shorter program is correct.
-%\item{Word Width: $w$}
-%% An $\mathcal{L}$-program runs on a virtual machine (the $\mathcal{L}$-machine) that
-%% has its own set of parameters.  The only relevant parameter is
-%% the \emph{word width} of the $\mathcal{L}$-machine, that is, the number of bits
-%% in each internal register and immediate constant.  This parameter is denoted by
-%% $w$.  The size of the final SAT problem generated by {\sc cbmc} scales
-%% polynomially with $w$, since each intermediate C variable corresponds
-%% to $w$ propositional variables.
+---Our exploration of the program space ensures that our programs are minimal in size.
+--- We parametrise the space of programs in such a way that it can be explored automatically, rather than asking a human for hints.
 
 
-%\item{Number of Constants: $c$}
-%% Instructions in $\mathcal{L}$ take either one or two operands.
-%% Since any instruction whose operands are all constants can always be
-%% eliminated (since its result is a constant), we know that a loop-free program
-%% of minimal length will not contain any instructions with two constant
-%% operands.  Therefore the number of constants that can appear in
-%% a minimal program of length $l$ is at most $l$.  By minimising the number
-%% of constants appearing in a program, we are able to use a particularly
-%% efficient program encoding that speeds up the synthesis procedure
-%% substantially.  The number of constants used in a program is the parameter $c$.
+We consider the following parameters:
+\begin{itemize}
+\item{Program Length: $l$}
+The first parameter we introduce is program length, denoted by $l$.
+At each iteration we synthesise programs of length exactly $l$.
+We start with $l = 1$ and increment $l$ whenever we determine
+that no program of length $l$ can satisfy the specification.  When we do
+successfully synthesise a program, we are \emph{guaranteed that it
+is of minimal length} since we have previously established that no
+shorter program is correct.
+\item{Word Width: $w$}
+An $\mathcal{L}$-program runs on a virtual machine (the $\mathcal{L}$-machine) that
+has its own set of parameters.  The only relevant parameter is
+the \emph{word width} of the $\mathcal{L}$-machine, that is, the number of bits
+in each internal register and immediate constant.  This parameter is denoted by
+$w$.  The size of the final SAT problem generated by {\sc cbmc} scales
+polynomially with $w$, since each intermediate C variable corresponds
+to $w$ propositional variables.
 
-%\end{itemize}
-%\subsubsection{Searching the Program Space}
+
+\item{Number of Constants: $c$}
+Instructions in $\mathcal{L}$ take either one or two operands.
+Since any instruction whose operands are all constants can always be
+eliminated (since its result is a constant), we know that a loop-free program
+of minimal length will not contain any instructions with two constant
+operands.  Therefore the number of constants that can appear in
+a minimal program of length $l$ is at most $l$.  By minimising the number
+of constants appearing in a program, we are able to use a particularly
+efficient program encoding that speeds up the synthesis procedure
+substantially.  The number of constants used in a program is the parameter $c$.
+
+\end{itemize}
+\subsubsection{Searching the Program Space}
 
 The key to our automation approach is to come up with a sensible way in which to
 adjust the $\mathcal{L}$-parameters in order to cover all possible programs.
 After each round of {\sc synth}, we may need to adjust the parameters.  
-%The
-%logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
+The
+logic for these adjustments is shown as a tree in Fig.~\ref{fig:paramsflow}.
 Whenever {\sc synth} fails, we consider which parameter might have caused the
 failure.  
-%% There are two possibilities: either the program length $l$ was too small,
-%% or the number of allowed constants $c$ was.  If $c < l$, we just increment $c$ and
-%% try another round of synthesis, but allowing ourselves an extra program constant.
-%% If $c = l$, there is no point in increasing $c$ any further.  This is because
-%% no minimal $\mathcal{L}$-program has $c > l$, for if it did there would
-%% have to be at least one instruction with two constant operands.  This
-%% instruction could be removed (at the expense of adding its result as
-%% a constant), contradicting the assumed minimality of the program.  So
-%% if $c = l$, we set $c$ to 0 and increment $l$, before attempting
-%% synthesis again.
+There are two possibilities: either the program length $l$ was too small,
+or the number of allowed constants $c$ was.  If $c < l$, we just increment $c$ and
+try another round of synthesis, but allowing ourselves an extra program constant.
+If $c = l$, there is no point in increasing $c$ any further.  This is because
+no minimal $\mathcal{L}$-program has $c > l$, for if it did there would
+have to be at least one instruction with two constant operands.  This
+instruction could be removed (at the expense of adding its result as
+a constant), contradicting the assumed minimality of the program.  So
+if $c = l$, we set $c$ to 0 and increment $l$, before attempting
+synthesis again.
 
-%% If {\sc synth} succeeds but {\sc verif} fails, we have a candidate
-%% program that is correct for some inputs but incorrect on at least
-%% one input.  However, it may be the case that the candidate program
-%% is correct for \emph{all} inputs when run on an $\mathcal{L}$-machine
-%% with a small word size.  For example, we may have synthesised a
-%% program which is correct for all 8-bit inputs, but incorrect for
-%% some 32-bit input.  If this is the case (which we can determine
-%% by running the candidate program through {\sc verif} using the smaller
-%% word size), we may be able to produce a correct program for
-%% the full $\mathcal{L}$-machine by using the constant extension rules
-%% shown in Fig.~\ref{fig:generalize}.  If constant generalization
-%% is able to find a correct program, we are done.  Otherwise,
-%% we need to increase the word width of the $\mathcal{L}$-machine
-%% we are currently synthesising for.
-
-
-%% \section{Conclusion}
-
-%% By expressing the program synthesis problem as a safety property for a
-%% program interpreter, we have been able to harness the power of
-%% state-of-the-art program analysis tools and reuse them in a new problem
-%% domain.  We have implemented our algorithm as a freely downloadable tool
-%% whose performance compares favourably to a recent program synthesiser. 
-%% Finally, we have taken advantage of the expressiveness of our specification
-%% language to make an initial step towards practical synthesis of
-%% floating-point programs.
+If {\sc synth} succeeds but {\sc verif} fails, we have a candidate
+program that is correct for some inputs but incorrect on at least
+one input.  However, it may be the case that the candidate program
+is correct for \emph{all} inputs when run on an $\mathcal{L}$-machine
+with a small word size.  For example, we may have synthesised a
+program which is correct for all 8-bit inputs, but incorrect for
+some 32-bit input.  If this is the case (which we can determine
+by running the candidate program through {\sc verif} using the smaller
+word size), we may be able to produce a correct program for
+the full $\mathcal{L}$-machine by using the constant extension rules
+shown in Fig.~\ref{fig:generalize}.  If constant generalization
+is able to find a correct program, we are done.  Otherwise,
+we need to increase the word width of the $\mathcal{L}$-machine
+we are currently synthesising for.
 
 
+\section{Conclusion}
+
+By expressing the program synthesis problem as a safety property for a
+program interpreter, we have been able to harness the power of
+state-of-the-art program analysis tools and reuse them in a new problem
+domain.  We have implemented our algorithm as a freely downloadable tool
+whose performance compares favourably to a recent program synthesiser. 
+Finally, we have taken advantage of the expressiveness of our specification
+language to make an initial step towards practical synthesis of
+floating-point programs.
+
+\fi

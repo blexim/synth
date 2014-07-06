@@ -6,6 +6,8 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
+ * Bibtex:         DBLP:conf/sas/Urban13
  */
 /*
  * Program from Fig.1 of

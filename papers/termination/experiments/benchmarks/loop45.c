@@ -7,6 +7,8 @@
  * Bitvector:      false
  * Lexicographic:  ?
  * Source:         Ramsey vs. Lexicographic Termination Proving, TACAS'13
+ * Bibtex:         DBLP:conf/tacas/CookSZ13
+ * Terminates:     true
  */
 
 extern int nondet();

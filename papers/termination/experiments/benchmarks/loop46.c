@@ -7,7 +7,9 @@
  * Bitvector:      false
  * Lexicographic:  ?
  * Source:         Ramsey vs. Lexicographic Termination Proving, TACAS'13
+ * Bibtex:         DBLP:conf/tacas/CookSZ13
  * Ranking function: m - x
+ * Terminates:     true
  */
 
 int main(void) {

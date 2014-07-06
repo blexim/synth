@@ -6,6 +6,8 @@
  * Float:          false
  * Bitvector:      false
  * Lexicographic:  1
+ * Terminates:     true
+ * Bibtex:         DBLP:conf/sigsoft/Nori013
  */
 /*
  * Program from Fig.8 of

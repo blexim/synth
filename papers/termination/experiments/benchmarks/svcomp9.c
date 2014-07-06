@@ -6,6 +6,8 @@
  * Float:          false
  * Bitvector:      unk
  * Lexicographic:  unk
+ * Terminates:     true
+ * Bibtex:         DBLP:conf/tacas/CookSZ13
  */
 /*
  * Program from Fig.3 of

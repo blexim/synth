@@ -1,3 +1,16 @@
+/*
+ * Name:           loop49
+ * Linear-program: true
+ * Linear-rank:    false
+ * Conditional:    false
+ * Float:          false
+ * Bitvector:      false
+ * Lexicographic:  ?
+ * Source:         -
+ * Terminates:     false
+ */
+
+
 int main(void) {
   int x;
 
