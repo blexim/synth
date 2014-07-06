@@ -1557,25 +1557,25 @@ Discuss {\bf [SNT]}.\\
 \noindent{\bf Nested loops.}
 \fi
 
-\subsection{Generalised synthesis formula.}
-Our design: for each loop always search for lexicographic ranking function + supporting invariant OR recurrence set.
+\subsection{Generalised Termination and Non-termination Formula} 
+Given a program, our algorithm attempts to prove termination or non-termination for each loop individually 
+by constructing a generalised formula for each of them.
+For nested loops, we generate one single formula for all the nested loops (as illustrated for termination in Figure~\ref{fig:environment-model}).
 
-Note: given a program with multiple loops (sequential and nested), we could potentially compute termination/non-termination 
-arguments for all of them in the same formula. Currently, our tool generates a separate formula for each loop.
+For an isolated loop $L=(I,G,T)$, the generalised termination and non-termination formula is the following:
+%
+ \begin{align*}
+  \exists R, N, x_0 . \forall x, x' . & N(x_0) ~ \wedge \\ & N(x) \rightarrow G(x) ~ \wedge \\
+							& N(x) \wedge T_u(x, x') \rightarrow N(x')\\
+  & \vee G(x) \wedge T_o(x, x') \rightarrow  R(x){>}0 \wedge R(x){>}R(x')
+ \end{align*}
+%
+%
+where $T_u$ and $T_o$ under- and over-approximate the transition relation $T$, respectively.
 
-- when analysing a loop, we assume that the nested ones and the one preceding it in program order terminate.\\
-%% \subsection{Program Synthesis as Second-Order Satisfaction}
+%If this formula is satisfiable, then:
 
-%% With the exception of Definition~\ref{def:nonterm-formula}, each of the second-order formulae above
-%% belongs to the synthesis fragment.  We use this name because the program synthesis problem can be
-%% described as finding a satisfying assigment to the following formula, which is the general case of
-%% the synthesis fragment:
-
-%% \begin{definition}[Synthesis Formula]
-%%  \label{def:synth-formula}
-%%  $$\exists P, x . \forall y . \sigma(P, x, y)$$
-%% \end{definition}
-
+%% Our design: for each loop always search for lexicographic ranking function + supporting invariant OR recurrence set.
 
 \section{Satisfiability of a Formula in the Synthesis Fragment} \label{sec:synthesis}
 %
@@ -1647,8 +1647,8 @@ Section~\ref{sec:second.order}.
 
 \subsection{The Synthesis Specification}
 
-The logic we use to express the synthesis formula, i.e.~the
-(non-)ter\-mination specifications, is a subset of C that we call
+The logic we use to express the synthesis formula, i.e.~the\\
+\mbox{(non-)termination} specifications, is a subset of C that we call
 \newC.  The characteristic property of a \newC program is that safety can be
 decided for it using a single query to a Bounded Model Checker.  A~\newC
 program is just a C program with the following syntactic restrictions:
