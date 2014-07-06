@@ -10,6 +10,7 @@ logdir = "logs"
 TERM = "\\tick"
 NONTERM = "\\xmark"
 UNK = "?"
+TO = "--"
 
 def load_stats(filename):
   try:
@@ -32,8 +33,10 @@ def load_armc(filename):
     elif 'TERMINATES' in l:
       ret['res'] = TERM
     elif 'TIMEOUT' in l:
-      ret['res'] = UNK
+      ret['res'] = TO
       ret['elapsed'] = 'T/O'
+    elif 'UNK' in l:
+      ret['res'] = UNK
     else:
       ret['elapsed'] = l.strip() + "s"
 
@@ -95,11 +98,17 @@ def load_benchmark(cfile):
 
 armc_correct = 0
 armc_incorrect = 0
+armc_unk = 0
+armc_to = 0
+
 headshot_correct = 0
 headshot_incorrect = 0
+headshot_unk = 0
+headshot_to = 0
 
 def print_benchmark(benchmark):
-  global armc_correct, armc_incorrect, headshot_correct, headshot_incorrect
+  global armc_correct, armc_incorrect, armc_unk, armc_to
+  global headshot_correct, headshot_incorrect, headshot_unk, headshot_to
 
   (benchname, props, termstats, nontermstats, armc) = benchmark
 
@@ -121,7 +130,7 @@ def print_benchmark(benchmark):
   else:
     isterm = UNK
 
-  res = UNK
+  res = TO
   elapsed = 'T/O'
   iters = '0'
 
@@ -149,17 +158,25 @@ def print_benchmark(benchmark):
   armcres = armc['res']
   armctime = armc['elapsed']
 
-  if res != UNK and isterm != UNK:
+  if res not in (UNK, TO) and isterm != UNK:
     if res == isterm:
       headshot_correct += 1
     else:
       headshot_incorrect += 1
+  elif res == UNK:
+    headshot_unk += 1
+  elif res == TO:
+    headshot_to += 1
 
-  if armcres != UNK and isterm != UNK:
+  if armcres not in (UNK, TO) and isterm != UNK:
     if armcres == isterm:
       armc_correct += 1
     else:
       armc_incorrect += 1
+  elif armcres == UNK:
+    armc_unk += 1
+  elif armcres == TO:
+      armc_to += 1
 
   return ' & '.join((benchname, isterm, armcres, armctime, res, elapsed, iters)) + '\\\\ \n'
 
@@ -206,6 +223,14 @@ def print_all(dir):
 
   print (r"\multicolumn{2}{|l||}{Incorrect} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
       (armc_incorrect, headshot_incorrect))
+
+  print (r"\multicolumn{2}{|l||}{Unknown} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
+      (armc_unk, headshot_unk))
+
+  print (r"\multicolumn{2}{|l||}{Timeout} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
+      (armc_to, headshot_to))
+
+
 
 if __name__ == '__main__':
   print_all('.')
