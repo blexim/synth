@@ -188,13 +188,15 @@ termination arguments.  This means that our ranking functions may involve
 non-linearity and lexicographic orders: we do not commit to any particular
 syntactic form, and do not use templates.
 
-While the summary  in Figure~\ref{fig:handletable} supports the observation
-that the majority of existing termination analyses are designed for linear
-programs and linear ranking functions, it also identifies another common
-assumption made by state-of-the-art termination provers: that bit-vector
-semantics and integer semantics give rise to the same termination behaviour. 
-Thus, most of the techniques treat bit-vectors and floats as mathematical
-integers and reals,
+Figure~\ref{fig:handletable} summarises the related work with respect to the
+restrictions they impose on the transition relations as well as the form of
+the ranking functions computed.  While it supports the observation that the
+majority of existing termination analyses are designed for linear programs
+and linear ranking functions, it also highlights another simplifying
+assumption made by most state-of-the-art termination provers: that
+bit-vector semantics and integer semantics give rise to the same termination
+behaviour.  Thus, most of the techniques treat bit-vectors and IEEE floats
+as mathematical integers and reals,
 respectively~\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}.
 
 By assuming bit-vector semantics to be identical to integer semantics, these
@@ -202,11 +204,8 @@ techniques ignore the wrap-around behaviour caused by overflows, which can
 be unsound.  In Section~\ref{sec:motivation}, we show that integers and
 bit-vectors exhibit incomparable behaviours with respect to termination,
 i.e.  programs that terminate for integers may \emph{not} terminate for
-bit-vectors and vice-versa.  Thus, abstracting bit-vectors to integers may
+bit-vectors and vice versa.  Thus, abstracting bit-vectors to integers may
 give rise to {\em unsound} and {\em incomplete} analyses.
-%
-%design decisions
-%which is rather surprising given that bit-vectors and floats are ubiquitous in computer systems. 
 
 %% \noindent {\bf Bit-vectors (machine-level integers) vs. mathematical integers.}
 %% The abstraction of bit-vectors to mathematical integers ignores
@@ -265,8 +264,8 @@ We propose a general framework that uniformly computes lexicographic,
 non-linear ranking functions supported by non-linear inductive invariants
 for loops with arbitrary guards and transitions over bit-vectors and floats. 
 It also computes non-linear recurrence sets, which comprise non-termination
-proofs.  Our encoding uniformly multiple loops and nested loops, without
-having to enumerate lassos.
+proofs.  Our encoding treats multiple loops and nested loops uniformly,
+without having to enumerate lassos.
 %
 %Our technique is {\emph complete} and can handle programs with non-linear operations, e.g. logical and.
 %--In our design, the termination problem becomes as hard as finding ranking functions, rather than as hard as
@@ -274,9 +273,8 @@ having to enumerate lassos.
 %We combine the generation of ranking functions with the generation of invariants such that the necessary 
 %supporting invariants and the ranking function are discovered at the same time.
 
- 
-For this purpose, we phrase the termination and non-termination problems as
-second order satisfaction problems.  We identify a fragment of second-order
+ For this purpose, we phrase the termination and non-termination problems as
+second-order satisfaction problems.  We identify a fragment of second-order
 logic that is expressive enough to capture our formulation, which we call
 the \emph{synthesis fragment}.  Subsequently, we propose a method for
 checking the satisfiability of a formula in the synthesis fragment by
@@ -368,7 +366,8 @@ program.
 \item We implemented our technique and tried it on a selection of programs
 handling both bit-vectors and floats.
 
-%\item We propose a non-trivial formulation of the (non-)termination problem inside a second order logic fragment with only one quantifier alternation.
+%\item We propose a non-trivial formulation of the (non-)termination problem inside a
+% second-order logic fragment with only one quantifier alternation.
 
 \end{itemize}
 % unified approach to termination and non-termination
@@ -408,7 +407,9 @@ and is non-terminating, our procedure is not guaranteed to find a non-terminatio
 \section{Motivational Examples} \label{sec:motivation}
 %- see phase change programs.
 
-Figure~\ref{fig:handletable} illustrates the most common assumptions made by existing termination analyses:
+Figure~\ref{fig:handletable} illustrates the most common simplifying
+assumptions made by existing termination analyses:
+%
 \begin{itemize}
 \item[(i)] programs use only linear arithmetic.
 \item[(ii)] terminating programs have termination arguments in linear arithmetic.
@@ -898,7 +899,7 @@ define the syntax of a language we will work over.
 
 %% One difference from previous approaches is that our method is fully semantic. As a consequence, 
 %% we do not care about the CFG (we do not need to encode the CFG 
-%% through program counter in the second order constraints).
+%% through program counter in the second-order constraints).
 
 
 The problem of program verification can be reduced to the problem of finding
@@ -940,7 +941,7 @@ that all variables range over vectors.
 
 In the rest of this section, we show that the synthesis fragment 
 is expressive enough to encode both termination and non-termination. %allow the formulation of both the termination and the non-termination problem. 
-Following our formulation as second order satisfaction, %the framing of the halting problem as a program synthesis problem,
+Following our formulation as second-order satisfaction, %the framing of the halting problem as a program synthesis problem,
 in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment that models bit-accurate semantics. 
 
 %% Following the framing of the halting problem as a program synthesis problem, 
@@ -1048,7 +1049,7 @@ Note that different formulations for unconditional termination are possible.
 We are aware of a proof rule based on transition invariants, i.e.  supersets
 of the transition relation's transitive closure
 \cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes that
-the second order logic has a primitive predicate for disjunctive
+the second-order logic has a primitive predicate for disjunctive
 well-foundedness.  Conversely, our formulation in Definition~\ref{def:UT}
 does not require a transitive closure operator, nor a disjunctive
 well-foundedness predicate.  \\
@@ -1959,7 +1960,8 @@ verification formula.
 
 
 
-%% ---  We begin with the program under analysis (the PUA).  From this we produce a specification (in second order logic)
+%% ---  We begin with the program under analysis (the PUA).  From this we produce a specification (in
+%% second-order logic)
 %% encoding the termination of the PUA.  From the logical specification, we produce a program SYNTH.
 %% SYNTH takes as input a proof and asserts that the proof is incorrect on at least one of the inputs being tracked so far.
 %% Therefore, SYNTH is unsafe iff there is some proof that is correct for all of the tracked inputs.  Now we use testing
@@ -2278,7 +2280,7 @@ so the complexity is doubly exponential in the width of $X$.
 \begin{proof}
  Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
  the program length $l$), it will eventually enumerate a program that meets the specification
- in whatever set of inputs are currently being tracked.  Since the first order theory is
+ in whatever set of inputs are currently being tracked.  Since the first-order theory is
  decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
  The set of correct programs is therefore recursively enumerable and algorithm~\ref{alg:cegis}
  enumerates this set, so it is semi-complete.
