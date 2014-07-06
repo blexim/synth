@@ -1143,6 +1143,26 @@ $$ \exists x . T^+(x, x)$$
 However, deciding satisfiability of this formula directly requires a logic
 that includes a transitive closure operator, which ours does not have.
 
+\noindent {\bf Non-determinism.} A non-termination diagnosis procedure based on checking the satisfiability of formula {\bf [CNT]}
+may fail to find a closed recurrence set for a loop $L=(G, T_u)$ when $T_u$ is non-deterministic.  
+To understand the issue, imagine the following loop with an non-deterministic assignment:
+
+\begin{lstlisting}[language=C]
+while(x != 0) {
+  y = nondet();
+  x = x-y;
+}
+\end{lstlisting}
+
+Only for certain values of \texttt{y} the loop is non-terminating.
+In order to restrict the values that may be assigned to \texttt{y}, we need an assumption associated with the non-deterministic choice. 
+However, such an assumption may cause a reachable state at the non-deterministic assignment to not have any successor. In such a case
+the termination formula would be satisfiable, although the execution halts. This situation can be avoided by checking the existence of 
+at least one successor for each reachable state at the non-deterministic assignment. Although we did put a reasonable amount of effort into it, 
+we failed to come up with a formulation for the non-termination of such non-deterministic transition relations 
+inside the synthesis fragment.
+%formula {\bf [Nondet-CNT]} in Definition~\ref{def:nondet-cnt}.
+
 \begin{figure*}
  \begin{framed}
 
