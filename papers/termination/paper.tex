@@ -2000,35 +2000,42 @@ of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
 which means it can be decided fairly efficiently for many practical
 instances.
 
-
-
 \section{Experiments}
 
-To evaluate our algorithm, we implemented two tools: one to generate a termination specification
-from a C program, and one to synthesise a proof from the specification.  We ran the resulting
-termination prover on 47 benchmarks taken from the literature and SV-COMP'15~\cite{svcomp}.  To provide a comparison
-point, we also ran {\sc ARMC}~\cite{armc-website} on the same benchmarks.  Each tool was given a time limit of
-180s, and was run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
+To evaluate our algorithm, we implemented two tools: one to generate a
+termination specification from a C program, and one to synthesise a proof
+from the specification.  We ran the resulting termination prover on 47
+benchmarks taken from the literature and SV-COMP'15~\cite{svcomp}.  To
+provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
+the same benchmarks.  Each tool was given a time limit of $180\,s$, and was
+run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
 results of these experiments are shown in Figure~\ref{fig:experiments}.
 
-It should be noted that the comparison here is imperfect, since {\sc ARMC} is solving a slightly different
-problem -- it checks whether the program under analysis would terminate if run with unbounded integer variables,
-while we are checking whether the program terminates with fixed width integers variables.  This means that
-{\sc ARMC}'s verdict differs from ours in 3 cases (due to the differences between integer and bit-vector semantics).
-There are a further 5 cases where our tool is able to find a proof and {\sc ARMC} cannot, which we believe is due
-to our more expressive proof language.  In 3 cases, {\sc ARMC} times out while our tool is able to find a termination
-proof.  All of these cases have nested loops, which are easy for us to handle, but can be difficult for
-provers based on enumerating lassos.
+It should be noted that the comparison here is imperfect, since {\sc ARMC}
+is solving a slightly different problem -- it checks whether the program
+under analysis would terminate if run with unbounded integer variables,
+while we are checking whether the program terminates with fixed-width
+integer variables.  This means that {\sc ARMC}'s verdict differs from ours
+in 3 cases (due to the differences between integer and bit-vector
+semantics).  There are a further 5 cases where our tool is able to find a
+proof and {\sc ARMC} cannot, which we believe is due to our more expressive
+proof language.  In 3 cases, {\sc ARMC} times out while our tool is able to
+find a termination proof.  All of these cases have nested loops, which are
+easy for us to handle, but can be difficult for provers that enumerate
+lassos.
 
-On the other hand, {\sc ARMC} is \emph{much} faster than our tool.
-While this difference can partly be explained by much more engineering time being invested in {\sc ARMC},
-we feel that the difference is probably inherent to the difference in the two approaches -- our
-algorithm is complete and bit-vector accurate, which comes at the cost of efficiency.
+On the other hand, {\sc ARMC} is \emph{much} faster than our tool.  While
+this difference can partly be explained by much more engineering time being
+invested in {\sc ARMC}, we feel that the difference is probably inherent to
+the difference in the two approaches -- our algorithm is complete and
+bit-vector accurate, which comes at the cost of efficiency.
 
-The final column in Figure~\ref{fig:experiments} shows the number of iterations of the CEGIS loop our
-synthesiser performed.  While the theoretical bound for the number of CEGIS iterations is very large
-(exponential in the amount of space used by the program), these results demonstrate that in practice
-the number of iterations required is usually small.
+The final column in Figure~\ref{fig:experiments} gives the number of
+iterations of the CEGIS loop our synthesiser performed.  While the
+theoretical bound for the number of CEGIS iterations is very large
+(exponential in the amount of space used by the program), these results
+demonstrate that in practice the number of iterations required is usually
+small.
 
 \begin{figure}
 \centering
@@ -2048,17 +2055,21 @@ Key: \tick = terminating, \xmark = non-terminating, ? = unknown (tool terminated
 \caption{Experimental results\label{fig:experiments}}
  \end{figure}
 
- \section{Conclusions and Related Work}
+\section{Conclusions and Related Work}
 %\subsection{Termination analysis}
-Automated program termination is a research topic that has received a fair amount of attention from the software verification community.
-In order to compare our technique to the rest of the area, 
-Figure~\ref{fig:handletable} summarises the related works with respect to the assumptions they make about programs and ranking functions. 
 
+Automated program termination is a research topic that has received a fair
+amount of attention from the software verification community.  In order to
+compare our technique to the rest of the area, Figure~\ref{fig:handletable}
+summarises the related works with respect to the assumptions they make about
+programs and ranking functions.
 
-Somehow expected, most of the techniques are specialised in the synthesis of linear ranking functions for linear programs 
-over integers (or rationals) \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,
-DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}. Among them, 
-Lee et al. make use of transition predicate abstraction, algorithmic learning, and decision procedures 
+Somehow expected, most of the techniques are specialised in the synthesis of
+linear ranking functions for linear programs over integers (or rationals)
+\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,
+DBLP:conf/atva/HeizmannHLP13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/cav/KroeningSTW10}. 
+Among them, Lee et al.  make use of transition predicate abstraction,
+algorithmic learning, and decision procedures
 %to compute transition invariants as proofs for the termination of linear programs 
 \cite{DBLP:conf/cav/LeeWY12},
 Leike and Heizmann propose linear ranking templates 
