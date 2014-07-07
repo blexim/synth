@@ -566,42 +566,40 @@ while (x>0 && y>0 && z>0) {
 \section{Preliminaries}
 
 Given a program, we first formalise its termination argument as a ranking
-function (Section~\ref{sec:ranking.functions}).  Subsequently, we discus
+function (Section~\ref{sec:ranking.functions}).  Subsequently, we discuss
 bit-vector semantics and illustrate differences between machine arithmetic
 and integer arithmetic that show that the abstraction of bit vectors to
-mathematical integers unsound (Section~\ref{sec:machine.arith}).
+mathematical integers is unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
 
-A programs $P$ is represented as a transition system with state space $X$ and
+A program $P$ is represented as a transition system with state space $X$ and
 transition relation $T \subseteq X \times X$.  For a state
 $x \in X$ with $T(x,x')$ we say $x'$ is a successor of $x$ under $T$.
-If each state $x$ has at most one successor $x'$, then we say that $T$ is
-deterministic.
 
 \begin{definition}[Unconditional termination]
 %
-A transition system is said to be \emph{unconditionally terminating} if
+A program is said to be \emph{unconditionally terminating} if
 there is no infinite sequence of states $x_1, x_2, \ldots \in X$ with
 $\forall i.~T(x_i, x_{i+1})$.
 %
 \end{definition}
 
-We can prove that the transition system is unconditionally terminating by
+We can prove that the program is unconditionally terminating by
 finding a ranking function for its transition relation.
 %
 \begin{definition}[Ranking function]
 %
 An injective function ${R:X\to Y}$ is a \emph{ranking function} for the
-transition relation $T$ if $Y$ is a well-founded set with order $<$ and 
+transition relation $T$ if $Y$ is a well-founded set with order $>$ and 
 $R$ is monotonically decreasing with respect to $T$.  That is
 to say:
-$$\forall x, x' \in X. T(x, x') \Rightarrow R(x) < R(x')$$
+$$\forall x, x' \in X. T(x, x') \Rightarrow R(x) > R(x')$$
 %
 \end{definition}
 
-\begin{definition}[Linear ranking function]
-A \emph{linear ranking function} $R: X \to Y$ 
+\begin{definition}[Linear function]
+A \emph{linear function} $f: X \to Y$ 
 with $\dim(X) = n$ and $\dim(Y) = m$ is of the form: $$f(\vec{x}) = M\vec{x}$$ where
 $M$ is an $n \times m$ matrix.
 \end{definition}
@@ -615,13 +613,17 @@ For $Y = Z^m$, we say that a ranking function $R: X \to Y$ is \emph{lexicographi
 if it maps each state in $X$ to a tuple of values such that the loop transition leads to a decrease with
 respect to the lexicographic ordering for this tuple.
 The total order imposed on $Y$ is the lexicographic ordering
-induced on tuples of $Z$'s. 
+induced on tuples of $Z$'s.  So for $y = (z_1, \ldots, z_m)$ and
+$y' = (z'_1, \ldots, z'_m)$:
+\[
+ y > y' \iff \exists i \leq m . z_i > z'_i \wedge \forall j < i . z_j = z'_j
+\]
+
+
 \end{definition}
 
-For lexicographic ranking functions, no function may increase unless a function of a lower index decreases.
-Additionally, at every step, there must be at least one function that decreases.
-We note that some termination arguments require lexicographic ranking functions, or equivalently, ranking functions
-whose co-domain is the ordinals, rather than just $\mathbb{N}$.
+We note that some termination arguments require lexicographic ranking functions, or
+equivalently, ranking functions whose co-domain is a countable ordinal, rather than just $\mathbb{N}$.
 
 
 \subsection{Machine Arithmetic and Bit Vectors} \label{sec:machine.arith} 
@@ -767,11 +769,13 @@ Our intention is to apply this approach to termination analysis.  In this
 section we show how several variations of both the termination and the
 non-termination problem can be defined in second-order logic.
 
-
-In fact, we identify a fragment of second-order logic with a constrained use
-of quantification that is expressive enough to encode both termination and
-non-termination.  We will suggestively refer to the fragment as the
-\emph{synthesis fragment}:
+Due to its expressiveness, second-order logic is very difficult to reason
+about, with many second-order theories becoming undecidable even when the
+corresponding first-order theory is decidable.
+To make solutions of our constraints tractable, we identify a fragment of second-order logic
+with a constrained use of quantification that is expressive enough to encode
+both termination and non-termination, while admitting a semi-decision procedure.
+We will suggestively refer to the fragment as the \emph{synthesis fragment}:
 
 
 \begin{definition}[Synthesis Fragment]
@@ -781,7 +785,7 @@ A formula is in the \emph{synthesis fragment} iff it is of the form
   \exists \vec{P},~ \vec{x} . ~\forall~ \vec{y} . \sigma(\vec{P}, \vec{x}, \vec{y})
  \]
 %
-where $\vec{P}$ ranges over sets, while $\vec{x}$ and $\vec{y}$ range over
+where $\vec{P}$ ranges over functions, while $\vec{x}$ and $\vec{y}$ range over
 ground terms.  Function $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times
 Y^m \to \mathbb{B}$ can be seen as a specification function that returns
 true iff the functions $\vec{P}$ compute appropriate outputs when fed the
@@ -793,9 +797,9 @@ Checking satisfiability of a formula in the synthesis fragment corresponds to pr
 %Solving the synthesis problem 
 amounts to finding witnesses for the unknowns $\vec{P}$ and $\vec{x}$ that meet the specification
 for all $\vec{y}$. 
-If a pair $(\vec{P_0}, \vec{x})$ is a solution to the synthesis problem, then we write $(\vec{P_0}, \vec{x}) \models \sigma$.
+If a pair $(\vec{P}, \vec{x})$ is a solution to the synthesis problem, then we write $(\vec{P}, \vec{x}) \models \sigma$.
 For the remainder of the presentation, we drop the $\vec{x}$ and instead just write $x$, with the understanding
-that all variables range over vectors.
+that all quantified variables range over vectors.
 
 In the rest of this section, we show that the synthesis fragment 
 is expressive enough to encode both termination and non-termination. 
@@ -804,12 +808,12 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 
 
 
-\subsection{An Isolated Loop}
+\subsection{An Isolated, Simple Loop}
 
-We will begin our discussion by showing how to encode the
-\mbox{(non-)termination} of a program consisting of a single loop in the
-synthesis fragment.  For the time being, a loop is a pair ${L= \langle G,T
-\rangle}$, where the states $x$ satisfying the loop's guard are given by the
+We will begin our discussion by showing how to encode in the synthesis fragment the
+\mbox{(non-)termination} of a program consisting of a single loop with no nesting.
+For the time being, a loop $L(G, T)$ is defined by a predicate $G$ and relation $T$.
+G states $x$ satisfying the loop's guard are given by the
 predicate $G(x)$.  The body of the loop is encoded as the transition
 relation $T(x, x')$, meaning that state $x'$ is reachable from state $x$ via
 a single iteration of the loop body.  For example, the loop in
@@ -830,7 +834,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{definition}[Unconditional Termination Formula {\bf [UT]}]
 \label{def:UT}
 \begin{align*}
- \exists R . \forall x, x' . & G(x) \wedge T_o(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
+ \exists R . \forall x, x' . & G(x) \wedge T(x, x') \rightarrow R(x) > 0 \wedge R(x) > R(x')
 \end{align*}
 \end{definition}
 
@@ -838,7 +842,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \label{def:ont}
  \begin{align*}
   \exists N, x_0 . \forall x . \exists x' . & N(x_0) ~\wedge \\ &  N(x) \rightarrow G(x) ~ \wedge \\
-							& N(x) \rightarrow T_u(x, x') \wedge N(x') 
+							& N(x) \rightarrow T(x, x') \wedge N(x') 
  \end{align*}
 \end{definition}
 
@@ -846,7 +850,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \label{def:cnt}
  \begin{align*}
   \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge \\ & N(x) \rightarrow G(x) ~ \wedge \\
-							& N(x) \wedge T_u(x, x') \rightarrow N(x') 
+							& N(x) \wedge T(x, x') \rightarrow N(x') 
  \end{align*}
 \end{definition}
 
@@ -864,30 +868,34 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 
 
 \noindent {\bf Unconditional termination.}
-To show that $L$ is unconditionally terminating (i.e. it eventually terminates regardless of the
-state it starts in), we try to find a ranking function for it. When defining $L$'s termination 
-formula, we need only consider the over-approximation of its transition relation $T$, which we call $T_o$.
-Note that this distinction is only important if $L$'s body contains nested loops, for which we'll have to 
-consider the over-approximation of their transition relation's transitive closure
-as shown in Section~\ref{sec:env}. For any other statements, $T_o$ and $T$ are equivalent.
+To show that $L(G, T)$ is unconditionally terminating (i.e. it eventually terminates regardless of the
+state it starts in), it suffices to find a ranking function for \mbox{$T \cap (G \times X)$},
+i.e. $T$ restricted to states satisfying the loop's guard.
+% If $L$ contains nested loops, we replace $T$ with an over-approximation of the loop body $T_o$,
+% as we will discuss in Section~\ref{sec:env}.
+
+% When defining $L$'s termination 
+% formula, we need only consider an over-approximation of its transition relation $T$, which we call $T_o$.
+% Note that this distinction is only important if $L$'s body contains nested loops, for which we'll have to 
+% consider the over-approximation of their transition relation's transitive closure
+% as shown in Section~\ref{sec:env}. For any other statements, $T_o$ and $T$ are equivalent.
 
 \begin{theorem}
 \label{thm:ut}
- The loop $L(G, T_o)$ terminates from every start state iff formula {\bf [UT]} (Definition~\ref{def:UT}) is
- satisfiable.
+ The loop $L(G, T)$ terminates from every start state iff formula {\bf [UT]} (Definition~\ref{def:UT}) is satisfiable.
 \end{theorem}
 
-\begin{proof}
- Then the codomain of $R$ is a well founded set and $R$ is an order homomorphism.
-
- (Do this proof properly).
-\end{proof}
+% \begin{proof}
+%  Then the codomain of $R$ is a well founded set and $R$ is an order homomorphism.
+% 
+%  (Do this proof properly).
+% \end{proof}
 
 As the existence of a ranking function is equivalent to the satisfiability
-of the formula {\bf [UT]}, a satisfiability witness is also a ranking
+of the formula {\bf [UT]}, a satisfiability witness is a ranking
 function and thus a proof of $L$'s unconditional termination.
 
-Continuing the example of the program in Figure~\ref{fig:motivation.a}, we
+Returning to the program from Figure~\ref{fig:motivation.a}, we
 can see that the corresponding synthesis formula {\bf [UT]} is satisfiable,
 as witnessed by the function $R(x) = x$.  Thus, $R(x) = x$ constitutes a
 proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
@@ -898,87 +906,95 @@ We are aware of a proof rule based on transition invariants, i.e.  supersets
 of the transition relation's transitive
 closure~\cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes
 that the second-order logic has a primitive predicate for disjunctive
-well-foundedness.  Conversely, our formulation in Definition~\ref{def:UT}
-does not require a transitive closure operator, nor a disjunctive
-well-foundedness predicate.  \\
+well-foundedness.  In contrast, our formulation in Definition~\ref{def:UT}
+does not use a primitive disjunctive well-foundedness predicate.  \\
 
 \noindent{\bf Non-termination.}
-Dually to termination, we might want to consider the non-termination of a program.  If a program terminates,
+Dually to termination, we might want to consider the non-termination of a loop.  If a loop terminates,
 we can prove this by finding a ranking function %and supporting invariant 
 witnessing the satisfiability of formula {\bf[UT]}.  What then would a proof of non-termination look like?
+
+Since our program's state space is finite, a transition relation
+induces a infinite execution iff some state is visited infinitely
+often, or equivalently $ \exists x . T^+(x, x)$.
+Deciding satisfiability of this formula directly would require a logic
+that includes a transitive closure operator, $T^+$.  Rather than
+introduce such an operator, we will characterise non-termination
+using a synthesis formula.
 
 Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination
 of a transition relation $T$ by the existence of an \emph{(open) recurrence
 set}, i.e.  a nonempty set of states $N$ such that for each $s \in N$ there
-exists a transition to some $s'\in N$.
-For our case, the notion of open recurrent set is encoded by formula {\bf [ONT]}. %Definition~\ref{def:nonterm-formula}.
-Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition
-relation~$T_u$. 
-Again, this distinction is mostly important when dealing with nested loops,
-as illustrated in Section~\ref{sec:env}.
+exists a transition to some $s' \in N$.
+The notion of open recurrence set is encoded by formula {\bf [ONT]} in Definition~\ref{def:ont}.
+% Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition
+% relation~$T_u$. 
+% Again, this distinction is mostly important when dealing with nested loops,
+% as illustrated in Section~\ref{sec:env}.
 
 
 \begin{theorem}
 \label{thm:ont}
- The loop $L(G, T_u)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
+ The loop $L(G, T)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
 \end{theorem}
 
-\begin{proof}
- Then $x_0$ is an underapproximation to the reachable states on entry to $L$, and $N$ is an open recurrence set.
- 
- (Do this proof properly).
-\end{proof}
+% \begin{proof}
+%  Then $x_0$ is an under-approximation to the reachable states on entry to $L$, and $N$ is an open recurrence set.
+%  
+%  (Do this proof properly).
+% \end{proof}
 
 If this formula is satisfiable, $N$ is an open recurrence set for $L$, which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula). %This means that we will not be able to use the solver for the synthesis fragment to solve it.
 
-In order to formulate the non-termination problem inside the synthesis
+In order to express the non-termination problem inside the synthesis
 fragment, we make use of the notion of \emph{closed recurrence set}
-introduced by Chen et al.~in~\cite{DBLP:conf/tacas/ChenCFNO14}.  As opposed
-to an open recurrence set, this is an $\exists \forall$ property: for each
-state in the recurrence set $N$, all of its successors must be in $N$.  We
-note that if $T$ is deterministic, every open recurrence set is also a
+introduced by Chen et al.~in~\cite{DBLP:conf/tacas/ChenCFNO14}:  for each
+state in the recurrence set $N$, \emph{all} of its successors must be in $N$.
+The existence of a closed recurrence set is equivalent to the satisfiability
+of formula {\bf [CNT]} in Definition~\ref{def:cnt}, which is in the synthesis
+fragment.
+
+We note that if $T$ is deterministic, every open recurrence set is also a
 closed recurrence set (since each state has at most one successor).  Thus,
 the non-termination problem for deterministic transition systems is
 equivalent to the satisfiability of formula {\bf [CNT]}.
 
+\begin{definition}[Determinism]
+ A relation $T$ is deterministic iff each state $x$ has exactly one successor under $T$:
+ $$\forall x . \exists x' . T(x, x') \wedge \forall x'' . T(x, x'') \rightarrow x'' = x'$$
+\end{definition}
 
+In order to describe a deterministic \emph{program} in a way that still allows us
+to sensibly talk about termination, we assume the existence of a special sink
+state $s$ with no outgoing transitions and such that $\lnot G(s)$ for any
+of the loop guards $G$.  The program is deterministic if its transition
+relation is determinstic for all states except $s$.
 
 \begin{theorem}
 \label{thm:cnt}
- If $T_u$ is deterministic, i.e. each state $x$ for which the guard $G(x)$ holds has exactly one successor $x'$ such that $T_u(x, x')$, then
- Definition~\ref{def:ont} is equivalent to Definition~\ref{def:cnt}.
+ If $T$ is deterministic,
+ Definition~\ref{def:ont} and Definition~\ref{def:cnt} are equisatisfiable.
 \end{theorem}
 
-\begin{proof}
- If $T_u$ is deterministic, then each $x$ satisfying $G(x)$ has a unique successor $S(x)$, so $\forall x, x' . G(x) \wedge T_u(x, x') \leftrightarrow x' = S(x)$.
- 
- (Finish this proof).
-\end{proof}
+% \begin{proof}
+%  If $T_u$ is deterministic, then each $x$ satisfying $G(x)$ has a unique successor $S(x)$, so $\forall x, x' . G(x) \wedge T_u(x, x') \leftrightarrow x' = S(x)$.
+%  
+%  (Finish this proof).
+% \end{proof}
 
-Note that by defining $T_u$'s determinism as the existence of exactly one
-successor for any state satisfying $L$'s guard, we eliminate the possibility
-of $T_u$ being $\mathit{false}$, which would otherwise constitute a
-counterexample for Theorem~\ref{thm:cnt}.
+% Note that by defining $T_u$'s determinism as the existence of exactly one
+% successor for any state satisfying $L$'s guard, we eliminate the possibility
+% of $T_u$ being $\mathit{false}$, which would otherwise constitute a
+% counterexample for Theorem~\ref{thm:cnt}.
 
-Given that our program's state space is finite, a transition relation
-induces a infinite execution if and only if some state is visited infinitely
-often, or equivalently the state is visited twice in the course of the
-execution.  This gives us an alternative way of expression a non-termination
-proof: we can can try to find a witness $x$ to the satisfiability of the
-formula
-%
-$$ \exists x . T^+(x, x)$$
-%
-However, deciding satisfiability of this formula directly requires a logic
-that includes a transitive closure operator, which ours does not have.
-
-\noindent {\bf Non-determinism.} A non-termination diagnosis procedure based
-on checking the satisfiability of formula {\bf [CNT]} may fail to find a
-closed recurrence set for a loop $L=(G, T_u)$ when $T_u$ is
-non-deterministic.  To understand the issue, imagine the following loop with
-a non-deterministic assignment to \lstinline!y!:
+So if our transition relation is deterministic we can say, without
+loss of generality, that non-termination of the loop is equivalent
+to the existence of a closed recurrence set.  However if $T$ is
+non-deterministic, it may be that there is an open recurrence
+set but not closed recurrence set.  To see this, consider the following
+loop:
 %
 \begin{lstlisting}[language=C]
 while(x != 0) {
@@ -987,193 +1003,31 @@ while(x != 0) {
 }
 \end{lstlisting}
 
-Only for certain choices of \texttt{y} the loop is non-terminating.  In
-order to restrict the values that may be assigned to \texttt{y}, we need an
-assumption associated with the non-deterministic choice.  However, such an
-assumption may cause a reachable state at the non-deterministic assignment
-to not have any successor.  In such a case the termination formula would be
-satisfiable, although the execution halts.  This situation can be avoided by
-checking the existence of at least one successor for each reachable state at
-the non-deterministic assignment.  Although we did put a reasonable amount
-of effort into it, we failed to come up with a formulation for the
-non-termination of such non-deterministic transition relations inside the
-synthesis fragment.
+It is clear that this loop has many non-terminating executions,
+e.g. the execution where \lstinline!nondet()! always returns 0.
+However it is equally clear that each state has a successor
+that exits the loop, i.e. when \lstinline|nondet()| returns
+the value currently stored in \lstinline|x|.  So this loop
+has an open recurrence set, but no closed recurrence set
+and hence we cannot specify a proof of its non-termination
+with formula {\bf [CNT]}.
 
-%formula {\bf [Nondet-CNT]} in Definition~\ref{def:nondet-cnt}.
+% Only for certain choices of \lstinline!y! the loop is non-terminating.  In
+% order to restrict the values that may be assigned to \texttt{y}, we need an
+% assumption associated with the non-deterministic choice.  However, such an
+% assumption may cause a reachable state at the non-deterministic assignment
+% to not have any successor.  In such a case the termination formula would be
+% satisfiable, although the execution halts.  This situation can be avoided by
+% checking the existence of at least one successor for each reachable state at
+% the non-deterministic assignment.  Although we did put a reasonable amount
+% of effort into it, we failed to come up with a formulation for the
+% non-termination of such non-deterministic transition relations inside the
+% synthesis fragment.
+% 
+% %formula {\bf [Nondet-CNT]} in Definition~\ref{def:nondet-cnt}.
 
-\begin{figure*}
- \begin{framed}
-
-\begin{definition}[Conditional Termination Formula {\bf [CT]}]
-\label{def:ct}
- \begin{align*}
-  \exists R, W . \forall x, x' . & I(x) \wedge G(x) \rightarrow W(x) ~ \wedge \\
-                                 & G(x) \wedge W(x) \wedge T_o(x, x') \rightarrow W(x') \wedge R(x) > 0 
-  \wedge R(x) > R(x')
- \end{align*}
-\end{definition}
-
-%%  \begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
-%%   \begin{align*}
-%% \label{def:multi-termination-formula}
-%%   \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
-%%  & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
-%%  & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
-%%  & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) \rightarrow Inv_n(x_n) ~ \wedge \\
-%%  & Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n') \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')
-%%  \end{align*}
-%% \end{definition}
-
-%% \begin{definition}[Nested Loops Termination Formula {\bf [NT]}]
-%% \label{def:nested-term-formula}
-%%  \begin{align*}
-%%   \exists R, S . \forall x, x' . & G_1(x) \wedge P_1(x,x') \rightarrow S(x',x') ~ \wedge \\
-%%                                 & G_2(x') \wedge S(x,x') \wedge T(x',x'')\rightarrow S(x,x'') ~ \wedge \\
-%% 				& G_1(x) \wedge P_1(x,x') \wedge \neg G_2(x') \wedge S(x',x'') \wedge 
-%%                                 P_2(x'',x''') \wedge 
-%%                                   R(x) > 0 \wedge R(x) > R(x''') 
-%%  \end{align*} 
-%% \end{definition}
-
-%% \begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
-%% \label{def:multi-termination-formula}
-%%  \begin{align*}
-%%   \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
-%%  & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
-%%  & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
-%%  & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge N(x_n)  ~ \wedge \\
-%%                                                         & N(x_n) \rightarrow G_n(x_n) ~ \wedge 
-%% 							 N(x_n) \wedge T_n(x_n, x_n') \rightarrow N(x_n') 
-%%  \end{align*}
-%% \end{definition}
- \end{framed}
-
-\end{figure*}
-
-\subsection{Composing a Loop with its Environment} \label{sec:env}
-
-Sometimes the termination behaviour of a loop depends on its environment, i.e. the rest of the program.  That is to say,
-the loop may not terminate if started in some particular state, but the rest of the program
-ensures that such a state cannot be reached on entry to the loop.  The program as a whole
-terminates, but if the loop were considered in isolation we would not be able to prove that
-it terminates. We must therefore encode a loop's interaction with its environment %the rest of the program 
-in order to do a sound termination analysis.\\
-
-\iffalse
-Let us assume that we have done some preprocessing of our program which has identified
-loops, straight line code blocks and the control flow between these.  In particular,
-the control flow analysis has determined which order these code blocks execute in,
-and the nesting structure of the loops.
-\fi
-
-\noindent {\bf Conditional termination.}
-Given a loop $L=(G,T_o)$, where $T_o$ is an over-approximation of its transition relation, 
-if $L$'s termination depends on the state it begins
-executing in, we say that $L$ is \emph{conditionally terminating}.
-The information we require of the environment is a predicate $I$ which
-overapproximates the set of states that $L$ may begin executing in.
-That is to say, for each state $x$ that is reachable on entry to $L$,
-we have $I(x)$.
-
-Conditional termination is then equivalent to the
-formula {\bf [CT]} of Defintion~\ref{def:ct}.
-
-\begin{theorem}
-\label{thm:ct}
- The loop $L(G, T_o)$ terminates when started in any state satisfying $I(x)$ iff
- Defintion~\ref{def:ct} is satisfiable.
-\end{theorem}
-
-\begin{proof}
- Do this proof.
-\end{proof}
-
-If this formula is satisfiable, two witnesses are returned:
-\begin{itemize}
-\item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
-guard $G$ is met.
-\item $R$ is a ranking function for $L$ as restricted by $W$ -- that is to say, $R$ need only
-be well founded on those states satisfying $W \wedge G$.  Since $W$ is an inductive invariant of $L$,
-$R$ is strong enough to show that $L$ terminates from any of its initial states.
-\end{itemize}
-
-$W$ is called a \emph{supporting invariant} for $L$ and $R$ proves termination relative to $W$.
-We require that $I \wedge G$ is strong enough to establish the base case of $W$'s inductiveness.
-
-Conditional termination is illustrated by the program in Figure~\ref{fig:motivation.h},
-which is encoded as:
-\begin{align*}
-            I(\langle x, y \rangle) & \triangleq y = 1 \\
-            G(\langle x, y \rangle) & \triangleq x > 0 \\
-            T(\langle x, y \rangle, \langle x', y' \rangle) & \triangleq x' = x - y \wedge y' = y 
-\end{align*}
-If the initial states $I$ are ignored this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
-would lead to a non-terminating execution.
-
-However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
-$R(\langle x,y\rangle) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
-This constitutes a proof that the program as a whole terminates, since the loop always begins
-executing in a state that guarantees its termination.\\
-
-
-%synthesizing environment abstractions: underapp for termination and underapp for non-termination.
-% \cite{} addresses the problem of automatically underapproximating weakest preconditions.
-
-
-%\noindent {\bf Nested loops.}
-%% If $L$'s body contains another loop $L'$, we cannot directly apply either formula {\bf [UT]} or
-%% {\bf [CT]} or prove that $L$ terminates.  This is because we don't have direct access to the
-%% single step transition relation for $L$'s body.  Instead, we consider $L'$ to be part of
-%% $L$'s environment, which we model with a relation $S$.  We require that $S$ overapproximates
-%% $L'$ in the sense that it satisfies the following formula:
-%% \begin{align*}
-%%  \forall x, x'. G(x) \wedge W(x) \wedge T'^*(x, x') \wedge \lnot G'(x') \rightarrow S(x, x')
-%% \end{align*}
-%% Where $G$ and $G'$ are respectively $L$ and $L'$'s guards, and $T'^*$ is the reflexive transitive closure of
-%% the inner loop ($L'$)'s transition relation.
-
-%% To give an example, if we wish to prove that the outer loop in Figure~\ref{fig:nested} terminates,
-%% it suffices to summarise the inner loop with the relation:
-%% \begin{align*}
-%% S(\langle x, y, z \rangle, \langle x', y', z' \rangle) & \triangleq x' = x \wedge y = 1
-%% \end{align*}
-%% Then the ranking function $R(x, y, z) = x$ proves termination of the outer loop $L(G, S)$.\\
-
-
-%% \begin{figure}
-%% \begin{lstlisting}
-%% while (x > 0) {
-%%   z = x, y = z + 1;
-%%   while (z > 0) {
-%%     z--, y--;
-%%   }
-%%   x -= y;
-%% }
-%% \end{lstlisting}
-%% \caption{A nested loop\label{fig:nested}}
-%% \end{figure}
-
-\noindent {\bf Over-approximating the environment for termination.}
-%% While proving that loop $L$ terminates, we create constraints on the environment in the
-%% form of the predicate $I$ and the over-approximating summary relation $T_o$:
-%% In the presence of nested loops, 
-%% for each loop $L'$ nested in the body
-%% of $L$, we must generate constraints saying that $T_o$ overapproximates $L'$, i.e. it is an over-approximation of the transitive closure of $L'$'s transition relation.
-%% Similarly, for each loop $L''$ appearing before $L$ in the program's control flow, we
-%% must add constraints saying that $I$ over-approximates the states reachable via $L''$.
-%The details of how to create these constraints are standard, so
-%rather than presenting the algorithm for generating the constraints, we direct the
-%reader's attention to Figure~\ref{fig:environment-model}.  
-%
-%\noindent {\bf Environment abstractions.}
-For a loop $L=(G,T)$, the formulae {\bf [CT]} %and {\bf [CNT]} 
-from Definition~\ref{def:ct} 
-%and Definition~\ref{def:cnt} 
-is in terms of 
-$T_o$ and $I$, which over-approximate the transition relation~$T$ and the set of states that $L$ may begin executing in, respectively. 
-The reason for using over-approximations [instead of exact relations] %when formulating the (non-)termination of an isolated loop 
-is so that we can use the same formulae regardless of the environment the loop is executing in, or 
-the complexity of its body, e.g.~if it contains nested loops.
+\subsection{An Isolated, Nested Loop}
+If a loop contains another 
 
 All we need to do in order to use {\bf [CT]} in any context %environment and regardless of the complexity of the loops's body 
 is generate constraints over-approximating %abstracting 
@@ -1260,6 +1114,182 @@ $L_3:$
 \end{framed}
 \caption{A non-trivial program and its termination formula\label{fig:environment-model}}
 \end{figure*}
+
+\begin{figure*}
+ \begin{framed}
+
+\begin{definition}[Conditional Termination Formula {\bf [CT]}]
+\label{def:ct}
+ \begin{align*}
+  \exists R, W . \forall x, x' . & I(x) \wedge G(x) \rightarrow W(x) ~ \wedge \\
+                                 & G(x) \wedge W(x) \wedge T_o(x, x') \rightarrow W(x') \wedge R(x) > 0 
+  \wedge R(x) > R(x')
+ \end{align*}
+\end{definition}
+
+%%  \begin{definition}[Sequential Loops Termination Formula {\bf [ST]}]
+%%   \begin{align*}
+%% \label{def:multi-termination-formula}
+%%   \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
+%%  & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
+%%  & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
+%%  & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) \rightarrow Inv_n(x_n) ~ \wedge \\
+%%  & Inv_n(x_n) \wedge G_n(x_n) \wedge T(x_n, x_n') \rightarrow Inv_n(x_n') \wedge R(x_n) > 0 \wedge R(x_n) > R(x_n')
+%%  \end{align*}
+%% \end{definition}
+
+%% \begin{definition}[Nested Loops Termination Formula {\bf [NT]}]
+%% \label{def:nested-term-formula}
+%%  \begin{align*}
+%%   \exists R, S . \forall x, x' . & G_1(x) \wedge P_1(x,x') \rightarrow S(x',x') ~ \wedge \\
+%%                                 & G_2(x') \wedge S(x,x') \wedge T(x',x'')\rightarrow S(x,x'') ~ \wedge \\
+%% 				& G_1(x) \wedge P_1(x,x') \wedge \neg G_2(x') \wedge S(x',x'') \wedge 
+%%                                 P_2(x'',x''') \wedge 
+%%                                   R(x) > 0 \wedge R(x) > R(x''') 
+%%  \end{align*} 
+%% \end{definition}
+
+%% \begin{definition}[Sequential Loops Non-Termination Formula {\bf [SNT]}]
+%% \label{def:multi-termination-formula}
+%%  \begin{align*}
+%%   \exists R, Inv_1,..., Inv_n . \forall x_0,...,x_n, x_1',...,x_n'.  & P_0(x_0,x_1) \rightarrow Inv_1(x_1) ~  \\
+%%  & \bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \rightarrow Inv_i(x_i')) ~  \\  
+%%  & \bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) \rightarrow Inv_{i+1}(x_{i+1})) ~ \wedge \\
+%%  & Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge N(x_n)  ~ \wedge \\
+%%                                                         & N(x_n) \rightarrow G_n(x_n) ~ \wedge 
+%% 							 N(x_n) \wedge T_n(x_n, x_n') \rightarrow N(x_n') 
+%%  \end{align*}
+%% \end{definition}
+ \end{framed}
+
+\end{figure*}
+
+\subsection{Composing a Loop with its Environment} \label{sec:env}
+
+Sometimes the termination behaviour of a loop depends on its environment, i.e. the rest of the program.  That is to say,
+the loop may not terminate if started in some particular state, but the rest of the program
+ensures that such a state cannot be reached on entry to the loop.  The program as a whole
+terminates, but if the loop were considered in isolation we would not be able to prove that
+it terminates. We must therefore encode a loop's interaction with its environment %the rest of the program 
+in order to do a sound termination analysis.\\
+
+\iffalse
+Let us assume that we have done some preprocessing of our program which has identified
+loops, straight line code blocks and the control flow between these.  In particular,
+the control flow analysis has determined which order these code blocks execute in,
+and the nesting structure of the loops.
+\fi
+
+\noindent {\bf Conditional termination.}
+Given a loop $L=(G,T_o)$, where $T_o$ is an over-approximation of its transition relation, 
+if $L$'s termination depends on the state it begins
+executing in, we say that $L$ is \emph{conditionally terminating}.
+The information we require of the environment is a predicate $I$ which
+over-approximates the set of states that $L$ may begin executing in.
+That is to say, for each state $x$ that is reachable on entry to $L$,
+we have $I(x)$.
+
+Conditional termination is then equivalent to the
+formula {\bf [CT]} of Defintion~\ref{def:ct}.
+
+\begin{theorem}
+\label{thm:ct}
+ The loop $L(G, T_o)$ terminates when started in any state satisfying $I(x)$ iff
+ Defintion~\ref{def:ct} is satisfiable.
+\end{theorem}
+
+\begin{proof}
+ Do this proof.
+\end{proof}
+
+If this formula is satisfiable, two witnesses are returned:
+\begin{itemize}
+\item $W$ is an inductive invariant of $L$ that is established by the initial states $I$ if the loop
+guard $G$ is met.
+\item $R$ is a ranking function for $L$ as restricted by $W$ -- that is to say, $R$ need only
+be well founded on those states satisfying $W \wedge G$.  Since $W$ is an inductive invariant of $L$,
+$R$ is strong enough to show that $L$ terminates from any of its initial states.
+\end{itemize}
+
+$W$ is called a \emph{supporting invariant} for $L$ and $R$ proves termination relative to $W$.
+We require that $I \wedge G$ is strong enough to establish the base case of $W$'s inductiveness.
+
+Conditional termination is illustrated by the program in Figure~\ref{fig:motivation.h},
+which is encoded as:
+\begin{align*}
+            I(\langle x, y \rangle) & \triangleq y = 1 \\
+            G(\langle x, y \rangle) & \triangleq x > 0 \\
+            T(\langle x, y \rangle, \langle x', y' \rangle) & \triangleq x' = x - y \wedge y' = y 
+\end{align*}
+If the initial states $I$ are ignored this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
+would lead to a non-terminating execution.
+
+However, formula {\bf [CT]} is satisfiable, as witnessed by the ranking function
+$R(\langle x,y\rangle) = x$ and supporting invariant $W(\langle x, y \rangle ) \triangleq y = 1$.
+This constitutes a proof that the program as a whole terminates, since the loop always begins
+executing in a state that guarantees its termination.\\
+
+
+%synthesizing environment abstractions: underapp for termination and underapp for non-termination.
+% \cite{} addresses the problem of automatically under-approximating weakest preconditions.
+
+
+%\noindent {\bf Nested loops.}
+%% If $L$'s body contains another loop $L'$, we cannot directly apply either formula {\bf [UT]} or
+%% {\bf [CT]} or prove that $L$ terminates.  This is because we don't have direct access to the
+%% single step transition relation for $L$'s body.  Instead, we consider $L'$ to be part of
+%% $L$'s environment, which we model with a relation $S$.  We require that $S$ over-approximates
+%% $L'$ in the sense that it satisfies the following formula:
+%% \begin{align*}
+%%  \forall x, x'. G(x) \wedge W(x) \wedge T'^*(x, x') \wedge \lnot G'(x') \rightarrow S(x, x')
+%% \end{align*}
+%% Where $G$ and $G'$ are respectively $L$ and $L'$'s guards, and $T'^*$ is the reflexive transitive closure of
+%% the inner loop ($L'$)'s transition relation.
+
+%% To give an example, if we wish to prove that the outer loop in Figure~\ref{fig:nested} terminates,
+%% it suffices to summarise the inner loop with the relation:
+%% \begin{align*}
+%% S(\langle x, y, z \rangle, \langle x', y', z' \rangle) & \triangleq x' = x \wedge y = 1
+%% \end{align*}
+%% Then the ranking function $R(x, y, z) = x$ proves termination of the outer loop $L(G, S)$.\\
+
+
+%% \begin{figure}
+%% \begin{lstlisting}
+%% while (x > 0) {
+%%   z = x, y = z + 1;
+%%   while (z > 0) {
+%%     z--, y--;
+%%   }
+%%   x -= y;
+%% }
+%% \end{lstlisting}
+%% \caption{A nested loop\label{fig:nested}}
+%% \end{figure}
+
+\noindent {\bf Over-approximating the environment for termination.}
+%% While proving that loop $L$ terminates, we create constraints on the environment in the
+%% form of the predicate $I$ and the over-approximating summary relation $T_o$:
+%% In the presence of nested loops, 
+%% for each loop $L'$ nested in the body
+%% of $L$, we must generate constraints saying that $T_o$ over-approximates $L'$, i.e. it is an over-approximation of the transitive closure of $L'$'s transition relation.
+%% Similarly, for each loop $L''$ appearing before $L$ in the program's control flow, we
+%% must add constraints saying that $I$ over-approximates the states reachable via $L''$.
+%The details of how to create these constraints are standard, so
+%rather than presenting the algorithm for generating the constraints, we direct the
+%reader's attention to Figure~\ref{fig:environment-model}.  
+%
+%\noindent {\bf Environment abstractions.}
+For a loop $L=(G,T)$, the formulae {\bf [CT]} %and {\bf [CNT]} 
+from Definition~\ref{def:ct} 
+%and Definition~\ref{def:cnt} 
+is in terms of 
+$T_o$ and $I$, which over-approximate the transition relation~$T$ and the set of states that $L$ may begin executing in, respectively. 
+The reason for using over-approximations [instead of exact relations] %when formulating the (non-)termination of an isolated loop 
+is so that we can use the same formulae regardless of the environment the loop is executing in, or 
+the complexity of its body, e.g.~if it contains nested loops.
+
+
 
 \noindent {\bf Under-approximating the environment for non-termination.}
 Dual to termination, when proving non-termination, we need to
@@ -2120,7 +2150,7 @@ and then statically prove their
 feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}. 
 In~\cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al.~prove nontermination via
 reduction to safety proving.  Their iterative algorithm uses counterexamples
-to a fixed safety property to refine an underapproximation of a program.
+to a fixed safety property to refine an under-approximation of a program.
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
