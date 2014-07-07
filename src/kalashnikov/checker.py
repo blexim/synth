@@ -47,6 +47,8 @@ args.argparser.add_argument("--noconsts", default=False,
     help="don't remove const instructions")
 args.argparser.add_argument("--fastverif", default=False, type=bool,
     help="use fast verification")
+args.argparser.add_argument("--nondet", default=0, type=int,
+    help="number of nondet variables")
 
 args.argparser.add_argument("-popsize", default=2000, type=int)
 args.argparser.add_argument("-keepfrac", default=200, type=int)
@@ -88,6 +90,7 @@ class Checker(object):
     pwidth = max(pwidth, 1)
     ewidth = max(width/4, 1)
     mwidth = width - ewidth - 1
+    nnondet = args.args.nondet
 
     self.sz = sz
     self.width = width
@@ -106,6 +109,7 @@ class Checker(object):
         "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
+        "-DNONDET_ARGS=%d" % nnondet,
         os.path.join(args.args.interpreter, "exclude.c"),
         os.path.join(args.args.interpreter, "wellformed.c"),
         os.path.join(args.args.lib, "solution.c"),

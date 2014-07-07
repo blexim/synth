@@ -8,7 +8,7 @@ import splitter
 
 def prove_terminates(filename):
   splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False)
-  (id_map, has_nested) = splitter.split(filename, splitfile)
+  (id_map, has_nested, nondet) = splitter.split(filename, splitfile)
   nids = len(id_map)
   varnames = ' '.join(id_map[k] for k in xrange(nids))
 
@@ -16,6 +16,7 @@ def prove_terminates(filename):
 
   os.system(("./kalashnikov.py " +
              "%s ../../papers/termination/experiments/benchmarks/unranking.c " +
+             "-P2 " +
              "--synth-strategy=genetic " +
              "-c1 " +
              "--fastverif=True " +
@@ -26,11 +27,13 @@ def prove_terminates(filename):
              "-popsize=3000 " +
              "-w4 " +
              "-a%d --evars %d --varnames %s --resnames I --seed=1337 " +
+             "--nondet=%d " +
              "%s") % 
               (splitfile.name,
                 nids,
                 nids,
                 varnames,
+                nondet,
                 ' '.join(sys.argv[2:])))
 
 if __name__ == '__main__':

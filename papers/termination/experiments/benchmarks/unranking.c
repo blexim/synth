@@ -7,15 +7,38 @@ extern int assertion(word_t args[NARGS]);
 
 int inv(prog_t *prog, word_t args[NARGS]) {
   word_t res[NRES];
+  int i;
+
+  for (i = 0; i < NONDET_ARGS; i++) {
+    args[i] = 0;
+  }
 
   exec(prog, args, res);
 
   return res[0];
 }
 
+int skolem(prog_t *prog, word_t pre_vars[NARGS]) {
+  word_t res[NRES];
+  int i;
+
+  for (i = 0; i < NONDET_ARGS; i++) {
+    pre_vars[i] = 0;
+  }
+
+  exec(prog, pre_vars, res);
+
+  for (i = 0; i < NONDET_ARGS; i++) {
+    pre_vars[i] = res[i];
+  }
+
+  return 0;
+}
+
 int check(solution_t *solution, word_t args[NARGS]) {
   word_t pre_vars[NARGS], post_vars[NARGS];
-  prog_t *prog = &solution->progs[0];
+  prog_t *inv_prog = &solution->progs[0];
+  prog_t *skolem_prog = &solution->progs[1];
   int i;
 
   for (i = 0; i < NARGS; i++) {
@@ -26,7 +49,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
     return 0;
   }
 
-  if (!inv(prog, post_vars) || !guard(post_vars)) {
+  if (!inv(inv_prog, post_vars) || !guard(post_vars)) {
     return 0;
   }
 
@@ -34,10 +57,12 @@ int check(solution_t *solution, word_t args[NARGS]) {
     pre_vars[i] = args[i];
   }
 
-  if (guard(pre_vars) && inv(prog, pre_vars)) {
+  if (guard(pre_vars) && inv(inv_prog, pre_vars)) {
+    skolem(skolem_prog, pre_vars);
+
     body(pre_vars, post_vars);
 
-    if (!inv(prog, post_vars)) {
+    if (!inv(inv_prog, post_vars)) {
       return 0;
     }
 

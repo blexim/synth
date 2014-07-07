@@ -8,7 +8,7 @@ import splitter
 
 def prove_terminates(filename):
   splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False)
-  (id_map, has_nested) = splitter.split(filename, splitfile)
+  (id_map, has_nested, nondet) = splitter.split(filename, splitfile)
   nids = len(id_map)
   varnames = ' '.join(id_map[k] for k in xrange(nids))
 

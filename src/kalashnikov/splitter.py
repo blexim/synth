@@ -284,7 +284,7 @@ def split_func(fd, ofile):
     f.write(loop_body)
     f.write("}\n\n")
 
-  return (rev_id_map, has_nested)
+  return (rev_id_map, has_nested, nondet)
 
 def split(filename, ofile=sys.stdout):
   ast = parse_file_libc(filename)
