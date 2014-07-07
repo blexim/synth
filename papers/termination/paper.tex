@@ -2262,7 +2262,13 @@ Figure~\ref{fig:handletable} is that most methods tend to specialise on a
 certain aspect of termination proving that they can solve efficiently. 
 Conversely to this view, we aim for generality, as we do not restrict the
 form of the synthesised ranking functions, nor the form of the input
-programs.
+programs. 
+
+%As a general approach to proving liveness properties, Biere et al.
+%propose a translation of liveness checking problems into safety checking problems
+%that is however best suited for finding shallow termination arguments 
+%\cite{DBLP:journals/entcs/BiereAS02}. 
+
 
 As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's
 theorem compute a set of local termination conditions that decrease as
@@ -2273,7 +2279,10 @@ checking the validity of the termination argument, Cook et al.~present an
 iterative termination proving procedure that searches for lexicographic
 termination arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et
 al.~strengthen the termination argument such that it becomes a transitive
-relation~\cite{DBLP:conf/cav/KroeningSTW10}.
+relation~\cite{DBLP:conf/cav/KroeningSTW10}. Following the same trend, 
+we search for lexicographic nonlinear termination arguments that can be verified 
+with a single call to a SAT solver. 
+
 
 Proving program termination implies the simultaneous search for a
 termination argument and a supporting invariant.  Brock\-schmidt et
@@ -2295,7 +2304,15 @@ feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}.  Chen et al.~prove
 nontermination via reduction to safety
 proving~\cite{DBLP:conf/tacas/ChenCFNO14}.  Their iterative algorithm uses
 counterexamples to a fixed safety property to refine an under-approximation
-of a program.
+of a program. In order to prove both termination and non-termination,
+Harris et al. compose several program analyses (termination provers
+for multi-path loops, non-termination provers for cycles, and global safety provers)
+\cite{DBLP:conf/sas/HarrisLNR10}. We propose a uniform treatment of 
+termination and non-termination by formulating a generalised second 
+order formula whose solution is a proof of one of them.
+
+
+
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
