@@ -288,14 +288,14 @@ program.
 \item We implemented our technique and tried it on a selection of programs
 handling both bit-vectors and floats.
 
-\end{itemize}
+\end{itemize} 
 
 {\bf Limitations.} Our algorithm proves termination for transition systems
 with finite state spaces.  The (non-)termination proofs take the form of
 ranking functions and program invariants that are expressed in a
 quantifier-free language.  This formalism is powerful enough to handle a
-large fragment of C, but is not rich enough to analyse code that uses the
-heap or unbounded arrays.  Also, we have not yet added support for recursion
+large fragment of C, but is not rich enough to analyse code that uses 
+unbounded arrays or the heap. Similar to other termination analyses \cite{DBLP:conf/tacas/CookSZ13}, we could attempt to alleviate the latter limitation by abstracting programs with heap to arithmetic ones \cite{DBLP:conf/popl/MagillTLT10}. Also, we have not yet added support for recursion
 to our encoding.
 
 \section{Motivating Examples} \label{sec:motivation}
