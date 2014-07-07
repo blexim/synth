@@ -2113,7 +2113,8 @@ instances.
 
 To evaluate our algorithm, we implemented two tools: one to generate a
 termination specification from a C program, and one to synthesise a proof
-from the specification.  We ran the resulting termination prover on 47
+from the specification.  We ran the resulting termination prover,
+named {\sc Juggernaut}, on 47
 benchmarks taken from the literature and SV-COMP'15~\cite{svcomp15}.  To
 provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
 the same benchmarks.  Each tool was given a time limit of $180\,s$, and was
@@ -2129,15 +2130,17 @@ in 3 cases (due to the differences between integer and bit-vector
 semantics).  There are a further 5 cases where our tool is able to find a
 proof and {\sc ARMC} cannot, which we believe is due to our more expressive
 proof language.  In 3 cases, {\sc ARMC} times out while our tool is able to
-find a termination proof.  All of these cases have nested loops, which are
-easy for us to handle, but can be difficult for provers that enumerate
-lassos.
+find a termination proof.  2 of these cases have nested loops and the
+third has an infinite number of terminating lassos.  This is not a problem for us,
+but can be difficult for provers that enumerate lassos.
 
 On the other hand, {\sc ARMC} is \emph{much} faster than our tool.  While
 this difference can partly be explained by much more engineering time being
 invested in {\sc ARMC}, we feel that the difference is probably inherent to
 the difference in the two approaches -- our algorithm is complete and
 bit-vector accurate, which comes at the cost of efficiency.
+{\sc Juggernaut} is slow, but unstoppable in its
+termination abilities if you are willing to wait for it.
 
 The final column in Figure~\ref{fig:experiments} gives the number of
 iterations of the CEGIS loop our synthesiser performed.  While the
@@ -2146,12 +2149,29 @@ theoretical bound for the number of CEGIS iterations is very large
 demonstrate that in practice the number of iterations required is usually
 small.
 
+Of the 47 benchmarks used, 2 used nonlinear operations in the program (loop6 and loop11),
+and 5 had nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
+{\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
+It solves 2 of the 5 nested loops in less than 30s, but times out on the other
+3.  Of these 3 timeouts, 2 (svcomp40 and svcomp41) are due program constants that
+are too large to be handled with our default settings.  Increasing
+our default word width from 3 bits to 5 bits allowed us to prove termination
+for both these benchmarks in less than 30s (but these results are not shown in
+the table).
+
+In conclusion, while they show that our tool is not yet production ready,
+these experiments confirm our conjecture that synthesis can be used
+effectively to prove termination and non-termination.  In particular,
+for programs with nested loops, nonlinear arithmetic and complex
+termination arguments, the versatility of unrestricted synthesis
+is very valuable.
+
 \begin{figure}
 \centering
 \scriptsize
 \begin{tabular}{|l|@{}c@{}||@{}c@{}|r||@{}c@{}|r|r|}
 \hline
-          &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{Us} \\
+          &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Juggernaut} \\
 Benchmark & \,Expected\, & \,Verdict\, & Time & \,Verdict\, & Time & \#It.\\
     \hline
     \hline
