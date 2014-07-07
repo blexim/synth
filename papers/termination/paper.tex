@@ -1460,16 +1460,15 @@ where $T_u$ and $T_o$ under- and over-approximate the transition relation $T$, r
 
 %% Our design: for each loop always search for lexicographic ranking function + supporting invariant OR recurrence set.
 
-\section{Satisfiability of a Formula in the Synthesis Fragment} \label{sec:synthesis}
-
+\section{Satisfiability of a Synthesis Fragment Formula} \label{sec:synthesis}
 
 In this section we present a solver for the synthesis fragment:
- \[
+\[
   \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
- \]
+\]
 %
 where $P$ ranges over sets, while $x$ and $y$ range over ground terms (as
-mentioned before, we drop the vector notation and write $x$ for $\vec{x}$).
+mentioned, we drop the vector notation and write $x$ for $\vec{x}$).
 
 By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 \mathbb{B}$ as a specification function that returns true iff $P$ computes
@@ -1481,9 +1480,6 @@ particularly fruitful beginning with Alonzo Church's work on the
 \emph{Circuit Synthesis Problem} in the sixties~\cite{church-synth}, and
 continuing with works such as {\sc Brahma}~\cite{brahma} and program
 sketching~\cite{lezama-thesis,sketch,modular-sketch}.
-
-
-
 
 In the context of (non-)termination analysis, a witnesses to the
 satisfiability of a formula in the synthesis fragment is a
@@ -1497,8 +1493,8 @@ Section~\ref{sec:second.order}.
 
 \subsection{The Synthesis Specification}
 
-The logic we use to express the synthesis formula, i.e.~the\\
-\mbox{(non-)termination} specifications, is a subset of C that we call
+The logic we use to express the synthesis formula, i.e.~the
+\mbox(non-)ter\-mi\-nation specifications, is a subset of C that we call
 \newC.  The characteristic property of a \newC program is that safety can be
 decided for it using a single query to a Bounded Model Checker.  A~\newC
 program is just a C program with the following syntactic restrictions:
@@ -1689,7 +1685,7 @@ free.  The model checking is done using a combination of bounded model
 checking, explicit state enumeration and genetic programming (GP).  The
 latter two techniques involve combining the previously generated C program,
 along with code that searches for candidate solutions.  Finally, if any of
-the model checkers finds a candidate solution it returns it.  The form of
+the model checkers finds a candidate solution, it returns it.  The form of
 this candidate solution is yet another program, this time written in the
 proof language $\mathcal{L}$.
 
@@ -1848,8 +1844,8 @@ $P \models \sigma$.
 \begin{theorem}
  \label{thm:synth-semicomplete}
  If the existential first-order theory used to express the specification $\sigma$ is decidable,
- algorithm~\ref{alg:cegis} is semi-complete -- if a program $P \models \sigma$
- exists then algorithm~\ref{alg:cegis} will terminate.  However, if no program
+ Algorithm~\ref{alg:cegis} is semi-complete -- if a program $P \models \sigma$
+ exists then Algorithm~\ref{alg:cegis} will terminate.  However, if no program
  satisfies the specification, the algorithm may not terminate.  Furthermore if the domain of inputs $X$
  is finite, the algorithm is guaranteed to terminate.
 \end{theorem}
@@ -1859,7 +1855,7 @@ $P \models \sigma$.
  the program length $l$), it will eventually enumerate a program that meets the specification
  in whatever set of inputs are currently being tracked.  Since the first-order theory is
  decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
- The set of correct programs is therefore recursively enumerable and algorithm~\ref{alg:cegis}
+ The set of correct programs is therefore recursively enumerable and Algorithm~\ref{alg:cegis}
  enumerates this set, so it is semi-complete.
 
  If the domain $X$ is finite then the loop in procedure {\sc RefinementLoop} can only
@@ -2046,7 +2042,7 @@ benchmarks taken from the literature and SV-COMP'15~\cite{svcomp15}.  To
 provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
 the same benchmarks.  Each tool was given a time limit of $180\,s$, and was
 run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
-results of these experiments are shown in Figure~\ref{fig:experiments}.
+results of these experiments are given in Figure~\ref{fig:experiments}.
 
 It should be noted that the comparison here is imperfect, since {\sc ARMC}
 is solving a slightly different problem -- it checks whether the program
@@ -2120,7 +2116,7 @@ imperative loops with polynomial guards and polynomial assignments
 is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
-Given the lack of research in handling not-linear programs, as well as
+Given the lack of research on termination of not-linear programs, as well as
 programs over bit vectors and floats, our work focused on covering these
 areas.  One of the obvious conclusions that can be reached from
 Figure~\ref{fig:handletable} is that most methods tend to specialise on a
@@ -2144,22 +2140,23 @@ Proving program termination implies the simultaneous search for a
 termination argument and a supporting invariant.  Brock\-schmidt et
 al.~share the same representation of the state of the termination proof
 between the safety prover and the ranking function synthesis
-tool~\cite{DBLP:conf/cav/BrockschmidtCF13}. 
-In~\cite{DBLP:conf/cav/BradleyMS05}, Bradley et al.~combine the generation
-of ranking functions with the generation of invariants to form a single
-constraint solving problem such that the necessary supporting invariants for
-the ranking function are discovered on demand.  In our setting, both the
-ranking function and the supporting invariant are iteratively constructed in
-the same refinement loop.
+tool~\cite{DBLP:conf/cav/BrockschmidtCF13}.  Bradley et al.~combine the
+generation of ranking functions with the generation of invariants to form a
+single constraint solving problem such that the necessary supporting
+invariants for the ranking function are discovered on
+demand~\cite{DBLP:conf/cav/BradleyMS05}.  In our setting, both the ranking
+function and the supporting invariant are iteratively constructed in the
+same refinement loop.
 
 While program termination has been extensively studied, much less research
 has been conducted in the area of proving non-termination.  Gupta et
 al.~dynamically enumerate lasso-shaped candidate paths for counterexamples,
 and then statically prove their
-feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}. 
-In~\cite{DBLP:conf/tacas/ChenCFNO14}, Chen et al.~prove nontermination via
-reduction to safety proving.  Their iterative algorithm uses counterexamples
-to a fixed safety property to refine an under-approximation of a program.
+feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}.  Chen et al.~prove
+nontermination via reduction to safety
+proving~\cite{DBLP:conf/tacas/ChenCFNO14}.  Their iterative algorithm uses
+counterexamples to a fixed safety property to refine an under-approximation
+of a program.
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
