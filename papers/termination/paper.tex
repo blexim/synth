@@ -625,68 +625,6 @@ We note that some termination arguments require lexicographic ranking functions,
 equivalently, ranking functions whose co-domain is a countable ordinal, rather than just $\mathbb{N}$.
 
 
-\subsection{Machine Arithmetic and Bit Vectors} \label{sec:machine.arith} 
-
-Physical computers have bounded storage, which means they are unable to
-perform calculations on mathematical integers.  For example, if $A$ is the
-Ackermann function and $G$ is Graham's number, a physical computer capable
-of computing $A(G, G)$ would contain (much!) more matter than is believed to
-exist in the universe.  Fortunately, it is rare for a programmer to need
-such a large number and so modern computers do their arithmetic over
-fixed-width binary words, otherwise known as bit vectors.  For the remainder
-of this section, we will say that the bit vectors we are working with are
-$k$-bits wide, which means that each word can hold one of $2^k$ bit
-patterns.  Typical values for $k$ are 32 and 64.
-
-Machine words can be interpreted as ``signed'' or ``unsigned'' values. 
-Signed values can be negative, while unsigned values cannot.  The encoding
-for signed values is two's complement, where the most significant bit
-$b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather
-than $2^k - 1$.  Two's complement representation has the property that
-$\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
-is bitwise negation.  Two's complement also has the property that addition,
-multiplication and subtraction are defined identically for unsigned and
-signed numbers.
-
-Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
-of the differences between machine arithmetic and Peano
-arithmetic.\footnote{ISO C requires that unsigned arithmetic is performed
-modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
-In practice, the undefined behaviour is implemented just as if the
-arithmetic had been unsigned.}  To give an example, $(2^k - 1) + 1 \equiv 0
-\pmod {2^k}$ provides a counterexample to the statement $\forall x. 
-x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
-arithmetic.  When an arithmetic operation has a result greater than $2^k$,
-it is said to ``overflow''.  If an operation does not overflow, its
-machine-arithmetic result is the same as the result of the same operation
-performed on integers.
-
-The final source of difference between integer arithmetic and bit-vector
-arithmetic stems from width conversions.  Many programming languages allow
-numeric variables of different types, which can be represented using words
-of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
-\texttt{int} might occupy 32 bits.  When a $k$-bit variable is assigned to a
-$l$-bit variable with $l < k$, the result is truncated $\mathrm{mod}~2^l$.  For
-example, if $x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will
-hold the value $0$ after the following code is executed:
-%
-\begin{lstlisting}
-x = 65536;
-y = x;
-\end{lstlisting}
-
-This gives us a counterexample to the statement $\forall x, y . x = y
-\Rightarrow (x + 1) = (y + 1)$, which is a theorem of Peano arithmetic.
-
-As well as machine arithmetic differing from Peano arithmetic on the
-operators they have in common, computers have several ``bitwise'' operations
-that are not taken as primitive in the theory of integers.  These operations
-include the Boolean operators \texttt{and, or, not, xor} applied to each
-element of the bit vector.  Computer programs often make use of these
-operators, which are nonlinear when interpreted in the standard model of
-Peano arithmetic\footnote{Some of these operators can be seen as
-linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
-addition in the Galois field $\mathrm{GF}(2^k)$.}.
 
 \iffalse
 \section{Combinatorics of Finite Termination}
@@ -1517,7 +1455,7 @@ In this section we present a solver for the synthesis fragment:
   \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
 \]
 %
-where $P$ ranges over sets, while $x$ and $y$ range over ground terms (as
+where $P$ ranges over functions, while $x$ and $y$ range over ground terms (as
 mentioned, we drop the vector notation and write $x$ for $\vec{x}$).
 
 By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
@@ -1525,26 +1463,94 @@ By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 appropriate outputs for the inputs $x$ and $y$, we can regard the
 satisfaction problem for the synthesis fragment as \emph{program synthesis},
 i.e.  the mechanised construction of software that provably satisfies a
-given specification.  Research in the area of program synthesis has been
+given specification.  Then a witness $P$ to the satisfiability of some formula
+is just a program that meets the specification $\sigma$.
+
+Research in the area of program synthesis has been
 particularly fruitful beginning with Alonzo Church's work on the
 \emph{Circuit Synthesis Problem} in the sixties~\cite{church-synth}, and
 continuing with works such as {\sc Brahma}~\cite{brahma} and program
 sketching~\cite{lezama-thesis,sketch,modular-sketch}.
 
-In the context of (non-)termination analysis, a witnesses to the
-satisfiability of a formula in the synthesis fragment is a
+In the context of termination analysis, a witness to the
+satisfiability of a generalised termination specification is a
 \mbox{(non-)termination} proof.  As mentioned earlier in the paper, our
 analysis must ensure precise treatment of bit-wise operations and arithmetic
 modulo fixed widths by modelling bit-accurate semantics.  The synthesiser
-must therefore be able to compute (non-termination) proofs over machine
+must therefore be able to compute solutions over machine
 integers and floating-point numbers from the specifications detailed in
-Section~\ref{sec:second.order}.
+Section~\ref{sec:second.order}.  In the next section, we will begin our treatment of
+bit-accurate synthesis by illustrating some of the differences between
+machine arithmetic and conventional integer arithmetic.
 
+
+\subsection{Machine Arithmetic Vs. Peano Arithmetic} \label{sec:machine.arith} 
+
+Physical computers have bounded storage, which means they are unable to
+perform calculations on mathematical integers.  For example, if $A$ is the
+Ackermann function and $G$ is Graham's number, a physical computer capable
+of computing $A(G, G)$ would contain (much!) more matter than is believed to
+exist in the universe.  Fortunately, it is rare for a programmer to need
+such a large number and so modern computers do their arithmetic over
+fixed-width binary words, otherwise known as bit vectors.  For the remainder
+of this section, we will say that the bit vectors we are working with are
+$k$-bits wide, which means that each word can hold one of $2^k$ bit
+patterns.  Typical values for $k$ are 32 and 64.
+
+Machine words can be interpreted as ``signed'' or ``unsigned'' values. 
+Signed values can be negative, while unsigned values cannot.  The encoding
+for signed values is two's complement, where the most significant bit
+$b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather
+than $2^k - 1$.  Two's complement representation has the property that
+$\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
+is bitwise negation.  Two's complement also has the property that addition,
+multiplication and subtraction are defined identically for unsigned and
+signed numbers.
+
+Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
+of the differences between machine arithmetic and Peano
+arithmetic\footnote{ISO C requires that unsigned arithmetic is performed
+modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
+In practice, the undefined behaviour is implemented just as if the
+arithmetic had been unsigned.}.  To give an example, $(2^k - 1) + 1 \equiv 0
+\pmod {2^k}$ provides a counterexample to the statement $\forall x. 
+x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
+arithmetic.  When an arithmetic operation has a result greater than $2^k$,
+it is said to ``overflow''.  If an operation does not overflow, its
+machine-arithmetic result is the same as the result of the same operation
+performed on integers.
+
+The final source of disagreement between integer arithmetic and bit-vector
+arithmetic stems from width conversions.  Many programming languages allow
+numeric variables of different types, which can be represented using words
+of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
+\texttt{int} might occupy 32 bits.  When a $k$-bit variable is assigned to a
+$j$-bit variable with $j < k$, the result is truncated $\mathrm{mod}~2^j$.  For
+example, if $x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will
+hold the value $0$ after the following code is executed:
+%
+\begin{lstlisting}
+x = 65536;
+y = x;
+\end{lstlisting}
+
+% This gives us a counterexample to the statement $\forall x, y . x = y
+% \Rightarrow (x + 1) = (y + 1)$, which is a theorem of Peano arithmetic.
+
+As well as machine arithmetic differing from Peano arithmetic on the
+operators they have in common, computers have several ``bitwise'' operations
+that are not taken as primitive in the theory of integers.  These operations
+include the Boolean operators \texttt{and, or, not, xor} applied to each
+element of the bit vector.  Computer programs often make use of these
+operators, which are nonlinear when interpreted in the standard model of
+Peano arithmetic\footnote{Some of these operators can be seen as
+linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
+addition in the Galois field $\mathrm{GF}(2^k)$.}.
 
 \subsection{The Synthesis Specification}
 
-The logic we use to express the synthesis formula, i.e.~the
-\mbox(non-)ter\-mi\-nation specifications, is a subset of C that we call
+The logic we use to express the synthesis formula, i.e.
+the generalised termination specification, is a subset of C that we call
 \newC.  The characteristic property of a \newC program is that safety can be
 decided for it using a single query to a Bounded Model Checker.  A~\newC
 program is just a C program with the following syntactic restrictions:
@@ -1555,9 +1561,19 @@ program is just a C program with the following syntactic restrictions:
 Additionally, \newC programs may use nondeterministic values, assumptions
 and arbitrary-width types.
 
-The (non-)termination proofs are arbitrary expressions over the grammar given in Figure~\ref{fig:l-language}.  
-%written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
-\todo{update the figure and make it look more like a grammar.}
+\subsection{The Proof Language}
+The proofs generated by the synthesiser take the form of imperative programs
+written in the language $\mathcal{L}$.  An
+$\mathcal{L}$-program is a list of instructions, each of which matches one of the
+patterns shown in Figure~\ref{fig:l-language}.  An instruction has an opcode
+(such as \verb|add| for addition) and one or more operands.  An operand is either
+a constant, one of the program's inputs or the result of a previous instruction.
+The $\mathcal{L}$ language has various arithmetic and logical operations,
+as well as basic branching in the form of the \verb|ite| (if-then-else) instruction.
+
+% The (non-)termination proofs are arbitrary expressions over the grammar given in Figure~\ref{fig:l-language}.  
+% %written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
+% \todo{update the figure and make it look more like a grammar.}
 
 
 \begin{algorithm*}
@@ -1567,9 +1583,9 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
  \begin{multicols}{2}
  \begin{algorithmic}[1]
  \Statex
-\Function{synth}{inputs}
-  \Let{$(i_1, \ldots, i_N)$}{inputs}
-  \Let{query}{$\exists P . \sigma(i_1, P(i_1)) \land \ldots \land \sigma(i_N, P(i_N))$}
+\Function{synth}{{\sc inputs}}
+  \Let{$(i_1, \ldots, i_N)$}{{\sc inputs}}
+  \Let{query}{$\exists P, x_0 . \forall i \in \text{\sc inputs} . \sigma(P, x_0, i)$}
   \Let{result}{decide(query)}
   \If{result.satisfiable}
     \State \Return{result.model}
@@ -1579,7 +1595,7 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 \EndFunction
 \Statex
 \Function{verif}{P}
-  \Let{query}{$\exists x . \lnot \sigma(x, P(x))$}
+  \Let{query}{$\exists x . \lnot \sigma(P, x_0, x)$}
   \Let{result}{decide(query)}
   \If{result.satisfiable}
     \State \Return{result.model}
@@ -1589,10 +1605,10 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
 \EndFunction
 \columnbreak
 \Statex
-\Function{refinement loop}{}
-  \Let{inputs}{$\emptyset$}
+\Function{RefinementLoop}{}
+  \Let{{\sc inputs}}{$\emptyset$}
   \Loop
-    \Let{candidate}{\Call{synth}{inputs}}
+    \Let{candidate}{\Call{synth}{{\sc inputs}}}
     \If{candidate = UNSAT}
       \State \Return{unsatisfiable}
     \EndIf
@@ -1600,7 +1616,7 @@ The (non-)termination proofs are arbitrary expressions over the grammar given in
     \If{res = valid}
       \State \Return{candidate}
     \Else
-      \Let{inputs}{inputs $\cup$ res}
+      \Let{{\sc inputs}}{{\sc inputs} $\cup$ res}
     \EndIf
   \EndLoop
 \EndFunction
@@ -1689,16 +1705,13 @@ Floating-point arithmetic:
 
 
 \subsection{The Synthesis Algorithm}
-As safety of a \newC program is efficiently 
-%the quantifier free first-order fragment of the logic is efficiently 
-decidable and a termination proof is expressible as a ground term of the \newC logic, we use
-Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch,DBLP:conf/iclp/BrainCVF06} to
-check the validity of the synthesis formula. 
+We use Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch,DBLP:conf/iclp/BrainCVF06} to
+find an $\mathcal{L}$-program satisfying our specification.
 The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
 detailed in Algorithm~\ref{alg:cegis}.  
 The algorithm is divided into two
 procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
-a finite set of test vectors {\sc inputs}, which is initialised to $\emptyset$.
+a finite set of test vectors {\sc inputs}.
 
 The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$
 that satisfy the partial specification:
@@ -1709,7 +1722,7 @@ that satisfy the partial specification:
 
 If {\sc synth} succeeds in finding a witness $(P, x_0)$, this witness is a
 candidate solution to the full synthesis formula.  We pass this candidate
-solution to {\sc verif} which determines whether the candidate does satisfy
+solution to {\sc verif} which determines whether it does satisfy
 the specification on all inputs by checking satisfiability of the
 verification formula:
 %
@@ -1725,17 +1738,17 @@ set and the loop iterates again.
 
 Concretely, {\sc synth} is implemented as shown in
 Figure~\ref{fig:synth-dfd}.  We start by taking the termination
-specification and generating a C program which takes as input a candidate
+specification and generating a \newC program which takes as input a candidate
 $(P, x_0)$ and asserts that the candidate fails to meet the specification on
-at least on of the elements of {\sc inputs}.  So this program is unsafe iff
+at least one of the elements of {\sc inputs}.  So this program is unsafe iff
 there is some candidate $(P, x_0)$ satisfying the specification for all the
 elements of {\sc inputs}.  Finding a new candidate solution is therefore
-reduced to model checking this C program, which by construction is loop
-free.  The model checking is done using a combination of bounded model
-checking, explicit state enumeration and genetic programming (GP).  The
-latter two techniques involve combining the previously generated C program,
-along with code that searches for candidate solutions.  Finally, if any of
-the model checkers finds a candidate solution, it returns it.  The form of
+reduced to model checking this \newC program, which by construction is loop
+free.  The model checking is done using a combination of symbolic Bounded Model
+Checking (BMC), explicit state enumeration and genetic programming (GP) running in
+parallel.
+Finally, if any of the model checkers finds a candidate solution, it returns it
+and the others are killed.  The form of
 this candidate solution is yet another program, this time written in the
 proof language $\mathcal{L}$.
 
@@ -1745,10 +1758,10 @@ exact semantics of the program as understood by a compiler, rather than some
 ad-hoc abstraction of its semantics.
 
 Similarly to {\sc synth}, the {\sc verif} procedure is implemented by
-creating a C program that is unsafe iff some input exists on which the
+creating a \newC program that is unsafe iff some input exists on which the
 candidate solution fails to meet the specification.  Again, symbolic and
 explicit state model checking are used to decide the satisfiability of the
-verification formula.
+verification formula\footnote{GP is not used, since it is inherently incomplete.}.
 
 
 
@@ -1825,53 +1838,66 @@ verification formula.
 
 
 \subsection{Candidate Generation Strategies}
-\noindent{\bf Explicit Proof Search} The simplest strategy for finding candidates
+\noindent{\bf Explicit Proof Search.} The simplest strategy for finding candidates
 is to just exhaustively enumerate them all, starting with the shortest and
 progressively increasing the number of instructions.  Since the set of
 $\mathcal{L}$-programs is recursively enumerable, this procedure is complete.
 \\
 
-\noindent{\bf Symbolic Bounded Model Checking} Another complete method for generating
+\noindent{\bf Symbolic Bounded Model Checking.} Another complete method for generating
 candidates is to simply use BMC on the {\sc synth.c} program.  As with explicit
-search, we must progressively increase the length of the solution we search for
+search, we must progressively increase the length of the $\mathcal{L}$-program we search for
 in order to get a complete search procedure.
 \\
 
-\noindent {\bf Genetic Programming and Incremental Evolution} \label{sec:gp}
-To generate candidate (non-)termination proofs in the ``Synthesise'' phase
-of the refinement loop, we make use of genetic programming
-(GP)~\cite{langdon:fogp} as an alternative to model checking and exhaustive
-search.  Genetic programming provides an intelligent and adaptive way of
-searching through the space of computer programs for an individual that is
-highly fit in solving the problem at hand by using the Darwinian principle
-of survival and reproduction of the fittest.  Thus, the program that emerges
-from the genetic programming paradigm is a consequence of fitness.
+\noindent {\bf Genetic Programming and Incremental Evolution.} \label{sec:gp}
+Our final strategy is genetic programming
+(GP)~\cite{langdon:fogp,brameier2007linear}.  GP provides an adaptive way of
+searching through the space of $\mathcal{L}$-programs for an individual
+``fit'' in some sense.  We measure the
+fitness of an individual by counting the number of tests in {\sc inputs}
+for which it satisfies the specification.
 
-We begin with a population of random programs, then iteratively evolve this
-population by applying the genetic operators {\sc crossover} and {\sc
-mutate}.  The {\sc crossover} operator takes two programs and combines their
-code in some way to create a new program.  The {\sc mutate} operator takes a
-single program and randomly changes parts of its code, again creating a new
-program.  Both these operators are applied to programs selected from the
-population in proportion to their observed fitness, and a program is said to
-be fitter than another if it meets the specification on more test cases.
+To bootstrap GP in the first iteration of the CEGIS loop, we generate a population
+of random $\mathcal{L}$-programs. We then iteratively evolve this population by
+applying the genetic operators {\sc crossover} and {\sc mutate}.
+{\sc Crossover} combines selected existing programs into new programs,
+whereas {\sc mutate} randomly changes parts of a single program.
+Fitter programs are more likely to be selected.
 
-In the setting of program synthesis, genetic programming can be very
-usefully combined with the concept of incremental evolution.  The idea is
-that in order to evolve a program that is adequate for some difficult task,
-it is often helpful to first evolve a population that as an ensemble is good
-at some simpler variation of the task.  This principle leads us to the
-observation that each round of the CEGIS loop can be thought of as creating
-a more difficult problem for the GP synthesiser to solve.  Therefore, if GP
-finds a candidate program which is correct for the $k$ inputs so far
-observed, but is not correct for the full specification, that candidate
-program came from a population that was ``good'' for the specification
-restrict to those $k$ inputs.  The next time round the CEGIS loop, the
-problem GP must solve is slightly harder -- any solution to this new problem
-must be correct for the previous $k$ inputs and also whatever new input was
-added by the previous iteration of {\sc verif}.  It therefore makes sense to
-begin the $k+1$st round of evolution with the population at the end of the
-$k$-th round.
+
+% The {\sc crossover} operator takes two programs and combines their
+% code in some way to create a new program.  Programs are selected to be
+% {\sc crossover}ed according to their fitness -- fitter programs are more
+% likely to be selected to become parents.
+
+% The {\sc mutate} operator takes a single program and randomly changes parts
+% of its code, again creating a new program.
+
+Rather than generating a random population at the beginning of each subsequent
+iteration of the CEGIS loop, we start with the population we had at the end of the
+previous iteration.  The intuition here is that this population contained
+many individuals that performed well on the $k$ inputs we had before, so
+they will probably continue to perform well on the $k+1$ inputs we have now.
+In the parlance of evolutionary programming, this is known as
+incremental evolution~\cite{Gomez97incrementalevolution}.
+
+% In the setting of program synthesis, genetic programming can be very
+% usefully combined with the concept of incremental evolution.  The idea is
+% that in order to evolve a program that is adequate for some difficult task,
+% it is often helpful to first evolve a population that as an ensemble is good
+% at some simpler variation of the task.  This principle leads us to the
+% observation that each round of the CEGIS loop can be thought of as creating
+% a more difficult problem for the GP synthesiser to solve.  Therefore, if GP
+% finds a candidate program which is correct for the $k$ inputs so far
+% observed, but is not correct for the full specification, that candidate
+% program came from a population that was ``good'' for the specification
+% restrict to those $k$ inputs.  The next time round the CEGIS loop, the
+% problem GP must solve is slightly harder -- any solution to this new problem
+% must be correct for the previous $k$ inputs and also whatever new input was
+% added by the previous iteration of {\sc verif}.  It therefore makes sense to
+% begin the $k+1$st round of evolution with the population at the end of the
+% $k$-th round.
 
 
 \section{Soundness, Completeness and Complexity}
