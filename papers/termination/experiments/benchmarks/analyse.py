@@ -119,6 +119,7 @@ def print_benchmark(benchmark):
   isfloat = props.get('float', '')
   lexdim = props.get('lexicographic', '')
   isterm = props.get('terminates', '')
+  tweaked = props.get('tweaked', '').lower() == 'true'
 
   if 'bibtex' in props:
     benchname += '~\cite{%s}' % props['bibtex']
@@ -150,6 +151,9 @@ def print_benchmark(benchmark):
         (start, end) = timers['_'][0]
         elapsed = '%.01fs' % (end - start)
         res = NONTERM
+
+    if tweaked:
+      elapsed += '*'
   else:
     return ""
     res = 'err'
@@ -221,7 +225,7 @@ def print_all(dir):
   print (r"\multicolumn{2}{|l||}{Correct} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
       (armc_correct, headshot_correct))
 
-  print (r"\multicolumn{2}{|l||}{Incorrect} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
+  print (r"\multicolumn{2}{|l||}{Incorrect for bit-vectors} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %
       (armc_incorrect, headshot_incorrect))
 
   print (r"\multicolumn{2}{|l||}{Unknown} & \multicolumn{2}{|r||}{%d} & \multicolumn{3}{|r|}{%d} \\" %

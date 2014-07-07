@@ -8,6 +8,7 @@
  * Lexicographic:  1
  * Terminates:     true
  * Bibtex:         DBLP:conf/sas/Urban13
+ * Tweaked:        true
  */
 /*
  * Program from Fig.1 of
