@@ -2117,7 +2117,7 @@ from the specification.  We ran the resulting termination prover,
 named {\sc Juggernaut}, on 47
 benchmarks taken from the literature and SV-COMP'15~\cite{svcomp15}.  To
 provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
-the same benchmarks.  Each tool was given a time limit of $180\,s$, and was
+the same benchmarks.  Each tool was given a time limit of 180s, and was
 run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
 results of these experiments are given in Figure~\ref{fig:experiments}.
 
@@ -2140,7 +2140,7 @@ invested in {\sc ARMC}, we feel that the difference is probably inherent to
 the difference in the two approaches -- our algorithm is complete and
 bit-vector accurate, which comes at the cost of efficiency.
 {\sc Juggernaut} is slow, but unstoppable in its
-termination abilities if you are willing to wait for it.
+termination capabilities if you are willing to wait for it.
 
 The final column in Figure~\ref{fig:experiments} gives the number of
 iterations of the CEGIS loop our synthesiser performed.  While the
@@ -2153,11 +2153,10 @@ Of the 47 benchmarks used, 2 used nonlinear operations in the program (loop6 and
 and 5 had nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
 {\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
 It solves 2 of the 5 nested loops in less than 30s, but times out on the other
-3.  Of these 3 timeouts, 2 (svcomp40 and svcomp41) are due program constants that
+3.  Of these 3 timeouts, 2 (svcomp40 and svcomp41) are due to program constants that
 are too large to be handled with our default settings.  Increasing
 our default word width from 3 bits to 5 bits allowed us to prove termination
-for both these benchmarks in less than 30s (but these results are not shown in
-the table).
+for both these benchmarks in less than 30s -- these results are marked with a *.
 
 In conclusion, while they show that our tool is not yet production ready,
 these experiments confirm our conjecture that synthesis can be used
@@ -2180,6 +2179,8 @@ Benchmark & \,Expected\, & \,Verdict\, & Time & \,Verdict\, & Time & \#It.\\
 \end{tabular}
 
 Key: \tick = terminating, \xmark = non-terminating, ? = unknown (tool terminated with an inconclusive verdict).
+
+Times marked with a * were run with non-default command line flags.
 
 \caption{Experimental results\label{fig:experiments}}
  \end{figure}
