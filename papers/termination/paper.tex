@@ -1260,13 +1260,13 @@ $L_2$:
 
 
 
-\subsection{Composing a Loop with its Environment} \label{sec:env}
+\subsection{Composing a Loop with the Rest of the Program} \label{sec:env}
 
-Sometimes the termination behaviour of a loop depends on its environment, i.e. the rest of the program.  That is to say,
-the loop may not terminate if started in some particular state, but the rest of the program
-ensures that such a state cannot be reached on entry to the loop.  The program as a whole
+Sometimes the termination behaviour of a loop depends on the rest of the program.  That is to say,
+the loop may not terminate if started in some particular state, but that state is
+not actually reachable on entry to the loop.  The program as a whole
 terminates, but if the loop were considered in isolation we would not be able to prove that
-it terminates. We must therefore encode a loop's interaction with its environment %the rest of the program 
+it terminates. We must therefore encode a loop's interaction with the rest of the program 
 in order to do a sound termination analysis.\\
 
 \iffalse
@@ -1279,7 +1279,7 @@ and the nesting structure of the loops.
 \noindent {\bf Conditional termination.}
 Given a loop $L(G,T)$, if $L$'s termination depends on the state it begins
 executing in, we say that $L$ is \emph{conditionally terminating}.
-The information we require of the environment is a predicate $I$ which
+The information we require of the rest of the program is a predicate $I$ which
 over-approximates the set of states that $L$ may begin executing in.
 That is to say, for each state $x$ that is reachable on entry to $L$,
 we have $I(x)$.
