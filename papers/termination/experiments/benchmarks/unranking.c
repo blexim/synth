@@ -57,7 +57,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
     pre_vars[i] = args[i];
   }
 
-  if (guard(pre_vars) && inv(inv_prog, pre_vars)) {
+  if (inv(inv_prog, pre_vars) && guard(pre_vars)) {
     skolem(skolem_prog, pre_vars);
 
     body(pre_vars, post_vars);
