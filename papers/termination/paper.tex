@@ -99,7 +99,7 @@
                                   % (paid open-access papers, 
                                   % short abstracts)
 
-\title{Synthesising Termination and Non-Termination Proofs for Bit-Vector Programs}
+\title{Synthesising Concise Termination and Non-Termination Proofs for Bit-Vector Programs}
 
 \authorinfo{Cristina David\and Daniel Kroening\and Matt Lewis}
            {University of Oxford}
@@ -124,7 +124,7 @@ We present a reduction from program \emph{termination} to program
 allows us to generate nonlinear, lexicographic ranking functions and
 nonlinear recurrence sets that are correct for fixed-width machine arithmetic
 and floating-point arithmetic.  We use this reduction to build a sound and
-complete procedure for the termination analysis of programs with fixed-width
+complete procedure for the termination analysis of finite state programs with fixed-width
 integers and IEEE floating-point arithmetic.
 %
 \end{abstract}
@@ -132,9 +132,8 @@ integers and IEEE floating-point arithmetic.
 %\category{CR-number}{subcategory}{third-level}
 
 \keywords
-Termination, Non-Termination,
-Program Synthesis, Lexicographic Ranking Functions, Bitvector Ranking Functions,
-Floating-Point Ranking Functions.
+Termination, Non-Termination, Program Synthesis,
+Lexicographic Ranking Functions, Bitvector Ranking Functions, Floating-Point Ranking Functions.
 
 \section{Introduction}\label{sec:intro}
 
@@ -150,7 +149,9 @@ functions has been constrained in various syntactic ways, leading to
 incompleteness, and is performed over abstractions that do not soundly
 capture the behaviour of physical computers.  In this paper, we present a
 sound and complete method for deciding whether a program with a fixed amount of
-storage terminates.
+storage terminates.  Since such programs are necessarily finite state, our
+problem is much easier than Turing's, but is more relevant to analysing computer
+programs.
 
 When surveying the area of program termination chronologically, we observe
 an initial focus on monolithic approaches based on a single measure shown to
@@ -163,7 +164,7 @@ by composing several small well-foundedness arguments.
 The main benefit of this approach is
 the simplicity of local termination measures in contrast to global ones. 
 For instance, there are cases in which linear arithmetic suffices when using
-local measures, while corresponding global measures require non-linear
+local measures, while corresponding global measures require nonlinear
 functions or lexicographic orders.
 
 One drawback of the Ramsey-based approach is that the validity of the
@@ -181,7 +182,7 @@ that are easier to
 check~\cite{DBLP:conf/cav/KroeningSTW10,DBLP:conf/tacas/CookSZ13}. 
 Following the same trend, we investigate its extreme: \emph{unrestricted}
 termination arguments.  This means that our ranking functions may involve
-non-linearity and lexicographic orders: we do not commit to any particular
+nonlinearity and lexicographic orders: we do not commit to any particular
 syntactic form, and do not use templates.  Furthermore, our approach allows
 us to simultaneously search for proofs of non-termination, which take the form
 of recurrence sets.
@@ -206,9 +207,9 @@ bit-vectors and vice versa.  Thus, abstracting bit-vectors with integers may
 give rise to {\em unsound} and {\em incomplete} analyses.
 
 % we propose a general framework that uniformly computes lexicographic,
-% non-linear ranking functions supported by non-linear inductive invariants
+% nonlinear ranking functions supported by nonlinear inductive invariants
 % for loops with arbitrary guards and transitions over bit-vectors and floats. 
-% it also computes non-linear recurrence sets, which comprise non-termination
+% it also computes nonlinear recurrence sets, which comprise non-termination
 % proofs.  our encoding treats multiple loops and nested loops uniformly,
 % without having to enumerate lassos.
 
@@ -220,10 +221,8 @@ restrictive enough to admit effective solvers.  Subsequently, we propose a metho
 checking the satisfiability of a formula in this fragment by
 solving an isomorphic program synthesis problem
 (Section~\ref{sec:synthesis}).  Our method is sound and
-complete for deterministic bit-vector programs -- for any program, we will find
-either a proof of its termination or non-termination.  For non-deterministic
-programs, we are only semi-complete -- if the program terminates, we will find a proof,
-but if it does not terminate we may fail to discover a recurrence set.
+complete for bit-vector programs -- for any program, we will find
+a proof of either its termination or non-termination.
 
 % With respect to the performance of our technique, we show that its runtime is dominated by the size of 
 % the shortest termination proof.
@@ -247,12 +246,12 @@ but if it does not terminate we may fail to discover a recurrence set.
   \hline
   \multirow{4}{*}{Ranking} & Linear lexicographic &  \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} & - & \cite{DBLP:conf/tacas/LeikeH14} & - &\checkmark&\checkmark&\checkmark&\checkmark\\
    & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/tacas/LeikeH14} & - & \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
-   & Non-linear lexicographic & - & - & - & - &\checkmark&\checkmark&\checkmark&\checkmark\\
-   & Non-linear non-lexicographic & \cite{DBLP:conf/vmcai/BradleyMS05} &  \cite{DBLP:conf/vmcai/BradleyMS05} & - & - &\checkmark&\checkmark&\checkmark&\checkmark\\
+   & Nonlinear lexicographic & - & - & - & - &\checkmark&\checkmark&\checkmark&\checkmark\\
+   & Nonlinear non-lexicographic & \cite{DBLP:conf/vmcai/BradleyMS05} &  \cite{DBLP:conf/vmcai/BradleyMS05} & - & - &\checkmark&\checkmark&\checkmark&\checkmark\\
    \hline
  \end{tabular}
 
- \caption{Summary of related termination analyses. Legend: \checkmark = we can handle; - = no available works; L = linear; NL = non-linear.} \label{fig:handletable}
+ \caption{Summary of related termination analyses. Legend: \checkmark = we can handle; - = no available works; L = linear; NL = nonlinear.} \label{fig:handletable}
 \end{figure*}
 
 The main contributions of our work can be summarised as follows:
@@ -263,13 +262,14 @@ The main contributions of our work can be summarised as follows:
 functions and recurrence sets that correctly accounts for the wrap-around
 behavior caused by under- and overflows in bit-vector and floating-point arithmetic.  Our
 technique is not restricted to finding linear ranking functions, but can
-also compute lexicographic non-linear ones.
+also compute lexicographic nonlinear ones.
 
 \item  We rephrased the termination and non-termination problems as
 second-order $\exists \forall$ satisfaction problems.  This formulation
 captures the (non-)termination
-properties of all of the loops in the program simultaneously, including
-nested loops.
+properties of all of the loops in the program, including
+nested loops.  We can use this to analyse all the loops at once,
+or one at a time.
 % In contrast to previous approaches to program synthesis, we
 % found that using genetic programming was very effective at generating
 % candidate termination and non-termination proofs.
@@ -326,7 +326,7 @@ illustrates the lack of a direct correlation between the linearity of a
 program and that of its termination arguments.
 
 \item Program (b) breaks assumption (ii), in that it has no linear ranking
-function.  We prove that this loop terminates by finding the non-linear
+function.  We prove that this loop terminates by finding the nonlinear
 ranking function $R(x) = |x|$.
 
 \item Program (c) breaks assumption (iii).  This loop is terminating for
@@ -363,7 +363,7 @@ handles them uniformly, without the need for any special treatment.
 \item Program (g) is a linear program that is shown
 in~\cite{DBLP:conf/tacas/CookSZ13} not to admit (without prior manipulation)
 a lexicographic linear ranking function.  With our technique we can find the
-non-linear ranking function $R(x) = |x|$.
+nonlinear ranking function $R(x) = |x|$.
 
 %As with linear lexicographic ranking functions, a state is mapped to a tuple of values such that the
 %loop transition leads to a decrease with respect to the lexicographic
@@ -385,7 +385,7 @@ ranked with an affine-linear function and the phase is considered to be
 completed once this function becomes non-positive.
 
 In our setting this type of programs does not need special treatment, as we
-can find a non-linear lexicographic ranking function $R(x, y, z) = (x < y,
+can find a nonlinear lexicographic ranking function $R(x, y, z) = (x < y,
 z)$.\footnote{This termination argument is somewhat subtle.  The Boolean
 values $\mathit{false}$ and $\mathit{true}$ are interpreted as 0 and 1,
 respectively.  The Boolean $x < y$ thus eventually decreases, that is to say
@@ -683,7 +683,7 @@ operators they have in common, computers have several ``bitwise'' operations
 that are not taken as primitive in the theory of integers.  These operations
 include the Boolean operators \texttt{and, or, not, xor} applied to each
 element of the bit vector.  Computer programs often make use of these
-operators, which are non-linear when interpreted in the standard model of
+operators, which are nonlinear when interpreted in the standard model of
 Peano arithmetic\footnote{Some of these operators can be seen as
 linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
 addition in the Galois field $\mathrm{GF}(2^k)$.}.
@@ -771,9 +771,9 @@ non-termination problem can be defined in second-order logic.
 Due to its expressiveness, second-order logic is very difficult to reason
 about, with many second-order theories becoming undecidable even when the
 corresponding first-order theory is decidable.
-To make solutions of our constraints tractable, we identify a fragment of second-order logic
+To make solving our constraints tractable, we identify a fragment of second-order logic
 with a constrained use of quantification that is expressive enough to encode
-both termination and non-termination, while admitting a semi-decision procedure.
+both termination and non-termination of finite programs, while admitting a semi-decision procedure.
 We will suggestively refer to the fragment as the \emph{synthesis fragment}:
 
 
@@ -811,8 +811,8 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 
 We will begin our discussion by showing how to encode in the synthesis fragment the
 \mbox{(non-)termination} of a program consisting of a single loop with no nesting.
-For the time being, a loop $L(G, T)$ is defined by a predicate $G$ and relation $T$.
-States $x$ satisfying the loop's guard are given by the
+For the time being, a loop $L(G, T)$ is defined by its guard $G$ and body $T$
+such that states $x$ satisfying the loop's guard are given by the
 predicate $G(x)$.  The body of the loop is encoded as the transition
 relation $T(x, x')$, meaning that state $x'$ is reachable from state $x$ via
 a single iteration of the loop body.  For example, the loop in
@@ -851,6 +851,15 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
   \exists N, x_0 . \forall x, x' . & N(x_0) ~ \wedge \\ & N(x) \rightarrow G(x) ~ \wedge \\
 							& N(x) \wedge T(x, x') \rightarrow N(x') 
  \end{align*}
+
+\begin{definition}[Non-Termination Formula -- Skolemized Open Recurrence Set  {\bf [SNT]}]
+\label{def:ont}
+ \begin{align*}
+  \exists N, S, x_0 . \forall x . & N(x_0) ~\wedge \\ &  N(x) \rightarrow G(x) ~ \wedge \\
+							& N(x) \rightarrow T(x, S(x)) \wedge N(S(x))
+ \end{align*}
+\end{definition}
+
 \end{definition}
 
 %% \begin{definition}[Non-deterministic Non-Termination Formula - Closed Recurrence Set {\bf [Nondet-CNT]}]
@@ -867,9 +876,9 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 
 
 \noindent {\bf Unconditional termination.}
-To show that $L(G, T)$ is unconditionally terminating (i.e. it eventually terminates regardless of the
-state it starts in), it suffices to find a ranking function for \mbox{$T \cap (G \times X)$},
-i.e. $T$ restricted to states satisfying the loop's guard.
+We say that a loop $L(G, T)$ is unconditionally terminating iff it eventually
+terminates regardless of the state it starts in. To prove unconditional termination, it suffices
+to find a ranking function for \mbox{$T \cap (G \times X)$}, i.e. $T$ restricted to states satisfying the loop's guard.
 % If $L$ contains nested loops, we replace $T$ with an over-approximation of the loop body $T_o$,
 % as we will discuss in Section~\ref{sec:env}.
 
@@ -914,14 +923,14 @@ we can prove this by finding a ranking function %and supporting invariant
 witnessing the satisfiability of formula {\bf[UT]}.  What then would a proof of non-termination look like?
 
 Since our program's state space is finite, a transition relation
-induces a infinite execution iff some state is visited infinitely
+induces an infinite execution iff some state is visited infinitely
 often, or equivalently $ \exists x . T^+(x, x)$.
 Deciding satisfiability of this formula directly would require a logic
-that includes a transitive closure operator, $T^+$.  Rather than
+that includes a transitive closure operator, $\bullet^+$.  Rather than
 introduce such an operator, we will characterise non-termination
 using a synthesis formula.
 
-Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterize non-termination
+Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterise non-termination
 of a transition relation $T$ by the existence of an \emph{(open) recurrence
 set}, i.e.  a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s' \in N$.
@@ -934,7 +943,7 @@ The notion of open recurrence set is encoded by formula {\bf [ONT]} in Definitio
 
 \begin{theorem}
 \label{thm:ont}
- The loop $L(G, T)$ has an infinite execution iff Defintion~\ref{def:ont} is satisfiable.
+ The loop $L(G, T)$ has an infinite execution iff formula {\bf [ONT]} (Definition~\ref{def:ont}) is satisfiable.
 \end{theorem}
 
 % \begin{proof}
@@ -1180,7 +1189,7 @@ and the nesting structure of the loops.
 \fi
 
 \noindent {\bf Conditional termination.}
-Given a loop $L=(G,T_o)$, where $T_o$ is an over-approximation of its transition relation, 
+Given a loop $L(G,T_o)$, where $T_o$ is an over-approximation of its transition relation, 
 if $L$'s termination depends on the state it begins
 executing in, we say that $L$ is \emph{conditionally terminating}.
 The information we require of the environment is a predicate $I$ which
@@ -2004,7 +2013,7 @@ a linear function is $O(2^{-l})$.
 \end{proof}
 
 
-Therefore the number of non-linear functions $f$ with $K(f) \leq \kappa$
+Therefore the number of nonlinear functions $f$ with $K(f) \leq \kappa$
 grows exponentially with $\kappa$, while the number of linear functions
 grows only linearly.  This shows that assuming the existence of a linear
 ranking function is much stronger than assuming the existence of a short
@@ -2105,7 +2114,7 @@ work for programs over machine integers.  Cook et al.~present a method
 based on a reduction to Presburger arithmetic, and a template-matching
 approach for predefined classes of ranking functions based on reduction to
 SAT- and QBF-solving~\cite{DBLP:conf/tacas/CookKRW10}.  Similarly, the only
-work we are aware of that can compute non-linear ranking functions for
+work we are aware of that can compute nonlinear ranking functions for
 imperative loops with polynomial guards and polynomial assignments
 is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
