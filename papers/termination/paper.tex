@@ -2113,7 +2113,8 @@ instances.
 
 To evaluate our algorithm, we implemented two tools: one to generate a
 termination specification from a C program, and one to synthesise a proof
-from the specification.  We ran the resulting termination prover on 47
+from the specification.  We ran the resulting termination prover,
+named {\sc Juggernaut}, on 47
 benchmarks taken from the literature and SV-COMP'15~\cite{svcomp15}.  To
 provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
 the same benchmarks.  Each tool was given a time limit of $180\,s$, and was
@@ -2129,15 +2130,17 @@ in 3 cases (due to the differences between integer and bit-vector
 semantics).  There are a further 5 cases where our tool is able to find a
 proof and {\sc ARMC} cannot, which we believe is due to our more expressive
 proof language.  In 3 cases, {\sc ARMC} times out while our tool is able to
-find a termination proof.  All of these cases have nested loops, which are
-easy for us to handle, but can be difficult for provers that enumerate
-lassos.
+find a termination proof.  2 of these cases have nested loops and the
+third has an infinite number of terminating lassos.  This is not a problem for us,
+but can be difficult for provers that enumerate lassos.
 
 On the other hand, {\sc ARMC} is \emph{much} faster than our tool.  While
 this difference can partly be explained by much more engineering time being
 invested in {\sc ARMC}, we feel that the difference is probably inherent to
 the difference in the two approaches -- our algorithm is complete and
 bit-vector accurate, which comes at the cost of efficiency.
+{\sc Juggernaut} is slow, but unstoppable in its
+termination abilities if you are willing to wait for it.
 
 The final column in Figure~\ref{fig:experiments} gives the number of
 iterations of the CEGIS loop our synthesiser performed.  While the
@@ -2146,12 +2149,29 @@ theoretical bound for the number of CEGIS iterations is very large
 demonstrate that in practice the number of iterations required is usually
 small.
 
+Of the 47 benchmarks used, 2 used nonlinear operations in the program (loop6 and loop11),
+and 5 had nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
+{\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
+It solves 2 of the 5 nested loops in less than 30s, but times out on the other
+3.  Of these 3 timeouts, 2 (svcomp40 and svcomp41) are due program constants that
+are too large to be handled with our default settings.  Increasing
+our default word width from 3 bits to 5 bits allowed us to prove termination
+for both these benchmarks in less than 30s (but these results are not shown in
+the table).
+
+In conclusion, while they show that our tool is not yet production ready,
+these experiments confirm our conjecture that synthesis can be used
+effectively to prove termination and non-termination.  In particular,
+for programs with nested loops, nonlinear arithmetic and complex
+termination arguments, the versatility of unrestricted synthesis
+is very valuable.
+
 \begin{figure}
 \centering
 \scriptsize
 \begin{tabular}{|l|@{}c@{}||@{}c@{}|r||@{}c@{}|r|r|}
 \hline
-          &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{Us} \\
+          &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Juggernaut} \\
 Benchmark & \,Expected\, & \,Verdict\, & Time & \,Verdict\, & Time & \#It.\\
     \hline
     \hline
@@ -2199,7 +2219,13 @@ Figure~\ref{fig:handletable} is that most methods tend to specialise on a
 certain aspect of termination proving that they can solve efficiently. 
 Conversely to this view, we aim for generality, as we do not restrict the
 form of the synthesised ranking functions, nor the form of the input
-programs.
+programs. 
+
+%As a general approach to proving liveness properties, Biere et al.
+%propose a translation of liveness checking problems into safety checking problems
+%that is however best suited for finding shallow termination arguments 
+%\cite{DBLP:journals/entcs/BiereAS02}. 
+
 
 As mentioned in Section~\ref{sec:intro}, approaches based on Ramsey's
 theorem compute a set of local termination conditions that decrease as
@@ -2210,7 +2236,10 @@ checking the validity of the termination argument, Cook et al.~present an
 iterative termination proving procedure that searches for lexicographic
 termination arguments~\cite{DBLP:conf/tacas/CookSZ13}, whereas Kroening et
 al.~strengthen the termination argument such that it becomes a transitive
-relation~\cite{DBLP:conf/cav/KroeningSTW10}.
+relation~\cite{DBLP:conf/cav/KroeningSTW10}. Following the same trend, 
+we search for lexicographic nonlinear termination arguments that can be verified 
+with a single call to a SAT solver. 
+
 
 Proving program termination implies the simultaneous search for a
 termination argument and a supporting invariant.  Brock\-schmidt et
@@ -2232,18 +2261,15 @@ feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}.  Chen et al.~prove
 nontermination via reduction to safety
 proving~\cite{DBLP:conf/tacas/ChenCFNO14}.  Their iterative algorithm uses
 counterexamples to a fixed safety property to refine an under-approximation
-of a program.
+of a program. In order to prove both termination and non-termination,
+Harris et al. compose several program analyses (termination provers
+for multi-path loops, non-termination provers for cycles, and global safety provers)
+\cite{DBLP:conf/sas/HarrisLNR10}. We propose a uniform treatment of 
+termination and non-termination by formulating a generalised second 
+order formula whose solution is a proof of one of them.
 
-\cite{DBLP:journals/entcs/BiereAS02}
 
-\cite{DBLP:conf/sas/HarrisLNR10}
- TREX, a novel algorithm for proving termination of whole programs. TREX
-simultaneously maintains over and under-approximations of a loop
-to quickly find proofs of termination or non-termination. This allows it to com-
-pose several program analyses that until no
-w were disparate: termination provers
-for multi-path loops, non-termination prove
-rs for cycles, and global safety provers.
+
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
