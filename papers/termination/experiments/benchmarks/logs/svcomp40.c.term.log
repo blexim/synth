@@ -1,228 +1,544 @@
 Using seed: 1337
-Iteration: [1m[31m1[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m16[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m0.00s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m2[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m17[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m0.40s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m3[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m18[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m0.42s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m4[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m19[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m0.45s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m5[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m20[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m0.47s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m6[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m21[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m0.72s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m7[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m22[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.09s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m8[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m23[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.48s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m9[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m24[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.54s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m10[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m25[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.60s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m11[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m26[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.67s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m12[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m27[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.78s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m13[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m28[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m1.94s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m14[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m29[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m2.21s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m15[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m30[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m2.68s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m16[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m31[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m2.97s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m17[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m32[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m3.13s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m18[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m33[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m4.33s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m19[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m34[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m5.40s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m20[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m35[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m5.98s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m21[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m36[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m6.72s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m22[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m37[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m7.90s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m23[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m38[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m9.06s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m24[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m39[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m11.20s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m25[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m40[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m12.46s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m26[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m41[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m13.07s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m27[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m42[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m14.58s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
-Iteration: [1m[31m28[0m
-Code sequence length: [1m[31m1/16[0m
-Word width: [1m[31m5/32[0m
-Excluded sequences: [1m[31m0/0[0m
-Test vectors: [1m[31m43[0m
-Constants: [1m[31m1[0m
-Elapsed time: [1m[31m23.51s[0m
-[1A[1A[1A[1A[1A[1A[1A[1A
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 <= x2';
+res1 = t1 << t1;
+Program 1:
+t1 = x1' | 0xf;
+t2 = 0xf ==> x1';
+t3 = x1 % x2';
+t4 = x2' < 0xf;
+res1 = min(x1', t4);
+Program 2:
+t1 = x2 + 0xf;
+t2 = x1 << 0xf;
+res1 = -(x2');
+
+Fastest checker: explicit
+Fails for (0, 19, 26, 25)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' < 0x10;
+t2 = 0x10 ^ x1';
+t3 = x2' != t1;
+t4 = x2 <= x2';
+res1 = max(t4, t4);
+Program 1:
+res1 = x2 * x2;
+Program 2:
+t1 = x2 <= x2;
+t2 = x1 << x1';
+t3 = x2 ==> x2';
+t4 = x1 * x1';
+res1 = -(x2);
+
+Fastest checker: explicit
+Fails for (0, 24, 26, 25)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(x2, x1');
+t2 = x1 s<= x1';
+res1 = x2' - t1;
+Program 1:
+t1 = x1 != x1';
+t2 = 0x1f * t1;
+t3 = x2 >>> t1;
+t4 = t2 == x2';
+res1 = x2' <= x2;
+Program 2:
+res1 = x1 ^ x2';
+
+Fastest checker: explicit
+Fails for (0, 25, 26, 25)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x2' s< x1;
+Program 1:
+t1 = 0x1f | x1;
+res1 = x1 <= x1';
+Program 2:
+t1 = ~(x2);
+t2 = x1 <= 0xf;
+res1 = 0xf s<= x2';
+
+Fastest checker: explicit
+Fails for (16, 25, 26, 25)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' / x1;
+t2 = t1 - x2';
+res1 = x1' >> x2';
+Program 1:
+t1 = x1 & x2';
+t2 = max(x2, x2);
+t3 = x2' - 0x1;
+t4 = ~(x1');
+res1 = 0x1 s< t3;
+Program 2:
+t1 = 0x10 | x1;
+res1 = 0x10 s<= x2';
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 3)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1 / x2';
+t2 = x1' * x1';
+res1 = t2 ==> t1;
+Program 1:
+t1 = -(x2);
+res1 = x1' <= x1;
+Program 2:
+t1 = x1 / x2;
+t2 = x1' ? x1 : 0x1;
+t3 = 0x1 - x2;
+t4 = -(t2);
+res1 = t4 >>> t3;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 16)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1 * x1;
+t2 = x1' / x2;
+t3 = min(x1', x2');
+res1 = min(t3, x2');
+Program 1:
+t1 = 0x0 == x2;
+t2 = x1 != x2;
+t3 = ~(x2');
+t4 = t3 >>> t1;
+res1 = t3 s< t2;
+Program 2:
+res1 = x1' s<= x2;
+
+Fastest checker: explicit
+Fails for (0, 16, 0, 31)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1 << x1';
+t2 = x1' ==> x1';
+t3 = t1 == x2;
+t4 = t1 s< t2;
+res1 = t4 << t1;
+Program 1:
+t1 = min(x1', x2);
+t2 = x2 >> x2';
+t3 = -(x2');
+t4 = t1 ^ t2;
+res1 = x2' < 0xf;
+Program 2:
+t1 = x1 | x2;
+t2 = x2' ==> t1;
+res1 = t1 ^ x1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' | 0x1;
+t2 = x2 >>> 0x1;
+t3 = x1 << x2;
+t4 = t3 != t2;
+res1 = 0x1 s< 0x1;
+Program 1:
+t1 = max(0x1, 0x1);
+res1 = 0x1 s<= x2';
+Program 2:
+t1 = min(x1, x2');
+t2 = 0x1f % x2';
+t3 = t2 << x1';
+t4 = -(x1');
+res1 = 0x1f <= t2;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x1 < x2';
+Program 1:
+t1 = x2 != x2';
+res1 = t1 s< x2';
+Program 2:
+t1 = max(x2', x2);
+t2 = x2 ^ 0x1f;
+t3 = x2 < t1;
+res1 = 0x1f s<= t2;
+
+Fastest checker: explicit
+Fails for (0, 1, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' >> 0x1f;
+t2 = x1' ? 0x1f : x1';
+res1 = x1 + x1;
+Program 1:
+t1 = x1' << 0xf;
+t2 = x1' & x2;
+res1 = x1 == t1;
+Program 2:
+t1 = 0x0 + 0x0;
+t2 = 0x0 & 0x0;
+t3 = x1 <= x1';
+t4 = x2' | t2;
+res1 = t2 < 0x0;
+
+Fastest checker: explicit
+Fails for (1, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1 <= 0xf;
+t2 = 0xf s<= x1;
+t3 = x2 << x1';
+t4 = 0xf ^ x2;
+res1 = 0xf <= t2;
+Program 1:
+res1 = x2' <= 0xf;
+Program 2:
+t1 = x2 >>> x2';
+t2 = x1 ^ 0xf;
+t3 = 0xf + 0xf;
+res1 = 0xf + 0xf;
+
+Fastest checker: explicit
+Fails for (2, 0, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' < x2;
+t2 = 0x1 <= 0x1;
+t3 = x1' - x1';
+t4 = max(t2, x2');
+res1 = x1' s<= x2';
+Program 1:
+t1 = min(x2, x2);
+t2 = x1 <= 0x1;
+t3 = 0x1 + 0x1;
+t4 = 0x1 + 0x1;
+res1 = t3 s<= x2';
+Program 2:
+t1 = x1' <= x2';
+res1 = x2' >> x2;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 2)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = -(0x1f);
+t2 = x1' ? x2 : x1';
+res1 = min(x1, t1);
+Program 1:
+t1 = 0x1 + 0x1;
+t2 = 0x1 + 0x1;
+t3 = 0x1 + 0x1;
+t4 = 0x1 + t1;
+res1 = t4 s< x2';
+Program 2:
+t1 = x2' s< x1';
+t2 = max(x1', x2);
+t3 = x2 < x2';
+t4 = x1' <= t3;
+res1 = 0x1f + 0x1f;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 + 0x0;
+t2 = x2' + t1;
+t3 = x2' == 0x0;
+t4 = x1 / 0x0;
+res1 = t3 >> 0x0;
+Program 1:
+t1 = x1' s< x2';
+t2 = t1 - 0xf;
+t3 = max(t2, x1);
+res1 = min(t1, t1);
+Program 2:
+t1 = x1 << x2;
+t2 = x1' == t1;
+res1 = x2' >> x2;
+
+Fastest checker: explicit
+Fails for (8, 0, 0, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(x1, x1');
+res1 = 0x0 | x1';
+Program 1:
+t1 = x1 == 0x1;
+t2 = -(x1');
+t3 = x1' + x1';
+t4 = t1 | t2;
+res1 = t3 s< x2';
+Program 2:
+t1 = ~(x2');
+t2 = x1 >>> 0x0;
+t3 = max(0x0, t2);
+res1 = ~(x1);
+
+Fastest checker: explicit
+Fails for (20, 0, 0, 4)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' ? x2 : x1';
+res1 = x2' == 0x1;
+Program 1:
+t1 = min(x2', x2');
+t2 = -(x2');
+t3 = 0xf + 0xf;
+res1 = 0xf + 0xf;
+Program 2:
+t1 = ~(x1);
+t2 = x2 ==> x2';
+t3 = x1 < x2;
+res1 = ~(x2);
+
+Fastest checker: explicit
+Fails for (1, 16, 0, 16)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' s< x1;
+res1 = 0x0 | x1';
+Program 1:
+t1 = min(x1, x2');
+t2 = -(x2);
+t3 = -(x2');
+t4 = 0x1f + 0x1f;
+res1 = x1' == x1;
+Program 2:
+t1 = x1 << x2';
+t2 = x1 < x2';
+t3 = ~(x1);
+res1 = t3 & x1;
+
+Fastest checker: explicit
+Fails for (31, 0, 31, 16)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1 + 0x1;
+t2 = x2' s<= x2';
+t3 = ~(0x1);
+res1 = ~(x2');
+Program 1:
+res1 = x1' s<= x2';
+Program 2:
+t1 = x2' ==> x2';
+t2 = ~(x2);
+t3 = 0xf s<= 0xf;
+res1 = 0xf >> x1;
+
+Fastest checker: explicit
+Fails for (9, 1, 31, 16)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(0x1, 0x1);
+t2 = x2' - 0x1;
+res1 = x1' ^ x2;
+Program 1:
+t1 = x2 < x2;
+res1 = t1 s< x2';
+Program 2:
+t1 = ~(x1);
+res1 = ~(x2);
+
+Fastest checker: explicit
+Fails for (1, 1, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' ^ 0x1;
+t2 = x1 < t1;
+t3 = ~(0x1);
+t4 = max(x2, t1);
+res1 = max(x1', x1);
+Program 1:
+t1 = 0x1 s< x2';
+t2 = 0x1 s<= 0x1;
+t3 = x2' >>> x2';
+res1 = t3 * t1;
+Program 2:
+t1 = 0x1f s< x1;
+res1 = x1 != t1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 5)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' <= x1';
+t2 = x1 / t1;
+res1 = 0xf / x2';
+Program 1:
+t1 = x1 != x2';
+res1 = x1 s<= x1';
+Program 2:
+t1 = -(x2);
+t2 = -(x1);
+t3 = x1 s<= t2;
+t4 = 0x1 + 0x1;
+res1 = x1' + 0x1;
+
+Fastest checker: explicit
+Fails for (0, 0, 15, 16)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(0x0, 0x0);
+t2 = x2' + t1;
+t3 = 0x0 + 0x0;
+res1 = 0x0 + 0x0;
+Program 1:
+t1 = 0x1f + x2;
+t2 = x2' < 0x1f;
+t3 = x1' s< x2;
+res1 = t3 s< x2';
+Program 2:
+t1 = x1 ? x1 : x2;
+t2 = 0xf + 0xf;
+res1 = ~(x2);
+
+Fastest checker: explicit
+Fails for (0, 16, 0, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x1f / x1';
+t2 = x2' ^ x2;
+t3 = min(x2', x1');
+t4 = 0x1f s<= x1';
+res1 = x1 s< t4;
+Program 1:
+t1 = x1' != x2;
+t2 = x2' ? x1 : x1;
+t3 = t1 s< x2';
+res1 = t3 & 0x1f;
+Program 2:
+t1 = x1' >>> 0xf;
+t2 = x1 ? x1 : x2;
+t3 = 0xf >> x1;
+t4 = x1 ==> x1';
+res1 = x1' == x2;
+
+Fastest checker: explicit
+Fails for (2, 1, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' >>> x1;
+res1 = x1 == x2';
+Program 1:
+t1 = x1' == x1;
+t2 = x1 - x2;
+res1 = t1 & 0xf;
+Program 2:
+t1 = x2' ^ x1;
+t2 = 0x10 - x2;
+t3 = x2' == x1;
+res1 = 0x10 < x1;
+
+Fastest checker: explicit
+Fails for (1, 2, 1, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+res1 = x1 ? x1' : 0x0;
+Program 1:
+t1 = x2' <= x2';
+t2 = x1' - 0x1;
+t3 = x1' >>> x1;
+t4 = x2' ^ 0x1;
+res1 = x1' == x1;
+Program 2:
+t1 = x2' >> x1';
+t2 = 0x10 ? x1' : x2';
+t3 = ~(x1);
+t4 = x1' >> x2;
+res1 = 0x10 - x1;
+
+Fastest checker: explicit
+Fails for (16, 0, 16, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x2' >> x1';
+t2 = 0xf + 0xf;
+t3 = 0xf + 0xf;
+res1 = max(t3, x1');
+Program 1:
+t1 = x1' == x1';
+res1 = x1' == x1;
+Program 2:
+t1 = x1 | x2;
+t2 = ~(x1);
+res1 = t2 == x2';
+
+Fastest checker: explicit
+Fails for (30, 0, 30, 1)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = x1' >> x2;
+t2 = 0x1 s< x1;
+t3 = x1' + x2;
+t4 = t3 >>> x2;
+res1 = x1' % x2';
+Program 1:
+res1 = x1 == x1';
+Program 2:
+t1 = -(x1);
+res1 = x1 s<= x1';
+
+Fastest checker: explicit
+Correct for wordlen=5
+Fastest checker: cbmc
+Also correct for wordlen=32!
 
 
 
@@ -245,3 +561,11 @@ t1 = -(x1);
 res1 = x1 s<= x1';
 
 
+Perf counters:
+{'genetic': 28, 'cbmc': 1, 'explicit': 28, 'iterations': 28}
+Perf timers:
+verify: 4.50s
+checker: 25.44s
+gcc: 0.55s
+_: 25.54s
+synth: 21.03s
