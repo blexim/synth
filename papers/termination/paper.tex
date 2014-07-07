@@ -124,13 +124,12 @@ We present a reduction from program \emph{termination} to program
 allows us to generate nonlinear, lexicographic ranking functions and
 nonlinear recurrence sets that are correct for fixed-width machine arithmetic
 and floating-point arithmetic.  We use this reduction to build a sound and
-complete procedure for the termination of fixed-width and floating-point
-arithmetic programs.
+complete procedure for the termination analysis of programs with fixed-width
+integers and IEEE floating-point arithmetic.
 %
 \end{abstract}
 
 %\category{CR-number}{subcategory}{third-level}
-
 
 \keywords
 Termination, Non-Termination,
@@ -291,13 +290,13 @@ handling both bit-vectors and floats.
 
 \end{itemize}
 
-{\bf Limitations.}
-Our algorithm proves termination for transition systems with finite state
-spaces.  The (non-)termination proofs take the form of ranking functions and
-program invariants that are expressed in a quantifier free language.  This
-formalism is powerful enough to handle a large fragment of C, but is not
-rich enough to analyse code which uses the heap or arrays.  Also, we have not
-yet added support for recursion to our encoding.
+{\bf Limitations.} Our algorithm proves termination for transition systems
+with finite state spaces.  The (non-)termination proofs take the form of
+ranking functions and program invariants that are expressed in a
+quantifier-free language.  This formalism is powerful enough to handle a
+large fragment of C, but is not rich enough to analyse code that uses the
+heap or unbounded arrays.  Also, we have not yet added support for recursion
+to our encoding.
 
 \section{Motivating Examples} \label{sec:motivation}
 
@@ -654,7 +653,7 @@ of the differences between machine arithmetic and Peano
 arithmetic.\footnote{ISO C requires that unsigned arithmetic is performed
 modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
 In practice, the undefined behaviour is implemented just as if the
-arithmetic had been unsigned.}.  To give an example, $(2^k - 1) + 1 \equiv 0
+arithmetic had been unsigned.}  To give an example, $(2^k - 1) + 1 \equiv 0
 \pmod {2^k}$ provides a counterexample to the statement $\forall x. 
 x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
 arithmetic.  When an arithmetic operation has a result greater than $2^k$,
@@ -662,7 +661,7 @@ it is said to ``overflow''.  If an operation does not overflow, its
 machine-arithmetic result is the same as the result of the same operation
 performed on integers.
 
-The final source of difference between integer arithmetic and bitvector
+The final source of difference between integer arithmetic and bit-vector
 arithmetic stems from width conversions.  Many programming languages allow
 numeric variables of different types, which can be represented using words
 of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
@@ -782,7 +781,7 @@ We will suggestively refer to the fragment as the \emph{synthesis fragment}:
 A formula is in the \emph{synthesis fragment} iff it is of the form
 %
  \[
-  \exists \vec{P},~ \vec{x} . ~\forall~ \vec{y} . \sigma(\vec{P}, \vec{x}, \vec{y})
+  \exists \vec{P},~ \vec{x} . ~\forall~ \vec{y} .\, \sigma(\vec{P}, \vec{x}, \vec{y})
  \]
 %
 where $\vec{P}$ ranges over functions, while $\vec{x}$ and $\vec{y}$ range over
@@ -813,7 +812,7 @@ in Section~\ref{sec:synthesis} we present a solver for the synthesis fragment th
 We will begin our discussion by showing how to encode in the synthesis fragment the
 \mbox{(non-)termination} of a program consisting of a single loop with no nesting.
 For the time being, a loop $L(G, T)$ is defined by a predicate $G$ and relation $T$.
-G states $x$ satisfying the loop's guard are given by the
+States $x$ satisfying the loop's guard are given by the
 predicate $G(x)$.  The body of the loop is encoded as the transition
 relation $T(x, x')$, meaning that state $x'$ is reachable from state $x$ via
 a single iteration of the loop body.  For example, the loop in
@@ -906,7 +905,7 @@ We are aware of a proof rule based on transition invariants, i.e.  supersets
 of the transition relation's transitive
 closure~\cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes
 that the second-order logic has a primitive predicate for disjunctive
-well-foundedness.  In contrast, our formulation in Definition~\ref{def:UT}
+well-foundedness.  By contrast, our formulation in Definition~\ref{def:UT}
 does not use a primitive disjunctive well-foundedness predicate.  \\
 
 \noindent{\bf Non-termination.}
@@ -989,7 +988,7 @@ relation is determinstic for all states except $s$.
 % of $T_u$ being $\mathit{false}$, which would otherwise constitute a
 % counterexample for Theorem~\ref{thm:cnt}.
 
-So if our transition relation is deterministic we can say, without
+So if our transition relation is deterministic, we can say, without
 loss of generality, that non-termination of the loop is equivalent
 to the existence of a closed recurrence set.  However if $T$ is
 non-deterministic, it may be that there is an open recurrence
@@ -1009,7 +1008,7 @@ However it is equally clear that each state has a successor
 that exits the loop, i.e. when \lstinline|nondet()| returns
 the value currently stored in \lstinline|x|.  So this loop
 has an open recurrence set, but no closed recurrence set
-and hence we cannot specify a proof of its non-termination
+and hence we cannot give a proof of its non-termination
 with formula {\bf [CNT]}.
 
 % Only for certain choices of \lstinline!y! the loop is non-terminating.  In
@@ -1831,7 +1830,7 @@ $k$-th round.
 
 \section{Soundness, Completeness and Complexity}
 
-Termination for bitvector programs is known to be
+Termination for bit-vector programs is known to be
 PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10}.  We first record the
 expected results for soundness and completeness of our algorithm for
 deciding it.
