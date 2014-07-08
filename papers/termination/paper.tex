@@ -1183,7 +1183,7 @@ under-approximate the loop's body and apply formula {\bf [CNT]}.
 %
 %
 Under-approximating the inner loop can be done with a nested existential quantifier, resulting in
-$\exists \forall \exists$ alternation which we could eliminate with skolemization.  
+$\exists \forall \exists$ alternation which we could eliminate with Skolemization.  
 However, we observe that
 %As we try to avoid an extra second order unknown, 
 unlike a ranking function,
@@ -1463,14 +1463,15 @@ respectively:
 We can combine these:
 %
 \begin{align*}
- (\exists P_T . \forall x, x'. \phi(P_T, x, x')) \vee (\exists P_N . \forall x, \psi(P_N, x))
+ (\exists P_T . \forall x, x'. \phi(P_T, x, x')) \vee (\exists P_N . \forall x.\, \psi(P_N, x))
 \end{align*}
 %
 Which simplifies to:
+%
 \begin{definition}[Generalised Termination Formula {\bf [GT]}]
 \label{def:general-termination}
 \begin{align*}
- \exists P_T, P_N. \forall x, x', y, \phi(P_T, x, x') \vee \psi(P_N, y)
+ \exists P_T, P_N. \forall x, x', y.\, \phi(P_T, x, x') \vee \psi(P_N, y)
 \end{align*}
 \end{definition}
 
@@ -1509,8 +1510,8 @@ In this section we present a solver for the synthesis fragment:
   \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
 \]
 %
-where $P$ ranges over functions, while $x$ and $y$ range over ground terms
-(as mentioned, we drop the vector notation and write $x$ for $\vec{x}$).
+where $P$ ranges over functions, and $x$ and $y$ range over ground terms
+(as mentioned, we drop vector notation and write $x$ for $\vec{x}$).
 
 By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 \mathbb{B}$ as a specification function that returns true iff $P$ computes
@@ -2061,8 +2062,8 @@ $(P, x_0) \models \sigma$.
 %  This is a direct consequence of Theorems~\ref{thm:ut}, \ref{thm:ct}, \ref{thm:ont}, \ref{thm:cnt} and \ref{thm:synth-sound}.
 % \end{proof}
 
-We will now show that $\mathcal{L}$ is expressive enough to encode (non-)termination proofs for
-every bit-vector program.
+We will now show that $\mathcal{L}$ is expressive enough to encode
+\mbox{(non-)}ter\-mi\-nation proofs for every bit-vector program.
 
 \begin{lemma}
  \label{lem:l-func}
@@ -2123,7 +2124,7 @@ being a single $b$-bit value.
 
 Then by Lemma~\ref{lem:l-func} with $X = Y = \mathcal{S}$, there exists
 a finite $\mathcal{L}$-program computing $R''$.
-
+%
 % Since {\sc Kalashnikov} enumerates all programs in order of
 % length, it will eventually check a program computing each permutation of
 % $\mathcal{S}$ and so will eventually check a program computing the ranking
@@ -2193,7 +2194,7 @@ $$2 \times n \times NP(n \times l \times \| L \|) \leq 2^{bk + 1} NP(2^{bk} \tim
 Clearly the runtime is affected most strongly by $n$, the total number of iterations of the CEGIS loop.
 
 We will now show that the number of iterations of the CEGIS loop is a function
-of the Kolmogorov complexity of the (non-)termination proof, and so
+of the Kolmogorov complexity of the \mbox{(non-)}ter\-mi\-nation proof, and so
 our runtime is asymptotically a function of the Kolmogorov complexity.
 We argue that this gives our procedure various desirable qualities in practical
 appliations.
