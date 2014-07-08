@@ -592,9 +592,9 @@ finding a ranking function for its transition relation.
 %
 \begin{definition}[Ranking function]
 %
-An injective function ${R:X\to Y}$ is a \emph{ranking function} for the
+A function ${R:X\to Y}$ is a \emph{ranking function} for the
 transition relation $T$ if $Y$ is a well-founded set with order $>$ and 
-$R$ is monotonically decreasing with respect to $T$.  That is
+$R$ is injective and monotonically decreasing with respect to $T$.  That is
 to say:
 $$\forall x, x' \in X. T(x, x') \Rightarrow R(x) > R(x')$$
 %
@@ -1542,7 +1542,7 @@ sketching~\cite{lezama-thesis,sketch,modular-sketch}.
 
 In the context of termination analysis, a witness to the
 satisfiability of a generalised termination specification is a
-\mbox{(non-)termination} proof.  As mentioned earlier in the paper, our
+proof of \mbox{(non-)termination}.  As mentioned earlier in the paper, our
 analysis must ensure precise treatment of bit-wise operations and arithmetic
 modulo fixed widths by modelling bit-accurate semantics.  The synthesiser
 must therefore be able to compute solutions over machine
@@ -1681,7 +1681,7 @@ operations, as well as basic branching in the form of the \verb|ite|
 \begin{center}
 {\small
 
-\setlength{\tabcolsep}{16pt}
+\setlength{\tabcolsep}{14pt}
 Integer arithmetic instructions:
 
 \begin{tabular}{llll}
@@ -1704,19 +1704,25 @@ Unsigned and signed comparison instructions:
 
 \begin{tabular}{lll}
  \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
- \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b|
+ \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b| \\
 \end{tabular}
+
+\medskip
 
 Miscellaneous logical instructions:
 
 \begin{tabular}{lll}
- \verb|implies a b| & \verb|ite a b c| & 
+ \verb|implies a b| & \verb|ite a b c| &  \\
 \end{tabular}
+
+\medskip
+
+\setlength{\tabcolsep}{12pt}
 
 Floating-point arithmetic:
 
 \begin{tabular}{llll}
- \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b| 
+ \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b|
 \end{tabular}
 
 }
@@ -1737,7 +1743,7 @@ and detailed in Algorithm~\ref{alg:cegis}.
 %\begin{figure}
 \begin{algorithm}
 {\small
- \caption{Abstract refinement algorithm
+ \caption{Abstract synthesis algorithm
  \label{alg:cegis}}
  %\vspace{-1.7em}
  %\begin{multicols}{2}
