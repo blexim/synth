@@ -2208,14 +2208,10 @@ quite rapidly.
 
 To give a flavour for the nature of the ``low Kolmogorov complexity'' assumption, 
 we observe that linear functions have low Kolmogorov complexity (since a linear function can
-be computed with at most 1 instruction and 1 multiplication for each program variable).
-Conversely, the probability that a random program of length $l$ computes
-a linear function is $O(2^{-l})$, since otherwise we'd need to have an exponential
-number of programs computing the same function.
-
-Therefore the number of nonlinear functions $f$ with $K(f) \leq \kappa$
-grows exponentially with $\kappa$, while the number of linear functions
-grows only linearly.  This shows that assuming the existence of a linear
+be computed with at most 1 instruction and 1 multiplication for each program variable),
+so the number of linear functions $f$ with $K(f) \leq \kappa$ grows linearly with $\kappa$.
+Conversely, the number of functions $f$ with $K(f) \leq \kappa$
+grows exponentially with $\kappa$.  This shows that assuming the existence of a linear
 ranking function is much stronger than assuming the existence of a short
 termination proof.  In addition to being a much weaker assumption,
 we argue that low Kolmogorov complexity is a more natural assumption than
