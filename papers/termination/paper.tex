@@ -1297,7 +1297,7 @@ which is encoded as:
             G(\langle x, y \rangle) & \triangleq x > 0 \\
             T(\langle x, y \rangle, \langle x', y' \rangle) & \triangleq x' = x - y \wedge y' = y 
 \end{align*}
-If the initial states $I$ are ignored this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
+If the initial states $I$ are ignored, this loop cannot be shown to terminate, since any state with $y = 0$ and $x > 0$
 would lead to a non-terminating execution.
 
 However, formula {\bf [CT]} is satisfiable, as witnessed by:
@@ -1723,7 +1723,7 @@ Floating-point arithmetic:
 We use Counterexample Guided Inductive Synthesis
 (CEGIS)~\cite{lezama-thesis,sketch, DBLP:conf/iclp/BrainCVF06} to find an
 $\mathcal{L}$-program satisfying our specification.  The core of the CEGIS
-algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement}
+algorithm is the refinement loop shown in Figure~\ref{fig:abstract-refinement}
 and detailed in Algorithm~\ref{alg:cegis}.
 
 %\begin{figure}
