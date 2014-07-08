@@ -139,7 +139,7 @@ Lexicographic Ranking Functions, Bit-vector Ranking Functions, Floating-Point Ra
 
 The halting problem has been of central interest to computer scientists
 since it was first considered by Turing in 1936~\cite{turing}.  Informally,
-we can say that the halting problem is concerned with answering the question
+the halting problem is concerned with answering the question
 ``does this program run forever, or will it eventually terminate?''
 
 Proving program termination is typically done by finding a \emph{ranking
@@ -184,8 +184,8 @@ Following the same trend, we investigate its extreme: \emph{unrestricted}
 termination arguments.  This means that our ranking functions may involve
 nonlinearity and lexicographic orders: we do not commit to any particular
 syntactic form, and do not use templates.  Furthermore, our approach allows
-us to simultaneously search for proofs of non-termination, which take the form
-of recurrence sets.
+us to \emph{simultaneously} search for proofs of \emph{non-termination},
+which take the form of recurrence sets.
 
 Figure~\ref{fig:handletable} summarises the related work with respect to the
 restrictions they impose on the transition relations as well as the form of
@@ -194,8 +194,8 @@ majority of existing termination analyses are designed for linear programs
 and linear ranking functions, it also highlights another simplifying
 assumption made by most state-of-the-art termination provers: that
 bit-vector semantics and integer semantics give rise to the same termination
-behaviour.  Thus, most of the techniques treat bit-vectors and IEEE floats
-as mathematical integers and reals,
+behaviour.  Thus, most existing techniques treat fixed-width machine integers
+(bit-vectors) and IEEE floats as mathematical integers and reals,
 respectively~\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/popl/Ben-AmramG13,DBLP:conf/vmcai/P04,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10}.
 
 By assuming bit-vector semantics to be identical to integer semantics, these
@@ -299,7 +299,7 @@ unbounded arrays or the heap.  Similar to other termination
 analyses~\cite{DBLP:conf/tacas/CookSZ13}, we could attempt to alleviate the
 latter limitation by abstracting programs with heap to arithmetic
 ones~\cite{DBLP:conf/popl/MagillTLT10}.  Also, we have not yet added support
-for recursion to our encoding.
+for recursion or \texttt{goto} to our encoding.
 
 \section{Motivating Examples} \label{sec:motivation}
 
@@ -309,7 +309,7 @@ assumptions made by existing termination analyses:
 \begin{itemize}
 \item[(i)] programs use only linear arithmetic.
 \item[(ii)] terminating programs have termination arguments expressible in linear arithmetic.
-\item[(iii)] the semantics of bit vectors and mathematical integers are equivalent.
+\item[(iii)] the semantics of bit-vectors and mathematical integers are equivalent.
 \item[(iv)] the semantics of IEEE floating-point numbers and mathematical reals are equivalent.
 \end{itemize}  
 
@@ -570,7 +570,7 @@ while (x>0 && y>0 && z>0) {
 Given a program, we first formalise its termination argument as a ranking
 function (Section~\ref{sec:ranking.functions}).  Subsequently, we discuss
 bit-vector semantics and illustrate differences between machine arithmetic
-and integer arithmetic that show that the abstraction of bit vectors to
+and integer arithmetic that show that the abstraction of bit-vectors to
 mathematical integers is unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
@@ -710,7 +710,7 @@ section we show how several variations of both the termination and the
 non-termination problem can be uniformly defined in second-order logic.
 
 Due to its expressiveness, second-order logic is very difficult to reason
-about, with many second-order theories becoming undecidable even when the
+in, with many second-order theories becoming undecidable even when the
 corresponding first-order theory is decidable.
 To make solving our constraints tractable, we identify a fragment of second-order logic
 with a constrained use of quantification that is expressive enough to encode
@@ -1518,8 +1518,8 @@ By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 appropriate outputs for the inputs $x$ and $y$, we can regard the
 satisfaction problem for the synthesis fragment as \emph{program synthesis},
 i.e.~the mechanised construction of software that provably satisfies a
-given specification.  Then a witness $P$ to the satisfiability of some
-formula is just a program that meets the specification $\sigma$.
+given specification.  A witness $P$ to the satisfiability of some
+formula is then just a program that meets the specification $\sigma$.
 
 Research in the area of program synthesis has been
 particularly fruitful beginning with Alonzo Church's work on the
@@ -1547,8 +1547,8 @@ Ackermann function and $G$ is Graham's number, a physical computer capable
 of computing $A(G, G)$ would contain (much!) more matter than is believed to
 exist in the universe.  Fortunately, it is rare for a programmer to need
 such a large number and so modern computers do their arithmetic over
-fixed-width binary words, otherwise known as bit vectors.  For the remainder
-of this section, we will say that the bit vectors we are working with are
+fixed-width binary words, otherwise known as bit-vectors.  For the remainder
+of this section, we will say that the bit-vectors we are working with are
 $k$-bits wide, which means that each word can hold one of $2^k$ bit
 patterns.  Typical values for $k$ are 32 and 64.
 
@@ -1596,7 +1596,7 @@ As well as machine arithmetic differing from Peano arithmetic on the
 operators they have in common, computers have several ``bitwise'' operations
 that are not taken as primitive in the theory of integers.  These operations
 include the Boolean operators \texttt{and, or, not, xor} applied to each
-element of the bit vector.  Computer programs often make use of these
+element of the bit-vector.  Computer programs often make use of these
 operators, which are nonlinear when interpreted in the standard model of
 Peano arithmetic\footnote{Some of these operators can be seen as
 linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
@@ -1833,7 +1833,7 @@ explicit-state model checking are used to decide the satisfiability of the
 verification formula\footnote{GP is not used, since it is inherently incomplete.}.
 
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
 \tikzstyle{file}=[draw, text width=7.0em, text centered,
   minimum height=1.5em]
@@ -1846,7 +1846,7 @@ verification formula\footnote{GP is not used, since it is inherently incomplete.
  \draw[dotted] (b) -- ++(0, 4.5);
 }
 
-%\resizebox{\linewidth}{!}{
+\resizebox{\linewidth}{!}{
 \begin{tikzpicture}[font=\sffamily]
 
 \node [file] (pua) {input.c};
@@ -1896,12 +1896,12 @@ verification formula\footnote{GP is not used, since it is inherently incomplete.
 \draw (out |- 0,-3) node [align=center] {Proof \\ (written in $\mathcal{L}$)};
 
 \end{tikzpicture}
-%}
+}
 \end{center}
 
 \caption{Schematic diagram of {\sc synth}}
 \label{fig:synth-dfd}
-\end{figure*}
+\end{figure}
 
 
 Now that we have a procedure for solving a formula
@@ -2263,8 +2263,8 @@ results of these experiments are given in Figure~\ref{fig:experiments}.
 It should be noted that the comparison here is imperfect, since {\sc ARMC}
 is solving a slightly different problem -- it checks whether the program
 under analysis would terminate if run with unbounded integer variables,
-while we are checking whether the program terminates with fixed-width
-integer variables.  This means that {\sc ARMC}'s verdict differs from ours
+while we are checking whether the program terminates with bit-vector
+variables.  This means that {\sc ARMC}'s verdict differs from ours
 in 3 cases (due to the differences between integer and bit-vector
 semantics).  There are a further 7 cases where our tool is able to find a
 proof and {\sc ARMC} cannot, which we believe is due to our more expressive
@@ -2362,7 +2362,7 @@ is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
 Given the lack of research on termination of nonlinear programs, as well as
-programs over bit vectors and floats, our work focused on covering these
+programs over bit-vectors and floats, our work focused on covering these
 areas.  One of the obvious conclusions that can be reached from
 Figure~\ref{fig:handletable} is that most methods tend to specialise on a
 certain aspect of termination proving that they can solve efficiently. 
