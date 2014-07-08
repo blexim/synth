@@ -869,18 +869,15 @@ often, or equivalently $ \exists x . T^+(x, x)$.
 Deciding satisfiability of this formula directly would require a logic
 that includes a transitive closure operator, $\bullet^+$.  Rather than
 introduce such an operator, we will characterise non-termination
-using a synthesis formula.
-
-Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterise non-termination
-of a transition relation $T$ by the existence of an \emph{(open) recurrence
-set}, i.e.~a nonempty set of states $N$ such that for each $s \in N$ there
-exists a transition to some $s' \in N$.
-The notion of open recurrence set is encoded by formula {\bf [ONT]} (Definition~\ref{def:ont}).
-% Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition
-% relation~$T_u$. 
-% Again, this distinction is mostly important when dealing with nested loops,
-% as illustrated in Section~\ref{sec:env}.
-
+using the synthesis formula {\bf [ONT]} (Definition~\ref{def:ont})
+encoding the existence of an \emph{(open) recurrence set}, i.e.~a nonempty 
+set of states $N$ such that for each $s \in N$ there
+exists a transition to some $s' \in N$ \cite{DBLP:conf/popl/GuptaHMRX08}.
+%% Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterise non-termination
+%% of a transition relation $T$ by the existence of an \emph{(open) recurrence
+%% set}, i.e.~a nonempty set of states $N$ such that for each $s \in N$ there
+%% exists a transition to some $s' \in N$.
+%% The notion of open recurrence set is encoded by formula {\bf [ONT]} (Definition~\ref{def:ont}).
 
 \begin{theorem}
 \label{thm:ont}
