@@ -988,10 +988,10 @@ with formula {\bf [CNT]} and instead must use formula {\bf [SNT]}.
 \noindent {\bf Termination.} If a loop $L(G, T)$ has another loop $L'(G', T')$ nested inside it, we cannot directly use {\bf [UT]}
 to express the termination of $L$.  This is because the single-step transition relation $T$ must
 include the transitive closure of the inner loop $T'^*$, and we do not have a transitive closure
-operator in our logic.  Therefore to encode the termination of $L$, we construct an overapproximation
+operator in our logic.  Therefore to encode the termination of $L$, we construct an over-approximation
 $T_o \supseteq T$ and use this in formula {\bf [UT]} to specify a ranking function.
 Rather than explicitly construct $T_o$ using, for example, abstract interpretation, we add constraints to
-our formula that encode the fact that $T_o$ is an overapproximation of $T$, and that it is
+our formula that encode the fact that $T_o$ is an over-approximation of $T$, and that it is
 precise enough to show that $R$ is a ranking function.
 
 % All we need to do in order to use {\bf [CT]} in any context %environment and regardless of the complexity of the loops's body 
@@ -1007,7 +1007,7 @@ Figure~\ref{fig:environment-model}:
 %% as the conjunction of constraints on the right side of the figure:
 \begin{itemize}
 \item $T_o$  over-approximates $L_1$'s transition relation.
-\item $P$ is a summary of $L_2$ that over-approximates the transitive closure of its transition relation.
+\item $S$ is a summary of $L_2$ that over-approximates the transitive closure of its transition relation.
 \item If the formula is satisfiable, then $R_1$ and $R_2$ are ranking functions for $L_1$ and $L_2$, respectively.
 \end{itemize}
 
@@ -1044,15 +1044,15 @@ $L_2:$
 \vline
 \begin{minipage}{0.84\textwidth}
 \begin{align*}
- \exists T_o, P, R_1, R_2 . \forall i, j, n, i', j', n' . \\
+ \exists T_o, S, R_1, R_2 . \forall i, j, n, i', j', n' . \\
    %% x = 0 & \rightarrow W_1(v, x, y, z) \, \wedge \\
    %% x \leq y \wedge W_1(v, x, y, z) & \rightarrow W_1(v, x+1, x, y, z) \, \wedge \\
    %% x > 0 \wedge x > y \wedge W_1(v, x, y, z) & \rightarrow W_2(v, x, y, z) \, \wedge \\
-   P(\langle i, j, n \rangle, \langle i', j', n' \rangle) \wedge j' \leq i' & \rightarrow P(\langle i, j, n \rangle, \langle i', j'+1, n' \rangle) \, \wedge \\
+   S(\langle i, j, n \rangle, \langle i', j', n' \rangle) \wedge j' \leq i' & \rightarrow S(\langle i, j, n \rangle, \langle i', j'+1, n' \rangle) \, \wedge \\
    & R_2(i,j,n) > 0 \, \wedge \\
    & R_2(i,j,n) > R_2(i',j'+1,n') \, \wedge\\
-   i < n \wedge T_o(i, j, n) & \rightarrow P(\langle i, j, n \rangle, \langle i, 0, n \rangle) \, \wedge \\
-   i < n \wedge T_o(i, j, n) \wedge P(\langle i, j, n \rangle, \langle i', j', n' \rangle) \wedge j' > i' & \rightarrow \\
+   i < n \wedge T_o(i, j, n) & \rightarrow S(\langle i, j, n \rangle, \langle i, 0, n \rangle) \, \wedge \\
+   i < n \wedge T_o(i, j, n) \wedge S(\langle i, j, n \rangle, \langle i', j', n' \rangle) \wedge j' > i' & \rightarrow \\
    & T_o(i'+1, j', n') \, \wedge \\
    & R_1(i, j, n) > 0 \, \wedge \\
    & R_1(i, j, n) > R_1(i'+1, j', n')
