@@ -1645,57 +1645,6 @@ operations, as well as basic branching in the form of the \verb|ite|
 % %written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
 % \todo{update the figure and make it look more like a grammar.}
 
-%\begin{figure}
-\begin{algorithm}
-{\small
- \caption{Abstract refinement algorithm
- \label{alg:cegis}}
- %\vspace{-1.7em}
- %\begin{multicols}{2}
- \begin{algorithmic}[1]
- \Statex
-\Function{synth}{{\sc inputs}, $\sigma$}
-  \Let{$(i_1, \ldots, i_N)$}{{\sc inputs}}
-  \Let{query}{$\exists P, x_0 . \forall i \in \text{\sc inputs} . \sigma(P, x_0, i)$}
-  \Let{result}{decide(query)}
-  \If{result.satisfiable}
-    \State \Return{result.model}
-  \Else
-    \State \Return{unsatisfiable}
-  \EndIf
-\EndFunction
-\Statex
-\Function{verif}{$P, x_0, \sigma$}
-  \Let{query}{$\exists x . \lnot \sigma(P, x_0, x)$}
-  \Let{result}{decide(query)}
-  \If{result.satisfiable}
-    \State \Return{result.model}
-  \Else
-    \State \Return{valid}
-  \EndIf
-\EndFunction
-\columnbreak
-\Statex
-\Function{Synthesise}{$\sigma$}
-  \Let{{\sc inputs}}{$\emptyset$}
-  \Loop
-    \Let{candidate}{\Call{synth}{{\sc inputs}}}
-    \If{candidate = UNSAT}
-      \State \Return{unsatisfiable}
-    \EndIf
-    \Let{res}{\Call{verif}{candidate}}
-    \If{res = valid}
-      \State \Return{candidate}
-    \Else
-      \Let{{\sc inputs}}{{\sc inputs} $\cup$ res}
-    \EndIf
-  \EndLoop
-\EndFunction
- \end{algorithmic}
- %\end{multicols}
- }
-\end{algorithm}
-%\end{figure}
 
 
 \begin{figure}
@@ -1783,8 +1732,61 @@ We use Counterexample Guided Inductive Synthesis
 (CEGIS)~\cite{lezama-thesis,sketch, DBLP:conf/iclp/BrainCVF06} to find an
 $\mathcal{L}$-program satisfying our specification.  The core of the CEGIS
 algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement}
-and detailed in Algorithm~\ref{alg:cegis}.  The algorithm is divided into
-two procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc
+and detailed in Algorithm~\ref{alg:cegis}.
+
+%\begin{figure}
+\begin{algorithm}
+{\small
+ \caption{Abstract refinement algorithm
+ \label{alg:cegis}}
+ %\vspace{-1.7em}
+ %\begin{multicols}{2}
+ \begin{algorithmic}[1]
+ \Statex
+\Function{synth}{{\sc inputs}, $\sigma$}
+  \Let{$(i_1, \ldots, i_N)$}{{\sc inputs}}
+  \Let{query}{$\exists P, x_0 . \forall i \in \text{\sc inputs} . \sigma(P, x_0, i)$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{unsatisfiable}
+  \EndIf
+\EndFunction
+\Statex
+\Function{verif}{$P, x_0, \sigma$}
+  \Let{query}{$\exists x . \lnot \sigma(P, x_0, x)$}
+  \Let{result}{decide(query)}
+  \If{result.satisfiable}
+    \State \Return{result.model}
+  \Else
+    \State \Return{valid}
+  \EndIf
+\EndFunction
+\columnbreak
+\Statex
+\Function{Synthesise}{$\sigma$}
+  \Let{{\sc inputs}}{$\emptyset$}
+  \Loop
+    \Let{candidate}{\Call{synth}{{\sc inputs}}}
+    \If{candidate = UNSAT}
+      \State \Return{unsatisfiable}
+    \EndIf
+    \Let{res}{\Call{verif}{candidate}}
+    \If{res = valid}
+      \State \Return{candidate}
+    \Else
+      \Let{{\sc inputs}}{{\sc inputs} $\cup$ res}
+    \EndIf
+  \EndLoop
+\EndFunction
+ \end{algorithmic}
+ %\end{multicols}
+ }
+\end{algorithm}
+%\end{figure}
+
+The algorithm is divided into two procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc
 verif}, which interact via a finite set of test vectors {\sc inputs}.
 
 The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$
