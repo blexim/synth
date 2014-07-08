@@ -2138,18 +2138,6 @@ linearity.  Humans tend to write programs they can understand.  It's hard
 to quantify exactly what ``understandable'' means, but we think that
 ``having a short proof'' is closer to the mark than ``having a linear proof''.
 
-\todo{do something with this?}
-Since each loop is bounded by a constant, and each recursive function call is
-limited to a constant depth, a \newC program necessarily terminates and in
-fact does so in $O(1)$ time.  If we call the largest loop bound~$k$, then
-a Bounded Model Checker with an unrolling bound of $k$ will be a complete
-decision procedure for the safety of the program.  For a \newC program of
-size $l$ and with largest loop bound~$k$, a Bounded Model Checker will
-create a SAT problem of size $O(lk)$.  Conversely, a SAT problem
-of size $s$ can be converted trivially into a loop-free \newC program
-of size $O(s)$.  The safety problem for \newC is therefore NP-complete,
-which means it can be decided fairly efficiently for many practical
-instances.
 
 \section{Experiments}
 
