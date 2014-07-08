@@ -961,12 +961,12 @@ while(x != 0) {
 
 It is clear that this loop has many non-terminating executions,
 e.g. the execution where \lstinline!nondet()! always returns 0.
-However it is equally clear that each state has a successor
+However each state has a successor
 that exits the loop, i.e.~when \lstinline|nondet()| returns
 the value currently stored in \lstinline|x|.  So this loop
 has an open recurrence set, but no closed recurrence set
 and hence we cannot give a proof of its non-termination
-with formula {\bf [CNT]} and instead must use formula {\bf [SNT]}.
+with {\bf [CNT]} and instead must use {\bf [SNT]}.
 
 % Only for certain choices of \lstinline!y! the loop is non-terminating.  In
 % order to restrict the values that may be assigned to \texttt{y}, we need an
@@ -1468,12 +1468,13 @@ Which simplifies to:
 Since $L$ either terminates or does not terminate, this formula is a tautology in the synthesis fragment.
 A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
 and termination respectively.  Exactly one of these will be a genuine proof, so we can check
-first one and then the other, as shown in Algorithm~\ref{alg:termination}.
+first one and then the other, as shown in Algorithm~\ref{alg:termination}:
 
 \begin{algorithm}
+{\small
  \caption{Bit-vector termination
  \label{alg:termination}}
- %\vspace{-1.5em}
+ \vspace{-.5em}
  \begin{algorithmic}[1]
  \Statex
 \Function{terminates}{$L$}
@@ -1489,13 +1490,9 @@ first one and then the other, as shown in Algorithm~\ref{alg:termination}.
   \EndIf
 \EndFunction
  \end{algorithmic}
+ }
 \end{algorithm}
 
-Since $L$ either terminates or does not terminate, this formula is
-satisfiable in the synthesis fragment.  A solution to the formula would
-include witnesses $P_N$ and $P_T$, which are putative proofs of
-non-termination and termination, respectively.  Exactly one of these will be
-a genuine proof, so we can check first one and then the other.
 
 
 % 
@@ -1648,12 +1645,13 @@ operations, as well as basic branching in the form of the \verb|ite|
 % %written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
 % \todo{update the figure and make it look more like a grammar.}
 
-
-\begin{algorithm*}
+%\begin{figure}
+\begin{algorithm}
+{\small
  \caption{Abstract refinement algorithm
  \label{alg:cegis}}
- \vspace{-1.5em}
- \begin{multicols}{2}
+ %\vspace{-1.7em}
+ %\begin{multicols}{2}
  \begin{algorithmic}[1]
  \Statex
 \Function{synth}{{\sc inputs}, $\sigma$}
@@ -1694,8 +1692,10 @@ operations, as well as basic branching in the form of the \verb|ite|
   \EndLoop
 \EndFunction
  \end{algorithmic}
- \end{multicols}
-\end{algorithm*}
+ %\end{multicols}
+ }
+\end{algorithm}
+%\end{figure}
 
 
 \begin{figure}
@@ -1729,8 +1729,9 @@ operations, as well as basic branching in the form of the \verb|ite|
 
 
 \begin{figure}
-{\small
 \begin{center}
+{\small
+
 \setlength{\tabcolsep}{16pt}
 Integer arithmetic instructions:
 
@@ -1769,9 +1770,9 @@ Floating-point arithmetic:
  \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b| 
 \end{tabular}
 
-
-\end{center}
 }
+\end{center}
+
  \caption{The language $\mathcal{L}$}
  \label{fig:l-language}
 \end{figure}
