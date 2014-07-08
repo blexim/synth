@@ -729,7 +729,9 @@ where $\vec{P}$ ranges over functions, while $\vec{x}$ and $\vec{y}$ range over
 ground terms.  Function $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times
 Y^m \to \mathbb{B}$ can be seen as a specification function that returns
 true iff the functions $\vec{P}$ compute appropriate outputs when fed the
-inputs $\vec{x}$ and $\vec{y}$.
+inputs $\vec{x}$ and $\vec{y}$.  The synthesis fragment is implicitly
+defined over some background first-order theory, and $\sigma$ must be
+computable in that theory.
 %
 \end{definition}
 %
