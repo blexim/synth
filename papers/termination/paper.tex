@@ -592,9 +592,9 @@ finding a ranking function for its transition relation.
 %
 \begin{definition}[Ranking function]
 %
-An injective function ${R:X\to Y}$ is a \emph{ranking function} for the
+A function ${R:X\to Y}$ is a \emph{ranking function} for the
 transition relation $T$ if $Y$ is a well-founded set with order $>$ and 
-$R$ is monotonically decreasing with respect to $T$.  That is
+$R$ is injective and monotonically decreasing with respect to $T$.  That is
 to say:
 $$\forall x, x' \in X. T(x, x') \Rightarrow R(x) > R(x')$$
 %
@@ -961,12 +961,12 @@ while(x != 0) {
 
 It is clear that this loop has many non-terminating executions,
 e.g. the execution where \lstinline!nondet()! always returns 0.
-However it is equally clear that each state has a successor
+However each state has a successor
 that exits the loop, i.e.~when \lstinline|nondet()| returns
 the value currently stored in \lstinline|x|.  So this loop
 has an open recurrence set, but no closed recurrence set
 and hence we cannot give a proof of its non-termination
-with formula {\bf [CNT]} and instead must use formula {\bf [SNT]}.
+with {\bf [CNT]} and instead must use {\bf [SNT]}.
 
 % Only for certain choices of \lstinline!y! the loop is non-terminating.  In
 % order to restrict the values that may be assigned to \texttt{y}, we need an
@@ -1024,7 +1024,7 @@ Figure~\ref{fig:environment-model}:
 
 \begin{figure*}
 \begin{framed}
-\begin{minipage}{0.16\textwidth}
+\begin{minipage}{0.17\textwidth}
 \begin{lstlisting}[mathescape=true]
 $L_1:$
 while (i<n){
@@ -1040,7 +1040,7 @@ $L_2:$
 \end{lstlisting}
 \end{minipage}
 \vline
-\begin{minipage}{0.84\textwidth}
+\begin{minipage}{0.82\textwidth}
 \begin{align*}
  \exists T_o, S, R_1, R_2 . \forall i, j, n, i', j', n' . \\
    %% x = 0 & \rightarrow W_1(v, x, y, z) \, \wedge \\
@@ -1468,12 +1468,13 @@ Which simplifies to:
 Since $L$ either terminates or does not terminate, this formula is a tautology in the synthesis fragment.
 A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
 and termination respectively.  Exactly one of these will be a genuine proof, so we can check
-first one and then the other, as shown in Algorithm~\ref{alg:termination}.
+first one and then the other, as shown in Algorithm~\ref{alg:termination}:
 
 \begin{algorithm}
+{\small
  \caption{Bit-vector termination
  \label{alg:termination}}
- %\vspace{-1.5em}
+ \vspace{-.5em}
  \begin{algorithmic}[1]
  \Statex
 \Function{terminates}{$L$}
@@ -1489,13 +1490,9 @@ first one and then the other, as shown in Algorithm~\ref{alg:termination}.
   \EndIf
 \EndFunction
  \end{algorithmic}
+ }
 \end{algorithm}
 
-Since $L$ either terminates or does not terminate, this formula is
-satisfiable in the synthesis fragment.  A solution to the formula would
-include witnesses $P_N$ and $P_T$, which are putative proofs of
-non-termination and termination, respectively.  Exactly one of these will be
-a genuine proof, so we can check first one and then the other.
 
 
 % 
@@ -1545,7 +1542,7 @@ sketching~\cite{lezama-thesis,sketch,modular-sketch}.
 
 In the context of termination analysis, a witness to the
 satisfiability of a generalised termination specification is a
-\mbox{(non-)termination} proof.  As mentioned earlier in the paper, our
+proof of \mbox{(non-)termination}.  As mentioned earlier in the paper, our
 analysis must ensure precise treatment of bit-wise operations and arithmetic
 modulo fixed widths by modelling bit-accurate semantics.  The synthesiser
 must therefore be able to compute solutions over machine
@@ -1649,11 +1646,107 @@ operations, as well as basic branching in the form of the \verb|ite|
 % \todo{update the figure and make it look more like a grammar.}
 
 
-\begin{algorithm*}
- \caption{Abstract refinement algorithm
+
+\begin{figure}
+ \begin{center}
+ \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
+ semithick, initial text=]
+
+  \matrix[nodes={draw, fill=none, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
+          row sep=2cm, column sep=2.5cm, ampersand replacement=\&] {
+   \node (synth) {Synthesise};
+   \&
+   \node (verif) {Verify}; %\\
+   %\node[draw=none] {};
+   \&
+   \node[ellipse] (done) {Done}; \\
+  };
+
+   \path
+    (synth) edge [bend left] node {Candidate program} (verif)
+    (verif) edge [bend left] node {Counterexample input} (synth)
+    (verif) edge node {Valid} (done);
+ \end{tikzpicture}
+ }
+ \end{center}
+ 
+ \caption{Abstract synthesis refinement loop
+ \label{fig:abstract-refinement}}
+\end{figure}
+
+
+
+\begin{figure}
+\begin{center}
+{\small
+
+\setlength{\tabcolsep}{14pt}
+Integer arithmetic instructions:
+
+\begin{tabular}{llll}
+ \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
+ \verb|neg a| &   \verb|mod a b| & \verb|min a b| & \verb|max a b|
+\end{tabular}
+
+\medskip
+
+Bitwise logical and shift instructions:
+
+\begin{tabular}{lll}
+ \verb|and  a b| & \verb|or   a b| & \verb|xor a b| \\
+ \verb|lshr a b| & \verb|ashr a b| & \verb|not a|
+\end{tabular}
+
+\medskip
+
+Unsigned and signed comparison instructions:
+
+\begin{tabular}{lll}
+ \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
+ \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b| \\
+\end{tabular}
+
+\medskip
+
+Miscellaneous logical instructions:
+
+\begin{tabular}{lll}
+ \verb|implies a b| & \verb|ite a b c| &  \\
+\end{tabular}
+
+\medskip
+
+\setlength{\tabcolsep}{12pt}
+
+Floating-point arithmetic:
+
+\begin{tabular}{llll}
+ \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b|
+\end{tabular}
+
+}
+\end{center}
+
+ \caption{The language $\mathcal{L}$}
+ \label{fig:l-language}
+\end{figure}
+
+\subsection{The Synthesis Algorithm}
+
+We use Counterexample Guided Inductive Synthesis
+(CEGIS)~\cite{lezama-thesis,sketch, DBLP:conf/iclp/BrainCVF06} to find an
+$\mathcal{L}$-program satisfying our specification.  The core of the CEGIS
+algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement}
+and detailed in Algorithm~\ref{alg:cegis}.
+
+%\begin{figure}
+\begin{algorithm}
+{\small
+ \caption{Abstract synthesis algorithm
  \label{alg:cegis}}
- \vspace{-1.5em}
- \begin{multicols}{2}
+ %\vspace{-1.7em}
+ %\begin{multicols}{2}
  \begin{algorithmic}[1]
  \Statex
 \Function{synth}{{\sc inputs}, $\sigma$}
@@ -1694,96 +1787,12 @@ operations, as well as basic branching in the form of the \verb|ite|
   \EndLoop
 \EndFunction
  \end{algorithmic}
- \end{multicols}
-\end{algorithm*}
-
-
-\begin{figure}
- \begin{center}
- \resizebox{\linewidth}{!}{%
-  \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,
- semithick, initial text=]
-
-  \matrix[nodes={draw, fill=none, shape=rectangle, minimum height=1cm, minimum width=1.5cm},
-          row sep=2cm, column sep=2.5cm, ampersand replacement=\&] {
-   \node (synth) {Synthesise};
-   \&
-   \node (verif) {Verify}; %\\
-   %\node[draw=none] {};
-   \&
-   \node[ellipse] (done) {Done}; \\
-  };
-
-   \path
-    (synth) edge [bend left] node {Candidate program} (verif)
-    (verif) edge [bend left] node {Counterexample input} (synth)
-    (verif) edge node {Valid} (done);
- \end{tikzpicture}
+ %\end{multicols}
  }
- \end{center}
- 
- \caption{Abstract synthesis refinement loop
- \label{fig:abstract-refinement}}
-\end{figure}
+\end{algorithm}
+%\end{figure}
 
-
-
-\begin{figure}
-{\small
-\begin{center}
-\setlength{\tabcolsep}{16pt}
-Integer arithmetic instructions:
-
-\begin{tabular}{llll}
- \verb|add a b| & \verb|sub a b| & \verb|mul a b| & \verb|div a b| \\
- \verb|neg a| &   \verb|mod a b| & \verb|min a b| & \verb|max a b|
-\end{tabular}
-
-\medskip
-
-Bitwise logical and shift instructions:
-
-\begin{tabular}{lll}
- \verb|and  a b| & \verb|or   a b| & \verb|xor a b| \\
- \verb|lshr a b| & \verb|ashr a b| & \verb|not a|
-\end{tabular}
-
-\medskip
-
-Unsigned and signed comparison instructions:
-
-\begin{tabular}{lll}
- \verb|le  a b| & \verb|lt  a b| & \verb|sle  a b| \\
- \verb|slt a b| & \verb|eq  a b| & \verb|neq  a b|
-\end{tabular}
-
-Miscellaneous logical instructions:
-
-\begin{tabular}{lll}
- \verb|implies a b| & \verb|ite a b c| & 
-\end{tabular}
-
-Floating-point arithmetic:
-
-\begin{tabular}{llll}
- \verb|fadd a b| & \verb|fsub a b| & \verb|fmul a b| & \verb|fdiv a b| 
-\end{tabular}
-
-
-\end{center}
-}
- \caption{The language $\mathcal{L}$}
- \label{fig:l-language}
-\end{figure}
-
-\subsection{The Synthesis Algorithm}
-
-We use Counterexample Guided Inductive Synthesis
-(CEGIS)~\cite{lezama-thesis,sketch, DBLP:conf/iclp/BrainCVF06} to find an
-$\mathcal{L}$-program satisfying our specification.  The core of the CEGIS
-algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement}
-and detailed in Algorithm~\ref{alg:cegis}.  The algorithm is divided into
-two procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc
+The algorithm is divided into two procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc
 verif}, which interact via a finite set of test vectors {\sc inputs}.
 
 The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$
@@ -2013,7 +2022,7 @@ $(P, x_0) \models \sigma$.
 
  Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
  the program length $l$), it will eventually enumerate a program that meets the specification
- in whatever set of inputs are currently being tracked, since by assumption such a program
+ on whatever set of inputs are currently being tracked, since by assumption such a program
  exists.  Since the first-order theory is
  decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
  The set of correct programs is therefore recursively enumerable and Algorithm~\ref{alg:cegis}
@@ -2068,7 +2077,8 @@ are computed by a program of size at most $2bk - k$.
 
 \begin{corollary}
  Every finite subset $A \subseteq B$ is computable by a finite $\mathcal{L}$-program
- by setting $X = B, Y = 2$ in Lemma~\ref{lem:l-func}.
+ by setting $X = B, Y = 2$ in Lemma~\ref{lem:l-func} and taking the
+ resulting function to be the characteristic function of $A$.
 \end{corollary}
 
 
@@ -2086,7 +2096,7 @@ exists iff $P$ terminates.  Without loss of generality,
 $\mathcal{D}$ is a well-founded total order.  Since $R$ is injective, we have that $\|
 \mathcal{D} \| \geq \| \mathcal{S} \|$.  If $\| \mathcal{D} \| > \|
 \mathcal{S} \|$, we can construct a function $R': \mathcal{S} \to
-\mathcal{D'}$ with $ \| \mathcal{D'} = \| \mathcal{S} \|$ by just setting
+\mathcal{D'}$ with $ \| \mathcal{D'} \| = \| \mathcal{S} \|$ by just setting
 $R' = R|_\mathcal{S}$, i.e.~$R'$ is just the restriction of $R$ to
 $\mathcal{S}$.  Since $\mathcal{S}$ already comes equipped with a natural
 well ordering we can also construct $R'' = \iota \circ R'$ where $\iota:
@@ -2114,15 +2124,16 @@ a finite $\mathcal{L}$-program computing $R''$.
 \end{theorem}
 
 \begin{proof}
- A non-termination proof is a triple $\langle N, C, x_0 \rangle$ where $N \subseteq \mathcal{S}$ is
- a (finite) recurrence set and $C : \mathcal{S} \to \mathcal{S}$ is a Skolem function choosing
- a successor for each $x \in N$.  Since $\mathcal{S}$ is finite, so by Lemma~\ref{lem:l-func} both
- $N$ and $C$ are computed by finite $\mathcal{L}$-programs.
+ A proof of non-termination is a triple $\langle N, C, x_0 \rangle$ where
+ \mbox{$N \subseteq \mathcal{S}$} is a (finite) recurrence set and
+ $C : \mathcal{S} \to \mathcal{S}$ is a Skolem function choosing
+ a successor for each $x \in N$.  $\mathcal{S}$ is finite, so by Lemma~\ref{lem:l-func} both
+ $N$ and $C$ are computed by finite $\mathcal{L}$-programs and $x_0$ is just a ground term.
 \end{proof}
 
 \begin{theorem}
  \label{thm:generalised-sat}
- The generalised termination formula for loop $L$ (Definiton~\ref{def:general-termination}) is satisfiable
+ The generalised termination formula {\bf [GT]} for any loop $L$ is satisfiable
  when $P_N$ and $P_T$ range over \mbox{$\mathcal{L}$-computable} functions.
 \end{theorem}
 
@@ -2138,7 +2149,7 @@ a finite $\mathcal{L}$-program computing $R''$.
  (Theorem~\ref{thm:snt}), hence for any $P_T$, $(P_T, P_N) \models \phi \vee \psi$.
 
  So in either case ($L$ terminates or does not), there is a witness in $\mathcal{L}$ satisfying
- formula {\bf [GT]}: $\phi \vee \psi$.
+ $\phi \vee \psi$, which is an instance of {\bf [GT]}.
 \end{proof}
 
 \begin{theorem}
@@ -2150,22 +2161,22 @@ a finite $\mathcal{L}$-program computing $R''$.
  By Theorem~\ref{thm:generalised-sat}, the specification \lstinline!spec! is satisfiable.  Corollary~\ref{cor:cegis-newc}
  shows that Algorithm~\ref{alg:cegis} is semi-complete, and so the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
  If $L$ terminates then $P_T$ is a termination proof (Theorem~\ref{thm:ct}).  Otherwise $P_N$ is a non-termination proof
- (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory being decidable means that each
+ (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory \newC being decidable means that each
  call to \lstinline|decide()| will terminate, which allows us to determine which of $P_T$ and $P_N$ is a correct proof.
 \end{proof}
 
 Hence Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
 
 Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
-$2^bk$ times where $k$ is the number of variables used by $L$ and
+$2^{bk}$ times where $k$ is the number of variables used by $L$ and
 $b$ is the number of bits used to store each variable.
 The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times l \times \| L\|$
 with $l$ the length of the program to be synthesised, and $\| L \| $ the size of the program-under-analysis
 computing $ L $.  So if
 the CEGIS loop iterates $n$ times, the
-runtime is bounded by $2 \times n \times NP(n \times l \times \| L \|)$, which is bounded
-by $2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$.  Clearly the runtime is affected most strongly by $n$,
-the total number of iterations of the CEGIS loop.
+runtime is bounded by
+$$2 \times n \times NP(n \times l \times \| L \|) \leq 2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$$
+Clearly the runtime is affected most strongly by $n$, the total number of iterations of the CEGIS loop.
 
 We will now show that the number of iterations of the CEGIS loop is a function
 of the Kolmogorov complexity of the (non-)termination proof, and so
@@ -2191,17 +2202,17 @@ synthesis problem in terms of its specification:
 Let us consider the number of iterations of the CEGIS loop $n$ required for a specification
 $\sigma$.  Since we enumerate candidate programs in order of length, we are always synthesising
 programs with length no greater than $K(\sigma)$ (since when we enumerate the first correct program,
-we will terminate).  So it is clear that the space of solutions we search over is the space
+we will terminate).  So the space of solutions we search over is the space
 of functions computed by $\mathcal{L}$-programs of length no greater than $K(\sigma)$.  Let's
-denote this set $\mathcal{L}(K(\sigma))$.  Clearly, $\| \mathcal{L}(K(\sigma)) \| \leq O(2^{K(\sigma)})$
-since there are $O(2^{K(\sigma)}$ \emph{programs} of length $K(\sigma)$ and some functions
-will be computed by more than one program.
+denote this set $\mathcal{L}(K(\sigma))$.
+Since there are $O(2^{K(\sigma)}$ \emph{programs} of length $K(\sigma)$ and some functions
+will be computed by more than one program, we have $\| \mathcal{L}(K(\sigma)) \| \leq O(2^{K(\sigma)})$.
 
 Each iteration of the CEGIS loop distinguishes at least one incorrect function from the set of correct
-functions, so we can see that the loop will iterate no more than $\| \mathcal{L}(K(\sigma)) \|$ times.
+functions, so the loop will iterate no more than $\| \mathcal{L}(K(\sigma)) \|$ times.
 Therefore another bound on our runtime is:
 $$O\left (2^{K(\sigma)} \times NP \left ( K(\sigma) \times \| L \| \right) \right) = O \left(2^{K(\sigma)} \right)$$
-Which means that for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
+So for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
 if $K(\sigma)$ is small we will be able to find a termination proof, regardless of other parameters
 such as the size of the program under analysis.  To put this another way, under the assumption
 that $K(\sigma)$ is small for a program's termination problem, we will find a termination proof
