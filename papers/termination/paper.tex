@@ -714,7 +714,7 @@ in, with many second-order theories becoming undecidable even when the
 corresponding first-order theory is decidable.
 To make solving our constraints tractable, we identify a fragment of second-order logic
 with a constrained use of quantification that is expressive enough to encode
-both termination and non-termination of finite programs, while admitting a semi-decision procedure.
+both termination and non-termination of finite-state programs, while admitting a semi-decision procedure.
 We will suggestively refer to the fragment as the \emph{synthesis fragment}:
 
 
@@ -1185,7 +1185,7 @@ under-approximate the loop's body and apply formula {\bf [CNT]}.
 %
 %
 Under-approximating the inner loop can be done with a nested existential quantifier, resulting in
-$\exists \forall \exists$ alternation which we could eliminate with Skolemization.  
+$\exists \forall \exists$ alternation, which we could eliminate with Skolemization.  
 However, we observe that
 %As we try to avoid an extra second order unknown, 
 unlike a ranking function,
@@ -1480,7 +1480,7 @@ Which simplifies to:
 Since $L$ either terminates or does not terminate, this formula is a tautology in the synthesis fragment.
 A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
 and termination respectively.  Exactly one of these will be a genuine proof, so we can check
-first one and then the other, which will be illustrated by Algorithm~\ref{alg:termination} once
+first one and then the other, which will be exemplified by Algorithm~\ref{alg:termination} once
 we have shown how to solve the formula {\bf [GT]}.
 
 
@@ -1908,7 +1908,7 @@ verification formula\footnote{GP is not used, since it is inherently incomplete.
 
 Now that we have a procedure for solving a formula
 in the synthesis fragment, we can build the full procedure for
-deciding termination of a loop $L$.  This is shown in Algorithm~\ref{alg:termination}.
+deciding termination of a loop $L$.  This is given as Algorithm~\ref{alg:termination}.
 
 \begin{algorithm}
 {\small
@@ -2035,7 +2035,7 @@ $(P, x_0) \models \sigma$.
  If the domain $X$ is finite then the loop in procedure {\sc Synthesise} can only
  iterate $\| X \|$ times, since by this time all of the elements of $X$ would have been
  added to the inputs set.  Therefore if the {\sc Synth} procedure always terminates,
- Algorithm~\ref{alg:cegis}.
+ Algorithm~\ref{alg:cegis} does as well.
 
  Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
  the program length $l$), it will eventually enumerate a program that meets the specification
@@ -2162,7 +2162,7 @@ a finite $\mathcal{L}$-program computing $R''$.
  for any $P_N$, $(P_T, P_N) \models \phi \vee \psi$.
 
  Similarly if $L$ does not terminate for some input, by Theorem~\ref{thm:l-nonterm} there is a non-termination
- proof $P_N$ expressible in $\mathcal{L}$.  $\psi$ is an instance of {\bf [SNT]} and so $P_N \models \psi$
+ proof $P_N$ expressible in $\mathcal{L}$.  Formula $\psi$ is an instance of {\bf [SNT]} and so $P_N \models \psi$
  (Theorem~\ref{thm:snt}), hence for any $P_T$, $(P_T, P_N) \models \phi \vee \psi$.
 
  So in either case ($L$ terminates or does not), there is a witness in $\mathcal{L}$ satisfying
@@ -2182,7 +2182,7 @@ a finite $\mathcal{L}$-program computing $R''$.
  call to \lstinline|decide()| will terminate, which allows us to determine which of $P_T$ and $P_N$ is a correct proof.
 \end{proof}
 
-Hence Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
+Hence, Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
 
 Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
 $2^{bk}$ times where $k$ is the number of variables used by $L$ and
