@@ -1468,31 +1468,8 @@ Which simplifies to:
 Since $L$ either terminates or does not terminate, this formula is a tautology in the synthesis fragment.
 A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
 and termination respectively.  Exactly one of these will be a genuine proof, so we can check
-first one and then the other, as shown in Algorithm~\ref{alg:termination}:
-
-\begin{algorithm}
-{\small
- \caption{Bit-vector termination
- \label{alg:termination}}
- \vspace{-.5em}
- \begin{algorithmic}[1]
- \Statex
-\Function{terminates}{$L$}
-  %\Let{termination-spec}{$\exists W, R. \forall x, x' . \phi(W, R, x, x')$} \Comment{Formula {\bf [CT]}}
-  %\Let{nonterm-spec}{$\exists N, C, x_0, \forall x. \psi(N, C, x_0, x)$} \Comment{Formula {\bf [SNT]}}
-  \Statex  \Comment{Formula {\bf[GT]}:}
-  \Let{spec}{$\exists P_T, P_N. \phi(P_T, x, x') \vee \psi(P_N, y)$}
-  \Let{$(P_T, P_N)$}{{\sc Synthesise}(spec)}
-  \If{decide($\exists x, x' . \lnot \phi(P_T, x, x'))$ = unsat}
-    \State \Return{$L$ terminates}
-  \ElsIf{decide($\exists x . \lnot \psi(P_N, x))$ = unsat}
-    \State \Return{$L$ does not terminate}
-  \EndIf
-\EndFunction
- \end{algorithmic}
- }
-\end{algorithm}
-
+first one and then the other, which will be illustrated by Algorithm~\ref{alg:termination} once
+we have shown how to solve the formula {\bf [GT]}.
 
 
 % 
@@ -1915,6 +1892,34 @@ verification formula\footnote{GP is not used, since it is inherently incomplete.
 \caption{Schematic diagram of {\sc synth}}
 \label{fig:synth-dfd}
 \end{figure*}
+
+
+Now that we have a procedure for solving a formula
+in the synthesis fragment, we can build the full procedure for
+deciding termination of a loop $L$.  This is shown in Algorithm~\ref{alg:termination}.
+
+\begin{algorithm}
+{\small
+ \caption{Bit-vector termination
+ \label{alg:termination}}
+ \vspace{-.5em}
+ \begin{algorithmic}[1]
+ \Statex
+\Function{terminates}{$L$}
+  %\Let{termination-spec}{$\exists W, R. \forall x, x' . \phi(W, R, x, x')$} \Comment{Formula {\bf [CT]}}
+  %\Let{nonterm-spec}{$\exists N, C, x_0, \forall x. \psi(N, C, x_0, x)$} \Comment{Formula {\bf [SNT]}}
+  \Statex  \Comment{Formula {\bf[GT]}:}
+  \Let{spec}{$\exists P_T, P_N. \phi(P_T, x, x') \vee \psi(P_N, y)$}
+  \Let{$(P_T, P_N)$}{{\sc Synthesise}(spec)}
+  \If{decide($\exists x, x' . \lnot \phi(P_T, x, x'))$ = unsat}
+    \State \Return{$L$ terminates}
+  \ElsIf{decide($\exists x . \lnot \psi(P_N, x))$ = unsat}
+    \State \Return{$L$ does not terminate}
+  \EndIf
+\EndFunction
+ \end{algorithmic}
+ }
+\end{algorithm}
 
 
 
