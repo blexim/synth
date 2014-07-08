@@ -982,10 +982,10 @@ with formula {\bf [CNT]} and instead must use formula {\bf [SNT]}.
 \noindent {\bf Termination.} If a loop $L(G, T)$ has another loop $L'(G', T')$ nested inside it, we cannot directly use {\bf [UT]}
 to express the termination of $L$.  This is because the single-step transition relation $T$ must
 include the transitive closure of the inner loop $T'^*$, and we do not have a transitive closure
-operator in our logic.  Therefore to encode the termination of $L$, we construct an overapproximation
+operator in our logic.  Therefore to encode the termination of $L$, we construct an over-approximation
 $T_o \supseteq T$ and use this in formula {\bf [UT]} to specify a ranking function.
 Rather than explicitly construct $T_o$ using, for example, abstract interpretation, we add constraints to
-our formula that encode the fact that $T_o$ is an overapproximation of $T$, and that it is
+our formula that encode the fact that $T_o$ is an over-approximation of $T$, and that it is
 precise enough to show that $R$ is a ranking function.
 
 % All we need to do in order to use {\bf [CT]} in any context %environment and regardless of the complexity of the loops's body 
