@@ -899,6 +899,12 @@ $L$'s non-termination. The issue with this formula is the additional level of qu
 we introduce a Skolem function $S$, which we then existentially quantify over.  This results in
 formula {\bf [SNT]} (Definition~\ref{def:snt}).
 
+\begin{theorem}
+ \label{thm:snt}
+ Formula {\bf [ONT]} (Definition~\ref{def:ont}) is satisfiable iff {\bf [SNT]} (Definition~\ref{def:snt}) is.
+\end{theorem}
+
+
 This extra second-order term introduces some complexity to the formula, which
 we can avoid if the transition relation $T$ is deterministic.
 \begin{definition}[Determinism]
@@ -1443,29 +1449,56 @@ iff it is non-terminating.  We will call these formulae $\phi$ and $\psi$,
 respectively:
 %
 \begin{align*}
- \exists P_N . \forall x, x' . \phi(W_N, x, x') \\
- \exists P_T . \forall x, x' . \psi(W_T, x, x')
+ \exists P_T . \forall x, x' . \phi(P_T, x, x') \\
+ \exists P_N . \forall x . \psi(P_N, x)
 \end{align*}
 %
 We can combine these:
 %
 \begin{align*}
- (\exists P_N . \forall x, x'. \phi(W_N, x, x')) \vee (\exists P_T . \forall x, x', \psi(W_T, x, x'))
+ (\exists P_T . \forall x, x'. \phi(P_T, x, x')) \vee (\exists P_N . \forall x, \psi(P_N, x))
 \end{align*}
 %
 Which simplifies to:
-%
-\begin{definition}[Generalised Termination Formula]
+\begin{definition}[Generalised Termination Formula {\bf [GT]}]
+\label{def:general-termination}
 \begin{align*}
- \exists P_N, P_T. \forall x, x', y, y', \phi(P_N, x, x') \vee \psi(P_T, y, y') 
+ \exists P_T, P_N. \forall x, x', y, \phi(P_T, x, x') \vee \psi(P_N, y)
 \end{align*}
 \end{definition}
 
-Since $L$ either terminates or does not terminate, this formula is a
-tautology in the synthesis fragment.  A solution to the formula would
+Since $L$ either terminates or does not terminate, this formula is a tautology in the synthesis fragment.
+A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
+and termination respectively.  Exactly one of these will be a genuine proof, so we can check
+first one and then the other, as shown in Algorithm~\ref{alg:termination}.
+
+\begin{algorithm}
+ \caption{Bit-vector termination
+ \label{alg:termination}}
+ %\vspace{-1.5em}
+ \begin{algorithmic}[1]
+ \Statex
+\Function{terminates}{$L$}
+  %\Let{termination-spec}{$\exists W, R. \forall x, x' . \phi(W, R, x, x')$} \Comment{Formula {\bf [CT]}}
+  %\Let{nonterm-spec}{$\exists N, C, x_0, \forall x. \psi(N, C, x_0, x)$} \Comment{Formula {\bf [SNT]}}
+  \Statex  \Comment{Formula {\bf[GT]}:}
+  \Let{spec}{$\exists P_T, P_N. \phi(P_T, x, x') \vee \psi(P_N, y)$}
+  \Let{$(P_T, P_N)$}{{\sc Synthesise}(spec)}
+  \If{decide($\exists x, x' . \lnot \phi(P_T, x, x'))$ = unsat}
+    \State \Return{$L$ terminates}
+  \ElsIf{decide($\exists x . \lnot \psi(P_N, x))$ = unsat}
+    \State \Return{$L$ does not terminate}
+  \EndIf
+\EndFunction
+ \end{algorithmic}
+\end{algorithm}
+
+Since $L$ either terminates or does not terminate, this formula is
+satisfiable in the synthesis fragment.  A solution to the formula would
 include witnesses $P_N$ and $P_T$, which are putative proofs of
 non-termination and termination, respectively.  Exactly one of these will be
 a genuine proof, so we can check first one and then the other.
+
 
 % 
 % Given a program, our algorithm attempts to prove termination or non-termination for each loop individually 
@@ -1625,7 +1658,7 @@ operations, as well as basic branching in the form of the \verb|ite|
  \begin{multicols}{2}
  \begin{algorithmic}[1]
  \Statex
-\Function{synth}{{\sc inputs}}
+\Function{synth}{{\sc inputs}, $\sigma$}
   \Let{$(i_1, \ldots, i_N)$}{{\sc inputs}}
   \Let{query}{$\exists P, x_0 . \forall i \in \text{\sc inputs} . \sigma(P, x_0, i)$}
   \Let{result}{decide(query)}
@@ -1636,7 +1669,7 @@ operations, as well as basic branching in the form of the \verb|ite|
   \EndIf
 \EndFunction
 \Statex
-\Function{verif}{P}
+\Function{verif}{$P, x_0, \sigma$}
   \Let{query}{$\exists x . \lnot \sigma(P, x_0, x)$}
   \Let{result}{decide(query)}
   \If{result.satisfiable}
@@ -1647,7 +1680,7 @@ operations, as well as basic branching in the form of the \verb|ite|
 \EndFunction
 \columnbreak
 \Statex
-\Function{RefinementLoop}{}
+\Function{Synthesise}{$\sigma$}
   \Let{{\sc inputs}}{$\emptyset$}
   \Loop
     \Let{candidate}{\Call{synth}{{\sc inputs}}}
@@ -1947,7 +1980,13 @@ incremental evolution~\cite{Gomez97incrementalevolution}.
 Termination for bit-vector programs is known to be
 PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10}.  We first record the
 expected results for soundness and completeness of our algorithm for
-deciding it.
+deciding it.  Our strategy for proving soundness and completeness
+is first to prove that Algorithm~\ref{alg:cegis} (as instanciated
+with \newC as a background logic) is a semi-decision
+procedure.  Next, we will show that $\mathcal{L}$ is expressive enough
+to compute (non-)termination proofs for every bit-vector program.
+We will then combine these results to show that the procedure as a whole
+terminates with a valid proof for every input program.
 %
 \begin{theorem}\label{thm:synth-sound}
 Algorithm~\ref{alg:cegis} is sound -- if it terminates with witness $(P, x_0)$, then
@@ -1955,31 +1994,32 @@ $(P, x_0) \models \sigma$.
 \end{theorem}
 
 \begin{proof}
- The procedure {\sc RefinementLoop} terminates only if {\sc Verif} returns ``valid''.  In that
+ The procedure {\sc Synthesise} terminates only if {\sc Verif} returns ``valid''.  In that
  case, $\exists x . \lnot \sigma(P, x_0, x)$ is unsatisfiable and so $\forall x . \sigma(P, x_0, x)$ holds.
 \end{proof}
 
 \begin{theorem}
  \label{thm:synth-semicomplete}
- If the existential first-order theory used to express the specification $\sigma$ is decidable,
+ If the existential first-order theory used to express the specification $\sigma$ is decidable
+ and the domain of inputs $X$ is finite,
  Algorithm~\ref{alg:cegis} is semi-complete -- if a solution $(P, x_0) \models \sigma$
  exists then Algorithm~\ref{alg:cegis} will terminate.  However, if no program
- satisfies the specification, the algorithm may not terminate.  Furthermore if the domain of inputs $X$
- is finite, the algorithm is guaranteed to terminate.
+ satisfies the specification, the algorithm may not terminate.
 \end{theorem}
 
 \begin{proof}
+ If the domain $X$ is finite then the loop in procedure {\sc Synthesise} can only
+ iterate $\| X \|$ times, since by this time all of the elements of $X$ would have been
+ added to the inputs set.  Therefore if the {\sc Synth} procedure always terminates,
+ Algorithm~\ref{alg:cegis}.
+
  Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
  the program length $l$), it will eventually enumerate a program that meets the specification
- in whatever set of inputs are currently being tracked.  Since the first-order theory is
+ in whatever set of inputs are currently being tracked, since by assumption such a program
+ exists.  Since the first-order theory is
  decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
  The set of correct programs is therefore recursively enumerable and Algorithm~\ref{alg:cegis}
  enumerates this set, so it is semi-complete.
-
- If the domain $X$ is finite then the loop in procedure {\sc RefinementLoop} can only
- iterate $\| X \|$ times, since by this time all of the elements of $X$ would have been
- added to the inputs set.  Therefore if the {\sc Synth} procedure always terminates (which it does
- by assumption of decidability), the whole algorithm terminates.
 \end{proof}
 
 
@@ -1994,6 +2034,8 @@ $(P, x_0) \models \sigma$.
 %  This is a direct consequence of Theorems~\ref{thm:ut}, \ref{thm:ct}, \ref{thm:ont}, \ref{thm:cnt} and \ref{thm:synth-sound}.
 % \end{proof}
 
+We will now show that $\mathcal{L}$ is expressive enough to encode (non-)termination proofs for
+every bit-vector program.
 
 \begin{lemma}
  \label{lem:l-func}
@@ -2001,7 +2043,10 @@ $(P, x_0) \models \sigma$.
 \end{lemma}
 
 \begin{proof}
-A very inefficient construction which computes $f$ is:
+Without loss of generality, let $X = Y = \mathbb{N}_b^k$ the set of
+$k$-tuples of natural numbers less than $b$.
+A very inefficient construction which computes the first co-ordinate
+of the output $y$ is:
 %
 \begin{verbatim}
 t1 = f(0)
@@ -2012,10 +2057,9 @@ t5 = ITE(t4, f(2), t3)
 ...
 \end{verbatim}
 %
-Thus, every $f$ is computed a program of size at most $b \times
-2^{bk + 1}$.
-
-(Tidy this up).
+Where the \verb|f(n)| are literal constants that are to appear in the program text.
+This program is of length $2b - 1$, and so all $k$ co-ordinates of the output $y$
+are computed by a program of size at most $2bk - k$.
 \end{proof}
 
 \begin{corollary}
@@ -2067,7 +2111,7 @@ a finite $\mathcal{L}$-program computing $R''$.
 \begin{proof}
  A non-termination proof is a triple $\langle N, C, x_0 \rangle$ where $N \subseteq \mathcal{S}$ is
  a (finite) recurrence set and $C : \mathcal{S} \to \mathcal{S}$ is a Skolem function choosing
- a successor for each $x \in N$.  Since $\mathcal{S}$ is finite, and by Lemma~\ref{lem:l-func}, both
+ a successor for each $x \in N$.  Since $\mathcal{S}$ is finite, so by Lemma~\ref{lem:l-func} both
  $N$ and $C$ are computed by finite $\mathcal{L}$-programs.
 \end{proof}
 
@@ -2078,26 +2122,34 @@ a finite $\mathcal{L}$-program computing $R''$.
 \end{theorem}
 
 \begin{proof}
+ For any $P, P', \sigma, \sigma$, if $P \models \sigma$ then $(P, P') \models \sigma \vee \sigma'$.
+
  By Theorem~\ref{thm:l-term}, if $L$ terminates then there exists a termination proof $P_T$ expressible
- in $\mathcal{L}$.  Since $\phi$ is a termination specification, $P_T \models \phi$ and so $P_T \models \phi \vee \psi$.
+ in $\mathcal{L}$.  Since $\phi$ is a termination specification, $P_T \models \phi$ and so
+ for any $P_N$, $(P_T, P_N) \models \phi \vee \psi$.
 
  Similarly if $L$ does not terminate for some input, by Theorem~\ref{thm:l-nonterm} there is a non-termination
- proof $P_N$ expressible in $\mathcal{L}$, so $P_N \models \psi$ and so $P_N \models \phi \vee \psi$. 
+ proof $P_N$ expressible in $\mathcal{L}$, so $P_N \models \psi$ and hence for any $P_T$, $(P_T, P_N) \models \phi \vee \psi$.
+ 
+ So in either case ($L$ terminates or does not), there is a witness in $\mathcal{L}$ satisfying $\phi \vee \psi$.
 \end{proof}
 
 \begin{theorem}
- Algorithm~\ref{alg:cegis} terminates on the generalised termination specification of Definition~\ref{def:general-termination}.
+ Algorithm~\ref{alg:termination} is sound and complete -- it terminates for all input loops $L$ with
+ a correct termination verdict.
 \end{theorem}
 
 \begin{proof}
- The specification is satisfiable (Thoerem~\ref{thm:generalised-sat}) and Algorithm~\ref{alg:cegis} is semi-complete
- (Theorem~\ref{thm:synth-semicomplete}).
+ The background logic for Algorithm~\ref{alg:termination} is \newC, for which safety is decidable.  Also, the set of
+ inputs is just the state space of $L$, which is finite.  Therefore Theorems~\ref{thm:generalised-sat} and \ref{thm:synth-semicomplete}
+ hold -- the specification \lstinline!spec! is satisfiable and the instanciation of Algorithm~\ref{alg:cegis} is semi-complete.
+ Therefore the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
+ If $L$ terminates then $P_T$ is a termination proof (Theorem~\ref{thm:ct}).  Otherwise $P_N$ is a non-termination proof
+ (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory being decidable means that each
+ call to \lstinline|decide()| will terminate, which allows us to determine which of $P_T$ and $P_N$ is a correct proof.
 \end{proof}
 
 Hence our procedure is sound and complete for bitvector termination.
-
-{\bf TODO:} Tie everything up into one algorithm (build the formula, invoke CEGIS, check which witness is
-correct) then proof soundness for that.
 
 
 We will now show that our time complexity is asymptotically a function of
