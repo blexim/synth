@@ -812,6 +812,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 %% \end{definition}
 
 \end{framed}
+\caption{Formulae encoding the termination and non-termination of a single loop} \label{fig:single_loop}
 \end{figure*}
  %This means that we will not be able to use the solver for the synthesis fragment to solve it.
 
@@ -831,7 +832,7 @@ to find a ranking function for \mbox{$T \cap (G \times X)$}, i.e.~$T$ restricted
 
 \begin{theorem}
 \label{thm:ut}
- The loop $L(G, T)$ terminates from every start state iff formula {\bf [UT]} (Definition~\ref{def:UT}) is satisfiable.
+ The loop $L(G, T)$ terminates from every start state iff formula {\bf [UT]} (Definition~\ref{def:UT}, Figure~\ref{fig:single_loop}) is satisfiable.
 \end{theorem}
 
 % \begin{proof}
@@ -869,7 +870,7 @@ often, or equivalently $ \exists x . T^+(x, x)$.
 Deciding satisfiability of this formula directly would require a logic
 that includes a transitive closure operator, $\bullet^+$.  Rather than
 introduce such an operator, we will characterise non-termination
-using the synthesis formula {\bf [ONT]} (Definition~\ref{def:ont})
+using the synthesis formula {\bf [ONT]} (Definition~\ref{def:ont}, Figure~\ref{fig:single_loop})
 encoding the existence of an \emph{(open) recurrence set}, i.e.~a nonempty 
 set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s' \in N$ \cite{DBLP:conf/popl/GuptaHMRX08}.
@@ -894,7 +895,7 @@ If this formula is satisfiable, $N$ is an open recurrence set for $L$, which pro
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula).  To eliminate the innermost existential quantifier,
 we introduce a Skolem function $C$ that chooses the successor $x'$, which we then existentially quantify over.  This results in
-formula {\bf [SNT]} (Definition~\ref{def:snt}).
+formula {\bf [SNT]} (Definition~\ref{def:snt}, Figure~\ref{fig:single_loop}).
 
 \begin{theorem}
  \label{thm:snt}
@@ -924,7 +925,7 @@ fragment without needing Skolemization.
 We note that if $T$ is deterministic, every open recurrence set is also a
 closed recurrence set (since each state has at most one successor).  Thus,
 the non-termination problem for deterministic transition systems is
-equivalent to the satisfiability of formula {\bf [CNT]}.
+equivalent to the satisfiability of formula {\bf [CNT]} from Figure~\ref{fig:single_loop}.
 
 
 \begin{theorem}
@@ -1153,7 +1154,7 @@ $L_2:$
 %%  \end{align*}
 %% \end{definition}
  \end{framed}
-
+\caption{Formula encoding conditional termination of a loop} \label{fig:conditional_termination}
 \end{figure*}
 
 \noindent {\bf Non-Termination.}
@@ -1228,7 +1229,7 @@ $L_2$:
 \end{minipage}
 \end{framed}
 
-\caption{The non-termination formula for nested loops \label{fig:nonterm-nested}}
+\caption{Formula encoding non-termination of nested loops \label{fig:nonterm-nested}}
 \end{figure*}
 
 
@@ -1261,7 +1262,7 @@ we have $I(x)$.
 \begin{theorem}
 \label{thm:ct}
  The loop $L(G, T)$ terminates when started in any state satisfying $I(x)$ iff formula {\bf [CT]}
- (Defintion~\ref{def:ct}) is satisfiable.
+ (Defintion~\ref{def:ct}, Figure~\ref{fig:conditional_termination}) is satisfiable.
 \end{theorem}
 % 
 % \begin{proof}
