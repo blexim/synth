@@ -99,7 +99,7 @@
                                   % (paid open-access papers, 
                                   % short abstracts)
 
-\title{Synthesising Concise Termination and Non-Termination Proofs for Bit-Vector Programs}
+\title{Synthesising Termination and Non-Termination Proofs for Bit-Vector Programs}
 
 \authorinfo{Cristina David\and Daniel Kroening\and Matt Lewis}
            {University of Oxford}
@@ -2245,7 +2245,7 @@ from the specification.  We ran the resulting termination prover,
 named {\sc Juggernaut}, on 47
 benchmarks taken from the literature and SV-COMP'15~\cite{svcomp15}.  To
 provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
-the same benchmarks.  Each tool was given a time limit of 180s, and was
+the same benchmarks.  Each tool was given a time limit of 180\,s, and was
 run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
 results of these experiments are given in Figure~\ref{fig:experiments}.
 
@@ -2265,10 +2265,10 @@ but can be difficult for provers that enumerate lassos.
 On the other hand, {\sc ARMC} is \emph{much} faster than our tool.  While
 this difference can partly be explained by much more engineering time being
 invested in {\sc ARMC}, we feel that the difference is probably inherent to
-the difference in the two approaches -- our algorithm is complete and
-bit-vector accurate, which comes at the cost of efficiency.
-{\sc Juggernaut} is slow, but unstoppable in its
-termination capabilities if you are willing to wait for it.
+the difference in the two approaches -- our solver is more general
+than {\sc ARMC}, in that it provides a complete proof system for both
+termination and non-termination.  This comes at the cost of efficiency:
+{\sc Juggernaut} is slow, but unstoppable.
 
 The final column in Figure~\ref{fig:experiments} gives the number of
 iterations of the CEGIS loop our synthesiser performed.  While the
@@ -2280,11 +2280,10 @@ small.
 Of the 47 benchmarks, 2 use nonlinear operations in the program (loop6 and loop11),
 and 5 have nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
 {\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
-It solves 2 of the 5 nested loops in less than 30s, but times out on the other
-3.  Of these 3 timeouts, 2 (svcomp40 and svcomp41) are due to program constants that
-are too large to be handled with our default settings.  Increasing
-our default word width from 3 bits to 5 bits allowed us to prove termination
-for both these benchmarks in less than 30s; these results are marked with a *.
+It solves 4 of the 5 nested loops in less than 30s\footnote{Although
+2 of these cases timed out with our default parameters, changing one command
+line flag allowed them to go through.  The benchmarks using non-default
+command line flags are marked with a *.}, but times out on the 5th.
 
 In conclusion, while they show that our tool is not yet production ready,
 these experiments confirm our conjecture that synthesis can be used
