@@ -796,8 +796,8 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \begin{definition}[Non-Termination Formula -- Skolemized Open Recurrence Set  {\bf [SNT]}]
 \label{def:snt}
  \begin{align*}
-  \exists N, S, x_0 . \forall x . & N(x_0) ~\wedge \\ &  N(x) \rightarrow G(x) ~ \wedge \\
-							& N(x) \rightarrow T(x, S(x)) \wedge N(S(x))
+  \exists N, C, x_0 . \forall x . & N(x_0) ~\wedge \\ &  N(x) \rightarrow G(x) ~ \wedge \\
+							& N(x) \rightarrow T(x, C(x)) \wedge N(C(x))
  \end{align*}
 \end{definition}
 
@@ -896,7 +896,7 @@ The notion of open recurrence set is encoded by formula {\bf [ONT]} (Definition~
 If this formula is satisfiable, $N$ is an open recurrence set for $L$, which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to the synthesis fragment
 (it is an $\exists \forall \exists$ formula).  To eliminate the innermost existential quantifier,
-we introduce a Skolem function $S$, which we then existentially quantify over.  This results in
+we introduce a Skolem function $C$, which we then existentially quantify over.  This results in
 formula {\bf [SNT]} (Definition~\ref{def:snt}).
 
 \begin{theorem}
