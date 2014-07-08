@@ -2203,34 +2203,15 @@ $$O\left (2^{K(\sigma)} \times NP \left ( K(\sigma) \times \| L \| \right) \righ
 Which means that for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
 if $K(\sigma)$ is small we will be able to find a termination proof, regardless of other parameters
 such as the size of the program under analysis.  To put this another way, under the assumption
-that $K(\sigma)$ is small for a program's termination problem, we will find a ranking function
-quite rapidly.  We will now investigate the properties of functions with low Kolmogorov complexity,
-and show that the assumption of a low-Kolmogorov ranking function is much weaker than the assumption
-of a linear ranking function.
+that $K(\sigma)$ is small for a program's termination problem, we will find a termination proof
+quite rapidly.
 
-\begin{theorem}
- Linear functions have low Kolmogorov complexity.
-\end{theorem}
-
-\begin{proof}
- The function $f: X \to Y$ can be computed with a program consisting of
- $2 \cdot \dim(X) \cdot \dim(Y) - \dim(Y)$ instructions (1 multiplication and 1 addition for
- each cell in the matrix representing $f$).  Therefore,
- $K(f) \leq 2 \cdot \dim(X) \cdot \dim(Y) - \dim(Y)$.
-\end{proof}
-
-\begin{theorem}
-Assuming a reasonable program encoding, the probability that a random program of length $l$ computes
-a linear function is $O(2^{-l})$.
-\end{theorem}
-
-\begin{proof}
- (Do this proof properly).
- 
- Otherwise, we'd need to have an exponential number of programs computing the same function.
- That would be an unreasonable program encoding.
-\end{proof}
-
+To give a flavour for the nature of the ``low Kolmogorov complexity'' assumption, 
+we observe that linear functions have low Kolmogorov complexity (since a linear function can
+be computed with at most 1 instruction and 1 multiplication for each program variable).
+Conversely, the probability that a random program of length $l$ computes
+a linear function is $O(2^{-l})$, since otherwise we'd need to have an exponential
+number of programs computing the same function.
 
 Therefore the number of nonlinear functions $f$ with $K(f) \leq \kappa$
 grows exponentially with $\kappa$, while the number of linear functions
