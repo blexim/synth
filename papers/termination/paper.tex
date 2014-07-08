@@ -2291,7 +2291,7 @@ small.
 Of the 47 benchmarks, 2 use nonlinear operations in the program (loop6 and loop11),
 and 5 have nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
 {\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
-It solves 4 of the 5 nested loops in less than 30s\footnote{Although
+It solves 4 of the 5 nested loops in less than 30\,s\footnote{Although
 2 of these cases timed out with our default parameters, changing one command
 line flag allowed them to go through.  The benchmarks using non-default
 command line flags are marked with a *.}, but times out on the 5th.
@@ -2301,7 +2301,7 @@ candidate solutions, {\sc ExplicitSearch} was always fastest
 to find counterexample inputs, and {\sc CBMC} was always fastest at
 proving correctness.  Each of these search methods has its strengths,
 and removing any one would have had a significant negative impact on
-overall performance.  Approximately 90\% of the total
+overall performance.  Approximately 90\,\% of the total
 runtime was spent in synthesising new candidate solutions, which matches
 our expectations -- the (non-)termination proofs are difficult to
 find, but easy to check.
