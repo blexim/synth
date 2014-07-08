@@ -299,7 +299,7 @@ unbounded arrays or the heap.  Similar to other termination
 analyses~\cite{DBLP:conf/tacas/CookSZ13}, we could attempt to alleviate the
 latter limitation by abstracting programs with heap to arithmetic
 ones~\cite{DBLP:conf/popl/MagillTLT10}.  Also, we have not yet added support
-for recursion to our encoding.
+for recursion or \texttt{goto} to our encoding.
 
 \section{Motivating Examples} \label{sec:motivation}
 
@@ -309,7 +309,7 @@ assumptions made by existing termination analyses:
 \begin{itemize}
 \item[(i)] programs use only linear arithmetic.
 \item[(ii)] terminating programs have termination arguments expressible in linear arithmetic.
-\item[(iii)] the semantics of bit vectors and mathematical integers are equivalent.
+\item[(iii)] the semantics of bit-vectors and mathematical integers are equivalent.
 \item[(iv)] the semantics of IEEE floating-point numbers and mathematical reals are equivalent.
 \end{itemize}  
 
@@ -570,7 +570,7 @@ while (x>0 && y>0 && z>0) {
 Given a program, we first formalise its termination argument as a ranking
 function (Section~\ref{sec:ranking.functions}).  Subsequently, we discuss
 bit-vector semantics and illustrate differences between machine arithmetic
-and integer arithmetic that show that the abstraction of bit vectors to
+and integer arithmetic that show that the abstraction of bit-vectors to
 mathematical integers is unsound (Section~\ref{sec:machine.arith}).
 
 \subsection{Termination and Ranking Functions} \label{sec:ranking.functions}
@@ -710,7 +710,7 @@ section we show how several variations of both the termination and the
 non-termination problem can be uniformly defined in second-order logic.
 
 Due to its expressiveness, second-order logic is very difficult to reason
-about, with many second-order theories becoming undecidable even when the
+in, with many second-order theories becoming undecidable even when the
 corresponding first-order theory is decidable.
 To make solving our constraints tractable, we identify a fragment of second-order logic
 with a constrained use of quantification that is expressive enough to encode
@@ -1517,8 +1517,8 @@ By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 appropriate outputs for the inputs $x$ and $y$, we can regard the
 satisfaction problem for the synthesis fragment as \emph{program synthesis},
 i.e.~the mechanised construction of software that provably satisfies a
-given specification.  Then a witness $P$ to the satisfiability of some
-formula is just a program that meets the specification $\sigma$.
+given specification.  A witness $P$ to the satisfiability of some
+formula is then just a program that meets the specification $\sigma$.
 
 Research in the area of program synthesis has been
 particularly fruitful beginning with Alonzo Church's work on the
@@ -1546,8 +1546,8 @@ Ackermann function and $G$ is Graham's number, a physical computer capable
 of computing $A(G, G)$ would contain (much!) more matter than is believed to
 exist in the universe.  Fortunately, it is rare for a programmer to need
 such a large number and so modern computers do their arithmetic over
-fixed-width binary words, otherwise known as bit vectors.  For the remainder
-of this section, we will say that the bit vectors we are working with are
+fixed-width binary words, otherwise known as bit-vectors.  For the remainder
+of this section, we will say that the bit-vectors we are working with are
 $k$-bits wide, which means that each word can hold one of $2^k$ bit
 patterns.  Typical values for $k$ are 32 and 64.
 
@@ -1595,7 +1595,7 @@ As well as machine arithmetic differing from Peano arithmetic on the
 operators they have in common, computers have several ``bitwise'' operations
 that are not taken as primitive in the theory of integers.  These operations
 include the Boolean operators \texttt{and, or, not, xor} applied to each
-element of the bit vector.  Computer programs often make use of these
+element of the bit-vector.  Computer programs often make use of these
 operators, which are nonlinear when interpreted in the standard model of
 Peano arithmetic\footnote{Some of these operators can be seen as
 linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
@@ -2361,7 +2361,7 @@ is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
 Given the lack of research on termination of nonlinear programs, as well as
-programs over bit vectors and floats, our work focused on covering these
+programs over bit-vectors and floats, our work focused on covering these
 areas.  One of the obvious conclusions that can be reached from
 Figure~\ref{fig:handletable} is that most methods tend to specialise on a
 certain aspect of termination proving that they can solve efficiently. 
