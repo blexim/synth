@@ -2022,6 +2022,12 @@ $(P, x_0) \models \sigma$.
  enumerates this set, so it is semi-complete.
 \end{proof}
 
+\begin{corollary}
+\label{cor:cegis-newc}
+ Since safety of \newC programs is decidable, Algorithm~\ref{alg:cegis} is semi-complete
+ when instanciated with \newC as a background theory.
+\end{corollary}
+
 
 % \begin{theorem}
 % \label{thm:sound}
@@ -2125,13 +2131,15 @@ a finite $\mathcal{L}$-program computing $R''$.
  For any $P, P', \sigma, \sigma$, if $P \models \sigma$ then $(P, P') \models \sigma \vee \sigma'$.
 
  By Theorem~\ref{thm:l-term}, if $L$ terminates then there exists a termination proof $P_T$ expressible
- in $\mathcal{L}$.  Since $\phi$ is a termination specification, $P_T \models \phi$ and so
+ in $\mathcal{L}$.  Since $\phi$ is an instance of {\bf [CT]}, $P_T \models \phi$ (Theorem~\ref{thm:ct}) and
  for any $P_N$, $(P_T, P_N) \models \phi \vee \psi$.
 
  Similarly if $L$ does not terminate for some input, by Theorem~\ref{thm:l-nonterm} there is a non-termination
- proof $P_N$ expressible in $\mathcal{L}$, so $P_N \models \psi$ and hence for any $P_T$, $(P_T, P_N) \models \phi \vee \psi$.
- 
- So in either case ($L$ terminates or does not), there is a witness in $\mathcal{L}$ satisfying $\phi \vee \psi$.
+ proof $P_N$ expressible in $\mathcal{L}$.  $\psi$ is an instance of {\bf [SNT]} and so $P_N \models \psi$
+ (Theorem~\ref{thm:snt}), hence for any $P_T$, $(P_T, P_N) \models \phi \vee \psi$.
+
+ So in either case ($L$ terminates or does not), there is a witness in $\mathcal{L}$ satisfying
+ formula {\bf [GT]}: $\phi \vee \psi$.
 \end{proof}
 
 \begin{theorem}
@@ -2140,17 +2148,19 @@ a finite $\mathcal{L}$-program computing $R''$.
 \end{theorem}
 
 \begin{proof}
- The background logic for Algorithm~\ref{alg:termination} is \newC, for which safety is decidable.  Also, the set of
- inputs is just the state space of $L$, which is finite.  Therefore Theorems~\ref{thm:generalised-sat} and \ref{thm:synth-semicomplete}
- hold -- the specification \lstinline!spec! is satisfiable and the instanciation of Algorithm~\ref{alg:cegis} is semi-complete.
- Therefore the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
+ By Theorem~\ref{thm:generalised-sat}, the specification \lstinline!spec! is satisfiable.  Corollary~\ref{cor:cegis-newc}
+ shows that Algorithm~\ref{alg:cegis} is semi-complete, and so the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
  If $L$ terminates then $P_T$ is a termination proof (Theorem~\ref{thm:ct}).  Otherwise $P_N$ is a non-termination proof
  (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory being decidable means that each
  call to \lstinline|decide()| will terminate, which allows us to determine which of $P_T$ and $P_N$ is a correct proof.
 \end{proof}
 
-Hence our procedure is sound and complete for bitvector termination.
+Hence Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
 
+Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
+$2^bk$ times and each iteration requires solving 2 NP-complete problems of size < $2^bk \times \| L\|$
+with $\| L \| $ the size of the program-under-analysis computing $\| L \|$.  So the
+runtime is bounded by $2^{bk+1} NP(2^bk \| L \|)$.
 
 We will now show that our time complexity is asymptotically a function of
 the Kolmogorov complexity of the (non-)termination proof, and argue
