@@ -133,7 +133,7 @@ integers and IEEE floating-point arithmetic.
 
 \keywords
 Termination, Non-Termination, Program Synthesis,
-Lexicographic Ranking Functions, Bitvector Ranking Functions, Floating-Point Ranking Functions.
+Lexicographic Ranking Functions, Bit-vector Ranking Functions, Floating-Point Ranking Functions.
 
 \section{Introduction}\label{sec:intro}
 
@@ -2082,7 +2082,8 @@ are computed by a program of size at most $2bk - k$.
 Let $v_1, \ldots, v_k$ be the variables of the program $P$ under analysis,
 and let each be $b$ bits wide.  Its state space $\mathcal{S}$ is then of
 size $2^{bk}$.  A~ranking function $R: \mathcal{S} \to \mathcal{D}$ for $P$
-exists iff $P$ terminates.  Since $R$ is injective, we have that $\|
+exists iff $P$ terminates.  Without loss of generality,
+$\mathcal{D}$ is a well-founded total order.  Since $R$ is injective, we have that $\|
 \mathcal{D} \| \geq \| \mathcal{S} \|$.  If $\| \mathcal{D} \| > \|
 \mathcal{S} \|$, we can construct a function $R': \mathcal{S} \to
 \mathcal{D'}$ with $ \| \mathcal{D'} = \| \mathcal{S} \|$ by just setting
@@ -2158,33 +2159,20 @@ Hence Algorithm~\ref{alg:termination} is sound and complete for bit-vector termi
 Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
 $2^bk$ times where $k$ is the number of variables used by $L$ and
 $b$ is the number of bits used to store each variable.
-The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times \| L\|$
-with $\| L \| $ the size of the program-under-analysis computing $\| L \|$.  So if 
+The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times l \times \| L\|$
+with $l$ the length of the program to be synthesised, and $\| L \| $ the size of the program-under-analysis
+computing $ L $.  So if
 the CEGIS loop iterates $n$ times, the
-runtime is bounded by $2 \times n \times NP(n \times \| L \|)$, which is bounded
-by $2^{bk + 1} NP(2^{bk} \| L \|)$.  Clearly the runtime is affected most strongly by $n$,
+runtime is bounded by $2 \times n \times NP(n \times l \times \| L \|)$, which is bounded
+by $2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$.  Clearly the runtime is affected most strongly by $n$,
 the total number of iterations of the CEGIS loop.
 
-We will now show that our time complexity is asymptotically a function of
-the Kolmogorov complexity of the (non-)termination proof, and argue
-that this gives our procedure various desirable qualities in practical
+We will now show that the number of iterations of the CEGIS loop is a function
+of the Kolmogorov complexity of the (non-)termination proof, and so
+our runtime is asymptotically a function of the Kolmogorov complexity.
+We argue that this gives our procedure various desirable qualities in practical
 appliations.
-%
-\begin{theorem}
- {\sc Kalashnikov} has time complexity $NP^{NP}(K(\sigma))$.
-\end{theorem}
-
-\begin{theorem}
- {\sc Headshot} uses a single call to {\sc Kalashnikov} and uses an encoding with $O(1)$
- overhead.  It therefore has time complexity $NP^{NP}(K(\tau(P))$ where $\tau(P)$ is the
- termination specification for program $P$.
-\end{theorem}
-
-In Section~\ref{sec:synthesis} we will describe a procedure for solving the synthesis formula.
-This procedure has the property that it will find the shortest program meeting the
-specification, and as a consequence the runtime of the program synthesiser is dominated
-by the size of this shortest program.  To frame the discussion of the runtime of our
-termination proving procedure, we first recall the definition of the Kolmogorov complexity
+We first recall the definition of the Kolmogorov complexity
 of a function $f$:
 
 \begin{definition}[Kolmogorov complexity]
@@ -2200,43 +2188,31 @@ synthesis problem in terms of its specification:
  program $P$ such that $P \models \sigma$.
 \end{definition}
 
-We will later show that the time complexity of our synthesis procedure is $NP^{NP}(K(\sigma))$,
-which means that for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
+Let us consider the number of iterations of the CEGIS loop $n$ required for a specification
+$\sigma$.  Since we enumerate candidate programs in order of length, we are always synthesising
+programs with length no greater than $K(\sigma)$ (since when we enumerate the first correct program,
+we will terminate).  So it is clear that the space of solutions we search over is the space
+of functions computed by $\mathcal{L}$-programs of length no greater than $K(\sigma)$.  Let's
+denote this set $\mathcal{L}(K(\sigma))$.  Clearly, $\| \mathcal{L}(K(\sigma)) \| \leq O(2^{K(\sigma)})$
+since there are $O(2^{K(\sigma)}$ \emph{programs} of length $K(\sigma)$ and some functions
+will be computed by more than one program.
+
+Each iteration of the CEGIS loop distinguishes at least one incorrect function from the set of correct
+functions, so we can see that the loop will iterate no more than $\| \mathcal{L}(K(\sigma)) \|$ times.
+Therefore another bound on our runtime is:
+$$O\left (2^{K(\sigma)} \times NP \left ( K(\sigma) \times \| L \| \right) \right) = O \left(2^{K(\sigma)} \right)$$
+Which means that for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
 if $K(\sigma)$ is small we will be able to find a termination proof, regardless of other parameters
 such as the size of the program under analysis.  To put this another way, under the assumption
-that $K(\sigma)$ is small for a program's termination problem, we will find a ranking function
-quite rapidly.  We will now investigate the properties of functions with low Kolmogorov complexity,
-and show that the assumption of a low-Kolmogorov ranking function is much weaker than the assumption
-of a linear ranking function.
+that $K(\sigma)$ is small for a program's termination problem, we will find a termination proof
+quite rapidly.
 
-
-\begin{theorem}
- Linear functions have low Kolmogorov complexity.
-\end{theorem}
-
-\begin{proof}
- The function $f: X \to Y$ can be computed with a program consisting of
- $2 \cdot \dim(X) \cdot \dim(Y) - \dim(Y)$ instructions (1 multiplication and 1 addition for
- each cell in the matrix representing $f$).  Therefore,
- $K(f) \leq 2 \cdot \dim(X) \cdot \dim(Y) - \dim(Y)$.
-\end{proof}
-
-\begin{theorem}
-Assuming a reasonable program encoding, the probability that a random program of length $l$ computes
-a linear function is $O(2^{-l})$.
-\end{theorem}
-
-\begin{proof}
- (Do this proof properly).
- 
- Otherwise, we'd need to have an exponential number of programs computing the same function.
- That would be an unreasonable program encoding.
-\end{proof}
-
-
-Therefore the number of nonlinear functions $f$ with $K(f) \leq \kappa$
-grows exponentially with $\kappa$, while the number of linear functions
-grows only linearly.  This shows that assuming the existence of a linear
+To give a flavour for the nature of the ``low Kolmogorov complexity'' assumption, 
+we observe that linear functions have low Kolmogorov complexity (since a linear function can
+be computed with at most 1 instruction and 1 multiplication for each program variable),
+so the number of linear functions $f$ with $K(f) \leq \kappa$ grows linearly with $\kappa$.
+Conversely, the number of functions $f$ with $K(f) \leq \kappa$
+grows exponentially with $\kappa$.  This shows that assuming the existence of a linear
 ranking function is much stronger than assuming the existence of a short
 termination proof.  In addition to being a much weaker assumption,
 we argue that low Kolmogorov complexity is a more natural assumption than
