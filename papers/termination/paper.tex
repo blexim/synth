@@ -2124,7 +2124,7 @@ a finite $\mathcal{L}$-program computing $R''$.
 
 \begin{theorem}
  \label{thm:generalised-sat}
- The generalised termination formula for loop $L$ (Definiton~\ref{def:general-termination}) is satisfiable
+ The generalised termination formula {\bf [GT]} for any loop $L$ is satisfiable
  when $P_N$ and $P_T$ range over \mbox{$\mathcal{L}$-computable} functions.
 \end{theorem}
 
@@ -2152,22 +2152,22 @@ a finite $\mathcal{L}$-program computing $R''$.
  By Theorem~\ref{thm:generalised-sat}, the specification \lstinline!spec! is satisfiable.  Corollary~\ref{cor:cegis-newc}
  shows that Algorithm~\ref{alg:cegis} is semi-complete, and so the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
  If $L$ terminates then $P_T$ is a termination proof (Theorem~\ref{thm:ct}).  Otherwise $P_N$ is a non-termination proof
- (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory being decidable means that each
+ (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory \newC being decidable means that each
  call to \lstinline|decide()| will terminate, which allows us to determine which of $P_T$ and $P_N$ is a correct proof.
 \end{proof}
 
 Hence Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
 
 Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
-$2^bk$ times where $k$ is the number of variables used by $L$ and
+$2^{bk}$ times where $k$ is the number of variables used by $L$ and
 $b$ is the number of bits used to store each variable.
 The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times l \times \| L\|$
 with $l$ the length of the program to be synthesised, and $\| L \| $ the size of the program-under-analysis
 computing $ L $.  So if
 the CEGIS loop iterates $n$ times, the
-runtime is bounded by $2 \times n \times NP(n \times l \times \| L \|)$, which is bounded
-by $2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$.  Clearly the runtime is affected most strongly by $n$,
-the total number of iterations of the CEGIS loop.
+runtime is bounded by
+$$2 \times n \times NP(n \times l \times \| L \|) \leq 2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$$
+Clearly the runtime is affected most strongly by $n$, the total number of iterations of the CEGIS loop.
 
 We will now show that the number of iterations of the CEGIS loop is a function
 of the Kolmogorov complexity of the (non-)termination proof, and so
@@ -2193,17 +2193,17 @@ synthesis problem in terms of its specification:
 Let us consider the number of iterations of the CEGIS loop $n$ required for a specification
 $\sigma$.  Since we enumerate candidate programs in order of length, we are always synthesising
 programs with length no greater than $K(\sigma)$ (since when we enumerate the first correct program,
-we will terminate).  So it is clear that the space of solutions we search over is the space
+we will terminate).  So the space of solutions we search over is the space
 of functions computed by $\mathcal{L}$-programs of length no greater than $K(\sigma)$.  Let's
-denote this set $\mathcal{L}(K(\sigma))$.  Clearly, $\| \mathcal{L}(K(\sigma)) \| \leq O(2^{K(\sigma)})$
-since there are $O(2^{K(\sigma)}$ \emph{programs} of length $K(\sigma)$ and some functions
-will be computed by more than one program.
+denote this set $\mathcal{L}(K(\sigma))$.
+Since there are $O(2^{K(\sigma)}$ \emph{programs} of length $K(\sigma)$ and some functions
+will be computed by more than one program, we have $\| \mathcal{L}(K(\sigma)) \| \leq O(2^{K(\sigma)})$.
 
 Each iteration of the CEGIS loop distinguishes at least one incorrect function from the set of correct
-functions, so we can see that the loop will iterate no more than $\| \mathcal{L}(K(\sigma)) \|$ times.
+functions, so the loop will iterate no more than $\| \mathcal{L}(K(\sigma)) \|$ times.
 Therefore another bound on our runtime is:
 $$O\left (2^{K(\sigma)} \times NP \left ( K(\sigma) \times \| L \| \right) \right) = O \left(2^{K(\sigma)} \right)$$
-Which means that for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
+So for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
 if $K(\sigma)$ is small we will be able to find a termination proof, regardless of other parameters
 such as the size of the program under analysis.  To put this another way, under the assumption
 that $K(\sigma)$ is small for a program's termination problem, we will find a termination proof
