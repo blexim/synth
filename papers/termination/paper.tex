@@ -333,7 +333,7 @@ function.  We prove that this loop terminates by finding the nonlinear
 ranking function $R(x) = |x|$.
 
 \item Program (c) breaks assumption (iii).  This loop is terminating for
-bit-vectors since $x$ will eventually over-flow and become negative. 
+bit-vectors since $x$ will eventually overflow and become negative. 
 Conversely, the same program is non-terminating using integer arithmetic
 since $x > 0 \rightarrow x+1 > 0$ for any integer $x$.
 
@@ -738,7 +738,7 @@ Checking satisfiability of a formula in the synthesis fragment corresponds to pr
 amounts to finding witnesses for the unknowns $\vec{P}$ and $\vec{x}$ that meet the specification
 for all $\vec{y}$. 
 If a pair $(\vec{P}, \vec{x})$ is a solution to the synthesis problem, then we write $(\vec{P}, \vec{x}) \models \sigma$.
-For the remainder of the presentation, we drop the $\vec{x}$ and instead just write $x$, with the understanding
+For the remainder of the presentation, we drop the vector notation and write $x$ for $\vec{x}$, with the understanding
 that all quantified variables range over vectors.
 
 In the rest of this section, we show that the synthesis fragment 
@@ -869,18 +869,15 @@ often, or equivalently $ \exists x . T^+(x, x)$.
 Deciding satisfiability of this formula directly would require a logic
 that includes a transitive closure operator, $\bullet^+$.  Rather than
 introduce such an operator, we will characterise non-termination
-using a synthesis formula.
-
-Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterise non-termination
-of a transition relation $T$ by the existence of an \emph{(open) recurrence
-set}, i.e.~a nonempty set of states $N$ such that for each $s \in N$ there
-exists a transition to some $s' \in N$.
-The notion of open recurrence set is encoded by formula {\bf [ONT]} (Definition~\ref{def:ont}).
-% Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition
-% relation~$T_u$. 
-% Again, this distinction is mostly important when dealing with nested loops,
-% as illustrated in Section~\ref{sec:env}.
-
+using the synthesis formula {\bf [ONT]} (Definition~\ref{def:ont})
+encoding the existence of an \emph{(open) recurrence set}, i.e.~a nonempty 
+set of states $N$ such that for each $s \in N$ there
+exists a transition to some $s' \in N$ \cite{DBLP:conf/popl/GuptaHMRX08}.
+%% Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterise non-termination
+%% of a transition relation $T$ by the existence of an \emph{(open) recurrence
+%% set}, i.e.~a nonempty set of states $N$ such that for each $s \in N$ there
+%% exists a transition to some $s' \in N$.
+%% The notion of open recurrence set is encoded by formula {\bf [ONT]} (Definition~\ref{def:ont}).
 
 \begin{theorem}
 \label{thm:ont}
@@ -901,7 +898,7 @@ formula {\bf [SNT]} (Definition~\ref{def:snt}).
 
 \begin{theorem}
  \label{thm:snt}
- Formula {\bf [ONT]} (Definition~\ref{def:ont}) is satisfiable iff {\bf [SNT]} (Definition~\ref{def:snt}) is.
+ Formula {\bf [ONT]} (Definition~\ref{def:ont}) and formula {\bf [SNT]} (Definition~\ref{def:snt}) are equisatisfiable.
 \end{theorem}
 
 
@@ -933,7 +930,7 @@ equivalent to the satisfiability of formula {\bf [CNT]}.
 \begin{theorem}
 \label{thm:cnt}
  If $T$ is deterministic,
- Definition~\ref{def:ont} and Definition~\ref{def:cnt} are equisatisfiable.
+formula {\bf [ONT]} (Definition~\ref{def:ont}) and formula {\bf [CNT]} (Definition~\ref{def:cnt}) are equisatisfiable.
 \end{theorem}
 
 % \begin{proof}
@@ -2051,7 +2048,7 @@ every bit-vector program.
 \begin{proof}
 Without loss of generality, let $X = Y = \mathbb{N}_b^k$ the set of
 $k$-tuples of natural numbers less than $b$.
-A very inefficient construction which computes the first co-ordinate
+A very inefficient construction which computes the first coordinate
 of the output $y$ is:
 %
 \begin{verbatim}
@@ -2350,7 +2347,7 @@ imperative loops with polynomial guards and polynomial assignments
 is~\cite{DBLP:conf/vmcai/BradleyMS05}.  However, this work extends only to
 polynomials.
 
-Given the lack of research on termination of not-linear programs, as well as
+Given the lack of research on termination of nonlinear programs, as well as
 programs over bit vectors and floats, our work focused on covering these
 areas.  One of the obvious conclusions that can be reached from
 Figure~\ref{fig:handletable} is that most methods tend to specialise on a
