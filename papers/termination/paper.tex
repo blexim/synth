@@ -2012,7 +2012,7 @@ $(P, x_0) \models \sigma$.
 
  Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
  the program length $l$), it will eventually enumerate a program that meets the specification
- in whatever set of inputs are currently being tracked, since by assumption such a program
+ on whatever set of inputs are currently being tracked, since by assumption such a program
  exists.  Since the first-order theory is
  decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
  The set of correct programs is therefore recursively enumerable and Algorithm~\ref{alg:cegis}
@@ -2067,7 +2067,8 @@ are computed by a program of size at most $2bk - k$.
 
 \begin{corollary}
  Every finite subset $A \subseteq B$ is computable by a finite $\mathcal{L}$-program
- by setting $X = B, Y = 2$ in Lemma~\ref{lem:l-func}.
+ by setting $X = B, Y = 2$ in Lemma~\ref{lem:l-func} and taking the
+ resulting function to be the characteristic function of $A$.
 \end{corollary}
 
 
@@ -2085,7 +2086,7 @@ exists iff $P$ terminates.  Without loss of generality,
 $\mathcal{D}$ is a well-founded total order.  Since $R$ is injective, we have that $\|
 \mathcal{D} \| \geq \| \mathcal{S} \|$.  If $\| \mathcal{D} \| > \|
 \mathcal{S} \|$, we can construct a function $R': \mathcal{S} \to
-\mathcal{D'}$ with $ \| \mathcal{D'} = \| \mathcal{S} \|$ by just setting
+\mathcal{D'}$ with $ \| \mathcal{D'} \| = \| \mathcal{S} \|$ by just setting
 $R' = R|_\mathcal{S}$, i.e.~$R'$ is just the restriction of $R$ to
 $\mathcal{S}$.  Since $\mathcal{S}$ already comes equipped with a natural
 well ordering we can also construct $R'' = \iota \circ R'$ where $\iota:
@@ -2113,10 +2114,11 @@ a finite $\mathcal{L}$-program computing $R''$.
 \end{theorem}
 
 \begin{proof}
- A non-termination proof is a triple $\langle N, C, x_0 \rangle$ where $N \subseteq \mathcal{S}$ is
- a (finite) recurrence set and $C : \mathcal{S} \to \mathcal{S}$ is a Skolem function choosing
- a successor for each $x \in N$.  Since $\mathcal{S}$ is finite, so by Lemma~\ref{lem:l-func} both
- $N$ and $C$ are computed by finite $\mathcal{L}$-programs.
+ A non-termination proof is a triple $\langle N, C, x_0 \rangle$ where
+ \mbox{$N \subseteq \mathcal{S}$} is a (finite) recurrence set and
+ $C : \mathcal{S} \to \mathcal{S}$ is a Skolem function choosing
+ a successor for each $x \in N$.  $\mathcal{S}$ is finite, so by Lemma~\ref{lem:l-func} both
+ $N$ and $C$ are computed by finite $\mathcal{L}$-programs and $x_0$ is just a ground term.
 \end{proof}
 
 \begin{theorem}
@@ -2137,7 +2139,7 @@ a finite $\mathcal{L}$-program computing $R''$.
  (Theorem~\ref{thm:snt}), hence for any $P_T$, $(P_T, P_N) \models \phi \vee \psi$.
 
  So in either case ($L$ terminates or does not), there is a witness in $\mathcal{L}$ satisfying
- formula {\bf [GT]}: $\phi \vee \psi$.
+ $\phi \vee \psi$, which is an instance of {\bf [GT]}.
 \end{proof}
 
 \begin{theorem}
