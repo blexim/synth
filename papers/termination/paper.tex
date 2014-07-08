@@ -2158,9 +2158,14 @@ a finite $\mathcal{L}$-program computing $R''$.
 Hence Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
 
 Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
-$2^bk$ times and each iteration requires solving 2 NP-complete problems of size < $2^bk \times \| L\|$
-with $\| L \| $ the size of the program-under-analysis computing $\| L \|$.  So the
-runtime is bounded by $2^{bk+1} NP(2^bk \| L \|)$.
+$2^bk$ times where $k$ is the number of variables used by $L$ and
+$b$ is the number of bits used to store each variable.
+The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times \| L\|$
+with $\| L \| $ the size of the program-under-analysis computing $\| L \|$.  So if 
+the CEGIS loop iterates $n$ times, the
+runtime is bounded by $2 \times n \times NP(n \times \| L \|)$, which is bounded
+by $2^{bk + 1} NP(2^{bk} \| L \|)$.  Clearly the runtime is affected most strongly by $n$,
+the total number of iterations of the CEGIS loop.
 
 We will now show that our time complexity is asymptotically a function of
 the Kolmogorov complexity of the (non-)termination proof, and argue
