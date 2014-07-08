@@ -124,7 +124,7 @@ We present a reduction from program \emph{termination} to program
 allows us to generate nonlinear, lexicographic ranking functions and
 nonlinear recurrence sets that are correct for fixed-width machine arithmetic
 and floating-point arithmetic.  We use this reduction to build a sound and
-complete procedure for the termination analysis of finite state programs with fixed-width
+complete procedure for the termination analysis of finite-state programs with fixed-width
 integers and IEEE floating-point arithmetic.
 %
 \end{abstract}
@@ -143,7 +143,7 @@ we can say that the halting problem is concerned with answering the question
 ``does this program run forever, or will it eventually terminate?''
 
 Proving program termination is typically done by finding a \emph{ranking
-function} for the program states, i.e.  a monotone map from the program's
+function} for the program states, i.e.~a monotone map from the program's
 state space to a well-ordered set.  Historically, the search for ranking
 functions has been constrained in various syntactic ways, leading to
 incompleteness, and is performed over abstractions that do not soundly
@@ -202,7 +202,7 @@ By assuming bit-vector semantics to be identical to integer semantics, these
 techniques ignore the wrap-around behaviour caused by overflows, which can
 be unsound.  In Section~\ref{sec:motivation}, we show that integers and
 bit-vectors exhibit incomparable behaviours with respect to termination,
-i.e.  programs that terminate for integers may \emph{not} terminate for
+i.e.~ programs that terminate for integers may \emph{not} terminate for
 bit-vectors and vice versa.  Thus, abstracting bit-vectors with integers may
 give rise to {\em unsound} and {\em incomplete} analyses.
 
@@ -294,9 +294,12 @@ handling both bit-vectors and floats.
 with finite state spaces.  The (non-)termination proofs take the form of
 ranking functions and program invariants that are expressed in a
 quantifier-free language.  This formalism is powerful enough to handle a
-large fragment of C, but is not rich enough to analyse code that uses 
-unbounded arrays or the heap. Similar to other termination analyses \cite{DBLP:conf/tacas/CookSZ13}, we could attempt to alleviate the latter limitation by abstracting programs with heap to arithmetic ones \cite{DBLP:conf/popl/MagillTLT10}. Also, we have not yet added support for recursion
-to our encoding.
+large fragment of C, but is not rich enough to analyse code that uses
+unbounded arrays or the heap.  Similar to other termination
+analyses~\cite{DBLP:conf/tacas/CookSZ13}, we could attempt to alleviate the
+latter limitation by abstracting programs with heap to arithmetic
+ones~\cite{DBLP:conf/popl/MagillTLT10}.  Also, we have not yet added support
+for recursion to our encoding.
 
 \section{Motivating Examples} \label{sec:motivation}
 
@@ -816,7 +819,7 @@ T(x, x') & \triangleq x' = (x - 1) \, \& \, x
 \noindent {\bf Unconditional termination.}
 We say that a loop $L(G, T)$ is unconditionally terminating iff it eventually
 terminates regardless of the state it starts in. To prove unconditional termination, it suffices
-to find a ranking function for \mbox{$T \cap (G \times X)$}, i.e. $T$ restricted to states satisfying the loop's guard.
+to find a ranking function for \mbox{$T \cap (G \times X)$}, i.e.~$T$ restricted to states satisfying the loop's guard.
 % If $L$ contains nested loops, we replace $T$ with an over-approximation of the loop body $T_o$,
 % as we will discuss in Section~\ref{sec:env}.
 
@@ -848,7 +851,7 @@ proof that the program in Figure~\ref{fig:motivation.a} is unconditionally
 terminating.
 
 Note that different formulations for unconditional termination are possible. 
-We are aware of a proof rule based on transition invariants, i.e.  supersets
+We are aware of a proof rule based on transition invariants, i.e.~supersets
 of the transition relation's transitive
 closure~\cite{DBLP:conf/pldi/GrebenshchikovLPR12}.  This formulation assumes
 that the second-order logic has a primitive predicate for disjunctive
@@ -870,7 +873,7 @@ using a synthesis formula.
 
 Gupta et al.~\cite{DBLP:conf/popl/GuptaHMRX08} characterise non-termination
 of a transition relation $T$ by the existence of an \emph{(open) recurrence
-set}, i.e.  a nonempty set of states $N$ such that for each $s \in N$ there
+set}, i.e.~a nonempty set of states $N$ such that for each $s \in N$ there
 exists a transition to some $s' \in N$.
 The notion of open recurrence set is encoded by formula {\bf [ONT]} (Definition~\ref{def:ont}).
 % Dual to the termination problem, when formulating $L$'s non-termination, we only need to consider an under-approximation of its transition
@@ -955,7 +958,7 @@ while(x != 0) {
 It is clear that this loop has many non-terminating executions,
 e.g. the execution where \lstinline!nondet()! always returns 0.
 However it is equally clear that each state has a successor
-that exits the loop, i.e. when \lstinline|nondet()| returns
+that exits the loop, i.e.~when \lstinline|nondet()| returns
 the value currently stored in \lstinline|x|.  So this loop
 has an open recurrence set, but no closed recurrence set
 and hence we cannot give a proof of its non-termination
@@ -982,12 +985,13 @@ include the transitive closure of the inner loop $T'^*$, and we do not have a tr
 operator in our logic.  Therefore to encode the termination of $L$, we construct an overapproximation
 $T_o \supseteq T$ and use this in formula {\bf [UT]} to specify a ranking function.
 Rather than explicitly construct $T_o$ using, for example, abstract interpretation, we add constraints to
-our formula which encode the fact that $T_o$ is an overapproximation of $T$, and that it is
+our formula that encode the fact that $T_o$ is an overapproximation of $T$, and that it is
 precise enough to show that $R$ is a ranking function.
 
 % All we need to do in order to use {\bf [CT]} in any context %environment and regardless of the complexity of the loops's body 
 % is generate constraints over-approximating %abstracting 
 % the environment and the loop's body. %: for termination, we need over-approximating abstractions, whereas for non-termination 
+
 As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
 we will not provide the full algorithm, but rather illustrate it through the example in Figure~\ref{fig:environment-model}.
 Our technique proves the termination of each loop separately, 
@@ -1389,7 +1393,7 @@ $$\bigwedge_{i=1..n{-}1} (Inv_i(x_i) \wedge G_i(x_i) \wedge T_i(x_i, x_i') \righ
 $$\bigwedge_{i=1..n{-}2} (Inv_i(x_i) \wedge \lnot G_i(x_i) \wedge P_{i+1}(x_i, x_{i+1}) {\rightarrow} Inv_{i+1}(x_{i+1})) ~$$
 
 \item When $L_n$'s guard holds, $Inv_{n-1}$ 
-is strong enough to establish $Inv_n$, i.e. $Inv_n$ holds for the program states after $L_n$'s entry point:
+is strong enough to establish $Inv_n$, i.e.~$Inv_n$ holds for the program states after $L_n$'s entry point:
 $$ Inv_{n-1}(x_{n-1}) \wedge \lnot G_{n-1}(x_{n-1}) \wedge P_n(x_{n-1},x_n) \wedge G_n(x_n) $$
 $$\qquad\qquad\rightarrow Inv_n(x_n)$$
 
@@ -1432,30 +1436,36 @@ Discuss {\bf [SNT]}.\\
 \fi
 
 \subsection{Generalised Termination and Non-termination Formula}
-At this point, we know how to construct two formulae for a loop $L$: one that is
-satisfiable iff $L$ is terminating and another that is
-satisfiable iff it is non-terminating.  We will call these formulae $\phi$ and $\psi$
+
+At this point, we know how to construct two formulae for a loop $L$: one
+that is satisfiable iff $L$ is terminating and another that is satisfiable
+iff it is non-terminating.  We will call these formulae $\phi$ and $\psi$,
 respectively:
+%
 \begin{align*}
  \exists P_N . \forall x, x' . \phi(W_N, x, x') \\
  \exists P_T . \forall x, x' . \psi(W_T, x, x')
 \end{align*}
+%
 We can combine these:
+%
 \begin{align*}
  (\exists P_N . \forall x, x'. \phi(W_N, x, x')) \vee (\exists P_T . \forall x, x', \psi(W_T, x, x'))
 \end{align*}
+%
 Which simplifies to:
+%
 \begin{definition}[Generalised Termination Formula]
 \begin{align*}
  \exists P_N, P_T. \forall x, x', y, y', \phi(P_N, x, x') \vee \psi(P_T, y, y') 
 \end{align*}
 \end{definition}
 
-
-Since $L$ either terminates or does not terminate, this formula is a tautology in the synthesis fragment.
-A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
-and termination respectively.  Exactly one of these will be a genuine proof, so we can check
-first one and then the other.
+Since $L$ either terminates or does not terminate, this formula is a
+tautology in the synthesis fragment.  A solution to the formula would
+include witnesses $P_N$ and $P_T$, which are putative proofs of
+non-termination and termination, respectively.  Exactly one of these will be
+a genuine proof, so we can check first one and then the other.
 
 % 
 % Given a program, our algorithm attempts to prove termination or non-termination for each loop individually 
@@ -1480,20 +1490,21 @@ first one and then the other.
 \section{Satisfiability of a Synthesis Fragment Formula} \label{sec:synthesis}
 
 In this section we present a solver for the synthesis fragment:
+%
 \[
   \exists P,~ x . ~\forall~ y . \sigma(P, x, y)
 \]
 %
-where $P$ ranges over functions, while $x$ and $y$ range over ground terms (as
-mentioned, we drop the vector notation and write $x$ for $\vec{x}$).
+where $P$ ranges over functions, while $x$ and $y$ range over ground terms
+(as mentioned, we drop the vector notation and write $x$ for $\vec{x}$).
 
 By viewing $\sigma: (X^n \times Y^m \to Z^k) \times X^n \times Y^m  \to
 \mathbb{B}$ as a specification function that returns true iff $P$ computes
 appropriate outputs for the inputs $x$ and $y$, we can regard the
 satisfaction problem for the synthesis fragment as \emph{program synthesis},
-i.e.  the mechanised construction of software that provably satisfies a
-given specification.  Then a witness $P$ to the satisfiability of some formula
-is just a program that meets the specification $\sigma$.
+i.e.~the mechanised construction of software that provably satisfies a
+given specification.  Then a witness $P$ to the satisfiability of some
+formula is just a program that meets the specification $\sigma$.
 
 Research in the area of program synthesis has been
 particularly fruitful beginning with Alonzo Church's work on the
@@ -1513,7 +1524,7 @@ bit-accurate synthesis by illustrating some of the differences between
 machine arithmetic and conventional integer arithmetic.
 
 
-\subsection{Machine Arithmetic Vs. Peano Arithmetic} \label{sec:machine.arith} 
+\subsection{Machine Arithmetic Vs.~Peano Arithmetic} \label{sec:machine.arith} 
 
 Physical computers have bounded storage, which means they are unable to
 perform calculations on mathematical integers.  For example, if $A$ is the
@@ -1585,20 +1596,22 @@ decided for it using a single query to a Bounded Model Checker.  A~\newC
 program is just a C program with the following syntactic restrictions:
  all loops in the program must have a constant bound;
  all recursion in the program must be limited to a constant depth;
- all arrays must be statically allocated (i.e. not using \texttt{malloc}),
+ all arrays must be statically allocated (i.e.~not using \texttt{malloc}),
  and be of constant size.
 Additionally, \newC programs may use nondeterministic values, assumptions
 and arbitrary-width types.
 
 \subsection{The Proof Language}
+
 The proofs generated by the synthesiser take the form of imperative programs
-written in the language $\mathcal{L}$.  An
-$\mathcal{L}$-program is a list of instructions, each of which matches one of the
-patterns shown in Figure~\ref{fig:l-language}.  An instruction has an opcode
-(such as \verb|add| for addition) and one or more operands.  An operand is either
-a constant, one of the program's inputs or the result of a previous instruction.
-The $\mathcal{L}$ language has various arithmetic and logical operations,
-as well as basic branching in the form of the \verb|ite| (if-then-else) instruction.
+written in the language $\mathcal{L}$.  An $\mathcal{L}$-program is a list
+of instructions, each of which matches one of the patterns shown in
+Figure~\ref{fig:l-language}.  An instruction has an opcode (such as
+\verb|add| for addition) and one or more operands.  An operand is either a
+constant, one of the program's inputs or the result of a previous
+instruction.  The $\mathcal{L}$ language has various arithmetic and logical
+operations, as well as basic branching in the form of the \verb|ite|
+(if-then-else) instruction.
 
 % The (non-)termination proofs are arbitrary expressions over the grammar given in Figure~\ref{fig:l-language}.  
 % %written in a simple RISC-like language $\mathcal{L}$, whose syntax is given in Fig.~\ref{fig:l-language}.  
@@ -1732,15 +1745,15 @@ Floating-point arithmetic:
  \label{fig:l-language}
 \end{figure}
 
-
 \subsection{The Synthesis Algorithm}
-We use Counterexample Guided Inductive Synthesis (CEGIS)~\cite{lezama-thesis,sketch,DBLP:conf/iclp/BrainCVF06} to
-find an $\mathcal{L}$-program satisfying our specification.
-The core of the CEGIS algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement} and
-detailed in Algorithm~\ref{alg:cegis}.  
-The algorithm is divided into two
-procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc verif}, which interact via
-a finite set of test vectors {\sc inputs}.
+
+We use Counterexample Guided Inductive Synthesis
+(CEGIS)~\cite{lezama-thesis,sketch, DBLP:conf/iclp/BrainCVF06} to find an
+$\mathcal{L}$-program satisfying our specification.  The core of the CEGIS
+algorithm is the refinement loop shown in Fig.~\ref{fig:abstract-refinement}
+and detailed in Algorithm~\ref{alg:cegis}.  The algorithm is divided into
+two procedures: {\sc synth} (see Figure~\ref{fig:synth-dfd}) and {\sc
+verif}, which interact via a finite set of test vectors {\sc inputs}.
 
 The {\sc synth} procedure tries to find existential witnesses $(P, x_0)$
 that satisfy the partial specification:
@@ -1789,9 +1802,8 @@ ad-hoc abstraction of its semantics.
 Similarly to {\sc synth}, the {\sc verif} procedure is implemented by
 creating a \newC program that is unsafe iff some input exists on which the
 candidate solution fails to meet the specification.  Again, symbolic and
-explicit state model checking are used to decide the satisfiability of the
+explicit-state model checking are used to decide the satisfiability of the
 verification formula\footnote{GP is not used, since it is inherently incomplete.}.
-
 
 
 \begin{figure*}
@@ -1884,7 +1896,7 @@ in order to get a complete search procedure.
 Our final strategy is genetic programming
 (GP)~\cite{langdon:fogp,brameier2007linear}.  GP provides an adaptive way of
 searching through the space of $\mathcal{L}$-programs for an individual
-``fit'' in some sense.  We measure the
+that is ``fit'' in some sense.  We measure the
 fitness of an individual by counting the number of tests in {\sc inputs}
 for which it satisfies the specification.
 
@@ -2189,7 +2201,7 @@ in 3 cases (due to the differences between integer and bit-vector
 semantics).  There are a further 7 cases where our tool is able to find a
 proof and {\sc ARMC} cannot, which we believe is due to our more expressive
 proof language.  In 3 cases, {\sc ARMC} times out while our tool is able to
-find a termination proof.  2 of these cases have nested loops and the
+find a termination proof.  Of these, 2 cases have nested loops and the
 third has an infinite number of terminating lassos.  This is not a problem for us,
 but can be difficult for provers that enumerate lassos.
 
@@ -2208,8 +2220,8 @@ theoretical bound for the number of CEGIS iterations is very large
 demonstrate that in practice the number of iterations required is usually
 small.
 
-Of the 47 benchmarks used, 2 used nonlinear operations in the program (loop6 and loop11),
-and 5 had nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
+Of the 47 benchmarks, 2 use nonlinear operations in the program (loop6 and loop11),
+and 5 have nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
 {\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
 It solves 2 of the 5 nested loops in less than 30s, but times out on the other
 3.  Of these 3 timeouts, 2 (svcomp40 and svcomp41) are due to program constants that
@@ -2321,15 +2333,12 @@ feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}.  Chen et al.~prove
 nontermination via reduction to safety
 proving~\cite{DBLP:conf/tacas/ChenCFNO14}.  Their iterative algorithm uses
 counterexamples to a fixed safety property to refine an under-approximation
-of a program. In order to prove both termination and non-termination,
-Harris et al. compose several program analyses (termination provers
-for multi-path loops, non-termination provers for cycles, and global safety provers)
-\cite{DBLP:conf/sas/HarrisLNR10}. We propose a uniform treatment of 
-termination and non-termination by formulating a generalised second 
-order formula whose solution is a proof of one of them.
-
-
-
+of a program.  In order to prove both termination and non-termination,
+Harris et al.~compose several program analyses (termination provers for
+multi-path loops, non-termination provers for cycles, and global safety
+provers)~\cite{DBLP:conf/sas/HarrisLNR10}.  We propose a uniform treatment
+of termination and non-termination by formulating a generalised second order
+formula whose solution is a proof of one of them.
 
 \bibliographystyle{abbrvnat}
 \bibliography{synth}{}
