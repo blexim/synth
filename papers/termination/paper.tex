@@ -645,7 +645,7 @@ define the syntax of a language we will work over.
  \item Our state space has size $\| X \| = M = 2^k$.
  \item Our ranking co-domain has size $\| Y \| = N = 2^j$.
  \item The number of looping states is $\| L \| = l$.
- \item Our transition relation is deterministic and parititioned into chains of length $c_i$, with $l = \sum c_i$.
+ \item Our transition relation is deterministic and partitioned into chains of length $c_i$, with $l = \sum c_i$.
 \end{itemize}
 
 \subsection{Counting Programs}
@@ -920,7 +920,7 @@ In order to describe a deterministic \emph{program} in a way that still allows u
 to sensibly talk about termination, we assume the existence of a special sink
 state $s$ with no outgoing transitions and such that $\lnot G(s)$ for any
 of the loop guards $G$.  The program is deterministic if its transition
-relation is determinstic for all states except $s$.
+relation is deterministic for all states except $s$.
 
 When analysing a deterministic loop, we can make use of the notion of a \emph{closed recurrence set}
 introduced by Chen et al.~in~\cite{DBLP:conf/tacas/ChenCFNO14}:  for each
@@ -1275,7 +1275,7 @@ we have $I(x)$.
 \begin{theorem}
 \label{thm:ct}
  The loop $L(G, T)$ terminates when started in any state satisfying $I(x)$ iff formula {\bf [CT]}
- (Defintion~\ref{def:ct}, Figure~\ref{fig:conditional_termination}) is satisfiable.
+ (Definition~\ref{def:ct}, Figure~\ref{fig:conditional_termination}) is satisfiable.
 \end{theorem}
 % 
 % \begin{proof}
@@ -2201,7 +2201,7 @@ We will now show that the number of iterations of the CEGIS loop is a function
 of the Kolmogorov complexity of the \mbox{(non-)}ter\-mi\-nation proof, and so
 our runtime is asymptotically a function of the Kolmogorov complexity.
 We argue that this gives our procedure various desirable qualities in practical
-appliations.
+applications.
 We first recall the definition of the Kolmogorov complexity
 of a function $f$:
 
