@@ -1005,7 +1005,7 @@ precise enough to show that $R$ is a ranking function.
 
 As the generation of such constraints is standard and covered by several other works \cite{DBLP:conf/pldi/GrebenshchikovLPR12,DBLP:conf/pldi/GulwaniSV08}, 
 we will not provide the full algorithm, but rather illustrate it through the example in Figure~\ref{fig:environment-model}.
-%Full details of this construction appear in the extended version of this paper~\cite{extended-version}.
+Full details of this construction appear in the extended version of this paper.
 For the current example, the termination formula is given on the right side of 
 Figure~\ref{fig:environment-model}:
 %% Following the same design, let us assume that we have already proven the termination of loop $L_1$, and we are now trying to prove that $L_2$ and $L_3$ terminate, which we encode
@@ -2258,7 +2258,8 @@ termination specification from a C program, and one to synthesise a proof
 from the specification.  We ran the resulting termination prover,
 named {\sc Juggernaut}, on 47
 benchmarks taken from the literature and
-SV-COMP'15~\cite{svcomp15}.%\footnote{The benchmarks, code and log files may be downloaded from the URL \texttt{http://www.cprover.org/juggernaut/}}.
+SV-COMP'15~\cite{svcomp15}\footnote{The logs and benchmarks are included in the
+non-anonymous supplementary material submitted with this paper}.%\footnote{The benchmarks, code and log files may be downloaded from the URL \texttt{http://www.cprover.org/juggernaut/}}.
 To
 provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
 the same benchmarks.  Each tool was given a time limit of 180\,s, and was
