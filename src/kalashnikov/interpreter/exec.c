@@ -1,5 +1,6 @@
 #include "synth.h"
 #include "exec.h"
+#include "heaplib.h"
 
 #include <math.h>
 
@@ -185,6 +186,12 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = fi.x;
       break;
 #endif // FLOAT
+
+#ifdef HEAP
+    case PATH:
+      res = path(p1, p2, args);
+      break;
+#endif
 
     default:
       assume(0);

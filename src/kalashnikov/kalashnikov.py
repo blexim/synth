@@ -197,6 +197,7 @@ def verif(prog, checker, width, codelen):
   cfile = open("/tmp/exec.c", "w")
   cfile.write(r"""
 #include "synth.h"
+#include "heaplib.h"
 
 volatile int execok;
 

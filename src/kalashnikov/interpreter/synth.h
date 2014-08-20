@@ -1,6 +1,8 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
+#define HEAP
+
 #ifndef SZ
  #define SZ 5
 #endif
@@ -59,7 +61,9 @@
 //#define MAXOPCODE 17
 
 
-#ifdef FLOAT
+#ifdef HEAP
+  #define MAXOPCODE 27
+#elif defined(FLOAT)
   // Use this one to enable floating point
   #define MAXOPCODE 26
 #else

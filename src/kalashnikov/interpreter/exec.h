@@ -25,11 +25,14 @@
 #define MAX 21
 #define ITE 22
 
+// Floating point
 #define FPLUS 23
 #define FMINUS 24
 #define FMUL 25
 #define FDIV 26
 
+// Heap
+#define PATH 27
 
 
 #endif // EXEC_H
