@@ -191,6 +191,9 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     case PATH:
       res = path(p1, p2, args);
       break;
+    case DEREF:
+      res = deref(p1, args);
+      break;
 #endif
 
     default:

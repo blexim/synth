@@ -59,7 +59,8 @@ revbinops = { v: k for (k, v) in binops.items() }
 
 unops = {
     4: "-(%s)",
-    8: "~(%s)"
+    8: "~(%s)",
+    28: "deref(%s, args)"
 }
 
 execunops = copy.copy(unops)

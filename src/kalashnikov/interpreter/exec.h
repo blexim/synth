@@ -33,6 +33,7 @@
 
 // Heap
 #define PATH 27
+#define DEREF 28
 
 
 #endif // EXEC_H
