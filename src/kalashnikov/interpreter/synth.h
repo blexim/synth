@@ -96,11 +96,18 @@
  #define assume(x) do {\
    if (!(x)) { execok = 0; \
     return; } \
- } while(0)
+ } while (0)
+
+ #define assume2(x) do {\
+   if(!(x)) { execok = 0; \
+     return 0; } \
+ } while (0)
 #elif defined(SYNTH)
  #define assume(x) __CPROVER_assume(x)
+ #define assume2(x) __CPROVER_assume(x)
 #else
  #define assume(x) assert(x)
+ #define assume2(x) assert(x)
 #endif
 
 typedef union fi {
