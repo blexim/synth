@@ -21,6 +21,10 @@ int check(solution_t *sol, word_t args[NARGS]) {
   word_t x = args[0];
   word_t y = args[1];
 
+  if (x < 2 || y < 2) {
+    return 1;
+  }
+
   if (deref(x, args) == y) {
     if (!inv(sol, args)) {
       return 0;
