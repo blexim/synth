@@ -9,7 +9,11 @@ int guard(word_t vars[1]) {
 }
 
 int body(word_t vars[1]) {
-  vars[0] -= 2;
+  word_t x = vars[0];
+
+  x = -x / 2;
+
+  vars[0] = x;
 
   return 1;
 }

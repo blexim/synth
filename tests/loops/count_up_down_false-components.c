@@ -9,9 +9,10 @@ int guard(word_t vars[3]) {
   return vars[0] > 0;
 }
 
-void body(word_t vars[3]) {
+int body(word_t vars[3]) {
   vars[0]--;
   vars[1]++;
+  return 1;
 }
 
 int assertion(word_t vars[3]) {

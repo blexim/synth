@@ -11,7 +11,7 @@ int guard(word_t args[1]) {
   return x != 0;
 }
 
-void body(word_t args[1]) {
+int body(word_t args[1]) {
   sword_t x = args[0];
 
   if (x < 0) {
@@ -21,6 +21,8 @@ void body(word_t args[1]) {
   }
 
   args[0] = x;
+
+  return 1;
 }
 
 int assertion(word_t args[1]) {
