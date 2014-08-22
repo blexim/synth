@@ -2,7 +2,7 @@
 
 extern void prefix(word_t args[NARGS]);
 extern int guard(word_t args[NARGS]);
-extern void body(word_t args[NARGS]);
+extern int body(word_t args[NARGS]);
 extern int assertion(word_t args[NARGS]);
 
 int inv(prog_t *prog, word_t args[NARGS]) {
@@ -33,7 +33,9 @@ int check(solution_t *solution, word_t args[NARGS]) {
   }
 
   if (guard(vars) && inv(prog, vars)) {
-    body(vars);
+    if (!body(vars)) {
+      return 0;
+    }
 
     if (!inv(prog, vars)) {
       return 0;
