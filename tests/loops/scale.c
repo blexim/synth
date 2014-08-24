@@ -30,7 +30,7 @@ int guard(word_t args[3]) {
   return fabs(state - oldState) > 0.0;
 }
 
-void body(word_t vars[3]) {
+int body(word_t vars[3]) {
   fi_t fi;
 
   fi.x = vars[0];
@@ -50,4 +50,6 @@ void body(word_t vars[3]) {
 
   fi.f = oldState;
   vars[2] = fi.x;
+
+  return 1;
 }

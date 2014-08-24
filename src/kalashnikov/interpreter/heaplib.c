@@ -15,6 +15,6 @@ int is_ptr(word_t p) {
 }
 
 word_t deref(word_t p, word_t vars[NARGS]) {
-  assume2(is_ptr(p));
+  assume2(is_ptr(p) && p != 0);
   return vars[p - 1];
 }
