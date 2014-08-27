@@ -1,7 +1,7 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
-#define HEAP
+//#define HEAP
 
 #ifndef SZ
  #define SZ 5
