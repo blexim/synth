@@ -48,6 +48,10 @@
  #define RECOMBINE_PROB 0.1
 #endif
 
+#ifndef GENERAL_SET
+ #define GENERAL_SET 1
+#endif
+
 #define PRINT_GEN 1000
 #define GEN_LIM 0
 
@@ -67,6 +71,7 @@
 
 int generation;
 int correct;
+int target;
 
 extern unsigned int **test_vectors;
 
@@ -78,11 +83,14 @@ typedef struct {
 int fitness(solution_t *solution) {
   correct = 0;
 
-  for (int i = 0; i < numtests; i++) {
+  for (int i = GENERAL_SET; i < numtests; i++) {
     execok = 1;
+    int score = 0;
 
-    if (check(solution, test_vectors[i]) && execok) {
-      correct++;
+    score = check(solution, test_vectors[i]);
+
+    if (execok) {
+      correct += score;
     }
   }
 
@@ -438,8 +446,10 @@ int sol_len(solution_t *s) {
 void test(solution_t *solution, word_t args[NARGS]) {
   execok = 1;
 
-  if(check(solution, args) && execok) {
-    correct++;
+  int score = check(solution, args);
+
+  if (execok) {
+    correct += score;
   }
 }
 
@@ -453,11 +463,28 @@ int check_fitness(individual_t *i, int best) {
   return i->fitness;
 }
 
+int check_generalise(individual_t *ind) {
+  correct = 0;
+
+  for (int i = 0; i < GENERAL_SET; i++) {
+    execok = 1;
+
+    int score = check(&ind->solution, test_vectors[i]);
+    
+    if (execok) {
+      correct += score;
+    }
+  }
+
+  return correct;
+}
+
 int main(void) {
   int i;
   int seed = SEED;
   int bestfitness = 0;
   int currfitness = 0;
+  int done = 0;
   individual_t *pop = (individual_t *) malloc(POPSIZE * sizeof(individual_t));
 
   printf("Genetic programming using random seed: %d\n", seed);
@@ -466,18 +493,22 @@ int main(void) {
   load(pop);
   load_tests();
 
+  target = (numtests - GENERAL_SET) * MAXFIT;
+  printf("Target fitness: %d\n", target);
+
   for (i = 0; i < POPSIZE; i++) {
     individual_t *ind = &pop[i];
     bestfitness = max(bestfitness, check_fitness(ind, bestfitness));
 
-    if (ind->fitness == numtests) {
+    if (ind->fitness == target && check_generalise(ind)) {
       print_solution(&ind->solution);
+      done = 1;
       break;
     }
   }
 
 
-  while (bestfitness < numtests) {
+  while (!done) {
     individual_t *a, *b, *c, *d;
     tournament(pop, &a, &b, &c, &d);
 
@@ -495,13 +526,14 @@ int main(void) {
       bestfitness = max(bestfitness, check_fitness(d, bestfitness));
     }
 
-    if (c->fitness == numtests) {
+    if (c->fitness == target) {
       print_solution(&c->solution);
-    } else if (d->fitness == numtests) {
+      done = 1;
+    } else if (d->fitness == target) {
       print_solution(&d->solution);
+      done = 1;
     }
   }
-
 
 
   save(pop);

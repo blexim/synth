@@ -57,6 +57,10 @@
  #define PWIDTH WIDTH
 #endif
 
+#ifndef MAXFIT
+ #define MAXFIT 1
+#endif
+
 // Use this one to use the same instruction set as Brahma
 //#define MAXOPCODE 17
 

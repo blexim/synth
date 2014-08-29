@@ -120,13 +120,13 @@ void test(solution_t *solution, word_t args[NARGS]) {
   }
 #endif
 
-  int valid = check(solution, args);
+  int score = check(solution, args);
 
   if (!execok) {
     return;
   }
 
-  if (!valid) {
+  if (score != MAXFIT) {
     ok = 0;
   }
 }

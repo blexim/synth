@@ -1,6 +1,6 @@
 #include "synth.h"
 void test(solution_t *solution, word_t args[NARGS]) {
-  __CPROVER_assume(check(solution, args));
+  __CPROVER_assume(check(solution, args) == MAXFIT);
 }
 
 int main(void) {

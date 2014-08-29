@@ -96,7 +96,7 @@ int main(void) {
   do {
     execok = 1;
 
-    if (!check(&solution, args) || !execok) {
+    if (check(&solution, args) != MAXFIT || !execok) {
       print_args(args);
       return 10;
     }

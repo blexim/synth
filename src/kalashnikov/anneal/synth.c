@@ -140,7 +140,7 @@ int fitness(solution_t *solution) {
 
   tests(solution);
 
-  if (correct == numtests) {
+  if (correct == (numtests * MAXFIT)) {
     printf("Found a program with fitness=%d\n", correct);
     save(solution);
     print_solution(solution);
@@ -156,8 +156,10 @@ void test(solution_t *solution, word_t args[NARGS]) {
 
   execok = 1;
 
-  if(check(solution, args) && execok) {
-    correct++;
+  int score = check(solution, args);
+  
+  if (execok) {
+    correct += score;
   }
 }
 
@@ -180,7 +182,7 @@ int main(void) {
     generation++;
 
     if (PRINT_GEN && (generation % PRINT_GEN == 0)) {
-      printf("Best fitness: %d, target=%d\n", best_fitness, numtests);
+      printf("Best fitness: %d, target=%d\n", best_fitness, numtests * MAXFIT);
     }
 
     if (generation % ((int) (TEMP_STEP / temperature)) == 0) {
