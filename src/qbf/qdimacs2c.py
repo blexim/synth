@@ -3,6 +3,11 @@
 import sys
 import re
 
+if "--neg" in sys.argv:
+  negate = True
+else:
+  negate = False
+
 hre = re.compile("p cnf (\d+) (\d+)")
 evarsre = re.compile("e(( \d+)+)")
 avarsre = re.compile("a(( \d+)+)")
@@ -34,34 +39,45 @@ def convert_file(fin, fout):
 int check(solution_t *sol, word_t args[NARGS]) {
   word_t res[NRES];
   word_t eargs[NARGS];
+  int i;
+  int ret = 0;
+
 """)
 
   avars = []
-  evars = []
+  nevars = 0
+  nefuncs = 0
+  nclauses = 0
 
   for l in fin:
+    if l[0] == 'c':
+      continue
+
     (ty, val) = parse_line(l)
+
+    univ = 'e' if negate else 'a'
+    exist = 'a' if negate else 'e'
 
     if ty == 'h':
       continue
-    elif ty == 'a':
+    elif ty == univ:
       idx = len(avars)
 
       for v in val:
         fout.write("  word_t x%d = args[%d];\n" % (v, idx))
         avars.append(v)
         idx += 1
-    elif ty == 'e':
+    elif ty == exist:
       if not avars:
-        idx = len(evars)
+        idx = nevars
 
         for v in val:
           fout.write("  word_t x%d = sol->evars[%d];\n" % (v, idx))
-          #evars.append(v)
+          nevars += 1
           idx += 1
       else:
         fout.write(r"""
-  for (int i = 0; i < NARGS; i++) {
+  for (i = 0; i < NARGS; i++) {
     eargs[i] = 0;
   }
 """)
@@ -69,24 +85,38 @@ int check(solution_t *sol, word_t args[NARGS]) {
         for i in xrange(len(avars)):
           fout.write("  eargs[%d] = x%d;\n" % (i, avars[i]))
 
-        idx = len(evars)
+        idx = nefuncs
 
         for v in val:
           fout.write("  exec(&sol->progs[%d], eargs, res);\n" % idx)
           fout.write("  word_t x%d = res[0];\n" % v)
-          evars.append(v)
+          nefuncs += 1
           idx += 1
     elif ty == 'c':
-      pos = ["!x%d" % v for v in val if v > 0]
-      neg = ["x%d" % -v for v in val if v < 0]
-      guard = ' && '.join(pos + neg)
+      pos = [v for v in val if v > 0]
+      neg = [-v for v in val if v < 0]
 
-      fout.write("  if (%s) return 0;\n" % guard)
+      if negate:
+        guard = ' && '.join(["!x%d" % v for v in pos] +
+                            ["x%d" % v for v in neg])
+      else:
+        guard = ' || '.join(["x%d" % v for v in pos] +
+                            ["!x%d" % v for v in neg])
+
+
+      if guard:
+        fout.write("  if (%s) ret += 1;\n" % guard)
+        nclauses += 1
 
   fout.write(r"""
-  return 1;
+  return ret;
 }
 """)
+
+  print "%d evars" % nevars
+  print "%d functions" % nefuncs
+  print "%d universals" % len(avars)
+  print "%d clauses" % nclauses
 
 if __name__ == '__main__':
   fin = open(sys.argv[1])
