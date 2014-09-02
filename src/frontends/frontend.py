@@ -25,7 +25,7 @@ def prove_terminates(filename):
     nargs = nids
 
 
-  cmd = (("./kalashnikov.py " +
+  cmd = (("kalashnikov.py " +
              "%s %s " +
              "-P%d  " +
              "--seed=1337 -a%d --varnames %s " +

@@ -15,7 +15,7 @@ def prove_terminates(filename):
 
   splitfile.close()
 
-  cmd = (("./kalashnikov.py " +
+  cmd = (("kalashnikov.py " +
              "%s ../../papers/termination/experiments/benchmarks/combined.c " +
              "-P3 " +
              "--seed=1337 " +
