@@ -51,6 +51,8 @@ args.argparser.add_argument("--nondet", default=0, type=int,
     help="number of nondet variables")
 args.argparser.add_argument("--maxfit", default=1, type=int,
     help="maximum possible fitness for checkers")
+args.argparser.add_argument("--ofiledir", default="/tmp", type=str,
+    help="directory to use for object files (must be writable and executable)")
 
 args.argparser.add_argument("-popsize", default=2000, type=int)
 args.argparser.add_argument("-keepfrac", default=200, type=int)
@@ -288,7 +290,7 @@ class Checker(object):
 
     if not self.cachable(key) or key not in compiled:
       bin = tempfile.NamedTemporaryFile(delete=not args.args.keeptemps,
-                                         dir="ofiles")
+                                         dir=args.args.ofiledir)
       gcc = self.gccargs[name] + ["-o", bin.name, "-lm"]
       compiled[key] = bin
       bin.close()
