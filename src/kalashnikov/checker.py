@@ -6,6 +6,7 @@ import perfcounters as perf
 import args
 import os
 import signal
+import sys
 
 args.argparser.add_argument("--cbmc", default="cbmc", type=str,
     help="path to CBMC")
@@ -104,9 +105,17 @@ class Checker(object):
     self.scratchfile = tempfile.NamedTemporaryFile(suffix=".c",
         delete=not args.args.keeptemps)
 
+    exedir = os.path.dirname(sys.argv[0])
+    interpreter = os.path.join(exedir, args.args.interpreter)
+    lib = os.path.join(exedir, args.args.lib)
+    explicitdir = os.path.join(exedir, "explicit")
+    geneticdir = os.path.join(exedir, "genetic")
+    annealdir = os.path.join(exedir, "anneal")
+    cbmcdir = os.path.join(exedir, "cbmc")
+
     genericargs = [
-        "-I%s" % args.args.interpreter,
-        "-I%s" % args.args.lib,
+        "-I%s" % interpreter,
+        "-I%s" % lib,
         "-DMWIDTH=%d" % mwidth,
         "-DWIDTH=%d" % width,
         "-DNARGS=%d" % nargs,
@@ -116,11 +125,11 @@ class Checker(object):
         "-DPWIDTH=%d" % pwidth,
         "-DNONDET_ARGS=%d" % nnondet,
         "-DMAXFIT=%d" % maxfit,
-        os.path.join(args.args.interpreter, "exclude.c"),
-        os.path.join(args.args.interpreter, "wellformed.c"),
-        os.path.join(args.args.interpreter, "heaplib.c"),
-        os.path.join(args.args.lib, "solution.c"),
-        os.path.join(args.args.lib, "io.c"),
+        os.path.join(interpreter, "exclude.c"),
+        os.path.join(interpreter, "wellformed.c"),
+        os.path.join(interpreter, "heaplib.c"),
+        os.path.join(lib, "solution.c"),
+        os.path.join(lib, "io.c"),
         self.scratchfile.name] + args.args.checker
 
     if args.args.float:
@@ -142,31 +151,31 @@ class Checker(object):
       if args.args.fastverif == True:
         execcfile = "/tmp/exec.c"
       else:
-        execcfile = os.path.join("interpreter", "exec.c")
+        execcfile = os.path.join(interpreter, "exec.c")
 
       self.cbmcargs = [args.args.cbmc,
           "-DSZ=%d" % sz,
           execcfile,
           "-DNRES=%d" % sz,
-          os.path.join("cbmc", "verif.c"), "--32"] + genericargs
+          os.path.join(cbmcdir, "verif.c"), "--32"] + genericargs
 
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
           "-DSZ=128",
           "-DNRES=128",
           #execcfile,
-          os.path.join("interpreter", "exec.c"),
-          "-O0", "-g", os.path.join("explicit", "verif.c")] + genericargs
+          os.path.join(interpreter, "exec.c"),
+          "-O0", "-g", os.path.join(explicitdir, "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
           "-DSZ=%d" % sz,
-          os.path.join(args.args.interpreter, "exec.c"),
-          os.path.join("cbmc", "synth.c")] + genericargs
+          os.path.join(interpreter, "exec.c"),
+          os.path.join(cbmcdir, "synth.c")] + genericargs
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=%d" % sz,
           "-DNRES=%d" % sz,
-          os.path.join(args.args.interpreter, "exec.c"),
+          os.path.join(interpreter, "exec.c"),
           "-O0", "-g",
-          os.path.join("explicit", "synth.c"), "-lm"] + genericargs
+          os.path.join(explicitdir, "synth.c"), "-lm"] + genericargs
       self.gccargs["genetic"] = [args.args.gcc,
           "-std=c99",
           "-DSEARCH",
@@ -181,15 +190,15 @@ class Checker(object):
           "-DRECOMBINE_PROB=%.03f" % args.args.recombprob,
           "-DREPLACE_PROB=%.03f" % args.args.replaceprob,
           "-DSAVEFILE=\"%s\"" % geneticsave.name,
-          os.path.join(args.args.interpreter, "exec.c"),
+          os.path.join(interpreter, "exec.c"),
           "-O0", "-g",
-          os.path.join("genetic", "synth.c"), "-lm"] + genericargs
+          os.path.join(geneticdir, "synth.c"), "-lm"] + genericargs
       self.gccargs["anneal"] = [args.args.gcc, "-DSEARCH", "-std=c99",
           "-DSZ=%d" % sz,
           "-DNRES=%d" % sz,
-          os.path.join(args.args.interpreter, "exec.c"),
+          os.path.join(interpreter, "exec.c"),
           "-O0", "-g",
-          os.path.join("anneal", "synth.c"), "-lm"] + genericargs
+          os.path.join(annealdir, "synth.c"), "-lm"] + genericargs
 
 
     if not args.args.noslice:
