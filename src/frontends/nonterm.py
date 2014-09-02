@@ -15,7 +15,7 @@ def prove_terminates(filename):
   splitfile.close()
 
   os.system(("kalashnikov.py " +
-             "%s ../../papers/termination/experiments/benchmarks/unranking.c " +
+             "%s ../../tests/termination/unranking.c " +
              "-P2 " +
              "--synth-strategy=genetic " +
              "-c1 " +

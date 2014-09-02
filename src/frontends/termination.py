@@ -15,12 +15,12 @@ def prove_terminates(filename):
   splitfile.close()
 
   if has_nested:
-    skeleton = "../../papers/termination/experiments/benchmarks/nested.c"
+    skeleton = "../../tests/termination/nested.c"
     nprogs = 3
     nargs = nids*2
     varnames += ' ' + ' '.join("%s\\'" % id_map[k] for k in xrange(nids))
   else:
-    skeleton = "../../papers/termination/experiments/benchmarks/ranking.c"
+    skeleton = "../../tests/termination/ranking.c"
     nprogs = 2
     nargs = nids
 

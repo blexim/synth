@@ -5,7 +5,9 @@ import sys
 import copy
 import tempfile
 
-sys.path.extend(["pycparser"])
+exedir = os.path.dirname(sys.argv[0])
+parserdir = os.path.join(exedir, "pycparser")
+sys.path.extend([parserdir])
 
 from pycparser import parse_file, c_generator, c_ast
 
