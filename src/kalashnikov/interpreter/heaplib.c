@@ -1,6 +1,6 @@
 #include "heaplib.h"
 
-int path(word_t x, word_t y, word_t vars[NARGS]) {
+int is_path(word_t x, word_t y, word_t vars[NARGS]) {
   int i = 0;
 
   while (x != 0 && x != y && i++ < NARGS) {

@@ -8,7 +8,7 @@ typedef struct node {
   word_t n;
 } node_t;
 
-int path(word_t x, word_t y, word_t vars[NARGS]);
+int is_path(word_t x, word_t y, word_t vars[NARGS]);
 
 int is_ptr(word_t p);
 word_t deref(word_t p, word_t vars[NARGS]);
