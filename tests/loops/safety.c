@@ -1,16 +1,16 @@
 #include "synth.h"
 
-extern void prefix(word_t args[NARGS]);
+extern int prefix(word_t args[NARGS]);
 extern int guard(word_t args[NARGS]);
 extern int body(word_t args[NARGS]);
 extern int assertion(word_t args[NARGS]);
 
 int inv(prog_t *prog, word_t args[NARGS]) {
-  word_t res;
+  word_t res[NRES];
 
-  exec(prog, args, &res);
+  exec(prog, args, res);
 
-  return res;
+  return res[0];
 }
 
 int check(solution_t *solution, word_t args[NARGS]) {
@@ -22,9 +22,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
     vars[i] = args[i];
   }
 
-  prefix(vars);
-
-  if (!inv(prog, vars)) {
+  if (prefix(vars) && !inv(prog, vars)) {
     return 0;
   }
 
