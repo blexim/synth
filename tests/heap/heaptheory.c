@@ -1,7 +1,7 @@
 #include "synth.h"
+#include "heaptheory.h"
 
 #define idx(x, y) (NSTACK + (x * NHEAP) + y)
-
 
 /*
  * Return the length of the shortest path from x to y.
@@ -103,7 +103,12 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   }
 
   for (i = 0; i < NHEAP; i++) {
-    post[idx(x, i)] = pre[idx(y, i)] - 1;
-    post[idx(i, x)] = pre[idx(i, y)] + 1;
+    if (pre[idx(y, i)] > 0) {
+      post[idx(x, i)] = pre[idx(y, i)] - 1;
+    }
+
+    if (pre[idx(i, y)] > 0) {
+      post[idx(i, x)] = pre[idx(i, y)] + 1;
+    }
   }
 }

@@ -8,7 +8,7 @@
 #endif
 
 #ifndef NHEAP
- #define NHEAP NARGS
+ #define NHEAP 3
 #endif
 
 int path_length(word_t args[NARGS], word_t x, word_t y);
