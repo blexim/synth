@@ -55,8 +55,10 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   // ii)   a -*> x && y -*> b, then new(a, b) = min(old(a, b), old(a, x) + old(y, b) + 1)
   // iii)  else new(a, b) = infinity
 
-  for (word_t a = 0; a < NHEAP; a++) {
-    for (word_t b = 0; b < NHEAP; b++) {
+  word_t a, b;
+
+  for (a = 0; a < NHEAP; a++) {
+    for (b = 0; b < NHEAP; b++) {
       if (path(pre, a, b) && !path(pre, x, b)) {
         // Case (i)
         post[idx(a, b)] = pre[idx(a, b)];
