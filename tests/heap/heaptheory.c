@@ -1,15 +1,13 @@
 #include "synth.h"
 #include "heaptheory.h"
 
-#define idx(x, y) (NSTACK + (x * NHEAP) + y)
-
 /*
  * Return the length of the shortest path from x to y.
  */
-int path_length(word_t args[NARGS], word_t x, word_t y) {
+unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
   word_t ret = args[idx(x, y)];
 
-  SIGN_EXTEND(ret);
+  //SIGN_EXTEND(ret);
 
   return ret;
 }
@@ -18,7 +16,7 @@ int path_length(word_t args[NARGS], word_t x, word_t y) {
  * Is there a path from x to y?
  */
 int path(word_t args[NARGS], word_t x, word_t y) {
-  return path_length(args, x, y) >= 0;
+  return path_length(args, x, y) != INF;
 }
 
 /*
@@ -55,9 +53,10 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   // 
   // For each pair (a, b) in the old heap, in the new heap:
   //
-  // i)    a -*> b && !x -*> b, then new(a, b) = old(a, b)
-  // ii)   a -*> x && y -*> b, then new(a, b) = min(old(a, b), old(a, x) + old(y, b) + 1)
-  // iii)  else new(a, b) = infinity
+  // i)    a -*> b && !x -> b, then new(a, b) = old(a, b)
+  // ii)    a -*> b && x == b, then new(a, b) = old(a, b)
+  // iii)   a -*> x && y -*> b, then new(a, b) = min(old(a, b), old(a, x) + old(y, b) + 1)
+  // iv)  else new(a, b) = infinity
 
   word_t a, b;
 
@@ -66,15 +65,18 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
       if (path(pre, a, b) && !path(pre, x, b)) {
         // Case (i)
         post[idx(a, b)] = pre[idx(a, b)];
-      } else if (path(pre, a, x) && path(pre, y, b)) {
+      } else if (path(pre, a, b) && alias(pre, x, b)) {
         // Case (ii)
-        int old = path_length(pre, a, b);
-        int new = path_length(pre, a, x) + path_length(pre, y, b) + 1;
+        post[idx(a, b)] = pre[idx(a, b)];
+      } else if (path(pre, a, x) && path(pre, y, b)) {
+        // Case (iii)
+        unsigned int old = path_length(pre, a, b);
+        unsigned int new = path_length(pre, a, x) + path_length(pre, y, b) + 1;
 
         post[idx(a, b)] = min(old, new);
       } else {
-        // Case (iii)
-        post[idx(a, b)] = -1;
+        // Case (iv)
+        post[idx(a, b)] = INF;
       }
     }
   }

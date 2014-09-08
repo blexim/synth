@@ -11,7 +11,11 @@
  #define NSTACK (NARGS - NHEAP*NHEAP)
 #endif
 
-int path_length(word_t args[NARGS], word_t x, word_t y);
+#define idx(x, y) (NSTACK + (x * NHEAP) + y)
+
+#define INF WORDMASK
+
+unsigned int path_length(word_t args[NARGS], word_t x, word_t y);
 int path(word_t args[NARGS], word_t x, word_t y);
 int onpath(word_t args[NARGS], word_t x, word_t y, word_t z);
 int alias(word_t args[NARGS], word_t x, word_t y);
