@@ -127,7 +127,6 @@ class Checker(object):
         "-DMAXFIT=%d" % maxfit,
         os.path.join(interpreter, "exclude.c"),
         os.path.join(interpreter, "wellformed.c"),
-        os.path.join(interpreter, "heaplib.c"),
         os.path.join(lib, "solution.c"),
         os.path.join(lib, "io.c"),
         self.scratchfile.name] + args.args.checker
