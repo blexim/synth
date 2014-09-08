@@ -90,6 +90,7 @@ class Checker(object):
     nargs = args.args.args
     nres = sz
     nevars = args.args.evars
+    nheapvars = args.args.heapvars
     nprogs = args.args.progs
     pwidth = log2(sz + consts + nargs - 1)
     pwidth = max(pwidth, 1)
@@ -120,6 +121,7 @@ class Checker(object):
         "-DWIDTH=%d" % width,
         "-DNARGS=%d" % nargs,
         "-DNEVARS=%d" % nevars,
+        "-DNHEAP=%d" % nheapvars,
         "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,

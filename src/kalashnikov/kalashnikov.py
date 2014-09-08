@@ -41,6 +41,8 @@ args.argparser.add_argument("--res", "-r", default=1, type=int,
     help="number of returns")
 args.argparser.add_argument("--evars", "-V", default=0, type=int,
     help="number of existentially quantified arguments")
+args.argparser.add_argument("--heapvars", "-H", default=0, type=int,
+    help="number of heap variables")
 args.argparser.add_argument("--progs", "-P", default=1, type=int,
     help="number of programs to synthesise")
 

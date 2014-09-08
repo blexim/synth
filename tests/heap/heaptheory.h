@@ -3,12 +3,12 @@
 
 #include "synth.h"
 
-#ifndef NSTACK
- #define NSTACK 0
+#ifndef NHEAP
+ #define NHEAP 0
 #endif
 
-#ifndef NHEAP
- #define NHEAP 3
+#ifndef NSTACK
+ #define NSTACK (NARGS - NHEAP*NHEAP)
 #endif
 
 int path_length(word_t args[NARGS], word_t x, word_t y);
