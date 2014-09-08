@@ -7,7 +7,11 @@
  * Return the length of the shortest path from x to y.
  */
 int path_length(word_t args[NARGS], word_t x, word_t y) {
-  return args[idx(x, y)];
+  word_t ret = args[idx(x, y)];
+
+  SIGN_EXTEND(ret);
+
+  return ret;
 }
 
 /*
@@ -103,12 +107,12 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   }
 
   for (i = 0; i < NHEAP; i++) {
-    if (pre[idx(y, i)] > 0) {
-      post[idx(x, i)] = pre[idx(y, i)] - 1;
+    if (path(pre, y, i)) {
+      post[idx(x, i)] = path_length(pre, y, i) - 1;
     }
 
-    if (pre[idx(i, y)] > 0) {
-      post[idx(i, x)] = pre[idx(i, y)] + 1;
+    if (path(pre, i, y)) {
+      post[idx(i, x)] = path_length(pre, i, y) + 1;
     }
   }
 }
