@@ -6,7 +6,11 @@
 int wellformed(prog_t *prog) {
   int i, j;
 
+#ifdef SEARCH
+  for (i = 0; i < prog->len; i++) {
+#else
   for (i = 0; i < SZ; i++) {
+#endif
     op_t op;
     param_t p1, p2, p3;
 
