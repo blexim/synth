@@ -2,6 +2,13 @@
 #include "heaptheory.h"
 
 /*
+ * Saturating addition.
+ */
+unsigned int s_add(unsigned int x, unsigned int y) {
+  return (x > INF - y) ? INF : x + y;
+}
+
+/*
  * Return the length of the shortest path from x to y.
  */
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
@@ -71,7 +78,8 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
       } else if (path(pre, a, x) && path(pre, y, b)) {
         // Case (iii)
         unsigned int old = path_length(pre, a, b);
-        unsigned int new = path_length(pre, a, x) + path_length(pre, y, b) + 1;
+        unsigned int new = s_add(path_length(pre, a, x), path_length(pre, y, b));
+        new = s_add(new, 1);
 
         post[idx(a, b)] = min(old, new);
       } else {
@@ -114,7 +122,27 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
     }
 
     if (path(pre, i, y)) {
-      post[idx(i, x)] = path_length(pre, i, y) + 1;
+      post[idx(i, x)] = s_add(path_length(pre, i, y), 1);
     }
   }
+}
+
+/*
+ * Allocate a new cell:
+ *
+ * x = new()
+ */
+void alloc(word_t pre[NARGS], word_t post[NARGS], word_t x) {
+  int i;
+
+  for (i = 0; i < NARGS; i++) {
+    post[i] = pre[i];
+  }
+
+  for (i = 0; i < NHEAP; i++) {
+    post[idx(x, i)] = INF;
+    post[idx(i, x)] = INF;
+  }
+
+  post[idx(x, x)] = 0;
 }

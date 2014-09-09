@@ -22,5 +22,6 @@ int alias(word_t args[NARGS], word_t x, word_t y);
 int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
 int assign(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
 int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
+void alloc(word_t pre[NARGS], word_t post[NARGS], word_t x);
 
 #endif
