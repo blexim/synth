@@ -14,8 +14,6 @@ unsigned int s_add(unsigned int x, unsigned int y) {
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
   word_t ret = args[idx(x, y)];
 
-  //SIGN_EXTEND(ret);
-
   return ret;
 }
 
@@ -60,9 +58,9 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   // 
   // For each pair (a, b) in the old heap, in the new heap:
   //
-  // i)    a -*> b && !x -> b, then new(a, b) = old(a, b)
-  // ii)    a -*> b && x == b, then new(a, b) = old(a, b)
-  // iii)   a -*> x && y -*> b, then new(a, b) = min(old(a, b), old(a, x) + old(y, b) + 1)
+  // i)   a -*> b && !(x -> b), then new(a, b) = old(a, b)
+  // ii)  a -*> b && x == b, then new(a, b) = old(a, b)
+  // iii) a -*> x && y -*> b, then new(a, b) = min(old(a, b), old(a, x) + old(y, b) + 1)
   // iv)  else new(a, b) = infinity
 
   word_t a, b;
@@ -104,6 +102,8 @@ int assign(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
     post[idx(x, i)] = pre[idx(y, i)];
     post[idx(i, x)] = pre[idx(i, y)];
   }
+
+  post[idx(x, x)] = 0;
 }
 
 /*
@@ -117,7 +117,9 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   }
 
   for (i = 0; i < NHEAP; i++) {
-    if (path(pre, y, i)) {
+    if (alias(pre, y, i)) {
+      post[idx(x, i)] = INF;
+    } else if (path(pre, y, i)) {
       post[idx(x, i)] = path_length(pre, y, i) - 1;
     }
 
@@ -125,6 +127,8 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
       post[idx(i, x)] = s_add(path_length(pre, i, y), 1);
     }
   }
+
+  post[idx(x, x)] = 0;
 }
 
 /*
