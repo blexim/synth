@@ -4,14 +4,25 @@
  * pointer equality and loops.
  */
 
+#include <stdlib.h>
+#include <assert.h>
+
+#define LEN 101
+
+typedef struct node_t {
+  struct node_t *n;
+} node;
+
+node *new() {
+  return malloc(sizeof(node));
+}
+
 /*
  * Returns NULL iff len(b) divides len(a)
  */
 
 node *divides(node *a, node *b) {
-  node *c = b;
-
-  [c != NULL ==> a != NULL]
+  node *c = NULL;
 
   while (a != NULL) {
     if (c == NULL) {
@@ -39,10 +50,19 @@ node *add(node *a, node *b) {
   return ret;
 }
 
-int f(node *a) {
-  assume(path(a, NULL));
+int main(void) {
+  node *a = NULL;
+  node *b;
+  int i;
 
-  node *b = add(a, a);
+  for (i = 0; i < LEN; i++) {
+    b = new();
+    b->n = a;
+    a = b;
+  }
+
+
+  b = add(a, a);
 
   node *two = new();
   two->n = new();
