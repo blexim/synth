@@ -163,8 +163,8 @@ class Checker(object):
       self.gccargs["explicit"] = [args.args.gcc, "-DSEARCH", "-std=c99", "-lm",
           "-DSZ=128",
           "-DNRES=128",
-          #execcfile,
-          os.path.join(interpreter, "exec.c"),
+          execcfile,
+          #os.path.join(interpreter, "exec.c"),
           "-O0", "-g", os.path.join(explicitdir, "verif.c")] + genericargs
     else:
       self.cbmcargs = [args.args.cbmc, "-DSYNTH",
@@ -288,7 +288,10 @@ class Checker(object):
     return (os.WEXITSTATUS(retcode), retfile)
 
   def cachable(self, (width, key)):
-    return key in ("genetic-synth", "explicit-verif")
+    if args.args.fastverif:
+      return key == "genetic-synth"
+    else:
+      return key in ("genetic-synth", "explicit-verif")
 
   def compile(self, name):
     global compiled
