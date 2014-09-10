@@ -78,7 +78,9 @@ presented the first algorithm to decide bitvector termination.
 We omitted the SVCOMP'15 benchmarks that made use of arrays or
 recursion.  We do not have arrays in our logic and we had not implemented
 recursion in our frontend (although the latter is uninteresting
-theoretically).
+theoretically).  On these benchmarks, we equalled the score of the
+winner of the SVCOMP'14 termination category (AProVE) and produced
+no incorrect results (AProVE had one incorrect result).
 
 Reviewer 3 (miscellaneous): Our contribution is twofold: we first
 present a novel reduction from termination to synthesis, then we present
