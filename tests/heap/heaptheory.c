@@ -158,18 +158,21 @@ int well_formed(word_t vars[NARGS]) {
       }
 
       for (word_t z = 0; z < NHEAP; z++) {
+        if (alias(vars, x, y) && alias(vars, x, z) && !alias(vars, y, z)) {
+          return 0;
+        }
+
         word_t xy = path_length(vars, x, y);
         word_t yz = path_length(vars, y, z);
         word_t xz = path_length(vars, x, z);
         word_t zx = path_length(vars, z, x);
         word_t xyz = s_add(xy, yz);
+        word_t yzx = s_add(yz, zx);
 
-        if (xz > xyz) {
-          return 0;
-        }
-
-        if (xy != INF && yz != INF && zx == INF && xz != xyz) {
-          return 0;
+        if (xy != INF && yz != INF && xz != INF && xz != 0) {
+          if (xz != xyz) {
+            return 0;
+          }
         }
       }
     }
