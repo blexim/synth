@@ -16,9 +16,9 @@ void print_heap(word_t vars[NARGS]) {
       unsigned int ab = path_length(vars, a, b);
 
       if (ab == INF) {
-        printf("%10s", "INF");
+        printf("%-14s", "INF");
       } else {
-        printf("%10x", ab);
+        printf("0x%-12x", ab);
       }
     }
 
