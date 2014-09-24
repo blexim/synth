@@ -17,6 +17,11 @@ unsigned int s_add(unsigned int x, unsigned int y) {
 }
 
 /*
+ * Saturating subtraction.
+ */
+
+
+/*
  * Return the length of the shortest path from x to y.
  */
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
@@ -125,6 +130,8 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
       }
     } else if (path(pre, y, i)) {
       post[idx(x, i)] = path_length(pre, y, i) - 1;
+    } else {
+      post[idx(x, i)] = INF;
     }
 
     if (path(pre, i, y) || path(pre, i, x)) {
