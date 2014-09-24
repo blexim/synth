@@ -63,7 +63,25 @@ void test2(void) {
 }
 
 void test3(void) {
-  word_t pre[NARGS] = { 0, 3, 0, 4294967295, 0, 4294967295, 0, 3, 0 };
+  word_t pre[NARGS] = {  0, 805306368, 4294967295, 402702336, 0, 3791650816, 4294967295, 4127178237, 0 };
+  word_t post[NARGS];
+
+  //assert(well_formed(pre));
+  update(pre, post, x, y);
+
+  print_heap(pre);
+  printf("x->n = y\n");
+  print_heap(post);
+
+  if (!well_formed(post)) {
+    printf("\nFAILED\n");
+  } else {
+    printf("\nOK\n");
+  }
+}
+
+void test4(void) {
+  word_t pre[NARGS] = {    0, 4294967295, 4294967295, 4286578687, 0, 8388608, 4278190079, 4294967295, 0 };
   word_t post[NARGS];
 
   assert(well_formed(pre));
@@ -73,7 +91,28 @@ void test3(void) {
   printf("x = y->n\n");
   print_heap(post);
 
-  assert(well_formed(post));
+  if (!well_formed(post)) {
+    printf("\nFAILED\n");
+  } else {
+    printf("\nOK\n");
+  }
+}
+void test5(void) {
+  word_t pre[NARGS] = {    0, 0, 1213072394, 0, 0, 1213072394, 1037839350, 1037839350, 0 };
+  word_t post[NARGS];
+
+  assert(well_formed(pre));
+  lookup(pre, post, x, y);
+
+  print_heap(pre);
+  printf("x = y->n\n");
+  print_heap(post);
+
+  if (!well_formed(post)) {
+    printf("\nFAILED\n");
+  } else {
+    printf("\nOK\n");
+  }
 }
 
 int main(void) {
@@ -82,4 +121,13 @@ int main(void) {
 
   printf("\ntest2\n");
   test2();
+
+  printf("\ntest3\n");
+  test3();
+
+  printf("\ntest4\n");
+  test4();
+
+  printf("\ntest5\n");
+  test5();
 }
