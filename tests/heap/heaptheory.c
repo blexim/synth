@@ -1,11 +1,19 @@
 #include "synth.h"
 #include "heaptheory.h"
 
+#ifndef __CPROVER_assume
+ #define __CPROVER_assume(x)
+#endif
+
 /*
  * Saturating addition.
  */
 unsigned int s_add(unsigned int x, unsigned int y) {
-  return (x > INF - y) ? INF : x + y;
+  unsigned int ret = (x > INF - y) ? INF : x + y;
+
+  __CPROVER_assume(ret != INF || x == INF || y == INF);
+
+  return ret;
 }
 
 /*
@@ -106,19 +114,43 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
     post[i] = pre[i];
   }
 
+  unsigned int cycle = cycle_length(pre, y);
+
   for (i = 0; i < NHEAP; i++) {
     if (alias(pre, y, i)) {
-      post[idx(x, i)] = INF;
+      if (cycle == INF) {
+        post[idx(x, i)] = INF;
+      } else {
+        post[idx(x, i)] = cycle - 1;
+      }
     } else if (path(pre, y, i)) {
       post[idx(x, i)] = path_length(pre, y, i) - 1;
     }
 
-    if (path(pre, i, y)) {
+    if (path(pre, i, y) || path(pre, i, x)) {
       post[idx(i, x)] = s_add(path_length(pre, i, y), 1);
     }
   }
 
   post[idx(x, x)] = 0;
+}
+
+/*
+ * Find the length of the cyclic path connection x -*> x.
+ */
+unsigned int cycle_length(word_t vars[NARGS], word_t x) {
+  int i;
+
+  for (i = 0; i < NHEAP; i++) {
+    unsigned int xi = path_length(vars, x, i);
+    unsigned int ix = path_length(vars, i, x);
+
+    if (xi != 0 && xi != INF && ix != INF) {
+      return s_add(xi, ix);
+    }
+  }
+
+  return INF;
 }
 
 /*
