@@ -1,7 +1,7 @@
 #include "synth.h"
 #include "heaptheory.h"
 
-#ifndef __CPROVER_assume
+#ifdef SEARCH
  #define __CPROVER_assume(x)
 #endif
 
@@ -191,19 +191,20 @@ int well_formed(word_t vars[NARGS]) {
 
       for (word_t z = 0; z < NHEAP; z++) {
         word_t xy = path_length(vars, x, y);
-        word_t yz = path_length(vars, y, z);
         word_t xz = path_length(vars, x, z);
+        word_t yx = path_length(vars, y, x);
+        word_t yz = path_length(vars, y, z);
         word_t zx = path_length(vars, z, x);
         word_t zy = path_length(vars, z, y);
-        word_t yx = path_length(vars, y, x);
+
         word_t xyz = s_add(xy, yz);
         word_t xzy = s_add(xz, zy);
 
-        if (xz > xyz) {
+        if (xz > xyz || xy > xzy) {
           return 0;
         }
 
-        if (!path(vars, z, x) && xz != xyz) {
+        if (!path(vars, z, x) && path(vars, x, y) && path(vars, y, z) && xz != xyz) {
           return 0;
         }
 
