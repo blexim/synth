@@ -208,19 +208,11 @@ int well_formed(word_t vars[NARGS]) {
       for (word_t z = 0; z < NHEAP; z++) {
         unsigned int xy = path_length(vars, x, y);
         unsigned int xz = path_length(vars, x, z);
-        unsigned int yx = path_length(vars, y, x);
         unsigned int yz = path_length(vars, y, z);
-        unsigned int zx = path_length(vars, z, x);
-        unsigned int zy = path_length(vars, z, y);
 
         unsigned int xyz = s_add(xy, yz);
-        unsigned int xzy = s_add(xz, zy);
 
         if (xy <= xz && xz != xyz) {
-          return 0;
-        }
-
-        if (xz <= xy && xy != xzy) {
           return 0;
         }
       }
