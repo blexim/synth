@@ -23,5 +23,6 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
 int assign(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
 int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
 void alloc(word_t pre[NARGS], word_t post[NARGS], word_t x);
+int well_formed(word_t vars[NARGS]);
 
 #endif
