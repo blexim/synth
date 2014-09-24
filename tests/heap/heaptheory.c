@@ -135,7 +135,13 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
     }
 
     if (path(pre, i, y) || path(pre, i, x)) {
-      post[idx(i, x)] = s_add(path_length(pre, i, y), 1);
+      unsigned int sum = s_add(path_length(pre, i, y), 1);
+
+      if (sum == cycle && cycle != INF) {
+        sum = 0;
+      }
+
+      post[idx(i, x)] = sum;
     }
   }
 
