@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 #include "heaptheory.h"
 #include "synth.h"
