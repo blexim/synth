@@ -36,10 +36,32 @@ void test1(void) {
   printf("x->n = y\n");
   print_heap(post);
 
-  assert(well_formed(post));
+  if (!well_formed(post)) {
+    printf("\nFAILED\n");
+  } else {
+    printf("\nOK\n");
+  }
 }
 
 void test2(void) {
+  word_t pre[NARGS] = { 0, 4294967295, 4294967295, 4294967293, 0, 0, 4294967293, 0, 0 };
+  word_t post[NARGS];
+
+  assert(well_formed(pre));
+  update(pre, post, x, y);
+
+  print_heap(pre);
+  printf("x->n = y\n");
+  print_heap(post);
+
+  if (!well_formed(post)) {
+    printf("\nFAILED\n");
+  } else {
+    printf("\nOK\n");
+  }
+}
+
+void test3(void) {
   word_t pre[NARGS] = { 0, 3, 0, 4294967295, 0, 4294967295, 0, 3, 0 };
   word_t post[NARGS];
 
