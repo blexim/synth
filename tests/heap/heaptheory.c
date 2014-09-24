@@ -17,11 +17,6 @@ unsigned int s_add(unsigned int x, unsigned int y) {
 }
 
 /*
- * Saturating subtraction.
- */
-
-
-/*
  * Return the length of the shortest path from x to y.
  */
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
@@ -72,7 +67,16 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   // For each pair (a, b) in the old heap, in the new heap:
   //
   // i)   len(a, b) <= len(a, x), then new(a, b) = old(a, b)
-  // ii) else new(a, b) = old(a, x) + old(y, b) + 1
+  //       This is the case where x does not appear between a and b, so the
+  //       update does not change the reachability.
+  // ii)  len(y, b) < len(y, x), then new(a, b) = old(a, x) + old(y, b) + 1
+  //       This is the case where x _does_ appear between a and b, but the
+  //       path y -> b did not go through x (i.e. there is no cycle x -> y -> x),
+  //       so we can just stitch the two paths together.
+  // iii) else new(a, b) = INF
+  //       This is the case where x was in the path a -> b, but there is no
+  //       path y -> b that does not include x, so b is no longer reachable
+  //       from a.
 
   word_t a, b;
 
@@ -81,11 +85,14 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
       if (path_length(pre, a, b) <= path_length(pre, a, x)) {
         // Case (i)
         post[idx(a, b)] = pre[idx(a, b)];
-      } else {
+      } else if (path_length(pre, y, b) <= path_length(pre, y, x)) {
         // Case (ii)
         unsigned int new = s_add(path_length(pre, a, x), path_length(pre, y, b));
         new = s_add(new, 1);
         post[idx(a, b)] = new;
+      } else {
+        // Case (iii)
+        post[idx(a, b)] = INF;
       }
     }
   }
@@ -136,7 +143,7 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
 
     if (path(pre, i, y) || path(pre, i, x)) {
       post[idx(i, x)] = s_add(path_length(pre, i, y), 1);
-    }
+   }
 
     if (path_length(pre, y, i) == 1) {
       post[idx(i, x)] = 0;
@@ -188,8 +195,6 @@ void alloc(word_t pre[NARGS], word_t post[NARGS], word_t x) {
  * Check whether the heap is well formed.
  */
 int well_formed(word_t vars[NARGS]) {
-  word_t res;
-
   for (word_t x = 0; x < NHEAP; x++) {
     if (path_length(vars, x, x) != 0) {
       return 0;
@@ -201,15 +206,15 @@ int well_formed(word_t vars[NARGS]) {
       }
 
       for (word_t z = 0; z < NHEAP; z++) {
-        word_t xy = path_length(vars, x, y);
-        word_t xz = path_length(vars, x, z);
-        word_t yx = path_length(vars, y, x);
-        word_t yz = path_length(vars, y, z);
-        word_t zx = path_length(vars, z, x);
-        word_t zy = path_length(vars, z, y);
+        unsigned int xy = path_length(vars, x, y);
+        unsigned int xz = path_length(vars, x, z);
+        unsigned int yx = path_length(vars, y, x);
+        unsigned int yz = path_length(vars, y, z);
+        unsigned int zx = path_length(vars, z, x);
+        unsigned int zy = path_length(vars, z, y);
 
-        word_t xyz = s_add(xy, yz);
-        word_t xzy = s_add(xz, zy);
+        unsigned int xyz = s_add(xy, yz);
+        unsigned int xzy = s_add(xz, zy);
 
         if (xz > xyz || xy > xzy) {
           return 0;
