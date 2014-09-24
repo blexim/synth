@@ -60,8 +60,9 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   //
   // i)   a -*> b && !(x -> b), then new(a, b) = old(a, b)
   // ii)  a -*> b && x == b, then new(a, b) = old(a, b)
-  // iii) a -*> x && y -*> b, then new(a, b) = min(old(a, b), old(a, x) + old(y, b) + 1)
-  // iv)  else new(a, b) = infinity
+  // iii) a -*> x && y -*> b, then new(a, b) = old(a, x) + old(y, b) + 1
+  // iv)  !(a -*> x), then new(a, b) = old(a, b)
+  // v)   else new(a, b) = infinity
 
   word_t a, b;
 
@@ -79,9 +80,11 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
         unsigned int new = s_add(path_length(pre, a, x), path_length(pre, y, b));
         new = s_add(new, 1);
 
-        post[idx(a, b)] = min(old, new);
+        post[idx(a, b)] = new;
+      } else if (!path(pre, a, x)) {
+        post[idx(a, b)] = pre[idx(a, b)];
       } else {
-        // Case (iv)
+        // Case (v)
         post[idx(a, b)] = INF;
       }
     }
@@ -149,4 +152,32 @@ void alloc(word_t pre[NARGS], word_t post[NARGS], word_t x) {
   }
 
   post[idx(x, x)] = 0;
+}
+
+/*
+ * Check whether the heap is well formed.
+ */
+int well_formed(word_t vars[NARGS]) {
+  word_t res;
+
+  for (word_t x = 0; x < NHEAP; x++) {
+    if (path_length(vars, x, x) != 0) {
+      return 0;
+    }
+
+    for (word_t y = 0; y < NHEAP; y++) {
+      for (word_t z = 0; z < NHEAP; z++) {
+        word_t xy = path_length(vars, x, y);
+        word_t yz = path_length(vars, y, z);
+        word_t xz = path_length(vars, x, z);
+        word_t xyz = s_add(xy, yz);
+
+        if (xy != INF && yz != INF && xz != xyz) {
+          return 0;
+        }
+      }
+    }
+  }
+
+  return 1;
 }
