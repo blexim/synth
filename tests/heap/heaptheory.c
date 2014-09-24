@@ -216,10 +216,11 @@ int well_formed(word_t vars[NARGS]) {
         unsigned int xyz = s_add(xy, yz);
         unsigned int xzy = s_add(xz, zy);
 
-        if (xz > xyz || xy > xzy) {
+        if (xz != xyz && xy != xzy) {
           return 0;
         }
 
+        /*
         if (path(vars, x, z) && path(vars, y, z) && path(vars, z, y)) {
           if (xz != xyz && xy != xzy) {
             return 0;
@@ -230,7 +231,12 @@ int well_formed(word_t vars[NARGS]) {
           }
         }
 
-        /*
+        if (path(vars, x, y) && path(vars, x, z)) {
+          if (xz != xyz && xy != xzy) {
+            return 0;
+          }
+        }
+
         if (path(vars, x, y) && path(vars, x, z) &&
             path(vars, y, z) && path(vars, z, y) &&
             !path(vars, z, x) && !path(vars, y, x)) {
