@@ -58,34 +58,25 @@ int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   // 
   // For each pair (a, b) in the old heap, in the new heap:
   //
-  // i)   a -*> b && !(x -> b), then new(a, b) = old(a, b)
-  // ii)  a -*> b && x == b, then new(a, b) = old(a, b)
-  // iii) a -*> x && y -*> b, then new(a, b) = old(a, x) + old(y, b) + 1
-  // iv)  !(a -*> x), then new(a, b) = old(a, b)
-  // v)   else new(a, b) = infinity
+  // i)   !(a -*> x), then new(a, b) = old(a, b)
+  // ii)  x == b, then new(a, b) = old(a, b)
+  // iii) else new(a, b) = old(a, x) + old(y, b) + 1
 
   word_t a, b;
 
   for (a = 0; a < NHEAP; a++) {
     for (b = 0; b < NHEAP; b++) {
-      if (path(pre, a, b) && !path(pre, x, b)) {
+      if (!path(pre, a, x)) {
         // Case (i)
         post[idx(a, b)] = pre[idx(a, b)];
-      } else if (path(pre, a, b) && alias(pre, x, b)) {
+      } else if (alias(pre, x, b)) {
         // Case (ii)
         post[idx(a, b)] = pre[idx(a, b)];
-      } else if (path(pre, a, x) && path(pre, y, b)) {
+      } else {
         // Case (iii)
-        unsigned int old = path_length(pre, a, b);
         unsigned int new = s_add(path_length(pre, a, x), path_length(pre, y, b));
         new = s_add(new, 1);
-
         post[idx(a, b)] = new;
-      } else if (!path(pre, a, x)) {
-        post[idx(a, b)] = pre[idx(a, b)];
-      } else {
-        // Case (v)
-        post[idx(a, b)] = INF;
       }
     }
   }
@@ -166,11 +157,19 @@ int well_formed(word_t vars[NARGS]) {
     }
 
     for (word_t y = 0; y < NHEAP; y++) {
+      if (alias(vars, x, y) && !alias(vars, y, x)) {
+        return 0;
+      }
+
       for (word_t z = 0; z < NHEAP; z++) {
         word_t xy = path_length(vars, x, y);
         word_t yz = path_length(vars, y, z);
         word_t xz = path_length(vars, x, z);
         word_t xyz = s_add(xy, yz);
+
+        if (xz > xyz) {
+          return 0;
+        }
 
         if (xy != INF && yz != INF && xz != xyz) {
           return 0;
