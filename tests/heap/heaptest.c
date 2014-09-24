@@ -26,108 +26,68 @@ void print_heap(word_t vars[NARGS]) {
   }
 }
 
-void test1(void) {
-  word_t pre[NARGS] = { 0, 2147483648, INF, INF, 0, INF, INF, INF, 0 };
+void test_update(word_t pre[NARGS]) {
   word_t post[NARGS];
 
-  assert(well_formed(pre));
   update(pre, post, x, y);
 
   print_heap(pre);
+  printf("Well formed: %s\n", well_formed(pre) ? "yes" : "no");
   printf("x->n = y\n");
   print_heap(post);
+  printf("Well formed: %s\n", well_formed(post) ? "yes" : "no");
 
-  if (!well_formed(post)) {
+  if (well_formed(pre) && !well_formed(post)) {
     printf("\nFAILED\n");
   } else {
     printf("\nOK\n");
   }
 }
 
-void test2(void) {
-  word_t pre[NARGS] = { 0, 4294967295, 4294967295, 4294967293, 0, 0, 4294967293, 0, 0 };
+#define NUPDATE 3
+word_t update_tests[NUPDATE][NARGS] = {
+  { 0, 2147483648, 4294967295, 4294967295, 0, 4294967295, 4294967295, 4294967295, 0 },
+  { 0, 4294967295, 4294967295, 4294967293, 0, 0, 4294967293, 0, 0 },
+  { 0, 805306368, 4294967295, 402702336, 0, 3791650816, 4294967295, 4127178237, 0 }
+};
+
+
+void test_lookup(word_t pre[NARGS]) {
   word_t post[NARGS];
 
-  assert(well_formed(pre));
-  update(pre, post, x, y);
-
-  print_heap(pre);
-  printf("x->n = y\n");
-  print_heap(post);
-
-  if (!well_formed(post)) {
-    printf("\nFAILED\n");
-  } else {
-    printf("\nOK\n");
-  }
-}
-
-void test3(void) {
-  word_t pre[NARGS] = {  0, 805306368, 4294967295, 402702336, 0, 3791650816, 4294967295, 4127178237, 0 };
-  word_t post[NARGS];
-
-  //assert(well_formed(pre));
-  update(pre, post, x, y);
-
-  print_heap(pre);
-  printf("x->n = y\n");
-  print_heap(post);
-
-  if (!well_formed(post)) {
-    printf("\nFAILED\n");
-  } else {
-    printf("\nOK\n");
-  }
-}
-
-void test4(void) {
-  word_t pre[NARGS] = {    0, 4294967295, 4294967295, 4286578687, 0, 8388608, 4278190079, 4294967295, 0 };
-  word_t post[NARGS];
-
-  assert(well_formed(pre));
   lookup(pre, post, x, y);
 
   print_heap(pre);
+  printf("Well formed: %s\n", well_formed(pre) ? "yes" : "no");
   printf("x = y->n\n");
   print_heap(post);
+  printf("Well formed: %s\n", well_formed(post) ? "yes" : "no");
 
-  if (!well_formed(post)) {
+  if (well_formed(pre) && !well_formed(post)) {
     printf("\nFAILED\n");
   } else {
     printf("\nOK\n");
   }
 }
-void test5(void) {
-  word_t pre[NARGS] = {    0, 0, 1213072394, 0, 0, 1213072394, 1037839350, 1037839350, 0 };
-  word_t post[NARGS];
 
-  assert(well_formed(pre));
-  lookup(pre, post, x, y);
-
-  print_heap(pre);
-  printf("x = y->n\n");
-  print_heap(post);
-
-  if (!well_formed(post)) {
-    printf("\nFAILED\n");
-  } else {
-    printf("\nOK\n");
-  }
-}
+#define NLOOKUP 2
+word_t lookup_tests[NLOOKUP][NARGS] = {
+  { 0, 4294967295, 4294967295, 4286578687, 0, 8388608, 4278190079, 4294967295, 0 },
+  { 0, 0, 1213072394, 0, 0, 1213072394, 1037839350, 1037839350, 0 }
+};
 
 int main(void) {
-  printf("\ntest1\n");
-  test1();
+  int i;
 
-  printf("\ntest2\n");
-  test2();
+  printf("Testing update:\n");
+  for (i = 0; i < NUPDATE; i++) {
+    printf("\nTest %d:\n", i);
+    test_update(update_tests[i]);
+  }
 
-  printf("\ntest3\n");
-  test3();
-
-  printf("\ntest4\n");
-  test4();
-
-  printf("\ntest5\n");
-  test5();
+  printf("\nTesting lookup:\n");
+  for (i = 0; i < NLOOKUP; i++) {
+    printf("\nTest %d:\n", i);
+    test_lookup(lookup_tests[i]);
+  }
 }
