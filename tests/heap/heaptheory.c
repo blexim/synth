@@ -194,16 +194,31 @@ int well_formed(word_t vars[NARGS]) {
         word_t yz = path_length(vars, y, z);
         word_t xz = path_length(vars, x, z);
         word_t zx = path_length(vars, z, x);
+        word_t zy = path_length(vars, z, y);
+        word_t yx = path_length(vars, y, x);
         word_t xyz = s_add(xy, yz);
-        word_t yzx = s_add(yz, zx);
+        word_t xzy = s_add(xz, zy);
 
         if (xz > xyz) {
           return 0;
         }
 
-        if (xy != INF && yz != INF && xz != INF && xz != 0 && xz != xyz) {
+        if (!path(vars, z, x) && xz != xyz) {
           return 0;
         }
+
+        if (path(vars, x, y) &&
+            path(vars, y, z) &&
+            path(vars, z, x)) {
+          // x, y, z are in a cycle...
+          if (xz != xyz && xy != xzy) {
+            return 0;
+          }
+        }
+
+        //if (xy != INF && yz != INF && xz != INF && xz != 0 && xz != xyz) {
+        //  return 0;
+        //}
       }
     }
   }
