@@ -220,8 +220,25 @@ int well_formed(word_t vars[NARGS]) {
           return 0;
         }
 
-        if (!path(vars, z, x) && path(vars, x, y) && path(vars, y, z) && xz != xyz) {
-          return 0;
+        if (path(vars, x, z) && path(vars, y, z) && path(vars, z, y)) {
+          if (xz != xyz && xy != xzy) {
+            return 0;
+          }
+        } else if (path(vars, x, y) && path(vars, y, z)) {
+          if (xz != xyz) {
+            return 0;
+          }
+        }
+
+        /*
+        if (path(vars, x, y) && path(vars, x, z) &&
+            path(vars, y, z) && path(vars, z, y) &&
+            !path(vars, z, x) && !path(vars, y, x)) {
+          // There is a cycle between y and z, and x leads into one of those
+          // from the outside...
+          if (xz != xyz && xy != xzy) {
+            return 0;
+          }
         }
 
         if (path(vars, x, y) &&
@@ -232,10 +249,7 @@ int well_formed(word_t vars[NARGS]) {
             return 0;
           }
         }
-
-        //if (xy != INF && yz != INF && xz != INF && xz != 0 && xz != xyz) {
-        //  return 0;
-        //}
+        */
       }
     }
   }
