@@ -16,6 +16,7 @@
 #define INF WORDMASK
 
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y);
+unsigned int cycle_length(word_t args[NARGS], word_t x);
 int path(word_t args[NARGS], word_t x, word_t y);
 int onpath(word_t args[NARGS], word_t x, word_t y, word_t z);
 int alias(word_t args[NARGS], word_t x, word_t y);
