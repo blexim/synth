@@ -20,7 +20,17 @@ unsigned int s_add(unsigned int x, unsigned int y) {
  * Return the length of the shortest path from x to y.
  */
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
-  word_t ret = args[idx(x, y)];
+  unsigned int ret = args[idx(x, y)];
+
+  return ret;
+}
+
+/*
+ * Return the length of the shortest path from x to a node
+ * c such that c is reachable from both x and y.
+ */
+unsigned int cut_length(word_t args[NARGS], word_t x, word_t y) {
+  unsigned int ret = args[cut_idx(x, y)];
 
   return ret;
 }
@@ -30,6 +40,13 @@ unsigned int path_length(word_t args[NARGS], word_t x, word_t y) {
  */
 int path(word_t args[NARGS], word_t x, word_t y) {
   return path_length(args, x, y) != INF;
+}
+
+/*
+ * Do x and y share a suffix?
+ */
+int cut(word_t args[NARGS], word_t x, word_t y) {
+  return cut_length(args, x, y) != INF;
 }
 
 /*
@@ -111,9 +128,12 @@ int assign(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   for (i = 0; i < NHEAP; i++) {
     post[idx(x, i)] = pre[idx(y, i)];
     post[idx(i, x)] = pre[idx(i, y)];
+    post[cut_idx(x, i)] = pre[cut_idx(y, i)];
+    post[cut_idx(i, x)] = pre[cut_idx(i, y)];
   }
 
   post[idx(x, x)] = 0;
+  post[cut_idx(x, x)] = 0;
 }
 
 /*
@@ -127,25 +147,40 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
   }
 
   unsigned int cycle = cycle_length(pre, y);
+  unsigned int new_length;
 
   for (i = 0; i < NHEAP; i++) {
     if (alias(pre, y, i)) {
       if (cycle == INF) {
         post[idx(x, i)] = INF;
+        post[cut_idx(x, i)] = INF;
       } else {
+        post[idx(x, i)] = cycle - 1;
         post[idx(x, i)] = cycle - 1;
       }
     } else if (path(pre, y, i)) {
-      post[idx(x, i)] = path_length(pre, y, i) - 1;
+      new_length = path_length(pre, y, i) - 1;
+      post[idx(x, i)] = new_length;
+      post[cut_idx(x, i)] = new_length;
+    } else if (cut(pre, y, i)) {
+      new_length = cut_length(pre, y, 1) - 1;
+      post[cut_idx(x, i)] = new_length;
     } else {
       post[idx(x, i)] = INF;
+      post[cut_idx(x, i)] = INF;
     }
 
     if (path(pre, i, y) || path(pre, i, x)) {
-      post[idx(i, x)] = s_add(path_length(pre, i, y), 1);
-   }
+      new_length = s_add(path_length(pre, i, y), 1);
+      post[idx(i, x)] = new_length;
+    }
 
-    if (path_length(pre, y, i) == 1) {
+    if (cut(pre, i, y) || cut(pre, i, x)) {
+      new_length = s_add(cut_length(pre, i, y), 1);
+      post[cut_idx(i, x)] = new_length;
+    }
+
+    if (cut_length(pre, y, i) == 1) {
       post[idx(i, x)] = 0;
     }
   }
@@ -186,9 +221,12 @@ void alloc(word_t pre[NARGS], word_t post[NARGS], word_t x) {
   for (i = 0; i < NHEAP; i++) {
     post[idx(x, i)] = INF;
     post[idx(i, x)] = INF;
+    post[cut_idx(x, i)] = INF;
+    post[cut_idx(i, x)] = INF;
   }
 
   post[idx(x, x)] = 0;
+  post[cut_idx(x, x)] = 0;
 }
 
 /*
@@ -201,18 +239,50 @@ int well_formed(word_t vars[NARGS]) {
     }
 
     for (word_t y = 0; y < NHEAP; y++) {
+      unsigned int xy = path_length(vars, x, y);
+      unsigned int cxy = cut_length(vars, x, y);
+      unsigned int cyx = cut_length(vars, y, x);
+
       if (alias(vars, x, y) && !alias(vars, y, x)) {
         return 0;
       }
 
-      for (word_t z = 0; z < NHEAP; z++) {
-        unsigned int xy = path_length(vars, x, y);
-        unsigned int xz = path_length(vars, x, z);
-        unsigned int yz = path_length(vars, y, z);
+      if (cxy > xy) {
+        return 0;
+      }
 
+      if (xy != INF && cxy != xy) {
+        return 0;
+      }
+
+      if (cxy != INF && cyx == INF) {
+        return 0;
+      }
+
+      for (word_t z = 0; z < NHEAP; z++) {
+        unsigned int xz = path_length(vars, x, z);
+        unsigned int cxz = cut_length(vars, x, z);
+        unsigned int yz = path_length(vars, y, z);
+        unsigned int cyz = cut_length(vars, y, z);
+
+        // If there is a path x -*> y -*> z, then the shortest path
+        // from x to z must have the same length as the path going via y.
         unsigned int xyz = s_add(xy, yz);
 
         if (xy <= xz && xz != xyz) {
+          return 0;
+        }
+
+        // If c is the cutpoint of x and y and there is a path
+        // x -*> c -*> z, then the shortest paths xz and yz must
+        // go via c, i.e.
+        //
+        // xz - xc = yz - yc ==>
+        // xz + yc = yz + xc
+        unsigned int cxyz = s_add(cxy, cyz);
+        unsigned int cyxz = s_add(cyx, cxz);
+
+        if (cxy <= cxz && cxz != cyxz) {
           return 0;
         }
       }

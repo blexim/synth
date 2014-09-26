@@ -8,16 +8,19 @@
 #endif
 
 #ifndef NSTACK
- #define NSTACK (NARGS - NHEAP*NHEAP)
+ #define NSTACK (NARGS - 2*NHEAP*NHEAP)
 #endif
 
 #define idx(x, y) (NSTACK + (x * NHEAP) + y)
+#define cut_idx(x, y) (NSTACK + NHEAP*NHEAP + (x * NHEAP) + y)
 
 #define INF WORDMASK
 
 unsigned int path_length(word_t args[NARGS], word_t x, word_t y);
+unsigned int cut_length(word_t args[NARGS], word_t x, word_t y);
 unsigned int cycle_length(word_t args[NARGS], word_t x);
 int path(word_t args[NARGS], word_t x, word_t y);
+int cut(word_t args[NARGS], word_t x, word_t y);
 int onpath(word_t args[NARGS], word_t x, word_t y, word_t z);
 int alias(word_t args[NARGS], word_t x, word_t y);
 int update(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y);
