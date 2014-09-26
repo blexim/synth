@@ -12,7 +12,7 @@ void print_heap(word_t vars[NARGS]) {
   int a, b;
   char sep[] = "  |  ";
 
-  printf("%14s", "Paths");
+  printf("%-14s", "Paths");
 
   for (a = 1; a < NHEAP; a++) {
     printf("%14s", "");
@@ -88,10 +88,11 @@ void test_lookup(word_t pre[NARGS]) {
   }
 }
 
-#define NLOOKUP 1
+#define NLOOKUP 2
 word_t lookup_tests[NLOOKUP][NARGS] = {
   { 0, 0, 1, INF, 0, 0, 1, INF, INF, INF, 0, INF, INF, INF, 1, 0,
-    0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0 }
+    0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0 },
+  { 0, 1977865311, 1978389599, 1977865311, 4294967295, 0, 524288, 0, 4294967295, 440141336, 0, 440141336, 4294967295, 0, 524288, 0, 0, 1977865311, 1978389599, 1977865311, 4294967294, 0, 524288, 0, 4294967294, 440141336, 0, 440141336, 4288675838, 0, 524288, 0 }
 };
 
 int main(void) {
