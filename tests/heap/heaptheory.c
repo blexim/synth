@@ -279,6 +279,10 @@ int well_formed(word_t vars[NARGS]) {
         unsigned int yz = path_length(vars, y, z);
         unsigned int cyz = cut_length(vars, y, z);
 
+        if (xy != INF && yz != INF && xz == INF) {
+          return 0;
+        }
+
         // If there is a path x -*> y -*> z, then the shortest path
         // from x to z must have the same length as the path going via y.
         unsigned int xyz = s_add(xy, yz);
