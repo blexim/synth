@@ -282,7 +282,7 @@ int well_formed(word_t vars[NARGS]) {
         unsigned int cxyz = s_add(cxy, cyz);
         unsigned int cyxz = s_add(cyx, cxz);
 
-        if (cxy <= cxz && cxz != cyxz) {
+        if (cxy <= cxz && cyxz != cyxz) {
           return 0;
         }
       }
