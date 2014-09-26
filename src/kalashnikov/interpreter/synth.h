@@ -1,7 +1,9 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
-//#define HEAP
+#include <assert.h>
+
+#define HEAP
 
 #ifndef SZ
  #define SZ 5
@@ -17,7 +19,12 @@
  #define WIDTH 32
 #endif
 
-#define WORDMASK ((1 << WIDTH) - 1)
+#if (WIDTH < 32)
+ #define WORDMASK ((1 << WIDTH) - 1)
+#else
+ #define WORDMASK 0xffffffff
+#endif
+
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
@@ -66,7 +73,7 @@
 
 
 #ifdef HEAP
-  #define MAXOPCODE 28
+  #define MAXOPCODE 24
 #elif defined(FLOAT)
   // Use this one to enable floating point
   #define MAXOPCODE 26
