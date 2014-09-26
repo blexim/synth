@@ -244,6 +244,7 @@ int well_formed(word_t vars[NARGS]) {
 
     for (word_t y = 0; y < NHEAP; y++) {
       unsigned int xy = path_length(vars, x, y);
+      unsigned int yx = path_length(vars, y, x);
       unsigned int cxy = cut_length(vars, x, y);
       unsigned int cyx = cut_length(vars, y, x);
 
@@ -255,8 +256,17 @@ int well_formed(word_t vars[NARGS]) {
         return 0;
       }
 
-      if (xy != INF && cxy != xy) {
-        return 0;
+      if (xy != INF) {
+        if (yx != INF) {
+          // There is a cycle containing x and y.
+          if (cxy != 0 || cyx != 0) {
+            return 0;
+          }
+        } else {
+          if (cxy != xy || cyx != 0) {
+            return 0;
+          }
+        }
       }
 
       if (cxy != INF && cyx == INF) {
