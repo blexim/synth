@@ -148,43 +148,57 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
 
   unsigned int cycle = cycle_length(pre, y);
   unsigned int new_length;
+  int a;
 
-  for (i = 0; i < NHEAP; i++) {
-    if (alias(pre, y, i)) {
-      if (cycle == INF) {
-        post[idx(x, i)] = INF;
-        post[cut_idx(x, i)] = INF;
-      } else {
-        post[idx(x, i)] = cycle - 1;
-        post[cut_idx(x, i)] = 0;
-      }
-    } else if (path(pre, y, i)) {
-      new_length = path_length(pre, y, i) - 1;
-      post[idx(x, i)] = new_length;
-      post[cut_idx(x, i)] = new_length;
-    } else if (cut(pre, y, i)) {
-      new_length = cut_length(pre, y, 1) - 1;
-      post[cut_idx(x, i)] = new_length;
+  for (a = 0; a < NHEAP; a++) {
+    if (!cut(pre, a, y)) {
+      // Case 1
+      post[idx(x, a)] = INF;
+      post[idx(a, x)] = INF;
 
-      if (new_length == 0) {
-        post[cut_idx(i, x)] = pre[cut_idx(i, y)];
-        post[cut_idx(x, i)] = 0;
-      }
-    } else {
-      post[idx(x, i)] = INF;
-      post[cut_idx(x, i)] = INF;
-    }
+      post[cut_idx(x, a)] = INF;
+      post[cut_idx(a, x)] = INF;
+    } else if (path(pre, a, y)) {
+      // Case 2
+      // TODO: handle a->a cycles
+      unsigned int ay = path_length(pre, a, y);
+      unsigned int ax = s_add(ay, 1);
 
-    if (path(pre, i, y) || path(pre, i, x)) {
-      new_length = s_add(path_length(pre, i, y), 1);
-      post[idx(i, x)] = new_length;
-      post[cut_idx(i, x)] = new_length;
-      post[cut_idx(x, i)] = 0;
-    }
+      post[idx(x, a)] = INF;
+      post[idx(a, x)] = ax;
 
-    if (cut_length(pre, y, i) == 1) {
-      post[idx(i, x)] = cut_length(pre, i, y);
-      post[cut_idx(x, i)] = 0;
+      post[cut_idx(x, a)] = 0;
+      post[cut_idx(a, x)] = ax;
+    } else if (path(pre, y, a)) {
+      // Case 3
+      // TODO: handle y->t cycles
+      unsigned int ya = path_length(pre, y, a);
+      unsigned int xa = ya - 1;
+
+      post[idx(x, a)] = xa;
+      post[idx(a, x)] = INF;
+
+      post[cut_idx(x, a)] = xa;
+      post[cut_idx(a, x)] = 0;
+    } else if (cut(pre, y, a) && cut_length(pre, y, a) > 1) {
+      // Case 4:
+      unsigned int cya = cut_length(pre, y, a);
+      unsigned int cxa = cya - 1;
+      unsigned int cay = cut_length(pre, a, y);
+
+      post[idx(x, a)] = INF;
+      post[idx(a, x)] = INF;
+
+      post[cut_idx(x, a)] = cxa;
+      post[cut_idx(a, x)] = cay;
+    } else if (cut_length(pre, y, a) == 1) {
+      unsigned int cay = cut_length(pre, a, y);
+
+      post[idx(x, a)] = INF;
+      post[idx(a, x)] = cay;
+
+      post[cut_idx(x, a)] = 0;
+      post[cut_idx(a, x)] = cay;
     }
   }
 
