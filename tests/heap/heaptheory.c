@@ -161,26 +161,30 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
     } else if (path(pre, y, i)) {
       new_length = path_length(pre, y, i) - 1;
       post[idx(x, i)] = new_length;
-    } else {
-      post[idx(x, i)] = INF;
-      post[cut_idx(x, i)] = INF;
-    }
-    
-    if (cut(pre, y, i) || cut(pre, i, y)) {
+      post[cut_idx(x, i)] = new_length;
+    } else if (cut(pre, y, i)) {
       new_length = cut_length(pre, y, 1) - 1;
       post[cut_idx(x, i)] = new_length;
 
       if (new_length == 0) {
         post[cut_idx(i, x)] = pre[cut_idx(i, y)];
-        post[idx(i, x)] = pre[cut_idx(i, y)];
+        post[cut_idx(x, i)] = 0;
       }
+    } else {
+      post[idx(x, i)] = INF;
+      post[cut_idx(x, i)] = INF;
     }
 
     if (path(pre, i, y) || path(pre, i, x)) {
       new_length = s_add(path_length(pre, i, y), 1);
       post[idx(i, x)] = new_length;
-      //post[cut_idx(i, x)] = new_length;
-      //post[cut_idx(x, i)] = 0;
+      post[cut_idx(i, x)] = new_length;
+      post[cut_idx(x, i)] = 0;
+    }
+
+    if (cut_length(pre, y, i) == 1) {
+      post[idx(i, x)] = cut_length(pre, i, y);
+      post[cut_idx(x, i)] = 0;
     }
   }
 

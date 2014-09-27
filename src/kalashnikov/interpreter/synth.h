@@ -1,7 +1,9 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
-//#define HEAP
+#include <assert.h>
+
+#define HEAP
 
 #ifndef SZ
  #define SZ 5
@@ -71,7 +73,7 @@
 
 
 #ifdef HEAP
-  #define MAXOPCODE 28
+  #define MAXOPCODE 24
 #elif defined(FLOAT)
   // Use this one to enable floating point
   #define MAXOPCODE 26

@@ -111,4 +111,3 @@ int main(void) {
     test_lookup(lookup_tests[i]);
   }
 }
-
