@@ -17,7 +17,12 @@
  #define WIDTH 32
 #endif
 
-#define WORDMASK ((1 << WIDTH) - 1)
+#if WIDTH != 32
+ #define WORDMASK ((1 << WIDTH) - 1)
+#else
+ #define WORDMASK 0xffffffff
+#endif
+
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
