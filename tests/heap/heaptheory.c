@@ -169,7 +169,7 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
 
       post[cut_idx(x, a)] = 0;
       post[cut_idx(a, x)] = ax;
-    } else if (path(pre, y, a)) {
+    } else if (path(pre, y, a) && path_length(pre, y, a) > 1) {
       // Case 3
       // TODO: handle y->t cycles
       unsigned int ya = path_length(pre, y, a);
@@ -179,6 +179,13 @@ int lookup(word_t pre[NARGS], word_t post[NARGS], word_t x, word_t y) {
       post[idx(a, x)] = INF;
 
       post[cut_idx(x, a)] = xa;
+      post[cut_idx(a, x)] = 0;
+    } else if (path_length(pre, y, a) == 1) {
+      // Case 6
+      post[idx(x, a)] = 0;
+      post[idx(a, x)] = 0;
+
+      post[cut_idx(x, a)] = 0;
       post[cut_idx(a, x)] = 0;
     } else if (cut(pre, y, a) && cut_length(pre, y, a) > 1) {
       // Case 4:
