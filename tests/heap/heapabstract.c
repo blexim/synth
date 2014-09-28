@@ -46,7 +46,9 @@ void abstract(unsigned int graph[NMATRIX],
 
   for (x = 0; x < NNODES; x++) {
     for (y = 0; y < NNODES; y++) {
-      if (x != y && abstraction[idx(x, y)] && abstraction[idx(y, x)]) {
+      if (x != y &&
+          abstraction[idx(x, y)] != INF &&
+          abstraction[idx(y, x)] != INF) {
         abstraction[cycle_idx(x)] =
           abstraction[idx(x, y)] + abstraction[idx(y, x)];
       }
