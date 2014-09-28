@@ -5,7 +5,7 @@
  #define NNODES 5
 #endif
 
-#define NMATRIX NNODES*NNODES
+#define NMATRIX (NNODES + NPROG)
 
 #ifndef NPROG
  #define NPROG (NNODES/2)
@@ -16,6 +16,7 @@
 #define INF 0xffffffff
 
 #define idx(x, y) (x*NNODES + y)
+#define ptr(x) (NNODES + x)
 
 #define abs_idx(x, y) (x*NPROG + y)
 #define cut_idx(x, y) (NPROG*NPROG + NPROG*x + y)
@@ -27,18 +28,14 @@
 
 void abstract(unsigned int graph[NMATRIX],
               unsigned int abstraction[ABSSIZE]) {
-  unsigned int paths[NMATRIX];
+  unsigned int paths[NNODES*NNODES];
   unsigned int cycles[NNODES];
-  unsigned int cuts[NPROG*NPROG];
-  unsigned int len;
-  int i, x, y, z;
+  unsigned int cuts[NNODES*NNODES];
+  unsigned int len, clen;
+  int i, x, y, z, c, px, py;
 
-  for (i = 0; i < NMATRIX; i++) {
+  for (i = 0; i < NNODES*NNODES; i++) {
     paths[i] = INF;
-    cuts[i] = INF;
-  }
-
-  for (i = 0; i < NPROG*NPROG; i++) {
     cuts[i] = INF;
   }
 
@@ -49,8 +46,8 @@ void abstract(unsigned int graph[NMATRIX],
   for (x = 0; x < NNODES; x++) {
     paths[idx(x, x)] = 0;
 
-    if (graph[idx(x, x)]) {
-      cycles[x] = graph[idx(x, x)];
+    if (graph[x] == x) {
+      cycles[x] = 1;
     } else {
       cycles[x] = INF;
     }
@@ -58,13 +55,14 @@ void abstract(unsigned int graph[NMATRIX],
 
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
-      for (y = 0; y < NNODES; y++) {
-        for (z = 0; z < NNODES; z++) {
-          if (paths[idx(x, y)] != INF &&
-              graph[idx(y, z)]) {
-            len = paths[idx(x, y)] + graph[idx(y, z)];
-            paths[idx(x, z)] = min(len, paths[idx(x, z)]);
-          }
+      y = graph[x];
+
+      for (z = 0; z < NNODES; z++) {
+        len = paths[idx(z, x)];
+
+        if (len != INF) {
+          len = len + 1;
+          paths[idx(z, y)] = min(len, paths[idx(z, y)]);
         }
       }
     }
@@ -78,30 +76,29 @@ void abstract(unsigned int graph[NMATRIX],
         len = paths[idx(x, y)] + paths[idx(y, x)];
         cycles[x] = min(cycles[x], len); 
       }
+
+      for (z = 0; z < NNODES; z++) {
+        if (paths[idx(x, z)] != INF &&
+            paths[idx(y, z)] != INF) {
+          c = cuts[idx(x, y)];
+          len = paths[idx(x, z)];
+          clen = paths[idx(x, c)];
+
+          if (len < clen) {
+            cuts[idx(x, y)] = z;
+            abstraction[cut_idx(x, y)] = len;
+          }
+        }
+      }
     }
   }
 
   for (x = 0; x < NPROG; x++) {
     abstraction[cycle_idx(x)] = INF;
     abstraction[cycle_dist_idx(x)] = INF;
+    px = graph[ptr(x)];
 
     for (y = 0; y < NNODES; y++) {
-      if (y < NPROG) {
-        abstraction[abs_idx(x, y)] = paths[idx(x, y)];
-
-        for (z = 0; z < NNODES; z++) {
-          if (paths[idx(x, z)] != INF &&
-              paths[idx(y, z)] != INF) {
-            len = paths[idx(x, z)];
-
-            if (len < abstraction[cut_idx(x, y)]) {
-              cuts[abs_idx(x, y)] = z;
-              abstraction[cut_idx(x, y)] = len;
-            }
-          }
-        }
-      }
-
       if (paths[idx(x, y)] != INF && cycles[y] != INF) {
         len = paths[idx(x, y)];
 
@@ -114,8 +111,13 @@ void abstract(unsigned int graph[NMATRIX],
 
   for (x = 0; x < NPROG; x++) {
     for (y = 0; y < NPROG; y++) {
-      unsigned int cxy = cuts[abs_idx(x, y)];
-      unsigned int cyx = cuts[abs_idx(y, x)];
+      px = graph[ptr(x)];
+      py = graph[ptr(y)];
+
+      abstraction[idx(x, y)] = paths[idx(px, py)];
+
+      unsigned int cxy = cuts[idx(px, py)];
+      unsigned int cyx = cuts[idx(py, px)];
 
       if (cxy != INF && cyx != INF) {
         abstraction[cut_cut_idx(x, y)] = paths[idx(cxy, cyx)];
@@ -127,31 +129,28 @@ void abstract(unsigned int graph[NMATRIX],
 }
 
 int is_valid_heap(unsigned int graph[NMATRIX]) {
-  int x, y, cnt;
+  unsigned int nullp = graph[ptr(0)];
+  unsigned int x, px;
+
+  if (graph[nullp] != INF) {
+    return 0;
+  }
 
   for (x = 0; x < NNODES; x++) {
-    cnt = 0;
-
-    for (y = 0; y < NNODES; y++) {
-      if (graph[idx(x, y)] != 0 &&
-          graph[idx(x, y)] != 1) {
+    if (graph[x] == INF) {
+      if (x != px) {
         return 0;
       }
-
-      if (graph[idx(x, y)]) {
-        cnt++;
-      }
+    } else if (graph[x] >= NNODES) {
+      return 0;
     }
+  }
 
-    if (x == 0) {
-      // Node 0 is NULL.
-      if (cnt != 0) {
-        return 0;
-      }
-    } else {
-      if (cnt != 1) {
-        return 0;
-      }
+  for (x = 0; x < NPROG; x++) {
+    px = graph[ptr(x)];
+
+    if (px >= NPROG) {
+      return 0;
     }
   }
 
@@ -159,28 +158,31 @@ int is_valid_heap(unsigned int graph[NMATRIX]) {
 }
 
 int succ(unsigned int graph[NMATRIX], unsigned int x) {
-  int y;
-
-  for (y = 0; y < NNODES; y++) {
-    if (graph[idx(x, y)]) {
-      return y;
-    }
-  }
-
-  return INF;
+  return graph[x];
 }
 
 int heaps_isomorphic(unsigned int graph1[NMATRIX],
                      unsigned int graph2[NMATRIX]) {
   unsigned int isomorphism[NNODES];
   int i, x, x2, y1, y2;
+  int px, px2;
 
-  for (i = 0; i < NPROG; i++) {
-    isomorphism[i] = i;
+
+  for (i = 0; i < NNODES; i++) {
+    isomorphism[i] = INF;
   }
 
-  for (i = NPROG; i < NNODES; i++) {
-    isomorphism[i] = INF;
+  for (i = 0; i < NPROG; i++) {
+    px = graph1[ptr(i)];
+    px2 = graph2[ptr(i)];
+
+    if (isomorphism[px] != INF) {
+      if (isomorphism[px] != px2) {
+        return 0;
+      }
+
+      isomorphism[px] = px2;
+    }
   }
 
   for (i = 0; i < NNODES; i++) {
