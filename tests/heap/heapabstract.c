@@ -106,8 +106,15 @@ int is_valid_heap(unsigned int graph[NMATRIX]) {
       }
     }
 
-    if (cnt > 1) {
-      return 0;
+    if (x == 0) {
+      // Node 0 is NULL.
+      if (cnt != 0) {
+        return 0;
+      }
+    } else {
+      if (cnt != 1) {
+        return 0;
+      }
     }
   }
 
