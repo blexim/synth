@@ -5,23 +5,24 @@
 #endif
 
 #define NMATRIX NNODES*NNODES
-#define ABSSIZE NMATRIX
+#define ABSSIZE (NMATRIX + NNODES)
 
 #ifndef NPROG
- #define NPROG 2
+ #define NPROG (NNODES/2)
 #endif
 
 #define INF 0xffffffff
 
 #define idx(x, y) (x*NNODES + y)
+#define cycle_idx(x) (NMATRIX + x)
 
 #define min(x, y) (x < y ? x : y)
 
 void abstract(unsigned int graph[NMATRIX],
               unsigned int abstraction[ABSSIZE]) {
-  int i, x;
+  int i, x, y;
 
-  for (i = 0; i < NMATRIX; i++) {
+  for (i = 0; i < ABSSIZE; i++) {
     abstraction[i] = INF;
   }
 
@@ -30,9 +31,24 @@ void abstract(unsigned int graph[NMATRIX],
   }
 
   for (i = 0; i < NNODES; i++) {
-    for (x = 0; x < NMATRIX; x++) {
-      if (graph[x]) {
-        abstraction[x] = min(i, abstraction[x]);
+    for (x = 0; x < NNODES; x++) {
+      for (y = 0; y < NNODES; y++) {
+        if (graph[idx(x, y)]) {
+          abstraction[idx(x, y)] = min(i, abstraction[idx(x, y)]);
+
+          if (x == y) {
+            abstraction[cycle_idx(x)] = graph[idx(x, y)];
+          }
+        }
+      }
+    }
+  }
+
+  for (x = 0; x < NNODES; x++) {
+    for (y = 0; y < NNODES; y++) {
+      if (x != y && abstraction[idx(x, y)] && abstraction[idx(y, x)]) {
+        abstraction[cycle_idx(x)] =
+          abstraction[idx(x, y)] + abstraction[idx(y, x)];
       }
     }
   }
