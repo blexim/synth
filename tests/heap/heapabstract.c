@@ -180,7 +180,7 @@ int heaps_isomorphic(unsigned int graph1[NMATRIX],
       if (isomorphism[px] != px2) {
         return 0;
       }
-
+    } else {
       isomorphism[px] = px2;
     }
   }
