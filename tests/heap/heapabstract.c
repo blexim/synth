@@ -11,7 +11,7 @@
  #define NPROG (NNODES/2)
 #endif
 
-#define ABSSIZE (NPROG*NPROG*2 + NPROG*2)
+#define ABSSIZE (NPROG*NPROG*3 + NPROG*2)
 
 #define INF 0xffffffff
 
@@ -19,8 +19,9 @@
 
 #define abs_idx(x, y) (x*NPROG + y)
 #define cut_idx(x, y) (NPROG*NPROG + NPROG*x + y)
-#define cycle_idx(x) (NPROG*NPROG*2 + x)
-#define cycle_dist_idx(x) (NPROG*NPROG*2 + NPROG + x)
+#define cut_cut_idx(x, y) (NPROG*NPROG*2 + NPROG*x + y)
+#define cycle_idx(x) (NPROG*NPROG*3 + x)
+#define cycle_dist_idx(x) (NPROG*NPROG*3 + NPROG + x)
 
 #define min(x, y) (x < y ? x : y)
 
@@ -28,11 +29,17 @@ void abstract(unsigned int graph[NMATRIX],
               unsigned int abstraction[ABSSIZE]) {
   unsigned int paths[NMATRIX];
   unsigned int cycles[NNODES];
+  unsigned int cuts[NPROG*NPROG];
   unsigned int len;
   int i, x, y, z;
 
   for (i = 0; i < NMATRIX; i++) {
     paths[i] = INF;
+    cuts[i] = INF;
+  }
+
+  for (i = 0; i < NPROG*NPROG; i++) {
+    cuts[i] = INF;
   }
 
   for (i = 0; i < ABSSIZE; i++) {
@@ -86,8 +93,11 @@ void abstract(unsigned int graph[NMATRIX],
           if (paths[idx(x, z)] != INF &&
               paths[idx(y, z)] != INF) {
             len = paths[idx(x, z)];
-            abstraction[cut_idx(x, y)] = min(len,
-                abstraction[cut_idx(x, y)]);
+
+            if (len < abstraction[cut_idx(x, y)]) {
+              cuts[abs_idx(x, y)] = z;
+              abstraction[cut_idx(x, y)] = len;
+            }
           }
         }
       }
@@ -98,6 +108,19 @@ void abstract(unsigned int graph[NMATRIX],
         abstraction[cycle_dist_idx(x)] = min(len,
             abstraction[cycle_dist_idx(x)]);
         abstraction[cycle_idx(x)] = cycles[y];
+      }
+    }
+  }
+
+  for (x = 0; x < NPROG; x++) {
+    for (y = 0; y < NPROG; y++) {
+      unsigned int cxy = cuts[abs_idx(x, y)];
+      unsigned int cyx = cuts[abs_idx(y, x)];
+
+      if (cxy != INF && cyx != INF) {
+        abstraction[cut_cut_idx(x, y)] = paths[idx(cxy, cyx)];
+      } else {
+        abstraction[cut_cut_idx(x, y)] = INF;
       }
     }
   }
