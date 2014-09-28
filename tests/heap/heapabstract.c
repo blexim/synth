@@ -144,7 +144,7 @@ int is_valid_heap(unsigned int graph[NMATRIX]) {
 
   for (x = 0; x < NNODES; x++) {
     if (graph[x] == INF) {
-      if (x != px) {
+      if (x != nullp) {
         return 0;
       }
     } else if (graph[x] >= NNODES) {
@@ -229,8 +229,8 @@ int abstractions_equal(unsigned int abs1[ABSSIZE],
 }
 
 int main(void) {
-  unsigned int heap1[NMATRIX];
-  unsigned int heap2[NMATRIX];
+  unsigned int heap1[NMATRIX] = { 0, 4294967295, 0, 1, 0 };
+  unsigned int heap2[NMATRIX] = { 2, 4294967295, 0, 1, 0 };
   unsigned int abs1[ABSSIZE], abs2[ABSSIZE];
 
   abstract(heap1, abs1);
