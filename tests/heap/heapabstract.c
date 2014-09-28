@@ -131,48 +131,48 @@ int is_valid_heap(unsigned int graph[NMATRIX]) {
   return 1;
 }
 
-void reachable(unsigned int graph[NMATRIX],
-               unsigned int out[NNODES]) {
-  int i, x, y;
+int succ(unsigned int graph[NMATRIX], unsigned int x) {
+  int y;
+
+  for (y = 0; y < NNODES; y++) {
+    if (graph[idx(x, y)]) {
+      return y;
+    }
+  }
+
+  return INF;
+}
+
+int heaps_isomorphic(unsigned int graph1[NMATRIX],
+                     unsigned int graph2[NMATRIX]) {
+  unsigned int isomorphism[NNODES];
+  int i, x, y1, y2;
 
   for (i = 0; i < NPROG; i++) {
-    out[i] = 1;
+    isomorphism[i] = i;
   }
 
   for (i = NPROG; i < NNODES; i++) {
-    out[i] = 0;
+    isomorphism[i] = INF;
   }
 
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
-      for (y = 0; y < NNODES; y++) {
-        if (out[x] && graph[idx(x, y)]) {
-          out[y] = 1;
-        }
+      if (isomorphism[x] == INF) {
+        continue;
       }
-    }
-  }
-}
 
-int heaps_equal(unsigned int graph1[NMATRIX],
-                unsigned int graph2[NMATRIX]) {
-  unsigned int reaches1[NNODES], reaches2[NNODES];
+      y1 = succ(graph1, x);
+      y2 = succ(graph2, x);
 
-  reachable(graph1, reaches1);
-  reachable(graph2, reaches2);
-
-  int x, y;
-
-  for (x = 0; x < NNODES; x++) {
-    if (reaches1[x] != reaches2[x]) {
-      return 0;
-    }
-
-    for (y = 0; y < NNODES; y++) {
-      if (reaches1[x] && reaches1[y]) {
-        if (graph1[idx(x, y)] != graph2[idx(x, y)]) {
+      if (y1 == INF) {
+        if (y2 != INF) {
           return 0;
         }
+      } else if (isomorphism[y1] == INF) {
+        isomorphism[y1] = y2;
+      } else if (isomorphism[y1] != y2) {
+        return 0;
       }
     }
   }
@@ -204,6 +204,6 @@ int main(void) {
   if (abstractions_equal(abs1, abs2) &&
       is_valid_heap(heap1) &&
       is_valid_heap(heap2)) {
-    assert(heaps_equal(heap1, heap2));
+    assert(heaps_isomorphic(heap1, heap2));
   }
 }
