@@ -60,7 +60,7 @@ void abstract(unsigned int graph[NMATRIX],
       for (z = 0; z < NNODES; z++) {
         len = paths[idx(z, x)];
 
-        if (len != INF) {
+        if (len != INF && y != INF) {
           len = len + 1;
           paths[idx(z, y)] = min(len, paths[idx(z, y)]);
         }
