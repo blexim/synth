@@ -11,15 +11,16 @@
  #define NPROG (NNODES/2)
 #endif
 
-#define ABSSIZE (NPROG*NPROG + NPROG*2)
+#define ABSSIZE (NPROG*NPROG*2 + NPROG*2)
 
 #define INF 0xffffffff
 
 #define idx(x, y) (x*NNODES + y)
 
 #define abs_idx(x, y) (x*NPROG + y)
-#define cycle_idx(x) (NPROG*NPROG + x)
-#define cycle_dist_idx(x) (NPROG*NPROG + NPROG + x)
+#define cut_idx(x, y) (NPROG*NPROG + NPROG*x + y)
+#define cycle_idx(x) (NPROG*NPROG*2 + x)
+#define cycle_dist_idx(x) (NPROG*NPROG*2 + NPROG + x)
 
 #define min(x, y) (x < y ? x : y)
 
@@ -84,6 +85,15 @@ void abstract(unsigned int graph[NMATRIX],
         abstraction[cycle_dist_idx(x)] = min(len,
             abstraction[cycle_dist_idx(x)]);
         abstraction[cycle_idx(x)] = cycles[y];
+      }
+
+      for (z = 0; z < NNODES; z++) {
+        if (paths[idx(x, z)] != INF &&
+            paths[idx(y, z)] != INF) {
+          len = paths[idx(x, z)];
+          abstraction[cut_idx(x, y)] = min(len,
+              abstraction[cut_idx(x, y)]);
+        }
       }
     }
   }
