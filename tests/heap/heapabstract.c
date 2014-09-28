@@ -177,8 +177,8 @@ int abstractions_equal(unsigned int abs1[ABSSIZE],
 }
 
 int main(void) {
-  unsigned int heap1[NMATRIX] = {0, 1, 0, 1};
-  unsigned int heap2[NMATRIX] = {0, 1, 0, 0};
+  unsigned int heap1[NMATRIX] ;
+  unsigned int heap2[NMATRIX];
   unsigned int abs1[ABSSIZE], abs2[ABSSIZE];
 
   abstract(heap1, abs1);
