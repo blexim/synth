@@ -18,12 +18,15 @@
 
 #define abs_idx(x, y) (x*NPROG + y)
 #define cycle_idx(x) (NPROG*NPROG + x)
+#define cycle_dist_idx(x) (NPROG*NPROG + NPROG + x)
 
 #define min(x, y) (x < y ? x : y)
 
 void abstract(unsigned int graph[NMATRIX],
               unsigned int abstraction[ABSSIZE]) {
   unsigned int paths[NMATRIX];
+  unsigned int cycles[NNODES];
+  unsigned int len;
   int i, x, y;
 
   for (i = 0; i < ABSSIZE; i++) {
@@ -32,6 +35,12 @@ void abstract(unsigned int graph[NMATRIX],
 
   for (x = 0; x < NNODES; x++) {
     paths[idx(x, x)] = 0;
+
+    if (graph[idx(x, x)]) {
+      cycles[x] = graph[idx(x, x)];
+    } else {
+      cycles[x] = INF;
+    }
   }
 
   for (i = 0; i < NNODES; i++) {
@@ -44,12 +53,20 @@ void abstract(unsigned int graph[NMATRIX],
     }
   }
 
-  for (x = 0; x < NPROG; x++) {
-    if (graph[idx(x, x)]) {
-      abstraction[cycle_idx(x)] = 1;
-    } else {
-      abstraction[cycle_idx(x)] = INF;
+  for (x = 0; x < NNODES; x++) {
+    for (y = 0; y < NNODES; y++) {
+      if (x != y &&
+          paths[idx(x, y)] != INF &&
+          paths[idx(y, x)] != INF) {
+        len = paths[idx(x, y)] + paths[idx(y, x)];
+
+        cycles[x] = min(cycles[x], len); 
+      }
     }
+  }
+
+  for (x = 0; x < NPROG; x++) {
+    abstraction[cycle_idx(x)] = cycles[x];
 
     for (y = 0; y < NPROG; y++) {
       abstraction[abs_idx(x, y)] = paths[idx(x, y)];
