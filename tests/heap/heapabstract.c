@@ -146,7 +146,7 @@ int succ(unsigned int graph[NMATRIX], unsigned int x) {
 int heaps_isomorphic(unsigned int graph1[NMATRIX],
                      unsigned int graph2[NMATRIX]) {
   unsigned int isomorphism[NNODES];
-  int i, x, y1, y2;
+  int i, x, x2, y1, y2;
 
   for (i = 0; i < NPROG; i++) {
     isomorphism[i] = i;
@@ -158,21 +158,21 @@ int heaps_isomorphic(unsigned int graph1[NMATRIX],
 
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
-      if (isomorphism[x] == INF) {
-        continue;
-      }
+      if (isomorphism[x] != INF) {
+        y1 = succ(graph1, x);
 
-      y1 = succ(graph1, x);
-      y2 = succ(graph2, x);
+        x2 = isomorphism[x];
+        y2 = succ(graph2, x2);
 
-      if (y1 == INF) {
-        if (y2 != INF) {
+        if (y1 == INF) {
+          if (y2 != INF) {
+            return 0;
+          }
+        } else if (isomorphism[y1] == INF) {
+          isomorphism[y1] = y2;
+        } else if (isomorphism[y1] != y2) {
           return 0;
         }
-      } else if (isomorphism[y1] == INF) {
-        isomorphism[y1] = y2;
-      } else if (isomorphism[y1] != y2) {
-        return 0;
       }
     }
   }
@@ -194,7 +194,7 @@ int abstractions_equal(unsigned int abs1[ABSSIZE],
 }
 
 int main(void) {
-  unsigned int heap1[NMATRIX] ;
+  unsigned int heap1[NMATRIX];
   unsigned int heap2[NMATRIX];
   unsigned int abs1[ABSSIZE], abs2[ABSSIZE];
 
