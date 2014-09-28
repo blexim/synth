@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 #ifndef NNODES
  #define NNODES 5
@@ -10,7 +11,7 @@
  #define NPROG (NNODES/2)
 #endif
 
-#define ABSSIZE (NPROG*NPROG + NPROG)
+#define ABSSIZE (NPROG*NPROG + NPROG*2)
 
 #define INF 0xffffffff
 
@@ -27,7 +28,7 @@ void abstract(unsigned int graph[NMATRIX],
   unsigned int paths[NMATRIX];
   unsigned int cycles[NNODES];
   unsigned int len;
-  int i, x, y;
+  int i, x, y, z;
 
   for (i = 0; i < ABSSIZE; i++) {
     paths[i] = INF;
@@ -46,8 +47,12 @@ void abstract(unsigned int graph[NMATRIX],
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
       for (y = 0; y < NNODES; y++) {
-        if (graph[idx(x, y)]) {
-          paths[idx(x, y)] = min(i, paths[idx(x, y)]);
+        for (z = 0; z < NNODES; z++) {
+          if (paths[idx(x, y)] != INF &&
+              graph[idx(y, z)]) {
+            len = paths[idx(x, y)] + graph[idx(y, z)];
+            paths[idx(x, z)] = min(len, paths[idx(x, z)]);
+          }
         }
       }
     }
@@ -59,23 +64,26 @@ void abstract(unsigned int graph[NMATRIX],
           paths[idx(x, y)] != INF &&
           paths[idx(y, x)] != INF) {
         len = paths[idx(x, y)] + paths[idx(y, x)];
-
         cycles[x] = min(cycles[x], len); 
       }
     }
   }
 
   for (x = 0; x < NPROG; x++) {
-    abstraction[cycle_idx(x)] = cycles[x];
+    abstraction[cycle_idx(x)] = INF;
+    abstraction[cycle_dist_idx(x)] = INF;
 
-    for (y = 0; y < NPROG; y++) {
-      abstraction[abs_idx(x, y)] = paths[idx(x, y)];
+    for (y = 0; y < NNODES; y++) {
+      if (y < NPROG) {
+        abstraction[abs_idx(x, y)] = paths[idx(x, y)];
+      }
 
-      if (x != y &&
-          paths[idx(x, y)] != INF &&
-          paths[idx(y, x)] != INF) {
-        abstraction[cycle_idx(x)] =
-          paths[idx(x, y)] + paths[idx(y, x)];
+      if (paths[idx(x, y)] != INF && cycles[y] != INF) {
+        len = paths[idx(x, y)];
+
+        abstraction[cycle_dist_idx(x)] = min(len,
+            abstraction[cycle_dist_idx(x)]);
+        abstraction[cycle_idx(x)] = cycles[y];
       }
     }
   }
@@ -169,7 +177,8 @@ int abstractions_equal(unsigned int abs1[ABSSIZE],
 }
 
 int main(void) {
-  unsigned int heap1[NMATRIX], heap2[NMATRIX];
+  unsigned int heap1[NMATRIX] = {0, 1, 0, 1};
+  unsigned int heap2[NMATRIX] = {0, 1, 0, 0};
   unsigned int abs1[ABSSIZE], abs2[ABSSIZE];
 
   abstract(heap1, abs1);
