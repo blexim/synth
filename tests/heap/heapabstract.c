@@ -5,52 +5,60 @@
 #endif
 
 #define NMATRIX NNODES*NNODES
-#define ABSSIZE (NMATRIX + NNODES)
 
 #ifndef NPROG
  #define NPROG (NNODES/2)
 #endif
 
+#define ABSSIZE (NPROG*NPROG + NPROG)
+
 #define INF 0xffffffff
 
 #define idx(x, y) (x*NNODES + y)
-#define cycle_idx(x) (NMATRIX + x)
+
+#define abs_idx(x, y) (x*NPROG + y)
+#define cycle_idx(x) (NPROG*NPROG + x)
 
 #define min(x, y) (x < y ? x : y)
 
 void abstract(unsigned int graph[NMATRIX],
               unsigned int abstraction[ABSSIZE]) {
+  unsigned int paths[NMATRIX];
   int i, x, y;
 
   for (i = 0; i < ABSSIZE; i++) {
-    abstraction[i] = INF;
+    paths[i] = INF;
   }
 
   for (x = 0; x < NNODES; x++) {
-    abstraction[idx(x, x)] = 0;
+    paths[idx(x, x)] = 0;
   }
 
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
       for (y = 0; y < NNODES; y++) {
         if (graph[idx(x, y)]) {
-          abstraction[idx(x, y)] = min(i, abstraction[idx(x, y)]);
-
-          if (x == y) {
-            abstraction[cycle_idx(x)] = graph[idx(x, y)];
-          }
+          paths[idx(x, y)] = min(i, paths[idx(x, y)]);
         }
       }
     }
   }
 
-  for (x = 0; x < NNODES; x++) {
-    for (y = 0; y < NNODES; y++) {
+  for (x = 0; x < NPROG; x++) {
+    if (graph[idx(x, x)]) {
+      abstraction[cycle_idx(x)] = 1;
+    } else {
+      abstraction[cycle_idx(x)] = INF;
+    }
+
+    for (y = 0; y < NPROG; y++) {
+      abstraction[abs_idx(x, y)] = paths[idx(x, y)];
+
       if (x != y &&
-          abstraction[idx(x, y)] != INF &&
-          abstraction[idx(y, x)] != INF) {
+          paths[idx(x, y)] != INF &&
+          paths[idx(y, x)] != INF) {
         abstraction[cycle_idx(x)] =
-          abstraction[idx(x, y)] + abstraction[idx(y, x)];
+          paths[idx(x, y)] + paths[idx(y, x)];
       }
     }
   }
