@@ -29,8 +29,8 @@
 void abstract(unsigned int graph[NMATRIX],
               unsigned int abstraction[ABSSIZE]) {
   unsigned int paths[NNODES*NNODES];
-  unsigned int cycles[NNODES];
   unsigned int cuts[NNODES*NNODES];
+  unsigned int cycles[NNODES];
   unsigned int len, clen;
   int i, x, y, z, c, px, py;
 
@@ -82,9 +82,15 @@ void abstract(unsigned int graph[NMATRIX],
             paths[idx(y, z)] != INF) {
           c = cuts[idx(x, y)];
           len = paths[idx(x, z)];
-          clen = paths[idx(x, c)];
 
-          if (len < clen) {
+          if (c != INF) {
+            clen = paths[idx(x, c)];
+
+            if (len < clen) {
+              cuts[idx(x, y)] = z;
+              abstraction[cut_idx(x, y)] = len;
+            }
+          } else {
             cuts[idx(x, y)] = z;
             abstraction[cut_idx(x, y)] = len;
           }
@@ -99,8 +105,8 @@ void abstract(unsigned int graph[NMATRIX],
     px = graph[ptr(x)];
 
     for (y = 0; y < NNODES; y++) {
-      if (paths[idx(x, y)] != INF && cycles[y] != INF) {
-        len = paths[idx(x, y)];
+      if (paths[idx(px, y)] != INF && cycles[y] != INF) {
+        len = paths[idx(px, y)];
 
         abstraction[cycle_dist_idx(x)] = min(len,
             abstraction[cycle_dist_idx(x)]);
