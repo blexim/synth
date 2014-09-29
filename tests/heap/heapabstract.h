@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <assert.h>
 
-typedef unsigned __CPROVER_bitvector[4] word_t;
-//typedef unsigned int word_t;
+#if 1
+ #define WIDTH 3
+ typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
+ #define INF ((word_t) -1)
+#else
+ typedef unsigned int word_t;
+ #define INF 0xffffffff
+#endif
 
 #ifndef NNODES
  #define NNODES 5
@@ -15,8 +21,6 @@ typedef unsigned __CPROVER_bitvector[4] word_t;
 #endif
 
 #define ABSSIZE (NPROG*NPROG*3 + NPROG*2)
-
-#define INF 0xf
 
 #define idx(x, y) (x*NNODES + y)
 #define ptr(x) (NNODES + x)
