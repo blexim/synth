@@ -11,7 +11,7 @@ void copy_abstract(abstract_heapt *pre,
     for (y = 0; y < NPROG; y++) {
       post->dist[x][y] = pre->dist[x][y];
       post->cut[x][y] = pre->cut[x][y];
-      pre->cut_cut[x][y] = pre->cut_cut[x][y];
+      post->cut_cut[x][y] = pre->cut_cut[x][y];
     }
   }
 }
