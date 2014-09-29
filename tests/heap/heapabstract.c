@@ -3,12 +3,12 @@
 
 #include "heapabstract.h"
 
-void abstract(unsigned int graph[NMATRIX],
-              unsigned int abstraction[ABSSIZE]) {
-  unsigned int paths[NNODES*NNODES];
-  unsigned int cuts[NNODES*NNODES];
-  unsigned int cycles[NNODES];
-  unsigned int len, clen;
+void abstract(word_t graph[NMATRIX],
+              word_t abstraction[ABSSIZE]) {
+  word_t paths[NNODES*NNODES];
+  word_t cuts[NNODES*NNODES];
+  word_t cycles[NNODES];
+  word_t len, clen;
   int i, x, y, z, c, px, py;
 
   for (i = 0; i < NNODES*NNODES; i++) {
@@ -89,8 +89,7 @@ void abstract(unsigned int graph[NMATRIX],
       if (paths[idx(px, y)] != INF && cycles[y] != INF) {
         len = paths[idx(px, y)];
 
-        abstraction[cycle_dist_idx(x)] = min(len,
-            abstraction[cycle_dist_idx(x)]);
+        abstraction[cycle_dist_idx(x)] = min(len, abstraction[cycle_dist_idx(x)]);
         abstraction[cycle_idx(x)] = cycles[y];
       }
     }
@@ -103,8 +102,8 @@ void abstract(unsigned int graph[NMATRIX],
 
       abstraction[idx(x, y)] = paths[idx(px, py)];
 
-      unsigned int cxy = cuts[idx(px, py)];
-      unsigned int cyx = cuts[idx(py, px)];
+      word_t cxy = cuts[idx(px, py)];
+      word_t cyx = cuts[idx(py, px)];
 
       if (cxy != INF && cyx != INF) {
         abstraction[cut_cut_idx(x, y)] = paths[idx(cxy, cyx)];
@@ -115,9 +114,13 @@ void abstract(unsigned int graph[NMATRIX],
   }
 }
 
-int is_valid_heap(unsigned int graph[NMATRIX]) {
-  unsigned int nullp = graph[ptr(0)];
-  unsigned int x, px;
+int is_valid_heap(word_t graph[NMATRIX]) {
+  word_t nullp = graph[ptr(0)];
+  word_t x, px;
+
+  if (nullp != 0) {
+    return 0;
+  }
 
   if (graph[nullp] != INF) {
     return 0;
@@ -144,13 +147,13 @@ int is_valid_heap(unsigned int graph[NMATRIX]) {
   return 1;
 }
 
-int succ(unsigned int graph[NMATRIX], unsigned int x) {
+int succ(word_t graph[NMATRIX], word_t x) {
   return graph[x];
 }
 
-int heaps_isomorphic(unsigned int graph1[NMATRIX],
-                     unsigned int graph2[NMATRIX]) {
-  unsigned int isomorphism[NNODES];
+int heaps_isomorphic(word_t graph1[NMATRIX],
+                     word_t graph2[NMATRIX]) {
+  word_t isomorphism[NNODES];
   int i, x, x2, y1, y2;
   int px, px2;
 
@@ -196,8 +199,8 @@ int heaps_isomorphic(unsigned int graph1[NMATRIX],
   return 1;
 }
 
-int abstractions_equal(unsigned int abs1[ABSSIZE],
-                       unsigned int abs2[ABSSIZE]) {
+int abstractions_equal(word_t abs1[ABSSIZE],
+                       word_t abs2[ABSSIZE]) {
   int i;
 
   for (i = 0; i < ABSSIZE; i++) {

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <assert.h>
 
+typedef unsigned __CPROVER_bitvector[4] word_t;
+//typedef unsigned int word_t;
+
 #ifndef NNODES
  #define NNODES 5
 #endif
@@ -13,7 +16,7 @@
 
 #define ABSSIZE (NPROG*NPROG*3 + NPROG*2)
 
-#define INF 0xffffffff
+#define INF 0xf
 
 #define idx(x, y) (x*NNODES + y)
 #define ptr(x) (NNODES + x)
@@ -26,15 +29,15 @@
 
 #define min(x, y) (x < y ? x : y)
 
-typedef unsigned int concrete_heapt[NMATRIX];
-typedef unsigned int abstract_heapt[ABSSIZE];
+typedef word_t concrete_heapt[NMATRIX];
+typedef word_t abstract_heapt[ABSSIZE];
 
 void abstract(concrete_heapt concrete,
               abstract_heapt abstraction);
 
 int is_valid_heap(concrete_heapt heap);
 
-int succ(concrete_heapt heap, unsigned int x);
+int succ(concrete_heapt heap, word_t x);
 
 int heaps_isomorphic(concrete_heapt heap1,
                      concrete_heapt heap2);
@@ -42,11 +45,11 @@ int heaps_isomorphic(concrete_heapt heap1,
 int abstractions_equal(abstract_heapt heap1,
                        abstract_heapt heap2);
 
-void concrete_assign(unsigned int x,
-                     unsigned int y,
+void concrete_assign(word_t x,
+                     word_t y,
                      concrete_heapt pre,
                      concrete_heapt post);
-void abstract_assign(unsigned int x,
-                     unsigned int y,
+void abstract_assign(word_t x,
+                     word_t y,
                      abstract_heapt pre,
                      abstract_heapt post);
