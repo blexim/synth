@@ -8,6 +8,7 @@
 #else
  typedef unsigned int word_t;
  #define INF 0xffffffff
+ #define __CPROVER_assume(x)
 #endif
 
 #ifndef NNODES
@@ -54,6 +55,15 @@ void concrete_assign(word_t x,
                      concrete_heapt *pre,
                      concrete_heapt *post);
 void abstract_assign(word_t x,
+                     word_t y,
+                     abstract_heapt *pre,
+                     abstract_heapt *post);
+
+void concrete_lookup(word_t x,
+                     word_t y,
+                     concrete_heapt *pre,
+                     concrete_heapt *post);
+void abstract_lookup(word_t x,
                      word_t y,
                      abstract_heapt *pre,
                      abstract_heapt *post);
