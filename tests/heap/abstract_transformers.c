@@ -20,7 +20,7 @@ unsigned int s_sub(unsigned int x, unsigned int y) {
   } else if (y > x) {
     return 0;
   } else {
-    return y - x;
+    return x - y;
   }
 }
 
