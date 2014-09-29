@@ -37,6 +37,9 @@ void abstract_assign(word_t x,
     post->cut_cut[z][x] = pre->cut_cut[z][y];
   }
 
+  post->stem[x] = pre->stem[y];
+  post->cycle[x] = pre->cycle[y];
+
   post->dist[x][x] = 0;
   post->cut[x][x] = 0;
   post->cut_cut[x][x] = 0;
