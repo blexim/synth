@@ -25,6 +25,24 @@ unsigned int s_sub(unsigned int x, unsigned int y) {
 }
 
 /*
+ * Is there a path a->b?
+ */
+int path(abstract_heapt *heap,
+         word_t a,
+         word_t b) {
+  return heap->dist[a][b] != INF;
+}
+
+/*
+ * Does a cut b?
+ */
+int cut(abstract_heapt *heap,
+        word_t a,
+        word_t b) {
+  return heap->cut[a][b] != INF;
+}
+
+/*
  * Copy an abstract heap.
  */
 void copy_abstract(abstract_heapt *pre,
@@ -85,6 +103,110 @@ void abstract_lookup(word_t x,
   word_t len;
 
   for (a = 0; a < NPROG; a++) {
+    //__CPROVER_assume(pre->stem[y] > 1);
+    // The acyclic case.
+    if (!cut(pre, a, y)) {
+      // Case 1:
+      //
+      // a -> .
+      // y -> x -> .
+      post->dist[a][x] = INF;
+      post->dist[x][a] = INF;
+    } else if (pre->dist[y][a] == 1) {
+      // Case 4:
+      //
+      // y -> a=x
+      post->dist[a][x] = 0;
+      post->dist[x][a] = 0;
+    } else if (path(pre, a, y) && pre->stem[a] > 0) {
+      // Case 2:
+      //
+      // a -> y -> x
+      // OR
+      // a = y -> x
+      //
+      // AND
+      //
+      // a is not in a cycle
+      post->dist[a][x] = s_add(pre->dist[a][y], 1);
+      post->dist[x][a] = INF;
+    } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] > 2) {
+      // Case 2a:
+      //
+      // a -> . -> y -> x -> a
+      //
+      // Note: stem[a] = 0 ==> stem[y] = 0
+      post->dist[a][x] = s_add(pre->dist[a][y], 1);
+      post->dist[x][a] = s_sub(pre->dist[y][a], 1);
+    } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 2) {
+      // Case 2b:
+      //
+      // a=x -> y -> a=x
+      post->dist[a][x] = 0;
+      post->dist[x][a] = 0;
+    } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 1) {
+      // Case 2b:
+      //
+      // a=y -> x=y=a
+      assert(post->dist[a][y] == 0 && post->dist[y][a] == 0);
+      post->dist[a][x] = 0;
+      post->dist[x][a] = 0;
+    } else if (path(pre, y, a) && pre->dist[y][a] > 1 && pre->stem[y] > 1) {
+      // Case 3:
+      //
+      // y -> x -> a
+      // 
+      // AND
+      //
+      // x is not in a cycle
+      post->dist[a][x] = INF;
+      post->dist[x][a] = s_sub(pre->dist[y][a], 1);
+    } else if (path(pre, y, a) && pre->dist[y][a] > 1 && pre->stem[y] == 1) {
+      // Case 3a:
+      //
+      // y -> x -> a -> x
+      assert(pre->stem[a] == 0 && pre->cycle[a] > 0);
+
+      len = s_sub(pre->dist[y][a], 1);
+      post->dist[x][a] = len;
+
+      len = s_sub(pre->cycle[a], len);
+      post->dist[a][x] = len;
+    } else if (cut(pre, y, a) && pre->cut[y][a] > 1) {
+      // Case 5:
+      //
+      // y -> x -> .
+      //           ^
+      //           |
+      //           a
+      post->dist[a][x] = INF;
+      post->dist[x][a] = INF;
+    } else if (pre->cut[y][a] == 1) {
+      // Case 6:
+      //
+      // y -> x -> .
+      //      ^
+      //      |
+      //      a
+      post->dist[a][x] = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
+      post->dist[x][a] = INF;
+    } else {
+      // NOTREACHED
+      assert(0);
+    }
+
+    /*
+      if (pre->dist[y][a] == 0) {
+        post->dist[x][a] = INF;
+      } else {
+        post->dist[x][a] = s_sub(pre->dist[y][a], 1);
+      }
+    } else if (pre->stem[1] == 1) {
+      // The pointer y is one step away from a cycle.  That means
+      // x is now in the cycle, but cannot reach y.
+
+    }
+
     // First we work out the distance x -> a
     if (a == x) {
       // a == x, and x always aliases itself.
@@ -129,5 +251,8 @@ void abstract_lookup(word_t x,
       // Otherwise, the distance a -> y is k, so a -> x = k+1
       post->dist[a][x] = s_add(pre->dist[a][y], 1);
     }
+    */
   }
+
+  post->dist[x][x] = 0;
 }
