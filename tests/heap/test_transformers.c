@@ -4,7 +4,9 @@ int main(void) {
   word_t x = 1;
   word_t y = 2;
 
-  concrete_heapt heap1 = {{ INF, 0, 2}, { 0, 0, 1 }};
+  concrete_heapt heap1 = {
+    .succ={ INF, 1, 0 }, .ptr={ 0, 1, 1 }
+  };
   concrete_heapt heap2;
   abstract_heapt abs1, abs2, abs3;
 
@@ -22,11 +24,14 @@ int main(void) {
 
   printf("\nExecuting x = y:\n");
 
-  printf("\nConcrete heap2:\n");
+  printf("\nAbstract result:\n");
+  print_abstract(&abs2);
+
+  printf("\nConcrete result:\n");
   print_concrete(&heap2);
 
-  printf("\nAbstract2:\n");
-  print_abstract(&abs1);
+  printf("\nAbstracted concrete:\n");
+  print_abstract(&abs3);
 
   if (is_valid_heap(&heap1)) {
     assert(abstractions_equal(&abs2, &abs3));
