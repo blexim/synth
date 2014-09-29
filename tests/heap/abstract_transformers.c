@@ -138,12 +138,18 @@ void abstract_lookup(word_t x,
       // Note: stem[a] = 0 ==> stem[y] = 0
       post->dist[a][x] = s_add(pre->dist[a][y], 1);
       post->dist[x][a] = s_sub(pre->dist[y][a], 1);
-    } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 2) {
+    } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 2 && pre->dist[a][y] == 1) {
       // Case 2b:
       //
       // a=x -> y -> a=x
       post->dist[a][x] = 0;
       post->dist[x][a] = 0;
+    } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 2 && pre->dist[a][y] == 0) {
+      // Case 2c:
+      //
+      // a=y -> x -> a=y
+      post->dist[a][x] = 1;
+      post->dist[x][a] = 1;
     } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 1) {
       // Case 2b:
       //
