@@ -8,7 +8,7 @@
 #define NMATRIX (NNODES + NPROG)
 
 #ifndef NPROG
- #define NPROG (NNODES/2)
+ #define NPROG NNODES
 #endif
 
 #define ABSSIZE (NPROG*NPROG*3 + NPROG*2)
@@ -41,3 +41,12 @@ int heaps_isomorphic(concrete_heapt heap1,
 
 int abstractions_equal(abstract_heapt heap1,
                        abstract_heapt heap2);
+
+void concrete_assign(unsigned int x,
+                     unsigned int y,
+                     concrete_heapt pre,
+                     concrete_heapt post);
+void abstract_assign(unsigned int x,
+                     unsigned int y,
+                     abstract_heapt pre,
+                     abstract_heapt post);
