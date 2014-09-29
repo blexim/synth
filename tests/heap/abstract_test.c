@@ -3,11 +3,11 @@
 int main(void) {
   concrete_heapt heap1 =
   {
-    .succ={ INF, 1, 0 }, .ptr={ 0, 1, 1 }
+    .succ={ INF, 1, 2 }, .ptr={ 0, 0, 1 }
   };
   concrete_heapt heap2 =
   {
-    .succ={ INF, 2, 2 }, .ptr={ 0, 2, 2 }
+    .succ={ INF, 1, 1 }, .ptr={ 0, 0, 2 }
   };
 
   abstract_heapt abs1;
