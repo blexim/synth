@@ -102,6 +102,9 @@ void abstract_lookup(word_t x,
   word_t a;
   word_t len;
 
+  post->stem[x] = s_sub(pre->stem[y], 1);
+  post->cycle[x] = pre->cycle[y];
+
   for (a = 0; a < NPROG; a++) {
     //__CPROVER_assume(pre->stem[y] > 1);
     // The acyclic case.
@@ -218,64 +221,6 @@ void abstract_lookup(word_t x,
       // NOTREACHED
       assert(0);
     }
-
-    /*
-      if (pre->dist[y][a] == 0) {
-        post->dist[x][a] = INF;
-      } else {
-        post->dist[x][a] = s_sub(pre->dist[y][a], 1);
-      }
-    } else if (pre->stem[1] == 1) {
-      // The pointer y is one step away from a cycle.  That means
-      // x is now in the cycle, but cannot reach y.
-
-    }
-
-    // First we work out the distance x -> a
-    if (a == x) {
-      // a == x, and x always aliases itself.
-      post->dist[x][a] = 0;
-    } else if (pre->dist[a][y] == 0) {
-      // a is an alias of y...
-      if (pre->stem[y] == 0) {
-        // y is part of a cycle of length k, so x -> a == x -> y == k-1
-        post->dist[x][a] = s_sub(pre->cycle[y], 1);
-      } else {
-        // y cannot reach y, and so x cannot.
-        post->dist[x][a] = INF;
-      }
-    } else {
-      // Otherwise, the distance y -> a is k, and so x -> a = k-1
-      post->dist[x][a] = s_sub(pre->dist[y][a], 1);
-    }
-
-    // Now work out the distance a -> x
-    if (a == x) {
-      post->dist[a][x] = 0;
-    } else if (pre->cut[y][a] == 1 && pre->dist[y][a] == INF) {
-      // y is one step away from a cutpoint with a.  There is a bit of trickery
-      // here -- we have to remember to account for the distance between the ay
-      // cutpoint and the ya cutpoint.
-      post->dist[a][x] = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
-    } else if (pre->cut[y][a] == 1 && pre->cycle[a] != INF) {
-      // y is one step away from a cycle containing a.
-      len = s_sub(pre->cycle[a], pre->dist[y][a]);
-      len = s_add(len, 1);
-      post->dist[a][x] = len;
-    } else if (pre->dist[y][a] == 1) {
-      post->dist[a][x] = 0;
-    } else if (pre->stem[y] == 0 && pre->dist[y][a] == 0) {
-      // y is on a cycle and a is on the same cycle.
-      len = s_sub(pre->cycle[y], pre->dist[y][a]);
-      len = s_sub(len, 1);
-      post->dist[a][x] = len;
-    } else if (pre->stem[y] == 0 && pre->cycle[y] == 1) {
-      post->dist[a][x] = pre->dist[a][y];
-    } else {
-      // Otherwise, the distance a -> y is k, so a -> x = k+1
-      post->dist[a][x] = s_add(pre->dist[a][y], 1);
-    }
-    */
   }
 
   post->dist[x][x] = 0;
