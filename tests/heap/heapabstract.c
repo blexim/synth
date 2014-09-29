@@ -102,7 +102,7 @@ void abstract(concrete_heapt *concrete,
         abstract->cut[x][y] = paths[px][cxy];
         
         if (cyx != INF) {
-        abstract->cut_cut[x][y] = paths[cxy][cyx];
+          abstract->cut_cut[x][y] = paths[cxy][cyx];
         } else {
           abstract->cut_cut[x][y] = INF;
         }
