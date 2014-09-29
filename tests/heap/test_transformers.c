@@ -126,6 +126,21 @@ void test_lookups() {
     .succ={ INF, 2, 3, 1 }, .ptr={ 0, 1, 1, 0 }
   };
   test_lookup(&heap7);
+
+  concrete_heapt heap8 = {
+    .succ={ INF, 3, 1, 1 }, .ptr={ 0, 0, 3, 2 }
+  };
+  test_lookup(&heap8);
+#elif NNODES==5
+  concrete_heapt heap9 = {
+    .succ={ INF, 2, 3, 2, 3 }, .ptr={ 0, 4, 4, 1, 4 }
+  };
+  test_lookup(&heap9);
+
+  concrete_heapt heap10 = {
+    .succ={ INF, 2, 4, 1, 2 }, .ptr={ 0, 2, 3, 4, 4 }
+  };
+  test_lookup(&heap10);
 #endif
 }
 
