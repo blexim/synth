@@ -1,7 +1,7 @@
 #include "heapabstract.h"
 
-void concrete_assign(unsigned int x,
-                     unsigned int y,
+void concrete_assign(word_t x,
+                     word_t y,
                      concrete_heapt pre,
                      concrete_heapt post) {
   int i;

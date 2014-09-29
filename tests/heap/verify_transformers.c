@@ -1,8 +1,8 @@
 #include "heapabstract.h"
 
 int main(void) {
-  unsigned int x = 1;
-  unsigned int y = 2;
+  word_t x = 1;
+  word_t y = 2;
 
   concrete_heapt heap1, heap2;
   abstract_heapt abs1, abs2, abs3;

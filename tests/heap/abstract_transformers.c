@@ -1,7 +1,7 @@
 #include "heapabstract.h"
 
-void abstract_assign(unsigned int x,
-                     unsigned int y,
+void abstract_assign(word_t x,
+                     word_t y,
                      abstract_heapt pre,
                      abstract_heapt post) {
   int i;
