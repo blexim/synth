@@ -91,6 +91,7 @@ void test_lookup(concrete_heapt *heap1) {
 }
 
 void test_lookups() {
+#if NNODES==3
   concrete_heapt heap1 = {
     .succ={ INF, 0, 0 }, .ptr={ 0, 0, 2 }
   };
@@ -115,6 +116,12 @@ void test_lookups() {
     .succ={ INF, 2, 2 }, .ptr={ 0, 2, 1 }
   };
   test_lookup(&heap5);
+#elif NNODES==4
+  concrete_heapt heap6 = {
+    .succ={ INF, 2, 2, 0 }, .ptr={ 0, 2, 2, 1 }
+  };
+  test_lookup(&heap6);
+#endif
 }
 
 void main() {
