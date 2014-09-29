@@ -240,3 +240,41 @@ int abstractions_equal(abstract_heapt *abs1,
 
   return 1;
 }
+
+#define LINEWIDTH 4
+
+void print_concrete(concrete_heapt *heap) {
+  int i;
+  word_t y;
+  char *ptrnames[] = {"NULL", "x", "y", "z", "w"};
+
+  printf("\nSuccessors:");
+
+  for (i = 0; i < NNODES; i++) {
+    if (i % LINEWIDTH == 0) {
+      printf("\n");
+    }
+
+    y = heap->succ[i];
+
+    printf("%d -> %d;   ", i, y);
+  }
+
+  printf("\nPointers:");
+
+  for (i = 0; i < NPROG; i++) {
+    if (i % LINEWIDTH == 0) {
+      printf("\n");
+    }
+
+    y = heap->ptr[i];
+
+    if (i < sizeof(ptrnames)) {
+      printf("%s == %d;  ", ptrnames[i], y);
+    } else {
+      printf("p%d == %d;  ", i, y);
+    }
+  }
+
+  printf("\n");
+}

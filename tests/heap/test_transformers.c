@@ -14,6 +14,12 @@ int main(void) {
   concrete_assign(x, y, &heap1, &heap2);
   abstract(&heap2, &abs3);
 
+  printf("Concrete heap1:\n");
+  print_concrete(&heap1);
+
+  printf("Concrete heap2:\n");
+  print_concrete(&heap2);
+
   if (is_valid_heap(&heap1)) {
     assert(abstractions_equal(&abs2, &abs3));
   }

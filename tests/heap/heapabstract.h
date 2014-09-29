@@ -33,6 +33,9 @@ typedef struct abstract_heap {
   word_t cycle[NPROG];
 } abstract_heapt;
 
+void print_concrete(concrete_heapt *heap);
+void print_abstract(abstract_heapt *abstract);
+
 void abstract(concrete_heapt *concrete,
               abstract_heapt *abstraction);
 
