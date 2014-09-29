@@ -3,141 +3,152 @@
 
 #include "heapabstract.h"
 
-void abstract(word_t graph[NMATRIX],
-              word_t abstraction[ABSSIZE]) {
-  word_t paths[NNODES*NNODES];
-  word_t cuts[NNODES*NNODES];
+void abstract(concrete_heapt *concrete,
+              abstract_heapt *abstract) {
+  word_t paths[NNODES][NNODES];
+  word_t cuts[NNODES][NNODES];
   word_t cycles[NNODES];
-  word_t len, clen;
+  word_t len, old_len, clen;
   int i, x, y, z, c, px, py;
 
-  for (i = 0; i < NNODES*NNODES; i++) {
-    paths[i] = INF;
-    cuts[i] = INF;
-  }
-
-  for (i = 0; i < ABSSIZE; i++) {
-    abstraction[i] = INF;
+  for (x = 0; x < NNODES; x++) {
+    for (y = 0; y < NNODES; y++) {
+      paths[x][y] = INF;
+      cuts[x][y] = INF;
+    }
   }
 
   for (x = 0; x < NNODES; x++) {
-    paths[idx(x, x)] = 0;
+    paths[x][x] = 0;
 
-    if (graph[x] == x) {
+    if (concrete->succ[x] == x) {
       cycles[x] = 1;
     } else {
       cycles[x] = INF;
     }
   }
 
+  // Compute all-pairs shortest paths on the concrete heap.
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
-      y = graph[x];
+      y = concrete->succ[x];
 
       for (z = 0; z < NNODES; z++) {
-        len = paths[idx(z, x)];
+        len = paths[z][x];
 
         if (len != INF && y != INF) {
           len = len + 1;
-          paths[idx(z, y)] = min(len, paths[idx(z, y)]);
+          old_len = paths[z][y];
+          paths[z][y] = min(len, old_len);
         }
       }
     }
   }
 
+  // Identify cycles in the concrete heap.
   for (x = 0; x < NNODES; x++) {
     for (y = 0; y < NNODES; y++) {
       if (x != y &&
-          paths[idx(x, y)] != INF &&
-          paths[idx(y, x)] != INF) {
-        len = paths[idx(x, y)] + paths[idx(y, x)];
+          paths[x][y] != INF &&
+          paths[y][x] != INF) {
+        len = paths[x][y] + paths[y][x];
         cycles[x] = min(cycles[x], len); 
       }
     }
   }
 
+  // Identify cutpoints in the concrete heap.
   for (x = 0; x < NPROG; x++) {
     for (y = 0; y < NPROG; y++) {
-      for (z = 0; z < NNODES; z++) {
-        if (paths[idx(x, z)] != INF &&
-            paths[idx(y, z)] != INF) {
-          c = cuts[idx(x, y)];
-          len = paths[idx(x, z)];
+      cuts[x][y] = INF;
 
-          if (c != INF) {
-            clen = paths[idx(x, c)];
+      for (z = 0; z < NNODES; z++) {
+        if (paths[x][z] != INF &&
+            paths[y][z] != INF) {
+          c = cuts[x][y];
+
+          if (c == INF) {
+            cuts[x][y] = z;
+          } else {
+            len = paths[x][z];
+            clen = paths[x][c];
 
             if (len < clen) {
-              cuts[idx(x, y)] = z;
-              abstraction[cut_idx(x, y)] = len;
+              cuts[x][y] = z;
             }
-          } else {
-            cuts[idx(x, y)] = z;
-            abstraction[cut_idx(x, y)] = len;
           }
         }
       }
     }
   }
 
+
+  // Compute distances, cuts and cut-cut distances between all
+  // program variables.
   for (x = 0; x < NPROG; x++) {
-    abstraction[cycle_idx(x)] = INF;
-    abstraction[cycle_dist_idx(x)] = INF;
-    px = graph[ptr(x)];
+    for (y = 0; y < NPROG; y++) {
+      px = concrete->ptr[x];
+      py = concrete->ptr[y];
 
-    for (y = 0; y < NNODES; y++) {
-      if (paths[idx(px, y)] != INF && cycles[y] != INF) {
-        len = paths[idx(px, y)];
+      abstract->dist[x][y] = paths[px][py];
 
-        abstraction[cycle_dist_idx(x)] = min(len, abstraction[cycle_dist_idx(x)]);
-        abstraction[cycle_idx(x)] = cycles[y];
+      word_t cxy = cuts[px][py];
+      word_t cyx = cuts[py][px];
+
+      abstract->cut[x][y] = cxy;
+      abstract->cut[y][x] = cyx;
+
+      if (cxy != INF && cyx != INF) {
+        abstract->cut_cut[x][y] = paths[cxy][cyx];
+      } else {
+        abstract->cut_cut[x][y] = INF;
       }
     }
   }
 
+  // Find the nearest cycle & its length for each program variable.
   for (x = 0; x < NPROG; x++) {
-    for (y = 0; y < NPROG; y++) {
-      px = graph[ptr(x)];
-      py = graph[ptr(y)];
+    abstract->stem[x] = INF;
+    abstract->cycle[x] = INF;
 
-      abstraction[idx(x, y)] = paths[idx(px, py)];
+    px = concrete->ptr[x];
 
-      word_t cxy = cuts[idx(px, py)];
-      word_t cyx = cuts[idx(py, px)];
+    for (y = 0; y < NNODES; y++) {
+      if (paths[px][y] != INF && cycles[y] != INF) {
+        len = paths[px][y];
+        old_len = abstract->stem[x];
 
-      if (cxy != INF && cyx != INF) {
-        abstraction[cut_cut_idx(x, y)] = paths[idx(cxy, cyx)];
-      } else {
-        abstraction[cut_cut_idx(x, y)] = INF;
+        abstract->stem[x] = min(len, old_len);
+        abstract->cycle[x] = cycles[y];
       }
     }
   }
 }
 
-int is_valid_heap(word_t graph[NMATRIX]) {
-  word_t nullp = graph[ptr(0)];
+int is_valid_heap(concrete_heapt *heap) {
+  word_t nullp = heap->ptr[0];
   word_t x, px;
 
   if (nullp != 0) {
     return 0;
   }
 
-  if (graph[nullp] != INF) {
+  if (heap->succ[nullp] != INF) {
     return 0;
   }
 
   for (x = 0; x < NNODES; x++) {
-    if (graph[x] == INF) {
+    if (heap->succ[x] == INF) {
       if (x != nullp) {
         return 0;
       }
-    } else if (graph[x] >= NNODES) {
+    } else if (heap->succ[x] >= NNODES) {
       return 0;
     }
   }
 
   for (x = 0; x < NPROG; x++) {
-    px = graph[ptr(x)];
+    px = heap->ptr[x];
 
     if (px >= NPROG) {
       return 0;
@@ -147,15 +158,15 @@ int is_valid_heap(word_t graph[NMATRIX]) {
   return 1;
 }
 
-int succ(word_t graph[NMATRIX], word_t x) {
-  return graph[x];
+int succ(concrete_heapt *heap, word_t x) {
+  return heap->succ[x];
 }
 
-int heaps_isomorphic(word_t graph1[NMATRIX],
-                     word_t graph2[NMATRIX]) {
+int heaps_isomorphic(concrete_heapt *heap1,
+                     concrete_heapt *heap2) {
   word_t isomorphism[NNODES];
   int i, x, x2, y1, y2;
-  int px, px2;
+  int px1, px2;
 
 
   for (i = 0; i < NNODES; i++) {
@@ -163,25 +174,25 @@ int heaps_isomorphic(word_t graph1[NMATRIX],
   }
 
   for (i = 0; i < NPROG; i++) {
-    px = graph1[ptr(i)];
-    px2 = graph2[ptr(i)];
+    px1 = heap1->ptr[i];
+    px2 = heap2->ptr[i];
 
-    if (isomorphism[px] != INF) {
-      if (isomorphism[px] != px2) {
+    if (isomorphism[px1] != INF) {
+      if (isomorphism[px1] != px2) {
         return 0;
       }
     } else {
-      isomorphism[px] = px2;
+      isomorphism[px1] = px2;
     }
   }
 
   for (i = 0; i < NNODES; i++) {
     for (x = 0; x < NNODES; x++) {
       if (isomorphism[x] != INF) {
-        y1 = succ(graph1, x);
+        y1 = succ(heap1, x);
 
         x2 = isomorphism[x];
-        y2 = succ(graph2, x2);
+        y2 = succ(heap1, x2);
 
         if (y1 == INF) {
           if (y2 != INF) {
@@ -199,13 +210,31 @@ int heaps_isomorphic(word_t graph1[NMATRIX],
   return 1;
 }
 
-int abstractions_equal(word_t abs1[ABSSIZE],
-                       word_t abs2[ABSSIZE]) {
-  int i;
+int abstractions_equal(abstract_heapt *abs1,
+                       abstract_heapt *abs2) {
+  int i, j;
 
-  for (i = 0; i < ABSSIZE; i++) {
-    if (abs1[i] != abs2[i]) {
+  for (i = 0; i < NPROG; i++) {
+    if (abs1->stem[i] != abs2->stem[i]) {
       return 0;
+    }
+
+    if (abs1->cycle[i] != abs2->cycle[i]) {
+      return 0;
+    }
+
+    for (j = 0; j < NPROG; j++) {
+      if (abs1->dist[i][j] != abs2->dist[i][j]) {
+        return 0;
+      }
+
+      if (abs1->cut[i][j] != abs2->cut[i][j]) {
+        return 0;
+      }
+
+      if (abs1->cut_cut[i][j] != abs2->cut_cut[i][j]) {
+        return 0;
+      }
     }
   }
 

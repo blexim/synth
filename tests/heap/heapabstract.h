@@ -33,27 +33,37 @@
 
 #define min(x, y) (x < y ? x : y)
 
-typedef word_t concrete_heapt[NMATRIX];
-typedef word_t abstract_heapt[ABSSIZE];
+typedef struct concrete_heap {
+  word_t succ[NNODES];
+  word_t ptr[NPROG];
+} concrete_heapt;
 
-void abstract(concrete_heapt concrete,
-              abstract_heapt abstraction);
+typedef struct abstract_heap {
+  word_t dist[NPROG][NPROG];
+  word_t cut[NPROG][NPROG];
+  word_t cut_cut[NPROG][NPROG];
+  word_t stem[NPROG];
+  word_t cycle[NPROG];
+} abstract_heapt;
 
-int is_valid_heap(concrete_heapt heap);
+void abstract(concrete_heapt *concrete,
+              abstract_heapt *abstraction);
 
-int succ(concrete_heapt heap, word_t x);
+int is_valid_heap(concrete_heapt *heap);
 
-int heaps_isomorphic(concrete_heapt heap1,
-                     concrete_heapt heap2);
+int succ(concrete_heapt *heap, word_t x);
 
-int abstractions_equal(abstract_heapt heap1,
-                       abstract_heapt heap2);
+int heaps_isomorphic(concrete_heapt *heap1,
+                     concrete_heapt *heap2);
+
+int abstractions_equal(abstract_heapt *heap1,
+                       abstract_heapt *heap2);
 
 void concrete_assign(word_t x,
                      word_t y,
-                     concrete_heapt pre,
-                     concrete_heapt post);
+                     concrete_heapt *pre,
+                     concrete_heapt *post);
 void abstract_assign(word_t x,
                      word_t y,
-                     abstract_heapt pre,
-                     abstract_heapt post);
+                     abstract_heapt *pre,
+                     abstract_heapt *post);
