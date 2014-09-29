@@ -53,7 +53,11 @@ void abstract(unsigned int graph[NMATRIX],
         len = paths[idx(x, y)] + paths[idx(y, x)];
         cycles[x] = min(cycles[x], len); 
       }
+    }
+  }
 
+  for (x = 0; x < NPROG; x++) {
+    for (y = 0; y < NPROG; y++) {
       for (z = 0; z < NNODES; z++) {
         if (paths[idx(x, z)] != INF &&
             paths[idx(y, z)] != INF) {
