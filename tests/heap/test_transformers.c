@@ -100,6 +100,11 @@ void test_lookups() {
     .succ={ INF, 1, 0 }, .ptr={ 0, 2, 2 }
   };
   test_lookup(&heap2);
+
+  concrete_heapt heap3 = {
+    .succ={ INF, 2, 0 }, .ptr={ 0, 0, 1 }
+  };
+  test_lookup(&heap3);
 }
 
 void main() {
