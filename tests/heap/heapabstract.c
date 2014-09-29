@@ -196,7 +196,7 @@ int heaps_isomorphic(concrete_heapt *heap1,
         y1 = succ(heap1, x);
 
         x2 = isomorphism[x];
-        y2 = succ(heap1, x2);
+        y2 = succ(heap2, x2);
 
         if (y1 == INF) {
           if (y2 != INF) {
