@@ -241,14 +241,30 @@ int abstractions_equal(abstract_heapt *abs1,
   return 1;
 }
 
-#define LINEWIDTH 4
+#define LINEWIDTH 6
+char *ptrnames[] = {"NULL", "x", "y", "z", "w"};
+
+void print_ptr(word_t p) {
+  if (p < sizeof(ptrnames)) {
+    printf("%s", ptrnames[p]);
+  } else {
+    printf("p%d", p);
+  }
+}
+
+void print_len(word_t l) {
+  if (l == INF) {
+    printf("INF");
+  } else {
+    printf("%d", l);
+  }
+}
 
 void print_concrete(concrete_heapt *heap) {
   int i;
   word_t y;
-  char *ptrnames[] = {"NULL", "x", "y", "z", "w"};
 
-  printf("\nSuccessors:");
+  printf("Successors:");
 
   for (i = 0; i < NNODES; i++) {
     if (i % LINEWIDTH == 0) {
@@ -269,11 +285,68 @@ void print_concrete(concrete_heapt *heap) {
 
     y = heap->ptr[i];
 
-    if (i < sizeof(ptrnames)) {
-      printf("%s == %d;  ", ptrnames[i], y);
-    } else {
-      printf("p%d == %d;  ", i, y);
+    print_ptr(i); printf(" == %d;  ", y);
+  }
+
+  printf("\n");
+}
+
+void print_abstract(abstract_heapt *heap) {
+  int i;
+  word_t x, y, len;
+
+  printf("Distance:\n");
+  for (x = 0; x < NPROG; x++) {
+    for (y = 0; y < NPROG; y++) {
+      len = heap->dist[x][y];
+      print_ptr(x); printf(" --"); print_len(len); printf("-> "); print_ptr(y);
+      printf("   ");
     }
+    printf("\n");
+  }
+
+  printf("Cuts:\n");
+  for (x = 0; x < NPROG; x++) {
+    for (y = 0; y < NPROG; y++) {
+      len = heap->cut[x][y];
+      print_ptr(x); printf(" --"); print_len(len); printf("-> "); print_ptr(y);
+      printf("   ");
+    }
+    printf("\n");
+  }
+
+  printf("Cut-cuts:\n");
+  for (x = 0; x < NPROG; x++) {
+    for (y = 0; y < NPROG; y++) {
+      len = heap->cut_cut[x][y];
+      print_ptr(x); printf(" --"); print_len(len); printf("-> "); print_ptr(y);
+      printf("   ");
+    }
+    printf("\n");
+  }
+
+  printf("Stems:");
+  for (x = 0; x < NPROG; x++) {
+    if (x % LINEWIDTH == 0) {
+      printf("\n");
+    }
+
+    len = heap->stem[x];
+
+    print_ptr(x); printf(": "); print_len(len);
+    printf("   ");
+  }
+
+  printf("\nCycles:");
+  for (x = 0; x < NPROG; x++) {
+    if (x % LINEWIDTH == 0) {
+      printf("\n");
+    }
+
+    len = heap->cycle[x];
+
+    print_ptr(x); printf(": "); print_len(len);
+    printf("   ");
   }
 
   printf("\n");

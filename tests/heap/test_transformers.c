@@ -17,8 +17,16 @@ int main(void) {
   printf("Concrete heap1:\n");
   print_concrete(&heap1);
 
-  printf("Concrete heap2:\n");
+  printf("\nAbstract1:\n");
+  print_abstract(&abs1);
+
+  printf("\nExecuting x = y:\n");
+
+  printf("\nConcrete heap2:\n");
   print_concrete(&heap2);
+
+  printf("\nAbstract2:\n");
+  print_abstract(&abs1);
 
   if (is_valid_heap(&heap1)) {
     assert(abstractions_equal(&abs2, &abs3));
