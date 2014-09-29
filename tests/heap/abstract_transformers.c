@@ -118,6 +118,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = INF;
       post->cut[x][a] = INF;
+
+      post->cut_cut[a][x] = INF;
+      post->cut_cut[x][a] = INF;
     } else if (pre->dist[y][a] == 1) {
       // Case 4:
       //
@@ -127,6 +130,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = 0;
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (path(pre, a, y) && pre->stem[y] > 0) {
       // Case 2:
       //
@@ -142,6 +148,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = post->dist[a][x];
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (path(pre, a, y) && pre->stem[y] == 0 && pre->stem[a] > 0 && pre->cycle[y] > 1) {
       // Case 2x:
       //
@@ -159,6 +168,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = pre->cut[a][y];
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (path(pre, a, y) && pre->stem[y] == 0 && pre->stem[a] > 0 && pre->cycle[y] == 1) {
       // Case 2xx:
       //
@@ -168,6 +180,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = post->dist[a][x];
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] > 1 && pre->dist[a][y] == 0) {
       // Case 2a:
       //
@@ -180,6 +195,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = 0;
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 1;
+      post->cut_cut[x][a] = len;
     } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] > 1 && pre->dist[a][y] > 0) {
       // Case 2b:
       //
@@ -192,6 +210,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = 0;
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = post->dist[a][x];
+      post->cut_cut[x][a] = post->dist[x][a];
     } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] == 1) {
       // Case 2b:
       //
@@ -202,6 +223,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = 0;
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (path(pre, y, a) && pre->dist[y][a] > 1 && pre->stem[y] > 1) {
       // Case 3:
       //
@@ -215,6 +239,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = 0;
       post->cut[x][a] = post->dist[x][a];
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (path(pre, y, a) && pre->dist[y][a] > 1 && pre->stem[y] == 1) {
       // Case 3a:
       //
@@ -229,6 +256,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = 0;
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (cut(pre, y, a) && pre->cut[y][a] > 1) {
       // Case 5:
       //
@@ -241,6 +271,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = pre->cut[a][y];
       post->cut[x][a] = s_sub(pre->cut[y][a], 1);
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else if (pre->cut[y][a] == 1) {
       // Case 6:
       //
@@ -253,6 +286,9 @@ void abstract_lookup(word_t x,
 
       post->cut[a][x] = pre->cut[a][y];
       post->cut[x][a] = 0;
+
+      post->cut_cut[a][x] = 0;
+      post->cut_cut[x][a] = 0;
     } else {
       // NOTREACHED
       assert(0);
@@ -261,4 +297,5 @@ void abstract_lookup(word_t x,
 
   post->dist[x][x] = 0;
   post->cut[x][x] = 0;
+  post->cut_cut[x][x] = 0;
 }
