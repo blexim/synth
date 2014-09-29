@@ -105,7 +105,7 @@ void abstract_lookup(word_t x,
 
     // Now work out the distance a -> x
     if (a == x) {
-      post->dist[x][a] = 0;
+      post->dist[a][x] = 0;
     } else if (pre->cut[y][a] == 1 && pre->dist[y][a] == INF) {
       // y is one step away from a cutpoint with a.  There is a bit of trickery
       // here -- we have to remember to account for the distance between the ay
@@ -118,7 +118,7 @@ void abstract_lookup(word_t x,
       post->dist[a][x] = len;
     } else if (pre->dist[y][a] == 1) {
       post->dist[a][x] = 0;
-    } else if (pre->cycle[y] != INF && pre->dist[y][a] == 0) {
+    } else if (pre->stem[y] == 0 && pre->dist[y][a] == 0) {
       // y is on a cycle and a is on the same cycle.
       len = s_sub(pre->cycle[y], pre->dist[y][a]);
       len = s_sub(len, 1);
