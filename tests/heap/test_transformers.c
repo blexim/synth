@@ -121,6 +121,11 @@ void test_lookups() {
     .succ={ INF, 2, 2, 0 }, .ptr={ 0, 2, 2, 1 }
   };
   test_lookup(&heap6);
+
+  concrete_heapt heap7 = {
+    .succ={ INF, 2, 3, 1 }, .ptr={ 0, 1, 1, 0 }
+  };
+  test_lookup(&heap7);
 #endif
 }
 
