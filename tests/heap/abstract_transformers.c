@@ -118,6 +118,11 @@ void abstract_lookup(word_t x,
       post->dist[a][x] = len;
     } else if (pre->dist[y][a] == 1) {
       post->dist[a][x] = 0;
+    } else if (pre->cycle[y] != INF && pre->dist[y][a] == 0) {
+      // y is on a cycle and a is on the same cycle.
+      len = s_sub(pre->cycle[y], pre->dist[y][a]);
+      len = s_sub(len, 1);
+      post->dist[a][x] = len;
     } else {
       // Otherwise, the distance a -> y is k, so a -> x = k+1
       post->dist[a][x] = s_add(pre->dist[a][y], 1);
