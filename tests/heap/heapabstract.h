@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#if 1
+#if 0
  #define WIDTH 3
  typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
  #define INF ((word_t) -1)
@@ -14,22 +14,9 @@
  #define NNODES 5
 #endif
 
-#define NMATRIX (NNODES + NPROG)
-
 #ifndef NPROG
  #define NPROG NNODES
 #endif
-
-#define ABSSIZE (NPROG*NPROG*3 + NPROG*2)
-
-#define idx(x, y) (x*NNODES + y)
-#define ptr(x) (NNODES + x)
-
-#define abs_idx(x, y) (x*NPROG + y)
-#define cut_idx(x, y) (NPROG*NPROG + NPROG*x + y)
-#define cut_cut_idx(x, y) (NPROG*NPROG*2 + NPROG*x + y)
-#define cycle_idx(x) (NPROG*NPROG*3 + x)
-#define cycle_dist_idx(x) (NPROG*NPROG*3 + NPROG + x)
 
 #define min(x, y) (x < y ? x : y)
 
