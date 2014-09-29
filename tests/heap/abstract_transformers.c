@@ -205,7 +205,7 @@ void abstract_lookup(word_t x,
       //           a
       post->dist[a][x] = INF;
       post->dist[x][a] = INF;
-    } else if (s_add(pre->cut[y][a], pre->cut_cut[y][a]) == 1) {
+    } else if (pre->cut[y][a] == 1) {
       // Case 6:
       //
       // y -> x -> .
