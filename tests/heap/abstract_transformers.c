@@ -106,7 +106,6 @@ void abstract_lookup(word_t x,
   post->cycle[x] = pre->cycle[y];
 
   for (a = 0; a < NPROG; a++) {
-    //__CPROVER_assume(pre->stem[y] > 1);
     // The acyclic case.
     if (!cut(pre, a, y)) {
       // Case 1:
@@ -243,10 +242,10 @@ void abstract_lookup(word_t x,
       post->dist[x][a] = s_sub(pre->dist[y][a], 1);
 
       post->cut[a][x] = 0;
-      post->cut[x][a] = post->dist[x][a];
+      post->cut[x][a] = s_sub(pre->cut[y][a], 1);
 
-      post->cut_cut[a][x] = 0;
-      post->cut_cut[x][a] = 0;
+      post->cut_cut[a][x] = pre->cut_cut[a][y];
+      post->cut_cut[x][a] = pre->cut_cut[y][a];
     } else if (path(pre, y, a) && pre->dist[y][a] > 1 && pre->stem[y] == 1) {
       // Case 3a:
       //
@@ -277,8 +276,8 @@ void abstract_lookup(word_t x,
       post->cut[a][x] = pre->cut[a][y];
       post->cut[x][a] = s_sub(pre->cut[y][a], 1);
 
-      post->cut_cut[a][x] = 0;
-      post->cut_cut[x][a] = 0;
+      post->cut_cut[a][x] = pre->cut_cut[a][y];
+      post->cut_cut[x][a] = pre->cut_cut[y][a];
     } else if (pre->cut[y][a] == 1) {
       // Case 6:
       //
@@ -292,8 +291,8 @@ void abstract_lookup(word_t x,
       post->cut[a][x] = pre->cut[a][y];
       post->cut[x][a] = 0;
 
-      post->cut_cut[a][x] = 0;
-      post->cut_cut[x][a] = 0;
+      post->cut_cut[a][x] = pre->cut_cut[a][y];
+      post->cut_cut[x][a] = pre->cut_cut[y][a];
     } else {
       // NOTREACHED
       assert(0);
