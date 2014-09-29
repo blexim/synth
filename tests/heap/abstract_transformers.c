@@ -123,6 +123,8 @@ void abstract_lookup(word_t x,
       len = s_sub(pre->cycle[y], pre->dist[y][a]);
       len = s_sub(len, 1);
       post->dist[a][x] = len;
+    } else if (pre->stem[y] == 0 && pre->cycle[y] == 1) {
+      post->dist[a][x] = pre->dist[a][y];
     } else {
       // Otherwise, the distance a -> y is k, so a -> x = k+1
       post->dist[a][x] = s_add(pre->dist[a][y], 1);
