@@ -157,8 +157,8 @@ void abstract_lookup(word_t x,
 
       post->dist[x][a] = INF;
 
-      post->cut[a][x] = post->dist[a][x];
-      post->cut[x][a] = INF;
+      post->cut[a][x] = pre->cut[a][y];
+      post->cut[x][a] = 0;
     } else if (path(pre, a, y) && pre->stem[y] == 0 && pre->stem[a] > 0 && pre->cycle[y] == 1) {
       // Case 2xx:
       //
@@ -167,7 +167,7 @@ void abstract_lookup(word_t x,
       post->dist[x][a] = INF;
 
       post->cut[a][x] = post->dist[a][x];
-      post->cut[x][a] = INF;
+      post->cut[x][a] = 0;
     } else if (path(pre, a, y) && pre->stem[a] == 0 && pre->cycle[a] > 1 && pre->dist[a][y] == 0) {
       // Case 2a:
       //
@@ -260,4 +260,5 @@ void abstract_lookup(word_t x,
   }
 
   post->dist[x][x] = 0;
+  post->cut[x][x] = 0;
 }
