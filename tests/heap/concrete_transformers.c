@@ -30,3 +30,16 @@ void concrete_lookup(word_t x,
   copy_concrete(pre, post);
   post->ptr[x] = yn;
 }
+
+void concrete_update(word_t x,
+                     word_t y,
+                     concrete_heapt *pre,
+                     concrete_heapt *post) {
+  word_t py = pre->ptr[y];
+  word_t px = pre->ptr[x];
+
+  __CPROVER_assume(px != 0);
+
+  copy_concrete(pre, post);
+  post->succ[x] = py;
+}
