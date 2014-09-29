@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#if 0
+#ifdef VERIF
  #define WIDTH 3
  typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
  #define INF ((word_t) -1)
