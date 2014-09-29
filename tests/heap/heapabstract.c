@@ -95,11 +95,10 @@ void abstract(concrete_heapt *concrete,
       word_t cxy = cuts[px][py];
       word_t cyx = cuts[py][px];
 
-      abstract->cut[x][y] = cxy;
+      abstract->cut[x][y] = paths[px][cxy];
 
       if (cxy != INF && cyx != INF) {
-        //abstract->cut_cut[x][y] = paths[cxy][cyx];
-        abstract->cut_cut[x][y] = INF;
+        abstract->cut_cut[x][y] = paths[cxy][cyx];
       } else {
         abstract->cut_cut[x][y] = INF;
       }
