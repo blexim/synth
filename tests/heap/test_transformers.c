@@ -224,6 +224,11 @@ void test_updates() {
   };
   test_update(&heap8);
 #elif NNODES==5
+  concrete_heapt heap9 = {
+    .succ={ INF, 4, 4, 1, 1 }, .ptr={ 0, 4, 2, 3, 1 }
+  };
+  test_update(&heap9);
+#elif NNODES==5
 #endif
 }
 
