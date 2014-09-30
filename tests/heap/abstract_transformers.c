@@ -344,8 +344,23 @@ void abstract_update(word_t x,
     for (b = 0; b < NPROG; b++) {
       if (pre->dist[a][x] != INF &&
           pre->dist[a][x] == pre->cut[a][b] &&
+          !alias(pre, x, y) &&
           path(pre, y, a)) {
         post->cut[a][b] = 0;
+      } else if (pre->dist[a][x] != INF &&
+          pre->dist[a][x] == pre->cut[a][b] &&
+          alias(pre, x, y) &&
+          !alias(pre, x, b) &&
+          !path(pre, b, x)) {
+        post->cut[a][b] = INF;
+      } else if (pre->dist[a][x] != INF &&
+          pre->dist[a][x] == pre->cut[a][b] &&
+          alias(pre, x, y) &&
+          !alias(pre, x, b) &&
+          path(pre, b, x)) {
+        post->cut[a][b] = 0;
+      } else if (alias(pre, x, y) && alias(pre, x, b)) {
+        post->cut[a][b] = pre->dist[a][b];
       } else if (pre->dist[a][x] >= pre->cut[a][b] &&
           pre->dist[b][x] >= pre->cut[b][a]) {
         post->cut[a][b] = pre->cut[a][b];
