@@ -322,7 +322,7 @@ void abstract_update(word_t x,
       // x -> .
       post->stem[a] = pre->stem[a];
       post->cycle[a] = pre->cycle[a];
-    } else if (path(pre, a, x) && !path(pre, a, y) && !path(pre, y, a)) {
+    } else if (path(pre, a, x) && !path(pre, a, y) && !path(pre, y, a) && pre->stem[y] == INF) {
       // Case 2:
       //
       // a -> x    y -> .
@@ -338,7 +338,9 @@ void abstract_update(word_t x,
       // Case 3:
       //
       // a -> x    y -> q -> q
-      post->stem[a] = s_add(pre->dist[a][x], pre->stem[y]);
+      len = s_add(pre->dist[a][x], pre->stem[y]);
+      len = s_add(len, 1);
+      post->stem[a] = len;
       post->cycle[a] = pre->cycle[y];
     } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, y, a)) {
       // Case 4:
