@@ -372,13 +372,21 @@ void abstract_update(word_t x,
       len = s_add(pre->dist[y][a], pre->dist[a][x]);
       len = s_add(len, 1);
       post->cycle[a] = len;
-    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, x, y) && path(pre, x, a)) {
+    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, x, y) && path(pre, x, a) && pre->dist[y][x] <= pre->dist[y][a]) {
       // Case:
       //
       // a -> x <- y
       // ^    |
       // |----
       post->stem[a] = pre->dist[a][x];
+      post->cycle[a] = s_add(pre->dist[y][x], 1);
+    } else if (path(pre, a, x) && path(pre, x, a) && !path(pre, a, y) && path(pre, y, x) && pre->dist[y][a] < pre->dist[y][x]) {
+      // Case:
+      //
+      // x -> a <- y
+      // ^    |
+      // |----
+      post->stem[a] = 0;
       post->cycle[a] = s_add(pre->dist[y][x], 1);
     } else if (path(pre, a, x) && path(pre, y, a) && alias(pre, x, y) && !alias(pre, x, a)) {
       // Case 6:
