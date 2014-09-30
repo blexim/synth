@@ -33,7 +33,23 @@ void verify_lookup() {
   }
 }
 
+void verify_update() {
+  concrete_heapt heap1, heap2;
+  abstract_heapt abs1, abs2, abs3;
+
+  abstract(&heap1, &abs1);
+  abstract_update(x, y, &abs1, &abs2);
+
+  concrete_update(x, y, &heap1, &heap2);
+  abstract(&heap2, &abs3);
+
+  if (is_valid_heap(&heap1)) {
+    assert(abstractions_equal(&abs2, &abs3));
+  }
+}
+
 void main(void) {
   //verify_assign();
-  verify_lookup();
+  //verify_lookup();
+  verify_update();
 }

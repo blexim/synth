@@ -303,3 +303,31 @@ void abstract_lookup(word_t x,
   post->cut[x][x] = 0;
   post->cut_cut[x][x] = 0;
 }
+
+void abstract_update(word_t x,
+                     word_t y,
+                     abstract_heapt *pre,
+                     abstract_heapt *post) {
+  copy_abstract(pre, post);
+
+  word_t a, b;
+  word_t len;
+
+  for (a = 0; a < NPROG; a++) {
+    for (b = 0; b < NPROG; b++) {
+      if (pre->dist[a][b] <= pre->dist[a][x]) {
+        // Case 1:
+        //
+        // a -> b
+        // x -> y
+        post->dist[a][b] = pre->dist[a][b];
+      } else if (pre->dist[y][b] < pre->dist[y][x]) {
+        len = s_add(pre->dist[a][x], pre->dist[y][b]);
+        len = s_add(len, 1);
+        post->dist[a][b] = len;
+      } else {
+        post->dist[a][b] = INF;
+      }
+    }
+  }
+}
