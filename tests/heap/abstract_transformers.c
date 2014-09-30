@@ -340,6 +340,8 @@ void abstract_update(word_t x,
     }
   }
 
+  word_t cycle_len = s_add(post->dist[y][x], 1);
+
   for (a = 0; a < NPROG; a++) {
     if (path(post, a, y) && path(post, y, a)) {
       post->cut[y][a] = 0;
@@ -365,19 +367,36 @@ void abstract_update(word_t x,
       post->cut[y][a] = pre->cut[y][a];
       post->cut[a][y] = pre->cut[a][y];
     }
+
+    if (path(post, a, x) && path(post, x, a)) {
+      post->cut[x][a] = 0;
+      post->cut[a][x] = 0;
+    } else if (cycle_len == INF) {
+      // There is no cycle x -> y -> x
+      if (path(post, a, x)) {
+        post->cut[x][a] = 0;
+        post->cut[a][x] = post->dist[a][x];
+      } else if (path(post, a, y)) {
+        post->cut[x][a] = 1;
+        post->cut[a][x] = post->dist[a][y];
+      } else {
+        post->cut[x][a] = s_add(post->cut[y][a], 1);
+        post->cut[a][x] = post->cut[a][y];
+      }
+    } else {
+      // There is a cycle...
+      post->cut[x][a] = post->cut[y][a];
+      post->cut[a][x] = post->cut[a][y];
+    }
   }
 
   for (a = 0; a < NPROG; a++) {
-    if (a == y) {
+    if (a == y || a == x) {
       continue;
     }
 
     for (b = 0; b < NPROG; b++) {
-      c1 = (pre->dist[a][x] < pre->cut[a][b]);
-      c2 = (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]));
-      c3 = (path(post, b, x) && path(post, y, a));
-
-      if (b == y) {
+      if (b == y || b == x) {
         // Nothing!
       } else if (pre->dist[a][x] < pre->cut[a][b]) {
         // Case 1:

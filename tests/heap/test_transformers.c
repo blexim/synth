@@ -260,6 +260,11 @@ void test_updates() {
   };
   test_update(&heap10);
 
+  concrete_heapt heap11 = {
+    .succ={ INF, 2, 1, 1 }, .ptr={ 0, 3, 1, 2 }
+  };
+  test_update(&heap11);
+
 #elif NNODES==5
   concrete_heapt heap9 = {
     .succ={ INF, 4, 4, 1, 1 }, .ptr={ 0, 4, 2, 3, 1 }
