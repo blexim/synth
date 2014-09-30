@@ -41,5 +41,5 @@ void concrete_update(word_t x,
   __CPROVER_assume(px != 0);
 
   copy_concrete(pre, post);
-  post->succ[x] = py;
+  post->succ[px] = py;
 }
