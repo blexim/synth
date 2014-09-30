@@ -189,6 +189,10 @@ void test_updates() {
   };
   test_update(&heap1);
 #elif NNODES==4
+  concrete_heapt heap2 = {
+     .succ={ INF, 3, 3, 0 }, .ptr={ 0, 3, 2, 1 }
+  };
+  test_update(&heap2);
 #elif NNODES==5
 #endif
 }

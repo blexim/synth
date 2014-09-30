@@ -322,7 +322,7 @@ void abstract_update(word_t x,
       // x -> .
       post->stem[a] = pre->stem[a];
       post->cycle[a] = pre->cycle[a];
-    } else if (path(pre, a, x) && !path(pre, a, y) && !path(pre, y, a) && pre->stem[y] == INF) {
+    } else if (path(pre, a, x) && !path(pre, a, y) && !path(pre, y, a) && !path(pre, y, x) && pre->stem[y] == INF) {
       // Case 2:
       //
       // a -> x    y -> .
