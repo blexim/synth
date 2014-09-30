@@ -11,6 +11,8 @@ void abstract(concrete_heapt *concrete,
   word_t len, old_len, clen;
   int i, x, y, z, c, px, py;
 
+  __CPROVER_assume(is_valid_heap(concrete));
+
   for (x = 0; x < NNODES; x++) {
     for (y = 0; y < NNODES; y++) {
       paths[x][y] = INF;
