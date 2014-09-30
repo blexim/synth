@@ -323,108 +323,6 @@ void abstract_update(word_t x,
   word_t len;
 
   for (a = 0; a < NPROG; a++) {
-    // Cycles!
-    if (!path(pre, a, x)) {
-      // Case 1:
-      //
-      // a -> .
-      // x -> .
-      post->stem[a] = pre->stem[a];
-      post->cycle[a] = pre->cycle[a];
-    } else if (path(pre, a, x) && !path(pre, y, x) && pre->stem[y] == INF) {
-      // Case 2:
-      //
-      // a -> x ~> y -> .
-      post->stem[a] = INF;
-      post->cycle[a] = INF;
-    } else if (path(pre, a, x) && !path(pre, y, x) && pre->stem[y] != INF) {
-      // Case 3:
-      //
-      // a -> x ~> y -> q -> q
-      len = s_add(pre->dist[a][x], pre->stem[y]);
-      len = s_add(len, 1);
-      post->stem[a] = len;
-      post->cycle[a] = pre->cycle[y];
-    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, y, a) && !alias(pre, x, y)) {
-      // Case 4:
-      //
-      // a -> x ~> y
-      //      ^    |
-      //      |    v
-      //      L--- .
-      post->stem[a] = pre->cut[a][y];
-      post->cycle[a] = s_add(pre->dist[y][x], 1);
-    } else if (path(pre, a, x) && !path(pre, y, a) && alias(pre, x, y)) {
-      // Case 5:
-      //
-      // a -> x=y
-      post->stem[a] = pre->dist[a][x];
-      post->cycle[a] = 1;
-    } else if (path(pre, a, x) && path(pre, y, a) && !path(pre, x, y) && !path(pre, x, a)) {
-      // Case 5:
-      //
-      // a -> x ~> y
-      // ^         |
-      // |         v
-      // L-------- .
-      post->stem[a] = 0;
-
-      len = s_add(pre->dist[y][a], pre->dist[a][x]);
-      len = s_add(len, 1);
-      post->cycle[a] = len;
-    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, x, y) && path(pre, x, a) && pre->dist[y][x] <= pre->dist[y][a]) {
-      // Case:
-      //
-      // a -> x <- y
-      // ^    |
-      // |----
-      post->stem[a] = pre->dist[a][x];
-      post->cycle[a] = s_add(pre->dist[y][x], 1);
-    } else if (path(pre, a, x) && path(pre, x, a) && !path(pre, a, y) && path(pre, y, x) && pre->dist[y][a] < pre->dist[y][x]) {
-      // Case:
-      //
-      // x -> a <- y
-      // ^    |
-      // |----
-      post->stem[a] = 0;
-      post->cycle[a] = s_add(pre->dist[y][x], 1);
-    } else if (path(pre, a, x) && path(pre, y, a) && alias(pre, x, y) && !alias(pre, x, a)) {
-      // Case 6:
-      //
-      // a -> x=y
-      // ^      |
-      // |-------
-      post->stem[a] = pre->dist[a][x];
-      post->cycle[a] = 1;
-    } else if (path(pre, a, x) && path(pre, y, a) && path(pre, x, a) && pre->dist[a][y] < pre->dist[a][x]) {
-      // Case 7:
-      //
-      // a -> y
-      // ^    |
-      // |    v
-      // L--- x
-      post->stem[a] = pre->dist[a][y];
-      post->cycle[a] = s_add(pre->dist[y][x], 1);
-    } else if (path(pre, a, x) && path(pre, y, a) && path(pre, x, y) && pre->dist[a][x] < pre->dist[a][y]) {
-      // Case 8:
-      //
-      // a -> x
-      // |    |
-      // |    v
-      // L--- y
-      post->stem[a] = 0;
-      post->cycle[a] = s_add(pre->dist[y][x], 1);
-    } else if (alias(pre, a, x) && alias(pre, a, y)) {
-      // Case 7:
-      //
-      // a=x=y
-      post->stem[a] = 0;
-      post->cycle[a] = 1;
-    } else {
-      // NOTREACHED
-      assert(0);
-    }
-
     for (b = 0; b < NPROG; b++) {
       if (pre->dist[a][b] <= pre->dist[a][x]) {
         // Case 1:
@@ -439,6 +337,85 @@ void abstract_update(word_t x,
       } else {
         post->dist[a][b] = INF;
       }
+    }
+  }
+
+  for (a = 0; a < NPROG; a++) {
+    for (b = 0; b < NPROG; b++) {
+      if (path(post, b, a)) {
+        post->cut[a][b] = 0;
+      } else if (pre->cut[a][b] <= pre->dist[a][x]) {
+        post->cut[a][b] = pre->cut[a][b];
+      } else if (pre->cut[y][b] < pre->dist[y][x]) {
+        len = s_add(pre->dist[a][x], pre->cut[y][b]);
+        len = s_add(len, 1);
+        post->cut[a][b] = len;
+      } else {
+        post->cut[a][b] = INF;
+      }
+    }
+  }
+
+  for (a = 0; a < NPROG; a++) {
+    if (!path(post, a, x)) {
+      // Case 1:
+      //
+      // a -> .
+      // x -> y
+      post->stem[a] = pre->stem[a];
+      post->cycle[a] = pre->cycle[a];
+    } else if (path(post, a, x) && !path(post, y, x) && pre->stem[y] == INF) {
+      // Case 2:
+      //
+      // a -> x -> y
+      //
+      // and y is not part of a cycle.
+      post->stem[a] = INF;
+      post->cycle[a] = INF;
+    } else if (path(post, a, x) && path(post, y, a) && !alias(post, x, y)) {
+      // Case 3:
+      //
+      // a -> x -> y
+      // ^         |
+      // L----------
+      post->stem[a] = 0;
+      
+      len = s_add(post->dist[a][x], post->dist[x][y]);
+      len = s_add(len, post->dist[y][a]);
+      post->cycle[a] = len;
+    } else if (path(post, a, x) && path(post, y, x) && !alias(post, x, y)) {
+      // Case 4:
+      // 
+      // a -> x -> y
+      //      ^    |
+      //      L----
+      post->stem[a] = post->cut[a][x];
+      //post->stem[a] = post->dist[a][x];
+      post->cycle[a] = s_add(post->dist[y][x], post->dist[x][y]);
+    } else if (path(post, a, x) && alias(post, x, y)) {
+      // Case :
+      //
+      // a -> x=y
+      post->stem[a] = post->dist[a][x];
+      post->cycle[a] = 1;
+    } else if (path(post, a, x) && pre->stem[y] == 0) {
+      // Case 5:
+      //
+      // a -> x -> y -> .
+      //           ^    |
+      //           L----
+      post->stem[a] = post->cut[a][y];
+      //post->stem[a] = s_add(post->dist[a][x], 1);
+      post->cycle[a] = pre->cycle[y];
+    } else if (path(post, a, x) && pre->stem[y] > 0 && pre->stem[y] != INF) {
+      // Case 6:
+      //
+      // a -> x -> y -> q -> q
+      post->stem[a] = s_add(post->dist[a][y], pre->stem[y]);
+      post->cycle[a] = pre->cycle[y];
+    } else {
+      // NOTREACHED
+      assert(0);
     }
   }
 }
