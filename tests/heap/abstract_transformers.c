@@ -341,47 +341,65 @@ void abstract_update(word_t x,
   }
 
   for (a = 0; a < NPROG; a++) {
-    for (b = 0; b < NPROG; b++) {
-      if (path(post, b, a)) {
-        post->cut[a][b] = 0;
-      } else if (pre->dist[a][x] != INF &&
-          pre->dist[a][x] == pre->cut[a][b] &&
-          !alias(pre, x, y) &&
-          path(pre, y, a)) {
-        post->cut[a][b] = 0;
-      } else if (pre->dist[a][x] != INF &&
-          pre->dist[a][x] == pre->cut[a][b] &&
-          alias(pre, x, y) &&
-          !alias(pre, x, b) &&
-          !path(pre, b, x)) {
-        post->cut[a][b] = INF;
-      } else if (pre->dist[a][x] != INF &&
-          pre->dist[a][x] == pre->cut[a][b] &&
-          alias(pre, x, y) &&
-          !alias(pre, x, b) &&
-          path(pre, b, x)) {
-        post->cut[a][b] = 0;
-      } else if (alias(pre, x, y) && alias(pre, x, b)) {
-        post->cut[a][b] = pre->dist[a][b];
-      } else if (pre->dist[a][x] >= pre->cut[a][b] &&
-          pre->dist[b][x] >= pre->cut[b][a]) {
-        post->cut[a][b] = pre->cut[a][b];
-      } else if (pre->dist[a][x] < pre->cut[a][b] &&
-                 pre->dist[y][x] >= pre->cut[y][b]) {
-        len = s_add(pre->dist[a][x], pre->cut[y][b]);
-        len = s_add(len, 1);
-        post->cut[a][b] = len;
-      } else if (pre->dist[a][x] < pre->cut[a][b] &&
-                 pre->dist[y][x] < pre->cut[y][b]) {
-        post->cut[a][b] = INF;
-      } else if (pre->dist[b][x] < pre->cut[b][a] &&
-                 pre->dist[y][x] >= pre->cut[y][a]) {
-        post->cut[a][b] = pre->cut[a][y];
-      } else if (pre->dist[b][x] < pre->cut[b][a] &&
-                 pre->dist[y][x] < pre->cut[y][a]) {
-        post->cut[a][b] = INF;
+    if (path(post, a, y) && path(post, y, a)) {
+      post->cut[y][a] = 0;
+      post->cut[a][y] = 0;
+    } else if (pre->dist[y][x] < pre->cut[y][a]) {
+      post->cut[y][a] = INF;
+      post->cut[a][y] = INF;
+    } else if (pre->dist[a][x] != INF &&
+               pre->dist[a][x] <= s_add(pre->cut[a][y], pre->cut_cut[a][y])) {
+      post->cut[y][a] = 0;
+
+      if (path(post, y, x)) {
+        post->cut[a][y] = post->dist[a][x];
       } else {
-        assert(0);
+        post->cut[a][y] = post->dist[a][y];
+      }
+    } else if (path(pre, a, y) && path(pre, y, a) &&
+               pre->dist[y][x] < s_add(pre->cut[y][a], pre->cut_cut[y][a])) {
+      // We just broke a cycle.
+      post->cut[y][a] = 0;
+      post->cut[a][y] = post->dist[a][y];
+    } else {
+      post->cut[y][a] = pre->cut[y][a];
+      post->cut[a][y] = pre->cut[a][y];
+    }
+  }
+
+  for (a = 0; a < NPROG; a++) {
+    if (a == y) {
+      continue;
+    }
+
+    for (b = 0; b < NPROG; b++) {
+      c1 = (pre->dist[a][x] < pre->cut[a][b]);
+      c2 = (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]));
+      c3 = (path(post, b, x) && path(post, y, a));
+
+      if (b == y) {
+        // Nothing!
+      } else if (pre->dist[a][x] < pre->cut[a][b]) {
+        // Case 1:
+        //
+        // a -> x -> . <- b
+        len = s_add(pre->dist[a][x], 1);
+        len = s_add(len, post->cut[y][b]);
+        post->cut[a][b] = len;
+      } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a])) {
+        // Case 2:
+        //
+        // a -> . <- b
+        post->cut[a][b] = post->cut[a][y];
+      } else if (path(post, b, x) && path(post, y, a)) {
+        // Case 3:
+        //
+        // We end with:
+        //
+        // b -> x -> y -> a
+        post->cut[a][b] = 0;
+      } else {
+        post->cut[a][b] = pre->cut[a][b];
       }
     }
   }
