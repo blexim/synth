@@ -43,6 +43,15 @@ int cut(abstract_heapt *heap,
 }
 
 /*
+ * Does a alias b?
+ */
+int alias(abstract_heapt *heap,
+          word_t a,
+          word_t b) {
+  return heap->dist[a][b] == 0;
+}
+
+/*
  * Copy an abstract heap.
  */
 void copy_abstract(abstract_heapt *pre,
@@ -325,13 +334,13 @@ void abstract_update(word_t x,
     } else if (path(pre, a, x) && !path(pre, y, x) && pre->stem[y] == INF) {
       // Case 2:
       //
-      // a -> x    y -> .
+      // a -> x ~> y -> .
       post->stem[a] = INF;
       post->cycle[a] = INF;
-    } else if (path(pre, a, x) && pre->stem[y] != INF && !path(pre, y, x)) {
+    } else if (path(pre, a, x) && !path(pre, y, x) && pre->stem[y] != INF) {
       // Case 3:
       //
-      // a -> x    y -> q -> q
+      // a -> x ~> y -> q -> q
       len = s_add(pre->dist[a][x], pre->stem[y]);
       len = s_add(len, 1);
       post->stem[a] = len;
@@ -339,16 +348,16 @@ void abstract_update(word_t x,
     } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, y, a)) {
       // Case 4:
       //
-      // a -> x -> y
+      // a -> x ~> y
       //      ^    |
       //      |    v
       //      L--- .
       post->stem[a] = pre->cut[a][y];
       post->cycle[a] = s_add(pre->dist[y][x], 1);
-    } else if (path(pre, a, x) && path(pre, y, a)) {
+    } else if (path(pre, a, x) && path(pre, y, a) && !alias(pre, x, y)) {
       // Case 5:
       //
-      // a -> x -> y
+      // a -> x ~> y
       // ^         |
       // |         v
       // L-------- .
@@ -357,6 +366,20 @@ void abstract_update(word_t x,
       len = s_add(pre->dist[y][a], pre->dist[a][x]);
       len = s_add(len, 1);
       post->cycle[a] = len;
+    } else if (path(pre, a, x) && path(pre, y, a) && alias(pre, x, y) && !alias(pre, x, a)) {
+      // Case 6:
+      //
+      // a -> x=y
+      // ^      |
+      // |-------
+      post->stem[a] = pre->dist[a][x];
+      post->cycle[a] = 1;
+    } else if (alias(pre, a, x) && alias(pre, a, y)) {
+      // Case 7:
+      //
+      // a=x=y
+      post->stem[a] = 0;
+      post->cycle[a] = 1;
     } else {
       // NOTREACHED
       assert(0);
