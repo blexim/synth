@@ -314,6 +314,58 @@ void abstract_update(word_t x,
   word_t len;
 
   for (a = 0; a < NPROG; a++) {
+    // Cycles!
+    if (!path(pre, a, x)) {
+      // Case 1:
+      //
+      // a -> .
+      // x -> .
+      post->stem[a] = pre->stem[a];
+      post->cycle[a] = pre->cycle[a];
+    } else if (path(pre, a, x) && !path(pre, a, y) && !path(pre, y, a)) {
+      // Case 2:
+      //
+      // a -> x    y -> .
+      post->stem[a] = INF;
+      post->cycle[a] = INF;
+    } else if (path(pre, a, x) && path(pre, x, y) && !path(pre, y, a) && pre->stem[y] == INF) {
+      // Case 3:
+      //
+      // a -> x -> y -> .
+      post->stem[a] = INF;
+      post->cycle[a] = INF;
+    } else if (path(pre, a, x) && pre->stem[y] != INF && !path(pre, y, x)) {
+      // Case 3:
+      //
+      // a -> x    y -> q -> q
+      post->stem[a] = s_add(pre->dist[a][x], pre->stem[y]);
+      post->cycle[a] = pre->cycle[y];
+    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, y, a)) {
+      // Case 4:
+      //
+      // a -> x -> y
+      //      ^    |
+      //      |    v
+      //      L--- .
+      post->stem[a] = pre->cut[a][y];
+      post->cycle[a] = s_add(pre->dist[y][x], 1);
+    } else if (path(pre, a, x) && path(pre, y, a)) {
+      // Case 5:
+      //
+      // a -> x -> y
+      // ^         |
+      // |         v
+      // L-------- .
+      post->stem[a] = 0;
+
+      len = s_add(pre->dist[y][a], pre->dist[a][x]);
+      len = s_add(len, 1);
+      post->cycle[a] = len;
+    } else {
+      // NOTREACHED
+      assert(0);
+    }
+
     for (b = 0; b < NPROG; b++) {
       if (pre->dist[a][b] <= pre->dist[a][x]) {
         // Case 1:
