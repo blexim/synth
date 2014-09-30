@@ -390,7 +390,7 @@ void abstract_update(word_t x,
       // |    |
       // |    v
       // L--- y
-      post->stem[a] = pre->dist[a][x];
+      post->stem[a] = 0;
       post->cycle[a] = s_add(pre->dist[y][x], 1);
     } else if (alias(pre, a, x) && alias(pre, a, y)) {
       // Case 7:
