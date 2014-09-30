@@ -342,7 +342,9 @@ void abstract_update(word_t x,
 
   for (a = 0; a < NPROG; a++) {
     for (b = 0; b < NPROG; b++) {
-      if (pre->dist[a][x] != INF &&
+      if (path(post, b, a)) {
+        post->cut[a][b] = 0;
+      } else if (pre->dist[a][x] != INF &&
           pre->dist[a][x] == pre->cut[a][b] &&
           !alias(pre, x, y) &&
           path(pre, y, a)) {

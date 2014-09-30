@@ -163,7 +163,7 @@ void test_update(concrete_heapt *heap1) {
     return;
   }
 
-  printf("TEST FAILED\n");
+  printf("\n\n               TEST %d FAILED:\n", tests);
 
   printf("Concrete heap1:\n");
   print_concrete(heap1);
