@@ -345,7 +345,7 @@ void abstract_update(word_t x,
       len = s_add(len, 1);
       post->stem[a] = len;
       post->cycle[a] = pre->cycle[y];
-    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, y, a)) {
+    } else if (path(pre, a, x) && path(pre, y, x) && !path(pre, y, a) && !alias(pre, x, y)) {
       // Case 4:
       //
       // a -> x ~> y
@@ -354,6 +354,12 @@ void abstract_update(word_t x,
       //      L--- .
       post->stem[a] = pre->cut[a][y];
       post->cycle[a] = s_add(pre->dist[y][x], 1);
+    } else if (path(pre, a, x) && !path(pre, y, a) && alias(pre, x, y)) {
+      // Case 5:
+      //
+      // a -> x=y
+      post->stem[a] = pre->dist[a][x];
+      post->cycle[a] = 1;
     } else if (path(pre, a, x) && path(pre, y, a) && !path(pre, x, y)) {
       // Case 5:
       //
