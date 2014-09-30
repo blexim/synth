@@ -352,7 +352,7 @@ void abstract_update(word_t x,
       //      ^    |
       //      |    v
       //      L--- .
-      post->stem[a] = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
+      post->stem[a] = pre->cut[a][y];
       post->cycle[a] = s_add(pre->dist[y][x], 1);
     } else if (path(pre, a, x) && !path(pre, y, a) && alias(pre, x, y)) {
       // Case 5:
