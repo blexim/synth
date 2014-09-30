@@ -342,16 +342,29 @@ void abstract_update(word_t x,
 
   for (a = 0; a < NPROG; a++) {
     for (b = 0; b < NPROG; b++) {
-      if (path(post, b, a)) {
+      if (pre->dist[a][x] != INF &&
+          pre->dist[a][x] == pre->cut[a][b] &&
+          path(pre, y, a)) {
         post->cut[a][b] = 0;
-      } else if (pre->cut[a][b] <= pre->dist[a][x]) {
+      } else if (pre->dist[a][x] >= pre->cut[a][b] &&
+          pre->dist[b][x] >= pre->cut[b][a]) {
         post->cut[a][b] = pre->cut[a][b];
-      } else if (pre->cut[y][b] < pre->dist[y][x]) {
+      } else if (pre->dist[a][x] < pre->cut[a][b] &&
+                 pre->dist[y][x] >= pre->cut[y][b]) {
         len = s_add(pre->dist[a][x], pre->cut[y][b]);
         len = s_add(len, 1);
         post->cut[a][b] = len;
-      } else {
+      } else if (pre->dist[a][x] < pre->cut[a][b] &&
+                 pre->dist[y][x] < pre->cut[y][b]) {
         post->cut[a][b] = INF;
+      } else if (pre->dist[b][x] < pre->cut[b][a] &&
+                 pre->dist[y][x] >= pre->cut[y][a]) {
+        post->cut[a][b] = pre->cut[a][y];
+      } else if (pre->dist[b][x] < pre->cut[b][a] &&
+                 pre->dist[y][x] < pre->cut[y][a]) {
+        post->cut[a][b] = INF;
+      } else {
+        assert(0);
       }
     }
   }

@@ -154,6 +154,17 @@ void test_update(concrete_heapt *heap1) {
   concrete_update(x, y, heap1, &heap2);
   abstract(&heap2, &abs3);
 
+  tests++;
+
+  if (!is_valid_heap(heap1) ||
+      abstractions_equal(&abs2, &abs3)) {
+    passed++;
+    //printf("TEST SUCCEEDED\n");
+    return;
+  }
+
+  printf("TEST FAILED\n");
+
   printf("Concrete heap1:\n");
   print_concrete(heap1);
 
@@ -170,16 +181,6 @@ void test_update(concrete_heapt *heap1) {
 
   printf("\nAbstracted concrete:\n");
   print_abstract(&abs3);
-
-  tests++;
-
-  if (is_valid_heap(heap1) &&
-      !abstractions_equal(&abs2, &abs3)) {
-    printf("TEST FAILED\n");
-  } else {
-    passed++;
-    printf("TEST SUCCEEDED\n");
-  }
 }
 
 void test_updates() {
@@ -198,6 +199,21 @@ void test_updates() {
     .succ={ INF, 1, 1 }, .ptr={ 0, 1, 1 }
   };
   test_update(&heap3);
+
+  concrete_heapt heap4 = {
+    .succ={ INF, 1, 0 }, .ptr={ 0, 2, 2 }
+  };
+  test_update(&heap4);
+
+  concrete_heapt heap5 = {
+    .succ={ INF, 0, 1 }, .ptr={ 0, 1, 2 }
+  };
+  test_update(&heap5);
+
+  concrete_heapt heap6 = {
+    .succ={ INF, 1, 1 }, .ptr={ 0, 2, 1 }
+  };
+  test_update(&heap6);
 #elif NNODES==4
   concrete_heapt heap2 = {
      .succ={ INF, 3, 3, 0 }, .ptr={ 0, 3, 2, 1 }
