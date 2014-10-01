@@ -384,7 +384,7 @@ void abstract_update(word_t x,
         post->cut[y][a] = 0;
       } else if (path(post, a, y) &&
                  post->dist[a][x] < post->dist[a][y] &&
-                 (post->dist[a][y] - post->dist[a][x]) == post->dist[y][x]) {
+                 s_sub(post->dist[a][y], post->dist[a][x]) == post->dist[y][x]) {
         // a -> x -> y -> x
         post->cut[a][y] = post->dist[a][x];
         post->cut[y][a] = 0;
@@ -393,9 +393,25 @@ void abstract_update(word_t x,
         // a -> . -> x -> y
         //      ^         |
         //      L---------
-        len = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
-        len = pre->cut[a][y];
-        post->cut[a][y] = len;
+        if (pre->cut_cut[a][y] == 0) {
+          // Pre:
+          //
+          // a -> . -> x
+          //      ^
+          //      |
+          //      y
+          post->cut[a][y] = pre->cut[a][y];
+        } else if (path(pre, x, a)) {
+          post->cut[a][y] = pre->cut[a][y] + pre->cut_cut[a][y];
+        } else if (path(pre, x, y) &&
+                   pre->cut[a][y] == pre->dist[a][x]) {
+          post->cut[a][y] = pre->cut[a][y];
+        } else if (s_add(pre->cut[a][y], pre->cut_cut[a][y]) == pre->dist[a][x]) {
+          post->cut[a][y] = pre->dist[a][x];
+        } else {
+          post->cut[a][y] = pre->cut[a][y];
+        }
+
         post->cut[y][a] = 0;
       } else {
         // a -> .
