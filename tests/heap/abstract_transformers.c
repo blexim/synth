@@ -539,18 +539,36 @@ void abstract_update(word_t x,
         } else if (!path(post, x, a) && !path(post, x, b) &&
                    pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
                    pre->dist[a][y] < s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
-          // Post state:
-          //
-          //
           // Pre state:
           //
-          // a -> y -> 
+          // a -> y ->  . <- x <- . <- b
+          //            |         ^
+          //            L---------|
+          //
+          // Post state:
+          //
+          // a -> y <- x <- . <- b
+          //      |         ^
+          //      L---------|
           post->cut[a][b] = post->cut[a][y];
         } else if (!path(post, x, a) && !path(post, x, b) &&
                    pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
                    pre->dist[a][y] >= s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
+          // Pre state:
+          //
+          // a -> . <- x <- . <- b
+          //      |         ^
+          //      L---------|
+          //
+          // Post state:
+          //
+          // a -> . -> x -> y
+          //      ^    ^    |
+          //      |    L-----
+          //      b
           post->cut[a][b] = s_add(pre->cut[a][b], pre->cut_cut[a][b]);
         } else {
+          //__CPROVER_assume(0);
           post->cut[a][b] = pre->cut[a][b];
         }
       } else {
