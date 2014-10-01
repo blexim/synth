@@ -342,51 +342,78 @@ void abstract_update(word_t x,
 
   word_t cycle_len = s_add(post->dist[y][x], 1);
 
+  // Compute a -/ y and y -/ a
   for (a = 0; a < NPROG; a++) {
-    if (path(post, a, y) && path(post, y, a)) {
-      post->cut[y][a] = 0;
+    if (alias(post, a, y)) {
+      // a = y
       post->cut[a][y] = 0;
-    } else if (pre->dist[y][x] < pre->cut[y][a]) {
-      post->cut[y][a] = INF;
-      post->cut[a][y] = INF;
-    } else if (pre->dist[a][x] != INF &&
-               pre->dist[a][x] <= s_add(pre->cut[a][y], pre->cut_cut[a][y])) {
       post->cut[y][a] = 0;
-
-      if (path(post, y, x)) {
-        post->cut[a][y] = post->dist[a][x];
-      } else {
-        post->cut[a][y] = post->dist[a][y];
-      }
-    } else if (path(pre, a, y) && path(pre, y, a) &&
-               pre->dist[y][x] < s_add(pre->cut[y][a], pre->cut_cut[y][a])) {
-      // We just broke a cycle.
-      post->cut[y][a] = 0;
-      post->cut[a][y] = post->dist[a][y];
-    } else {
-      post->cut[y][a] = pre->cut[y][a];
-      post->cut[a][y] = pre->cut[a][y];
-    }
-
-    if (path(post, a, x) && path(post, x, a)) {
-      post->cut[x][a] = 0;
-      post->cut[a][x] = 0;
-    } else if (cycle_len == INF) {
-      // There is no cycle x -> y -> x
+    } else if (alias(post, x, y)) {
+      // x = y
       if (path(post, a, x)) {
-        post->cut[x][a] = 0;
-        post->cut[a][x] = post->dist[a][x];
-      } else if (path(post, a, y)) {
-        post->cut[x][a] = 1;
-        post->cut[a][x] = post->dist[a][y];
+        // a -> x=y -> x=y
+        post->cut[a][y] = post->dist[a][x];
+        post->cut[y][a] = 0;
       } else {
-        post->cut[x][a] = s_add(post->cut[y][a], 1);
-        post->cut[a][x] = post->cut[a][y];
+        // a -> .
+        // . -> x=y -> x=y
+        post->cut[a][y] = INF;
+        post->cut[y][a] = INF;
+      }
+    } else if (alias(post, a, x)) {
+      // a = x
+      if (cycle_len == INF) {
+        // a=x -> y -> .
+        post->cut[a][y] = 1;
+        post->cut[y][a] = 0;
+      } else {
+        // a=x -> y -> a=x
+        post->cut[a][y] = 0;
+        post->cut[y][a] = 0;
+      }
+    } else if (path(post, y, x)) {
+      // There is now a cycle x -> y -> x
+      if (path(post, y, a)) {
+        // a is on the cycle
+        post->cut[a][y] = 0;
+        post->cut[y][a] = 0;
+      } else if (path(post, a, y)) {
+        // a -> x -> y -> x
+        // 
+        // OR
+        //
+        // a -> . -> x -> y
+        //      ^         |
+        //      L---------
+        post->cut[a][y] = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
+        post->cut[y][a] = 0;
+      } else {
+        // a -> .
+        // . -> x -> y -> x
+        post->cut[a][y] = INF;
+        post->cut[y][a] = INF;
       }
     } else {
-      // There is a cycle...
-      post->cut[x][a] = post->cut[y][a];
-      post->cut[a][x] = post->cut[a][y];
+      // y -/> x, a != y, a != x
+      if (path(post, a, y)) {
+        // a -> x -> y
+        //
+        // OR
+        //
+        // a -> . -> x -> y
+        //      ^         |
+        //      L---------
+        post->cut[a][y] = min(post->dist[a][y],
+                              pre->cut[a][y]);
+        post->cut[y][a] = 0;
+      } else {
+        // x -> y -> .
+        //           ^
+        //           |
+        //           a
+        post->cut[a][y] = pre->cut[a][y];
+        post->cut[y][a] = pre->cut[y][a];
+      }
     }
   }
 
