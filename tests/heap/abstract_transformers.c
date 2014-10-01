@@ -473,61 +473,70 @@ void abstract_update(word_t x,
         post->cut[a][b] = post->cut[a][y];
       } else if (alias(post, b, x)) {
         post->cut[a][b] = post->cut[a][x];
-      } else if (pre->dist[a][x] < pre->cut[a][b]) {
-        // Case 1:
-        //
-        // a -> x -> . <- b
-        len = s_add(post->dist[a][x], post->cut[x][b]);
-        post->cut[a][b] = len;
-      } else if (pre->dist[a][x] != INF &&
-                 pre->dist[a][x] == pre->cut[a][b]) {
-        len = min(s_add(post->dist[a][x], post->cut[x][b]),
-                  s_add(post->dist[a][y], post->cut[y][b]));
-        post->cut[a][b] = len;
-      } else if (path(post, y, x) &&
-                 post->cut[a][x] < post->dist[a][b] &&
-                 post->cut[b][x] < post->dist[b][a]) {
-        post->cut[a][b] = post->cut[a][x];
-      } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
-                 pre->dist[b][x] >= pre->cut[b][a] &&
-                 path(pre, x, a)) {
-        // b -> . -> x -> a
-        //      ^         |
-        //      L---------
-        if (path(post, x, a)) {
-          post->cut[a][b] = pre->cut[a][b];
+      } else if (!path(post, y, x)) {
+        if (pre->dist[a][x] < pre->cut[a][b]) {
+          // Case 1:
+          //
+          // a -> x -> . <- b
+          len = s_add(post->dist[a][x], post->cut[x][b]);
+          post->cut[a][b] = len;
+        } else if (pre->dist[b][x] < pre->cut[b][a]) {
+          post->cut[a][b] = post->cut[a][y];
+        } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                   pre->dist[b][x] >= pre->cut[b][a]) {
+          // Before, we had:
+          //
+          // a -> . -> b
+          //      ^    |
+          //      |    v
+          //      L--- x
+          if (path(post, x, b)) {
+            post->cut[a][b] = post->cut[a][x];
+          } else {
+            post->cut[a][b] = s_add(pre->cut[a][b], pre->cut_cut[a][b]);
+          }
         } else {
-          post->cut[a][b] = pre->cut_cut[a][b];
+          post->cut[a][b] = pre->cut[a][b];
         }
-      } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
-                 pre->dist[b][x] >= pre->cut[b][a] &&
-                 path(pre, x, b)) {
-        if (path(post, x, b)) {
-          post->cut[a][b] = pre->cut[a][b];
-        } else {
+      } else if (path(post, y, x)) {
+        // We end with a loop x -> y -> x
+        if (path(post, a, b) &&
+            post->dist[a][b] < post->cut[a][x]) {
+          // Post state:
+          //
+          // a -> b -> x -> y -> x
+          post->cut[a][b] = post->dist[a][b];
+        } else if (path(post, b, a)) {
+          // Post state:
+          //
+          // b -> a
+          post->cut[a][b] = 0;
+        } else if (!path(post, x, a) && path(post, x, b)) {
+          // Post state:
+          //
+          // a -> . -> b -> x -> y
+          //      ^              |
+          //      L--------------
+          post->cut[a][b] = post->cut[a][x];
+        } else if (!path(post, x, a) && !path(post, x, b) &&
+                   pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                   pre->dist[a][y] < s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
+          // Post state:
+          //
+          //
+          // Pre state:
+          //
+          // a -> y -> 
+          post->cut[a][b] = post->cut[a][y];
+        } else if (!path(post, x, a) && !path(post, x, b) &&
+                   pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                   pre->dist[a][y] >= s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
           post->cut[a][b] = s_add(pre->cut[a][b], pre->cut_cut[a][b]);
+        } else {
+          post->cut[a][b] = pre->cut[a][b];
         }
-      } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a])) {
-        // Case 2:
-        //
-        // a -> . <-> . <- x <- b
-        len = min(post->cut[a][y], post->dist[a][b]);
-        len = min(len, s_add(post->dist[a][x], post->cut[x][b]));
-        post->cut[a][b] = len;
-      } else if (path(post, b, x) && path(post, y, a)) {
-        // Case 3:
-        //
-        // We end with:
-        //
-        // b -> x -> y -> a
-        post->cut[a][b] = 0;
-      } else if (path(post, y, x) &&
-                 pre->dist[a][y] < pre->cut[a][b]) {
-        len = min(s_add(post->dist[a][x], post->cut[x][b]),
-                  s_add(post->dist[a][y], post->cut[y][b]));
-        post->cut[a][b] = len;
       } else {
-        post->cut[a][b] = pre->cut[a][b];
+        assert(0);
       }
     }
   }
