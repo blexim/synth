@@ -569,7 +569,6 @@ void abstract_update(word_t x,
           //      b
           post->cut[a][b] = s_add(pre->cut[a][b], pre->cut_cut[a][b]);
         } else {
-          //__CPROVER_assume(0);
           post->cut[a][b] = pre->cut[a][b];
         }
       } else {

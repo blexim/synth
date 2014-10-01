@@ -231,7 +231,7 @@ int abstractions_equal(abstract_heapt *abs1,
 
     for (j = 0; j < NPROG; j++) {
       if (abs1->dist[i][j] != abs2->dist[i][j]) {
-        return 0;
+        //return 0;
       }
 
       if (abs1->cut[i][j] != abs2->cut[i][j]) {
