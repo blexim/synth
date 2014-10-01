@@ -299,6 +299,21 @@ void test_updates() {
     .succ={ INF, 4, 1, 4, 2 }, .ptr={ 0, 2, 1, 3, 4 }
   };
   test_update(&heap12);
+
+  concrete_heapt heap13 = {
+    .succ={ INF, 0, 4, 2, 2 }, .ptr={ 0, 4, 1, 2, 4 }
+  };
+  test_update(&heap13);
+
+  concrete_heapt heap14 = {
+    .succ={ INF, 4, 3, 4, 1 }, .ptr={ 0, 4, 3, 1, 2 }
+  };
+  test_update(&heap14);
+
+  concrete_heapt heap15 = {
+    .succ={ INF, 2, 1, 4, 1 }, .ptr={ 0, 2, 4, 1, 3 }
+  };
+  test_update(&heap15);
 #endif
 }
 
