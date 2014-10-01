@@ -131,6 +131,11 @@ void test_lookups() {
     .succ={ INF, 3, 1, 1 }, .ptr={ 0, 0, 3, 2 }
   };
   test_lookup(&heap8);
+
+  concrete_heapt heap9 = {
+    .succ={ INF, 2, 1, 2 }, .ptr={ 0, 2, 1, 3 }
+  };
+  test_lookup(&heap9);
 #elif NNODES==5
   concrete_heapt heap9 = {
     .succ={ INF, 2, 3, 2, 3 }, .ptr={ 0, 4, 4, 1, 4 }
@@ -254,12 +259,101 @@ void test_updates() {
     .succ={ INF, 2, 2, 1 }, .ptr={ 0, 3, 1, 2 }
   };
   test_update(&heap9);
+
+  concrete_heapt heap10 = {
+    .succ={ INF, 2, 2, 1 }, .ptr={ 0, 2, 1, 3 }
+  };
+  test_update(&heap10);
+
+  concrete_heapt heap11 = {
+    .succ={ INF, 2, 1, 1 }, .ptr={ 0, 3, 1, 2 }
+  };
+  test_update(&heap11);
+
+  concrete_heapt heap12 = {
+    .succ={ INF, 2, 1, 2 }, .ptr={ 0, 2, 1, 3 }
+  };
+  test_update(&heap12);
+
+  concrete_heapt heap13 = {
+    .succ={ INF, 0, 1, 2 }, .ptr={ 0, 2, 0, 1 }
+  };
+  test_update(&heap13);
 #elif NNODES==5
   concrete_heapt heap9 = {
     .succ={ INF, 4, 4, 1, 1 }, .ptr={ 0, 4, 2, 3, 1 }
   };
   test_update(&heap9);
-#elif NNODES==5
+
+  concrete_heapt heap10 = {
+    .succ={ INF, 4, 1, 1, 3 }, .ptr={ 0, 4, 3, 2, 1 }
+  };
+  test_update(&heap10);
+
+  concrete_heapt heap11 = {
+    .succ={ INF, 3, 4, 2, 3 }, .ptr={ 0, 2, 1, 3, 4 }
+  };
+  test_update(&heap11);
+
+  concrete_heapt heap12 = {
+    .succ={ INF, 4, 1, 4, 2 }, .ptr={ 0, 2, 1, 3, 4 }
+  };
+  test_update(&heap12);
+
+  concrete_heapt heap13 = {
+    .succ={ INF, 0, 4, 2, 2 }, .ptr={ 0, 4, 1, 2, 4 }
+  };
+  test_update(&heap13);
+
+  concrete_heapt heap14 = {
+    .succ={ INF, 4, 3, 4, 1 }, .ptr={ 0, 4, 3, 1, 2 }
+  };
+  test_update(&heap14);
+
+  concrete_heapt heap15 = {
+    .succ={ INF, 2, 1, 4, 1 }, .ptr={ 0, 2, 4, 1, 3 }
+  };
+  test_update(&heap15);
+
+  concrete_heapt heap16 = {
+    .succ={ INF, 2, 4, 2, 3 }, .ptr={ 0, 3, 0, 4, 1 }
+  };
+  test_update(&heap16);
+
+  concrete_heapt heap17 = {
+    .succ={ INF, 3, 1, 2, 3 }, .ptr={ 0, 3, 0, 2, 4 }
+  };
+  test_update(&heap17);
+
+  concrete_heapt heap18 = {
+    .succ={ INF, 3, 4, 4, 1 }, .ptr={ 0, 1, 0, 2, 3 }
+  };
+  test_update(&heap18);
+
+  concrete_heapt heap19 = {
+    .succ={ INF, 3, 1, 2, 2 }, .ptr={ 0, 2, 3, 4, 1 }
+  };
+  test_update(&heap19);
+
+  concrete_heapt heap20 = {
+    .succ={ INF, 2, 4, 1, 2 }, .ptr={ 0, 2, 3, 1, 4 }
+  };
+  test_update(&heap20);
+
+  concrete_heapt heap21 = {
+    .succ={ INF, 2, 1, 2, 2 }, .ptr={ 0, 1, 1, 3, 4 }
+  };
+  test_update(&heap21);
+
+  concrete_heapt heap22 = {
+    .succ={ INF, 2, 3, 4, 1 }, .ptr={ 0, 4, 3, 2, 1 }
+  };
+  test_update(&heap22);
+
+  concrete_heapt heap23 = {
+    .succ={ INF, 3, 1, 4, 1 }, .ptr={ 0, 3, 3, 4, 2 }
+  };
+  test_update(&heap23);
 #endif
 }
 
