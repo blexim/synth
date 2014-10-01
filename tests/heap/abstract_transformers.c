@@ -443,6 +443,23 @@ void abstract_update(word_t x,
     }
   }
 
+  // Compute x -/ a and a -/ x
+  for (a = 0; a < NPROG; a++) {
+    // We've already computed x -/ y and y -/ x
+    if (alias(post, a, y)) {
+      continue;
+    } else if (alias(post, a, x)) {
+      post->cut[a][x] = 0;
+      post->cut[x][a] = 0;
+    } else if (path(post, y, x)) {
+      post->cut[a][x] = post->cut[a][y];
+      post->cut[x][a] = post->cut[y][a];
+    } else {
+      post->cut[a][x] = post->cut[a][y];
+      post->cut[x][a] = s_add(post->cut[y][a], 1);
+    }
+  }
+
   for (a = 0; a < NPROG; a++) {
     if (a == y || a == x) {
       continue;
