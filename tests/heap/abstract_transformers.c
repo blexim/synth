@@ -377,16 +377,24 @@ void abstract_update(word_t x,
         // a is on the cycle
         post->cut[a][y] = 0;
         post->cut[y][a] = 0;
-      } else if (path(post, a, y)) {
+      } else if (path(post, a, y) &&
+                 post->dist[a][y] < post->dist[a][x]) {
+        // a -> y -> x -> y
+        post->cut[a][y] = post->dist[a][y];
+        post->cut[y][a] = 0;
+      } else if (path(post, a, y) &&
+                 post->dist[a][x] < post->dist[a][y] &&
+                 (post->dist[a][y] - post->dist[a][x]) == post->dist[y][x]) {
         // a -> x -> y -> x
-        // 
-        // OR
-        //
+        post->cut[a][y] = post->dist[a][x];
+        post->cut[y][a] = 0;
+      } else if (path(post, a, y) &&
+                 post->dist[a][x] < post->dist[a][y]) {
         // a -> . -> x -> y
         //      ^         |
         //      L---------
         len = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
-        len = min(len, post->dist[a][x]);
+        len = pre->cut[a][y];
         post->cut[a][y] = len;
         post->cut[y][a] = 0;
       } else {
