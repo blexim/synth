@@ -489,6 +489,7 @@ void abstract_update(word_t x,
         //
         // a -> . <- b
         len = min(post->cut[a][y], post->dist[a][b]);
+        len = min(len, s_add(post->dist[a][x], post->cut[x][b]));
         post->cut[a][b] = len;
       } else if (path(post, b, x) && path(post, y, a)) {
         // Case 3:
