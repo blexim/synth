@@ -501,6 +501,7 @@ void abstract_update(word_t x,
       } else if (path(post, y, x)) {
         // We end with a loop x -> y -> x
         if (path(post, a, b) &&
+            path(post, a, x) &&
             post->dist[a][b] < post->cut[a][x]) {
           // Post state:
           //
