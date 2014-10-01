@@ -484,10 +484,29 @@ void abstract_update(word_t x,
         len = min(s_add(post->dist[a][x], post->cut[x][b]),
                   s_add(post->dist[a][y], post->cut[y][b]));
         post->cut[a][b] = len;
+      } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                 pre->dist[b][x] >= pre->cut[b][a] &&
+                 path(pre, x, a)) {
+        // b -> . -> x -> a
+        //      ^         |
+        //      L---------
+        if (path(post, x, a)) {
+          post->cut[a][b] = pre->cut[a][b];
+        } else {
+          post->cut[a][b] = pre->cut_cut[a][b];
+        }
+      } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                 pre->dist[b][x] >= pre->cut[b][a] &&
+                 path(pre, x, b)) {
+        if (path(post, x, b)) {
+          post->cut[a][b] = pre->cut[a][b];
+        } else {
+          post->cut[a][b] = s_add(pre->cut[a][b], pre->cut_cut[a][b]);
+        }
       } else if (pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a])) {
         // Case 2:
         //
-        // a -> . <- b
+        // a -> . <-> . <- x <- b
         len = min(post->cut[a][y], post->dist[a][b]);
         len = min(len, s_add(post->dist[a][x], post->cut[x][b]));
         post->cut[a][b] = len;
