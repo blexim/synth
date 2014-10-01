@@ -537,7 +537,7 @@ void abstract_update(word_t x,
           // a -> . <- y <- x <- b
           post->cut[a][b] = post->cut[a][y];
         } else if (!path(post, x, a) && !path(post, x, b) &&
-                   pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                   pre->dist[b][x] <= s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
                    pre->dist[a][y] < s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
           // Pre state:
           //
