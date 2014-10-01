@@ -385,7 +385,9 @@ void abstract_update(word_t x,
         // a -> . -> x -> y
         //      ^         |
         //      L---------
-        post->cut[a][y] = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
+        len = s_add(pre->cut[a][y], pre->cut_cut[a][y]);
+        len = min(len, post->dist[a][x]);
+        post->cut[a][y] = len;
         post->cut[y][a] = 0;
       } else {
         // a -> .
