@@ -464,12 +464,16 @@ void abstract_update(word_t x,
   }
 
   for (a = 0; a < NPROG; a++) {
-    if (a == y || a == x) {
-      continue;
-    }
-
     for (b = 0; b < NPROG; b++) {
-      if (b == y || b == x) {
+      if (alias(post, a, y)) {
+        post->cut[a][b] = post->cut[y][b];
+      } else if (alias(post, a, x)) {
+        post->cut[a][b] = post->cut[x][b];
+      } else if (alias(post, b, y)) {
+        post->cut[a][b] = post->cut[a][y];
+      } else if (alias(post, b, x)) {
+        post->cut[a][b] = post->cut[a][x];
+      } else if (b == y || b == x) {
         // Nothing!
       } else if (pre->dist[a][x] < pre->cut[a][b]) {
         // Case 1:
