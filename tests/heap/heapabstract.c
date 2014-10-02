@@ -248,7 +248,7 @@ int abstractions_equal(abstract_heapt *abs1,
 }
 
 #define LINEWIDTH 6
-char *ptrnames[] = {"NULL", "x", "y", "z", "w"};
+char *ptrnames[] = {"NULL", "x", "y", "z", "w", "q"};
 
 void print_ptr(word_t p) {
   if (p < sizeof(ptrnames)) {
