@@ -501,6 +501,7 @@ void abstract_update(word_t x,
       } else if (path(post, y, x)) {
         // We end with a loop x -> y -> x
         if (path(post, a, b) &&
+            path(post, a, x) &&
             post->dist[a][b] < post->cut[a][x]) {
           // Post state:
           //
@@ -537,18 +538,35 @@ void abstract_update(word_t x,
           // a -> . <- y <- x <- b
           post->cut[a][b] = post->cut[a][y];
         } else if (!path(post, x, a) && !path(post, x, b) &&
-                   pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
+                   pre->dist[b][x] <= s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
                    pre->dist[a][y] < s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
-          // Post state:
-          //
-          //
           // Pre state:
           //
-          // a -> y -> 
+          // a -> y ->  . <- x <- . <- b
+          //            |         ^
+          //            L---------|
+          //
+          // Post state:
+          //
+          // a -> y <- x <- . <- b
+          //      |         ^
+          //      L---------|
           post->cut[a][b] = post->cut[a][y];
         } else if (!path(post, x, a) && !path(post, x, b) &&
                    pre->dist[b][x] < s_add(pre->cut[b][a], pre->cut_cut[b][a]) &&
                    pre->dist[a][y] >= s_add(pre->cut[a][b], pre->cut_cut[a][b])) {
+          // Pre state:
+          //
+          // a -> . <- x <- . <- b
+          //      |         ^
+          //      L---------|
+          //
+          // Post state:
+          //
+          // a -> . -> x -> y
+          //      ^    ^    |
+          //      |    L-----
+          //      b
           post->cut[a][b] = s_add(pre->cut[a][b], pre->cut_cut[a][b]);
         } else {
           post->cut[a][b] = pre->cut[a][b];
@@ -608,7 +626,6 @@ void abstract_update(word_t x,
       //           ^    |
       //           L----
       post->stem[a] = post->cut[a][y];
-      //post->stem[a] = s_add(post->dist[a][x], 1);
       post->cycle[a] = pre->cycle[y];
     } else if (path(post, a, x) && pre->stem[y] > 0 && pre->stem[y] != INF) {
       // Case 6:
@@ -619,6 +636,52 @@ void abstract_update(word_t x,
     } else {
       // NOTREACHED
       assert(0);
+    }
+  }
+
+  // Cut-cuts!
+  for (a = 0; a < NPROG; a++) {
+    for (b = 0; b < NPROG; b++) {
+      if (path(pre, y, x) && !path(pre, x, y) &&
+          pre->cut[y][b] <= pre->dist[y][x] &&
+          pre->cut[y][a] <= pre->dist[y][x]) {
+        // Pre:
+        //
+        // y -> b -> a -> x
+        //
+        // Post:
+        //
+        // y -> b -> a -> x
+        // ^              |
+        // L--------------|
+        if (pre->cut[y][b] < pre->cut[y][a]) {
+          post->cut_cut[a][b] = s_sub(cycle_len, pre->cut[y][b]);
+        } else {
+          post->cut_cut[a][b] = s_sub(pre->cut[y][b], pre->cut[y][a]);
+        }
+      }
+
+      if (pre->stem[x] == 0 && post->stem[x] == INF &&
+          pre->cut[a][x] != INF && pre->cut[b][x] != INF) {
+        // We previous had a cycle containing x, which a and b cut:
+        //
+        // a -> . -> x -> . <- b
+        //      ^         |
+        //      L---------
+        //
+        // Now we've broken that cycle:
+        //
+        // a -> . -> x -> y
+        //      ^
+        //      |
+        //      b
+        //post->cut_cut[a][b] = 0;
+      } else {
+      }
+
+      if (post->cut[a][b] == INF) {
+        post->cut_cut[a][b] = INF;
+      }
     }
   }
 }

@@ -354,6 +354,16 @@ void test_updates() {
     .succ={ INF, 3, 1, 4, 1 }, .ptr={ 0, 3, 3, 4, 2 }
   };
   test_update(&heap23);
+
+  concrete_heapt heap24 = {
+    .succ={ INF, 3, 4, 4, 1 }, .ptr={ 0, 2, 2, 1, 3 }
+  };
+  test_update(&heap24);
+#elif NNODES == 6
+  concrete_heapt heap25 = {
+    .succ={ INF, 5, 3, 5, 3, 4 }, .ptr={ 0, 5, 4, 1, 4, 2 }
+  };
+  test_update(&heap25);
 #endif
 }
 
