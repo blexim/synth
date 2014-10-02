@@ -174,6 +174,75 @@ void test_lookups() {
 #endif
 }
 
+void test_new(concrete_heapt *heap1) {
+  concrete_heapt heap2;
+  abstract_heapt abs1, abs2, abs3;
+
+  abstract(heap1, &abs1);
+  abstract_new(x, &abs1, &abs2);
+
+  concrete_new(x, heap1, &heap2);
+  abstract(&heap2, &abs3);
+
+  printf("Concrete heap1:\n");
+  print_concrete(heap1);
+
+  printf("\nAbstract1:\n");
+  print_abstract(&abs1);
+
+  printf("\nExecuting x = new():\n");
+
+  printf("\nAbstract result:\n");
+  print_abstract(&abs2);
+
+  printf("\nConcrete result:\n");
+  print_concrete(&heap2);
+
+  printf("\nAbstracted concrete:\n");
+  print_abstract(&abs3);
+
+  tests++;
+
+  if (is_valid_heap(heap1) &&
+      !abstractions_equal(&abs2, &abs3)) {
+    printf("TEST FAILED\n");
+  } else {
+    passed++;
+    printf("TEST SUCCEEDED\n");
+  }
+}
+
+void test_news() {
+#if NNODES==3
+  /* concrete_heapt heap1 = { */
+  /*   .succ={ INF, 0, 2 }, .ptr={ 0, 2, 0 } */
+  /* }; */
+  /* test_new(&heap1); */
+
+  /* concrete_heapt heap2 = { */
+  /*   .succ={ INF, 0, 0 }, .ptr={ 0, 0, 1 }  */
+  /* }; */
+  /* test_new(&heap2); */
+
+  concrete_heapt heap3 = {
+    .succ={ INF, 0, 1 }, .ptr={ 0, 0, 0 } 
+  };
+  test_new(&heap3);
+
+ 
+#elif NNODES==4
+  concrete_heapt heap4 = {
+    .succ={ INF, 2, 3, 1 }, .ptr={ 0, 3, 0, 0 }
+  };
+  test_new(&heap4);
+
+
+#elif NNODES==5
+
+#elif NNODES==6
+#endif
+}
+
 void test_update(concrete_heapt *heap1) {
   concrete_heapt heap2;
   abstract_heapt abs1, abs2, abs3;
@@ -339,9 +408,10 @@ void test_updates() {
 }
 
 void main() {
-  test_assigns();
-  test_lookups();
-  test_updates();
+  //test_assigns();
+  //test_lookups();
+  //test_updates();
+  test_news();
 
   printf("\n%d/%d tests passed\n", passed, tests);
 }

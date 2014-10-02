@@ -60,6 +60,66 @@ void copy_abstract(abstract_heapt *pre,
 }
 
 /*
+  Computing the distance between x and the cutpoint x|y
+ */
+word_t cut(abstract_heapt *h, word_t x, word_t y, word_t* cut_ptr) {
+  word_t len = h->dist[x][y]; 
+  word_t z;
+  *cut_ptr = y;
+
+  for(z = 0; z < NPROG; z++)
+    if(h->dist[x][z] != INF && h->dist[y][z] != INF && h->dist[x][z] < len) {
+      len = h->dist[x][z];
+      *cut_ptr = z;
+    }
+
+  return len;
+}
+
+/*
+  Computing the distance between cutpoints x|y and y|x
+ */
+word_t cut_cut(abstract_heapt *h, word_t x, word_t y) {
+  word_t cut_xy; 
+  word_t cut_yx; 
+  word_t cut_xy_ptr, cut_yx_ptr;
+
+  cut_xy = cut(h, x, y, &cut_xy_ptr);
+  cut_yx = cut(h, y, x, &cut_yx_ptr);
+  if (cut_xy != INF && cut_yx != INF)
+    return h->dist[cut_xy_ptr][cut_yx_ptr];
+  else
+    return INF;
+}
+
+
+/*
+ * The abstract transformer for new:
+ *
+ * x = new();
+ */
+void abstract_new(word_t x,
+                     abstract_heapt *pre,
+                     abstract_heapt *post) {
+  copy_abstract(pre, post);
+
+  unsigned int z;
+
+  for (z = 0; z < NPROG; z++) {
+    post->dist[x][z] = s_add(pre->dist[0][z], 1);
+    post->dist[z][x] = INF;
+  }
+
+  // convention: a newly created node has NULL as its successor.
+  post->dist[x][0] = 1;
+  post->dist[x][x] = 0;
+
+  post->stem[x] = INF;
+  post->cycle[x] = INF;
+
+}
+
+/*
  * The abstract transformer for assignment:
  *
  * x = y;
@@ -82,34 +142,6 @@ void abstract_assign(word_t x,
   post->cycle[x] = pre->cycle[y];
 
   post->dist[x][x] = 0;
-}
-
-word_t cut(abstract_heapt *h, word_t x, word_t y, word_t* cut_ptr) {
-  word_t len = h->dist[x][y]; 
-  word_t z;
-  *cut_ptr = y;
-
-  for(z = 0; z < NPROG; z++)
-    if(h->dist[x][z] != INF && h->dist[y][z] != INF && h->dist[x][z] < len) {
-      len = h->dist[x][z];
-      *cut_ptr = z;
-    }
-
-  return len;
-}
-
-
-word_t cut_cut(abstract_heapt *h, word_t x, word_t y) {
-  word_t cut_xy; 
-  word_t cut_yx; 
-  word_t cut_xy_ptr, cut_yx_ptr;
-
-  cut_xy = cut(h, x, y, &cut_xy_ptr);
-  cut_yx = cut(h, y, x, &cut_yx_ptr);
-  if (cut_xy != INF && cut_yx != INF)
-    return h->dist[cut_xy_ptr][cut_yx_ptr];
-  else
-    return INF;
 }
 
 
