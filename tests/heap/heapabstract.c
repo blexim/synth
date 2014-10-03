@@ -222,16 +222,16 @@ int abstractions_equal(abstract_heapt *abs1,
 
   for (i = 0; i < NPROG; i++) {
     if (abs1->stem[i] != abs2->stem[i]) {
-      //return 0;
+      return 0;
     }
 
     if (abs1->cycle[i] != abs2->cycle[i]) {
-      //return 0;
+      return 0;
     }
 
     for (j = 0; j < NPROG; j++) {
       if (abs1->dist[i][j] != abs2->dist[i][j]) {
-        //return 0;
+        return 0;
       }
 
       if (abs1->cut[i][j] != abs2->cut[i][j]) {
@@ -239,7 +239,7 @@ int abstractions_equal(abstract_heapt *abs1,
       }
 
       if (abs1->cut_cut[i][j] != abs2->cut_cut[i][j]) {
-        //return 0;
+        return 0;
       }
     }
   }

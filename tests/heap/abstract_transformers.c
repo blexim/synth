@@ -707,7 +707,12 @@ void abstract_new(word_t x,
 
   for (a = 0; a < NPROG; a++) {
     post->dist[a][x] = INF;
-    post->dist[x][a] = INF;
+
+    if (alias(pre, a, nil)) {
+      post->dist[x][a] = 1;
+    } else {
+      post->dist[x][a] = INF;
+    }
 
     post->cut[a][x] = INF;
     post->cut[x][a] = INF;
