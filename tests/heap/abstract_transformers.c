@@ -952,7 +952,8 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
 
         if (cut(heap, a, b) && cut(heap, a, c)) {
           if (s_add(heap->cut[b][a], heap->cut[a][c]) != s_add(heap->cut[a][b], heap->cut[b][c]) &&
-              s_add(heap->cut[a][a], heap->cut[a][b]) != s_add(heap->cut[a][c], heap->cut[c][b])) {
+              s_add(heap->cut[a][a], heap->cut[a][b]) != s_add(heap->cut[a][c], heap->cut[c][b]) &&
+              heap->cut[a][b] != heap->cut[a][c]) {
             return 0;
           }
         }
