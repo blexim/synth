@@ -711,7 +711,7 @@ void abstract_new(word_t x,
   post->cut[x][x] = 0;
   post->cut_cut[x][x] = 0;
   post->cycle[x] = INF;
-  post->cycle[x] = INF;
+  post->stem[x] = INF;
 }
 
 int is_valid_abstract_heap(abstract_heapt *heap) {
