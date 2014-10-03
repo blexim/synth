@@ -374,6 +374,51 @@ int cycle_axioms(abstract_heapt *heap) {
   return 1;
 }
 
+int cut_axioms(abstract_heapt *heap) {
+  word_t a, b, c;
+
+  for (a = 0; a < NPROG; a++) {
+    // Every node is its own cutpoint
+    for (b = 0; b < NPROG; b++) {
+      if (alias(heap, a, b)) {
+        if (heap->cut[a][b] != 0) {
+          return 0;
+        }
+      }
+
+      if (path(heap, a, b)) {
+        // If there is a path a -> b, then b is the b|a cutpoint.
+        if (heap->cut[b][a] != 0) {
+          return 0;
+        }
+
+        // ...and the a|b cutpoint is either b or a node closer to a.
+        if (heap->cut[a][b] > heap->dist[a][b]) {
+          return 0;
+        }
+      }
+    }
+  }
+
+  return 1;
+}
+
+int cut_cut_axioms(abstract_heapt *heap) {
+  word_t a, b, c;
+
+  for (a = 0; a < NPROG; a++) {
+    for (b = 0; b < NPROG; b++) {
+      if (alias(heap, a, b)) {
+        if (heap->cut_cut[a][b] != 0) {
+          return 0;
+        }
+      }
+    }
+  }
+
+  return 1;
+}
+
 int acyclic(abstract_heapt *heap) {
   word_t a, b;
 
