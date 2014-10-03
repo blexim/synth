@@ -1,6 +1,6 @@
 #include "heapabstract.h"
+#include "heap_axioms.h"
 
-word_t nil = 0;
 word_t l = 1;
 word_t p = 2;
 word_t q = 3;
@@ -58,26 +58,34 @@ void body(abstract_heapt *pre, abstract_heapt *post) {
   }
 }
 
+int axioms(abstract_heapt *heap) {
+  return alias_axioms(heap) &&
+         null_axioms(heap) &&
+         path_axioms(heap) &&
+         cycle_axioms(heap);
+}
+
 int main(void) {
   abstract_heapt heap1;
   abstract_heapt heap2;
   abstract_heapt heap3;
   abstract_heapt tmp;
 
-  /*
-  __CPROVER_assume(is_valid_abstract_heap(&heap1));
+  __CPROVER_assume(axioms(&heap1));
   __CPROVER_assume(alias(&heap1, l, p));
   __CPROVER_assume(alias(&heap1, l, q));
-
   body(&heap1, &tmp);
+  __CPROVER_assume(axioms(&tmp));
   assert(inv(&tmp));
-  */
 
-  __CPROVER_assume(is_valid_abstract_heap(&heap2));
+  /*
+  __CPROVER_assume(axioms(&heap2));
   __CPROVER_assume(inv(&heap2));
   __CPROVER_assume(cond(&heap2));
   body(&heap2, &tmp);
+  __CPROVER_assume(axioms(&tmp));
   assert(inv(&tmp));
+  */
 
   /*
   if (is_valid_abstract_heap(&heap3) && inv(&heap3) && !cond(&heap3)) {

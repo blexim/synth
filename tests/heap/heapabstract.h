@@ -1,3 +1,6 @@
+#ifndef HEAPABSTRACT_H
+#define HEAPABSTRACT_H
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -33,6 +36,8 @@ typedef struct abstract_heap {
   word_t stem[NPROG];
   word_t cycle[NPROG];
 } abstract_heapt;
+
+word_t nil = 0;
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
@@ -94,5 +99,11 @@ int path(abstract_heapt *heap,
 int alias(abstract_heapt *heap,
           word_t a,
           word_t b);
+int cut(abstract_heapt *heap,
+        word_t a,
+        word_t b);
 
 word_t s_add(word_t x, word_t y);
+word_t s_sub(word_t x, word_t y);
+
+#endif // HEAPABSTRACT_H
