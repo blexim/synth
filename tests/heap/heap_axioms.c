@@ -298,6 +298,10 @@ int null_axioms(abstract_heapt *heap) {
       if (path(heap, nil, a)) {
         return 0;
       }
+
+      if (cut(heap, nil, a)) {
+        return 0;
+      }
     }
   }
 
@@ -427,6 +431,18 @@ int cut_cut_axioms(abstract_heapt *heap) {
         }
       } else {
         if (heap->cut_cut[a][b] != INF) {
+          return 0;
+        }
+      }
+
+      // Cut-cut a||b is non-zero iff both cutpoints a|b and b|a are on
+      // a cycle.  That means that a and b both reach the same cycle.
+      if (heap->cut_cut[a][b] != INF && heap->cut_cut[a][b] != 0) {
+        if (heap->cycle[a] == INF) {
+          return 0;
+        }
+
+        if (heap->cycle[a] != heap->cycle[b]) {
           return 0;
         }
       }
