@@ -341,7 +341,7 @@ int cycle_axioms(abstract_heapt *heap) {
       // If a -> b then a and b share the same cycle.
       if (path(heap, a, b)) {
         if (heap->cycle[a] != heap->cycle[b]) {
-          return ;
+          return 0;
         }
       }
 
