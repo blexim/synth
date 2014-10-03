@@ -686,6 +686,34 @@ void abstract_update(word_t x,
   }
 }
 
+/*
+ * x = new()
+ */
+void abstract_new(word_t x,
+                  abstract_heapt *pre,
+                  abstract_heapt *post) {
+  word_t a;
+
+  copy_abstract(pre, post);
+
+  for (a = 0; a < NPROG; a++) {
+    post->dist[a][x] = INF;
+    post->dist[x][a] = INF;
+
+    post->cut[a][x] = INF;
+    post->cut[x][a] = INF;
+
+    post->cut_cut[a][x] = INF;
+    post->cut_cut[x][a] = INF;
+  }
+
+  post->dist[x][x] = 0;
+  post->cut[x][x] = 0;
+  post->cut_cut[x][x] = 0;
+  post->cycle[x] = INF;
+  post->cycle[x] = INF;
+}
+
 int is_valid_abstract_heap(abstract_heapt *heap) {
   word_t a, b, c;
 
