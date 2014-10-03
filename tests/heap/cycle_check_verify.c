@@ -16,7 +16,8 @@ int rank2(abstract_heapt *heap) {
 int inv(abstract_heapt *heap) {
   return (heap->stem[p] > 0 && heap->dist[p][q] > 0) ||
           (s_add(heap->dist[p][q], heap->dist[q][p]) == heap->cycle[l]) ||
-          (alias(heap, p, q) && heap->cycle[l] != INF); 
+          (alias(heap, p, q) && heap->cycle[l] != INF) ||
+          (alias(heap, q, nil) && heap->cycle[l] == INF);
 }
 
 int cond(abstract_heapt *heap) {
@@ -47,12 +48,7 @@ void body(abstract_heapt *pre, abstract_heapt *post) {
 }
 
 int main(void) {
-  abstract_heapt heap1 = {
-.dist={ { 0, INF, INF, INF }, { INF, 0, 0, 0 }, { INF, 0, 0, 0 }, { INF, 0, 0, 0 } }, .cut={ { 0, INF, INF, INF }, { INF, 0, 0, 0 }, { INF, 0, 0, 0 }, { INF, 0, 0, 0 } },
-    .cut_cut={ { 0, INF, INF, INF }, { INF, 0, 0, 0 }, { INF, 0, 0, 0 }, { INF, 0, 0, 0 } },
-    .stem={ INF, 1, 1, 1 },
-    .cycle={ INF, 1, 1, 1 }
-  };
+  abstract_heapt heap1;
   abstract_heapt heap2;
   abstract_heapt heap3;
   abstract_heapt tmp;
@@ -67,7 +63,7 @@ int main(void) {
   /*
   if (is_valid_abstract_heap(&heap2) && inv(&heap2) && cond(&heap2)) {
     body(&heap2, &tmp);
-    //assert(inv(&tmp));
+    assert(inv(&tmp));
   }
 
   if (is_valid_abstract_heap(&heap3) && inv(&heap3) && !cond(&heap3)) {
