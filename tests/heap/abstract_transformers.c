@@ -3,8 +3,8 @@
 /*
  * Saturating addition.
  */
-unsigned int s_add(unsigned int x, unsigned int y) {
-  unsigned int ret = (x > INF - y) ? INF : x + y;
+word_t s_add(word_t x, word_t y) {
+  word_t ret = (x > INF - y) ? INF : x + y;
 
   __CPROVER_assume(ret != INF || x == INF || y == INF);
 
@@ -14,7 +14,7 @@ unsigned int s_add(unsigned int x, unsigned int y) {
 /*
  * Saturating subtraction.
  */
-unsigned int s_sub(unsigned int x, unsigned int y) {
+word_t s_sub(word_t x, word_t y) {
   if (x == INF) {
     return INF;
   } else if (y > x) {
@@ -684,4 +684,135 @@ void abstract_update(word_t x,
       }
     }
   }
+}
+
+int is_valid_abstract_heap(abstract_heapt *heap) {
+  word_t a, b, c;
+
+  for (a = 0; a < NPROG; a++) {
+    if (!alias(heap, 0, a) && !path(heap, a, 0)) {
+      if (heap->cut[0][a] != INF) {
+        return 0;
+      }
+
+      if (heap->cut[a][0] != INF) {
+        return 0;
+      }
+    }
+
+    if (!alias(heap, 0, a) && path(heap, 0, a)) {
+      return 0;
+    }
+
+    if (path(heap, a, 0)) {
+      if (heap->cycle[a] != INF) {
+        return 0;
+      }
+    }
+
+    if (!alias(heap, a, a)) {
+      return 0;
+    }
+
+    if (heap->cut[a][a] != 0) {
+      return 0;
+    }
+
+    if (heap->cut_cut[a][a] != 0) {
+      return 0;
+    }
+
+    if (heap->cycle[a] == INF && heap->stem[a] != INF) {
+      return 0;
+    }
+
+    if (heap->cycle[a] == 0) {
+      return 0;
+    }
+
+    for (b = 0; b < NPROG; b++) {
+      if (alias(heap, a, b)) {
+        if (!alias(heap, b, a)) {
+          return 0;
+        }
+
+        if (heap->cut_cut[a][b] != 0 || heap->cut_cut[b][a] != 0) {
+          return 0;
+        }
+
+        if (heap->cut[a][b] != 0 || heap->cut[a][b] != 0) {
+          return 0;
+        }
+
+        if (heap->stem[a] != heap->stem[b]) {
+          return 0;
+        }
+
+        if (heap->cycle[a] != heap->cycle[b]) {
+          return 0;
+        }
+      }
+
+      if (path(heap, a, b)) {
+        if (heap->cut[a][b] == INF || heap->cut[b][a] != 0) {
+          return 0;
+        }
+      }
+
+      if (heap->cut[a][b] == INF) {
+        if (heap->cut_cut[a][b] != INF) {
+          return 0;
+        }
+      }
+
+      if (alias(heap, a, b) != alias(heap, b, a)) {
+        return 0;
+      }
+
+      if (heap->cut_cut[a][b] != INF && heap->cut_cut[a][b] != 0) {
+        if (heap->cut_cut[b][a] == INF || heap->cut_cut[b][a] == INF) {
+          return 0;
+        }
+
+        if (heap->cycle[a] == INF || heap->cycle[b] == INF) {
+          return 0;
+        }
+
+        if (heap->cut[a][b] == INF || heap->cut[b][a] == INF) {
+          return 0;
+        }
+      }
+
+      if (path(heap, a, b) && path(heap, b, a)) {
+        if (!alias(heap, a, b) &&
+            s_add(heap->dist[a][b], heap->dist[b][a]) != heap->cycle[a]) {
+          return 0;
+        }
+
+        if (heap->cycle[a] != heap->cycle[b]) {
+          return 0;
+        }
+
+        if (!alias(heap, a, b)) {
+          if (heap->cycle[a] == INF || heap->cycle[b] == INF) {
+            return 0;
+          }
+
+          if (heap->stem[a] != 0 || heap->stem[b] != 0) {
+            return 0;
+          }
+        }
+      }
+
+      for (c = 0; c < NPROG; c++) {
+        if (path(heap, a, b) && path(heap, b, c)) {
+          if (heap->dist[a][c] != s_add(heap->dist[a][b], heap->dist[b][c])) {
+            return 0;
+          }
+        }
+      }
+    }
+  }
+
+  return 1;
 }
