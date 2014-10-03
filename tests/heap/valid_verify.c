@@ -46,7 +46,7 @@ int main(void) {
   */
 
   /*
-  abstract_inew(x, &pre, &post);
+  abstract_new(x, &pre, &post);
   assert(is_valid_abstract_heap(&post));
   */
 }

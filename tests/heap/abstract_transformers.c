@@ -102,6 +102,9 @@ void abstract_assign(word_t x,
   post->cut_cut[x][x] = 0;
 }
 
+/*
+ * x = y->n
+ */
 void abstract_lookup(word_t x,
                      word_t y,
                      abstract_heapt *pre,
@@ -110,6 +113,8 @@ void abstract_lookup(word_t x,
 
   word_t a;
   word_t len;
+
+  __CPROVER_assume(!alias(pre, y, 0));
 
   post->stem[x] = s_sub(pre->stem[y], 1);
   post->cycle[x] = pre->cycle[y];
@@ -321,6 +326,8 @@ void abstract_update(word_t x,
 
   word_t a, b;
   word_t len;
+
+  __CPROVER_assume(!alias(pre, x, 0));
 
   for (a = 0; a < NPROG; a++) {
     for (b = 0; b < NPROG; b++) {
@@ -694,6 +701,8 @@ void abstract_new(word_t x,
                   abstract_heapt *post) {
   word_t a;
 
+  __CPROVER_assume(x != 0);
+
   copy_abstract(pre, post);
 
   for (a = 0; a < NPROG; a++) {
@@ -734,6 +743,10 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
 
     if (path(heap, a, 0)) {
       if (heap->cycle[a] != INF) {
+        return 0;
+      }
+    } else {
+      if (heap->cycle[a] == INF) {
         return 0;
       }
     }
@@ -786,7 +799,7 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
       }
 
       if (path(heap, a, b)) {
-        if (heap->cut[a][b] > heap->dist[a][b]) {
+        if (s_add(heap->cut[a][b], heap->cut_cut[a][b]) != heap->dist[a][b]) {
           return 0;
         }
 
@@ -912,8 +925,11 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
           }
         }
 
-        if (path(heap, a, b) && path(heap, a, c) && !path(heap, b, c)) {
-          return 0;
+        if (path(heap, a, b) && path(heap, a, c)) {
+          if (heap->dist[a][b] != s_add(heap->dist[a][c], heap->dist[c][b]) &&
+              heap->dist[a][c] != s_add(heap->dist[a][b], heap->dist[b][c])) {
+            return 0;
+          }
         }
 
         if (alias(heap, a, b)) {
@@ -930,6 +946,13 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
           }
 
           if (heap->cut_cut[c][a] != heap->cut_cut[c][b]) {
+            return 0;
+          }
+        }
+
+        if (cut(heap, a, b) && cut(heap, a, c)) {
+          if (s_add(heap->cut[b][a], heap->cut[a][c]) != s_add(heap->cut[a][b], heap->cut[b][c]) &&
+              s_add(heap->cut[a][a], heap->cut[a][b]) != s_add(heap->cut[a][c], heap->cut[c][b])) {
             return 0;
           }
         }
