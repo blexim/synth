@@ -277,7 +277,7 @@ int path_axioms(abstract_heapt *heap) {
   for (a = 0; a < NPROG; a++) {
     for (b = 0; b < NPROG; b++) {
       for (c = 0; c < NPROG; c++) {
-        if (heap->dist[a][b] < heap->dist[a][c]) {
+        if (heap->dist[a][b] <= heap->dist[a][c]) {
           if (s_add(heap->dist[a][b], heap->dist[b][c]) != heap->dist[a][c]) {
             return 0;
           }
@@ -308,6 +308,11 @@ int cycle_axioms(abstract_heapt *heap) {
   word_t a, b, len;
 
   for (a = 0; a < NPROG; a++) {
+    // Nothing has a 0 cycle.
+    if (heap->cycle[a] == 0) {
+      return 0;
+    }
+
     // No stem <=> no cycle.
     if (heap->stem[a] == INF) {
       if (heap->cycle[a] != INF) {
