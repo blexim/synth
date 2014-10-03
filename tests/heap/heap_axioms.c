@@ -298,10 +298,11 @@ int null_axioms(abstract_heapt *heap) {
       if (path(heap, nil, a)) {
         return 0;
       }
+    }
 
-      if (cut(heap, nil, a)) {
-        return 0;
-      }
+    // A node cuts null at null or not at all.
+    if (heap->dist[a][nil] != heap->cut[a][nil]) {
+       return 0;
     }
   }
 
@@ -404,6 +405,19 @@ int cut_axioms(abstract_heapt *heap) {
         // There is no path a -> b, so b|a should not be 0.
         if (heap->cut[b][a] == 0) {
           return 0;
+        }
+      }
+
+      for (c = 0; c < NPROG; c++) {
+        if (heap->cut[a][c] > heap->cut[a][b]) {
+          // a -> . -> .
+          //      ^    ^
+          //      |    |
+          //      b    c
+          if (s_add(heap->cut[a][b], heap->cut[b][c]) !=
+              s_add(heap->cut[b][a], heap->cut[a][c])) {
+            return 0;
+          }
         }
       }
     }
