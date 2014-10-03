@@ -726,6 +726,10 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
       return 0;
     }
 
+    if (heap->cycle[a] != INF && heap->stem[a] == INF) {
+      return 0;
+    }
+
     if (heap->cycle[a] == 0) {
       return 0;
     }
@@ -754,7 +758,70 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
       }
 
       if (path(heap, a, b)) {
-        if (heap->cut[a][b] == INF || heap->cut[b][a] != 0) {
+        if (heap->cut[a][b] > heap->dist[a][b]) {
+          return 0;
+        }
+
+        if (heap->cut[b][a] != 0) {
+          return 0;
+        }
+
+        if (heap->cycle[a] != heap->cycle[b]) {
+          return 0;
+        }
+
+        if (heap->stem[b] > heap->stem[a]) {
+          return 0;
+        }
+
+        if (s_sub(heap->stem[a], heap->dist[a][b]) != heap->stem[b]) {
+          return 0;
+        }
+
+        if (heap->stem[a] != INF) {
+          if (s_sub(heap->dist[a][b], heap->cut_cut[a][b]) != heap->stem[a]) {
+            return 0;
+          }
+        }
+
+        if (heap->stem[a] == 0) {
+          if (s_add(heap->cut_cut[a][b], heap->cut_cut[b][a]) != heap->cycle[a] &&
+              s_add(heap->cut_cut[a][b], heap->cut_cut[b][a]) != 0) {
+            return 0;
+          }
+
+          if (s_add(heap->cut_cut[a][b], heap->cut_cut[b][a]) == 0) {
+            if (!alias(heap, a, b)) {
+              return 0;
+            }
+          }
+
+          if (!path(heap, b, a)) {
+            return 0;
+          }
+        }
+      }
+
+      if (heap->cut[a][b] != INF) {
+        if (heap->cut_cut[a][b] == INF) {
+          return 0;
+        }
+
+        if (heap->cut[b][a] == INF) {
+          return 0;
+        }
+
+        if (heap->cycle[a] != heap->cycle[b]) {
+          return 0;
+        }
+
+        if (heap->cut_cut[a][b] > heap->cycle[a]) {
+          return 0;
+        }
+      }
+
+      if (heap->cut[a][b] == 0) {
+        if (!path(heap, b, a)) {
           return 0;
         }
       }
@@ -769,8 +836,14 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
         return 0;
       }
 
+      if (heap->cut_cut[a][b] == 0) {
+        if (heap->cut_cut[b][a] != 0) {
+          return 0;
+        }
+      }
+
       if (heap->cut_cut[a][b] != INF && heap->cut_cut[a][b] != 0) {
-        if (heap->cut_cut[b][a] == INF || heap->cut_cut[b][a] == INF) {
+        if (heap->cut_cut[b][a] == INF || heap->cut_cut[b][a] == 0) {
           return 0;
         }
 
@@ -781,15 +854,15 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
         if (heap->cut[a][b] == INF || heap->cut[b][a] == INF) {
           return 0;
         }
+
+        if (s_add(heap->cut_cut[a][b], heap->cut_cut[b][a]) != heap->cycle[a]) {
+          return 0;
+        }
       }
 
       if (path(heap, a, b) && path(heap, b, a)) {
         if (!alias(heap, a, b) &&
             s_add(heap->dist[a][b], heap->dist[b][a]) != heap->cycle[a]) {
-          return 0;
-        }
-
-        if (heap->cycle[a] != heap->cycle[b]) {
           return 0;
         }
 
@@ -807,6 +880,28 @@ int is_valid_abstract_heap(abstract_heapt *heap) {
       for (c = 0; c < NPROG; c++) {
         if (path(heap, a, b) && path(heap, b, c)) {
           if (heap->dist[a][c] != s_add(heap->dist[a][b], heap->dist[b][c])) {
+            return 0;
+          }
+        }
+
+        if (path(heap, a, b) && path(heap, a, c) && !path(heap, b, c)) {
+          return 0;
+        }
+
+        if (alias(heap, a, b)) {
+          if (heap->cut[a][c] != heap->cut[b][c]) {
+            return 0;
+          }
+
+          if (heap->cut[c][a] != heap->cut[c][b]) {
+            return 0;
+          }
+
+          if (heap->cut_cut[a][c] != heap->cut_cut[b][c]) {
+            return 0;
+          }
+
+          if (heap->cut_cut[c][a] != heap->cut_cut[c][b]) {
             return 0;
           }
         }

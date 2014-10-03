@@ -14,10 +14,11 @@ int rank2(abstract_heapt *heap) {
 }
 
 int inv(abstract_heapt *heap) {
-  return (heap->stem[p] > 0 && heap->dist[p][q] > 0) ||
+  return (path(heap, p, q) && path(heap, l, p)) && (
+          (heap->stem[p] > 0 && heap->dist[p][q] > 0) ||
           (s_add(heap->dist[p][q], heap->dist[q][p]) == heap->cycle[l]) ||
           (alias(heap, p, q) && heap->cycle[l] != INF) ||
-          (alias(heap, q, nil) && heap->cycle[l] == INF);
+          (alias(heap, q, nil) && heap->cycle[l] == INF));
 }
 
 int cond(abstract_heapt *heap) {
@@ -27,23 +28,33 @@ int cond(abstract_heapt *heap) {
 }
 
 void body(abstract_heapt *pre, abstract_heapt *post) {
-  abstract_heapt p1, p2;
+  abstract_heapt p1, p2, p3;
   abstract_heapt *s = pre;
 
   if (!alias(s, p, nil)) {
     abstract_lookup(p, p, s, &p1);
-    s = &p1;
-  }
 
-  if (!alias(s, q, nil)) {
-    abstract_lookup(q, q, s, &p2);
-    s = &p2;
-  }
+    if (!alias(&p1, q, nil)) {
+      abstract_lookup(q, q, &p1, &p2);
 
-  if (!alias(s, q, nil)) {
-    abstract_lookup(q, q, s, post);
+      if (!alias(&p2, q, nil)) {
+        abstract_lookup(q, q, &p2, post);
+      } else {
+        copy_abstract(&p2, post);
+      }
+    } else {
+      copy_abstract(&p1, post);
+    }
+  } else if (!alias(pre, q, nil)) {
+    abstract_lookup(q, q, pre, &p1);
+
+    if (!alias(&p1, q, nil)) {
+      abstract_lookup(q, q, &p1, post);
+    } else {
+      copy_abstract(&p1, post);
+    }
   } else {
-    copy_abstract(s, post);
+    copy_abstract(pre, post);
   }
 }
 
@@ -53,19 +64,22 @@ int main(void) {
   abstract_heapt heap3;
   abstract_heapt tmp;
 
-  if (is_valid_abstract_heap(&heap1) &&
-      alias(&heap1, l, p) &&
-      alias(&heap1, l, q)) {
-    body(&heap1, &tmp);
-    assert(inv(&tmp));
-  }
+  /*
+  __CPROVER_assume(is_valid_abstract_heap(&heap1));
+  __CPROVER_assume(alias(&heap1, l, p));
+  __CPROVER_assume(alias(&heap1, l, q));
+
+  body(&heap1, &tmp);
+  assert(inv(&tmp));
+  */
+
+  __CPROVER_assume(is_valid_abstract_heap(&heap2));
+  __CPROVER_assume(inv(&heap2));
+  __CPROVER_assume(cond(&heap2));
+  body(&heap2, &tmp);
+  assert(inv(&tmp));
 
   /*
-  if (is_valid_abstract_heap(&heap2) && inv(&heap2) && cond(&heap2)) {
-    body(&heap2, &tmp);
-    assert(inv(&tmp));
-  }
-
   if (is_valid_abstract_heap(&heap3) && inv(&heap3) && !cond(&heap3)) {
     if (alias(&heap3, p, q)) {
       //assert(heap3.cycle[l] != INF);
