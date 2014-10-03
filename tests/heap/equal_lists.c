@@ -36,7 +36,9 @@ int axioms(abstract_heapt *heap) {
   return path_axioms(heap) &&
          alias_axioms(heap) &&
          cycle_axioms(heap) &&
-         null_axioms(heap);
+         null_axioms(heap) &&
+         acyclic(heap) &&
+         no_sharing(heap);
 }
 
 int main(void) {

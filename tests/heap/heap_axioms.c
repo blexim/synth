@@ -373,3 +373,35 @@ int cycle_axioms(abstract_heapt *heap) {
 
   return 1;
 }
+
+int acyclic(abstract_heapt *heap) {
+  word_t a, b;
+
+  for (a = 0; a < NPROG; a++) {
+    if (heap->cycle[a] != INF) {
+      return 0;
+    }
+  }
+
+  return 1;
+}
+
+int no_sharing(abstract_heapt *heap) {
+  word_t a, b;
+
+  for (a = 0; a < NPROG; a++) {
+    for (b = 0; b < NPROG; b++) {
+      if (heap->cut[a][b] == 0) {
+        if (!path(heap, b, a)) {
+          return 0;
+        }
+      } else if (heap->cut[a][b] != 0) {
+        if (heap->dist[a][b] != heap->cut[a][b]) {
+          return 0;
+        }
+      }
+    }
+  }
+
+  return 1;
+}
