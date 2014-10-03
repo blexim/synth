@@ -396,6 +396,11 @@ int cut_axioms(abstract_heapt *heap) {
         if (heap->cut[a][b] > heap->dist[a][b]) {
           return 0;
         }
+      } else {
+        // There is no path a -> b, so b|a should not be 0.
+        if (heap->cut[b][a] == 0) {
+          return 0;
+        }
       }
     }
   }
@@ -408,8 +413,20 @@ int cut_cut_axioms(abstract_heapt *heap) {
 
   for (a = 0; a < NPROG; a++) {
     for (b = 0; b < NPROG; b++) {
+      // Cut-cut is 0 for aliases.
       if (alias(heap, a, b)) {
         if (heap->cut_cut[a][b] != 0) {
+          return 0;
+        }
+      }
+
+      // Cut-cut is INF iff cut is INF.
+      if (cut(heap, a, b)) {
+        if (heap->cut_cut[a][b] == INF) {
+          return 0;
+        }
+      } else {
+        if (heap->cut_cut[a][b] != INF) {
           return 0;
         }
       }
