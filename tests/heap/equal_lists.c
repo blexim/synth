@@ -20,8 +20,7 @@ int cond(abstract_heapt *heap) {
 }
 
 int inv(abstract_heapt *heap) {
-  return heap->dist[x][nil] == heap->dist[y][nil] &&
-         path(heap, x, nil);
+  return heap->dist[x][nil] == heap->dist[y][nil];
 }
 
 int body(abstract_heapt *pre,
@@ -32,22 +31,13 @@ int body(abstract_heapt *pre,
   abstract_lookup(y, y, &tmp, post);
 }
 
-int axioms(abstract_heapt *heap) {
-  return path_axioms(heap) &&
-         alias_axioms(heap) &&
-         cycle_axioms(heap) &&
-         null_axioms(heap) &&
-         acyclic(heap) &&
-         no_sharing(heap);
-}
-
 int main(void) {
   abstract_heapt pre_heap, t, post_heap;
 
-  __CPROVER_assume(axioms(&pre_heap));
+  __CPROVER_assume(all_axioms(&pre_heap));
   __CPROVER_assume(inv(&pre_heap) && cond(&pre_heap));
   body(&pre_heap, &t);
   __CPROVER_assume(abstractions_equal(&t, &post_heap));
-  __CPROVER_assume(axioms(&post_heap));
+  //__CPROVER_assume(axioms(&post_heap));
   assert(inv(&post_heap));
 }

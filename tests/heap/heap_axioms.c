@@ -194,22 +194,49 @@ int cut_axioms(abstract_heapt *heap) {
         }
       }
 
-      // a -> b -> . --
-      //           ^  |
-      //           L--|
-      if (path(heap, a, b) && heap->stem[a] != INF) {
-        if (heap->stem[a] != s_add(heap->cut[a][b], heap->stem[b])) {
+      // a -> . -> . --
+      //      ^    ^  |
+      //      |    L--|
+      //      b
+      if (cut(heap, a, b) && heap->stem[a] != INF) {
+        if (s_add(heap->cut[b][a], heap->stem[a]) !=
+            s_add(heap->cut[a][b], heap->stem[b])) {
           return 0;
         }
       }
 
       if (cut(heap, a, b)) {
+        // Only allowed diagram:
+        //
+        // a -> .
+        //      ^
+        //      |
+        //      b
         if (!cut(heap, b, a)) {
           return 0;
         }
 
         if (heap->cycle[a] != heap->cycle[b]) {
           return 0;
+        }
+
+        if (path(heap, a, b)) {
+          if (heap->cut[a][b] < heap->dist[a][b]) {
+            // a -> . -> b
+            //      ^    |
+            //      L-----
+            if (heap->stem[a] != heap->cut[a][b]) {
+              return 0;
+            }
+
+            if (heap->dist[a][b] != s_add(heap->stem[a], heap->cut_cut[a][b])) {
+              return 0;
+            }
+
+            if (heap->dist[a][b] >= s_add(heap->stem[a], heap->cycle[a])) {
+              return 0;
+            }
+          }
         }
       }
 
@@ -266,7 +293,7 @@ int cut_cut_axioms(abstract_heapt *heap) {
         }
       }
 
-      if (cut(heap, a, b) && cut(heap, b, a) && !alias(heap, a, b)) {
+      if (cut(heap, a, b) && !alias(heap, a, b)) {
         if (heap->cut[a][b] >= heap->stem[a] && heap->cut[b][a] >= heap->stem[b]) {
           //  a       b
           //  |       |
@@ -297,12 +324,12 @@ int cut_cut_axioms(abstract_heapt *heap) {
 }
 
 int all_axioms(abstract_heapt *heap) {
-  return alias_axioms(&abs) &&
-         path_axioms(&abs) &&
-         null_axioms(&abs) &&
-         cycle_axioms(&abs) &&
-         cut_axioms(&abs) &&
-         cut_cut_axioms(&abs);
+  return alias_axioms(heap) &&
+         path_axioms(heap) &&
+         null_axioms(heap) &&
+         cycle_axioms(heap) &&
+         cut_axioms(heap) &&
+         cut_cut_axioms(heap);
 }
 
 int acyclic(abstract_heapt *heap) {
