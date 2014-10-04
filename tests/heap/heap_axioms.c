@@ -373,6 +373,13 @@ int cycle_axioms(abstract_heapt *heap) {
           return 0;
         }
       }
+
+      // If a -> b, then a's stem is the same as b's
+      if (path(heap, a, b) && heap->stem[a] > 0) {
+        if (heap->stem[a] != s_add(heap->cut[a][b], heap->stem[b])) {
+          return 0;
+        }
+      }
     }
   }
 
