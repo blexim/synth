@@ -415,6 +415,25 @@ int cut_axioms(abstract_heapt *heap) {
         }
       }
 
+      // a -> b -> . --
+      //           ^  |
+      //           L--|
+      if (path(heap, a, b) && heap->stem[a] != INF) {
+        if (heap->stem[a] != s_add(heap->cut[a][b], heap->stem[b])) {
+          return 0;
+        }
+      }
+
+      if (cut(heap, a, b)) {
+        if (!cut(heap, b, a)) {
+          return 0;
+        }
+
+        if (heap->cycle[a] != heap->cycle[b]) {
+          return 0;
+        }
+      }
+
       for (c = 0; c < NPROG; c++) {
         if (heap->cut[a][c] > heap->cut[a][b]) {
           // a -> . -> .
@@ -434,7 +453,7 @@ int cut_axioms(abstract_heapt *heap) {
 }
 
 int cut_cut_axioms(abstract_heapt *heap) {
-  word_t a, b, c;
+  word_t a, b, c, len;
 
   for (a = 0; a < NPROG; a++) {
     for (b = 0; b < NPROG; b++) {
@@ -464,6 +483,31 @@ int cut_cut_axioms(abstract_heapt *heap) {
         }
 
         if (heap->cycle[a] != heap->cycle[b]) {
+          return 0;
+        }
+      }
+
+      if (cut(heap, a, b) && cut(heap, b, a) && !alias(heap, a, b)) {
+        if (heap->cut[a][b] >= heap->stem[a] && heap->cut[b][a] >= heap->stem[b]) {
+          //  a       b
+          //  |       |
+          //  v       v
+          //  . ----> .
+          //  ^       |
+          //  L-------|
+          //
+          //  Then if c is the cycle length, (a||b + b||a) % c = 0
+
+          len = s_add(heap->cut_cut[a][b], heap->cut_cut[b][a]);
+          if (len != heap->cycle[a] && len != 0) {
+            return ;
+          }
+        }
+      }
+
+      // If a and b are on a cycle, the distance a -> b is a||b.
+      if (path(heap, a, b) && path(heap, b, a) && !alias(heap, a, b)) {
+        if (heap->cut_cut[a][b] != heap->dist[a][b]) {
           return 0;
         }
       }
