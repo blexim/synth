@@ -236,6 +236,8 @@ void abstract_update(abstract_heapt *pre,
   node_t px = deref(post, x);
   node_t xn = next(post, x);
 
+  __CPROVER_assume(px != null_node);
+
   node_t py = deref(post, y);
 
   destructive_assign_next(post, px, py, 1);
