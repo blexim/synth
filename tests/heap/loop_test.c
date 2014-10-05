@@ -1,5 +1,18 @@
 #include "heap.h"
 
+/*
+ * List y = x;
+ * int n = path_len(x, null);
+ * int i;
+ *
+ * while (i < n) {
+ *   y = y->n;
+ * }
+ *
+ * Prove safety using invariant:
+ *  path_len(y, null) == (n - i) && is_path(y, null)
+ */
+
 const ptr_t x = 1;
 const ptr_t y = 2;
 
