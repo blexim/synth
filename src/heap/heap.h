@@ -27,8 +27,8 @@
 typedef word_t ptr_t;
 typedef word_t node_t;
 
-const ptr_t null_ptr = 0;
-const node_t null_node = 0;
+#define null_ptr (ptr_t) 0
+#define null_node (node_t) 0
 
 typedef struct concrete_heap {
   node_t succ[NNODES];
@@ -60,6 +60,7 @@ typedef struct heap_facts {
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
+void print_facts(heap_factst *facts);
 
 void abstract(concrete_heapt *concrete,
               abstract_heapt *abstraction);

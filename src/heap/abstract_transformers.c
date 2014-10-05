@@ -1,4 +1,4 @@
-#include "heapabstract.h"
+#include "heap.h"
 
 #include <string.h>
 
@@ -53,6 +53,9 @@ static void destructive_move_node(abstract_heapt *heap,
     return;
   }
 
+  node_t old_succ = next(heap, n);
+  node_t old_dist = dist(heap, n);
+
   ptr_t p;
 
   // First reassign the program variables...
@@ -69,6 +72,9 @@ static void destructive_move_node(abstract_heapt *heap,
       heap->succ[x] = m;
     }
   }
+
+  heap->succ[m] = old_succ;
+  heap->dist[m] = old_dist;
 }
 
 /*
@@ -202,6 +208,7 @@ void abstract_new(abstract_heapt *pre,
 
   // Just allocate a new node and have x point to it.
   node_t n = destructive_alloc(post);
+  destructive_assign_next(post, n, null_node, 1);
   destructive_assign_ptr(post, x, n);
 
   destructive_gc(post);
@@ -226,6 +233,9 @@ void abstract_lookup(abstract_heapt *pre,
 
   assert(y_yn_dist > 0);
 
+  copy_abstract(pre, post);
+
+
   // Two cases: 
   //
   // (1): y has a direct successor, i.e. y -1> z
@@ -235,7 +245,8 @@ void abstract_lookup(abstract_heapt *pre,
     //
     // y's successor is one step away, so now x points to that
     // successor -- this is just a simple assign to the successor node.
-    abstract_assign_node(x, yn, pre, post);
+    destructive_assign_ptr(post, x, yn);
+    destructive_gc(post);
   } else {
     // Case 2:
     //
@@ -250,9 +261,8 @@ void abstract_lookup(abstract_heapt *pre,
     // Post state:
     //
     // y -1> x -(k-1)> z
-    copy_abstract(pre, post);
-
-    // Now allocate a new node between y and yn.
+    //
+    // Begin by allocating a new node between y and yn.
     node_t n = destructive_alloc(post);
     word_t new_dist = s_sub(y_yn_dist, 1);
     destructive_assign_next(post, n, yn, new_dist);
@@ -370,5 +380,21 @@ void consequences(abstract_heapt *heap,
       n = deref(heap, y);
       facts->dists[x][y] = min_dists[n];
     }
+  }
+}
+
+/*
+ * Create an initial heap where everything points to null.
+ */
+void init_abstract_heap(abstract_heapt *heap) {
+  heap->nnodes = 1;
+
+  heap->succ[null_node] = null_node;
+  heap->dist[null_node] = 0;
+
+  ptr_t p;
+
+  for (p = 0; p < NPROG; p++) {
+    heap->ptr[p] = null_node;
   }
 }
