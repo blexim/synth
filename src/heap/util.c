@@ -88,7 +88,7 @@ void print_abstract_heap(abstract_heapt *heap) {
   node_t n, m;
   word_t len;
 
-  for (n = 0; n < heap->nnodes; n++) {
+  for (n = 0; n < NABSNODES; n++) {
     if (n % LINEWIDTH == 0) {
       printf("\n");
     }
