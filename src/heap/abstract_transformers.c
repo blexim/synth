@@ -333,3 +333,42 @@ int valid_abstract_heap(abstract_heapt *heap) {
 
   return 1;
 }
+
+/*
+ * Compute the heap facts, i.e. all the pairwise distances between program
+ * variables.
+ */
+void consequences(abstract_heapt *heap,
+                  heap_factst *facts) {
+  word_t min_dists[NABSNODES];
+  ptr_t x, y;
+  node_t n;
+  word_t curr_dist;
+  word_t i;
+
+  for (x = 0; x < NPROG; x++) {
+    memset(min_dists, INF, sizeof(min_dists));
+    n = deref(heap, x);
+    curr_dist = 0;
+    min_dists[n] = 0;
+
+    // First compute the distance form x to each heap node...
+    for (i = 0; i < NABSNODES; i++) {
+      curr_dist += dist(heap, n);
+      n = next(heap, n);
+
+      if (min_dists[n] != INF) {
+        // We've hit a cycle.
+        break;
+      }
+
+      min_dists[n] = curr_dist;
+    }
+
+    // Now fill in the heap facts!
+    for (y = 0; y < NPROG; y++) {
+      n = deref(heap, y);
+      facts->dists[x][y] = min_dists[n];
+    }
+  }
+}
