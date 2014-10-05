@@ -67,7 +67,7 @@ static void destructive_move_node(abstract_heapt *heap,
 
   node_t x;
   // Now reassign the "next" pointers for each node.
-  for (x = 0; x < heap->nnodes; x++) {
+  for (x = 0; x < heap->nnodes && x < NABSNODES; x++) {
     if (next(heap, x) == n) {
       heap->succ[x] = m;
     }
@@ -101,8 +101,8 @@ static void destructive_gc(abstract_heapt *heap) {
 
   assert(heap->nnodes <= NABSNODES);
 
-  for (i = 0; i < heap->nnodes; i++) {
-    for (j = 0; j < heap->nnodes; j++) {
+  for (i = 0; i < heap->nnodes && i < NABSNODES; i++) {
+    for (j = 0; j < heap->nnodes && j < NABSNODES; j++) {
       if (is_reachable[j]) {
         n = next(heap, j);
         is_reachable[n] = 1;
@@ -114,7 +114,7 @@ static void destructive_gc(abstract_heapt *heap) {
   node_t reachable_nodes[NABSNODES];
   word_t nreachable = 0;
 
-  for (n = 0; n < heap->nnodes; n++) {
+  for (n = 0; n < heap->nnodes & n < NABSNODES; n++) {
     if (is_reachable[n]) {
       reachable_nodes[nreachable] = n;
       nreachable++;
@@ -124,7 +124,7 @@ static void destructive_gc(abstract_heapt *heap) {
   word_t ncopied = 0;
   word_t k;
 
-  for (k = 0; k < nreachable; k++) {
+  for (k = 0; k < nreachable && k < NABSNODES; k++) {
     n = reachable_nodes[k];
     destructive_move_node(heap, n, ncopied);
     ncopied++;
@@ -302,6 +302,11 @@ void abstract_update(abstract_heapt *pre,
  * Check that the heap is well formed.
  */
 int valid_abstract_heap(abstract_heapt *heap) {
+  // There is at least one node (null)
+  if (heap->nnodes <= 0) {
+    return 0;
+  }
+
   // NULL points to the null nodes.
   if (deref(heap, null_ptr) != null_node) {
     return 0;
@@ -328,14 +333,14 @@ int valid_abstract_heap(abstract_heapt *heap) {
   // Each node's next pointer points to a valid node.
   node_t n;
 
-  for (n = 0; n < heap->nnodes; n++) {
+  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
     if (next(heap, n) >= heap->nnodes) {
       return 0;
     }
   }
 
   // Each node, except null, is > 0 away from its successor.
-  for (n = 0; n < heap->nnodes; n++) {
+  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
     if (dist(heap, n) <= 0) {
       return 0;
     }
@@ -396,5 +401,35 @@ void init_abstract_heap(abstract_heapt *heap) {
 
   for (p = 0; p < NPROG; p++) {
     heap->ptr[p] = null_node;
+  }
+}
+
+int is_minimal(abstract_heapt *heap) {
+  word_t is_named[NABSNODES];
+  memset(is_named, 0, sizeof(is_named));
+
+  // Find all of the named nodes.
+  ptr_t p;
+  node_t n, m;
+
+  for (p = 0; p < NPROG; p++) {
+    n = deref(heap, p);
+    is_named[n] = 1;
+  }
+
+  // Find the indegree of each node.
+  word_t indegree[NABSNODES];
+  memset(indegree, 0, sizeof(indegree));
+
+  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+    m = next(heap, n);
+    indegree[m]++;
+  }
+
+  // Check there are no unnamed nodes with indegree <= 1.
+  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+    if (!is_named[n] && indegree[n] <= 1) {
+      return 0;
+    }
   }
 }

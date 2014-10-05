@@ -1,11 +1,11 @@
-#ifndef HEAPABSTRACT_H
-#define HEAPABSTRACT_H
+#ifndef HEAP_H
+#define HEAP_H
 
 #include <stdio.h>
 #include <assert.h>
 
 #ifdef VERIF
- #define WIDTH 3
+ #define WIDTH 4
  typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
  #define INF ((word_t) -1)
 #else
@@ -90,43 +90,42 @@ word_t is_path(heap_factst *facts,
                word_t x,
                word_t y);
 
-void concrete_assign(word_t x,
-                     word_t y,
-                     concrete_heapt *pre,
-                     concrete_heapt *post);
+void concrete_assign(concrete_heapt *pre,
+                     concrete_heapt *post,
+                     ptr_t x,
+                     ptr_t y);
+void concrete_lookup(concrete_heapt *pre,
+                     concrete_heapt *post,
+                     ptr_t x,
+                     ptr_t y);
+void concrete_update(concrete_heapt *pre,
+                     concrete_heapt *post,
+                     ptr_t x,
+                     ptr_t y);
+void concrete_new(concrete_heapt *pre,
+                  concrete_heapt *post,
+                  word_t x);
+
 void abstract_assign(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y);
-
-void concrete_lookup(word_t x,
-                     word_t y,
-                     concrete_heapt *pre,
-                     concrete_heapt *post);
 void abstract_lookup(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y);
-
-void concrete_update(word_t x,
-                     word_t y,
-                     concrete_heapt *pre,
-                     concrete_heapt *post);
 void abstract_update(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y);
-
-void concrete_new(word_t x,
-                  concrete_heapt *pre,
-                  concrete_heapt *post);
 void abstract_new(abstract_heapt *pre,
                   abstract_heapt *post,
                   ptr_t x);
 
 int valid_abstract_heap(abstract_heapt *heap);
+int is_minimal(abstract_heapt *heap);
 
 word_t s_add(word_t x, word_t y);
 word_t s_sub(word_t x, word_t y);
 
-#endif // HEAPABSTRACT_H
+#endif // HEAP_H
