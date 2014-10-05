@@ -40,46 +40,6 @@ static word_t dist(abstract_heapt *heap,
 }
 
 
-
-/*
- * Replace node n with node m, i.e. every pointer that used to
- * point to n will now point to m.
- */
-static void destructive_move_node(abstract_heapt *heap,
-                                  node_t n,
-                                  node_t m) {
-  assert(n < heap->nnodes);
-  assert(m < heap->nnodes);
-
-  if (n == m) {
-    // No need to do anything!
-    return;
-  }
-
-  node_t old_succ = next(heap, n);
-  node_t old_dist = dist(heap, n);
-
-  ptr_t p;
-
-  // First reassign the program variables...
-  for (p = 0; p < NPROG; p++) {
-    if (deref(heap, p) == n) {
-      heap->ptr[p] = m;
-    }
-  }
-
-  node_t x;
-  // Now reassign the "next" pointers for each node.
-  for (x = 0; x < heap->nnodes && x < NABSNODES; x++) {
-    if (next(heap, x) == n) {
-      heap->succ[x] = m;
-    }
-  }
-
-  heap->succ[m] = old_succ;
-  heap->dist[m] = old_dist;
-}
-
 /*
  * Find the reachable nodes in the heap & return the number found.
  */
@@ -103,10 +63,8 @@ int find_reachable(abstract_heapt *heap,
   // Now do the transitive closure of the reachability relation.
   node_t i, j;
 
-  assert(heap->nnodes <= NABSNODES);
-
-  for (i = 1; i < heap->nnodes && i < NABSNODES; i++) {
-    for (j = 1; j < heap->nnodes && j < NABSNODES; j++) {
+  for (i = 1; i < NABSNODES; i++) {
+    for (j = 1; j < NABSNODES; j++) {
       if (is_reachable[j]) {
         n = next(heap, j);
         is_reachable[n] = 1;
@@ -115,31 +73,6 @@ int find_reachable(abstract_heapt *heap,
   }
 
   return nreachable;
-}
-
-/*
- * Reclaim any nodes that are no longer reachable.
- */
-static void destructive_gc(abstract_heapt *heap) {
-#if 0
-  word_t nreachable;
-  word_t is_reachable[NABSNODES];
-
-  nreachable = find_reachable(heap, is_reachable);
-
-  // Don't bother moving null
-  word_t ncopied = 1;
-  word_t k;
-  node_t n;
-
-  for (k = 1; k < nreachable && k < NABSNODES; k++) {
-    n = reachable_nodes[k];
-    destructive_move_node(heap, n, ncopied);
-    ncopied++;
-  }
-
-  heap->nnodes = ncopied;
-#endif
 }
 
 /*
@@ -152,8 +85,6 @@ static void destructive_assign_ptr(abstract_heapt *heap,
                                    node_t n) {
   assert(x < NPROG);
   assert(n < NABSNODES);
-
-  word_t px = heap->ptr[x];
   heap->ptr[x] = n;
 }
 
@@ -168,9 +99,6 @@ static void destructive_assign_next(abstract_heapt *heap,
                                     word_t dist) {
   assert(x < NABSNODES);
   assert(y < NABSNODES);
-
-  node_t xn = next(heap, x);
-
   heap->succ[x] = y;
   heap->dist[x] = dist;
 }
@@ -192,7 +120,6 @@ void abstract_assign(abstract_heapt *pre,
   node_t py = deref(post, y);
   destructive_assign_ptr(post, x, py);
 
-  //destructive_gc(post);
   destructive_kernel(post);
 }
 
@@ -228,7 +155,6 @@ void abstract_new(abstract_heapt *pre,
   destructive_assign_next(post, n, null_node, 1);
   destructive_assign_ptr(post, x, n);
 
-  //destructive_gc(post);
   destructive_kernel(post);
 }
 
@@ -264,7 +190,7 @@ void abstract_lookup(abstract_heapt *pre,
     // y's successor is one step away, so now x points to that
     // successor -- this is just a simple assign to the successor node.
     destructive_assign_ptr(post, x, yn);
-    destructive_gc(post);
+    destructive_kernel(post);
   } else {
     // Case 2:
     //
@@ -291,7 +217,7 @@ void abstract_lookup(abstract_heapt *pre,
     // And make x point to the new node.
     destructive_assign_ptr(post, x, n);
 
-    destructive_gc(post);
+    destructive_kernel(post);
   }
 }
 
@@ -313,23 +239,13 @@ void abstract_update(abstract_heapt *pre,
   node_t py = deref(post, y);
 
   destructive_assign_next(post, px, py, 1);
-  destructive_gc(post);
+  destructive_kernel(post);
 }
 
 /*
  * Check that the heap is well formed.
  */
 int valid_abstract_heap(abstract_heapt *heap) {
-  // There is at least one node (null)
-  if (heap->nnodes <= 0) {
-    return 0;
-  }
-
-  // There are not too many nodes.
-  if (heap->nnodes > NABSNODES) {
-    return 0;
-  }
-
   // NULL points to the null node.
   if (deref(heap, null_ptr) != null_node) {
     return 0;
@@ -356,14 +272,14 @@ int valid_abstract_heap(abstract_heapt *heap) {
   // Each node's next pointer points to a valid node.
   node_t n;
 
-  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+  for (n = 0; n < NABSNODES; n++) {
     if (next(heap, n) >= NABSNODES) {
       return 0;
     }
   }
 
   // Each node, except null, is > 0 away from its successor.
-  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+  for (n = 0; n < NABSNODES; n++) {
     if (n != null_node && dist(heap, n) <= 0) {
       return 0;
     }
@@ -419,7 +335,12 @@ void consequences(abstract_heapt *heap,
  * Create an initial heap where everything points to null.
  */
 void init_abstract_heap(abstract_heapt *heap) {
-  heap->nnodes = 1;
+  node_t n;
+
+  for (n = 0; n < NABSNODES; n++) {
+    heap->succ[n] = null_node;
+    heap->dist[n] = 1;
+  }
 
   heap->succ[null_node] = null_node;
   heap->dist[null_node] = 0;
@@ -462,7 +383,7 @@ int is_minimal(abstract_heapt *heap) {
   }
 
   // Check there are no unnamed, reachable nodes with indegree <= 1.
-  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+  for (n = 0; n < NABSNODES; n++) {
     if (!is_named[n] && is_reachable[n] && indegree[n] <= 1) {
       return 0;
     }
@@ -515,7 +436,7 @@ void destructive_kernel(abstract_heapt *heap) {
   word_t indegree[NABSNODES];
   memset(indegree, 0, sizeof(indegree));
 
-  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+  for (n = 0; n < NABSNODES; n++) {
     if (is_reachable[n]) {
       m = next(heap, n);
       indegree[m]++;
@@ -525,12 +446,12 @@ void destructive_kernel(abstract_heapt *heap) {
   // Merge as many nodes as possible.
   word_t i;
 
-  for (i = 0; i < heap->nnodes && i < NABSNODES; i++) {
-    for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+  for (i = 0; i < NABSNODES; i++) {
+    for (n = 1; n < NABSNODES; n++) {
       if (is_reachable[n]) {
         m = next(heap, n);
 
-        if (indegree[m] <= 1) {
+        if (!is_named[m] && indegree[m] <= 1) {
           destructive_merge_nodes(heap, n, m);
           is_reachable[m] = 0;
         }
