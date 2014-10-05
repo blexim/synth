@@ -79,9 +79,10 @@ static void destructive_move_node(abstract_heapt *heap,
 }
 
 /*
- * Reclaim any nodes that are no longer reachable.
+ * Find the reachable nodes in the heap & return the number found.
  */
-static void destructive_gc(abstract_heapt *heap) {
+int find_reachable(abstract_heapt *heap,
+                   node_t reachable_nodes[NABSNODES]) {
   word_t is_reachable[NABSNODES];
 
   memset(is_reachable, 0, sizeof(is_reachable));
@@ -91,7 +92,7 @@ static void destructive_gc(abstract_heapt *heap) {
   ptr_t p;
   node_t n;
 
-  for (p = 1; p < NPROG; p++) {
+  for (p = 0; p < NPROG; p++) {
     n = deref(heap, p);
 
     is_reachable[n] = 1;
@@ -112,19 +113,31 @@ static void destructive_gc(abstract_heapt *heap) {
   }
 
   // Now copy all of the reachable nodes into the next generation.
-  node_t reachable_nodes[NABSNODES];
-  word_t nreachable = 1;
+  word_t nreachable = 0;
 
-  for (n = 1; n < heap->nnodes && n < NABSNODES; n++) {
+  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
     if (is_reachable[n]) {
       reachable_nodes[nreachable] = n;
       nreachable++;
     }
   }
 
+  return nreachable;
+}
+
+/*
+ * Reclaim any nodes that are no longer reachable.
+ */
+static void destructive_gc(abstract_heapt *heap) {
+  word_t nreachable;
+  node_t reachable_nodes[NABSNODES];
+
+  nreachable = find_reachable(heap, reachable_nodes);
+
   // Don't bother moving null
   word_t ncopied = 1;
   word_t k;
+  node_t n;
 
   for (k = 1; k < nreachable && k < NABSNODES; k++) {
     n = reachable_nodes[k];
@@ -309,6 +322,11 @@ int valid_abstract_heap(abstract_heapt *heap) {
     return 0;
   }
 
+  // There are not too many nodes.
+  if (heap->nnodes > NABSNODES) {
+    return 0;
+  }
+
   // NULL points to the null node.
   if (deref(heap, null_ptr) != null_node) {
     return 0;
@@ -423,11 +441,20 @@ int is_minimal(abstract_heapt *heap) {
     is_named[n] = 1;
   }
 
-  // Find the indegree of each node.
+  // Check that each node is reachable.
+  word_t reachable_nodes[NABSNODES];
+  word_t nreachable;
+
+  nreachable = find_reachable(heap, reachable_nodes);
+
+  // Find the indegree of each node, restricted to just the reachable subgraph.
   word_t indegree[NABSNODES];
   memset(indegree, 0, sizeof(indegree));
 
-  for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
+  word_t i;
+
+  for (i = 0; i < nreachable && i < NABSNODES; i++) {
+    n = reachable_nodes[i];
     m = next(heap, n);
     indegree[m]++;
   }
