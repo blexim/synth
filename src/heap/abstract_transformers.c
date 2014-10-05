@@ -16,7 +16,7 @@ static void copy_abstract(abstract_heapt *pre,
 static node_t deref(abstract_heapt *heap,
                     ptr_t p) {
   // Ensure p is a real pointer.
-  assert(p < NPROG);
+  __CPROVER_assume(p < NPROG);
   return heap->ptr[p];
 }
 
@@ -26,7 +26,7 @@ static node_t deref(abstract_heapt *heap,
 static node_t next(abstract_heapt *heap,
                    node_t n) {
   // Ensure n is an allocated node.
-  assert(n < NABSNODES);
+  __CPROVER_assume(n < NABSNODES);
   return heap->succ[n];
 }
 
@@ -35,7 +35,7 @@ static node_t next(abstract_heapt *heap,
  */
 static word_t dist(abstract_heapt *heap,
                    node_t n) {
-  assert(n < NABSNODES);
+  __CPROVER_assume(n < NABSNODES);
   return heap->dist[n];
 }
 
@@ -83,8 +83,8 @@ int find_reachable(abstract_heapt *heap,
 static void destructive_assign_ptr(abstract_heapt *heap,
                                    ptr_t x,
                                    node_t n) {
-  assert(x < NPROG);
-  assert(n < NABSNODES);
+  __CPROVER_assume(x < NPROG);
+  __CPROVER_assume(n < NABSNODES);
   heap->ptr[x] = n;
 }
 
@@ -97,8 +97,8 @@ static void destructive_assign_next(abstract_heapt *heap,
                                     node_t x,
                                     node_t y,
                                     word_t dist) {
-  assert(x < NABSNODES);
-  assert(y < NABSNODES);
+  __CPROVER_assume(x < NABSNODES);
+  __CPROVER_assume(y < NABSNODES);
   heap->succ[x] = y;
   heap->dist[x] = dist;
 }
@@ -112,21 +112,22 @@ void abstract_assign(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y) {
-  assert(x < NPROG);
-  assert(y < NPROG);
+  __CPROVER_assume(x < NPROG);
+  __CPROVER_assume(y < NPROG);
 
   copy_abstract(pre, post);
 
   node_t py = deref(post, y);
   destructive_assign_ptr(post, x, py);
 
-  destructive_kernel(post);
+  //destructive_kernel(post);
 }
 
 /*
  * Allocate a new node.
  */
 static node_t destructive_alloc(abstract_heapt *heap) {
+#if 0
   word_t is_reachable[NABSNODES];
   word_t nreachable = find_reachable(heap, is_reachable);
   node_t n;
@@ -136,8 +137,11 @@ static node_t destructive_alloc(abstract_heapt *heap) {
       return n;
     }
   }
+#endif
+  node_t n;
 
-  __CPROVER_assume(0);
+  __CPROVER_assume(heap->nnodes < NABSNODES);
+  return heap->nnodes++;
 }
 
 /*
@@ -146,7 +150,7 @@ static node_t destructive_alloc(abstract_heapt *heap) {
 void abstract_new(abstract_heapt *pre,
                   abstract_heapt *post,
                   ptr_t x) {
-  assert(x < NPROG);
+  __CPROVER_assume(x < NPROG);
 
   copy_abstract(pre, post);
 
@@ -155,7 +159,7 @@ void abstract_new(abstract_heapt *pre,
   destructive_assign_next(post, n, null_node, 1);
   destructive_assign_ptr(post, x, n);
 
-  destructive_kernel(post);
+  //destructive_kernel(post);
 }
 
 /*
@@ -165,8 +169,8 @@ void abstract_lookup(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y) {
-  assert(x < NPROG);
-  assert(y < NPROG);
+  __CPROVER_assume(x < NPROG);
+  __CPROVER_assume(y < NPROG);
 
   node_t py = deref(pre, y);
   node_t yn = next(pre, py);
@@ -175,7 +179,7 @@ void abstract_lookup(abstract_heapt *pre,
 
   __CPROVER_assume(py != null_node);
 
-  assert(y_yn_dist > 0);
+  __CPROVER_assume(y_yn_dist > 0);
 
   copy_abstract(pre, post);
 
@@ -190,7 +194,7 @@ void abstract_lookup(abstract_heapt *pre,
     // y's successor is one step away, so now x points to that
     // successor -- this is just a simple assign to the successor node.
     destructive_assign_ptr(post, x, yn);
-    destructive_kernel(post);
+    //destructive_kernel(post);
   } else {
     // Case 2:
     //
@@ -217,7 +221,7 @@ void abstract_lookup(abstract_heapt *pre,
     // And make x point to the new node.
     destructive_assign_ptr(post, x, n);
 
-    destructive_kernel(post);
+    //destructive_kernel(post);
   }
 }
 
@@ -228,8 +232,8 @@ void abstract_update(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y) {
-  assert(x < NPROG);
-  assert(y < NPROG);
+  __CPROVER_assume(x < NPROG);
+  __CPROVER_assume(y < NPROG);
 
   copy_abstract(pre, post);
 
@@ -241,7 +245,7 @@ void abstract_update(abstract_heapt *pre,
   node_t py = deref(post, y);
 
   destructive_assign_next(post, px, py, 1);
-  destructive_kernel(post);
+  //destructive_kernel(post);
 }
 
 /*
@@ -266,7 +270,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
   ptr_t p;
 
   for (p = 0; p < NPROG; p++) {
-    if (deref(heap, p) >= NABSNODES) {
+    if (deref(heap, p) >= heap->nnodes) {
       return 0;
     }
   }
@@ -275,7 +279,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
   node_t n;
 
   for (n = 0; n < NABSNODES; n++) {
-    if (next(heap, n) >= NABSNODES) {
+    if (next(heap, n) >= heap->nnodes) {
       return 0;
     }
   }
@@ -292,6 +296,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
   }
 
   return is_minimal(heap);
+  return 1;
 }
 
 /*
@@ -300,35 +305,41 @@ int valid_abstract_heap(abstract_heapt *heap) {
  */
 void consequences(abstract_heapt *heap,
                   heap_factst *facts) {
-  word_t min_dists[NABSNODES];
+  word_t min_dists[NPROG][NABSNODES];
   ptr_t x, y;
   node_t n;
   word_t curr_dist;
   word_t i;
 
+  memset(min_dists, INF, sizeof(min_dists));
+
   for (x = 0; x < NPROG; x++) {
-    memset(min_dists, INF, sizeof(min_dists));
+    //memset(min_dists, INF, sizeof(min_dists));
     n = deref(heap, x);
     curr_dist = 0;
-    min_dists[n] = 0;
+    min_dists[x][n] = 0;
 
     // First compute the distance form x to each heap node...
-    for (i = 0; i < NABSNODES; i++) {
-      curr_dist += dist(heap, n);
+    for (i = 0; i < heap->nnodes && i < NABSNODES; i++) {
+      curr_dist = s_add(curr_dist, dist(heap, n));
       n = next(heap, n);
 
-      if (min_dists[n] != INF) {
+#if 0
+      min_dists[x][n] = min(min_dists[x][n], curr_dist);
+#else
+      if (min_dists[x][n] != INF) {
         // We've hit a cycle.
         break;
       }
 
-      min_dists[n] = curr_dist;
+      min_dists[x][n] = curr_dist;
+#endif
     }
 
     // Now fill in the heap facts!
     for (y = 0; y < NPROG; y++) {
       n = deref(heap, y);
-      facts->dists[x][y] = min_dists[n];
+      facts->dists[x][y] = min_dists[x][n];
     }
   }
 }
@@ -373,6 +384,10 @@ int is_minimal(abstract_heapt *heap) {
 
   nreachable = find_reachable(heap, is_reachable);
 
+  if (heap->nnodes > nreachable) {
+    return 0;
+  }
+
   // Find the indegree of each node, restricted to just the reachable subgraph.
   word_t indegree[NABSNODES];
   memset(indegree, 0, sizeof(indegree));
@@ -403,7 +418,7 @@ int is_minimal(abstract_heapt *heap) {
 void destructive_merge_nodes(abstract_heapt *heap,
                              node_t n,
                              node_t m) {
-  assert(m == next(heap, n));
+  __CPROVER_assume(m == next(heap, n));
 
   // n->next = m->next
   heap->succ[n] = next(heap, m);

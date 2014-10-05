@@ -38,7 +38,8 @@ typedef struct concrete_heap {
   node_t ptr[NPROG];
 } concrete_heapt;
 
-#define NABSNODES (NPROG*2 + 1)
+//#define NABSNODES (NPROG*2 + 1)
+#define NABSNODES (NPROG*3)
 
 typedef struct abstract_heap {
   // A map from nodes to nodes saying for each node n what its successor is.
