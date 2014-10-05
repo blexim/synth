@@ -45,7 +45,7 @@ static word_t dist(abstract_heapt *heap,
  */
 int find_reachable(abstract_heapt *heap,
                    word_t is_reachable[NABSNODES]) {
-  word_t nreachable;
+  word_t nreachable = 0;
 
   memset(is_reachable, 0, NABSNODES * sizeof(word_t));
 
@@ -56,8 +56,8 @@ int find_reachable(abstract_heapt *heap,
 
   for (p = 0; p < NPROG; p++) {
     n = deref(heap, p);
-
     is_reachable[n] = 1;
+    nreachable++;
   }
 
   // Now do the transitive closure of the reachability relation.
@@ -67,7 +67,11 @@ int find_reachable(abstract_heapt *heap,
     for (j = 1; j < NABSNODES; j++) {
       if (is_reachable[j]) {
         n = next(heap, j);
-        is_reachable[n] = 1;
+
+        if (!is_reachable[n]) {
+          is_reachable[n] = 1;
+          nreachable++;
+        }
       }
     }
   }
@@ -295,8 +299,11 @@ int valid_abstract_heap(abstract_heapt *heap) {
     }
   }
 
+#if 0
   return is_minimal(heap);
+#else
   return 1;
+#endif
 }
 
 /*
@@ -311,15 +318,20 @@ void consequences(abstract_heapt *heap,
   word_t curr_dist;
   word_t i;
 
-  memset(min_dists, INF, sizeof(min_dists));
+  //memset(min_dists, INF, sizeof(min_dists));
 
   for (x = 0; x < NPROG; x++) {
-    //memset(min_dists, INF, sizeof(min_dists));
+    for (n = 0; n < NABSNODES; n++) {
+      min_dists[x][n] = INF;
+    }
+  }
+
+  for (x = 0; x < NPROG; x++) {
     n = deref(heap, x);
     curr_dist = 0;
     min_dists[x][n] = 0;
 
-    // First compute the distance form x to each heap node...
+    // First compute the distance from x to each heap node...
     for (i = 0; i < heap->nnodes && i < NABSNODES; i++) {
       curr_dist = s_add(curr_dist, dist(heap, n));
       n = next(heap, n);
