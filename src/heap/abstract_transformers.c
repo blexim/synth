@@ -4,7 +4,8 @@
 
 static void copy_abstract(abstract_heapt *pre,
                           abstract_heapt *post) {
-  memcpy(post, pre, sizeof(abstract_heapt));
+  //memcpy(post, pre, sizeof(abstract_heapt));
+  *post = *pre;
 }
 
 /*
@@ -49,7 +50,7 @@ static void destructive_move_node(abstract_heapt *heap,
   assert(m < heap->nnodes);
 
   if (n == m) {
-    // No need to do anything!;
+    // No need to do anything!
     return;
   }
 
@@ -90,7 +91,7 @@ static void destructive_gc(abstract_heapt *heap) {
   ptr_t p;
   node_t n;
 
-  for (p = 0; p < NPROG; p++) {
+  for (p = 1; p < NPROG; p++) {
     n = deref(heap, p);
 
     is_reachable[n] = 1;
@@ -101,8 +102,8 @@ static void destructive_gc(abstract_heapt *heap) {
 
   assert(heap->nnodes <= NABSNODES);
 
-  for (i = 0; i < heap->nnodes && i < NABSNODES; i++) {
-    for (j = 0; j < heap->nnodes && j < NABSNODES; j++) {
+  for (i = 1; i < heap->nnodes && i < NABSNODES; i++) {
+    for (j = 1; j < heap->nnodes && j < NABSNODES; j++) {
       if (is_reachable[j]) {
         n = next(heap, j);
         is_reachable[n] = 1;
@@ -112,19 +113,20 @@ static void destructive_gc(abstract_heapt *heap) {
 
   // Now copy all of the reachable nodes into the next generation.
   node_t reachable_nodes[NABSNODES];
-  word_t nreachable = 0;
+  word_t nreachable = 1;
 
-  for (n = 0; n < heap->nnodes & n < NABSNODES; n++) {
+  for (n = 1; n < heap->nnodes && n < NABSNODES; n++) {
     if (is_reachable[n]) {
       reachable_nodes[nreachable] = n;
       nreachable++;
     }
   }
 
-  word_t ncopied = 0;
+  // Don't bother moving null
+  word_t ncopied = 1;
   word_t k;
 
-  for (k = 0; k < nreachable && k < NABSNODES; k++) {
+  for (k = 1; k < nreachable && k < NABSNODES; k++) {
     n = reachable_nodes[k];
     destructive_move_node(heap, n, ncopied);
     ncopied++;
@@ -307,7 +309,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
     return 0;
   }
 
-  // NULL points to the null nodes.
+  // NULL points to the null node.
   if (deref(heap, null_ptr) != null_node) {
     return 0;
   }
@@ -341,12 +343,16 @@ int valid_abstract_heap(abstract_heapt *heap) {
 
   // Each node, except null, is > 0 away from its successor.
   for (n = 0; n < heap->nnodes && n < NABSNODES; n++) {
-    if (dist(heap, n) <= 0) {
+    if (n != null_node && dist(heap, n) <= 0) {
+      return 0;
+    }
+
+    if (dist(heap, n) >= INF) {
       return 0;
     }
   }
 
-  return 1;
+  return is_minimal(heap);
 }
 
 /*
@@ -432,4 +438,6 @@ int is_minimal(abstract_heapt *heap) {
       return 0;
     }
   }
+
+  return 1;
 }
