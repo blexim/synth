@@ -5,7 +5,10 @@
 #include <assert.h>
 
 #ifdef VERIF
- #define WIDTH 4
+ #ifndef WIDTH
+  #define WIDTH 4
+ #endif
+
  typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
  #define INF ((word_t) -1)
 #else
@@ -57,6 +60,9 @@ typedef struct heap_facts {
   word_t dists[NPROG][NPROG];
 } heap_factst;
 
+#define path_len(f, x, y) (f->dists[x][y])
+#define is_path(f, x, y) (path_len(f, x, y) != INF)
+#define alias(f, x, y) (path_len(f, x, y) == 0)
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
@@ -74,21 +80,6 @@ int heaps_isomorphic(concrete_heapt *heap1,
 
 void consequences(abstract_heapt *heap,
                   heap_factst *facts);
-
-void gc(abstract_heapt *heap,
-        word_t x);
-
-void alias(heap_factst *facts,
-           word_t x,
-           word_t y);
-
-word_t path(heap_factst *facts,
-            word_t x,
-            word_t y);
-
-word_t is_path(heap_factst *facts,
-               word_t x,
-               word_t y);
 
 void concrete_assign(concrete_heapt *pre,
                      concrete_heapt *post,
