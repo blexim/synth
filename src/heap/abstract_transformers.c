@@ -299,7 +299,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
     }
   }
 
-#if 0
+#if 1
   return is_minimal(heap);
 #else
   return 1;
