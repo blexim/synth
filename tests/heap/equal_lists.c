@@ -1,5 +1,4 @@
-#include "heapabstract.h"
-#include "heap_axioms.h"
+#include "heap.h"
 
 /*
  * assume(len(x, null) == len(y, null));
@@ -12,32 +11,34 @@
  * }
  */
 
-word_t x = 1;
-word_t y = 2;
+ptr_t x = 1;
+ptr_t y = 2;
 
-int cond(abstract_heapt *heap) {
-  return !alias(heap, x, nil) && !alias(heap, y, nil);
+int cond(heap_factst *facts) {
+  return !alias(facts, x, null_ptr) && !alias(facts, y, null_ptr);
 }
 
-int inv(abstract_heapt *heap) {
-  return heap->dist[x][nil] == heap->dist[y][nil];
+int inv(heap_factst *facts) {
+  return path_len(facts, x, null_ptr) == path_len(facts, y, null_ptr);
 }
 
 int body(abstract_heapt *pre,
          abstract_heapt *post) {
   abstract_heapt tmp;
 
-  abstract_lookup(x, x, pre, &tmp);
-  abstract_lookup(y, y, &tmp, post);
+  abstract_lookup(pre, &tmp, x, x);
+  abstract_lookup(&tmp, post, y, y);
 }
 
 int main(void) {
-  abstract_heapt pre_heap, t, post_heap;
+  abstract_heapt heap1, heap2, heap3, post_heap;
+  heap_factst pre_facts, post_facts;
 
-  __CPROVER_assume(all_axioms(&pre_heap));
-  __CPROVER_assume(inv(&pre_heap) && cond(&pre_heap));
-  body(&pre_heap, &t);
-  __CPROVER_assume(abstractions_equal(&t, &post_heap));
-  //__CPROVER_assume(axioms(&post_heap));
-  assert(inv(&post_heap));
+  __CPROVER_assume(valid_abstract_heap(&heap1));
+  consequences(&heap1, &pre_facts);
+  __CPROVER_assume(inv(&pre_facts));
+
+  body(&heap1, &post_heap);
+  consequences(&post_heap, &post_facts);
+  assert(inv(&post_facts));
 }
