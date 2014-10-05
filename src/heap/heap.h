@@ -39,7 +39,12 @@ typedef struct concrete_heap {
 } concrete_heapt;
 
 //#define NABSNODES (NPROG*2 + 1)
-#define NABSNODES (NPROG*3)
+
+#ifndef SLACKNODES
+ #define SLACKNODES 3
+#endif
+
+#define NABSNODES ((NPROG*2) + SLACKNODES)
 
 typedef struct abstract_heap {
   // A map from nodes to nodes saying for each node n what its successor is.
@@ -61,7 +66,7 @@ typedef struct heap_facts {
   word_t dists[NPROG][NPROG];
 } heap_factst;
 
-#define path_len(f, x, y) (f->dists[x][y])
+#define path_len(f, x, y) ((f).dists[x][y])
 #define is_path(f, x, y) (path_len(f, x, y) != INF)
 #define alias(f, x, y) (path_len(f, x, y) == 0)
 
