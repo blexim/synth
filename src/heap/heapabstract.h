@@ -27,6 +27,9 @@
 typedef word_t ptr_t;
 typedef word_t node_t;
 
+const ptr_t null_ptr = 0;
+const node_t null_node = 0;
+
 typedef struct concrete_heap {
   node_t succ[NNODES];
   node_t ptr[NPROG];
@@ -54,7 +57,6 @@ typedef struct heap_facts {
   word_t dists[NPROG][NPROG];
 } heap_factst;
 
-word_t nil = 0;
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
@@ -91,49 +93,37 @@ void concrete_assign(word_t x,
                      word_t y,
                      concrete_heapt *pre,
                      concrete_heapt *post);
-void abstract_assign(word_t x,
-                     word_t y,
-                     abstract_heapt *pre,
-                     abstract_heapt *post);
+void abstract_assign(abstract_heapt *pre,
+                     abstract_heapt *post,
+                     ptr_t x,
+                     ptr_t y);
 
 void concrete_lookup(word_t x,
                      word_t y,
                      concrete_heapt *pre,
                      concrete_heapt *post);
-void abstract_lookup(word_t x,
-                     word_t y,
-                     abstract_heapt *pre,
-                     abstract_heapt *post);
+void abstract_lookup(abstract_heapt *pre,
+                     abstract_heapt *post,
+                     ptr_t x,
+                     ptr_t y);
 
 void concrete_update(word_t x,
                      word_t y,
                      concrete_heapt *pre,
                      concrete_heapt *post);
-void abstract_update(word_t x,
-                     word_t y,
-                     abstract_heapt *pre,
-                     abstract_heapt *post);
+void abstract_update(abstract_heapt *pre,
+                     abstract_heapt *post,
+                     ptr_t x,
+                     ptr_t y);
 
 void concrete_new(word_t x,
                   concrete_heapt *pre,
                   concrete_heapt *post);
-void abstract_new(word_t x,
-                  abstract_heapt *pre,
-                  abstract_heapt *post);
+void abstract_new(abstract_heapt *pre,
+                  abstract_heapt *post,
+                  ptr_t x);
 
-void copy_abstract(abstract_heapt *pre,
-                   abstract_heapt *post);
-
-int is_valid_abstract_heap(abstract_heapt *heap);
-int path(abstract_heapt *heap,
-         word_t a,
-         word_t b);
-int alias(abstract_heapt *heap,
-          word_t a,
-          word_t b);
-int cut(abstract_heapt *heap,
-        word_t a,
-        word_t b);
+int valid_abstract_heap(abstract_heapt *heap);
 
 word_t s_add(word_t x, word_t y);
 word_t s_sub(word_t x, word_t y);

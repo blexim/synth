@@ -57,7 +57,7 @@ static void destructive_move_node(abstract_heapt *heap,
 
   // First reassign the program variables...
   for (p = 0; p < NPROG; p++) {
-    if (deref(p) == n) {
+    if (deref(heap, p) == n) {
       heap->ptr[p] = m;
     }
   }
@@ -65,7 +65,7 @@ static void destructive_move_node(abstract_heapt *heap,
   node_t x;
   // Now reassign the "next" pointers for each node.
   for (x = 0; x < heap->nnodes; x++) {
-    if (next(x) == n) {
+    if (next(heap, x) == n) {
       heap->succ[x] = m;
     }
   }
@@ -132,9 +132,9 @@ static void destructive_gc(abstract_heapt *heap) {
  *
  * x is a pointer, n is a graph node.
  */
-static void destructive_assign_ptr(ptr_t x,
-                                   node_t n,
-                                   abstract_heapt *heap) {
+static void destructive_assign_ptr(abstract_heapt *heap,
+                                   ptr_t x,
+                                   node_t n) {
   assert(x < NPROG);
   assert(n < heap->nnodes);
 
@@ -147,10 +147,10 @@ static void destructive_assign_ptr(ptr_t x,
  *
  * x and y are nodes.
  */
-static void destructive_assign_next(node_t x,
+static void destructive_assign_next(abstract_heapt *heap,
+                                    node_t x,
                                     node_t y,
-                                    word_t dist,
-                                    abstract_heapt *heap) {
+                                    word_t dist) {
   assert(x < heap->nnodes);
   assert(y < heap->nnodes);
 
@@ -165,17 +165,17 @@ static void destructive_assign_next(node_t x,
  *
  * x and y are pointers.
  */
-void abstract_assign(ptr_t x,
-                     ptr_t y,
-                     abstract_heapt *pre,
-                     abstract_heapt *post) {
+void abstract_assign(abstract_heapt *pre,
+                     abstract_heapt *post,
+                     ptr_t x,
+                     ptr_t y) {
   assert(x < NPROG);
   assert(y < NPROG);
 
   copy_abstract(pre, post);
 
   node_t py = deref(post, y);
-  destructive_assign_ptr(x, py, post);
+  destructive_assign_ptr(post, x, py);
 
   destructive_gc(post);
 }
@@ -193,16 +193,16 @@ static node_t destructive_alloc(abstract_heapt *heap) {
 /*
  * x = new();
  */
-void abstract_new(ptr_t x,
-                  abstract_heapt *pre,
-                  abstract_heapt *post) {
+void abstract_new(abstract_heapt *pre,
+                  abstract_heapt *post,
+                  ptr_t x) {
   assert(x < NPROG);
 
   copy_abstract(pre, post);
 
   // Just allocate a new node and have x point to it.
   node_t n = destructive_alloc(post);
-  destructive_assign_ptr(x, n, post);
+  destructive_assign_ptr(post, x, n);
 
   destructive_gc(post);
 }
@@ -210,10 +210,10 @@ void abstract_new(ptr_t x,
 /*
  * x = y->n
  */
-void abstract_lookup(ptr_t x,
-                     ptr_t y,
-                     concrete_heapt *pre,
-                     concrete_heapt *post) {
+void abstract_lookup(abstract_heapt *pre,
+                     abstract_heapt *post,
+                     ptr_t x,
+                     ptr_t y) {
   assert(x < NPROG);
   assert(y < NPROG);
 
@@ -224,13 +224,13 @@ void abstract_lookup(ptr_t x,
 
   __CPROVER_assume(py != null_node);
 
-  assert(y_yn > 0);
+  assert(y_yn_dist > 0);
 
   // Two cases: 
   //
   // (1): y has a direct successor, i.e. y -1> z
   // (2): y's successor is some distance > 1 away, i.e. y -k-> z
-  if (y_yn == 1) {
+  if (y_yn_dist == 1) {
     // Case 1:
     //
     // y's successor is one step away, so now x points to that
@@ -270,10 +270,10 @@ void abstract_lookup(ptr_t x,
 /*
  * x->n = y;
  */
-void abstract_update(word_t x,
-                     word_t y,
-                     concrete_heapt *pre,
-                     concrete_heapt *post) {
+void abstract_update(abstract_heapt *pre,
+                     abstract_heapt *post,
+                     ptr_t x,
+                     ptr_t y) {
   assert(x < NPROG);
   assert(y < NPROG);
 
@@ -284,7 +284,7 @@ void abstract_update(word_t x,
 
   node_t py = deref(post, y);
 
-  destructive_assign_next(post, px, py);
+  destructive_assign_next(post, px, py, 1);
   destructive_gc(post);
 }
 
@@ -302,6 +302,10 @@ int valid_abstract_heap(abstract_heapt *heap) {
     return 0;
   }
 
+  if (dist(heap, null_node) != 0) {
+    return 0;
+  }
+
   // Each program variable points to a valid node.
   ptr_t p;
 
@@ -316,6 +320,13 @@ int valid_abstract_heap(abstract_heapt *heap) {
 
   for (n = 0; n < heap->nnodes; n++) {
     if (next(heap, n) >= heap->nnodes) {
+      return 0;
+    }
+  }
+
+  // Each node, except null, is > 0 away from its successor.
+  for (n = 0; n < heap->nnodes; n++) {
+    if (dist(heap, n) <= 0) {
       return 0;
     }
   }
