@@ -2,8 +2,6 @@
 
 #include <string.h>
 
-static void destructive_kernel(abstract_heapt *heap);
-
 static void copy_abstract(abstract_heapt *pre,
                           abstract_heapt *post) {
   //memcpy(post, pre, sizeof(abstract_heapt));
@@ -44,34 +42,27 @@ static word_t dist(abstract_heapt *heap,
  * Find the reachable nodes in the heap & return the number found.
  */
 int find_reachable(abstract_heapt *heap,
-                   word_t is_reachable[NABSNODES]) {
+                   word_t is_reachable[NABSNODES],
+                   node_t reachable_nodes[NABSNODES]) {
   word_t nreachable = 0;
 
   memset(is_reachable, 0, NABSNODES * sizeof(word_t));
+  memset(reachable_nodes, INF, NABSNODES * sizeof(word_t));
 
-  // We're going to do a mark-and-sweep garbage collection.
-  // First mark all of the program variables as reachable.
   ptr_t p;
   node_t n;
+  word_t i;
 
   for (p = 0; p < NPROG; p++) {
     n = deref(heap, p);
-    is_reachable[n] = 1;
-    nreachable++;
-  }
 
-  // Now do the transitive closure of the reachability relation.
-  node_t i, j;
+    for (i = 0; i < NABSNODES+1; i++) {
+      if (!is_reachable[n]) {
+        is_reachable[n] = 1;
+        reachable_nodes[nreachable] = n;
+        nreachable++;
 
-  for (i = 1; i < NABSNODES; i++) {
-    for (j = 1; j < NABSNODES; j++) {
-      if (is_reachable[j]) {
-        n = next(heap, j);
-
-        if (!is_reachable[n]) {
-          is_reachable[n] = 1;
-          nreachable++;
-        }
+        n = next(heap, n);
       }
     }
   }
@@ -123,8 +114,6 @@ void abstract_assign(abstract_heapt *pre,
 
   node_t py = deref(post, y);
   destructive_assign_ptr(post, x, py);
-
-  //destructive_kernel(post);
 }
 
 /*
@@ -144,7 +133,7 @@ static node_t destructive_alloc(abstract_heapt *heap) {
 #endif
   node_t n;
 
-  __CPROVER_assume(heap->nnodes < NABSNODES);
+  assert(heap->nnodes < NABSNODES);
   return heap->nnodes++;
 }
 
@@ -162,8 +151,6 @@ void abstract_new(abstract_heapt *pre,
   node_t n = destructive_alloc(post);
   destructive_assign_next(post, n, null_node, 1);
   destructive_assign_ptr(post, x, n);
-
-  //destructive_kernel(post);
 }
 
 /*
@@ -198,7 +185,6 @@ void abstract_lookup(abstract_heapt *pre,
     // y's successor is one step away, so now x points to that
     // successor -- this is just a simple assign to the successor node.
     destructive_assign_ptr(post, x, yn);
-    //destructive_kernel(post);
   } else {
     // Case 2:
     //
@@ -224,8 +210,6 @@ void abstract_lookup(abstract_heapt *pre,
 
     // And make x point to the new node.
     destructive_assign_ptr(post, x, n);
-
-    //destructive_kernel(post);
   }
 }
 
@@ -249,7 +233,6 @@ void abstract_update(abstract_heapt *pre,
   node_t py = deref(post, y);
 
   destructive_assign_next(post, px, py, 1);
-  //destructive_kernel(post);
 }
 
 /*
@@ -336,7 +319,7 @@ void consequences(abstract_heapt *heap,
       curr_dist = s_add(curr_dist, dist(heap, n));
       n = next(heap, n);
 
-#if 0
+#if 1
       min_dists[x][n] = min(min_dists[x][n], curr_dist);
 #else
       if (min_dists[x][n] != INF) {
@@ -392,12 +375,28 @@ int is_minimal(abstract_heapt *heap) {
 
   // Check that each node is reachable.
   word_t is_reachable[NABSNODES];
+  node_t reachable_nodes[NABSNODES];
   word_t nreachable;
 
-  nreachable = find_reachable(heap, is_reachable);
+  nreachable = find_reachable(heap, is_reachable, reachable_nodes);
 
+  // If we're a fully reduced graph, we don't have any unreachable nodes.
   if (heap->nnodes > nreachable) {
     return 0;
+  }
+
+  // We're canonical only if the nodes respect a topological ordering.
+  word_t i;
+  n = 0;
+
+  for (i = 1; i < NABSNODES && i < nreachable; i++) {
+    m = reachable_nodes[i];
+
+    if (m <= n) {
+      return 0;
+    }
+
+    n = m;
   }
 
   // Find the indegree of each node, restricted to just the reachable subgraph.
@@ -421,70 +420,22 @@ int is_minimal(abstract_heapt *heap) {
   return 1;
 }
 
-/*
- * Remove node m by merging it into node n.
- *
- * Note: if there are any pointer into m, this is very unsafe, so
- * only do it if you've already checked m has indegree = 1.
- */
-void destructive_merge_nodes(abstract_heapt *heap,
-                             node_t n,
-                             node_t m) {
-  __CPROVER_assume(m == next(heap, n));
-
-  // n->next = m->next
-  heap->succ[n] = next(heap, m);
-
-  // n->dist += m->dist
-  heap->dist[n] = s_add(dist(heap, n), dist(heap, m));
-}
-
-/*
- * Reduce a graph down to its kernel.
- */
-void destructive_kernel(abstract_heapt *heap) {
-  word_t is_named[NABSNODES];
-  memset(is_named, 0, sizeof(is_named));
-
-  // Find all of the named nodes.
-  ptr_t p;
-  node_t n, m;
-
-  for (p = 0; p < NPROG; p++) {
-    n = deref(heap, p);
-    is_named[n] = 1;
-  }
-
-  // Check that each node is reachable.
-  word_t is_reachable[NABSNODES];
-  word_t nreachable;
-
-  nreachable = find_reachable(heap, is_reachable);
-
-  // Find the indegree of each node, restricted to just the reachable subgraph.
-  word_t indegree[NABSNODES];
-  memset(indegree, 0, sizeof(indegree));
-
-  for (n = 0; n < NABSNODES; n++) {
-    if (is_reachable[n]) {
-      m = next(heap, n);
-      indegree[m]++;
-    }
-  }
-
-  // Merge as many nodes as possible.
+word_t path_len(abstract_heapt *heap,
+                ptr_t x,
+                ptr_t y) {
+  word_t curr_dist = 0;
+  node_t n = deref(heap, x);
+  node_t yn = deref(heap, y);
   word_t i;
 
-  for (i = 0; i < NABSNODES; i++) {
-    for (n = 1; n < NABSNODES; n++) {
-      if (is_reachable[n]) {
-        m = next(heap, n);
-
-        if (!is_named[m] && indegree[m] <= 1) {
-          destructive_merge_nodes(heap, n, m);
-          is_reachable[m] = 0;
-        }
-      }
+  for (i = 0; i < NABSNODES+1; i++) {
+    if (n == yn) {
+      return curr_dist;
     }
+
+    curr_dist = s_add(curr_dist, dist(heap, n));
+    n = next(heap, n);
   }
+
+  return INF;
 }
