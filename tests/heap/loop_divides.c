@@ -2,7 +2,7 @@
 
 /*
  * int divides(List x, List y) {
- *   assume(path(x, null) && path(y, null));
+ *   assume(path(x, null) && path(y, null) && y != null);
  *
  *   List z = y;
  *   List w = x;
@@ -27,10 +27,11 @@ const ptr_t w = 4;
 int inv(heap_factst *facts) {
   return is_path(*facts, x, null_ptr) &&
          is_path(*facts, z, null_ptr) &&
+         is_path(*facts, w, null_ptr) &&
          is_path(*facts, y, null_ptr) &&
-         is_path(*facts, y, null_ptr) &&
-         (s_add(path_len(*facts, x, w), path_len(*facts, z, null_ptr)) %
-          path_len(*facts, y, null_ptr)) == 0;
+         !alias(*facts, y, null_ptr) &&
+         ((s_add(path_len(*facts, x, w), path_len(*facts, z, null_ptr)) %
+           path_len(*facts, y, null_ptr)) == 0);
 }
 
 int assertion(heap_factst *facts) {
@@ -55,8 +56,9 @@ int main(void) {
   __CPROVER_assume(valid_abstract_heap(&init_heap));
   consequences(&init_heap, &f1);
 
-  __CPROVER_assume(path(f1, x, null_ptr));
-  __CPROVER_assume(path(f1, y, null_ptr));
+  __CPROVER_assume(is_path(f1, x, null_ptr));
+  __CPROVER_assume(is_path(f1, y, null_ptr));
+  __CPROVER_assume(!alias(f1, y, null_ptr));
   __CPROVER_assume(alias(f1, z, y));
   __CPROVER_assume(alias(f1, w, x));
 
