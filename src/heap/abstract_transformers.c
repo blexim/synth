@@ -318,13 +318,15 @@ void consequences(abstract_heapt *heap,
   word_t curr_dist;
   word_t i;
 
-  //memset(min_dists, INF, sizeof(min_dists));
-
+#if 1
+  memset(min_dists, INF, NPROG*NABSNODES*sizeof(word_t));
+#else
   for (x = 0; x < NPROG; x++) {
     for (n = 0; n < NABSNODES; n++) {
       min_dists[x][n] = INF;
     }
   }
+#endif
 
   for (x = 0; x < NPROG; x++) {
     n = deref(heap, x);
