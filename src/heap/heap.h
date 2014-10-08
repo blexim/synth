@@ -38,8 +38,6 @@ typedef struct concrete_heap {
   node_t ptr[NPROG];
 } concrete_heapt;
 
-//#define NABSNODES (NPROG*2 + 1)
-
 #ifndef SLACKNODES
  #define SLACKNODES 3
 #endif
@@ -66,9 +64,13 @@ typedef struct heap_facts {
   word_t dists[NPROG][NPROG];
 } heap_factst;
 
-#define path_len(f, x, y) ((f).dists[x][y])
-#define is_path(f, x, y) (path_len(f, x, y) != INF)
-#define alias(f, x, y) (path_len(f, x, y) == 0)
+
+word_t path_len(abstract_heapt *heap,
+                ptr_t x,
+                ptr_t y);
+
+#define is_path(h, x, y) (path_len(h, x, y) != INF)
+#define alias(h, x, y) (path_len(h, x, y) == 0)
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
