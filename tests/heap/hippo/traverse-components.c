@@ -22,6 +22,5 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
 }
 
 int assertion(abstract_heapt *heap) {
-  return 1;
   return is_path(heap, x, null_ptr);
 }
