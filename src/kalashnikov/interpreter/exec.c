@@ -186,6 +186,12 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = fi.x;
       break;
 #endif // FLOAT
+    case ISINF:
+      res = (p1 == WORDMASK);
+      break;
+    case NOTINF:
+      res = (p1 != WORDMASK);
+      break;
 
     default:
       assume(0);

@@ -32,8 +32,8 @@
 #define FDIV 26
 
 // Heap
-#define PATH 27
-#define DEREF 28
+#define ISINF 23
+#define NOTINF 24
 
 
 #endif // EXEC_H
