@@ -4,16 +4,11 @@
 #include <stdio.h>
 #include <assert.h>
 
-#ifdef VERIF
- #ifndef WIDTH
-  #define WIDTH 4
- #endif
+#include "synth.h"
 
- typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
- #define INF ((word_t) -1)
-#else
- typedef unsigned int word_t;
- #define INF 0xffffffff
+#define INF WORDMASK
+
+#ifdef SEARCH
  #define __CPROVER_assume(x)
 #endif
 
@@ -22,10 +17,8 @@
 #endif
 
 #ifndef NPROG
- #define NPROG NNODES
+ #define NPROG 3
 #endif
-
-#define min(x, y) (x < y ? x : y)
 
 typedef word_t ptr_t;
 typedef word_t node_t;
@@ -39,7 +32,7 @@ typedef struct concrete_heap {
 } concrete_heapt;
 
 #ifndef SLACKNODES
- #define SLACKNODES 3
+ #define SLACKNODES 1
 #endif
 
 #define NABSNODES ((NPROG*2) + SLACKNODES)
@@ -123,6 +116,9 @@ void abstract_new(abstract_heapt *pre,
 
 int valid_abstract_heap(abstract_heapt *heap);
 int is_minimal(abstract_heapt *heap);
+
+void serialize_facts(heap_factst *facts, word_t buf[NARGS]);
+void deserialize_heap(word_t buf[NARGS], abstract_heapt *heap);
 
 word_t s_add(word_t x, word_t y);
 word_t s_sub(word_t x, word_t y);

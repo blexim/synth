@@ -301,7 +301,7 @@ void consequences(abstract_heapt *heap,
   word_t curr_dist;
   word_t i;
 
-#if 1
+#if 0
   memset(min_dists, INF, NPROG*NABSNODES*sizeof(word_t));
 #else
   for (x = 0; x < NPROG; x++) {
