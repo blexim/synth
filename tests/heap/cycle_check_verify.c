@@ -14,11 +14,13 @@ int rank2(abstract_heapt *heap) {
 }
 
 int inv(abstract_heapt *heap) {
-  return (path(heap, p, q) && path(heap, l, p)) && (
+  return (path(heap, p, q) && path(heap, l, p)) &&
+         (
           (heap->stem[p] > 0 && heap->dist[p][q] > 0) ||
           (s_add(heap->dist[p][q], heap->dist[q][p]) == heap->cycle[l]) ||
           (alias(heap, p, q) && heap->cycle[l] != INF) ||
-          (alias(heap, q, nil) && heap->cycle[l] == INF));
+          (alias(heap, q, nil) && heap->cycle[l] == INF)
+         );
 }
 
 int cond(abstract_heapt *heap) {
@@ -58,42 +60,35 @@ void body(abstract_heapt *pre, abstract_heapt *post) {
   }
 }
 
-int axioms(abstract_heapt *heap) {
-  return alias_axioms(heap) &&
-         null_axioms(heap) &&
-         path_axioms(heap) &&
-         cycle_axioms(heap);
-}
-
 int main(void) {
   abstract_heapt heap1;
   abstract_heapt heap2;
   abstract_heapt heap3;
   abstract_heapt tmp;
 
-  __CPROVER_assume(axioms(&heap1));
+  /*
+  __CPROVER_assume(all_axioms(&heap1));
   __CPROVER_assume(alias(&heap1, l, p));
   __CPROVER_assume(alias(&heap1, l, q));
   body(&heap1, &tmp);
-  __CPROVER_assume(axioms(&tmp));
   assert(inv(&tmp));
+  */
+
 
   /*
-  __CPROVER_assume(axioms(&heap2));
+  __CPROVER_assume(all_axioms(&heap2));
   __CPROVER_assume(inv(&heap2));
   __CPROVER_assume(cond(&heap2));
   body(&heap2, &tmp);
-  __CPROVER_assume(axioms(&tmp));
   assert(inv(&tmp));
   */
 
-  /*
-  if (is_valid_abstract_heap(&heap3) && inv(&heap3) && !cond(&heap3)) {
-    if (alias(&heap3, p, q)) {
-      //assert(heap3.cycle[l] != INF);
-    } else {
-      //assert(heap3.cycle[l] == INF);
-    }
+  __CPROVER_assume(all_axioms(&heap3));
+  __CPROVER_assume(inv(&heap3));
+  __CPROVER_assume(!cond(&heap3));
+  if (alias(&heap3, q, nil)) {
+    assert(heap3.cycle[l] == INF);
+  } else {
+    assert(heap3.cycle[l] != INF);
   }
-  */
 }
