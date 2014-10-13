@@ -1,4 +1,4 @@
-#include "heapabstract.h"
+//#include "heapabstract.h"
 #include "heap_axioms.h"
 
 int is_valid_abstract_heap(abstract_heapt *heap) {

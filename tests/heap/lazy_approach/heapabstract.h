@@ -21,6 +21,10 @@
 
 #define min(x, y) (x < y ? x : y)
 
+word_t nil = 0;
+
+/* #define nil ((word_t) 0) */
+
 typedef struct concrete_heap {
   word_t succ[NNODES];
   word_t ptr[NPROG];
@@ -33,6 +37,27 @@ typedef struct abstract_heap {
   word_t stem[NPROG];
   word_t cycle[NPROG];
 } abstract_heapt;
+
+/*
+ * Saturating addition.
+ */
+unsigned int s_add(unsigned int x, unsigned int y);
+
+/*
+ * Saturating subtraction.
+ */
+unsigned int s_sub(unsigned int x, unsigned int y);
+
+/*
+ * Is there a path a->b?
+ */
+int path(abstract_heapt *heap, word_t a, word_t b);
+
+/*
+ * Does a alias b?
+ */
+int alias(abstract_heapt *heap, word_t a, word_t b);
+
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
@@ -67,3 +92,6 @@ void abstract_lookup(word_t x,
                      word_t y,
                      abstract_heapt *pre,
                      abstract_heapt *post);
+
+int named_ptr(int p, concrete_heapt *heap);
+word_t has_predecessor(concrete_heapt *heap, word_t x); 

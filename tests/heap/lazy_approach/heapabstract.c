@@ -6,6 +6,48 @@
 #define LINEWIDTH 6
 char *ptrnames[] = {"NULL", "x", "y", "z", "w"};
 
+/*
+ * Saturating addition.
+ */
+unsigned int s_add(unsigned int x, unsigned int y) {
+  unsigned int ret = (x > INF - y) ? INF : x + y;
+
+  __CPROVER_assume(ret != INF || x == INF || y == INF);
+
+  return ret;
+}
+
+/*
+ * Saturating subtraction.
+ */
+unsigned int s_sub(unsigned int x, unsigned int y) {
+  if (x == INF) {
+    return INF;
+  } else if (y > x) {
+    return 0;
+  } else {
+    return x - y;
+  }
+}
+
+/*
+ * Is there a path a->b?
+ */
+int path(abstract_heapt *heap,
+         word_t a,
+         word_t b) {
+  return heap->dist[a][b] != INF;
+}
+
+/*
+ * Does a alias b?
+ */
+int alias(abstract_heapt *heap,
+          word_t a,
+          word_t b) {
+  return heap->dist[a][b] == 0;
+}
+
 
 void abstract(concrete_heapt *concrete,
               abstract_heapt *abstract) {
@@ -239,6 +281,17 @@ int named_ptr(int p, concrete_heapt *heap) {
       found = 1;
   }
   return found;
+}
+
+word_t has_predecessor(concrete_heapt *heap, word_t x) {
+  word_t i;
+
+  for(i = 0; i < NNODES; i++) {
+    if(heap->succ[i] == x)
+      return 1;
+  }
+
+  return 0;
 }
 
 void print_concrete(concrete_heapt *heap) {
