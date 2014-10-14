@@ -357,57 +357,40 @@ int is_minimal(abstract_heapt *heap) {
   word_t is_named[NABSNODES];
   memset(is_named, 0, sizeof(is_named));
 
-  // Find all of the named nodes.
+  // Count the reachable nodes and find the indegrees of each node in the
+  // reachable subheap.
+  word_t is_reachable[NABSNODES];
+  word_t indegree[NABSNODES];
+  word_t nreachable = 0;
+
+  memset(is_reachable, 0, sizeof(is_reachable));
+  memset(indegree, 0, sizeof(indegree));
+
   ptr_t p;
   node_t n, m;
+  word_t i;
+  word_t last_reachable = 0;
 
   for (p = 0; p < NPROG; p++) {
     n = deref(heap, p);
     is_named[n] = 1;
-  }
 
-  // Check that each node is reachable.
-  word_t is_reachable[NABSNODES];
-  node_t reachable_nodes[NABSNODES];
-  word_t nreachable;
+    for (i = 0; i < NABSNODES-1; i++) {
+      if (!is_reachable[n]) {
+        if (n < last_reachable) {
+          // The heap is not topologically ordered.
+          return 0;
+        }
 
-  nreachable = find_reachable(heap, is_reachable, reachable_nodes);
+        last_reachable = n;
 
-  // If we're a fully reduced graph, we don't have any unreachable nodes.
-  if (heap->nnodes > nreachable) {
-    return 0;
-  }
+        is_reachable[n] = 1;
+        nreachable++;
 
-  if (heap->nnodes > NABSNODES) {
-    return 0;
-  }
+        n = next(heap, n);
 
-  // We're canonical only if the nodes respect a topological ordering.
-  word_t i;
-  n = 0;
-
-  for (i = 1; i < NABSNODES && i < nreachable; i++) {
-    m = reachable_nodes[i];
-
-    if (m <= n) {
-      return 0;
-    }
-
-    if (m >= nreachable) {
-      return 0;
-    }
-
-    n = m;
-  }
-
-  // Find the indegree of each node, restricted to just the reachable subgraph.
-  word_t indegree[NABSNODES];
-  memset(indegree, 0, sizeof(indegree));
-
-  for (n = 0; n < NABSNODES; n++) {
-    if (is_reachable[n]) {
-      m = next(heap, n);
-      indegree[m]++;
+        indegree[n]++;
+      }
     }
   }
 
@@ -416,6 +399,15 @@ int is_minimal(abstract_heapt *heap) {
     if (!is_named[n] && is_reachable[n] && indegree[n] <= 1) {
       return 0;
     }
+  }
+
+  // If we're a fully reduced graph, we don't have any unreachable nodes.
+  if (heap->nnodes > nreachable) {
+    return 0;
+  }
+
+  if (heap->nnodes > NABSNODES) {
+    return 0;
   }
 
   return 1;
