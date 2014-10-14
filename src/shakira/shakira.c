@@ -6,10 +6,6 @@ extern int body(abstract_heapt *pre, abstract_heapt *post);
 extern int assertion(abstract_heapt *heap);
 extern int inv(abstract_heapt *heap);
 
-extern word_t live_base;
-extern word_t live_induct;
-extern word_t live_safe;
-
 void main(void) {
   abstract_heapt h, t1, t2;
 
