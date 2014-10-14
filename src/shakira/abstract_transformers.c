@@ -440,3 +440,12 @@ word_t path_len(abstract_heapt *heap,
 
   return INF;
 }
+
+word_t alias(abstract_heapt *heap,
+             ptr_t x,
+             ptr_t y) {
+  node_t xn = deref(heap, x);
+  node_t yn = deref(heap, y);
+
+  return x == yn;
+}
