@@ -32,7 +32,7 @@ static node_t next(abstract_heapt *heap,
  */
 static word_t dist(abstract_heapt *heap,
                    node_t n) {
-  __CPROVER_assume(n < heap->nnodes);
+  __CPROVER_assume(n < NABSNODES);
   return heap->dist[n];
 }
 
@@ -193,60 +193,6 @@ void abstract_update(abstract_heapt *pre,
   destructive_assign_next(post, px, py, 1);
 }
 
-/*
- * Check that the heap is well formed.
- */
-int valid_abstract_heap(abstract_heapt *heap) {
-  // NULL points to the null node.
-  if (deref(heap, null_ptr) != null_node) {
-    return 0;
-  }
-
-  // The null node doesn't point anywhere.
-  if (next(heap, null_node) != null_node) {
-    return 0;
-  }
-
-  if (dist(heap, null_node) != 0) {
-    return 0;
-  }
-
-  // We have no more nodes than we expect.
-  if (heap->nnodes > NABSNODES) {
-    return 0;
-  }
-
-  // Each program variable points to a valid node.
-  ptr_t p;
-
-  for (p = 0; p < NPROG; p++) {
-    if (deref(heap, p) >= heap->nnodes) {
-      return 0;
-    }
-  }
-
-  // Each node's next pointer points to a valid node.
-  node_t n;
-
-  for (n = 0; n < NABSNODES; n++) {
-    if (next(heap, n) >= heap->nnodes) {
-      return 0;
-    }
-  }
-
-  // Each node, except null, is > 0 away from its successor.
-  for (n = 0; n < NABSNODES; n++) {
-    if (n != null_node && dist(heap, n) <= 0) {
-      return 0;
-    }
-
-    if (dist(heap, n) >= INF) {
-      return 0;
-    }
-  }
-
-  return is_minimal(heap);
-}
 
 /*
  * Compute the heap facts, i.e. all the pairwise distances between program
@@ -321,6 +267,63 @@ void init_abstract_heap(abstract_heapt *heap) {
   }
 }
 
+/*
+ * Check that the heap is well formed.
+ */
+int valid_abstract_heap(abstract_heapt *heap) {
+  // NULL points to the null node.
+  if (deref(heap, null_ptr) != null_node) {
+    return 0;
+  }
+
+  // The null node doesn't point anywhere.
+  if (next(heap, null_node) != null_node) {
+    return 0;
+  }
+
+  if (dist(heap, null_node) != 0) {
+    return 0;
+  }
+
+  /*
+  // We have no more nodes than we expect.
+  if (heap->nnodes > NABSNODES) {
+    return 0;
+  }
+
+  // Each program variable points to a valid node.
+  ptr_t p;
+
+  for (p = 0; p < NPROG; p++) {
+    if (deref(heap, p) >= heap->nnodes) {
+      return 0;
+    }
+  }
+
+  // Each node's next pointer points to a valid node.
+  node_t n;
+
+  for (n = 0; n < NABSNODES; n++) {
+    if (next(heap, n) >= heap->nnodes) {
+      return 0;
+    }
+  }
+
+  // Each node, except null, is > 0 away from its successor.
+  for (n = 0; n < NABSNODES; n++) {
+    if (n != null_node && dist(heap, n) <= 0) {
+      return 0;
+    }
+
+    if (dist(heap, n) >= INF) {
+      return 0;
+    }
+  }
+  */
+
+  return is_minimal(heap);
+}
+
 int is_minimal(abstract_heapt *heap) {
   word_t is_named[NABSNODES];
   memset(is_named, 0, sizeof(is_named));
@@ -345,6 +348,18 @@ int is_minimal(abstract_heapt *heap) {
 
     for (i = 0; i < NABSNODES-1; i++) {
       if (!is_reachable[n]) {
+        if (n >= heap->nnodes) {
+          return 0;
+        }
+
+        if (dist(heap, n) >= INF) {
+          return 0;
+        }
+
+        if (n != null_node && dist(heap, n) <= 0) {
+          return 0;
+        }
+
         if (n < last_reachable) {
           // The heap is not topologically ordered.
           return 0;
@@ -356,6 +371,7 @@ int is_minimal(abstract_heapt *heap) {
         nreachable++;
 
         n = next(heap, n);
+
 
         indegree[n]++;
       }
@@ -370,11 +386,11 @@ int is_minimal(abstract_heapt *heap) {
   }
 
   // If we're a fully reduced graph, we don't have any unreachable nodes.
-  if (heap->nnodes > nreachable) {
+  if (heap->nnodes != nreachable) {
     return 0;
   }
 
-  if (heap->nnodes > NABSNODES) {
+  if (nreachable > NLIVE*2 + 1) {
     return 0;
   }
 
