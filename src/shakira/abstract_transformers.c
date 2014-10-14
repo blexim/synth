@@ -447,5 +447,5 @@ word_t alias(abstract_heapt *heap,
   node_t xn = deref(heap, x);
   node_t yn = deref(heap, y);
 
-  return x == yn;
+  return xn == yn;
 }
