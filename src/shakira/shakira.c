@@ -6,6 +6,10 @@ extern int body(abstract_heapt *pre, abstract_heapt *post);
 extern int assertion(abstract_heapt *heap);
 extern int inv(abstract_heapt *heap);
 
+extern word_t live_base;
+extern word_t live_induct;
+extern word_t live_safe;
+
 void main(void) {
   abstract_heapt h, t1, t2;
 
@@ -18,14 +22,14 @@ void main(void) {
     assert(inv(&t1));
   }
 
-  // Induction.
-  if (inv(&h) && cond(&h)) {
-    assert(body(&h, &t2));
-    assert(inv(&t2));
-  }
-
-  // Property.
-  if (inv(&h) && !cond(&h)) {
-    assert(assertion(&h));
+  if (inv(&h)) {
+    if (cond(&h)) {
+      // Induction.
+      assert(body(&h, &t2));
+      assert(inv(&t2));
+    } else {
+      // Property.
+      assert(assertion(&h));
+    }
   }
 }
