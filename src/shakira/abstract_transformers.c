@@ -38,38 +38,6 @@ static word_t dist(abstract_heapt *heap,
 
 
 /*
- * Find the reachable nodes in the heap & return the number found.
- */
-int find_reachable(abstract_heapt *heap,
-                   word_t is_reachable[NABSNODES],
-                   node_t reachable_nodes[NABSNODES]) {
-  word_t nreachable = 0;
-
-  memset(is_reachable, 0, NABSNODES * sizeof(word_t));
-  memset(reachable_nodes, INF, NABSNODES * sizeof(word_t));
-
-  ptr_t p;
-  node_t n;
-  word_t i;
-
-  for (p = 0; p < NPROG; p++) {
-    n = deref(heap, p);
-
-    for (i = 0; i < NABSNODES+1; i++) {
-      if (!is_reachable[n]) {
-        is_reachable[n] = 1;
-        reachable_nodes[nreachable] = n;
-        nreachable++;
-
-        n = next(heap, n);
-      }
-    }
-  }
-
-  return nreachable;
-}
-
-/*
  * x = n;
  *
  * x is a pointer, n is a graph node.
@@ -121,7 +89,7 @@ void abstract_assign(abstract_heapt *pre,
 static node_t destructive_alloc(abstract_heapt *heap) {
   node_t n;
 
-  //assert(heap->nnodes < NABSNODES);
+  assert(heap->nnodes < NABSNODES);
   //__CPROVER_assume(heap->nnodes < NABSNODES);
   return heap->nnodes++;
 }
