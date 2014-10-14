@@ -65,10 +65,11 @@ typedef struct heap_facts {
 word_t path_len(abstract_heapt *heap,
                 ptr_t x,
                 ptr_t y);
-
 word_t alias(abstract_heapt *heap,
              ptr_t x,
              ptr_t y);
+word_t is_null(abstract_heapt *heap,
+               ptr_t x);
 
 #define is_path(h, x, y) (path_len(h, x, y) != INF)
 #define circular(h, x) (!is_path(h, x, null_ptr))

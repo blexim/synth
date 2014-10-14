@@ -449,3 +449,8 @@ word_t alias(abstract_heapt *heap,
 
   return xn == yn;
 }
+
+word_t is_null(abstract_heapt *heap,
+               ptr_t x) {
+  return deref(heap, x) == null_node;
+}
