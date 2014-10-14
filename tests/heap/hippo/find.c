@@ -18,6 +18,8 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
   }
 
   abstract_lookup(pre, post, tmp, tmp);
+
+  return 1;
 }
 
 int assertion(abstract_heapt *heap) {
