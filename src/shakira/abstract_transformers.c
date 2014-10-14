@@ -168,9 +168,8 @@ void abstract_lookup(abstract_heapt *pre,
 
   word_t y_yn_dist = dist(pre, py);
 
-  __CPROVER_assume(py != null_node);
-
-  __CPROVER_assume(y_yn_dist > 0);
+  //__CPROVER_assume(py != null_node);
+  //assert(py != null_node);
 
   copy_abstract(pre, post);
 
