@@ -18,14 +18,14 @@ void main(void) {
     assert(inv(&t1));
   }
 
-  // Induction.
-  if (inv(&h) && cond(&h)) {
-    assert(body(&h, &t2));
-    assert(inv(&t2));
-  }
-
-  // Property.
-  if (inv(&h) && !cond(&h)) {
-    assert(assertion(&h));
+  if (inv(&h)) {
+    if (cond(&h)) {
+      // Induction.
+      assert(body(&h, &t2));
+      assert(inv(&t2));
+    } else {
+      // Property.
+      assert(assertion(&h));
+    }
   }
 }

@@ -32,10 +32,14 @@ typedef struct concrete_heap {
 } concrete_heapt;
 
 #ifndef SLACKNODES
- #define SLACKNODES 1
+ #define SLACKNODES 0
 #endif
 
-#define NABSNODES ((NPROG*2) - 1 + SLACKNODES)
+#ifndef NLIVE
+ #define NLIVE NPROG
+#endif
+
+#define NABSNODES ((NLIVE*2) + SLACKNODES)
 
 typedef struct abstract_heap {
   // A map from nodes to nodes saying for each node n what its successor is.
@@ -62,8 +66,11 @@ word_t path_len(abstract_heapt *heap,
                 ptr_t x,
                 ptr_t y);
 
+word_t alias(abstract_heapt *heap,
+             ptr_t x,
+             ptr_t y);
+
 #define is_path(h, x, y) (path_len(h, x, y) != INF)
-#define alias(h, x, y) (path_len(h, x, y) == 0)
 #define circular(h, x) (!is_path(h, x, null_ptr))
 
 void print_concrete(concrete_heapt *heap);
