@@ -7,7 +7,7 @@ ptr_t tmp = 3;
 int pre(abstract_heapt *pre, abstract_heapt *post) {
   *post = *pre;
 
-  return !alias(pre, x, null_ptr) &&
+  return !is_null(pre, x) &&
          alias(pre, x, tmp);
 }
 
@@ -16,11 +16,11 @@ int cond(abstract_heapt *heap) {
 
   abstract_lookup(heap, &h, tmp, tmp);
 
-  return !alias(&h, tmp, null_ptr);
+  return !is_null(&h, tmp);
 }
 
 int body(abstract_heapt *pre, abstract_heapt *post) {
-  if (alias(pre, tmp, null_ptr)) {
+  if (is_null(pre, tmp)) {
     return 0;
   }
 
@@ -37,5 +37,5 @@ int assertion(abstract_heapt *heap) {
 }
 
 int inv(abstract_heapt *heap) {
-  return !alias(heap, tmp, null_ptr) && is_path(heap, x, tmp);
+  return !is_null(heap, tmp) && is_path(heap, x, tmp);
 }

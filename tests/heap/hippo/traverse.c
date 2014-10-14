@@ -18,7 +18,7 @@ int inv(abstract_heapt *heap) {
 }
 
 int body(abstract_heapt *pre, abstract_heapt *post) {
-  if (alias(pre, p, null_ptr)) {
+  if (is_null(pre, p)) {
     return 0;
   }
 
