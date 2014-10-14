@@ -4,9 +4,11 @@ ptr_t x = 1;
 ptr_t y = 2;
 ptr_t tmp = 3;
 
-int pre(abstract_heapt *heap) {
-  return !alias(heap, x, null_ptr) &&
-         alias(heap, x, tmp);
+int pre(abstract_heapt *pre, abstract_heapt *post) {
+  *post = *pre;
+
+  return !alias(pre, x, null_ptr) &&
+         alias(pre, x, tmp);
 }
 
 int cond(abstract_heapt *heap) {
