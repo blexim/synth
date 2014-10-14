@@ -31,15 +31,15 @@ typedef struct concrete_heap {
   node_t ptr[NPROG];
 } concrete_heapt;
 
-#ifndef SLACKNODES
- #define SLACKNODES 0
+#ifndef NSLACK
+ #define NSLACK 0
 #endif
 
 #ifndef NLIVE
- #define NLIVE NPROG
+ #define NLIVE (NPROG-1)
 #endif
 
-#define NABSNODES ((NLIVE*2) + SLACKNODES)
+#define NABSNODES ((NLIVE*2) + 1 + NSLACK)
 
 typedef struct abstract_heap {
   // A map from nodes to nodes saying for each node n what its successor is.
