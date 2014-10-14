@@ -4,7 +4,6 @@
 
 static void copy_abstract(abstract_heapt *pre,
                           abstract_heapt *post) {
-  //memcpy(post, pre, sizeof(abstract_heapt));
   *post = *pre;
 }
 
@@ -33,7 +32,7 @@ static node_t next(abstract_heapt *heap,
  */
 static word_t dist(abstract_heapt *heap,
                    node_t n) {
-  __CPROVER_assume(n < NABSNODES);
+  __CPROVER_assume(n < heap->nnodes);
   return heap->dist[n];
 }
 
@@ -120,20 +119,10 @@ void abstract_assign(abstract_heapt *pre,
  * Allocate a new node.
  */
 static node_t destructive_alloc(abstract_heapt *heap) {
-#if 0
-  word_t is_reachable[NABSNODES];
-  word_t nreachable = find_reachable(heap, is_reachable);
   node_t n;
 
-  for (n = 0; n < NABSNODES; n++) {
-    if (!is_reachable[n]) {
-      return n;
-    }
-  }
-#endif
-  node_t n;
-
-  assert(heap->nnodes < NABSNODES);
+  //assert(heap->nnodes < NABSNODES);
+  //__CPROVER_assume(heap->nnodes < NABSNODES);
   return heap->nnodes++;
 }
 
@@ -165,6 +154,8 @@ void abstract_lookup(abstract_heapt *pre,
 
   node_t py = deref(pre, y);
   node_t yn = next(pre, py);
+
+  __CPROVER_assume(py < NABSNODES);
 
   word_t y_yn_dist = dist(pre, py);
 
@@ -252,6 +243,11 @@ int valid_abstract_heap(abstract_heapt *heap) {
     return 0;
   }
 
+  // We have no more nodes than we expect.
+  if (heap->nnodes > NABSNODES) {
+    return 0;
+  }
+
   // Each program variable points to a valid node.
   ptr_t p;
 
@@ -281,11 +277,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
     }
   }
 
-#if 1
   return is_minimal(heap);
-#else
-  return 1;
-#endif
 }
 
 /*
@@ -386,6 +378,10 @@ int is_minimal(abstract_heapt *heap) {
     return 0;
   }
 
+  if (heap->nnodes > NABSNODES) {
+    return 0;
+  }
+
   // We're canonical only if the nodes respect a topological ordering.
   word_t i;
   n = 0;
@@ -394,6 +390,10 @@ int is_minimal(abstract_heapt *heap) {
     m = reachable_nodes[i];
 
     if (m <= n) {
+      return 0;
+    }
+
+    if (m >= nreachable) {
       return 0;
     }
 
