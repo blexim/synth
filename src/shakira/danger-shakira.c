@@ -26,9 +26,11 @@ void main(void) {
   }
 
   if (danger(&h)) {
-    if (cond(&h)) {
+    word_t cond_holds = cond(&h);
+    word_t body_safe = body(&h, &t2);
+
+    if (cond_holds && body_safe) {
       // Induction.
-      assert(body(&h, &t2));
       assert(danger(&t2));
 
       // Bounded ranking function.
@@ -45,9 +47,11 @@ void main(void) {
       if (r1 == r1_) {
         assert(r2 > r2_);
       }
+    } else if (!cond_holds) {
+        // Property.
+        assert(!assertion(&h));
     } else {
-      // Property.
-      assert(!assertion(&h));
+      // Assertion violation in the body -- no worries.
     }
   }
 }
