@@ -45,9 +45,9 @@ int assertion(abstract_heapt *heap) {
   word_t z_null = path_len(heap, z, null_ptr);
 
   if (x_null % y_null == 0) {
-    return z_null == 0;
+    return z_null == 0 || z_null == y_null;
   } else {
-    return z_null != 0;
+    return z_null != 0 && z_null != y_null;
   }
 }
 
