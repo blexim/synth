@@ -74,3 +74,11 @@ int inv(abstract_heapt *heap) {
   return is_path(heap, l, p) && is_path(heap, p, q) &&
          (is_path(heap, q, p) != is_path(heap, l, null_ptr));
 }
+
+word_t rank1(abstract_heapt *heap) {
+  return path_len(heap, q, null_ptr);
+}
+
+word_t rank2(abstract_heapt *heap) {
+  return path_len(heap, q, p);
+}
