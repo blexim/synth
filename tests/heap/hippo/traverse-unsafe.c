@@ -13,10 +13,6 @@ int cond(abstract_heapt *heap) {
   return !alias(heap, p, null_ptr);
 }
 
-int inv(abstract_heapt *heap) {
-  return is_path(heap, x, p);
-}
-
 int body(abstract_heapt *pre, abstract_heapt *post) {
   if (is_null(pre, p)) {
     return 0;
@@ -38,6 +34,7 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
 int assertion(abstract_heapt *heap) {
   return is_path(heap, x, null_ptr);
 }
+
 word_t rank1(abstract_heapt *heap) {
   return 1;
 }
@@ -47,9 +44,9 @@ word_t rank2(abstract_heapt *heap) {
 }
 
 int init(abstract_heapt *heap) {
-  return 1;
+  return path_len(heap, p, null_ptr) == 1;
 }
 
 int danger(abstract_heapt *heap) {
-  return 1;
+  return path_len(heap, p, null_ptr) == 1;
 }
