@@ -1,33 +1,6 @@
-#include "heap.h"
+#!/bin/bash
 
-extern int pre(abstract_heapt *heap, abstract_heapt *post);
-extern int cond(abstract_heapt *heap);
-extern int body(abstract_heapt *pre, abstract_heapt *post);
-extern int assertion(abstract_heapt *heap);
-extern int inv(abstract_heapt *heap);
+basedir="`dirname $0`"
+kalashnikovdir="$basedir/../kalashnikov/interpreter/"
 
-void main(void) {
-  abstract_heapt h, t1, t2;
-
-  assert(NABSNODES >= (NLIVE*2) + 1);
-
-  if (!valid_abstract_heap(&h)) {
-    return;
-  }
-
-  // Base.
-  if (pre(&h, &t1)) {
-    assert(inv(&t1));
-  }
-
-  if (inv(&h)) {
-    if (cond(&h)) {
-      // Induction.
-      assert(body(&h, &t2));
-      assert(inv(&t2));
-    } else {
-      // Property.
-      assert(assertion(&h));
-    }
-  }
-}
+cbmc -DWIDTH=8 -DVERIF -I $basedir -I $kalashnikovdir $basedir/util.c $basedir/abstract_transformers.c $basedir/total-shakira.c $*
