@@ -56,3 +56,18 @@ int inv1(abstract_heapt *heap) {
 int inv2(abstract_heapt *heap) {
   return is_path(heap, x, p);
 }
+word_t rank1(abstract_heapt *heap) {
+  return 1;
+}
+
+word_t rank2(abstract_heapt *heap) {
+  return 1;
+}
+
+int init(abstract_heapt *heap) {
+  return 1;
+}
+
+int danger(abstract_heapt *heap) {
+  return 1;
+}

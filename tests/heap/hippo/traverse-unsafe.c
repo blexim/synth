@@ -38,3 +38,18 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
 int assertion(abstract_heapt *heap) {
   return is_path(heap, x, null_ptr);
 }
+word_t rank1(abstract_heapt *heap) {
+  return 1;
+}
+
+word_t rank2(abstract_heapt *heap) {
+  return 1;
+}
+
+int init(abstract_heapt *heap) {
+  return 1;
+}
+
+int danger(abstract_heapt *heap) {
+  return 1;
+}
