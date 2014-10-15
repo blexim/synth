@@ -15,21 +15,21 @@ void main(void) {
 
   assert(NABSNODES >= (NLIVE*2) + 1);
 
-  if (!valid_abstract_heap(&h) ||
-      !init(&h)) {
+  if (!valid_abstract_heap(&h)) {
     return;
   }
 
   // Base.
-  if (pre(&h, &t1)) {
-    assert(inv(&t1));
+  if (init(&h) &&
+      pre(&h, &t1)) {
+    assert(danger(&t1));
   }
 
-  if (inv(&h)) {
+  if (danger(&h)) {
     if (cond(&h)) {
       // Induction.
       assert(body(&h, &t2));
-      assert(inv(&t2));
+      assert(danger(&t2));
 
       // Bounded ranking function.
       word_t r1 = rank1(&h);

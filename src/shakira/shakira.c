@@ -9,6 +9,8 @@ extern int inv(abstract_heapt *heap);
 void main(void) {
   abstract_heapt h, t1, t2;
 
+  assert(NABSNODES >= (NLIVE*2) + 1);
+
   if (!valid_abstract_heap(&h)) {
     return;
   }
