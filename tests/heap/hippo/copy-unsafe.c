@@ -49,7 +49,7 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
     return 0;
   }
 
-  abstract_update(&t1, &t2, tmpy, cell);
+  abstract_lookup(&t1, &t2, tmpy, cell);
 
   if (is_null(&t2, tmpx)) {
     return 0;
