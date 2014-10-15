@@ -1,24 +1,24 @@
 #include "heap.h"
 
-extern int pre1(abstract_heapt *heap, abstract_heapt *post);
-extern int pre2(abstract_heapt *heap, abstract_heapt *post);
+extern int pre1(statet *heap, statet *post);
+extern int pre2(statet *heap, statet *post);
 
-extern int cond1(abstract_heapt *heap);
-extern int cond2(abstract_heapt *heap);
+extern int cond1(statet *heap);
+extern int cond2(statet *heap);
 
-extern int body2(abstract_heapt *pre, abstract_heapt *post);
+extern int body2(statet *pre, statet *post);
 
-extern int assertion(abstract_heapt *heap);
+extern int assertion(statet *heap);
 
-extern int inv1(abstract_heapt *heap);
-extern int inv2(abstract_heapt *heap);
+extern int inv1(statet *heap);
+extern int inv2(statet *heap);
 
 void main(void) {
-  abstract_heapt h, t1, t2, t3;
+  statet h, t1, t2, t3;
 
   //assert(NABSNODES >= (NLIVE*2) + 1);
 
-  if (!valid_abstract_heap(&h)) {
+  if (!valid_abstract_heap(&(h.heap))) {
     return;
   }
 

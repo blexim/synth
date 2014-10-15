@@ -1,17 +1,18 @@
 #include "heap.h"
+#include "state.h"
 
-extern int pre(abstract_heapt *heap, abstract_heapt *post);
-extern int cond(abstract_heapt *heap);
-extern int body(abstract_heapt *pre, abstract_heapt *post);
-extern int assertion(abstract_heapt *heap);
-extern int inv(abstract_heapt *heap);
+extern int pre(statet *pre, statet *post);
+extern int cond(statet *staet);
+extern int body(statet *pre, statet *post);
+extern int assertion(statet *state);
+extern int inv(statet *state);
 
 void main(void) {
-  abstract_heapt h, t1, t2;
+  statet h, t1, t2;
 
   assert(NABSNODES >= (NLIVE*2) + 1);
 
-  if (!valid_abstract_heap(&h)) {
+  if (!valid_abstract_heap(&(h.heap))) {
     return;
   }
 

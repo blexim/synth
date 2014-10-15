@@ -9,8 +9,8 @@
 #endif
 
 typedef struct state {
-  word_t stack[NSTACK];
   abstract_heapt heap;
+  word_t stack[NSTACK];
 } statet;
 
 void alloc(statet *pre, statet *post, ptr_t x);
