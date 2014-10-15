@@ -4,16 +4,11 @@
 #include <stdio.h>
 #include <assert.h>
 
-#ifdef VERIF
- #ifndef WIDTH
-  #define WIDTH 4
- #endif
+#include "synth.h"
 
- typedef unsigned __CPROVER_bitvector[WIDTH] word_t;
- #define INF ((word_t) -1)
-#else
- typedef unsigned int word_t;
- #define INF 0xffffffff
+#define INF WORDMASK
+
+#ifdef SEARCH
  #define __CPROVER_assume(x)
 #endif
 
@@ -22,10 +17,8 @@
 #endif
 
 #ifndef NPROG
- #define NPROG NNODES
+ #define NPROG 3
 #endif
-
-#define min(x, y) (x < y ? x : y)
 
 typedef word_t ptr_t;
 typedef word_t node_t;
@@ -38,11 +31,15 @@ typedef struct concrete_heap {
   node_t ptr[NPROG];
 } concrete_heapt;
 
-#ifndef SLACKNODES
- #define SLACKNODES 3
+#ifndef NSLACK
+ #define NSLACK 0
 #endif
 
-#define NABSNODES ((NPROG*2) + SLACKNODES)
+#ifndef NLIVE
+ #define NLIVE (NPROG-1)
+#endif
+
+#define NABSNODES ((NLIVE*2) + 1 + NSLACK)
 
 typedef struct abstract_heap {
   // A map from nodes to nodes saying for each node n what its successor is.
@@ -68,9 +65,14 @@ typedef struct heap_facts {
 word_t path_len(abstract_heapt *heap,
                 ptr_t x,
                 ptr_t y);
+word_t alias(abstract_heapt *heap,
+             ptr_t x,
+             ptr_t y);
+word_t is_null(abstract_heapt *heap,
+               ptr_t x);
 
 #define is_path(h, x, y) (path_len(h, x, y) != INF)
-#define alias(h, x, y) (path_len(h, x, y) == 0)
+#define circular(h, x) (!is_path(h, x, null_ptr))
 
 void print_concrete(concrete_heapt *heap);
 void print_abstract(abstract_heapt *abstract);
@@ -123,6 +125,9 @@ void abstract_new(abstract_heapt *pre,
 
 int valid_abstract_heap(abstract_heapt *heap);
 int is_minimal(abstract_heapt *heap);
+
+void serialize_facts(heap_factst *facts, word_t buf[NARGS]);
+void deserialize_heap(word_t buf[NARGS], abstract_heapt *heap);
 
 word_t s_add(word_t x, word_t y);
 word_t s_sub(word_t x, word_t y);

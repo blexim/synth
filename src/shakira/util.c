@@ -131,3 +131,36 @@ void print_facts(heap_factst *facts) {
     printf("\n");
   }
 }
+
+void serialize_facts(heap_factst *facts, word_t buf[NARGS]) {
+  word_t i, j;
+
+  for (i = 0; i < NPROG; i++) {
+    for (j = 0; j < NPROG; j++) {
+      buf[i*NPROG + j] = facts->dists[i][j];
+    }
+  }
+
+  for (i = NPROG*NPROG; i < NARGS; i++) {
+    buf[i] = 0;
+  }
+}
+
+void deserialize_heap(word_t buf[NARGS], abstract_heapt *heap) {
+  word_t i = 0;
+  word_t j;
+
+  for (j = 0; j < NABSNODES; j++) {
+    heap->succ[j] = buf[i++];
+  }
+
+  for (j = 0; j < NABSNODES; j++) {
+    heap->dist[j] = buf[i++];
+  }
+
+  for (j = 0; j < NPROG; j++) {
+    heap->ptr[j] = buf[i++];
+  }
+
+  heap->nnodes = buf[i++];
+}

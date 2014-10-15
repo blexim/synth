@@ -8,7 +8,6 @@
 #include "exec.h"
 #include "io.h"
 
-#define WORDMASK ((1 << WIDTH) - 1)
 #define PMASK ((1 << PWIDTH) - 1)
 #define OPMASK ((1 << OPLEN) - 1)
 
@@ -89,8 +88,12 @@ int main(void) {
   word_t args[NARGS];
   int i;
 
+  for (i = 0; i < NARGS; i++) {
+    init_vector[i] = 0;
+  }
+
   load_solution(&solution);
-  load_init_vector();
+  //load_init_vector();
   init_args(args);
 
   do {

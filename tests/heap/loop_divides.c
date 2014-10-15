@@ -33,6 +33,7 @@ int inv(abstract_heapt *heap) {
 
   return x_null != INF &&
          z_null != INF &&
+         is_path(heap, y, z) &&
          x_w != INF &&
          y_null != INF &&
          y_null != 0 &&
@@ -52,49 +53,38 @@ int assertion(abstract_heapt *heap) {
 }
 
 int cond(abstract_heapt *heap) {
-  return !alias(heap, w, null_ptr);
+  return !is_null(heap, w);
 }
 
-int main(void) {
-  abstract_heapt init_heap, pre_heap, post_heap;
-  abstract_heapt t1, t2, t3;
+int pre(abstract_heapt *init_heap, abstract_heapt *post) {
+  *post = *init_heap;
 
-#define phase 1
+  return is_path(init_heap, x, null_ptr) &&
+         is_path(init_heap, y, null_ptr) &&
+         !is_null(init_heap, y) &&
+         alias(init_heap, z, y) &&
+         alias(init_heap, w, x);
+}
 
-#if phase==1
-  // Base case.
-  __CPROVER_assume(valid_abstract_heap(&init_heap));
+int body(abstract_heapt *pre_heap, abstract_heapt *post_heap) {
+  abstract_heapt t1, t2;
 
-  __CPROVER_assume(is_path(&init_heap, x, null_ptr));
-  __CPROVER_assume(is_path(&init_heap, y, null_ptr));
-  __CPROVER_assume(!alias(&init_heap, y, null_ptr));
-  __CPROVER_assume(alias(&init_heap, z, y));
-  __CPROVER_assume(alias(&init_heap, w, x));
-
-  assert(inv(&init_heap));
-#elif phase==2
-  // Induction.
-  __CPROVER_assume(valid_abstract_heap(&pre_heap));
-
-  __CPROVER_assume(inv(&pre_heap));
-  __CPROVER_assume(cond(&pre_heap));
-
-  if (alias(&pre_heap, z, null_ptr)) {
-    abstract_assign(&pre_heap, &t1, z, y);
+  if (is_null(pre_heap, z)) {
+    abstract_assign(pre_heap, &t1, z, y);
   } else {
-    t1 = pre_heap;
+    t1 = *pre_heap;
+  }
+
+  if (is_null(&t1, z)) {
+    return 0;
   }
 
   abstract_lookup(&t1, &t2, z, z);
-  abstract_lookup(&t2, &t3, w, w);
 
-  assert(inv(&t3));
-#else
-  // Conclusion.
-  __CPROVER_assume(valid_abstract_heap(&post_heap));
+  if (is_null(&t2, w)) {
+    return 0;
+  }
+  abstract_lookup(&t2, post_heap, w, w);
 
-  __CPROVER_assume(inv(&post_heap));
-  __CPROVER_assume(!cond(&post_heap));
-  assert(assertion(&post_heap));
-#endif
+  return 1;
 }
