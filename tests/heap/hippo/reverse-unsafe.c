@@ -21,6 +21,11 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
   abstract_heapt t1, t2, t3, t4;
 
   abstract_lookup(pre, &t1, next, root);
+
+  if (is_null(&t1, root)) {
+    return 0;
+  }
+
   abstract_lookup(&t1, &t2, root, root);
 
   if (is_null(&t2, root)) {
@@ -38,9 +43,6 @@ int assertion(abstract_heapt *heap) {
   return is_path(heap, new_root, null_ptr);
 }
 
-int inv(abstract_heapt *heap) {
-  return 1;
-}
 word_t rank1(abstract_heapt *heap) {
   return 1;
 }
@@ -50,9 +52,9 @@ word_t rank2(abstract_heapt *heap) {
 }
 
 int init(abstract_heapt *heap) {
-  return 1;
+  return path_len(heap, root, null_ptr) == 1;
 }
 
 int danger(abstract_heapt *heap) {
-  return 1;
+  return path_len(heap, root, null_ptr) == 1;
 }
