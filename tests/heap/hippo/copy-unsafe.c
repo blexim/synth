@@ -36,11 +36,6 @@ int body(abstract_heapt *pre, abstract_heapt *post) {
 
   *post = *pre;
 
-  if (!is_null(pre, x) ||
-      !is_null(pre, cell)) {
-    return 1;
-  }
-
   abstract_new(pre, &t1, cell);
 
   if (is_null(&t1, cell) ||
@@ -81,9 +76,11 @@ word_t rank2(abstract_heapt *heap) {
 }
 
 int danger(abstract_heapt *heap) {
-  return is_path(heap, tmpx, null_ptr);
+  return is_path(heap, tmpx, null_ptr) &&
+         path_len(heap, tmpx, null_ptr) == path_len(heap, tmpy, null_ptr) &&
+         path_len(heap, tmpx, null_ptr) <= 1;
 }
 
 int init(abstract_heapt *heap) {
-  return is_path(heap, x, null_ptr);
+  return path_len(heap, x, null_ptr) == 2;
 }
