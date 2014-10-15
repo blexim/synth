@@ -47,9 +47,9 @@ word_t rank2(abstract_heapt *heap) {
 }
 
 int init(abstract_heapt *heap) {
-  return 1;
+  return !is_null(heap, y);
 }
 
 int danger(abstract_heapt *heap) {
-  return 1;
+  return !is_null(heap, y);
 }
