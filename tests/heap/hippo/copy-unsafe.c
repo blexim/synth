@@ -72,7 +72,18 @@ int assertion(abstract_heapt *heap) {
   return 1;
 }
 
-int inv(abstract_heapt *heap) {
-  return !is_null(heap, tmpy) &&
-         is_path(heap, y, null_ptr);
+word_t rank1(abstract_heapt *heap) {
+  return path_len(heap, tmpx, null_ptr);
+}
+
+word_t rank2(abstract_heapt *heap) {
+  return 1;
+}
+
+int danger(abstract_heapt *heap) {
+  return is_path(heap, tmpx, null_ptr);
+}
+
+int init(abstract_heapt *heap) {
+  return is_path(heap, x, null_ptr);
 }
