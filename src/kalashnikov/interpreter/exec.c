@@ -13,7 +13,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   param_t a1, a2, a3;
   word_t p1, p2, p3, res;
   sword_t i1, i2, i3;
-  word_t A[LEN(prog) + NARGS + CONSTS];
+  word_t A[LEN(prog) + NSTACK + CONSTS];
   statet state;
 
   deserialize_state(args, &state);
@@ -31,7 +31,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     A[i] = prog->consts[i];
   }
 
-  for (i = 0; i < NARGS; i++) {
+  for (i = 0; i < NSTACK; i++) {
     A[CONSTS + i] = state.stack[i];
   }
 
@@ -193,35 +193,35 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       break;
 #endif // FLOAT
     case PATH_LEN:
-      assume(a1 < NPROG && a2 < NPROG);
+      assume(a1 < NHEAP && a2 < NHEAP);
       res = path_len(heap, a1, a2);
       break;
     case IS_PATH:
-      assume(a1 < NPROG && a2 < NPROG);
+      assume(a1 < NHEAP && a2 < NHEAP);
       res = is_path(heap, a1, a2);
       break;
     case ALIAS:
-      assume(a1 < NPROG && a2 < NPROG);
+      assume(a1 < NHEAP && a2 < NHEAP);
       res = alias(heap, a1, a2);
       break;
     case NOT_ALIAS:
-      assume(a1 < NPROG && a2 < NPROG);
+      assume(a1 < NHEAP && a2 < NHEAP);
       res = !alias(heap, a1, a2);
       break;
     case IS_NULL:
-      assume(a1 < NPROG);
+      assume(a1 < NHEAP);
       res = is_null(heap, a1);
       break;
     case NOT_NULL:
-      assume(a1 < NPROG);
+      assume(a1 < NHEAP);
       res = !is_null(heap, a1);
       break;
     case CIRCULAR:
-      assume(a1 < NPROG);
+      assume(a1 < NHEAP);
       res = circular(heap, a1);
       break;
     case NOT_CIRCULAR:
-      assume(a1 < NPROG);
+      assume(a1 < NHEAP);
       res = !circular(heap, a1);
       break;
 
@@ -234,10 +234,10 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     res &= WORDMASK;
 #endif
 
-    A[NARGS + CONSTS + i] = res;
+    A[NSTACK + CONSTS + i] = res;
   }
 
   for (i = 0; i < NRES && i < LEN(prog); i++) {
-    results[i] = A[NARGS + CONSTS + LEN(prog) - i - 1];
+    results[i] = A[NSTACK + CONSTS + LEN(prog) - i - 1];
   }
 }
