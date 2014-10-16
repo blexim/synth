@@ -14,7 +14,7 @@ static void copy_abstract(abstract_heapt *pre,
 static node_t deref(abstract_heapt *heap,
                     ptr_t p) {
   // Ensure p is a real pointer.
-  __CPROVER_assume(p < NPROG);
+  __CPROVER_assume(p < NHEAP);
   return heap->ptr[p];
 }
 
@@ -46,7 +46,7 @@ static word_t dist(abstract_heapt *heap,
 static void destructive_assign_ptr(abstract_heapt *heap,
                                    ptr_t x,
                                    node_t n) {
-  __CPROVER_assume(x < NPROG);
+  __CPROVER_assume(x < NHEAP);
   __CPROVER_assume(n < NABSNODES);
   heap->ptr[x] = n;
 }
@@ -75,8 +75,8 @@ void abstract_assign(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y) {
-  __CPROVER_assume(x < NPROG);
-  __CPROVER_assume(y < NPROG);
+  __CPROVER_assume(x < NHEAP);
+  __CPROVER_assume(y < NHEAP);
 
   copy_abstract(pre, post);
 
@@ -101,7 +101,7 @@ static node_t destructive_alloc(abstract_heapt *heap) {
 void abstract_new(abstract_heapt *pre,
                   abstract_heapt *post,
                   ptr_t x) {
-  __CPROVER_assume(x < NPROG);
+  __CPROVER_assume(x < NHEAP);
 
   copy_abstract(pre, post);
 
@@ -118,8 +118,8 @@ void abstract_lookup(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y) {
-  __CPROVER_assume(x < NPROG);
-  __CPROVER_assume(y < NPROG);
+  __CPROVER_assume(x < NHEAP);
+  __CPROVER_assume(y < NHEAP);
 
   node_t py = deref(pre, y);
   node_t yn = next(pre, py);
@@ -179,8 +179,8 @@ void abstract_update(abstract_heapt *pre,
                      abstract_heapt *post,
                      ptr_t x,
                      ptr_t y) {
-  __CPROVER_assume(x < NPROG);
-  __CPROVER_assume(y < NPROG);
+  __CPROVER_assume(x < NHEAP);
+  __CPROVER_assume(y < NHEAP);
 
   copy_abstract(pre, post);
 
@@ -230,7 +230,7 @@ int valid_abstract_heap(abstract_heapt *heap) {
   word_t i;
   word_t last_reachable = 0;
 
-  for (p = 0; p < NPROG; p++) {
+  for (p = 0; p < NHEAP; p++) {
     n = deref(heap, p);
     is_named[n] = 1;
 
