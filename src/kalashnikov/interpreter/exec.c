@@ -193,36 +193,36 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       break;
 #endif // FLOAT
     case PATH_LEN:
-      assume(p1 < NPROG && p2 < NPROG);
-      res = path_len(heap, p1, p2);
+      assume(a1 < NPROG && a2 < NPROG);
+      res = path_len(heap, a1, a2);
       break;
     case IS_PATH:
-      assume(p1 < NPROG && p2 < NPROG);
-      res = is_path(heap, p1, p2);
+      assume(a1 < NPROG && a2 < NPROG);
+      res = is_path(heap, a1, a2);
       break;
     case ALIAS:
-      assume(p1 < NPROG && p2 < NPROG);
-      res = alias(heap, p1, p2);
+      assume(a1 < NPROG && a2 < NPROG);
+      res = alias(heap, a1, a2);
       break;
     case NOT_ALIAS:
-      assume(p1 < NPROG && p2 < NPROG);
-      res = !alias(heap, p1, p2);
+      assume(a1 < NPROG && a2 < NPROG);
+      res = !alias(heap, a1, a2);
       break;
     case IS_NULL:
-      assume(p1 < NPROG);
-      res = is_null(heap, p1);
+      assume(a1 < NPROG);
+      res = is_null(heap, a1);
       break;
     case NOT_NULL:
-      assume(p1 < NPROG);
-      res = !is_null(heap, p1);
+      assume(a1 < NPROG);
+      res = !is_null(heap, a1);
       break;
     case CIRCULAR:
-      assume(p1 < NPROG);
-      res = circular(heap, p1);
+      assume(a1 < NPROG);
+      res = circular(heap, a1);
       break;
     case NOT_CIRCULAR:
-      assume(p1 < NPROG);
-      res = !circular(heap, p1);
+      assume(a1 < NPROG);
+      res = !circular(heap, a1);
       break;
 
     default:
