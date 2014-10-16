@@ -1,6 +1,7 @@
 #include "synth.h"
 #include "exec.h"
-#include "heaplib.h"
+#include "heap.h"
+#include "state.h"
 
 #include <math.h>
 
@@ -13,6 +14,11 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   word_t p1, p2, p3, res;
   sword_t i1, i2, i3;
   word_t A[LEN(prog) + NARGS + CONSTS];
+  statet state;
+
+  deserialize_state(args, &state);
+
+  abstract_heapt *heap = &(state.heap);
 
 #ifdef FLOAT
   fword_t f1, f2;
@@ -26,7 +32,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   }
 
   for (i = 0; i < NARGS; i++) {
-    A[CONSTS + i] = args[i];
+    A[CONSTS + i] = state.stack[i];
   }
 
   for (i = 0; i < NRES; i++) {
@@ -186,11 +192,29 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = fi.x;
       break;
 #endif // FLOAT
-    case ISINF:
-      res = (p1 == WORDMASK);
+    case PATH_LEN:
+      res = path_len(heap, p1, p2);
       break;
-    case NOTINF:
-      res = (p1 != WORDMASK);
+    case IS_PATH:
+      res = is_path(heap, p1, p2);
+      break;
+    case ALIAS:
+      res = alias(heap, p1, p2);
+      break;
+    case NOT_ALIAS:
+      res = !alias(heap, p1, p2);
+      break;
+    case IS_NULL:
+      res = is_null(heap, p1);
+      break;
+    case NOT_NULL:
+      res = !is_null(heap, p1);
+      break;
+    case CIRCULAR:
+      res = circular(heap, p1);
+      break;
+    case NOT_CIRCULAR:
+      res = !circular(heap, p1);
       break;
 
     default:
