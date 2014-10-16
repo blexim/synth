@@ -1,0 +1,4 @@
+file ../../tests/heap/hippo/filter.c line 19 function body: function `c::nondet' is not declared
+**** WARNING: no body for function c::nondet
+2.38user 0.08system 0:02.49elapsed 98%CPU (0avgtext+0avgdata 86020maxresident)k
+0inputs+9792outputs (0major+73843minor)pagefaults 0swaps

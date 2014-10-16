@@ -1,0 +1,4 @@
+file ../../tests/heap/hippo/find.c line 12 function cond: function `c::nondet' is not declared
+**** WARNING: no body for function c::nondet
+0.90user 0.11system 0:01.02elapsed 99%CPU (0avgtext+0avgdata 85372maxresident)k
+0inputs+1840outputs (0major+73590minor)pagefaults 0swaps
