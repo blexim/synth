@@ -1,0 +1,535 @@
+CBMC version 4.9 64-bit linux
+file ./util.c: Parsing
+file ./abstract_transformers.c: Parsing
+file ./shakira.c: Parsing
+file ../../tests/heap/hippo/filter-unsafe.c: Parsing
+Converting
+Type-checking abstract_transformers
+Type-checking filter-unsafe
+Type-checking shakira
+Type-checking util
+Generating GOTO Program
+Adding CPROVER library
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop c::is_minimal.0 iteration 1 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 2 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 3 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 4 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 5 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 6 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 7 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 8 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 9 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 10 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 11 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 12 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.0 iteration 13 file ./abstract_transformers.c line 329 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 1 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 2 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 3 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 4 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 5 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 6 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 7 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 8 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 9 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 10 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 11 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 12 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.1 iteration 13 file ./abstract_transformers.c line 337 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 1 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 2 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 3 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 4 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 5 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 6 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 7 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 8 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 9 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 10 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 11 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 12 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.2 iteration 13 file ./abstract_transformers.c line 338 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 1 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 2 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 3 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 4 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 5 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 6 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 7 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 8 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 9 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 10 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 11 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 12 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.4 iteration 1 file ./abstract_transformers.c line 345 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 1 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 2 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 3 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 4 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 5 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 6 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 7 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 8 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 9 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 10 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 11 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 12 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.4 iteration 2 file ./abstract_transformers.c line 345 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 1 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 2 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 3 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 4 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 5 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 6 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 7 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 8 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 9 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 10 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 11 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 12 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.4 iteration 3 file ./abstract_transformers.c line 345 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 1 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 2 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 3 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 4 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 5 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 6 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 7 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 8 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 9 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 10 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 11 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 12 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.4 iteration 4 file ./abstract_transformers.c line 345 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 1 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 2 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 3 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 4 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 5 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 6 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 7 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 8 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 9 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 10 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 11 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.3 iteration 12 file ./abstract_transformers.c line 349 function is_minimal thread 0
+Unwinding loop c::is_minimal.4 iteration 5 file ./abstract_transformers.c line 345 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 1 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 2 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 3 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 4 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 5 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 6 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 7 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 8 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 9 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 10 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 11 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 12 file ./abstract_transformers.c line 382 function is_minimal thread 0
+Unwinding loop c::is_minimal.5 iteration 13 file ./abstract_transformers.c line 382 function is_minimal thread 0
+size of program expression: 8442 steps
+slicing removed 4538 assignments
+Generated 5 VCC(s), 5 remaining after simplification
+Passing problem to propositional reduction
+Running propositional reduction
+Post-processing
+Solving with Glucose 2.2 with simplifier
+59604 variables, 249755 clauses
+c |  Eliminated clauses:           2.51 Mb                                                                |
+c last restart ## conflicts  :  210 342 
+SAT checker: negated claim is SATISFIABLE, i.e., does not hold
+Runtime decision procedure: 0.89s
+Building error trace
+
+Counterexample:
+
+State 6 file ./shakira.c line 10 function main thread 0
+----------------------------------------------------
+  h={ .succ={ 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, .dist={ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    .ptr={ 0, 0, 1, 1, 19 },
+    .nnodes=2 } ({ { 00000, 00000, 10011, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 }, { 00000, 00001, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 }, { 00000, 00000, 00001, 00001, 10011 }, 00010 })
+
+State 13 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  return_value_deref$1=0 (00000)
+
+State 19 file ./abstract_transformers.c line 27 function next thread 0
+----------------------------------------------------
+  return_value_next$2=0 (00000)
+
+State 25 file ./abstract_transformers.c line 36 function dist thread 0
+----------------------------------------------------
+  return_value_dist$3=0 (00000)
+
+State 30 file ./abstract_transformers.c line 328 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 32 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 34 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 36 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 38 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 40 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 42 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 44 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 46 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 48 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 50 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 52 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 54 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 56 file ./abstract_transformers.c line 329 function is_minimal thread 0
+----------------------------------------------------
+  is_named={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 61 file ./abstract_transformers.c line 333 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 62 file ./abstract_transformers.c line 334 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 64 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 66 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 68 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 70 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 72 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 74 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 76 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 78 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 80 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 82 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 84 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 86 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 88 file ./abstract_transformers.c line 337 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 94 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 96 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 98 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 100 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 102 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 104 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 106 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 108 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 110 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 112 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 114 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 116 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 118 file ./abstract_transformers.c line 338 function is_minimal thread 0
+----------------------------------------------------
+  indegree={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 })
+
+State 126 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 128 file ./abstract_transformers.c line 347 function is_minimal thread 0
+----------------------------------------------------
+  is_named[0]=1 (00001)
+
+State 133 file ./abstract_transformers.c line 355 function is_minimal thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 136 file ./abstract_transformers.c line 36 function dist thread 0
+----------------------------------------------------
+  return_value_dist$1=0 (00000)
+
+State 141 file ./abstract_transformers.c line 368 function is_minimal thread 0
+----------------------------------------------------
+  last_reachable=0 (00000)
+
+State 142 file ./abstract_transformers.c line 370 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable[0]=1 (00001)
+
+State 145 file ./abstract_transformers.c line 373 function is_minimal thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 148 file ./abstract_transformers.c line 27 function next thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 150 file ./abstract_transformers.c line 376 function is_minimal thread 0
+----------------------------------------------------
+  indegree[0]=1 (00001)
+
+State 179 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 181 file ./abstract_transformers.c line 347 function is_minimal thread 0
+----------------------------------------------------
+  is_named[0]=1 (00001)
+
+State 211 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 213 file ./abstract_transformers.c line 347 function is_minimal thread 0
+----------------------------------------------------
+  is_named[1]=1 (00001)
+
+State 218 file ./abstract_transformers.c line 355 function is_minimal thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 221 file ./abstract_transformers.c line 36 function dist thread 0
+----------------------------------------------------
+  return_value_dist$1=1 (00001)
+
+State 227 file ./abstract_transformers.c line 359 function is_minimal thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 230 file ./abstract_transformers.c line 36 function dist thread 0
+----------------------------------------------------
+  return_value_dist$2=1 (00001)
+
+State 234 file ./abstract_transformers.c line 368 function is_minimal thread 0
+----------------------------------------------------
+  last_reachable=1 (00001)
+
+State 235 file ./abstract_transformers.c line 370 function is_minimal thread 0
+----------------------------------------------------
+  is_reachable[1]=1 (00001)
+
+State 236 file ./abstract_transformers.c line 371 function is_minimal thread 0
+----------------------------------------------------
+  nreachable=2 (00010)
+
+State 239 file ./abstract_transformers.c line 373 function is_minimal thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 242 file ./abstract_transformers.c line 27 function next thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 244 file ./abstract_transformers.c line 376 function is_minimal thread 0
+----------------------------------------------------
+  indegree[0]=2 (00010)
+
+State 273 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 275 file ./abstract_transformers.c line 347 function is_minimal thread 0
+----------------------------------------------------
+  is_named[1]=1 (00001)
+
+State 305 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  n=19 (10011)
+
+State 307 file ./abstract_transformers.c line 347 function is_minimal thread 0
+----------------------------------------------------
+  is_named[19]={ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }[19] (?)
+
+State 378 file ./abstract_transformers.c line 324 function valid_abstract_heap thread 0
+----------------------------------------------------
+  return_value_valid_abstract_heap$1=1 (00000000000000000000000000000001)
+
+State 388 file ./shakira.c line 23 function main thread 0
+----------------------------------------------------
+  return_value_inv$6=16 (00000000000000000000000000010000)
+
+State 397 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  return_value_deref$1=1 (00001)
+
+State 400 file ./abstract_transformers.c line 431 function is_null thread 0
+----------------------------------------------------
+  return_value_is_null$1=0 (00000)
+
+State 403 file ../../tests/heap/hippo/filter-unsafe.c line 13 function cond thread 0
+----------------------------------------------------
+  return_value_cond$5=1 (00000000000000000000000000000001)
+
+State 413 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  xn=1 (00001)
+
+State 418 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  yn=0 (00000)
+
+State 421 file ./abstract_transformers.c line 426 function alias thread 0
+----------------------------------------------------
+  return_value_alias$7=0 (00000)
+
+State 430 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  return_value_deref$1=1 (00001)
+
+State 433 file ./abstract_transformers.c line 431 function is_null thread 0
+----------------------------------------------------
+  return_value_is_null$2=0 (00000)
+
+State 441 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  py=1 (00001)
+
+State 445 file ./abstract_transformers.c line 124 function abstract_lookup thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 448 file ./abstract_transformers.c line 27 function next thread 0
+----------------------------------------------------
+  yn=0 (00000)
+
+State 453 file ./abstract_transformers.c line 128 function abstract_lookup thread 0
+----------------------------------------------------
+  n=1 (00001)
+
+State 456 file ./abstract_transformers.c line 36 function dist thread 0
+----------------------------------------------------
+  y_yn_dist=1 (00001)
+
+State 460 file ./abstract_transformers.c line 7 function copy_abstract thread 0
+----------------------------------------------------
+  t1={ .succ={ 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, .dist={ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    .ptr={ 0, 0, 1, 1, 19 },
+    .nnodes=2 } ({ { 00000, 00000, 10011, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 }, { 00000, 00001, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000, 00000 }, { 00000, 00000, 00001, 00001, 10011 }, 00010 })
+
+State 465 file ./abstract_transformers.c line 145 function abstract_lookup thread 0
+----------------------------------------------------
+  n=0 (00000)
+
+State 467 file ./abstract_transformers.c line 50 function destructive_assign_ptr thread 0
+----------------------------------------------------
+  t1.ptr[3]=0 (00000)
+
+State 474 file ../../tests/heap/hippo/filter-unsafe.c line 34 function body thread 0
+----------------------------------------------------
+  return_value_nondet$6=4 (00000000000000000000000000000100)
+
+State 481 file ./abstract_transformers.c line 17 function deref thread 0
+----------------------------------------------------
+  return_value_deref$1=0 (00000)
+
+State 484 file ./abstract_transformers.c line 431 function is_null thread 0
+----------------------------------------------------
+  return_value_is_null$3=1 (00001)
+
+Violated property:
+  file ./shakira.c line 26 function main
+  assertion body(&h, &t2)
+  FALSE
+
+VERIFICATION FAILED

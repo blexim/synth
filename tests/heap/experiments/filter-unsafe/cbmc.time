@@ -1,0 +1,6 @@
+file ../../tests/heap/hippo/filter-unsafe.c line 19 function body: function `c::nondet' is not declared
+**** WARNING: no body for function c::inv
+**** WARNING: no body for function c::nondet
+Command exited with non-zero status 10
+2.76user 0.12system 0:02.89elapsed 99%CPU (0avgtext+0avgdata 116556maxresident)k
+0inputs+88outputs (0major+86037minor)pagefaults 0swaps

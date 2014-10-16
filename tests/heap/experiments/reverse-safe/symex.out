@@ -87,6 +87,15 @@ Unwinding loop c::path_len.0 iteration 6 file ./abstract_transformers.c line 408
 Unwinding loop c::path_len.0 iteration 7 file ./abstract_transformers.c line 408 function path_len thread 0
 Unwinding loop c::path_len.0 iteration 8 file ./abstract_transformers.c line 408 function path_len thread 0
 Unwinding loop c::path_len.0 iteration 9 file ./abstract_transformers.c line 408 function path_len thread 0
-size of program expression: 4520 steps
-slicing removed 2356 assignments
+Unwinding loop c::path_len.0 iteration 1 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 2 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 3 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 4 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 5 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 6 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 7 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 8 file ./abstract_transformers.c line 408 function path_len thread 0
+Unwinding loop c::path_len.0 iteration 9 file ./abstract_transformers.c line 408 function path_len thread 0
+size of program expression: 4931 steps
+slicing removed 2492 assignments
 Generated 3 VCC(s), 3 remaining after simplification
