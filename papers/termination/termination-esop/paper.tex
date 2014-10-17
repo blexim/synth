@@ -1823,68 +1823,6 @@ Floating-point arithmetic:
 
 
 
-%% \subsection{Candidate Generation Strategies}
-%% \noindent{\bf Explicit Proof Search.} The simplest strategy for finding candidates
-%% is to just exhaustively enumerate them all, starting with the shortest and
-%% progressively increasing the number of instructions.  This strategy
-%% is implemented by the {\sc ExplicitSearch} routine.  Since the set of
-%% $\mathcal{L}$-programs is recursively enumerable, this procedure is complete.
-%% \\
-
-%% \noindent{\bf Symbolic Bounded Model Checking.} Another complete method for generating
-%% candidates is to simply use BMC on the {\sc synth.c} program.  As with explicit
-%% search, we must progressively increase the length of the $\mathcal{L}$-program we search for
-%% in order to get a complete search procedure.
-%% \\
-
-%% \noindent {\bf Genetic Programming and Incremental Evolution.} \label{sec:gp}
-%% Our final strategy is genetic programming
-%% (GP)~\cite{langdon:fogp,brameier2007linear}.  GP provides an adaptive way of
-%% searching through the space of $\mathcal{L}$-programs for an individual
-%% that is ``fit'' in some sense.  We measure the
-%% fitness of an individual by counting the number of tests in {\sc inputs}
-%% for which it satisfies the specification.
-
-%% To bootstrap GP in the first iteration of the CEGIS loop, we generate a population
-%% of random $\mathcal{L}$-programs. We then iteratively evolve this population by
-%% applying the genetic operators {\sc crossover} and {\sc mutate}.
-%% {\sc Crossover} combines selected existing programs into new programs,
-%% whereas {\sc mutate} randomly changes parts of a single program.
-%% Fitter programs are more likely to be selected.
-
-
-%% % The {\sc crossover} operator takes two programs and combines their
-%% % code in some way to create a new program.  Programs are selected to be
-%% % {\sc crossover}ed according to their fitness -- fitter programs are more
-%% % likely to be selected to become parents.
-
-%% % The {\sc mutate} operator takes a single program and randomly changes parts
-%% % of its code, again creating a new program.
-
-%% Rather than generating a random population at the beginning of each subsequent
-%% iteration of the CEGIS loop, we start with the population we had at the end of the
-%% previous iteration.  The intuition here is that this population contained
-%% many individuals that performed well on the $k$ inputs we had before, so
-%% they will probably continue to perform well on the $k+1$ inputs we have now.
-%% In the parlance of evolutionary programming, this is known as
-%% incremental evolution~\cite{Gomez97incrementalevolution}.
-
-%% % In the setting of program synthesis, genetic programming can be very
-%% % usefully combined with the concept of incremental evolution.  The idea is
-%% % that in order to evolve a program that is adequate for some difficult task,
-%% % it is often helpful to first evolve a population that as an ensemble is good
-%% % at some simpler variation of the task.  This principle leads us to the
-%% % observation that each round of the CEGIS loop can be thought of as creating
-%% % a more difficult problem for the GP synthesiser to solve.  Therefore, if GP
-%% % finds a candidate program which is correct for the $k$ inputs so far
-%% % observed, but is not correct for the full specification, that candidate
-%% % program came from a population that was ``good'' for the specification
-%% % restrict to those $k$ inputs.  The next time round the CEGIS loop, the
-%% % problem GP must solve is slightly harder -- any solution to this new problem
-%% % must be correct for the previous $k$ inputs and also whatever new input was
-%% % added by the previous iteration of {\sc verif}.  It therefore makes sense to
-%% % begin the $k+1$st round of evolution with the population at the end of the
-%% % $k$-th round.
 
 
 \section{Soundness, Completeness and Complexity}
@@ -1902,61 +1840,6 @@ In this section, we show that $\mathcal{L}$ is expressive enough
 to compute (non-)termination proofs for every bit-vector program.
 By using this result, %We will then combine this result with the fact that the second-order SAT solver is a semi-decision procedure to 
 we then show that our technique terminates with a valid proof for every input program.
-%
-%% \begin{theorem}\label{thm:synth-sound}
-%% Algorithm~\ref{alg:cegis} is sound -- if it terminates with witness $(P, x_0)$, then
-%% $(P, x_0) \models \sigma$.
-%% \end{theorem}
-
-%% \begin{proof}
-%%  The procedure {\sc Synthesise} terminates only if {\sc Verif} returns ``valid''.  In that
-%%  case, $\exists x . \lnot \sigma(P, x_0, x)$ is unsatisfiable and so $\forall x . \sigma(P, x_0, x)$ holds.
-%% \end{proof}
-
-%% \begin{theorem}
-%%  \label{thm:synth-semicomplete}
-%%  If the existential first-order theory used to express the specification $\sigma$ is decidable
-%%  and the domain of inputs $X$ is finite,
-%%  Algorithm~\ref{alg:cegis} is semi-complete -- if a solution $(P, x_0) \models \sigma$
-%%  exists then Algorithm~\ref{alg:cegis} will terminate.  However, if no program
-%%  satisfies the specification, the algorithm may not terminate.
-%% \end{theorem}
-
-%% \begin{proof}
-%%  If the domain $X$ is finite then the loop in procedure {\sc Synthesise} can only
-%%  iterate $\| X \|$ times, since by this time all of the elements of $X$ would have been
-%%  added to the inputs set.  Therefore if the {\sc Synth} procedure always terminates,
-%%  Algorithm~\ref{alg:cegis} does as well.
-
-%%  Since the {\sc ExplicitSearch} routine enumerates all programs (as can be seen by induction on
-%%  the program length $l$), it will eventually enumerate a program that meets the specification
-%%  on whatever set of inputs are currently being tracked, since by assumption such a program
-%%  exists.  Since the first-order theory is
-%%  decidable, the query in {\sc Verif} will succeed for this program, causing the algorithm to terminate.
-%%  The set of correct programs is therefore recursively enumerable and Algorithm~\ref{alg:cegis}
-%%  enumerates this set, so it is semi-complete.
-%% \end{proof}
-
-%% \begin{corollary}
-%% \label{cor:cegis-newc}
-%%  Since safety of \newC programs is decidable, Algorithm~\ref{alg:cegis} is semi-complete
-%%  when instantiated with \newC as a background theory.
-%% \end{corollary}
-
-
-%% % \begin{theorem}
-%% % \label{thm:sound}
-%% %  {\sc Headshot} is sound -- if it returns a verdict of termination, the program under
-%% %  analysis terminates on all inputs.  Similarly if it returns a verdict of non-termination,
-%% %  the program under analysis has at least one infinite execution.
-%% % \end{theorem}
-%% % 
-%% % \begin{proof}
-%% %  This is a direct consequence of Theorems~\ref{thm:ut}, \ref{thm:ct}, \ref{thm:ont}, \ref{thm:cnt} and \ref{thm:synth-sound}.
-%% % \end{proof}
-
-%% We will now show that $\mathcal{L}$ is expressive enough to encode
-%% \mbox{(non-)}ter\-mi\-nation proofs for every bit-vector program.
 
 \begin{lemma}
  \label{lem:l-func}
@@ -1988,7 +1871,6 @@ are computed by a program of size at most $2bk - k$.
  by setting $X = B, Y = 2$ in Lemma~\ref{lem:l-func} and taking the
  resulting function to be the characteristic function of $A$.
 \end{corollary}
-
 
 \begin{theorem}
 \label{thm:l-term}
@@ -2069,84 +1951,15 @@ is sound and complete -- it terminates for all input loops $L$ with
  test both and discard the one that is invalid.
 \end{proof}
 
-%%---- Hence, Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
-
-%% Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
-%% $2^{bk}$ times where $k$ is the number of variables used by $L$ and
-%% $b$ is the number of bits used to store each variable.
-%% The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times l \times \| L\|$
-%% with $l$ the length of the program to be synthesised, and $\| L \| $ the size of the program-under-analysis
-%% computing $ L $.  So if
-%% the CEGIS loop iterates $n$ times, the
-%% runtime is bounded by
-%% $$2 \times n \times NP(n \times l \times \| L \|) \leq 2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$$
-%% Clearly the runtime is affected most strongly by $n$, the total number of iterations of the CEGIS loop.
-
-%% We will now show that the number of iterations of the CEGIS loop is a function
-%% of the Kolmogorov complexity of the \mbox{(non-)}ter\-mi\-nation proof, and so
-%% our runtime is asymptotically a function of the Kolmogorov complexity.
-%% We argue that this gives our procedure various desirable qualities in practical
-%% applications.
-%% We first recall the definition of the Kolmogorov complexity
-%% of a function $f$:
-
-%% \begin{definition}[Kolmogorov complexity]
-%%  The Kolmogorov complexity $K(f)$ is the length of the shortest program that
-%%  computes~$f$.
-%% \end{definition}
-
-%% We can extend this definition slightly to talk about the Kolmogorov complexity of a
-%% synthesis problem in terms of its specification:
-
-%% \begin{definition}[Kolmogorov complexity of a synthesis problem]
-%%  The Kolmogorov complexity of a program specification $K(\sigma)$ is the length of the shortest
-%%  program $P$ such that $P \models \sigma$.
-%% \end{definition}
-
-%% Let us consider the number of iterations of the CEGIS loop $n$ required for a specification
-%% $\sigma$.  Since we enumerate candidate programs in order of length, we are always synthesising
-%% programs with length no greater than $K(\sigma)$ (since when we enumerate the first correct program,
-%% we will terminate).  So the space of solutions we search over is the space
-%% of functions computed by $\mathcal{L}$-programs of length no greater than $K(\sigma)$.  Let's
-%% denote this set $\mathcal{L}(K(\sigma))$.
-%% Since there are $O(2^{K(\sigma)})$ \emph{programs} of length $K(\sigma)$ and some functions
-%% will be computed by more than one program, we have $\| \mathcal{L}(K(\sigma)) \| \leq O(2^{K(\sigma)})$.
-
-%% Each iteration of the CEGIS loop distinguishes at least one incorrect function from the set of correct
-%% functions, so the loop will iterate no more than $\| \mathcal{L}(K(\sigma)) \|$ times.
-%% Therefore another bound on our runtime is:
-%% $$O\left (2^{K(\sigma)} \times NP \left ( K(\sigma) \times \| L \| \right) \right) = O \left(2^{K(\sigma)} \right)$$
-%% So for even moderately large $K(\sigma)$ our procedure is intractably slow.  Conversely
-%% if $K(\sigma)$ is small we will be able to find a termination proof, regardless of other parameters
-%% such as the size of the program under analysis.  To put this another way, under the assumption
-%% that $K(\sigma)$ is small for a program's termination problem, we will find a termination proof
-%% quite rapidly.
-
-%% To give a flavour for the nature of the ``low Kolmogorov complexity'' assumption, 
-%% we observe that linear functions have low Kolmogorov complexity (since a linear function can
-%% be computed with at most 1 instruction and 1 multiplication for each program variable),
-%% so the number of linear functions $f$ with $K(f) \leq \kappa$ grows linearly with $\kappa$.
-%% Conversely, the number of functions $f$ with $K(f) \leq \kappa$
-%% grows exponentially with $\kappa$.  This shows that assuming the existence of a linear
-%% ranking function is much stronger than assuming the existence of a short
-%% termination proof.  In addition to being a much weaker assumption,
-%% we argue that low Kolmogorov complexity is a more natural assumption than
-%% linearity.  Humans tend to write programs they can understand.  It's hard
-%% to quantify exactly what ``understandable'' means, but we think that
-%% ``having a short proof'' is closer to the mark than ``having a linear proof''.
-
-
 \section{Experiments}
 
-To evaluate our algorithm, we implemented two tools: one to generate a
-termination specification from a C program, and one to synthesise a proof
-from the specification.  We ran the resulting termination prover,
+To evaluate our algorithm, we implemented a tool that generates a
+termination specification from a C program and calls the second-order SAT solver in \cite{kalashnikov} to obtain a proof.
+We ran the resulting termination prover,
 named {\sc Juggernaut}, on 47
 benchmarks taken from the literature and
-SV-COMP'15~\cite{svcomp15}\footnote{The logs and benchmarks are included in the
-non-anonymous supplementary material submitted with this paper}.%\footnote{The benchmarks, code and log files may be downloaded from the URL \texttt{http://www.cprover.org/juggernaut/}}.
-To
-provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
+SV-COMP'15~\cite{svcomp15}.
+To provide a comparison point, we also ran {\sc ARMC}~\cite{armc-website} on
 the same benchmarks.  Each tool was given a time limit of 180\,s, and was
 run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
 results of these experiments are given in Figure~\ref{fig:experiments}.
@@ -2172,45 +1985,42 @@ than {\sc ARMC}, in that it provides a complete proof system for both
 termination and non-termination.  This comes at the cost of efficiency:
 {\sc Juggernaut} is slow, but unstoppable.
 
-The final column in Figure~\ref{fig:experiments} gives the number of
-iterations of the CEGIS loop our synthesiser performed.  While the
-theoretical bound for the number of CEGIS iterations is very large
-(exponential in the amount of space used by the program), these results
-demonstrate that in practice the number of iterations required is usually
-small.
+%% The final column in Figure~\ref{fig:experiments} gives the number of
+%% iterations of the CEGIS loop our synthesiser performed.  While the
+%% theoretical bound for the number of CEGIS iterations is very large
+%% (exponential in the amount of space used by the program), these results
+%% demonstrate that in practice the number of iterations required is usually
+%% small.
 
 Of the 47 benchmarks, 2 use nonlinear operations in the program (loop6 and loop11),
 and 5 have nested loops (svcomp6, svcomp12, svcomp18, svcomp40, svcomp41).
 {\sc Juggernaut} handles the nonlinear cases correctly and rapidly.
-It solves 4 of the 5 nested loops in less than 30\,s\footnote{Although
-2 of these cases timed out with our default parameters, changing one command
-line flag allowed them to go through.  The benchmarks using non-default
-command line flags are marked with a *.}, but times out on the 5th.
+It solves 4 of the 5 nested loops in less than 30\,s, but times out on the 5th.
 
-Overall, we notice that the GP component was always the fastest to find
-candidate solutions, {\sc ExplicitSearch} was always fastest
-to find counterexample inputs, and {\sc CBMC} was always fastest at
-proving correctness.  Each of these search methods has its strengths,
-and removing any one would have had a significant negative impact on
-overall performance.  Approximately 90\,\% of the total
-runtime was spent in synthesising new candidate solutions, which matches
-our expectations -- the (non-)termination proofs are difficult to
-find, but easy to check.
+%% Overall, we notice that the GP component was always the fastest to find
+%% candidate solutions, {\sc ExplicitSearch} was always fastest
+%% to find counterexample inputs, and {\sc CBMC} was always fastest at
+%% proving correctness.  Each of these search methods has its strengths,
+%% and removing any one would have had a significant negative impact on
+%% overall performance.  Approximately 90\,\% of the total
+%% runtime was spent in synthesising new candidate solutions, which matches
+%% our expectations -- the (non-)termination proofs are difficult to
+%% find, but easy to check.
 
 In conclusion,
-these experiments confirm our conjecture that synthesis can be used
+these experiments confirm our conjecture that second-order SAT can be used
 effectively to prove termination and non-termination.  In particular,
 for programs with nested loops, nonlinear arithmetic and complex
-termination arguments, the versatility of unrestricted synthesis
+termination arguments, the versatility given by a general purpose solver %unrestricted termination arguments %synthesis
 is very valuable.
 
 \begin{figure}
 \centering
-\scriptsize
-\begin{tabular}{|l|@{}c@{}||@{}c@{}|r||@{}c@{}|r|r|}
+\small
+\begin{tabular}{|l|@{}c@{}||@{}c@{}|r||@{}c@{}|r|}
 \hline
-          &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{3}{|c|}{\sc Juggernaut} \\
-Benchmark & \,Expected\, & \,Verdict\, & Time & \,Verdict\, & Time & \#It.\\
+          &             & \multicolumn{2}{|c||}{\sc ARMC} & \multicolumn{2}{|c|}{\sc Juggernaut} \\
+Benchmark & \,Expected\, & \,Verdict\, & Time & \,Verdict\, & Time \\
     \hline
     \hline
 \input{table}
@@ -2218,8 +2028,6 @@ Benchmark & \,Expected\, & \,Verdict\, & Time & \,Verdict\, & Time & \#It.\\
 \end{tabular}
 
 Key: \tick = terminating, \xmark = non-terminating, ? = unknown (tool terminated with an inconclusive verdict).
-
-Times marked with a * were run with non-default command line flags.
 
 \caption{Experimental results\label{fig:experiments}}
  \end{figure}
