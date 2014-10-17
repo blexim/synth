@@ -38,5 +38,5 @@ int assertion(abstract_heapt *heap) {
 }
 
 int inv(abstract_heapt *heap) {
-  return 1;
+  return is_path(heap, new_root, null_ptr);
 }

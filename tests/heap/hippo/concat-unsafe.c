@@ -47,3 +47,7 @@ int assertion(abstract_heapt *heap) {
 int danger(abstract_heapt *heap) {
   return is_path(heap, tmp, null_ptr);
 }
+
+int inv(abstract_heapt *heap) {
+  return !is_null(heap, tmp) && is_path(heap, x, tmp);
+}
