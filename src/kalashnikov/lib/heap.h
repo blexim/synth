@@ -12,8 +12,12 @@
  #define __CPROVER_assume(x)
 #endif
 
-#ifndef NHEAP
- #define NHEAP 0
+#ifndef NNODES
+ #define NNODES 5
+#endif
+
+#ifndef NPROG
+ #define NPROG 3
 #endif
 
 typedef word_t ptr_t;
@@ -27,7 +31,7 @@ typedef word_t node_t;
 #endif
 
 #ifndef NLIVE
- #define NLIVE (NHEAP-1)
+ #define NLIVE (NPROG-1)
 #endif
 
 #define NABSNODES ((NLIVE*2) + 1 + NSLACK)
@@ -42,7 +46,7 @@ typedef struct abstract_heap {
 
   // A map from pointers to nodes, saying for each pointer which node it points
   // to.
-  node_t ptr[NHEAP];
+  node_t ptr[NPROG];
 
   // How many nodes are currently allocated?
   word_t nnodes;

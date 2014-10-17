@@ -24,7 +24,7 @@ void deserialize_state(word_t args[NARGS], statet *state) {
     heap->dist[i] = args[j++];
   }
 
-  for (i = 0; i < NHEAP; i++) {
+  for (i = 0; i < NPROG; i++) {
     heap->ptr[i] = args[j++];
   }
 
@@ -48,7 +48,7 @@ void serialize_state(statet *state, word_t args[NARGS]) {
     args[j++] = heap->dist[i];
   }
 
-  for (i = 0; i < NHEAP; i++) {
+  for (i = 0; i < NPROG; i++) {
     args[j++] = heap->ptr[i];
   }
 
