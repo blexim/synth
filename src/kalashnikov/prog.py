@@ -125,6 +125,9 @@ class Prog(object):
       if mevars:
         self.evars = str2ints(mevars.group(1))
 
+    if not self.consts:
+      self.consts = [[] * len(self.ops)]
+
   def argname(self, p, executable):
     if executable:
       return "args[%d]" % p
