@@ -1,4 +1,4 @@
-#include "heapabstract.h"
+//#include "heapabstract.h"
 #include "heap_axioms.h"
 
 word_t l = 1;
