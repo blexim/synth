@@ -1481,6 +1481,16 @@ Peano arithmetic\footnote{Some of these operators can be seen as
 linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
 addition in the Galois field $\mathrm{GF}(2^k)$.}.
 
+\begin{theorem}
+ \label{thm:synth-semicomplete}
+ If the existential first-order theory used to express the specification $\sigma$ is decidable
+ and the domain of inputs $X$ is finite,
+ the second-order SAT decision procedure is semi-complete -- if a solution $(P, x_0) \models \sigma$
+ exists then Algorithm~\ref{alg:cegis} will terminate.  However, if no program
+ satisfies the specification, the algorithm may not terminate.
+\end{theorem}
+
+
 
 %% \subsection{The Synthesis Specification}
 
@@ -1878,17 +1888,20 @@ Floating-point arithmetic:
 
 
 \section{Soundness, Completeness and Complexity}
-
-Termination for bit-vector programs is known to be
-PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10}.  We first record the
-expected results for soundness and completeness of our algorithm for
-deciding it.  Our strategy for proving soundness and completeness
-is first to prove that Algorithm~\ref{alg:cegis} (as instantiated
-with \newC as a background logic) is a semi-decision
-procedure.  Next, we will show that $\mathcal{L}$ is expressive enough
+The second-order SAT solver we are using is a semi-decision procedure -- for any
+satisfiable formula, the solver is guaranteed to find a satisfying assignment to
+all the second-order variables~\cite{kalashnikov}. 
+%% Termination for bit-vector programs is known to be
+%% PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10}.  We first record the
+%% expected results for soundness and completeness of our algorithm for
+%% deciding it.  Our strategy for proving soundness and completeness
+%% is first to prove that Algorithm~\ref{alg:cegis} (as instantiated
+%% with \newC as a background logic) is a semi-decision
+%% procedure.
+In this section, we show that $\mathcal{L}$ is expressive enough
 to compute (non-)termination proofs for every bit-vector program.
-We will then combine these results to show that the procedure as a whole
-terminates with a valid proof for every input program.
+By using this result, %We will then combine this result with the fact that the second-order SAT solver is a semi-decision procedure to 
+we then show that our technique terminates with a valid proof for every input program.
 %
 %% \begin{theorem}\label{thm:synth-sound}
 %% Algorithm~\ref{alg:cegis} is sound -- if it terminates with witness $(P, x_0)$, then
@@ -2021,7 +2034,7 @@ a finite $\mathcal{L}$-program computing $R''$.
 
 \begin{theorem}
  \label{thm:generalised-sat}
- The generalised termination formula {\bf [GT]} for any loop $L$ is valid
+ The generalised termination formula {\bf [GT]} for any loop $L$ is a tautology
  when $P_N$ and $P_T$ range over \mbox{$\mathcal{L}$-computable} functions.
 \end{theorem}
 
@@ -2041,30 +2054,33 @@ a finite $\mathcal{L}$-program computing $R''$.
 \end{proof}
 
 \begin{theorem}
- Algorithm~\ref{alg:termination} is sound and complete -- it terminates for all input loops $L$ with
+Our technique %Algorithm~\ref{alg:termination} 
+is sound and complete -- it terminates for all input loops $L$ with
  a correct termination verdict.
 \end{theorem}
 
 \begin{proof}
- By Theorem~\ref{thm:generalised-sat}, the specification \lstinline!spec! is valid, and hence satisfiable.  Corollary~\ref{cor:cegis-newc}
- shows that Algorithm~\ref{alg:cegis} is semi-complete, and so the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
- If $L$ terminates then $P_T$ is a termination proof (Theorem~\ref{thm:ct}).  Otherwise $P_N$ is a non-termination proof
- (Theorem~\ref{thm:snt}).  Exactly one of these cases holds, and the background theory \newC being decidable means that each
- call to \lstinline|decide()| will terminate, which allows us to determine which of $P_T$ and $P_N$ is a correct proof.
+ By Theorem~\ref{thm:generalised-sat}, the specification \lstinline!spec! is satisfiable.
+ In~\cite{kalashnikov}, we show that the second-order SAT solver is semi-complete, and so is guaranteed to find a satisfying
+ assignment for \lstinline!spec!. %, and so the call to {\sc Synthesise} terminates with a witness $(P_T, P_N)$.
+ If $L$ terminates then $P_T$ is a termination proof (Theorem~\ref{thm:ct}),
+ otherwise $P_N$ is a non-termination proof (Theorem~\ref{thm:snt}).  Exactly one of these purported proofs
+ will be valid, and since we can check each proof with a single call to a SAT solver we simply
+ test both and discard the one that is invalid.
 \end{proof}
 
-Hence, Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
+%%---- Hence, Algorithm~\ref{alg:termination} is sound and complete for bit-vector termination.
 
-Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
-$2^{bk}$ times where $k$ is the number of variables used by $L$ and
-$b$ is the number of bits used to store each variable.
-The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times l \times \| L\|$
-with $l$ the length of the program to be synthesised, and $\| L \| $ the size of the program-under-analysis
-computing $ L $.  So if
-the CEGIS loop iterates $n$ times, the
-runtime is bounded by
-$$2 \times n \times NP(n \times l \times \| L \|) \leq 2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$$
-Clearly the runtime is affected most strongly by $n$, the total number of iterations of the CEGIS loop.
+%% Theorem~\ref{thm:synth-semicomplete} provides a time bound -- the CEGIS loop can iterate at most
+%% $2^{bk}$ times where $k$ is the number of variables used by $L$ and
+%% $b$ is the number of bits used to store each variable.
+%% The $i$th iteration of the loop requires solving 2 NP-complete problems of size $i \times l \times \| L\|$
+%% with $l$ the length of the program to be synthesised, and $\| L \| $ the size of the program-under-analysis
+%% computing $ L $.  So if
+%% the CEGIS loop iterates $n$ times, the
+%% runtime is bounded by
+%% $$2 \times n \times NP(n \times l \times \| L \|) \leq 2^{bk + 1} NP(2^{bk} \times l \times \| L \|)$$
+%% Clearly the runtime is affected most strongly by $n$, the total number of iterations of the CEGIS loop.
 
 %% We will now show that the number of iterations of the CEGIS loop is a function
 %% of the Kolmogorov complexity of the \mbox{(non-)}ter\-mi\-nation proof, and so
