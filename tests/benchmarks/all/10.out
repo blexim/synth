@@ -1,0 +1,51 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0x1 * a1;
+t2 = -(a2);
+t3 = t2 ^ t1;
+t4 = a1 % a2;
+res1 = t2 < t3;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = -(0x1);
+t2 = -(a2);
+t3 = a2 & a1;
+t4 = a2 ^ a1;
+res1 = t4 <= t3;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 6.26s
+
+Program 0:
+t1 = -(0x1);
+t2 = -(a2);
+t3 = a2 & a1;
+t4 = a2 ^ a1;
+res1 = t4 <= t3;
+
+
+Perf counters:
+{'cbmc': 1, 'anneal': 2, 'explicit': 2, 'iterations': 2}
+Perf timers:
+verify: 1.65s
+checker: 6.25s
+gcc: 0.93s
+_: 6.26s
+synth: 4.61s

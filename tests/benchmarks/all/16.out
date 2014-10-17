@@ -1,0 +1,31 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+res1 = max(a1, a2);
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.77s
+
+Program 0:
+res1 = max(a1, a2);
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.33s
+checker: 1.76s
+gcc: 0.78s
+_: 1.77s
+synth: 0.44s
