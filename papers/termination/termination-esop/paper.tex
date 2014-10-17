@@ -1537,17 +1537,10 @@ Floating-point arithmetic:
 
 
 \section{Soundness, Completeness and Complexity}
-%% Termination for bit-vector programs is known to be
-%% PSPACE-complete~\cite{DBLP:conf/tacas/CookKRW10}.  We first record the
-%% expected results for soundness and completeness of our algorithm for
-%% deciding it.  Our strategy for proving soundness and completeness
-%% is first to prove that Algorithm~\ref{alg:cegis} (as instantiated
-%% with \newC as a background logic) is a semi-decision
-%% procedure.
 In this section, we show that $\mathcal{L}$ is expressive enough
 to compute (non-)termination proofs for every bit-vector program.
 By using this result, %We will then combine this result with the fact that the second-order SAT solver is a semi-decision procedure to 
-we then show that our technique terminates with a valid proof for every input program.
+we then show that our analysis terminates with a valid proof for every input program.
 
 \begin{lemma}
  \label{lem:l-func}
@@ -1644,7 +1637,7 @@ a finite $\mathcal{L}$-program computing $R''$.
 \end{proof}
 
 \begin{theorem}
-Our technique %Algorithm~\ref{alg:termination} 
+Our termination analysis %Algorithm~\ref{alg:termination} 
 is sound and complete -- it terminates for all input loops $L$ with
  a correct termination verdict.
 \end{theorem}
