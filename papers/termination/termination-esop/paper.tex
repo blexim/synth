@@ -125,8 +125,18 @@ furthermore a termination argument for a program operating on mathematical
 integers does not always lead to a termination argument for the same program
 operating on fixed-width machine integers.
 
-We present a reduction from program \emph{termination} to program
-\emph{synthesis} via a fragment of second-order logic.  This reduction
+We present a reduction from program \emph{termination} to 
+second-order satisfiability. 
+%program
+%\emph{synthesis} via a fragment of second-order logic.  
+We give formulations for termination and non-termination in a fragment of second-order logic 
+with restricted quantification.
+
+existential second-order logic over finite domains is decidable \cite{kalashnikov}. 
+
+% decidable for finite-state programs 
+
+This reduction
 allows us to generate nonlinear, lexicographic ranking functions and
 nonlinear recurrence sets that are correct for fixed-width machine arithmetic
 and floating-point arithmetic.  We use this reduction to build a sound and
@@ -434,10 +444,11 @@ As with all of the termination proofs presented in this paper, the ranking
 functions above were all found completely automatically.
 
 \begin{figure*}
+\footnotesize{
 \centering
- \begin{tabular}{ccc}
-
+\begin{tabular}{ccc}
 \begin{subfigure}[b]{0.3\textwidth}
+\small{
 \begin{lstlisting}
 while (x > 0) {
   x = (x - 1) & x;
@@ -445,6 +456,7 @@ while (x > 0) {
 \end{lstlisting}
 \caption{Taken from~\cite{DBLP:conf/tacas/CookKRW10}.}
  \label{fig:motivation.a}
+}
 \end{subfigure}%
 
 &
@@ -474,6 +486,7 @@ while(x > 0) {
 \hline
 
 \begin{subfigure}[b]{0.3\textwidth}
+
 \begin{lstlisting}
 while (i < M || j < N) {
   i = i + 1;
@@ -581,8 +594,8 @@ while (x>0 && y>0 && z>0) {
 % \end{lstlisting}
 % \caption{Taken from~\cite{DBLP:conf/cav/BrockschmidtCF13}}
 % \end{subfigure}
-
 \end{tabular}
+}
 \caption{Motivational examples, mostly taken from the literature.\label{fig:motivation}}
 \end{figure*}
 
@@ -1121,12 +1134,11 @@ Figure~\ref{fig:environment-model}:
 $T_o$ is a summary of $L_1$ that over-approximates its transition relation;
 $R_1$ and $R_2$ are ranking functions for $L_1$ and $L_2$, respectively.
 
-
-
 \begin{figure*}
 \begin{framed}
-\begin{minipage}{0.17\textwidth}
-\begin{lstlisting}[mathescape=true]
+%\resizebox{.25\textwidth}{!}{
+\begin{minipage}{.2\textwidth}
+\begin{lstlisting}[mathescape=true,basicstyle=\tiny]
 $L_1:$
 while (i<n){
   j = 0;
@@ -1140,9 +1152,11 @@ $L_2:$
 }
 \end{lstlisting}
 \end{minipage}
+%}
 \vline
-\begin{minipage}{0.82\textwidth}
-\begin{align*}
+\resizebox{.75\textwidth}{!}{
+\begin{minipage}{.85\textwidth}
+ \begin{align*}
  \exists T_o, R_1, R_2 . \forall i, j, n, i', j', n' . \\
    i < n & \rightarrow T_o(\langle i, j, n \rangle , \langle i, 0, n \rangle) ~ \wedge \\
    j \leq i \wedge T_o(\langle i', j', n' \rangle, \langle i, j, n\rangle ) & \rightarrow R_2(i, j, n) > 0 ~ \wedge \\
@@ -1152,9 +1166,44 @@ $L_2:$
                                          & R_1(i, j, n) > R_1(i+1, j, n)
    \end{align*}
 \end{minipage}
+}
 \end{framed}
 \caption{A program with nested loops and its termination formula\label{fig:environment-model}}
 \end{figure*}
+
+
+%% \begin{figure*}
+%% \begin{framed}
+%% \begin{minipage}{0.17\textwidth}
+%% \begin{lstlisting}[mathescape=true]
+%% $L_1:$
+%% while (i<n){
+%%   j = 0;
+
+%% $L_2:$
+%%   while (j$\leq$i){
+%%     j = j + 1;
+%%   }
+
+%%   i = i + 1;
+%% }
+%% \end{lstlisting}
+%% \end{minipage}
+%% \vline
+%% \begin{minipage}{0.82\textwidth}
+%% \begin{align*}
+%%  \exists T_o, R_1, R_2 . \forall i, j, n, i', j', n' . \\
+%%    i < n & \rightarrow T_o(\langle i, j, n \rangle , \langle i, 0, n \rangle) ~ \wedge \\
+%%    j \leq i \wedge T_o(\langle i', j', n' \rangle, \langle i, j, n\rangle ) & \rightarrow R_2(i, j, n) > 0 ~ \wedge \\
+%%      & R_2(i, j, n) > R_2(i, j+1, n) ~ \wedge \\
+%%      & T_o(\langle i', j', n' \rangle, \langle i, j+1, n \rangle) ~ \wedge \\
+%%    i < n \wedge S(\langle i, j, n \rangle, \langle i', j', n' \rangle) \wedge j' > i' & \rightarrow R_1(i, j, n) > 0 ~ \wedge \\
+%%                                          & R_1(i, j, n) > R_1(i+1, j, n)
+%%    \end{align*}
+%% \end{minipage}
+%% \end{framed}
+%% \caption{A program with nested loops and its termination formula\label{fig:environment-model}}
+%% \end{figure*}
 
 
 
@@ -1217,10 +1266,43 @@ reestablished $N_1$ after $L_2$ stops executing: $\lnot G_2(x) \wedge N_2(x)
 %
 \end{itemize}
 
+%% \begin{figure*}
+%% \begin{framed}
+%%  \begin{minipage}{0.16\textwidth}
+%% \begin{lstlisting}[mathescape=true]
+%% $L_1$:
+%% while ($G_1$) {
+%%   $P_1$;
+
+%% $L_2$:
+%%   while ($G_2$) {
+%%     $B_2$;
+%%   }
+
+%%   $P_2$;
+%% }
+%% \end{lstlisting}
+%% \end{minipage}
+%% \vline
+%% \begin{minipage}{0.82\textwidth}
+%% \begin{align*}
+%%  \exists N_1, N_2, x_0 . \forall x, x' . \\
+%%   N_1(x_0) & \, \wedge \\
+%%   N_1(x) & \rightarrow G_1(x) \, \wedge \\
+%%   N_1(x) \wedge P_1(x,x') & \rightarrow N_2(x') \, \wedge \\
+%%   G_2(x) \wedge N_2(x) \wedge B_2(x,x') & \rightarrow N_2(x') \, \wedge \\
+%%   \lnot G_2(x) \wedge N_2(x) \wedge P_2(x,x') & \rightarrow N_1(x') 
+%% \end{align*}
+%% \end{minipage}
+%% \end{framed}
+
+%% \caption{Formula encoding non-termination of nested loops \label{fig:nonterm-nested}}
+%% \end{figure*}
+
 \begin{figure*}
 \begin{framed}
- \begin{minipage}{0.16\textwidth}
-\begin{lstlisting}[mathescape=true]
+\begin{minipage}{0.2\textwidth}
+\begin{lstlisting}[mathescape=true,basicstyle=\tiny]
 $L_1$:
 while ($G_1$) {
   $P_1$;
@@ -1235,7 +1317,7 @@ $L_2$:
 \end{lstlisting}
 \end{minipage}
 \vline
-\begin{minipage}{0.82\textwidth}
+\begin{minipage}{0.8\textwidth}
 \begin{align*}
  \exists N_1, N_2, x_0 . \forall x, x' . \\
   N_1(x_0) & \, \wedge \\
@@ -1249,7 +1331,6 @@ $L_2$:
 
 \caption{Formula encoding non-termination of nested loops \label{fig:nonterm-nested}}
 \end{figure*}
-
 
 
 
