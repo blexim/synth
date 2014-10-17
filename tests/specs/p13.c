@@ -25,6 +25,7 @@ int check(solution_t *solution, word_t args[1]) {
 
 #ifdef SEARCH
   expected &= ((1 << WIDTH) - 1);
+  z &= WORDMASK;
 #endif
 
   return expected == z;

@@ -1,6 +1,6 @@
 #include "synth.h"
 
-int check(solution_t *solution, word_t args[1]) {
+int check(solution_t *solution, word_t args[NARGS]) {
   word_t res[NRES];
   exec(&solution->progs[0], args, res);
 
