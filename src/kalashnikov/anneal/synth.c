@@ -74,9 +74,9 @@ void rand_solution(solution_t *solution) {
     }
 
     for (i = 0; i < prog->len; i++) {
-      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
-      prog->params[i*3+1] = rand() % (i + NARGS + CONSTS);
-      prog->params[i*3+2] = rand() % (i + NARGS + CONSTS);
+      prog->params[i*3] = rand() % (i + ARGBASE);
+      prog->params[i*3+1] = rand() % (i + ARGBASE);
+      prog->params[i*3+2] = rand() % (i + ARGBASE);
     }
   }
 
@@ -110,15 +110,15 @@ void mutate(solution_t *solution) {
 
     for (i = 0; i < b->len; i++) {
       if (should_mutate()) {
-        b->params[i*3] = rand() % (i + NARGS + CONSTS);
+        b->params[i*3] = rand() % (i + ARGBASE);
       }
 
       if (should_mutate()) {
-        b->params[i*3+1] = rand() % (i + NARGS + CONSTS);
+        b->params[i*3+1] = rand() % (i + ARGBASE);
       }
 
       if (should_mutate()) {
-        b->params[i*3+2] = rand() % (i + NARGS + CONSTS);
+        b->params[i*3+2] = rand() % (i + ARGBASE);
       }
     }
   }

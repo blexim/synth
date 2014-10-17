@@ -1,7 +1,7 @@
 #include "synth.h"
 #include "exec.h"
 
-#define ISCONST(x) (x < CONSTS)
+#define ISCONST(x) (x < CONSTS + 2)
 
 int wellformed(prog_t *prog) {
   int i, j;
@@ -21,23 +21,27 @@ int wellformed(prog_t *prog) {
     }
 
     // Operands must not refer to uninitialised registers.
-    if (p1 >= i + NARGS + CONSTS) {
+    if (p1 >= i + NARGS + CONSTS + 2) {
       return 0;
     }
 
-    if (p2 >= i + NARGS + CONSTS) {
+    if (p2 >= i + NARGS + CONSTS + 2) {
       return 0;
     }
 
-    if (p3 >= i + NARGS + CONSTS) {
+    if (p3 >= i + NARGS + CONSTS + 2) {
       return 0;
     }
   }
 
   // Constants must be ordered & no duplicates.
+  if (CONSTS > 0 && prog->consts[0] <= 1) {
+    return 0;
+  }
+
   for (i = 0; i < CONSTS-1; i++) {
     if (prog->consts[i] >= prog->consts[i+1]) {
-      return 1;
+      return 0;
     }
   }
 

@@ -149,6 +149,11 @@ class Prog(object):
         return "t%d" % (idx + 1)
 
   def strarg(self, p, seqlen, consts, executable):
+    if p < 2:
+      return hex(p)
+
+    p -= 2
+
     if p < len(consts):
       return hex(consts[p])
     else:

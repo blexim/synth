@@ -92,7 +92,7 @@ class Checker(object):
     nevars = args.args.evars
     nheapvars = args.args.heapvars
     nprogs = args.args.progs
-    pwidth = log2(sz + consts + nargs - 1)
+    pwidth = log2(sz + consts + nargs + 2 - 1)
     pwidth = max(pwidth, 1)
     ewidth = max(width/4, 1)
     mwidth = width - ewidth - 1
