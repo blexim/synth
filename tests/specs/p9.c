@@ -21,7 +21,10 @@ int check(solution_t *solution, word_t args[1]) {
     ret = x;
   }
 
-  ret &= ((1 << WIDTH) - 1);
+#ifdef SEARCH
+  ret &= WORDMASK;
+  z &= WORDMASK;
+#endif
 
   return ret == z;
 }
