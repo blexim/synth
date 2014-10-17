@@ -192,35 +192,35 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       break;
 #endif // FLOAT
     case PATH_LEN:
-      assume(a1 < NHEAP && a2 < NHEAP);
+      assume(a1 < NPROG && a2 < NPROG);
       res = path_len(heap, a1, a2);
       break;
     case IS_PATH:
-      assume(a1 < NHEAP && a2 < NHEAP);
+      assume(a1 < NPROG && a2 < NPROG);
       res = is_path(heap, a1, a2);
       break;
     case ALIAS:
-      assume(a1 < NHEAP && a2 < NHEAP);
+      assume(a1 < NPROG && a2 < NPROG);
       res = alias(heap, a1, a2);
       break;
     case NOT_ALIAS:
-      assume(a1 < NHEAP && a2 < NHEAP);
+      assume(a1 < NPROG && a2 < NPROG);
       res = !alias(heap, a1, a2);
       break;
     case IS_NULL:
-      assume(a1 < NHEAP);
+      assume(a1 < NPROG);
       res = is_null(heap, a1);
       break;
     case NOT_NULL:
-      assume(a1 < NHEAP);
+      assume(a1 < NPROG);
       res = !is_null(heap, a1);
       break;
     case CIRCULAR:
-      assume(a1 < NHEAP);
+      assume(a1 < NPROG);
       res = circular(heap, a1);
       break;
     case NOT_CIRCULAR:
-      assume(a1 < NHEAP);
+      assume(a1 < NPROG);
       res = !circular(heap, a1);
       break;
 
