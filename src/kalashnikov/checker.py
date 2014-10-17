@@ -54,10 +54,6 @@ args.argparser.add_argument("--maxfit", default=1, type=int,
     help="maximum possible fitness for checkers")
 args.argparser.add_argument("--ofiledir", default="/tmp", type=str,
     help="directory to use for object files (must be writable and executable)")
-args.argparser.add_argument("--nheap", default=0, type=int,
-    help="number of heap variables")
-args.argparser.add_argument("--slack", default=0, type=int,
-    help="number of slack heap nodes")
 
 args.argparser.add_argument("-popsize", default=2000, type=int)
 args.argparser.add_argument("-keepfrac", default=200, type=int)
@@ -91,17 +87,10 @@ class Checker(object):
   scratchfile = None
 
   def __init__(self, sz, width, consts, verif=False):
+    nargs = args.args.args
     nres = sz
     nevars = args.args.evars
     nheapvars = args.args.heapvars
-    nslack = args.args.slack
-    nstack = args.args.args
-    nheapnodes = (nheapvars*2) - 1 + nslack
-    nargs = nstack + (nheapnodes*2) + nheapvars
-
-    if nheapnodes > 1:
-      nargs += 1
-
     nprogs = args.args.progs
     pwidth = log2(sz + consts + nargs + 2 - 1)
     pwidth = max(pwidth, 1)
@@ -109,8 +98,6 @@ class Checker(object):
     mwidth = width - ewidth - 1
     nnondet = args.args.nondet
     maxfit = args.args.maxfit
-
-    width = max(width, pwidth)
 
     self.sz = sz
     self.width = width
@@ -135,8 +122,6 @@ class Checker(object):
         "-DNARGS=%d" % nargs,
         "-DNEVARS=%d" % nevars,
         "-DNHEAP=%d" % nheapvars,
-        "-DNSLACK=%d" % nslack,
-        "-DNSTACK=%d" % nstack,
         "-DNPROGS=%d" % nprogs,
         "-DCONSTS=%d" % consts,
         "-DPWIDTH=%d" % pwidth,
@@ -146,8 +131,6 @@ class Checker(object):
         os.path.join(interpreter, "wellformed.c"),
         os.path.join(lib, "solution.c"),
         os.path.join(lib, "io.c"),
-        os.path.join(lib, "state.c"),
-        os.path.join(lib, "heap.c"),
         self.scratchfile.name] + args.args.checker
 
     if args.args.float:
