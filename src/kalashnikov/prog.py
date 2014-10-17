@@ -36,10 +36,11 @@ binops = {
     19: "%s ==> %s",    # Implies
     20: "min(%s, %s)",
     21: "max(%s, %s)",
-    23: "path_len(heap, %s, %s)",
-    24: "is_path(heap, %s, %s)",
-    25: "alias(heap, %s, %s)",
-    26: "!alias(heap, %s, %s)",
+    23: "f+(%s, %s)",
+    24: "f-(%s, %s)",
+    25: "f*(%s, %s)",
+    26: "f/(%s, %s)",
+    27: "path(%s, %s, args)"
 }
 
 unsafeops = (3, 18)
@@ -59,10 +60,7 @@ revbinops = { v: k for (k, v) in binops.items() }
 unops = {
     4: "-(%s)",
     8: "~(%s)",
-    27: "is_null(heap, %s)",
-    28: "!is_null(heap, %s)",
-    29: "circular(heap, %s)",
-    30: "!circular(heap, %s)",
+    28: "deref(%s, args)"
 }
 
 execunops = copy.copy(unops)
