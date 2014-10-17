@@ -124,23 +124,17 @@ insufficient for proving termination of many terminating programs, and
 furthermore a termination argument for a program operating on mathematical
 integers does not always lead to a termination argument for the same program
 operating on fixed-width machine integers.
-
-We present a reduction from program \emph{termination} to 
-second-order satisfiability. 
-%program
-%\emph{synthesis} via a fragment of second-order logic.  
-We give formulations for termination and non-termination in a fragment of second-order logic 
-with restricted quantification.
-
-existential second-order logic over finite domains is decidable \cite{kalashnikov}. 
-
-% decidable for finite-state programs 
-
-This reduction
-allows us to generate nonlinear, lexicographic ranking functions and
+We propose a termination analysis able 
+to generate nonlinear, lexicographic ranking functions and
 nonlinear recurrence sets that are correct for fixed-width machine arithmetic
-and floating-point arithmetic.  We use this reduction to build a sound and
-complete procedure for the termination analysis of finite-state programs with fixed-width
+and floating-point arithmetic
+Our technique is based on a reduction from program \emph{termination} to 
+second-order satisfaction. Thus, we provide 
+formulations for termination and non-termination in a fragment of second-order logic 
+with restricted quantification which was proven decidable over finite domains.
+%existential second-order logic over finite domains is decidable \cite{kalashnikov}. 
+The resulted technique is a sound and complete analysis for the termination 
+of finite-state programs with fixed-width
 integers and IEEE floating-point arithmetic.
 %
 \end{abstract}
@@ -241,7 +235,7 @@ due to its expressiveness, second-order logic is very difficult to reason
 in, with many second-order theories becoming undecidable even when the
 corresponding first-order theory is decidable.
 To make solving our constraints tractable, we formulate termination and non-termination inside a fragment of second-order logic with restricted quantification, 
-for which we have built a solver in \cite{}.
+for which we have built a solver in \cite{kalashnikov}.
 Our method is sound and
 complete for bit-vector programs -- for any program, we find
 a proof of either its termination or non-termination.
@@ -292,7 +286,8 @@ The main contributions of our work can be summarised as follows:
 \begin{itemize}
 
 \item  We rephrased the termination and non-termination problems as
-second-order $\exists \forall$ satisfaction problems.  This formulation
+second-order %$\exists \forall$ 
+satisfaction problems.  This formulation
 captures the (non-)termination
 properties of all of the loops in the program, including
 nested loops.  We can use this to analyse all the loops at once,
@@ -320,7 +315,8 @@ also compute lexicographic nonlinear ones.
 
 \item We implemented our technique and tried it on a selection of programs
 handling both bit-vectors and floats. In our implementation we made use of 
-a solver for second-order logic with restricted quantification that we have introduced in \cite{}. 
+a solver for a fragment of second-order logic with restricted quantification that is decidable 
+over finite domains \cite{kalashnikov}. 
 
 \end{itemize} 
 
@@ -791,7 +787,7 @@ non-termination problem can be uniformly defined in second-order logic.
 Due to its expressiveness, second-order logic is very difficult to reason
 in, with many second-order theories becoming undecidable even when the
 corresponding first-order theory is decidable.
-In \cite{}, we have identified and built a solver for a fragment of second-order logic with restricted quantification, 
+In \cite{kalashnikov}, we have identified and built a solver for a fragment of second-order logic with restricted quantification, 
 which we call second-order SAT (see Definition~\ref{def:2sat}).
 
 \begin{definition}[Second-Order SAT]
