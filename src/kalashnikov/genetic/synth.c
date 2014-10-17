@@ -65,7 +65,7 @@
 
 #define TESTFILE "/tmp/testvectors"
 
-#define ISTMP(x) ((x) >= NARGS + CONSTS)
+#define ISTMP(x) ((x) >= ARGBASE)
 
 #define min(x, y) (x) <= (y) ? (x) : (y)
 
@@ -146,9 +146,9 @@ void rand_solution(solution_t *solution) {
 
     for (i = 0; i < prog->len; i++) {
       prog->ops[i] = rand() % (MAXOPCODE + 1);
-      prog->params[i*3] = rand() % (i + NARGS + CONSTS);
-      prog->params[(i*3)+1] = rand() % (i + NARGS + CONSTS);
-      prog->params[(i*3)+2] = rand() % (i + NARGS + CONSTS);
+      prog->params[i*3] = rand() % (i + ARGBASE);
+      prog->params[(i*3)+1] = rand() % (i + ARGBASE);
+      prog->params[(i*3)+2] = rand() % (i + ARGBASE);
     }
 
     for (i = 0; i < CONSTS; i++) {
@@ -277,7 +277,7 @@ void mutate(individual_t *a, individual_t *b) {
       if (offs % 4 == 3) {
         sb->progs[i].ops[target] = rand() % MAXOPCODE;
       } else {
-        sb->progs[i].params[target*3 + offs] = rand() % (NARGS + CONSTS + target);
+        sb->progs[i].params[target*3 + offs] = rand() % (ARGBASE + target);
       }
 
       return;
@@ -294,7 +294,7 @@ void mutate(individual_t *a, individual_t *b) {
 #define splice(p, delta, i) do { \
   if (ISTMP((p))) { \
     (p) -= delta; \
-    (p) %= (NARGS + CONSTS + i); \
+    (p) %= (ARGBASE + i); \
   } \
 } while(0)
 
