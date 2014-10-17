@@ -9,7 +9,8 @@ int check(solution_t *solution, word_t args[1]) {
   word_t z = res[0];
 
 #ifdef SEARCH
-  q &= ((1 << WIDTH) - 1);
+  q &= WORDMASK;
+  z &= WORDMASK;
 #endif
 
   return q == z;

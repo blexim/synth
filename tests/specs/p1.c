@@ -8,5 +8,10 @@ int check(solution_t *solution, word_t args[1]) {
   word_t z = res[0];
   word_t expected = (x-1) & x;
 
+#ifdef SEARCH
+  z &= WORDMASK;
+  expected &= WORDMASK;
+#endif
+
   return z == expected;
 }
