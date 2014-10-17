@@ -16,8 +16,6 @@ typedef struct state {
   word_t stack[NSTACK];
 } statet;
 
-#define heap(s) &((s)->heap)
-
 int valid_state(statet *state);
 
 void deserialize_state(word_t args[NARGS], statet *state);

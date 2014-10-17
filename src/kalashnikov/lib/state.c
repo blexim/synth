@@ -2,6 +2,8 @@
 #include "heap.h"
 #include "state.h"
 
+#define heap(s) &((s)->heap)
+
 int valid_state(statet *state) {
   return valid_abstract_heap(heap(state));
 }
