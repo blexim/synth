@@ -129,9 +129,9 @@ to generate nonlinear, lexicographic ranking functions and
 nonlinear recurrence sets that are correct for fixed-width machine arithmetic
 and floating-point arithmetic
 Our technique is based on a reduction from program \emph{termination} to 
-second-order satisfaction. Thus, we provide 
+second-order \emph{satisfaction}. We provide 
 formulations for termination and non-termination in a fragment of second-order logic 
-with restricted quantification which was proven decidable over finite domains.
+with restricted quantification which is decidable over finite domains \cite{kalashnikov}.
 %existential second-order logic over finite domains is decidable \cite{kalashnikov}. 
 The resulted technique is a sound and complete analysis for the termination 
 of finite-state programs with fixed-width
@@ -184,7 +184,7 @@ termination argument relies on checking the \emph{transitive closure} of the
 program, rather than a single step.  As such, there is experimental evidence
 that most of the effort is spent in reachability
 analysis~\cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/KroeningSTW10},
-requiring the support of powerful safety checkers: there is a tradeoff
+requiring the support of powerful safety checkers: there is a trade-off
 between the complexity of the termination arguments and that of checking
 their validity.
 
@@ -194,7 +194,7 @@ that are easier to
 check~\cite{DBLP:conf/cav/KroeningSTW10,DBLP:conf/tacas/CookSZ13}. 
 Following the same trend, we investigate its extreme: \emph{unrestricted}
 termination arguments.  This means that our ranking functions may involve
-nonlinearity and lexicographic orders: we do not commit to any particular
+non-linearity and lexicographic orders: we do not commit to any particular
 syntactic form, and do not use templates.  Furthermore, our approach allows
 us to \emph{simultaneously} search for proofs of \emph{non-termination},
 which take the form of recurrence sets.
@@ -296,7 +296,7 @@ both properties are captured in the same second-order formula.
 
 \item We designed a bit-level accurate technique for computing ranking
 functions and recurrence sets that correctly accounts for the wrap-around
-behavior caused by under- and overflows in bit-vector and floating-point arithmetic.  Our
+behaviour caused by under- and overflows in bit-vector and floating-point arithmetic.  Our
 technique is not restricted to finding linear ranking functions, but can
 also compute lexicographic nonlinear ones.
 
@@ -1860,7 +1860,7 @@ has been conducted in the area of proving non-termination.  Gupta et
 al.~dynamically enumerate lasso-shaped candidate paths for counterexamples,
 and then statically prove their
 feasibility~\cite{DBLP:conf/popl/GuptaHMRX08}.  Chen et al.~prove
-nontermination via reduction to safety
+non-termination via reduction to safety
 proving~\cite{DBLP:conf/tacas/ChenCFNO14}.  Their iterative algorithm uses
 counterexamples to a fixed safety property to refine an under-approximation
 of a program.  In order to prove both termination and non-termination,
