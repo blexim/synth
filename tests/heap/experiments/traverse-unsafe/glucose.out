@@ -3,13 +3,13 @@ c This is glucose 4.0 --  based on MiniSAT (Many thanks to MiniSAT team)
 c
 c ========================================[ Problem Statistics ]===========================================
 c |                                                                                                       |
-c |  Number of variables:         12132                                                                   |
-c |  Number of clauses:           44069                                                                   |
+c |  Number of variables:         15352                                                                   |
+c |  Number of clauses:           56974                                                                   |
 c |  Parse time:                   0.02 s                                                                 |
 c |                                                                                                       |
 c | Preprocesing is fully done
-c |  Eliminated clauses:           0.43 Mb                                                                |
-c |  Simplification time:          0.05 s                                                                 |
+c |  Eliminated clauses:           0.56 Mb                                                                |
+c |  Simplification time:          0.06 s                                                                 |
 c |                                                                                                       |
 c ========================================[ MAGIC CONSTANTS ]==============================================
 c | Constants are supposed to work well together :-)                                                      |
@@ -27,21 +27,21 @@ c |                                                                             
 c |          RESTARTS           |          ORIGINAL         |              LEARNT              | Progress |
 c |       NB   Blocked  Avg Cfc |    Vars  Clauses Literals |   Red   Learnts    LBD2  Removed |          |
 c =========================================================================================================
-c last restart ## conflicts  :  96 51 
+c last restart ## conflicts  :  189 161 
 c =========================================================================================================
-c restarts              : 2 (100 conflicts in avg)
+c restarts              : 2 (178 conflicts in avg)
 c blocked restarts      : 0 (multiple: 0) 
 c last block at restart : 0
 c nb ReduceDB           : 0
 c nb removed Clauses    : 0
-c nb learnts DL2        : 12
-c nb learnts size 2     : 6
-c nb learnts size 1     : 0
-c conflicts             : 201            (2907 /sec)
-c decisions             : 947            (0.00 % random) (13696 /sec)
-c propagations          : 25643          (370864 /sec)
-c conflict literals     : 3398           (15.05 % deleted)
-c nb reduced Clauses    : 3
-c CPU time              : 0.069144 s
+c nb learnts DL2        : 19
+c nb learnts size 2     : 10
+c nb learnts size 1     : 1
+c conflicts             : 357            (3909 /sec)
+c decisions             : 1699           (0.00 % random) (18605 /sec)
+c propagations          : 77787          (851816 /sec)
+c conflict literals     : 4722           (17.56 % deleted)
+c nb reduced Clauses    : 5
+c CPU time              : 0.091319 s
 
 s SATISFIABLE
