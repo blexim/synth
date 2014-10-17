@@ -1,0 +1,47 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = ~(a1);
+res1 = 0xd * a1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 / 0x1;
+res1 = t1 * 0x2d;
+
+Fastest checker: explicit
+Correct for wordlen=8
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 3.18s
+
+Program 0:
+t1 = a1 / 0x1;
+res1 = t1 * 0x2d;
+
+
+Perf counters:
+{'cbmc': 1, 'anneal': 2, 'explicit': 4, 'iterations': 2}
+Perf timers:
+gcc: 1.35s
+verify: 2.24s
+checker: 3.17s
+generalize: 0.00s
+synth: 0.94s
+_: 3.18s

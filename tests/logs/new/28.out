@@ -1,0 +1,37 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 < 0x1;
+t2 = a2 s< 0x0;
+res1 = a1 * t1;
+res2 = 0x0 | a2;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.93s
+
+Program 0:
+t1 = 0x0 < 0x1;
+t2 = a2 s< 0x0;
+res1 = a1 * t1;
+res2 = 0x0 | a2;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.44s
+checker: 1.92s
+gcc: 0.83s
+_: 1.93s
+synth: 0.49s

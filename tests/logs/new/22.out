@@ -1,0 +1,112 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 s<= a1;
+t2 = -(a1);
+t3 = 0x1 + a1;
+t4 = t2 s< t3;
+t5 = min(t4, 0x1);
+t6 = min(0x1, t5);
+t7 = t6 << a1;
+t8 = 0x7 s<= a1;
+t9 = t3 >> t5;
+res1 = t9 < 0x4;
+
+Fastest checker: explicit
+Fails for (0,)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x3 >> a1;
+t2 = 0x3 << a1;
+t3 = 0x3 != 0x3;
+t4 = a1 << a1;
+t5 = a1 << a1;
+t6 = a1 != t5;
+t7 = 0x3 + a1;
+t8 = t7 < 0x3;
+t9 = t8 < 0x3;
+res1 = min(t7, t6);
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 6
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0xf - a1;
+t2 = a1 % t1;
+t3 = t2 >>> t2;
+t4 = t1 s<= t2;
+t5 = 0x0 + 0x0;
+t6 = 0xf & t3;
+t7 = t1 | t6;
+t8 = t7 | t2;
+t9 = max(0x1, t3);
+res1 = t3 & 0x1;
+
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0xf - a1;
+t2 = 0x32 & t1;
+t3 = t2 >>> a1;
+t4 = min(t1, t2);
+t5 = 0x0 + 0x0;
+t6 = 0xf & t3;
+t7 = t3 | t6;
+t8 = t7 | t6;
+t9 = max(0x1, t3);
+res1 = t3 & 0x1;
+
+Fastest checker: explicit
+Fails for (2,)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0xf - a1;
+t2 = 0x36 & t1;
+t3 = t2 >>> a1;
+t4 = min(t1, t2);
+t5 = 0x0 + 0x0;
+t6 = 0x1 == 0x36;
+t7 = t3 | t6;
+t8 = t1 | t6;
+t9 = max(t2, t3);
+res1 = t3 & 0x1;
+
+Fastest checker: explicit
+Fails for (4,)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 2, 'anneal': 3, 'explicit': 11, 'timeout': 1, 'iterations': 6}
+Perf timers:
+gcc: 2.04s
+verify: 0.59s
+checker: 99.97s
+generalize: 0.02s
+synth: 99.41s
+_: 100.00s

@@ -1,0 +1,39 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(0x0, a1);
+t2 = a1 >> 0x0;
+t3 = -(t2);
+t4 = t3 == t1;
+res1 = min(t1, t3);
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.03s
+
+Program 0:
+t1 = max(0x0, a1);
+t2 = a1 >> 0x0;
+t3 = -(t2);
+t4 = t3 == t1;
+res1 = min(t1, t3);
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.58s
+checker: 2.01s
+gcc: 0.80s
+_: 2.03s
+synth: 0.46s

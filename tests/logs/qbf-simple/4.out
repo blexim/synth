@@ -1,0 +1,31 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+res1 = 0x0 >>> 0x0;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.67s
+
+Program 0:
+res1 = 0x0 >>> 0x0;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.22s
+checker: 1.67s
+gcc: 0.77s
+_: 1.67s
+synth: 0.45s

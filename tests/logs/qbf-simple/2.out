@@ -1,0 +1,33 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = min(a2, a1);
+res1 = a2 - a1;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.86s
+
+Program 0:
+t1 = min(a2, a1);
+res1 = a2 - a1;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.42s
+checker: 1.86s
+gcc: 0.78s
+_: 1.86s
+synth: 0.45s

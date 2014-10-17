@@ -1,0 +1,39 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = ~(a1);
+t2 = 0x1 ==> 0xf;
+t3 = a1 ? 0xf : a1;
+t4 = -(t1);
+res1 = t1 & t4;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.91s
+
+Program 0:
+t1 = ~(a1);
+t2 = 0x1 ==> 0xf;
+t3 = a1 ? 0xf : a1;
+t4 = -(t1);
+res1 = t1 & t4;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.49s
+checker: 1.90s
+gcc: 0.76s
+_: 1.91s
+synth: 0.42s

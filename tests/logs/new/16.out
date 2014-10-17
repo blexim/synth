@@ -1,0 +1,45 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 / a1;
+t2 = t1 * 0x1;
+res1 = max(a1, a2);
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = max(a1, a2);
+t2 = max(0x0, a2);
+res1 = max(t1, t2);
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.62s
+
+Program 0:
+t1 = max(a1, a2);
+t2 = max(0x0, a2);
+res1 = max(t1, t2);
+
+
+Perf counters:
+{'genetic': 2, 'cbmc': 1, 'explicit': 2, 'iterations': 2}
+Perf timers:
+verify: 1.60s
+checker: 2.59s
+gcc: 1.35s
+_: 2.62s
+synth: 1.01s

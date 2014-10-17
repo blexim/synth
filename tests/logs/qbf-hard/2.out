@@ -1,0 +1,381 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 1, 0, 5
+Program 0:
+res1 = 0x1 >>> 0x1;
+Program 1:
+res1 = a2 ? a4 : 0x0;
+Program 2:
+res1 = min(a2, 0x1);
+Program 3:
+res1 = a3 != a4;
+Program 4:
+res1 = 0x1 + a2;
+Program 5:
+t1 = a2 <= 0x1;
+res1 = min(t1, 0x1);
+Program 6:
+t1 = a4 % 0x1;
+res1 = a3 / 0x1;
+Program 7:
+t1 = a4 != 0x1;
+res1 = 0x0 < a3;
+Program 8:
+t1 = a2 < a4;
+res1 = a5 < a2;
+Program 9:
+t1 = a3 ^ a2;
+res1 = a3 * 0x1;
+Program 10:
+t1 = min(0x0, a5);
+t2 = a5 == 0x1;
+res1 = -(t1);
+Program 11:
+res1 = a5 * 0x0;
+Program 12:
+t1 = 0x1 s<= 0x0;
+res1 = a2 s<= a1;
+Program 13:
+t1 = max(a2, a2);
+res1 = a2 ? t1 : a5;
+Program 14:
+t1 = 0x1 ==> 0x1;
+res1 = min(a2, a1);
+Program 15:
+t1 = max(a2, a3);
+t2 = a2 ? a1 : a4;
+res1 = min(a4, a3);
+Program 16:
+t1 = a2 ? a4 : a3;
+res1 = a5 * a4;
+Program 17:
+res1 = min(a3, a5);
+Program 18:
+t1 = a4 + 0x1;
+t2 = a1 + a3;
+res1 = 0x0 ? a4 : t1;
+Program 19:
+t1 = -(a5);
+res1 = 0x0 == 0x0;
+Program 20:
+t1 = a3 s< a4;
+res1 = a4 & t1;
+Program 21:
+t1 = a1 >>> a3;
+res1 = 0x0 << a1;
+Program 22:
+res1 = a4 != a4;
+Program 23:
+t1 = 0x1 ^ a1;
+t2 = max(a1, t1);
+res1 = t2 % a2;
+Program 24:
+t1 = 0x0 >> a1;
+res1 = a2 & a5;
+Program 25:
+res1 = a5 ==> a1;
+Program 26:
+res1 = a3 | a4;
+Program 27:
+res1 = a5 ? a5 : 0x0;
+Program 28:
+res1 = min(0x1, a2);
+Program 29:
+t1 = a5 / a2;
+res1 = t1 >> t1;
+Program 30:
+res1 = 0x0 == a3;
+Program 31:
+res1 = -(0x0);
+Program 32:
+t1 = ~(a5);
+res1 = a5 <= 0x0;
+Program 33:
+res1 = max(a1, a5);
+Program 34:
+res1 = min(a1, a4);
+Program 35:
+res1 = a2 & a2;
+Program 36:
+res1 = a4 s< 0x0;
+Program 37:
+t1 = a3 ^ a2;
+res1 = a1 != 0x1;
+Program 38:
+t1 = a1 * a2;
+t2 = max(0x1, a5);
+res1 = t1 - 0x0;
+Program 39:
+res1 = a1 s<= a3;
+Program 40:
+t1 = 0x0 ==> a1;
+t2 = a2 >> a4;
+res1 = max(t1, t2);
+Program 41:
+t1 = a2 s<= a3;
+res1 = 0x0 % t1;
+Program 42:
+t1 = a3 ==> a3;
+res1 = a1 < a4;
+Program 43:
+t1 = a4 >>> a1;
+t2 = a1 == a2;
+res1 = a5 + t1;
+Program 44:
+t1 = a2 & a1;
+res1 = a4 + a1;
+Program 45:
+res1 = a4 | a4;
+Program 46:
+res1 = a2 | a5;
+Program 47:
+t1 = a4 <= a4;
+t2 = a2 == 0x0;
+res1 = max(a3, t2);
+Program 48:
+t1 = a2 | a1;
+res1 = min(a5, 0x0);
+Program 49:
+res1 = -(a3);
+Program 50:
+t1 = a4 != a4;
+t2 = ~(0x1);
+res1 = a3 * a4;
+Program 51:
+res1 = 0x0 == a5;
+Program 52:
+res1 = 0x0 % 0x1;
+Program 53:
+t1 = a1 == 0x1;
+res1 = -(a3);
+Program 54:
+res1 = a5 << 0x1;
+Program 55:
+t1 = a5 + a1;
+res1 = a1 - a1;
+Program 56:
+t1 = 0x0 s<= 0x0;
+res1 = a3 + a1;
+Program 57:
+t1 = 0x0 | a4;
+res1 = a4 >> 0x1;
+Program 58:
+t1 = a2 - a5;
+t2 = min(a5, a1);
+res1 = a3 >>> t2;
+Program 59:
+res1 = a5 / a3;
+Program 60:
+t1 = 0x0 - 0x0;
+res1 = a1 s< 0x1;
+Program 61:
+t1 = min(a3, a1);
+t2 = 0x0 | a3;
+res1 = 0x1 - 0x0;
+Program 62:
+t1 = min(a3, a1);
+res1 = a2 / a3;
+Program 63:
+t1 = a1 < a2;
+t2 = a1 ? a1 : t1;
+res1 = a5 >> 0x1;
+Program 64:
+t1 = a5 s<= a3;
+t2 = 0x0 ==> 0x0;
+res1 = max(a1, t1);
+Program 65:
+t1 = 0x1 >> 0x0;
+res1 = 0x1 / t1;
+Program 66:
+t1 = a4 < 0x0;
+res1 = 0x1 >>> t1;
+Program 67:
+t1 = a3 != a1;
+res1 = a5 s< a3;
+Program 68:
+res1 = a4 == 0x1;
+Program 69:
+t1 = 0x1 >> 0x0;
+t2 = max(0x0, a4);
+res1 = min(a4, a2);
+Program 70:
+t1 = a3 ^ 0x0;
+res1 = a4 <= a5;
+Program 71:
+t1 = ~(a2);
+t2 = a3 <= a5;
+res1 = t1 ==> 0x0;
+Program 72:
+t1 = a3 >>> 0x1;
+res1 = a2 | 0x1;
+Program 73:
+t1 = ~(a3);
+t2 = t1 % a4;
+res1 = a4 >>> a3;
+Program 74:
+t1 = a4 <= a2;
+res1 = min(a4, 0x1);
+Program 75:
+t1 = a1 == a1;
+res1 = a4 - a2;
+Program 76:
+res1 = min(0x0, a5);
+Program 77:
+t1 = ~(0x0);
+res1 = ~(t1);
+Program 78:
+t1 = a5 % a3;
+t2 = 0x1 | a1;
+res1 = max(a4, t2);
+Program 79:
+t1 = a5 % a3;
+res1 = a2 < t1;
+Program 80:
+t1 = -(a4);
+t2 = 0x1 >>> a5;
+res1 = a5 == a4;
+Program 81:
+res1 = a4 s< a3;
+Program 82:
+t1 = -(a5);
+t2 = a1 >> a3;
+res1 = a5 & t2;
+Program 83:
+res1 = a4 ==> a2;
+Program 84:
+t1 = 0x0 >> a4;
+t2 = t1 ==> a2;
+res1 = a4 ^ 0x0;
+Program 85:
+t1 = 0x0 & 0x1;
+res1 = a1 & 0x1;
+Program 86:
+t1 = a5 ? a2 : a5;
+t2 = 0x1 s< a3;
+res1 = 0x0 s< a5;
+Program 87:
+t1 = a3 ==> a2;
+res1 = a4 + a1;
+Program 88:
+res1 = a3 + 0x0;
+Program 89:
+res1 = -(0x1);
+Program 90:
+res1 = 0x0 ==> a1;
+Program 91:
+t1 = min(0x1, a1);
+t2 = 0x0 ? 0x1 : 0x0;
+res1 = max(a4, a1);
+Program 92:
+t1 = max(0x0, 0x0);
+t2 = a1 | 0x0;
+res1 = a1 >> t1;
+Program 93:
+res1 = a2 != a2;
+Program 94:
+res1 = 0x0 / a3;
+Program 95:
+t1 = a4 - a3;
+res1 = min(0x0, t1);
+Program 96:
+res1 = a2 << a1;
+Program 97:
+res1 = 0x0 ==> a2;
+Program 98:
+t1 = a4 != a1;
+t2 = a4 ==> a1;
+res1 = a5 >>> 0x0;
+Program 99:
+res1 = a2 s< a1;
+Program 100:
+t1 = a5 >>> a3;
+t2 = a4 ? a1 : a2;
+res1 = a3 & 0x1;
+Program 101:
+t1 = a3 | a1;
+res1 = a1 s< a5;
+Program 102:
+t1 = a4 + a1;
+res1 = a5 <= a2;
+Program 103:
+res1 = a1 ^ 0x0;
+Program 104:
+res1 = 0x0 s< a1;
+Program 105:
+t1 = a5 | a1;
+t2 = 0x0 | t1;
+res1 = t2 ? a1 : 0x0;
+Program 106:
+t1 = a4 % a4;
+res1 = 0x0 <= t1;
+Program 107:
+t1 = max(a3, 0x0);
+t2 = a4 == a2;
+res1 = a3 - a4;
+Program 108:
+res1 = a2 != a5;
+Program 109:
+res1 = a3 s< a5;
+Program 110:
+res1 = min(a1, a4);
+Program 111:
+t1 = max(a1, 0x1);
+t2 = 0x0 <= a2;
+res1 = ~(t1);
+Program 112:
+t1 = 0x0 <= a4;
+res1 = 0x0 ^ 0x0;
+Program 113:
+res1 = a4 % a3;
+Program 114:
+t1 = a4 ==> a1;
+res1 = 0x0 % 0x1;
+Program 115:
+res1 = a4 <= 0x1;
+Program 116:
+t1 = a3 | a1;
+res1 = 0x1 >> a2;
+Program 117:
+t1 = a4 ^ a5;
+t2 = a5 * 0x1;
+res1 = min(0x0, a4);
+Program 118:
+res1 = a2 & 0x0;
+Program 119:
+t1 = a4 s< 0x1;
+res1 = a5 >>> a1;
+Program 120:
+res1 = a4 / a5;
+Program 121:
+res1 = 0x0 != 0x0;
+Program 122:
+res1 = 0x0 != a5;
+Program 123:
+t1 = a1 != a4;
+res1 = 0x1 ? a3 : 0x0;
+Program 124:
+t1 = a3 s<= a2;
+t2 = 0x1 >>> a1;
+res1 = a4 ^ t2;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0, 0)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 1, 'explicit': 1, 'timeout': 1, 'iterations': 2}
+Perf timers:
+verify: 0.77s
+checker: 99.99s
+gcc: 1.50s
+_: 100.02s
+synth: 99.25s
