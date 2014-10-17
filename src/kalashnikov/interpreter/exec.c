@@ -1,7 +1,6 @@
 #include "synth.h"
 #include "exec.h"
-#include "heap.h"
-#include "state.h"
+#include "heaplib.h"
 
 #include <math.h>
 
@@ -191,29 +190,11 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = fi.x;
       break;
 #endif // FLOAT
-    case PATH_LEN:
-      res = path_len(heap, p1, p2);
+    case ISINF:
+      res = (p1 == WORDMASK);
       break;
-    case IS_PATH:
-      res = is_path(heap, p1, p2);
-      break;
-    case ALIAS:
-      res = alias(heap, p1, p2);
-      break;
-    case NOT_ALIAS:
-      res = !alias(heap, p1, p2);
-      break;
-    case IS_NULL:
-      res = is_null(heap, p1);
-      break;
-    case NOT_NULL:
-      res = !is_null(heap, p1);
-      break;
-    case CIRCULAR:
-      res = circular(heap, p1);
-      break;
-    case NOT_CIRCULAR:
-      res = !circular(heap, p1);
+    case NOTINF:
+      res = (p1 != WORDMASK);
       break;
 
     default:
