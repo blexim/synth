@@ -1,0 +1,39 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = min(0x1, 0x5);
+t2 = max(a1, 0x0);
+t3 = t2 - 0x1;
+t4 = t3 | t2;
+res1 = t2 ^ t4;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.39s
+
+Program 0:
+t1 = min(0x1, 0x5);
+t2 = max(a1, 0x0);
+t3 = t2 - 0x1;
+t4 = t3 | t2;
+res1 = t2 ^ t4;
+
+
+Perf counters:
+{'cbmc': 1, 'anneal': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.51s
+checker: 2.38s
+gcc: 0.75s
+_: 2.39s
+synth: 0.88s

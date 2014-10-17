@@ -1,0 +1,83 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 7, 2, 3
+Program 0:
+res1 = a1 <= a1;
+Program 1:
+t1 = a1 * 0x0;
+t2 = t1 >> a2;
+res1 = -(a1);
+Program 2:
+t1 = max(a2, 0x0);
+res1 = a2 == 0x0;
+Program 3:
+t1 = a2 >>> a1;
+t2 = ~(a1);
+res1 = 0x0 <= a2;
+Program 4:
+res1 = a1 & a1;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 6, 6, 5
+Program 0:
+t1 = 0x0 ? a1 : 0x1;
+res1 = 0x1 s<= t1;
+Program 1:
+res1 = a2 <= a2;
+Program 2:
+t1 = 0x0 ? a1 : a1;
+t2 = t1 >>> t1;
+res1 = t2 s<= t2;
+Program 3:
+t1 = a1 s<= a1;
+res1 = a2 ? 0x1 : 0x1;
+Program 4:
+t1 = 0x1 * a2;
+t2 = 0x1 % 0x1;
+res1 = t1 ==> 0x1;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: explicit
+Also correct for wordlen=1!
+
+
+
+
+
+
+
+Finished in 1.46s
+
+Evars: 6, 6, 5
+Program 0:
+t1 = 0x0 ? a1 : 0x1;
+res1 = 0x1 s<= t1;
+Program 1:
+res1 = a2 <= a2;
+Program 2:
+t1 = 0x0 ? a1 : a1;
+t2 = t1 >>> t1;
+res1 = t2 s<= t2;
+Program 3:
+t1 = a1 s<= a1;
+res1 = a2 ? 0x1 : 0x1;
+Program 4:
+t1 = 0x1 * a2;
+t2 = 0x1 % 0x1;
+res1 = t1 ==> 0x1;
+
+
+Perf counters:
+{'genetic': 2, 'explicit': 3, 'iterations': 2}
+Perf timers:
+verify: 0.35s
+checker: 1.45s
+gcc: 1.43s
+_: 1.46s
+synth: 1.10s

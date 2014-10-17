@@ -1,0 +1,35 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 << 0x1;
+t2 = -(a1);
+t3 = t1 ^ a1;
+t4 = t2 - t3;
+res1 = t4 & a1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'anneal': 1, 'explicit': 3, 'timeout': 1, 'iterations': 2}
+Perf timers:
+gcc: 1.16s
+verify: 0.37s
+checker: 99.99s
+generalize: 0.00s
+synth: 99.63s
+_: 100.00s

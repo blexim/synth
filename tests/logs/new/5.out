@@ -1,0 +1,56 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0x1 < 0x1;
+t2 = min(0x1, 0x1);
+t3 = t2 / t2;
+t4 = a1 + 0xf;
+res1 = t4 | a1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: explicit
+Couldn't generalize :-(
+Increasing wordlen to 8
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 - 0x1;
+t2 = 0xd8 != t1;
+t3 = 0x0 << a1;
+t4 = t1 ? t2 : a1;
+res1 = t1 | a1;
+
+Fastest checker: explicit
+Correct for wordlen=8
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 2.82s
+
+Program 0:
+t1 = a1 - 0x1;
+t2 = 0xd8 != t1;
+t3 = 0x0 << a1;
+t4 = t1 ? t2 : a1;
+res1 = t1 | a1;
+
+
+Perf counters:
+{'cbmc': 1, 'anneal': 2, 'explicit': 4, 'iterations': 2}
+Perf timers:
+gcc: 1.29s
+verify: 1.89s
+checker: 2.80s
+generalize: 0.00s
+synth: 0.93s
+_: 2.82s

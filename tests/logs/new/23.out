@@ -1,0 +1,35 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0x1 s< 0x0;
+t2 = -(0x1);
+t3 = 0x40fedf79 <= 0x1;
+t4 = 0x1 | a1;
+t5 = 0x0 < t3;
+t6 = 0x40fedf79 ^ 0x40fedf79;
+t7 = a1 + 0x40fedf79;
+t8 = 0x647a222c ==> t6;
+t9 = t4 s<= 0x647a222c;
+res1 = t7 % t4;
+
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'anneal': 1, 'explicit': 1, 'timeout': 1, 'iterations': 2}
+Perf timers:
+verify: 0.20s
+checker: 99.99s
+gcc: 0.79s
+_: 100.00s
+synth: 99.80s

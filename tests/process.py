@@ -22,11 +22,15 @@ def load_file(filename):
 
   state = START
   insts = 0
+  seen_finished = False
 
-  r = re.compile('t(\d+) =')
+  r = re.compile('.* = .*;')
 
   for l in f.readlines():
     l = l.strip()
+
+    if "Finished" in l:
+      seen_finished = True
 
     if state == START and l == "Perf counters:":
       state = COUNTERS
@@ -37,8 +41,8 @@ def load_file(filename):
 
     m = r.match(l)
 
-    if m:
-      insts = int(m.group(1))
+    if seen_finished and m:
+      insts += 1
 
     if state == COUNTERS:
       counters = eval(l)

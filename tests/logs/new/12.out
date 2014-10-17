@@ -1,0 +1,83 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 + a1;
+t2 = a1 + 0x1;
+t3 = 0x1 ==> 0x0;
+t4 = a2 << 0x1;
+res1 = t2 s< t4;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = min(a2, 0x1);
+t2 = a2 >> t1;
+t3 = min(a1, t2);
+t4 = t3 | a2;
+res1 = a1 s<= t4;
+
+Fastest checker: cbmc
+Fails for (25165952, 16777221)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = 0x1 << a2;
+t2 = a2 >>> t1;
+t3 = min(0x1, t1);
+t4 = a1 <= a2;
+res1 = t2 ^ t4;
+
+Fastest checker: cbmc
+Fails for (69637, 4097)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a1 <= a2;
+t2 = a2 / 0x1;
+t3 = a1 ^ t2;
+t4 = a2 s<= t3;
+res1 = t4 ? t1 : 0x1;
+
+Fastest checker: cbmc
+Fails for (4294967295, 613566756)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = a1 ^ a2;
+t2 = a1 ^ a2;
+t3 = a1 & t2;
+res1 = t3 <= a2;
+
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 8.99s
+
+Program 0:
+t1 = a1 ^ a2;
+t2 = a1 ^ a2;
+t3 = a1 & t2;
+res1 = t3 <= a2;
+
+
+Perf counters:
+{'cbmc': 4, 'genetic': 2, 'anneal': 3, 'explicit': 1, 'iterations': 5}
+Perf timers:
+verify: 5.82s
+checker: 8.97s
+gcc: 1.26s
+_: 8.99s
+synth: 3.17s

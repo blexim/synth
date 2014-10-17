@@ -1,0 +1,35 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x0 >> a1;
+t2 = a1 ? t1 : a1;
+res1 = a1 >>> t2;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 1.88s
+
+Program 0:
+t1 = 0x0 >> a1;
+t2 = a1 ? t1 : a1;
+res1 = a1 >>> t2;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.44s
+checker: 1.87s
+gcc: 0.77s
+_: 1.88s
+synth: 0.44s
