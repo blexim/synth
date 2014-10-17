@@ -32,8 +32,14 @@
 #define FDIV 26
 
 // Heap
-#define ISINF 23
-#define NOTINF 24
+#define PATH_LEN 23
+#define IS_PATH 24
+#define ALIAS 25
+#define NOT_ALIAS 26
+#define IS_NULL 27
+#define NOT_NULL 28
+#define CIRCULAR 29
+#define NOT_CIRCULAR 30
 
 
 #endif // EXEC_H

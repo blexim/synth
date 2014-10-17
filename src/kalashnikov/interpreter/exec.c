@@ -1,6 +1,7 @@
 #include "synth.h"
 #include "exec.h"
-#include "heaplib.h"
+#include "heap.h"
+#include "state.h"
 
 #include <math.h>
 
@@ -190,11 +191,37 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
       res = fi.x;
       break;
 #endif // FLOAT
-    case ISINF:
-      res = (p1 == WORDMASK);
+    case PATH_LEN:
+      assume(a1 < NHEAP && a2 < NHEAP);
+      res = path_len(heap, a1, a2);
       break;
-    case NOTINF:
-      res = (p1 != WORDMASK);
+    case IS_PATH:
+      assume(a1 < NHEAP && a2 < NHEAP);
+      res = is_path(heap, a1, a2);
+      break;
+    case ALIAS:
+      assume(a1 < NHEAP && a2 < NHEAP);
+      res = alias(heap, a1, a2);
+      break;
+    case NOT_ALIAS:
+      assume(a1 < NHEAP && a2 < NHEAP);
+      res = !alias(heap, a1, a2);
+      break;
+    case IS_NULL:
+      assume(a1 < NHEAP);
+      res = is_null(heap, a1);
+      break;
+    case NOT_NULL:
+      assume(a1 < NHEAP);
+      res = !is_null(heap, a1);
+      break;
+    case CIRCULAR:
+      assume(a1 < NHEAP);
+      res = circular(heap, a1);
+      break;
+    case NOT_CIRCULAR:
+      assume(a1 < NHEAP);
+      res = !circular(heap, a1);
       break;
 
     default:

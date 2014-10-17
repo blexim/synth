@@ -75,7 +75,7 @@
 
 
 #ifdef HEAP
-  #define MAXOPCODE 24
+  #define MAXOPCODE 30
 #elif defined(FLOAT)
   // Use this one to enable floating point
   #define MAXOPCODE 26
