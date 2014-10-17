@@ -1,0 +1,42 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a2 ^ 0x1;
+t2 = a1 >> t1;
+t3 = a2 & a2;
+t4 = 0x1 >> t3;
+res1 = t1 s<= t2;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a2 ^ 0x1;
+t2 = a1 >> t1;
+t3 = 0x3 & 0x3;
+t4 = 0x1 + a2;
+res1 = a2 s<= t2;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'anneal': 2, 'explicit': 2, 'timeout': 1, 'iterations': 3}
+Perf timers:
+verify: 0.18s
+checker: 99.99s
+gcc: 0.89s
+_: 100.00s
+synth: 99.82s

@@ -1,0 +1,101 @@
+Using seed: 1337
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 6
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 7
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 8
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 9
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 10
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 11
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 12
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 13
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 14
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 15
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 16
+
+[]
+Fastest checker: genetic
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 17
+
+
+
+
+
+
+
+
+Finished in 2.57s
+
+Perf counters:
+{'genetic': 12, 'iterations': 12}
+Perf timers:
+checker: 2.56s
+gcc: 2.53s
+_: 2.57s
+synth: 2.57s

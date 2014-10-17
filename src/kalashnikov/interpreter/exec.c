@@ -12,7 +12,7 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   param_t a1, a2, a3;
   word_t p1, p2, p3, res;
   sword_t i1, i2, i3;
-  word_t A[LEN(prog) + NARGS + CONSTS];
+  word_t A[LEN(prog) + ARGBASE];
 
 #ifdef FLOAT
   fword_t f1, f2;
@@ -20,13 +20,17 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
 #endif
 
   unsigned int i;
+  unsigned int j = 0;
+
+  A[j++] = 0;
+  A[j++] = 1;
 
   for (i = 0; i < CONSTS; i++) {
-    A[i] = prog->consts[i];
+    A[j++] = prog->consts[i];
   }
 
   for (i = 0; i < NARGS; i++) {
-    A[CONSTS + i] = args[i];
+    A[j++] = args[i];
   }
 
   for (i = 0; i < NRES; i++) {
@@ -202,10 +206,10 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
     res &= WORDMASK;
 #endif
 
-    A[NARGS + CONSTS + i] = res;
+    A[ARGBASE + i] = res;
   }
 
   for (i = 0; i < NRES && i < LEN(prog); i++) {
-    results[i] = A[NARGS + CONSTS + LEN(prog) - i - 1];
+    results[i] = A[ARGBASE + LEN(prog) - i - 1];
   }
 }

@@ -1,6 +1,6 @@
 #include "synth.h"
 
-int check(solution_t *solution, word_t args[1]) {
+int check(solution_t *solution, word_t args[NARGS]) {
   word_t res[NRES];
   exec(&solution->progs[0], args, res);
 
@@ -8,8 +8,8 @@ int check(solution_t *solution, word_t args[1]) {
   word_t z = res[0];
 
   if (x & x+1) {
-    return z;
+    return z != 0;
   } else {
-    return !z;
+    return z == 0;
   }
 }

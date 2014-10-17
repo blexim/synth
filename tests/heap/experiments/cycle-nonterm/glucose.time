@@ -1,0 +1,4 @@
+WARNING! DIMACS header mismatch: wrong number of variables.
+Command exited with non-zero status 10
+1.58user 0.05system 0:01.65elapsed 99%CPU (0avgtext+0avgdata 118028maxresident)k
+0inputs+16outputs (0major+31899minor)pagefaults 0swaps

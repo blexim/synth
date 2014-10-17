@@ -1,0 +1,47 @@
+Using seed: 23649
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 1
+
+Increasing sequence length to 1
+
+[]
+Fastest checker: explicit
+No sequence possible!
+Increasing constants to 0
+
+Increasing sequence length to 2
+
+[]
+Fastest checker: explicit
+Program 0:
+t1 = 0x1 + a1;
+res1 = a1 & t1;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 3.43s
+
+Program 0:
+t1 = 0x1 + a1;
+res1 = a1 & t1;
+
+
+Perf counters:
+{'cbmc': 1, 'explicit': 4, 'iterations': 3}
+Perf timers:
+verify: 1.62s
+checker: 3.39s
+gcc: 2.11s
+_: 3.43s
+synth: 1.81s

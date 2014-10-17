@@ -19,14 +19,15 @@ int check(solution_t *solution, word_t args[1]) {
   word_t t5 = t4 >> 2;
 
 #ifdef SEARCH
-  t5 &= ((1 << WIDTH) - 1);
+  t5 &= WORDMASK;
 #endif
 
   word_t t6 = t5 / t2;
   word_t t7 = t6 | t3;
 
 #ifdef SEARCH
-  t7 &= ((1 << WIDTH) -1);
+  t7 &= WORDMASK;
+  z &= WORDMASK;
 #endif
 
   return z == t7;

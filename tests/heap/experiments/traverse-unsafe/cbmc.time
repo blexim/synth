@@ -1,0 +1,4 @@
+**** WARNING: no body for function c::inv
+Command exited with non-zero status 10
+1.13user 0.09system 0:01.22elapsed 100%CPU (0avgtext+0avgdata 93040maxresident)k
+0inputs+64outputs (0major+76713minor)pagefaults 0swaps

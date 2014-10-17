@@ -7,7 +7,7 @@ int check(solution_t *solution, word_t args[2]) {
   word_t y = args[0];
   word_t r = res[0];
 
-  int a=1, b=0, z=1, c=0;
+  word_t a=1, b=0, z=1, c=0;
 
   while(1) {
     if (a == 0) {
@@ -21,10 +21,12 @@ int check(solution_t *solution, word_t args[2]) {
     } else {
       if (b == 0) { z=y << 2; a=!a; }
       else {
-        z=y << 3; a=!a; b=!b; } } }
+        z=y << 3; a=!a; b=!b; } }
+  }
 
 #ifdef SEARCH
-  y &= ((1 << WIDTH) -1);
+  y &= WORDMASK;
+  r &= WORDMASK;
 #endif
 
   return y == r;

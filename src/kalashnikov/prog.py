@@ -125,6 +125,9 @@ class Prog(object):
       if mevars:
         self.evars = str2ints(mevars.group(1))
 
+    if not self.consts:
+      self.consts = [[] * len(self.ops)]
+
   def argname(self, p, executable):
     if executable:
       return "args[%d]" % p
@@ -149,6 +152,11 @@ class Prog(object):
         return "t%d" % (idx + 1)
 
   def strarg(self, p, seqlen, consts, executable):
+    if p < 2:
+      return hex(p)
+
+    p -= 2
+
     if p < len(consts):
       return hex(consts[p])
     else:

@@ -1,0 +1,135 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 >> 0x1;
+t2 = 0x1 >> 0x1;
+t3 = 0x3 < t2;
+t4 = 0x1 + t1;
+res1 = a2 <= t4;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 >> 0x1;
+t2 = a2 - 0x1;
+t3 = 0x3 < 0x0;
+t4 = 0x0 + t1;
+res1 = t2 <= t4;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Program 0:
+t1 = 0x7 * a2;
+t2 = 0x0 ==> 0x0;
+t3 = a2 < 0x7;
+t4 = a1 * t3;
+res1 = t4 >> t1;
+
+Fastest checker: explicit
+Fails for (2, 1)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 s< 0x1;
+t2 = a2 - t1;
+t3 = 0x1 < 0x1;
+t4 = 0x3 + t1;
+res1 = t2 <= t4;
+
+Fastest checker: explicit
+Fails for (8, 0)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 s< 0x1;
+t2 = a2 ^ t1;
+t3 = a1 >> 0x1;
+t4 = 0x3 + t1;
+res1 = t2 <= t3;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 s< 0x1;
+t2 = a2 & a1;
+t3 = a1 - t2;
+t4 = a2 + t1;
+res1 = t4 <= t3;
+
+Fastest checker: explicit
+Fails for (0, 15)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = min(a1, 0x1);
+t2 = a2 & a1;
+t3 = a1 - t2;
+t4 = a2 >>> t1;
+res1 = t4 < t3;
+
+Fastest checker: explicit
+Fails for (3, 4)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a2 >>> 0x1;
+t2 = a2 >>> 0x1;
+t3 = min(a2, a2);
+t4 = a2 | t1;
+res1 = t4 < a1;
+
+Fastest checker: explicit
+Fails for (7, 4)
+
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a1 >> 0x1;
+t2 = a2 | t1;
+t3 = 0x1 s<= a2;
+t4 = a2 | t1;
+res1 = t4 < a1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 34.12s
+
+Program 0:
+t1 = a1 >> 0x1;
+t2 = a2 | t1;
+t3 = 0x1 s<= a2;
+t4 = a2 | t1;
+res1 = t4 < a1;
+
+
+Perf counters:
+{'cbmc': 1, 'genetic': 1, 'anneal': 8, 'explicit': 9, 'iterations': 9}
+Perf timers:
+verify: 1.61s
+checker: 34.09s
+gcc: 2.17s
+_: 34.12s
+synth: 32.51s

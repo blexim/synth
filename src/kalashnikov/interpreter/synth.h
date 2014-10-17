@@ -3,7 +3,7 @@
 
 #include <assert.h>
 
-#define HEAP
+//#define HEAP
 
 #ifndef SZ
  #define SZ 5
@@ -58,6 +58,8 @@
 #ifndef CONSTS
  #define CONSTS SZ
 #endif
+
+#define ARGBASE (NARGS + CONSTS + 2)
 
 // The width of a pointer
 #ifndef PWIDTH

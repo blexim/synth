@@ -1,0 +1,39 @@
+Using seed: 1337
+[]
+Fastest checker: anneal
+Program 0:
+t1 = a2 ^ a1;
+t2 = a1 & a2;
+t3 = t1 >> 0x1;
+t4 = max(a1, 0x1);
+res1 = t2 + t3;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 11.12s
+
+Program 0:
+t1 = a2 ^ a1;
+t2 = a1 & a2;
+t3 = t1 >> 0x1;
+t4 = max(a1, 0x1);
+res1 = t2 + t3;
+
+
+Perf counters:
+{'cbmc': 1, 'anneal': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 1.62s
+checker: 11.12s
+gcc: 0.74s
+_: 11.12s
+synth: 9.51s

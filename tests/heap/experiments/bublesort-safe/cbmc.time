@@ -1,0 +1,4 @@
+file ../../tests/heap/hippo/bubblesort.c line 12 function cond1: function `c::nondet' is not declared
+**** WARNING: no body for function c::nondet
+3.19user 0.07system 0:03.28elapsed 99%CPU (0avgtext+0avgdata 105944maxresident)k
+0inputs+56outputs (0major+82474minor)pagefaults 0swaps

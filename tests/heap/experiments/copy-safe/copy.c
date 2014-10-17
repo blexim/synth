@@ -7,7 +7,14 @@ ptr_t tmpy = 4;
 ptr_t cell = 5;
 
 int pre(abstract_heapt *pre, abstract_heapt *post) {
-  if (alias(pre, x, null_ptr)) {
+  if (is_null(pre, x)) {
+    return 0;
+  }
+
+  if (!is_null(pre, y) ||
+      !is_null(pre, tmpx) ||
+      !is_null(pre, tmpy) ||
+      !is_null(pre, cell)) {
     return 0;
   }
 
@@ -21,29 +28,30 @@ int pre(abstract_heapt *pre, abstract_heapt *post) {
 }
 
 int cond(abstract_heapt *heap) {
-  return !alias(heap, tmpx, null_ptr);
+  return !is_null(heap, tmpx);
 }
 
 int body(abstract_heapt *pre, abstract_heapt *post) {
   abstract_heapt t1, t2;
 
+  *post = *pre;
+
+  if (!is_null(pre, x) ||
+      !is_null(pre, cell)) {
+    return 1;
+  }
+
   abstract_new(pre, &t1, cell);
 
-  if (alias(&t1, cell, null_ptr)) {
-    return 0;
-  }
-
-  if (alias(&t1, tmpx, null_ptr)) {
-    return 0;
-  }
-
-  if (alias(&t1, tmpy, null_ptr)) {
+  if (is_null(&t1, cell) ||
+      is_null(&t1, tmpx) ||
+      is_null(&t1, tmpy)) {
     return 0;
   }
 
   abstract_update(&t1, &t2, tmpy, cell);
 
-  if (alias(&t2, tmpx, null_ptr)) {
+  if (is_null(&t2, tmpx)) {
     return 0;
   }
 
@@ -65,6 +73,6 @@ int assertion(abstract_heapt *heap) {
 }
 
 int inv(abstract_heapt *heap) {
-  return !alias(heap, tmpy, null_ptr) &&
+  return !is_null(heap, tmpy) &&
          is_path(heap, y, null_ptr);
 }

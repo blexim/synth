@@ -1,0 +1,6 @@
+file ../../tests/heap/hippo/create-unsafe.c line 22 function cond: function `c::nondet' is not declared
+**** WARNING: no body for function c::inv
+**** WARNING: no body for function c::nondet
+Command exited with non-zero status 10
+1.42user 0.07system 0:01.48elapsed 100%CPU (0avgtext+0avgdata 96052maxresident)k
+0inputs+72outputs (0major+78064minor)pagefaults 0swaps

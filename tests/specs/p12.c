@@ -11,6 +11,11 @@ int check(solution_t *solution, word_t args[2]) {
   word_t t1 = ~y;
   word_t t2 = x & t1;
 
+#ifdef SEARCH
+  t2 &= WORDMASK;
+  y &= WORDMASK;
+#endif
+
   if (t2 <= y) {
     return !!z;
   } else {
