@@ -651,6 +651,74 @@ $y' = (z'_1, \ldots, z'_m)$:
 We note that some termination arguments require lexicographic ranking functions, or
 alternatively, ranking functions whose co-domain is a countable ordinal, rather than just $\mathbb{N}$.
 
+
+
+
+\subsection{Machine Arithmetic Vs.~Peano Arithmetic} \label{sec:machine.arith} 
+
+Physical computers have bounded storage, which means they are unable to
+perform calculations on mathematical integers.  %% For example, if $A$ is the
+%% Ackermann function and $G$ is Graham's number, a physical computer capable
+%% of computing $A(G, G)$ would contain (much!) more matter than is believed to
+%% exist in the universe.  Fortunately, it is rare for a programmer to need
+%% such a large number and so modern computers
+They do their arithmetic over
+fixed-width binary words, otherwise known as bit-vectors.  For the remainder
+of this section, we will say that the bit-vectors we are working with are
+$k$-bits wide, which means that each word can hold one of $2^k$ bit
+patterns.  Typical values for $k$ are 32 and 64.
+
+Machine words can be interpreted as ``signed'' or ``unsigned'' values. 
+Signed values can be negative, while unsigned values cannot.  The encoding
+for signed values is two's complement, where the most significant bit
+$b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather
+than $2^k - 1$.  Two's complement representation has the property that
+$\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
+is bitwise negation.  Two's complement also has the property that addition,
+multiplication and subtraction are defined identically for unsigned and
+signed numbers.
+
+Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
+of the differences between machine arithmetic and Peano
+arithmetic\footnote{ISO C requires that unsigned arithmetic is performed
+modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
+In practice, the undefined behaviour is implemented just as if the
+arithmetic had been unsigned.}.  To give an example, $(2^k - 1) + 1 \equiv 0
+\pmod {2^k}$ provides a counterexample to the statement $\forall x. 
+x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
+arithmetic.  When an arithmetic operation has a result greater than $2^k$,
+it is said to ``overflow''.  If an operation does not overflow, its
+machine-arithmetic result is the same as the result of the same operation
+performed on integers.
+
+The final source of disagreement between integer arithmetic and bit-vector
+arithmetic stems from width conversions.  Many programming languages allow
+numeric variables of different types, which can be represented using words
+of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
+\texttt{int} might occupy 32 bits.  When a $k$-bit variable is assigned to a
+$j$-bit variable with $j < k$, the result is truncated $\mathrm{mod}~2^j$.  For
+example, if $x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will
+hold the value $0$ after the following code is executed:
+%
+\begin{lstlisting}
+x = 65536;
+y = x;
+\end{lstlisting}
+
+% This gives us a counterexample to the statement $\forall x, y . x = y
+% \Rightarrow (x + 1) = (y + 1)$, which is a theorem of Peano arithmetic.
+
+As well as machine arithmetic differing from Peano arithmetic on the
+operators they have in common, computers have several ``bitwise'' operations
+that are not taken as primitive in the theory of integers.  These operations
+include the Boolean operators \texttt{and, or, not, xor} applied to each
+element of the bit-vector.  Computer programs often make use of these
+operators, which are nonlinear when interpreted in the standard model of
+Peano arithmetic\footnote{Some of these operators can be seen as
+linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
+addition in the Galois field $\mathrm{GF}(2^k)$.}.
+
+
 \iffalse
 
 \section{Combinatorics of Finite Termination}
@@ -1416,70 +1484,6 @@ integers and floating-point numbers from the specifications detailed in
 Section~\ref{sec:second.order}.  In the next section, we will begin our treatment of
 bit-accurate synthesis by illustrating some of the differences between
 machine arithmetic and conventional integer arithmetic.
-
-
-\subsection{Machine Arithmetic Vs.~Peano Arithmetic} \label{sec:machine.arith} 
-
-Physical computers have bounded storage, which means they are unable to
-perform calculations on mathematical integers.  For example, if $A$ is the
-Ackermann function and $G$ is Graham's number, a physical computer capable
-of computing $A(G, G)$ would contain (much!) more matter than is believed to
-exist in the universe.  Fortunately, it is rare for a programmer to need
-such a large number and so modern computers do their arithmetic over
-fixed-width binary words, otherwise known as bit-vectors.  For the remainder
-of this section, we will say that the bit-vectors we are working with are
-$k$-bits wide, which means that each word can hold one of $2^k$ bit
-patterns.  Typical values for $k$ are 32 and 64.
-
-Machine words can be interpreted as ``signed'' or ``unsigned'' values. 
-Signed values can be negative, while unsigned values cannot.  The encoding
-for signed values is two's complement, where the most significant bit
-$b_{k-1}$ of the word is a ``sign'' bit, whose weight is $-(2^k - 1)$ rather
-than $2^k - 1$.  Two's complement representation has the property that
-$\forall x .  -x = (\mathord{\sim} x) + 1$, where $\mathord{\sim}(\bullet)$
-is bitwise negation.  Two's complement also has the property that addition,
-multiplication and subtraction are defined identically for unsigned and
-signed numbers.
-
-Bit-vector arithmetic is performed modulo $2^k$, which is the source of many
-of the differences between machine arithmetic and Peano
-arithmetic\footnote{ISO C requires that unsigned arithmetic is performed
-modulo $2^k$, whereas the overflow case is undefined for signed arithmetic. 
-In practice, the undefined behaviour is implemented just as if the
-arithmetic had been unsigned.}.  To give an example, $(2^k - 1) + 1 \equiv 0
-\pmod {2^k}$ provides a counterexample to the statement $\forall x. 
-x + 1 > x$, which is a theorem of Peano arithmetic but not of modular
-arithmetic.  When an arithmetic operation has a result greater than $2^k$,
-it is said to ``overflow''.  If an operation does not overflow, its
-machine-arithmetic result is the same as the result of the same operation
-performed on integers.
-
-The final source of disagreement between integer arithmetic and bit-vector
-arithmetic stems from width conversions.  Many programming languages allow
-numeric variables of different types, which can be represented using words
-of different widths.  In C, a \texttt{short} might occupy 16 bits, while an
-\texttt{int} might occupy 32 bits.  When a $k$-bit variable is assigned to a
-$j$-bit variable with $j < k$, the result is truncated $\mathrm{mod}~2^j$.  For
-example, if $x$ is a 32-bit variable and $y$ is a 16-bit variable, $y$ will
-hold the value $0$ after the following code is executed:
-%
-\begin{lstlisting}
-x = 65536;
-y = x;
-\end{lstlisting}
-
-% This gives us a counterexample to the statement $\forall x, y . x = y
-% \Rightarrow (x + 1) = (y + 1)$, which is a theorem of Peano arithmetic.
-
-As well as machine arithmetic differing from Peano arithmetic on the
-operators they have in common, computers have several ``bitwise'' operations
-that are not taken as primitive in the theory of integers.  These operations
-include the Boolean operators \texttt{and, or, not, xor} applied to each
-element of the bit-vector.  Computer programs often make use of these
-operators, which are nonlinear when interpreted in the standard model of
-Peano arithmetic\footnote{Some of these operators can be seen as
-linear in a different algebraic structure, e.g.~\texttt{xor} corresponds to
-addition in the Galois field $\mathrm{GF}(2^k)$.}.
 
 \begin{theorem}
  \label{thm:synth-semicomplete}
