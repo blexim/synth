@@ -33,10 +33,6 @@ void deserialize_state(word_t args[NARGS], statet *state) {
 void serialize_state(statet *state, word_t args[NARGS]) {
   word_t i, j;
 
-  for (j = 0; j < NARGS; j++) {
-    args[j] = 0;
-  }
-
   j = 0;
   for (i = 0; i < NSTACK; i++) {
     args[j++] = state->stack[i];
