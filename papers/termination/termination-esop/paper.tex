@@ -194,7 +194,7 @@ that are easier to
 check~\cite{DBLP:conf/cav/KroeningSTW10,DBLP:conf/tacas/CookSZ13}. 
 Following the same trend, we investigate its extreme: \emph{unrestricted}
 termination arguments.  This means that our ranking functions may involve
-non-linearity and lexicographic orders: we do not commit to any particular
+nonlinearity and lexicographic orders: we do not commit to any particular
 syntactic form, and do not use templates.  Furthermore, our approach allows
 us to \emph{simultaneously} search for proofs of \emph{non-termination},
 which take the form of recurrence sets.
@@ -225,7 +225,7 @@ give rise to {\em unsound} and {\em incomplete} analyses.
 % proofs.  our encoding treats multiple loops and nested loops uniformly,
 % without having to enumerate lassos.
 
-We present a technique that treats uniformly linear and non-linear programs and
+We present a technique that treats linear and nonlinear programs uniformly and
 it is not restricted to finding linear ranking functions, but can
 also compute lexicographic nonlinear ones. 
 Our approach is constraint-based and relies on second-order formulations 
@@ -801,7 +801,7 @@ the $x_i$'s range over boolean values,
  and $\sigma$ is a quantifier-free propositional formula
  whose free variables are the $x_i$'s.  
 Each $S_i$ has an associated arity $\mathrm{ar}(S_i)$
- and $S_i \in \mathbb{B}^{\mathrm{ar}(S_i)}$.  Note that 
+ and $S_i \subseteq \mathbb{B}^{\mathrm{ar}(S_i)}$.  Note that 
 $Q_1 x_1 \ldots Q_n x_n . \sigma$
  is an instance of first-order propositional SAT, i.e. QBF.
 \end{definition}
@@ -1477,8 +1477,7 @@ Which simplifies to:
 Since $L$ either terminates or does not terminate, this formula is a tautology in second-order SAT.
 A solution to the formula would include witnesses $P_N$ and $P_T$, which are putative proofs of non-termination
 and termination respectively.  Exactly one of these will be a genuine proof, so we can check
-first one and then the other, which will be exemplified by Algorithm~\ref{alg:termination} once
-we have shown how to solve the formula {\bf [GT]}.
+first one and then the other.
 
 
 % 
@@ -1514,8 +1513,7 @@ In order to solve the second-order generalised formula {\bf [GT]}, we use the so
 %% \end{theorem}
 %
 %
-This second-order SAT solver is a semi-decision procedure -- for any
-satisfiable formula, the solver is guaranteed to find a satisfying assignment to
+For any satisfiable formula, the solver is guaranteed to find a satisfying assignment to
 all the second-order variables. 
 
 In the context of our termination analysis, such a satisfying assignment returned by the solver 
@@ -1590,7 +1588,7 @@ Floating-point arithmetic:
 
 \section{Soundness, Completeness and Complexity}
 In this section, we show that $\mathcal{L}$ is expressive enough
-to compute (non-)termination proofs for every bit-vector program.
+to capture  (non-)termination proofs for every bit-vector program.
 By using this result, %We will then combine this result with the fact that the second-order SAT solver is a semi-decision procedure to 
 we then show that our analysis terminates with a valid proof for every input program.
 
@@ -1723,7 +1721,7 @@ run on an unloaded 8-core 3.07\,GHz Xeon X5667 with 50\,GB of RAM.  The
 results of these experiments are given in Figure~\ref{fig:experiments}.
 
 It should be noted that the comparison here is imperfect, since {\sc ARMC}
-is solving a slightly different problem -- it checks whether the program
+is solving a different problem -- it checks whether the program
 under analysis would terminate if run with unbounded integer variables,
 while we are checking whether the program terminates with bit-vector
 variables.  This means that {\sc ARMC}'s verdict differs from ours
