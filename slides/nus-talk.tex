@@ -77,7 +77,8 @@ alternativetitlepage=true,
 \usepackage{listings}
 
 \lstset{language=C,
- basicstyle=\tiny
+ basicstyle=\tiny,
+ mathescape=true
  }
 
 \usepackage{ifthen}
@@ -92,6 +93,8 @@ alternativetitlepage=true,
 
 \usepackage{color}
 \definecolor{light-gray}{gray}{0.80}
+
+\usepackage{amsmath}
 
 
 \newcommand{\hpathlen}{\ensuremath{\mathit{pathLength}}\xspace}
@@ -569,7 +572,11 @@ This number is very small, which to some degree justifies our aim of moving beyo
 \end{frame}
 
 \begin{frame}[fragile]{Heap}
- \centering
+The heaps we are interested in consist of singly linked lists with lengths, but no data.
+
+Lists can have (unspecified) cycles and sharing, for example:
+
+\begin{center}
 \begin{tikzpicture}
   %\node at (-.75,.25) {$h:$};
 
@@ -595,10 +602,14 @@ This number is very small, which to some degree justifies our aim of moving beyo
 		   (z) edge (n1)%
 		   (null) edge (n6);
  \end{tikzpicture}
+\end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Heap Transformers}
- \centering
+\only<1>{
+x = y$\rightarrow$next
+
+\begin{center}
  \begin{tikzpicture}
   \node (n1) {$\bullet$};
   \node [right of=n1] (n2) {$\bullet$};
@@ -623,12 +634,171 @@ This number is very small, which to some degree justifies our aim of moving beyo
 
   \path[draw, ->] (m1) edge (m2) (m2) edge (m3);
   \path[dashed,->] (x) edge (m2) (y) edge (m1) (null) edge (m3);
+\end{tikzpicture}
+\end{center}
+}
+
+\only<2>{
+x = new()
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,auto]
+  \node (n1) {$\bullet$};
+  \node (n2) [right of=n1] {$\bullet$};
+  \node (n3) [right of=n2] {$\bullet$};
+
+  \node (x) [below of=n1] {$x$};
+  \node (null) [below of=n3] {\bf null};
+
+  \path[draw, ->] (n1) edge (n2)
+                  (n2) edge (n3);
+  \draw[dashed,->] (x) to (n1);
+  \draw[dashed,->] (null) to (n3);
+
+  \node [below right of=n3] (mid) {$\Rightarrow$};
+
+  \node (m1) [above right of=mid]{$\bullet$};
+  \node (m2) [right of=m1] {$\bullet$};
+  \node (m3) [right of=m2] {$\bullet$};
+  \node (m4) [below of=m2] {$\bullet$};
+
+  \node (x2) [below =1em of m4] {$x$};
+  \node (null) [right of=x2] {\bf null};
+each of these 
+  \path[draw, ->] (m1) edge (m2) (m2) edge (m3) (m4) edge (m3);
+  \draw[dashed,->] (x2) to (m4);
+  \draw[dashed,->] (null) to (m3);
  \end{tikzpicture}
+ \end{center}
+ }
+ 
+ \only<3>{
+x = y
+
+\begin{center} 
+ \begin{tikzpicture}[shorten >=1pt,auto]
+  \node (n1) {$\bullet$};
+  \node (n2) [right of=n1] {$\bullet$};
+  \node (n3) [right of=n2] {$\bullet$};
+  \node (n4) [below=2em of n2] {$\bullet$};
+
+  \node (y) [below=1em of n4] {$y$};
+  \node (x) [left of=y] {$x$};
+  \node (null) [right of=y] {\bf null};
+
+  \path[draw, ->] (n1) edge (n2)
+                  (n2) edge (n3)
+                  (n4) edge (n3);
+  \path[dashed,->] (x) edge (n1)
+                   (y) edge (n4)
+                   (null) edge (n3);
+
+  \node [below right of=n3] (mid) {$\Rightarrow$};
+
+  \node (m1) [above right of=mid]{$\bullet$};
+  \node (m2) [right of=m1] {$\bullet$};
+  \node (m3) [right of=m2] {$\bullet$};
+  \node (m4) [below=2em of m2] {$\bullet$};
+
+  \node (y2) [below=1em of m4] {$y$};
+  \node (x2) [left of=y2] {$x$};
+  \node (null) [right of=y2] {\bf null};
+
+  \path[draw, ->] (m1) edge (m2)
+                  (m2) edge (m3)
+                  (m4) edge (m3);
+  \path[dashed,->] (x2) edge (m4)
+                   (y2) edge (m4)
+                   (null) edge (m3);
+ \end{tikzpicture}
+ \end{center}
  }
 
+\only<4>{
+x$\rightarrow$next = y
+
+\begin{center}
+ \begin{tikzpicture}[shorten >=1pt,auto]
+  \node (n1) {$\bullet$};
+  \node (n2) [right of=n1] {$\bullet$};
+  \node (n3) [right of=n2] {$\bullet$};
+  \node (n4) [below=2em of n2] {$\bullet$};
+
+  \node (y) [below=1em of n4] {$y$};
+  \node (x) [left of=y] {$x$};
+  \node (null) [right of=y] {\bf null};
+
+  \path[draw, ->] (n1) edge (n2)
+                  (n2) edge (n3)
+                  (n4) edge (n3);
+  \path[dashed,->] (x) edge (n1)
+                   (y) edge (n4)
+                   (null) edge (n3);
+
+  \node [below right of=n3] (mid) {$\Rightarrow$};
+
+  \node (m1) [above right of=mid]{$\bullet$};
+  \node (m2) [right of=m1] {$\bullet$};
+  \node (m3) [right of=m2] {$\bullet$};
+  \node (m4) [below=2em of m2] {$\bullet$};
+
+  \node (y2) [below=1em of m4] {$y$};
+  \node (x2) [left of=y2] {$x$};
+  \node (null) [right of=y2] {\bf null};
+
+  \path[draw, ->] (m1) edge (m4)
+                  (m2) edge (m3)
+                  (m4) edge (m3);
+  \path[dashed,->] (x2) edge (m1)
+                   (y2) edge (m4)
+                   (null) edge (m3);
+ \end{tikzpicture}
+\end{center}
+}
+
+\end{frame}
+
+\begin{frame}[fragile]{Heap Observations}
+ 
+\begin{minipage}[c]{.4\textwidth}
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,scale=.8]
+  %\node at (-.75,.25) {$h:$};
+
+  \node (n1) {$\bullet$};
+  \node (n2) [below of=n1] {$\bullet$};
+  \node (n3) [right of=n1] {$\bullet$};
+  \node (n4) [right of=n3] {$\bullet$};
+  \node (n5) [right of=n4,above of=n4] {$\bullet$};
+  \node (n6) [below of=n4] {$\bullet$};
+  \node (x) [below of=n2] {$x$};
+  \node (y) [right of=n5] {$y$};
+  \node (z) [above of=n1] {$z$};
+  \node (null) [below of=n6] {\bf null};
+
+  \path[draw,->] (n1) edge (n3)
+		 (n2) edge (n3)
+		 (n3) edge (n4)
+		 (n4) edge[bend right=45] (n5)
+		 (n5) edge[bend right=45] (n4);
+
+  \path[dashed,->] (x) edge (n2)%
+		   (y) edge (n5)%
+		   (z) edge (n1)%
+		   (null) edge (n6);
+ \end{tikzpicture}
+ \end{minipage}
+ \begin{minipage}[c]{.4\textwidth}
  \vfill
- $\hlookup(h, x, y)$ \\
- $x = y{\rightarrow}next;$
+ \begin{align*}
+ \hpathlen(h, x, y) & =  3 \\
+ \hispath(h, z, y) & = \text{true} \\
+ \hispath(h, x, z) & = \text{false} \\
+ \halias(h, x, z) & = \text{false} \\
+ \hisnull(h, x) & = \text{false} \\
+ \hcircular(h, y) & = \text{true}
+ \end{align*}
+ \vfill
+ \end{minipage}
 \end{frame}
 
 
