@@ -95,7 +95,7 @@ alternativetitlepage=true,
 \definecolor{light-gray}{gray}{0.80}
 
 \usepackage{amsmath}
-
+\usepackage{xspace}
 
 \newcommand{\hpathlen}{\ensuremath{\mathit{pathLength}}\xspace}
 \newcommand{\halloc}{\ensuremath{\mathit{new}}\xspace}
@@ -138,13 +138,16 @@ alternativetitlepage=true,
   \titlepage
 \end{frame}
 
-\iffalse
 \begin{frame}{Outline}
   \tableofcontents
 \end{frame}
-\fi
 
-\section{Motivation}
+
+\section{Program Synthesis and Second-Order Logic}
+
+
+
+\section{Termination}
 
 
 \begin{frame}[fragile]{Motivation}
@@ -571,8 +574,18 @@ This number is very small, which to some degree justifies our aim of moving beyo
 
 \end{frame}
 
-\begin{frame}[fragile]{Heap}
-The heaps we are interested in consist of singly linked lists with lengths, but no data.
+\section{Heap}
+
+\begin{frame}[fragile]{Heaps of Singly Linked Lists}
+We would like to use second-order logic to analyse programs using the heap.  To do so, we need a
+heap theory with a decision procedure in NP that we can combine with arithmetic.
+
+\pause
+
+We will restrict ourselves to singly linked lists with lengths, but no data.
+
+
+\pause 
 
 Lists can have (unspecified) cycles and sharing, for example:
 
@@ -759,7 +772,8 @@ x$\rightarrow$next = y
 \end{frame}
 
 \begin{frame}[fragile]{Heap Observations}
- 
+
+\begin{center}
 \begin{minipage}[c]{.4\textwidth}
 \begin{tikzpicture}[>=stealth',shorten >=1pt,auto,scale=.8]
   %\node at (-.75,.25) {$h:$};
@@ -790,15 +804,204 @@ x$\rightarrow$next = y
  \begin{minipage}[c]{.4\textwidth}
  \vfill
  \begin{align*}
- \hpathlen(h, x, y) & =  3 \\
- \hispath(h, z, y) & = \text{true} \\
- \hispath(h, x, z) & = \text{false} \\
- \halias(h, x, z) & = \text{false} \\
- \hisnull(h, x) & = \text{false} \\
- \hcircular(h, y) & = \text{true}
+ \hpathlen(x, y) & =  3 \\
+ \hispath(z, y) & = \text{true} \\
+ \hispath(x, z) & = \text{false} \\
+ \halias(x, z) & = \text{false} \\
+ \hisnull(x) & = \text{false} \\
+ \hcircular(y) & = \text{true}
  \end{align*}
  \vfill
  \end{minipage}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{The SLH Theory}
+ SLH is our theory of singly linked lists.  SLH formulae can contain arbitrary boolean combinations of the
+ predicates from the previous slides.
+ 
+ For example:
+ 
+ \[
+  h' = \halloc(h, x) \wedge \hisnull(h', x)
+ \]
+
+\end{frame}
+
+\begin{frame}{\shakira}
+ We built a decision procedure for SLH named \shakira, which checks that heaps don't lie.
+
+ \pause 
+
+ \shakira works by exploiting a small model property of SLH to build a SAT formula that is equisatisfiabile with the SLH formula.
+\end{frame}
+
+
+\begin{frame}[fragile]{Edge Subdivision}
+\begin{center}
+ \begin{tikzpicture}
+  \node (h) {$H:$};
+
+  \node (n1) [below right =.1em and .1em of h] {$\bullet$};
+  \node (space) [right of=n1] {};
+  \node (n2) [right of=space] {$\bullet$};
+
+  \node (x) [below of=n1] {$x$};
+  \node (null) [below of=n2] {\bf null};
+
+  \path[draw, ->] (n1) to node[above] {3} (n2);
+  \path[dashed,->] (x) edge (n1)
+                   (null) edge (n2);
+
+  \node (h2) [right=9em of h] {$H':$};
+
+  \node (m1)[below right =.1em and .1em of h2] {$\bullet$};
+  \node (m2) [right of=m1] {$\bullet$};
+  \node (m3) [right of=m2] {$\bullet$};
+
+  \node (x2) [below of=m1] {$x$};
+  \node (null2) [below of=m3] {\bf null};
+
+  \path[draw, ->] (m1) edge node[above] {1} (m2)
+                  (m2) edge node [above] {2} (m3);
+  \path[dashed,->] (x2) edge (m1)
+		   (null2) edge (m3);
+ \end{tikzpicture}
+\end{center}
+
+ \vspace{1em}
+ $H'$ can be generated from $H$ by subdividing an edge.  We say $H'$ is a \emph{subdivision} of $H$.
+\end{frame}
+
+
+\begin{frame}[fragile]{Heap Homeomorphism}
+ 
+ \begin{center}
+ \resizebox{\textwidth}{!}{
+ \begin{tikzpicture}
+  \node (h) {$H:$};
+
+  \node (x) [below right =.1em and .1em of h] {$x$};
+  \node (y) [below of=x] {$y$};
+  
+  \node (n1) [right of=x] {$\bullet$};
+  \node (n2) [below of=n1] {$\bullet$};
+
+  \path (n1) to node (mid) {} (n2);
+
+  \node (n3) [right of=mid] {$\bullet$};
+  \node (n4) [right of=n3] {$\bullet$};
+
+  \node (n5) [right of=n4] {$\bullet$};
+  \node (space2) [right of=n5] {};
+  \node (n6) [right of=space2] {$\bullet$};
+
+  \path[->,draw] (n1) edge node [above] {1} (n3)
+                 (n2) edge node [below] {2} (n3)
+                 (n3) edge node [above] {4} (n4)
+                 (n4) edge node [above] {2} (n5)
+                 (n5) edge[bend right=70] node [below] {6} (n6)
+                 (n6) edge[bend right=70] node [above] {3} (n5);
+
+  \path[->,dashed] (x) edge (n1)
+                   (y) edge (n2);
+
+  \node (h2) [right=20em of h] {$H':$};
+
+  \node (x2) [below right =.1em and .1em of h2] {$x$};
+  \node (y2) [below of=x2] {$y$};
+
+  \node (m1) [right of=x2] {$\bullet$};
+  \node (m2) [below of=m1] {$\bullet$};
+
+  \path (m1) to node (mid2) {} (m2);
+
+  \node (m3) [right of=mid2] {$\bullet$};
+  \node (m4) [right of=m3] {};
+
+  \node (m5) [right of=m4] {$\bullet$};
+  \node (space2) [right of=m5] {};
+  \node (m6) [right of=space2] {$\bullet$};
+
+  \node (m7) [above of=space2] {$\bullet$};
+
+  \path[->,draw] (m1) edge node [above] {1} (m3)
+                 (m2) edge node [below] {2} (m3)
+                 (m3) edge node [above] {6} (m5)
+                 (m5) edge[bend right=70] node [below] {6} (m6)
+                 (m6) edge[bend right=35] node [above] {1} (m7)
+                 (m7) edge[bend right=35] node [above] {2} (m5);
+
+  \path[->,dashed] (x2) edge (m1)
+                   (y2) edge (m2);
+
+  \node (s) [below right=7em and 8em of h] {$S:$};
+
+  \node (x) [below right =.1em and .1em of s] {$x$};
+  \node (y) [below of=x] {$y$};
+
+  \node (n1) [right of=x] {$\bullet$};
+  \node (n2) [below of=n1] {$\bullet$};
+
+  \path (n1) to node (mid) {} (n2);
+
+  \node (n3) [right of=mid] {$\bullet$};
+  \node (n4) [right of=n3] {$\bullet$};
+
+  \node (n5) [right of=n4] {$\bullet$};
+  \node (space2) [right of=n5] {};
+  \node (n6) [right of=space2] {$\bullet$};
+
+  \node (n7) [above of=space2] {$\bullet$};
+
+  \path[->,draw] (n1) edge node [above] {1} (n3)
+                 (n2) edge node [below] {2} (n3)
+                 (n3) edge node [above] {4} (n4)
+                 (n4) edge node [above] {2} (n5)
+                 (n5) edge[bend right=70] node [below] {6} (n6)
+                 (n6) edge[bend right=35] node [above] {1} (n7)
+                 (n7) edge[bend right=35] node [above] {2} (n5);
+
+  \path[->,dashed] (x) edge (n1)
+                   (y) edge (n2);
+% 
+%   \node (x) [below of=n1] {$x$};
+%   \node (null) [below of=n2] {\bf null};
+% 
+%   \path[draw, ->] (n1) to node[above] {3} (n2);
+%   \path[dashed,->] (x) edge (n1) 
+%                    (null) edge (n2);
+% 
+%   \node (h2) [right=9em of h] {$H':$};
+% 
+%   \node (m1)[below right =.1em and .1em of h2] {$\bullet$};
+%   \node (m2) [right of=m1] {$\bullet$};
+%   \node (m3) [right of=m2] {$\bullet$};
+% 
+%   \node (x2) [below of=m1] {$x$};
+%   \node (null2) [below of=m3] {\bf null};
+% 
+%   \path[draw, ->] (m1) edge node[above] {1} (m2)
+%                   (m2) edge node [above] {2} (m3);
+%   \path[dashed,->] (x2) edge (m1)
+%                    (null2) edge (m3);
+ \end{tikzpicture}
+ }
+ \end{center}
+
+ Both $H$ and $H'$ can be subdivided to produce $S$.  We then say that $H$ and $H'$ are \emph{homeomorphic}.
+\end{frame}
+
+\begin{frame}{SLH Has Small Models}
+ \begin{theorem}[Homeomorphism Preserves Models]
+  If two heaps are homeomorphic, they satisfy exactly the same SLH formulae.
+ \end{theorem}
+
+ \begin{theorem}[Homeomorphisms Can Be Small]
+  Every homeomorphism class has a least element, which has no more than $2P$ nodes ($P$ is the number of program variables).
+ \end{theorem}
+
+ From this it follows that SLH has small models -- we only need to check models up to size $2P$.
 \end{frame}
 
 
