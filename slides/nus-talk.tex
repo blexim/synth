@@ -145,65 +145,84 @@ alternativetitlepage=true,
 
 \section{Program Synthesis and Second-Order Logic}
 
+\begin{frame}{Existential Second-Order Logic}
+ Second-order logic allows quantification over functions as well as ground terms.
+ 
+ \vspace{1em}
+ 
+ Existential second-order logic is a restriction where we can only existentially quantify over functions.
+ 
+\end{frame}
 
+\begin{frame}{Existential Second-Order Logic Example}
+The following is an existential second-order formula:
+
+ \[
+  \exists F . \forall x . F(x) > x
+ \]
+
+ When using Peano arithmetic as a background theory, this formula is satisfiable.  One satisfying assignment would be $F(x) = x + 1$.
+\end{frame}
+
+\begin{frame}{Second-Order SAT}
+ A further restriction is to say that all the first-order variables are boolean propositions.  This
+ gives us the \emph{second-order SAT problem}.
+
+ \vspace{1em}
+
+ Second-order SAT is an extension of propositional SAT, where we are allowed to quantify
+ over functions.
+ 
+ \vspace{1em}
+ 
+ Second-order SAT is NEXPTIME-complete.
+\end{frame}
+
+\begin{frame}{Using Second-Order SAT}
+ Second-order SAT is a very general problem and can be used for lots of problems, including:
+ 
+ \begin{itemize}
+  \item Termination and non-termination
+  \item Safety invariants
+  \item Finding bugs without unwinding loops
+  \item Code refactoring
+  \item Code deobfuscation
+  \item Program synthesis
+  \item Concurrency
+ \end{itemize}
+ 
+ Also since everything boils down to SAT, we can freely combine with any theory that is decidable in NP.
+\end{frame}
+
+\begin{frame}{Solving Second-Order SAT}
+ To solve second-order SAT instances, we use a program synthesiser.
+
+ \vspace{1em}
+
+ The synthesiser finds programs computing each of the quantified functions.
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+Consider the following second-order SAT problem:
+
+ \[
+  \exists F . \forall x . F(x) < x
+ \]
+
+This formula is satisfiable.  To show this, our program synthesiser might generate the following program:
+
+\begin{center}
+\begin{lstlisting}
+F(unsigned int x) {
+  unsigned int t1 = x / 2;
+  return t1;
+}
+\end{lstlisting}
+\end{center}
+\end{frame}
 
 \section{Termination}
 
-
-\begin{frame}[fragile]{Motivation}
-Does this program terminate?
-\begin{center}
-\begin{minipage}{0.4\linewidth}
- \begin{lstlisting}[language=C,basicstyle=\normalsize]
-while (x > 0) {
-  x++;
-}
- \end{lstlisting}
-\end{minipage}
-\end{center}
-
-\pause
-
-That depends...
-
-It \emph{does not} terminate if the program operates on integers...
-
-But it \emph{does} terminate if the program operates on fixed-width words
-(-x decreases monotonically and is bounded by -MAXINT).
-
-\end{frame}
-
-\begin{frame}[fragile]{Motivation}
-Which of these guys terminates?
-\begin{center}
-\begin{minipage}{0.45\linewidth}
- \begin{lstlisting}[language=C,basicstyle=\normalsize]
-while (x > 0) {
-  x = (x - 1) & x;
-}
-\end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.45\linewidth}
- \begin{lstlisting}[language=C,basicstyle=\normalsize]
-while (x > 0) {
-  x = (x + 1) & x;
-}
-\end{lstlisting}
-\end{minipage}
-\end{center}
-
-\pause
-
-The left one does (x decreases monotonically), but the right one doesn't ($2 \rightarrow 2 \rightarrow \dots$).
-\end{frame}
-
-\begin{frame}{Motivation}
-Proving program termination has been a big deal for a while.
-
-It'd be nice if we could automatically prove termination for programs that run on computers.
-\end{frame}
-
-\section{Proving Termination}
 \begin{frame}{What Does a Termination Proof Look Like?}
 We prove that a program terminates by finding a \emph{ranking function}.
 
@@ -222,26 +241,26 @@ Or more generally, $R$ must be an order-homomorphism with a well-founded co-doma
 
 We are therefore in the business of finding ranking functions.
 \end{frame}
-
-\begin{frame}{Finding Ranking Functions}
-Traditionally, people find ranking functions under some assumptions:
-
-\begin{itemize}
- \item Programs are linear
- \item Ranking functions are linear
- \item Program variables are rationals
-\end{itemize}
-
-\vspace{1em}
-
-With these assumptions in hand, one can deploy a very powerful piece of linear algebra: \emph{Farkas's lemma}.
-
-This lemma makes light work of a ton of termination problems.
-
-\vspace{1em}
-
-But it's not for us.
-\end{frame}
+% 
+% \begin{frame}{Finding Ranking Functions}
+% Traditionally, people find ranking functions under some assumptions:
+% 
+% \begin{itemize}
+%  \item Programs are linear
+%  \item Ranking functions are linear
+%  \item Program variables are rationals
+% \end{itemize}
+% 
+% \vspace{1em}
+% 
+% With these assumptions in hand, one can deploy a very powerful piece of linear algebra: \emph{Farkas's lemma}.
+% 
+% This lemma makes light work of a ton of termination problems.
+% 
+% \vspace{1em}
+% 
+% But it's not for us.
+% \end{frame}
 
 
 \begin{frame}{Synthesing Ranking Functions}
@@ -395,7 +414,7 @@ $$\exists P . \forall x \in I . \sigma(x, P(x))$$
  We can add this input to our set of test inputs and loop back to synthesising a new program.
 \end{frame}
 
-\section{Program Synthesis}
+% \section{Program Synthesis}
 \iffalse
 \begin{frame}{Concrete Synthesis in C}
  We're using C as an implementation language.  To do that we need:
@@ -507,7 +526,7 @@ while (x > 0 && y > 0 && z > 0) {
 \end{frame}
 
 
-\section{Advanced Topics}
+% \section{Advanced Topics}
 \begin{frame}{Conditional Termination}
 
 \begin{align*}
