@@ -789,18 +789,18 @@ which we call second-order SAT (see Definition~\ref{def:2sat}).
 
 \begin{definition}[Second-Order SAT]
 \label{def:2sat}
- \[
-  \exists S_1 \ldots S_m . Q_1 x_1 \ldots Q_n x_n . \sigma
- \]
- Where the $S_i$'s range over predicates,
+\[ \exists S_1 \ldots S_m . Q_1 x_1 \ldots Q_n x_n . \sigma \]
+%
+Where the $S_i$'s range over predicates,
 the $Q_i$'s are either $\exists$ or $\forall$,
-the $x_i$'s range over boolean values,
- and $\sigma$ is a quantifier-free propositional formula
- whose free variables are the $x_i$'s.  
+the $x_i$'s range over Boolean values,
+and $\sigma$ is a quantifier-free propositional formula
+whose free variables are the $x_i$'s.  
 Each $S_i$ has an associated arity $\mathrm{ar}(S_i)$
- and $S_i \subseteq \mathbb{B}^{\mathrm{ar}(S_i)}$.  Note that 
-$Q_1 x_1 \ldots Q_n x_n . \sigma$
- is an instance of first-order propositional SAT, i.e. QBF.
+and $S_i \subseteq \mathbb{B}^{\mathrm{ar}(S_i)}$.  Note that 
+$Q_1 x_1 \ldots Q_n x_n . \sigma$ is the special case of
+a propositional formula with first-order quantification,
+i.e.~QBF.
 \end{definition}
 
 
@@ -988,10 +988,10 @@ exists a transition to some $s' \in N$ \cite{DBLP:conf/popl/GuptaHMRX08}.
 %  (Do this proof properly).
 % \end{proof}
 
-If this formula is satisfiable, $N$ is an open recurrence set for $L$, which proves
+If this formula is satisfiable, $N$~is an open recurrence set for~$L$, which proves
 $L$'s non-termination. The issue with this formula is the additional level of quantifier alternation as compared to second-order SAT
 (it is an $\exists \forall \exists$ formula).  To eliminate the innermost existential quantifier,
-we introduce a Skolem function $C$ that chooses the successor $x'$, which we then existentially quantify over.
+we introduce a Skolem function~$C$ that chooses the successor~$x'$, which we then existentially quantify over.
 This results in formula {\bf [SNT]} (Definition~\ref{def:snt}, Figure~\ref{fig:single_loop}).
 
 \begin{theorem}
@@ -1002,19 +1002,21 @@ This results in formula {\bf [SNT]} (Definition~\ref{def:snt}, Figure~\ref{fig:s
 
 This extra second-order term introduces some complexity to the formula, which
 we can avoid if the transition relation $T$ is deterministic.
+%
 \begin{definition}[Determinism]
  A relation $T$ is deterministic iff each state $x$ has exactly one successor under $T$:
  $$\forall x . \exists x' . T(x, x') \wedge \forall x'' . T(x, x'') \rightarrow x'' = x'$$
 \end{definition}
+%
 In order to describe a deterministic \emph{program} in a way that still allows us
 to sensibly talk about termination, we assume the existence of a special sink
-state $s$ with no outgoing transitions and such that $\lnot G(s)$ for any
-of the loop guards $G$.  The program is deterministic if its transition
-relation is deterministic for all states except $s$.
+state~$s$ with no outgoing transitions and such that $\lnot G(s)$ for any
+of the loop guards~$G$.  The program is deterministic if its transition
+relation is deterministic for all states except~$s$.
 
 When analysing a deterministic loop, we can make use of the notion of a \emph{closed recurrence set}
 introduced by Chen et al.~in~\cite{DBLP:conf/tacas/ChenCFNO14}:  for each
-state in the recurrence set $N$, \emph{all} of its successors must be in $N$.
+state in the recurrence set~$N$, \emph{all} of its successors must be in~$N$.
 The existence of a closed recurrence set is equivalent to the satisfiability
 of formula {\bf [CNT]} in Definition~\ref{def:cnt}, which is already in second-order SAT without needing Skolemization.
 
@@ -1022,7 +1024,6 @@ We note that if $T$ is deterministic, every open recurrence set is also a
 closed recurrence set (since each state has at most one successor).  Thus,
 the non-termination problem for deterministic transition systems is
 equivalent to the satisfiability of formula {\bf [CNT]} from Figure~\ref{fig:single_loop}.
-
 
 \begin{theorem}
 \label{thm:cnt}
@@ -1043,7 +1044,7 @@ formula {\bf [ONT]} (Definition~\ref{def:ont}) and formula {\bf [CNT]} (Definiti
 
 So if our transition relation is deterministic, we can say, without
 loss of generality, that non-termination of the loop is equivalent
-to the existence of a closed recurrence set.  However if $T$ is
+to the existence of a closed recurrence set.  However, if $T$ is
 non-deterministic, it may be that there is an open recurrence
 set but not closed recurrence set.  To see this, consider the following
 loop:
@@ -1056,13 +1057,13 @@ while(x != 0) {
 \end{lstlisting}
 
 It is clear that this loop has many non-terminating executions,
-e.g. the execution where \lstinline!nondet()! always returns 0.
-However each state has a successor
+e.g.~the execution where \lstinline!nondet()! always returns~0.
+However, each state has a successor
 that exits the loop, i.e.~when \lstinline|nondet()| returns
-the value currently stored in \lstinline|x|.  So this loop
+the value currently stored in \lstinline|x|.  Thus, this loop
 has an open recurrence set, but no closed recurrence set
 and hence we cannot give a proof of its non-termination
-with {\bf [CNT]} and instead must use {\bf [SNT]}.
+with {\bf [CNT]} and instead must use~{\bf [SNT]}.
 
 % Only for certain choices of \lstinline!y! the loop is non-terminating.  In
 % order to restrict the values that may be assigned to \texttt{y}, we need an
