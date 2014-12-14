@@ -265,21 +265,23 @@ a proof of either its termination or non-termination.
 
 \begin{figure*}
 \centering
- \begin{tabular}{|ll||c|c|c|c|c|c|c|c|}
+ \begin{tabular}{|l||c|c|c|c|c|c|c|c|}
  \hline
-  & & \multicolumn{8}{c|}{Program} \\
-  & & \multicolumn{2}{c|}{Rationals/Integers} & \multicolumn{2}{c|}{Reals} & \multicolumn{2}{c|}{Bit-vectors} & \multicolumn{2}{c|}{Floats} \\
-  & & L & NL & L & NL & L & NL & L & NL \\
+                   & \multicolumn{8}{c|}{Program} \\
+  Ranking argument & \multicolumn{2}{c|}{Rationals/Integers} & \multicolumn{2}{c|}{Reals} & \multicolumn{2}{c|}{Bit-vectors} & \multicolumn{2}{c|}{Floats} \\
+                   & L & NL & L & NL & L & NL & L & NL \\
   \hline
   \hline
-  \multirow{4}{*}{Ranking} & Linear lexicographic &  \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} & - & \cite{DBLP:conf/tacas/LeikeH14} & - &\checkmark&\checkmark&\checkmark&\checkmark\\
-   & Linear non-lexicographic & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/tacas/LeikeH14} & - & \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
-   & Nonlinear lexicographic & - & - & - & - &\checkmark&\checkmark&\checkmark&\checkmark\\
-   & Nonlinear non-lexicographic & \cite{DBLP:conf/vmcai/BradleyMS05} &  \cite{DBLP:conf/vmcai/BradleyMS05} & - & - &\checkmark&\checkmark&\checkmark&\checkmark\\
-   \hline
- \end{tabular}
+  Linear lexicographic        & \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} & -- & \cite{DBLP:conf/tacas/LeikeH14} & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
+  Linear non-lexicographic    & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/tacas/LeikeH14} & -- & \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
+  Nonlinear lexicographic     & -- & -- & -- & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
+  Nonlinear non-lexicographic & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/vmcai/BradleyMS05} & -- & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
+  \hline
+ \end{tabular}\\
+ Legend: \checkmark = we can handle; --~=~no available works; L = linear; NL = nonlinear
 
- \caption{Summary of related termination analyses. Legend: \checkmark = we can handle; - = no available works; L = linear; NL = nonlinear.} \label{fig:handletable}
+ \caption{Summary of related termination analyses}
+ \label{fig:handletable}
 \end{figure*}
 
 The main contributions of our work can be summarised as follows:
