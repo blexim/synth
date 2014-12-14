@@ -323,6 +323,7 @@ over finite domains \cite{kalashnikov}.
 
 \end{itemize} 
 
+\noindent
 {\bf Limitations.} Our algorithm proves termination for transition systems
 with finite state spaces.  The (non-)termination proofs take the form of
 ranking functions and program invariants that are expressed in a
@@ -349,7 +350,6 @@ assumptions made by existing termination analyses:
 To show how these assumptions are violated by even simple programs, we draw
 the reader's attention to the programs in Figure~\ref{fig:motivation} and
 their curious properties:
-
 %
 \begin{itemize}
 
@@ -387,6 +387,133 @@ that the nearest representable number is $0.0$, at which point it will be
 rounded to $0.0$ and the loop will terminate.
 
 \end{itemize}
+
+\begin{figure*}[p]
+\centering
+\begin{tabular}{ccc}
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+while (x > 0) {
+  x = (x - 1) & x;
+}
+\end{lstlisting}
+\caption{Taken from~\cite{DBLP:conf/tacas/CookKRW10}}
+\label{fig:motivation.a}
+\end{subfigure}%
+
+&
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+while (x != 0) {
+  x = -x / 2;
+}
+\end{lstlisting}
+\caption{}
+ \label{fig:motivation.b}
+\end{subfigure} \\
+\hline
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}[language=C]
+while(x > 0) {
+  x++;
+}
+ \end{lstlisting}
+\caption{}
+ \label{fig:motivation.c}
+\end{subfigure}%
+
+&
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+while (i<M || j<N) {
+  i = i + 1;
+  j = j + 1;
+}
+\end{lstlisting}
+\caption{Taken from~\cite{DBLP:conf/sigsoft/Nori013}}
+ \label{fig:motivation.d}
+\end{subfigure} \\
+\hline
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+float x;
+
+while (x > 0.0) {
+  x -= 1.0;
+}
+\end{lstlisting}
+\caption{}
+ \label{fig:motivation.e}
+\end{subfigure}%
+
+&
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+float x;
+
+while (x > 0.0) {
+  x *= 0.5;
+}
+\end{lstlisting}
+\caption{}
+ \label{fig:motivation.f}
+\end{subfigure} \\
+\hline
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+while (x != 0) {
+  if (x > 0)
+    x--;
+  else
+    x++;
+}
+\end{lstlisting}
+\caption{Taken from \cite{DBLP:conf/tacas/CookSZ13}}
+ \label{fig:motivation.g}
+\end{subfigure} 
+
+
+&
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+y = 1;
+
+while (x > 0) {
+  x = x - y;
+}
+\end{lstlisting}
+\caption{}
+ \label{fig:motivation.h}
+\end{subfigure} \\
+\hline
+
+\begin{subfigure}[b]{0.45\textwidth}
+\begin{lstlisting}
+while (x>0 && y>0 && z>0){
+  if (y > x) {
+    y = z;
+    x = nondet();
+    z = x - 1;
+  } else {
+    z = z - 1;
+    x = nondet();
+    y = x - 1;
+  }
+}
+\end{lstlisting}
+\caption{Taken from~\cite{BA:mcs}}
+ \label{fig:motivation.i}
+\end{subfigure} 
+\end{tabular}
+\caption{Motivational examples, mostly taken from the literature.\label{fig:motivation}}
+\end{figure*}
 
 Up until this point, we considered examples that are not soundly treated by
 existing techniques as they don't fit in the range of programs addressed by
@@ -441,140 +568,6 @@ decrease indefinitely, and so $R$ proves that the loop is well founded.}
 %
 As with all of the termination proofs presented in this paper, the ranking
 functions above were all found completely automatically.
-
-\begin{figure*}[h]
-\hspace*{-2.5cm}
-\centering
-%\resizebox{.95\textwidth}{!}{
-%\begin{minipage}{\linewidth}
-\begin{tabular}{ccc}
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-while (x > 0) {
-  x = (x - 1) & x;
-}
-\end{lstlisting}
-\caption{Taken from~\cite{DBLP:conf/tacas/CookKRW10}.}
- \label{fig:motivation.a}
-\end{subfigure}%
-
-&
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-while (x != 0) {
-  x = -x / 2;
-}
-\end{lstlisting}
-\caption{}
- \label{fig:motivation.b}
-\end{subfigure}%
-
-&
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}[language=C]
-while(x > 0) {
-  x++;
-}
- \end{lstlisting}
-\caption{}
- \label{fig:motivation.c}
-\end{subfigure} \\
-
-\hline
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-while (i<M || j<N) {
-  i = i + 1;
-  j = j + 1;
-}
-\end{lstlisting}
-\caption{Taken from~\cite{DBLP:conf/sigsoft/Nori013}}
- \label{fig:motivation.d}
-\end{subfigure} 
-
-&
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-float x;
-
-while (x > 0.0) {
-  x -= 1.0;
-}
-\end{lstlisting}
-\caption{}
- \label{fig:motivation.e}
-\end{subfigure} 
-
-&
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-float x;
-
-while (x > 0.0) {
-  x *= 0.5;
-}
-\end{lstlisting}
-\caption{}
- \label{fig:motivation.f}
-\end{subfigure} \\
-\hline
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-while (x != 0) {
-  if (x > 0)
-    x--;
-  else
-    x++;
-}
-\end{lstlisting}
-\caption{Taken from \cite{DBLP:conf/tacas/CookSZ13}}
- \label{fig:motivation.g}
-\end{subfigure} 
-
-
-&
-
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-y = 1;
-
-while (x > 0) {
-  x = x - y;
-}
-\end{lstlisting}
-\caption{}
- \label{fig:motivation.h}
-\end{subfigure} 
-&
-\begin{subfigure}[b]{0.45\textwidth}
-\begin{lstlisting}
-while (x>0 && y>0 && z>0){
-  if (y > x) {
-    y = z;
-    x = nondet();
-    z = x - 1;
-  } else {
-    z = z - 1;
-    x = nondet();
-    y = x - 1;
-  }
-}
-\end{lstlisting}
-\caption{Taken from~\cite{BA:mcs}}
- \label{fig:motivation.i}
-\end{subfigure} 
-\end{tabular}
-%}
-\caption{Motivational examples, mostly taken from the literature.\label{fig:motivation}}
-\end{figure*}
-
-
 
 \section{Preliminaries}
 
