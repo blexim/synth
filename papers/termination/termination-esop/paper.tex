@@ -273,8 +273,8 @@ a proof of either its termination or non-termination.
                    & L & NL & L & NL & L & NL & L & NL \\
   \hline
   \hline
-  Linear lexicographic        & \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} & -- & \cite{DBLP:conf/tacas/LeikeH14} & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
-  Linear non-lexicographic    & \cite{DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/tacas/LeikeH14} & -- & \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
+  Linear lexicographic        & \cite{DBLP:journals/jacm/Ben-AmramG14,DBLP:conf/cav/BradleyMS05,DBLP:conf/tacas/CookSZ13,DBLP:conf/vmcai/P04} & -- & \cite{DBLP:conf/tacas/LeikeH14} & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
+  Linear non-lexicographic    & \cite{DBLP:conf/popl/Ben-AmramG13,DBLP:conf/pldi/CookPR06,DBLP:conf/cav/LeeWY12,DBLP:conf/atva/HeizmannHLP13,DBLP:conf/vmcai/BradleyMS05,DBLP:conf/cav/KroeningSTW10} & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/tacas/LeikeH14} & -- & \checkmark~ \cite{DBLP:conf/tacas/CookKRW10} &\checkmark~ \cite{DBLP:conf/tacas/CookKRW10}&\checkmark&\checkmark\\
   Nonlinear lexicographic     & -- & -- & -- & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
   Nonlinear non-lexicographic & \cite{DBLP:conf/vmcai/BradleyMS05} & \cite{DBLP:conf/vmcai/BradleyMS05} & -- & -- &\checkmark&\checkmark&\checkmark&\checkmark\\
   \hline
@@ -541,15 +541,15 @@ termination argument, and the search for a supporting
 invariant~\cite{DBLP:conf/cav/BrockschmidtCF13}.  For this loop, we find the
 ranking function $R(x) = x$ together with the supporting invariant $y=1$.
 
-\item In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, program (i)
-admits a \emph{multiphase} ranking function, computed from a multiphase
-ranking template.  Multiphase ranking templates are targeted at programs
-that go through a finite number of phases in their execution.  Each phase is
-ranked with an affine-linear function and the phase is considered to be
-completed once this function becomes non-positive.
+\item %% In the terminology of \cite{DBLP:conf/tacas/LeikeH14}, program (i)
+%% admits a \emph{multiphase} ranking function, computed from a multiphase
+%% ranking template.  Multiphase ranking templates are targeted at programs
+%% that go through a finite number of phases in their execution.  Each phase is
+%% ranked with an affine-linear function and the phase is considered to be
+%% completed once this function becomes non-positive.
 
-In our setting this type of programs does not need special treatment, as we
-can find a nonlinear lexicographic ranking function $R(x, y, z) = (x < y,
+%% In our setting this type of programs does not need special treatment, as
+For program (i) we find a nonlinear lexicographic ranking function $R(x, y, z) = (x < y,
 z)$.\footnote{This termination argument is somewhat subtle.  The Boolean
 values $\mathit{false}$ and $\mathit{true}$ are interpreted as 0 and 1,
 respectively.  The Boolean $x < y$ thus eventually decreases, that is to say
@@ -561,6 +561,7 @@ have stayed in the same branch of the ``if''), then $z$ does decrease.
 Since a Boolean only has two possible values, it cannot decrease
 indefinitely.  Since $z > 0$ is a conjunct of the loop guard, $z$ cannot
 decrease indefinitely, and so $R$ proves that the loop is well founded.}
+ We are not aware of any linear ranking function for this program.
 
 %\item Program (j) illustrates a nested loop.  This construction can
 %cause difficulties for provers based on enumerating lassos
