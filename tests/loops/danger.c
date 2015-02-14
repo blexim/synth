@@ -49,7 +49,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
     return 0;
   }
 
-  if (!inv(inv_prog, post_vars) || !guard(post_vars)) {
+  if (!inv(inv_prog, post_vars)) {
     return 0;
   }
 
