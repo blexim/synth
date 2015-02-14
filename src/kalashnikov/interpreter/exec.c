@@ -38,6 +38,10 @@ void exec(prog_t *prog, word_t args[NARGS], word_t results[NRES]) {
   }
 
   for (i = 0; i < LEN(prog); i++) {
+    if (i >= SZ) {
+      break;
+    }
+
     op = prog->ops[i];
     a1 = prog->params[3*i];
     a2 = prog->params[3*i + 1];
