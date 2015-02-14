@@ -31,7 +31,7 @@ void load_tests() {
     return;
   }
 
-  char buf[1024];
+  char buf[8192];
   char *p, *q;
 
   int i, j;
