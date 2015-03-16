@@ -224,7 +224,7 @@ def split_func(fd, ofile):
 
   prefix.block_items = prefix_block
 
-  assertion_block = decls
+  assertion_block = copy.deepcopy(decls)
   assertion_expr = c_ast.Constant('int', '1')
 
   for b in assertion.block_items:
