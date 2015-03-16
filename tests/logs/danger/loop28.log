@@ -1,0 +1,50 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop28.c', '../../tests/loops/danger.c', '-P3', '--evars', '1', '-a1', '--seed=1337', '--varnames', 'x', '--strategy=evolve', '-w4', '-v']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 6
+Program 0:
+t1 = 0x0 != x;
+t2 = 0x1 - x;
+res1 = t2 & 0x1;
+Program 1:
+res1 = 0x0 >> 0x0;
+Program 2:
+t1 = x * x;
+t2 = 0x1 - x;
+res1 = t2 + 0x1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 5.09s
+
+Evars: 6
+Program 0:
+t1 = 0x0 != x;
+t2 = 0x1 - x;
+res1 = t2 & 0x1;
+Program 1:
+res1 = 0x0 >> 0x0;
+Program 2:
+t1 = x * x;
+t2 = 0x1 - x;
+res1 = t2 + 0x1;
+
+
+Perf counters:
+{'genetic': 1, 'cbmc': 1, 'explicit': 1, 'iterations': 1}
+Perf timers:
+verify: 4.42s
+checker: 5.08s
+gcc: 1.11s
+_: 5.09s
+synth: 0.67s
