@@ -58,7 +58,7 @@ int nonzero(word_t rank[NRES]) {
   int i;
 
   for (i = 0; i < NRES; i++) {
-    if (rank[i] != 0) {
+    if (rank[i] > 0) {
       return 1;
     }
   }
