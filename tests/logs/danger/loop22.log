@@ -1,0 +1,349 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop22.c', '../../tests/loops/danger.c', '-P3', '--evars', '2', '-a2', '--seed=1337', '--varnames', 'i', 'c', '--strategy=evolve', '-v', '-c1', '-s10']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 7, 2
+Program 0:
+t1 = 0x0 < 0x1;
+t2 = 0x0 ? c : 0x3;
+res1 = 0x3 | c;
+Program 1:
+res1 = max(i, 0x0);
+Program 2:
+res1 = c | 0x0;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 5
+Program 0:
+t1 = i != 0x4;
+res1 = 0x4 == c;
+Program 1:
+t1 = 0x0 <= 0x1;
+t2 = ~(t1);
+res1 = t2 - c;
+Program 2:
+res1 = min(0x0, 0x4);
+
+Fastest checker: explicit
+Fails for (0, 4)
+
+[]
+Fastest checker: genetic
+Evars: 2, 3
+Program 0:
+t1 = i - c;
+t2 = max(i, 0x1);
+res1 = 0x0 ? 0x7 : t1;
+Program 1:
+t1 = 0x0 * 0x7;
+t2 = i ^ 0x7;
+res1 = i | i;
+Program 2:
+t1 = 0x1 <= 0x0;
+t2 = 0x0 & i;
+res1 = c << t2;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: anneal
+Evars: 3, 7
+Program 0:
+t1 = c - c;
+t2 = 0x0 & i;
+t3 = ~(t1);
+t4 = ~(c);
+t5 = i << i;
+t6 = t3 + 0x0;
+t7 = t5 + 0x1;
+t8 = 0x3 ==> i;
+t9 = 0x0 s< t8;
+res1 = t4 <= 0x1;
+Program 1:
+t1 = 0x6 ^ 0x1;
+t2 = t1 s<= 0x1;
+t3 = c >>> c;
+t4 = -(t3);
+t5 = t1 == 0x1;
+t6 = max(c, t3);
+t7 = 0x0 <= 0x6;
+t8 = max(c, t5);
+t9 = -(t1);
+res1 = t7 s<= t8;
+Program 2:
+t1 = min(i, 0x1);
+t2 = t1 << c;
+t3 = 0x0 | t1;
+t4 = 0x1 s< c;
+t5 = max(c, c);
+t6 = t3 / 0x1;
+t7 = t3 - t5;
+t8 = t1 * t4;
+t9 = t4 ^ t5;
+res1 = ~(t2);
+
+Fastest checker: explicit
+Fails for (0, 6)
+
+[]
+Fastest checker: anneal
+Evars: 3, 4
+Program 0:
+t1 = i >> c;
+t2 = t1 + t1;
+t3 = 0x1 s<= t1;
+t4 = t2 ^ t1;
+t5 = t4 <= 0x0;
+t6 = 0x3 != c;
+t7 = t4 + t2;
+t8 = t6 ==> t2;
+t9 = t4 + 0x3;
+res1 = t8 == t5;
+Program 1:
+t1 = 0x3 >> i;
+t2 = 0x3 + 0x1;
+t3 = -(0x0);
+t4 = c % 0x1;
+t5 = t4 + t3;
+t6 = c s<= t5;
+t7 = t3 >>> 0x1;
+t8 = t1 s<= c;
+t9 = t4 - t6;
+res1 = t7 >> t4;
+Program 2:
+t1 = c + 0x6;
+t2 = 0x6 ^ c;
+t3 = t1 & 0x0;
+t4 = -(c);
+t5 = t4 & t4;
+t6 = max(t3, i);
+t7 = t6 / c;
+t8 = max(t3, t4);
+t9 = 0x6 == t5;
+res1 = t4 % t4;
+
+Fastest checker: explicit
+Fails for (4, 0)
+
+[]
+Fastest checker: anneal
+Evars: 5, 4
+Program 0:
+t1 = c << 0x0;
+t2 = 0x1 - i;
+t3 = 0x1 >>> i;
+t4 = t3 s<= c;
+t5 = t1 * i;
+t6 = 0x1 | 0x1;
+t7 = t5 s<= t4;
+t8 = t4 - t3;
+t9 = c ? 0x1 : t5;
+res1 = i < t4;
+Program 1:
+t1 = c / 0x0;
+t2 = t1 * 0x1;
+t3 = t1 ==> c;
+t4 = 0x0 & i;
+t5 = i <= 0x2;
+t6 = i s< 0x2;
+t7 = 0x1 == t1;
+t8 = i * t6;
+t9 = t1 / c;
+res1 = t7 / 0x0;
+Program 2:
+t1 = min(0x0, 0x0);
+t2 = 0x0 <= 0x1;
+t3 = i >> 0x7;
+t4 = t3 ? t3 : 0x1;
+t5 = t3 * t4;
+t6 = t2 >> 0x7;
+t7 = 0x7 % i;
+t8 = t2 ^ t2;
+t9 = t3 | 0x7;
+res1 = t2 s<= t6;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: anneal
+Evars: 4, 4
+Program 0:
+t1 = 0x4 >> 0x4;
+t2 = max(0x4, t1);
+t3 = t1 s<= 0x4;
+t4 = min(0x0, i);
+t5 = i <= 0x1;
+t6 = 0x1 s< c;
+t7 = min(0x0, t6);
+t8 = t4 ==> t1;
+t9 = t6 & 0x0;
+res1 = t6 ? t5 : t3;
+Program 1:
+t1 = 0x0 * 0x4;
+t2 = 0x0 % 0x4;
+t3 = 0x1 < i;
+t4 = 0x0 != c;
+t5 = c + c;
+t6 = t4 - t3;
+t7 = 0x0 <= t2;
+t8 = t3 == t6;
+t9 = t8 <= 0x1;
+res1 = 0x4 >> t4;
+Program 2:
+t1 = 0x7 <= i;
+t2 = ~(i);
+t3 = i / 0x1;
+t4 = min(0x1, t1);
+t5 = max(t3, t1);
+t6 = t4 s< t5;
+t7 = -(i);
+t8 = t5 >>> t1;
+t9 = 0x7 | i;
+res1 = t3 ==> c;
+
+Fastest checker: explicit
+Fails for (0, 2)
+
+[]
+Fastest checker: anneal
+Evars: 7, 7
+Program 0:
+t1 = 0x1 << c;
+t2 = i s<= c;
+t3 = i != t1;
+t4 = 0x1 >> t2;
+t5 = -(i);
+t6 = t2 != i;
+t7 = t6 ==> t3;
+t8 = 0x1 * t1;
+t9 = ~(t4);
+res1 = t6 ^ 0x1;
+Program 1:
+t1 = 0x0 << 0x1;
+t2 = t1 >>> 0x1;
+t3 = 0x5 s<= 0x1;
+t4 = max(c, t2);
+t5 = i s<= t1;
+t6 = t2 s<= 0x1;
+t7 = 0x1 ? 0x1 : i;
+t8 = 0x5 << t5;
+t9 = 0x0 | t3;
+res1 = 0x1 <= i;
+Program 2:
+t1 = 0x0 | i;
+t2 = 0x1 << c;
+t3 = t1 <= c;
+t4 = t1 ^ c;
+t5 = ~(t4);
+t6 = t2 >>> t4;
+t7 = i + i;
+t8 = max(t1, t2);
+t9 = -(t2);
+res1 = t8 s<= t5;
+
+Fastest checker: explicit
+Fails for (1, 1)
+
+[]
+Fastest checker: anneal
+Evars: 0, 4
+Program 0:
+t1 = max(i, i);
+t2 = 0x1 & 0x3;
+t3 = -(t1);
+t4 = ~(t2);
+t5 = max(0x1, t3);
+t6 = 0x3 == c;
+t7 = min(t1, t6);
+t8 = 0x1 != c;
+t9 = -(0x3);
+res1 = t6 ^ t7;
+Program 1:
+t1 = min(c, 0x1);
+t2 = -(c);
+t3 = t1 >> 0x0;
+t4 = max(0x1, t2);
+t5 = t4 % t1;
+t6 = min(t5, 0x0);
+t7 = t6 ==> 0x1;
+t8 = 0x0 >>> t4;
+t9 = t4 >>> t3;
+res1 = t6 / t5;
+Program 2:
+t1 = c < 0x1;
+t2 = 0x0 - t1;
+t3 = 0x7 s< c;
+t4 = t1 s<= t2;
+t5 = c & i;
+t6 = t1 << 0x1;
+t7 = 0x0 <= 0x7;
+t8 = c % 0x7;
+t9 = t7 s<= 0x1;
+res1 = ~(0x7);
+
+Fastest checker: explicit
+Fails for (0, 3)
+
+[]
+Fastest checker: anneal
+Evars: 4, 6
+Program 0:
+t1 = max(0x0, i);
+t2 = 0x1 ^ 0x4;
+t3 = -(i);
+t4 = ~(t2);
+t5 = 0x1 - t3;
+t6 = t2 == c;
+t7 = min(t1, t6);
+t8 = 0x1 s<= c;
+t9 = t7 != t1;
+res1 = t6 ^ t7;
+Program 1:
+t1 = c & 0x1;
+t2 = -(c);
+t3 = i >> c;
+t4 = 0x1 == t2;
+t5 = t4 % i;
+t6 = min(t2, t3);
+t7 = min(0x1, 0x1);
+t8 = t6 >>> t4;
+t9 = t2 >>> i;
+res1 = t6 / t5;
+Program 2:
+t1 = c < 0x7;
+t2 = 0x0 >>> 0x1;
+t3 = t2 == 0x0;
+t4 = t1 ^ t2;
+t5 = c < t3;
+t6 = i s< i;
+t7 = 0x0 != c;
+t8 = c + t6;
+t9 = t7 < t4;
+res1 = 0x7 != t5;
+
+Fastest checker: explicit
+Fails for (0, 5)
+
+[]
+
+
+
+
+
+
+
+Timeout
+Perf counters:
+{'genetic': 3, 'anneal': 7, 'explicit': 10, 'timeout': 1, 'iterations': 11}
+Perf timers:
+verify: 0.24s
+checker: 1799.96s
+gcc: 3.59s
+_: 1800.00s
+synth: 1799.75s

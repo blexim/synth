@@ -1,0 +1,83 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop29.c', '../../tests/loops/danger.c', '-P3', '--evars', '1', '-a1', '--seed=1337', '--varnames', 'x', '-v', '-w32']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 1058046837
+Program 0:
+t1 = 0x1 ? 0x0 : 0x1;
+t2 = 0x0 s<= x;
+res1 = t1 s< t2;
+Program 1:
+t1 = 0x0 ==> x;
+t2 = 0x0 % x;
+res1 = t1 ? 0x1 : x;
+Program 2:
+t1 = 0x0 >> 0x0;
+t2 = x | x;
+res1 = ~(t2);
+
+Fastest checker: cbmc
+Fails for (1912602535,)
+
+[]
+Fastest checker: genetic
+Evars: 2130957603
+Program 0:
+t1 = x >> x;
+res1 = t1 >> t1;
+Program 1:
+t1 = x s< 0x1;
+res1 = 0x0 s< 0x1;
+Program 2:
+t1 = x s< x;
+res1 = x <= x;
+
+Fastest checker: explicit
+Fails for (32,)
+
+[]
+Fastest checker: genetic
+Evars: 1682623722
+Program 0:
+t1 = 0x1 | x;
+t2 = min(0x1, 0x1);
+res1 = t1 ^ x;
+Program 1:
+t1 = x >>> x;
+res1 = 0x0 % 0x0;
+Program 2:
+t1 = ~(x);
+res1 = ~(x);
+
+Fastest checker: cbmc
+Correct for wordlen=32
+
+
+
+
+
+
+
+Finished in 9.68s
+
+Evars: 1682623722
+Program 0:
+t1 = 0x1 | x;
+t2 = min(0x1, 0x1);
+res1 = t1 ^ x;
+Program 1:
+t1 = x >>> x;
+res1 = 0x0 % 0x0;
+Program 2:
+t1 = ~(x);
+res1 = ~(x);
+
+
+Perf counters:
+{'genetic': 3, 'cbmc': 2, 'explicit': 1, 'iterations': 3}
+Perf timers:
+verify: 7.48s
+checker: 9.64s
+gcc: 2.04s
+_: 9.68s
+synth: 2.20s
