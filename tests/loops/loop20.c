@@ -2,7 +2,7 @@
  * Danger invariant:
  *  x_0 = y_0 = nondet_0 = 0
  *  D(nondet0, x, y) = x == y
- *  R(nondet0, x, y) = x
+ *  R(nondet0, x, y) = -x
  *  nondet(x, y) = 1
  */
 int main(void) {
