@@ -18,27 +18,33 @@ int inv(prog_t *prog, word_t args[NARGS]) {
   return res[0];
 }
 
-int skolem(prog_t *prog, word_t pre_vars[NARGS]) {
+int skolem(prog_t *prog, word_t pre_vars[NARGS], word_t post_vars[NARGS]) {
   word_t res[NRES];
   int i;
 
-#if NONDET_ARGS > 0
-  for (i = 0; i < NONDET_ARGS; i++) {
-    pre_vars[i] = 0;
-  }
-
+#if (NONDET_ARGS > 0)
   exec(prog, pre_vars, res);
 
   for (i = 0; i < NONDET_ARGS; i++) {
-    pre_vars[i] = res[i];
+    post_vars[i] = res[i];
   }
 #endif
+
+  for (i = NONDET_ARGS; i < NARGS; i++) {
+    post_vars[i] = pre_vars[i];
+  }
 
   return 0;
 }
 
 
 void rank(prog_t *prog, word_t args[NARGS], word_t res[NRES]) {
+  int i;
+
+  for (i = 0; i < NONDET_ARGS; i++) {
+    args[i] = 0;
+  }
+
   exec(prog, args, res);
 }
 
@@ -69,7 +75,7 @@ int nonzero(word_t rank[NRES]) {
 }
 
 int check(solution_t *solution, word_t args[NARGS]) {
-  word_t pre_vars[NARGS], post_vars[NARGS];
+  word_t tmp[NARGS], pre_vars[NARGS], post_vars[NARGS];
   prog_t *inv_prog = &solution->progs[0];
   prog_t *skolem_prog = &solution->progs[1];
   prog_t *rank_prog = &solution->progs[2];
@@ -87,16 +93,20 @@ int check(solution_t *solution, word_t args[NARGS]) {
     return 0;
   }
 
-  for (i = 0; i < NARGS; i++) {
-    pre_vars[i] = args[i];
+  for (i = 0; i < NONDET_ARGS; i++) {
+    tmp[i] = 0;
   }
 
-  if (inv(inv_prog, pre_vars) && guard(pre_vars)) {
+  for (i = NONDET_ARGS; i < NARGS; i++) {
+    tmp[i] = args[i];
+  }
+
+  if (inv(inv_prog, tmp) && guard(tmp)) {
     word_t r1[NRES], r2[NRES];
 
-    rank(rank_prog, pre_vars, r1);
+    rank(rank_prog, tmp, r1);
     
-    skolem(skolem_prog, pre_vars);
+    skolem(skolem_prog, tmp, pre_vars);
     body(pre_vars, post_vars);
 
     rank(rank_prog, post_vars, r2);
