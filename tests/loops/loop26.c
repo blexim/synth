@@ -3,8 +3,8 @@ int main(void) {
 
   x = 0;
 
-  while (x < 1000) {
-    if (x < 501) {
+  while (x < 100) {
+    if (x < 51) {
       x++;
     } else {
       x += 2;
