@@ -1,0 +1,731 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop30.c', '../../tests/loops/danger.c', '-P3', '--evars', '1', '-a1', '--seed=1337', '--varnames', 'x', '-v', '-w32', '-c1', '--strategy=evolve']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 126664552
+Program 0:
+t1 = x ^ 0x1;
+res1 = t1 | 0x1;
+Program 1:
+t1 = -(0x7fffffff);
+res1 = 0x1 << x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (4294967295,)
+
+[]
+Fastest checker: genetic
+Evars: 482074192
+Program 0:
+res1 = 0x1 s< x;
+Program 1:
+t1 = 0x0 s<= 0x1;
+t2 = 0x0 < t1;
+res1 = 0x0 < 0x0;
+Program 2:
+t1 = -0x1 ? 0x1 : 0x1;
+t2 = x & t1;
+res1 = -0x1 - x;
+
+Fastest checker: cbmc
+Fails for (402653183,)
+
+[]
+Fastest checker: genetic
+Evars: 266786352
+Program 0:
+t1 = 0x1 >> -0x80000000;
+t2 = x % -0x80000000;
+res1 = t2 >> t2;
+Program 1:
+t1 = 0x0 s<= 0x1;
+t2 = 0x1 << 0x1;
+res1 = 0x1 - -0x80000000;
+Program 2:
+t1 = 0x1 + 0x0;
+res1 = 0x0 <= 0x1;
+
+Fastest checker: explicit
+Fails for (32,)
+
+[]
+Fastest checker: anneal
+Evars: 45690962
+Program 0:
+res1 = x <= 0xc823b0a;
+Program 1:
+res1 = 0x1 ^ 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (209861386,)
+
+[]
+Fastest checker: genetic
+Evars: 650094857
+Program 0:
+res1 = 0x7fffffff >>> x;
+Program 1:
+res1 = x s<= 0x1;
+Program 2:
+t1 = ~(x);
+t2 = 0x0 + 0x0;
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Fails for (30,)
+
+[]
+Fastest checker: anneal
+Evars: 1349023279
+Program 0:
+res1 = 0x2ac4a1c4 s<= x;
+Program 1:
+res1 = 0x0 >> 0x18f50aa6;
+Program 2:
+res1 = x >> 0x5ecdf12c;
+
+Fastest checker: cbmc
+Fails for (1254400453,)
+
+[]
+Fastest checker: anneal
+Evars: 1743104607
+Program 0:
+res1 = 0x6771f4cc s<= x;
+Program 1:
+res1 = 0x0 ==> 0x1;
+Program 2:
+res1 = 0x1 ? 0x1 : 0x0;
+
+Fastest checker: cbmc
+Fails for (1735521489,)
+
+[]
+Fastest checker: anneal
+Evars: 2064807418
+Program 0:
+res1 = 0x6e89b56b s<= x;
+Program 1:
+res1 = 0x1 >> 0x1;
+Program 2:
+res1 = 0x565e31a8 * 0x1;
+
+Fastest checker: cbmc
+Fails for (1854780773,)
+
+[]
+Fastest checker: anneal
+Evars: 2062961761
+Program 0:
+res1 = 0x6e8f7489 s<= x;
+Program 1:
+res1 = 0x424ef46d ? 0x1 : 0x424ef46d;
+Program 2:
+res1 = 0x283bff8e + 0x1;
+
+Fastest checker: cbmc
+Fails for (1855943701,)
+
+[]
+Fastest checker: anneal
+Evars: 2124965407
+Program 0:
+res1 = 0x7894487e s<= x;
+Program 1:
+res1 = 0x1 & 0x1;
+Program 2:
+res1 = ~(0x5ebf0918);
+
+Fastest checker: cbmc
+Fails for (2022983811,)
+
+[]
+Fastest checker: anneal
+Evars: 2129077808
+Program 0:
+res1 = 0x7c526ee0 s<= x;
+Program 1:
+res1 = 0x1 < 0x0;
+Program 2:
+res1 = 0x0 != 0x1;
+
+Fastest checker: cbmc
+Fails for (2085777153,)
+
+[]
+Fastest checker: anneal
+Evars: 2108176020
+Program 0:
+res1 = 0x7caab353 s<= x;
+Program 1:
+res1 = -(x);
+Program 2:
+res1 = 0x1 / 0x0;
+
+Fastest checker: cbmc
+Fails for (2091561811,)
+
+[]
+Fastest checker: anneal
+Evars: 2132114776
+Program 0:
+res1 = 0x7d2a30f7 s< x;
+Program 1:
+res1 = 0x1 / x;
+Program 2:
+res1 = x != 0x0;
+
+Fastest checker: cbmc
+Fails for (2099917503,)
+
+[]
+Fastest checker: anneal
+Evars: 131368468
+Program 0:
+res1 = x <= 0x958aa2d;
+Program 1:
+res1 = 0x3f06f57f + x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (156805677,)
+
+[]
+Fastest checker: anneal
+Evars: 2125438844
+Program 0:
+res1 = 0x7e6d2908 s<= x;
+Program 1:
+res1 = 0x1 % 0x0;
+Program 2:
+res1 = 0x1 ? 0x1 : 0x1;
+
+Fastest checker: cbmc
+Fails for (2121083145,)
+
+[]
+Fastest checker: anneal
+Evars: 241651283
+Program 0:
+res1 = x < 0x116748e3;
+Program 1:
+res1 = 0x5f9e4fab % 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (291981411,)
+
+[]
+Fastest checker: anneal
+Evars: 105184702
+Program 0:
+res1 = x < 0xd2e206d;
+Program 1:
+res1 = 0x5f9e4fab ^ x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (221126764,)
+
+[]
+Fastest checker: anneal
+Evars: 105184702
+Program 0:
+res1 = x < 0x78eb9b6;
+Program 1:
+res1 = 0x324a89b % x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (126794165,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x78eb9b6;
+Program 1:
+res1 = 0x0 % x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (126794166,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x2813726;
+Program 1:
+res1 = 0x1 / x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (42022694,)
+
+[]
+Fastest checker: anneal
+Evars: 105184702
+Program 0:
+res1 = x <= 0xd2e206d;
+Program 1:
+res1 = 0x1 ^ x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (221126765,)
+
+[]
+Fastest checker: anneal
+Evars: 54982080
+Program 0:
+res1 = x <= 0xa5ed93e;
+Program 1:
+res1 = 0x7e1c661d s< 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (173988158,)
+
+[]
+Fastest checker: anneal
+Evars: 54982080
+Program 0:
+res1 = x < 0xa5ed93e;
+Program 1:
+res1 = 0x2cecc40d <= 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (173988157,)
+
+[]
+Fastest checker: anneal
+Evars: 45690962
+Program 0:
+res1 = x < 0xc823b0a;
+Program 1:
+res1 = 0x1 <= 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (209861385,)
+
+[]
+Fastest checker: anneal
+Evars: 45690962
+Program 0:
+res1 = x < 0x9396781;
+Program 1:
+res1 = 0x1 <= x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (154756992,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x9396781;
+Program 1:
+res1 = 0x0 <= x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (154756993,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x9a327ef;
+Program 1:
+res1 = x < 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (161687535,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x9a327ef;
+Program 1:
+res1 = 0x2cecc40d <= 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (161687534,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x2813726;
+Program 1:
+res1 = 0x1 / x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (42022693,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x3180fd5;
+Program 1:
+res1 = min(0x1, 0x4fe0addc);
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (51908564,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x3180fd5;
+Program 1:
+res1 = min(0x0, 0x4439ac7d);
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (51908565,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0xec59db3;
+Program 1:
+res1 = 0x1 < 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (247831987,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0xec59db3;
+Program 1:
+res1 = 0x2cecc40d <= 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (247831986,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0xcbfec68;
+Program 1:
+res1 = 0x1 % x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (213904487,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0xcbfec68;
+Program 1:
+res1 = 0x0 % x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (213904488,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x10747ab6;
+Program 1:
+res1 = ~(0x0);
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (274185177,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x573c883;
+Program 1:
+res1 = ~(x);
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (91474051,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x573c883;
+Program 1:
+res1 = 0x2cecc40d <= 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (91474050,)
+
+[]
+Fastest checker: anneal
+Evars: 10771476
+Program 0:
+res1 = x < 0x2267197;
+Program 1:
+res1 = 0x38583a99 | 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (36073878,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x2267197;
+Program 1:
+res1 = 0x0 | 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (36073879,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x4d93e35;
+Program 1:
+res1 = 0x49e91dd7 | 0x49e91dd7;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (81346101,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x4d93e35;
+Program 1:
+res1 = 0x2cecc40d <= 0x2cecc40d;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (81346100,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x3ec04d1;
+Program 1:
+res1 = 0x6c737c40 >> 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (65799377,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x3ec04d1;
+Program 1:
+res1 = 0x2cecc40d <= 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (65799376,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0xe993e32;
+Program 1:
+res1 = 0x44f250ce <= x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (244923953,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0xe993e32;
+Program 1:
+res1 = 0x0 <= x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (244923954,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x932115c;
+Program 1:
+res1 = 0x0 <= 0x4439ac7d;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (154276188,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0x932115c;
+Program 1:
+res1 = 0x2cecc40d <= 0x2cecc40d;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (154276187,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x < 0xdaf5887;
+Program 1:
+res1 = 0x2cecc40d | 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (229595270,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0xdaf5887;
+Program 1:
+res1 = 0x0 | 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (229595271,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0x100e5a3a;
+Program 1:
+res1 = ~(0x0);
+Program 2:
+res1 = 0x6f4b9945 - x;
+
+Fastest checker: cbmc
+Fails for (269376018,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0xecac999;
+Program 1:
+res1 = 0x0 <= 0x0;
+Program 2:
+res1 = 0x1eb701e1 - x;
+
+Fastest checker: cbmc
+Fails for (248170905,)
+
+[]
+Fastest checker: anneal
+Evars: 3412010
+Program 0:
+res1 = x <= 0xea0964a;
+Program 1:
+res1 = 0x1 <= 0x1;
+Program 2:
+res1 = 0x612d2a60 - x;
+
+Fastest checker: cbmc
+Fails for (245405258,)
+
+[]
+Fastest checker: anneal
+Evars: 134681440
+Program 0:
+res1 = x < 0x88fb5d8;
+Program 1:
+res1 = 0x0 != 0x0;
+Program 2:
+res1 = 0x612d2a60 >>> x;
+
+Fastest checker: explicit
+Fails for (31,)
+
+[]
+Fastest checker: anneal
+Evars: 97689421
+Program 0:
+res1 = x < 0x88fb5d8;
+Program 1:
+res1 = 0x0 + 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (143635927,)
+
+[]

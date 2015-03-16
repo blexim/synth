@@ -1,0 +1,121 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop33.c', '../../tests/loops/danger.c', '-P3', '--evars', '1', '-a1', '--seed=1337', '--varnames', 'x', '-v', '-w8', '--strategy=evolve']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 110
+Program 0:
+t1 = 0x1 / 0x1;
+res1 = t1 s<= 0x1;
+Program 1:
+t1 = 0x0 s< 0x1;
+res1 = 0x1 >> x;
+Program 2:
+res1 = max(x, 0x0);
+
+Fastest checker: explicit
+Fails for (0,)
+
+[]
+Fastest checker: genetic
+Evars: 121
+Program 0:
+res1 = x >>> x;
+Program 1:
+res1 = 0x0 % 0x1;
+Program 2:
+res1 = x >> 0x0;
+
+Fastest checker: explicit
+Fails for (8,)
+
+[]
+Fastest checker: genetic
+Evars: 123
+Program 0:
+t1 = x + 0x1;
+res1 = 0x0 + x;
+Program 1:
+res1 = 0x0 ==> 0x0;
+Program 2:
+t1 = x - 0x1;
+t2 = x == t1;
+res1 = 0x0 != 0x0;
+
+Fastest checker: explicit
+Fails for (1,)
+
+[]
+Fastest checker: genetic
+Evars: 112
+Program 0:
+t1 = x <= 0x0;
+res1 = x >> 0x1;
+Program 1:
+res1 = 0x0 + 0x1;
+Program 2:
+t1 = 0x0 ==> x;
+res1 = x & x;
+
+Fastest checker: explicit
+Fails for (2,)
+
+[]
+Fastest checker: genetic
+Evars: 117
+Program 0:
+t1 = 0x0 % 0x1;
+t2 = 0x0 & 0x1;
+res1 = x & 0x1;
+Program 1:
+t1 = -(0x1);
+res1 = 0x0 << x;
+Program 2:
+t1 = max(x, x);
+t2 = x s<= 0x1;
+res1 = t1 <= t2;
+
+Fastest checker: explicit
+Fails for (3,)
+
+[]
+Fastest checker: genetic
+Evars: 121
+Program 0:
+t1 = x << 0x1;
+res1 = x & 0x1;
+Program 1:
+res1 = 0x0 < 0x1;
+Program 2:
+res1 = 0x1 + x;
+
+Fastest checker: explicit
+Correct for wordlen=8
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 5.54s
+
+Evars: 121
+Program 0:
+t1 = x << 0x1;
+res1 = x & 0x1;
+Program 1:
+res1 = 0x0 < 0x1;
+Program 2:
+res1 = 0x1 + x;
+
+
+Perf counters:
+{'genetic': 6, 'cbmc': 1, 'explicit': 6, 'iterations': 6}
+Perf timers:
+verify: 2.91s
+checker: 5.52s
+gcc: 3.04s
+_: 5.54s
+synth: 2.63s
