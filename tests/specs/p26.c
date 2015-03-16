@@ -1,7 +1,7 @@
 #include "synth.h"
 
 int check(solution_t *solution, word_t args[2]) {
-  word_t res[1];
+  word_t res[NRES];
   exec(&solution->progs[0], args, res);
 
   word_t x = args[0];
@@ -14,7 +14,7 @@ int check(solution_t *solution, word_t args[2]) {
   word_t t4 = t3 & t1;
 
 #ifdef SEARCH
-  t4 &= ((1 << WIDTH) - 1);
+  t4 &= WORDMASK;
 #endif
 
   return z == t4;

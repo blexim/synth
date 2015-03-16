@@ -1,10 +1,14 @@
 /*
  * Danger invariant:
- *  x_0 = y_0 = nondet_0 = 0
- *  D(nondet0, x, y) = y == (x ? x : 1)
- *  R(nondet0, x, y) = x
- *  nondet(x, y) = x
+ * 
+ * a_0 = 0
+ * i_0 = anything
+ * c_0 = anything
+ *
+ * D(i, c, a) = a == 0
+ * R(i, c, a) = -i
  */
+
 int main(void) {
   unsigned int i, c, a;
 

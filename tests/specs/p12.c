@@ -17,8 +17,8 @@ int check(solution_t *solution, word_t args[2]) {
 #endif
 
   if (t2 <= y) {
-    return !!z;
+    return z != 0;
   } else {
-    return !z;
+    return z == 0;
   }
 }
