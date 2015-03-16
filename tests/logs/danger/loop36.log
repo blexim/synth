@@ -1,0 +1,149 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop36.c', '../../tests/loops/danger.c', '-P3', '--evars', '2', '-a2', '--seed=1337', '--varnames', 'x', 'y', '-v', '--strategy=evolve', '-w7']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 124, 64
+Program 0:
+res1 = 0x0 | x;
+Program 1:
+t1 = 0x1 s<= 0x0;
+res1 = 0x1 s<= x;
+Program 2:
+t1 = 0x1 & y;
+t2 = x >> x;
+res1 = t1 >>> x;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 51, 100
+Program 0:
+res1 = y + x;
+Program 1:
+t1 = y < y;
+res1 = 0x0 ^ t1;
+Program 2:
+t1 = -(x);
+res1 = 0x1 << 0x1;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 69, 28
+Program 0:
+res1 = 0x0 < x;
+Program 1:
+t1 = 0x1 ^ 0x1;
+t2 = y s< 0x0;
+res1 = 0x0 ? y : 0x0;
+Program 2:
+t1 = ~(0x0);
+t2 = t1 << y;
+res1 = y s<= y;
+
+Fastest checker: explicit
+Fails for (1, 6)
+
+[]
+Fastest checker: genetic
+Evars: 46, 33
+Program 0:
+t1 = x / 0x1;
+t2 = 0x0 >> t1;
+res1 = y | 0x0;
+Program 1:
+res1 = 0x1 s< x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (100, 100)
+
+[]
+Fastest checker: genetic
+Evars: 52, 114
+Program 0:
+t1 = 0x1 * 0x0;
+res1 = 0x1 s<= x;
+Program 1:
+t1 = y % 0x0;
+t2 = t1 >>> y;
+res1 = y | 0x1;
+Program 2:
+res1 = ~(y);
+
+Fastest checker: explicit
+Fails for (63, 0)
+
+[]
+Fastest checker: genetic
+Evars: 26, 47
+Program 0:
+res1 = x ^ y;
+Program 1:
+t1 = y + 0x0;
+t2 = y << 0x0;
+res1 = 0x0 != 0x0;
+Program 2:
+t1 = min(y, 0x1);
+res1 = ~(y);
+
+Fastest checker: explicit
+Fails for (0, 127)
+
+[]
+Fastest checker: genetic
+Evars: 69, 95
+Program 0:
+t1 = -(0x0);
+t2 = y s<= 0x0;
+res1 = x - y;
+Program 1:
+t1 = min(x, 0x0);
+t2 = y >> t1;
+res1 = t2 / y;
+Program 2:
+t1 = y != 0x1;
+t2 = ~(x);
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Correct for wordlen=7
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 7.22s
+
+Evars: 69, 95
+Program 0:
+t1 = -(0x0);
+t2 = y s<= 0x0;
+res1 = x - y;
+Program 1:
+t1 = min(x, 0x0);
+t2 = y >> t1;
+res1 = t2 / y;
+Program 2:
+t1 = y != 0x1;
+t2 = ~(x);
+res1 = 0x0 + 0x0;
+
+
+Perf counters:
+{'genetic': 7, 'cbmc': 1, 'explicit': 7, 'iterations': 7}
+Perf timers:
+verify: 4.22s
+checker: 7.19s
+gcc: 3.40s
+_: 7.22s
+synth: 2.99s
