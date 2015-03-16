@@ -1,0 +1,173 @@
+Running with args: ['./kalashnikov.py', '--nondet=1', '/tmp/loop20.c', '../../tests/loops/danger.c', '-P3', '--evars', '3', '-a3', '--seed=1337', '--varnames', 'nondet0', 'x', 'y', '-v', '-w10', '--strategy=evolve']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 988, 807, 963
+Program 0:
+t1 = 0x1 <= y;
+t2 = 0x0 ==> y;
+res1 = 0x1 >> x;
+Program 1:
+t1 = max(y, 0x1);
+t2 = nondet0 ? 0x0 : nondet0;
+res1 = x >>> x;
+Program 2:
+res1 = ~(y);
+
+Fastest checker: explicit
+Fails for (0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 978, 242, 145
+Program 0:
+t1 = nondet0 ==> x;
+t2 = y != y;
+res1 = x <= x;
+Program 1:
+res1 = y << 0x0;
+Program 2:
+t1 = nondet0 << 0x1;
+t2 = t1 * nondet0;
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (0, 1000, 0)
+
+[]
+Fastest checker: genetic
+Evars: 26, 473, 615
+Program 0:
+res1 = x <= 0x1;
+Program 1:
+res1 = 0x1 s<= nondet0;
+Program 2:
+res1 = x == nondet0;
+
+Fastest checker: explicit
+Fails for (0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 628, 372, 975
+Program 0:
+t1 = y | x;
+t2 = t1 <= y;
+res1 = min(t2, t2);
+Program 1:
+res1 = 0x1 << y;
+Program 2:
+res1 = y <= 0x0;
+
+Fastest checker: explicit
+Fails for (0, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 464, 792, 319
+Program 0:
+t1 = nondet0 ==> 0x1;
+t2 = 0x0 <= 0x0;
+res1 = x ? y : 0x1;
+Program 1:
+res1 = max(0x1, y);
+Program 2:
+t1 = ~(x);
+res1 = 0x0 * 0x0;
+
+Fastest checker: cbmc
+Fails for (0, 387, 1023)
+
+[]
+Fastest checker: genetic
+Evars: 704, 144, 218
+Program 0:
+t1 = 0x0 + nondet0;
+res1 = y == x;
+Program 1:
+t1 = x * nondet0;
+res1 = 0x0 | 0x1;
+Program 2:
+t1 = 0x0 + 0x0;
+t2 = 0x0 + 0x0;
+res1 = 0x1 >> x;
+
+Fastest checker: explicit
+Fails for (0, 1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 374, 657, 178
+Program 0:
+res1 = 0x0 s<= x;
+Program 1:
+t1 = 0x0 - 0x0;
+res1 = t1 ^ 0x1;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (0, 511, 0)
+
+[]
+Fastest checker: genetic
+Evars: 76, 465, 403
+Program 0:
+t1 = -(0x1);
+t2 = 0x1 + x;
+res1 = y s< t2;
+Program 1:
+t1 = y <= x;
+res1 = 0x0 + 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (0, 510, 0)
+
+[]
+Fastest checker: genetic
+Evars: 978, 242, 145
+Program 0:
+t1 = 0x0 + nondet0;
+res1 = y == x;
+Program 1:
+res1 = 0x1 | 0x1;
+Program 2:
+t1 = nondet0 << 0x1;
+t2 = t1 * nondet0;
+res1 = ~(x);
+
+Fastest checker: cbmc
+Correct for wordlen=10
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 21.54s
+
+Evars: 978, 242, 145
+Program 0:
+t1 = 0x0 + nondet0;
+res1 = y == x;
+Program 1:
+res1 = 0x1 | 0x1;
+Program 2:
+t1 = nondet0 << 0x1;
+t2 = t1 * nondet0;
+res1 = ~(x);
+
+
+Perf counters:
+{'genetic': 9, 'cbmc': 3, 'explicit': 7, 'iterations': 9}
+Perf timers:
+verify: 17.37s
+checker: 21.47s
+gcc: 4.55s
+_: 21.54s
+synth: 4.17s
