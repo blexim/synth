@@ -22,6 +22,7 @@ int skolem(prog_t *prog, word_t pre_vars[NARGS]) {
   word_t res[NRES];
   int i;
 
+#if NONDET_ARGS > 0
   for (i = 0; i < NONDET_ARGS; i++) {
     pre_vars[i] = 0;
   }
@@ -31,6 +32,7 @@ int skolem(prog_t *prog, word_t pre_vars[NARGS]) {
   for (i = 0; i < NONDET_ARGS; i++) {
     pre_vars[i] = res[i];
   }
+#endif
 
   return 0;
 }
