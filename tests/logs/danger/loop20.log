@@ -149,7 +149,7 @@ Also correct for wordlen=32!
 
 
 
-Finished in 21.54s
+Finished in 21.17s
 
 Evars: 978, 242, 145
 Program 0:
@@ -166,8 +166,8 @@ res1 = ~(x);
 Perf counters:
 {'genetic': 9, 'cbmc': 3, 'explicit': 7, 'iterations': 9}
 Perf timers:
-verify: 17.37s
-checker: 21.47s
-gcc: 4.55s
-_: 21.54s
-synth: 4.17s
+verify: 17.34s
+checker: 21.10s
+gcc: 4.21s
+_: 21.17s
+synth: 3.83s
