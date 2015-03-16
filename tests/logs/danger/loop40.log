@@ -1,0 +1,143 @@
+Running with args: ['./kalashnikov.py', '--nondet=1', '/tmp/loop40.c', '../../tests/loops/danger.c', '-P3', '--evars', '3', '-a3', '--seed=1337', '--varnames', 'nondet0', 'x', 'y', '-v', '-w10', '--strategy=evolve', '--fastverif=True']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 988, 807, 963
+Program 0:
+t1 = 0x1 <= y;
+t2 = 0x0 ==> y;
+res1 = 0x1 >> x;
+Program 1:
+t1 = max(y, 0x1);
+t2 = nondet0 ? 0x0 : nondet0;
+res1 = x >>> x;
+Program 2:
+res1 = ~(y);
+
+Fastest checker: explicit
+Fails for (0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 978, 242, 145
+Program 0:
+t1 = nondet0 ==> x;
+t2 = y != y;
+res1 = x <= x;
+Program 1:
+res1 = y << 0x0;
+Program 2:
+t1 = nondet0 << 0x1;
+t2 = t1 * nondet0;
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (0, 1007, 1007)
+
+[]
+Fastest checker: genetic
+Evars: 46, 56, 120
+Program 0:
+res1 = y == 0x1;
+Program 1:
+t1 = 0x1 & x;
+t2 = ~(y);
+res1 = nondet0 s< 0x1;
+Program 2:
+t1 = y ^ 0x1;
+t2 = 0x0 & 0x0;
+res1 = 0x1 * y;
+
+Fastest checker: explicit
+Fails for (0, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 844, 907, 370
+Program 0:
+t1 = nondet0 == 0x0;
+res1 = nondet0 s< y;
+Program 1:
+res1 = y | nondet0;
+Program 2:
+t1 = 0x1 s<= 0x0;
+t2 = nondet0 != y;
+res1 = ~(x);
+
+Fastest checker: cbmc
+Fails for (0, 63, 511)
+
+[]
+Fastest checker: genetic
+Evars: 26, 473, 615
+Program 0:
+res1 = x <= 0x1;
+Program 1:
+res1 = 0x1 s<= nondet0;
+Program 2:
+res1 = x == nondet0;
+
+Fastest checker: explicit
+Fails for (0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 107, 489, 116
+Program 0:
+t1 = nondet0 s< 0x0;
+t2 = 0x0 s<= x;
+res1 = t1 s<= x;
+Program 1:
+res1 = y + y;
+Program 2:
+t1 = ~(x);
+t2 = 0x0 + 0x0;
+res1 = 0x0 + 0x0;
+
+Fastest checker: cbmc
+Fails for (0, 511, 256)
+
+[]
+Fastest checker: genetic
+Evars: 384, 322, 830
+Program 0:
+t1 = 0x1 & y;
+res1 = y ^ x;
+Program 1:
+res1 = nondet0 == nondet0;
+Program 2:
+t1 = ~(x);
+res1 = 0x0 s< nondet0;
+
+Fastest checker: cbmc
+Correct for wordlen=10
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 9.59s
+
+Evars: 384, 322, 830
+Program 0:
+t1 = 0x1 & y;
+res1 = y ^ x;
+Program 1:
+res1 = nondet0 == nondet0;
+Program 2:
+t1 = ~(x);
+res1 = 0x0 s< nondet0;
+
+
+Perf counters:
+{'genetic': 7, 'cbmc': 5, 'explicit': 3, 'iterations': 7}
+Perf timers:
+verify: 6.49s
+checker: 9.57s
+gcc: 4.66s
+_: 9.59s
+synth: 3.10s
