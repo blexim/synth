@@ -1,0 +1,348 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop37.c', '../../tests/loops/danger.c', '-P3', '--evars', '2', '-a2', '--seed=1337', '--varnames', 'x', 'y', '-v', '--strategy=evolve', '-w7']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 51, 100
+Program 0:
+res1 = y + x;
+Program 1:
+t1 = y < y;
+res1 = 0x0 ^ t1;
+Program 2:
+t1 = -(x);
+res1 = 0x1 << 0x1;
+
+Fastest checker: explicit
+Fails for (100, 0)
+
+[]
+Fastest checker: genetic
+Evars: 62, 26
+Program 0:
+res1 = 0x0 == x;
+Program 1:
+t1 = 0x0 + 0x0;
+res1 = t1 % x;
+Program 2:
+t1 = 0x1 >> y;
+res1 = min(y, t1);
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 116, 100
+Program 0:
+t1 = 0x1 * y;
+t2 = y + t1;
+res1 = x < t1;
+Program 1:
+t1 = 0x1 % 0x1;
+t2 = 0x1 ^ y;
+res1 = 0x0 | 0x0;
+Program 2:
+res1 = -(x);
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 60, 95
+Program 0:
+t1 = y <= y;
+t2 = 0x1 * 0x0;
+res1 = y >> 0x1;
+Program 1:
+t1 = -(x);
+t2 = ~(0x1);
+res1 = y ^ 0x0;
+Program 2:
+t1 = y + 0x1;
+res1 = t1 - x;
+
+Fastest checker: explicit
+Fails for (3, 2)
+
+[]
+Fastest checker: genetic
+Evars: 46, 33
+Program 0:
+t1 = x / 0x1;
+t2 = 0x0 >> t1;
+res1 = y | 0x0;
+Program 1:
+res1 = 0x1 s< x;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (99, 1)
+
+[]
+Fastest checker: genetic
+Evars: 5, 104
+Program 0:
+t1 = y >> 0x1;
+res1 = y s< x;
+Program 1:
+res1 = x % x;
+Program 2:
+t1 = x << 0x0;
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (63, 0)
+
+[]
+Fastest checker: genetic
+Evars: 113, 98
+Program 0:
+t1 = 0x0 | x;
+t2 = max(0x1, y);
+res1 = y >> 0x1;
+Program 1:
+t1 = max(y, 0x1);
+t2 = max(0x0, t1);
+res1 = 0x1 == y;
+Program 2:
+t1 = -(x);
+t2 = 0x0 >>> y;
+res1 = x < t2;
+
+Fastest checker: explicit
+Fails for (0, 2)
+
+[]
+Fastest checker: genetic
+Evars: 115, 117
+Program 0:
+t1 = x | 0x0;
+t2 = y >>> 0x0;
+res1 = t2 >>> y;
+Program 1:
+t1 = min(x, 0x1);
+t2 = 0x0 << 0x1;
+res1 = t1 + y;
+Program 2:
+t1 = 0x1 != x;
+t2 = -(x);
+res1 = 0x0 << 0x1;
+
+Fastest checker: explicit
+Fails for (0, 7)
+
+[]
+Fastest checker: genetic
+Evars: 71, 8
+Program 0:
+res1 = y >> y;
+Program 1:
+t1 = 0x0 ? 0x0 : 0x0;
+res1 = y | 0x1;
+Program 2:
+t1 = ~(x);
+res1 = min(t1, 0x1);
+
+Fastest checker: explicit
+Fails for (99, 7)
+
+[]
+Fastest checker: genetic
+Evars: 62, 93
+Program 0:
+t1 = 0x0 s<= y;
+res1 = x == t1;
+Program 1:
+res1 = -(x);
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: anneal
+Evars: 105, 77
+Program 0:
+res1 = y s< 0x0;
+Program 1:
+res1 = -(0x0);
+Program 2:
+res1 = 0x0 - x;
+
+Fastest checker: explicit
+Fails for (0, 64)
+
+[]
+Fastest checker: genetic
+Evars: 109, 101
+Program 0:
+t1 = -(y);
+t2 = 0x1 | 0x1;
+res1 = y s< 0x0;
+Program 1:
+t1 = 0x0 != y;
+t2 = y < 0x0;
+res1 = y ==> 0x1;
+Program 2:
+t1 = ~(x);
+t2 = y != x;
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Fails for (64, 64)
+
+[]
+Fastest checker: genetic
+Evars: 71, 8
+Program 0:
+t1 = x >>> x;
+t2 = 0x0 != t1;
+res1 = t2 < 0x1;
+Program 1:
+t1 = ~(y);
+res1 = max(y, 0x1);
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (6, 0)
+
+[]
+Fastest checker: genetic
+Evars: 109, 101
+Program 0:
+res1 = y s< 0x0;
+Program 1:
+t1 = 0x0 != y;
+res1 = y < 0x0;
+Program 2:
+t1 = ~(x);
+t2 = y != t1;
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Fails for (63, 64)
+
+[]
+Fastest checker: genetic
+Evars: 5, 94
+Program 0:
+res1 = y s< 0x0;
+Program 1:
+t1 = y >> 0x0;
+res1 = -(t1);
+Program 2:
+t1 = ~(x);
+t2 = ~(x);
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Fails for (100, 64)
+
+[]
+Fastest checker: genetic
+Evars: 122, 115
+Program 0:
+t1 = y s< 0x0;
+t2 = y s< 0x0;
+res1 = t1 & y;
+Program 1:
+t1 = 0x0 / 0x1;
+t2 = 0x0 + 0x0;
+res1 = 0x0 + 0x0;
+Program 2:
+t1 = ~(x);
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (99, 65)
+
+[]
+Fastest checker: genetic
+Evars: 123, 78
+Program 0:
+t1 = y * y;
+res1 = t1 s< y;
+Program 1:
+t1 = y s< x;
+res1 = 0x1 - x;
+Program 2:
+t1 = y >>> 0x0;
+t2 = 0x0 + x;
+res1 = -(x);
+
+Fastest checker: explicit
+Fails for (0, 8)
+
+[]
+Fastest checker: genetic
+Evars: 40, 0
+Program 0:
+t1 = x << 0x1;
+t2 = 0x0 s< y;
+res1 = 0x0 s<= t1;
+Program 1:
+res1 = 0x0 s<= y;
+Program 2:
+t1 = ~(x);
+t2 = ~(x);
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (31, 0)
+
+[]
+Fastest checker: genetic
+Evars: 71, 0
+Program 0:
+t1 = ~(x);
+t2 = t1 << 0x1;
+res1 = x < t2;
+Program 1:
+t1 = 0x1 ^ x;
+res1 = 0x1 * t1;
+Program 2:
+t1 = ~(x);
+t2 = ~(x);
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Fails for (41, 0)
+
+[]
+Fastest checker: genetic
+Evars: 40, 0
+Program 0:
+t1 = 0x1 + 0x1;
+res1 = x <= t1;
+Program 1:
+t1 = 0x1 + 0x0;
+res1 = -(t1);
+Program 2:
+t1 = ~(x);
+t2 = 0x0 + 0x0;
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (2, 0)
+
+[]
+Fastest checker: genetic
+Evars: 40, 0
+Program 0:
+t1 = x + 0x1;
+res1 = 0x1 s<= t1;
+Program 1:
+t1 = 0x1 < 0x1;
+res1 = x != t1;
+Program 2:
+t1 = ~(x);
+res1 = 0x0 + 0x0;
+
+Fastest checker: explicit
+Fails for (62, 0)
+
+[]
