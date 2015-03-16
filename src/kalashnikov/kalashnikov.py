@@ -592,9 +592,11 @@ def gentests(wordlen, codelen):
   return list(itertools.product(*slices))
 
 if __name__ == '__main__':
-  args.args = args.argparser.parse_args()
+  import sys
 
-  random.seed()
+  print "Running with args: %s" % sys.argv
+
+  args.args = args.argparser.parse_args()
 
   if args.args.seed is None:
     args.args.seed = random.randint(0, 100000)
