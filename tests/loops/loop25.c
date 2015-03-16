@@ -3,13 +3,24 @@ int main(void) {
   unsigned int lockstate;
 
   lockstate = 0;
-  do {
+
+  lockstate = 1;
+  x = y;
+
+  if (nondet()) {
+    lockstate = 0;
+    y++;
+  }
+
+  while (x != y) {
     lockstate = 1;
     x = y;
-    if (*) {
+
+    if (nondet()) {
       lockstate = 0;
-      y++; }
-  } while (x != y)
+      y++;
+    }
+  }
 
   assert (lockstate == 0);
- }
+}
