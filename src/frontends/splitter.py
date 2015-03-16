@@ -187,6 +187,11 @@ def split_func(fd, ofile):
   prefix = copy.deepcopy(prog.blocks[0])
   loop = copy.deepcopy(prog.blocks[1])
 
+  if len(prog.blocks) > 2:
+      assertion = copy.deepcopy(prog.blocks[2])
+  else:
+      assertion = FlatProgram()
+
   #(prefix, prefix_nondet) = replace_nondet(prefix)
   #(guard, guard_nondet) = replace_nondet(loop.cond)
   #(body, body_nondet) = replace_nondet(loop.stmt)
@@ -194,6 +199,7 @@ def split_func(fd, ofile):
   decls = []
   copy_out = []
   prefix_block = []
+  assertion_block = []
 
   retvis = ReturnVisitor()
   retvis.visit(prefix)
@@ -217,6 +223,20 @@ def split_func(fd, ofile):
         prefix_block.append(extend)
 
   prefix.block_items = prefix_block
+
+  assertion_block = decls
+  assertion_expr = c_ast.Constant('int', '1')
+
+  for b in assertion.block_items:
+      if isinstance(b, c_ast.FuncCall) and b.name.name == "assert":
+          assertion_expr = b.args.children()[0][1]
+
+  assertion_block += [c_ast.Return(assertion_expr)]
+  assertion.block_items = assertion_block
+
+  f.write("int assertion(word_t in_vars[NARGS]) {\n")
+  f.write(assertion)
+  f.write("}\n\n")
 
   for id in sorted(rev_id_map.keys()):
     varname = rev_id_map[id]
