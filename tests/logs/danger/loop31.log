@@ -1,0 +1,134 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop31.c', '../../tests/loops/danger.c', '-P3', '--evars', '2', '-a2', '--seed=1337', '--varnames', 'x', 'N', '-v', '--strategy=evolve']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 2, 0
+Program 0:
+res1 = 0x0 == N;
+Program 1:
+t1 = 0x0 + N;
+res1 = x >> x;
+Program 2:
+t1 = x % 0x0;
+res1 = x % N;
+
+Fastest checker: explicit
+Fails for (1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 7, 4
+Program 0:
+t1 = max(0x1, 0x1);
+t2 = ~(0x0);
+res1 = t2 == x;
+Program 1:
+t1 = x ? 0x1 : 0x0;
+t2 = x >>> 0x0;
+res1 = max(x, x);
+Program 2:
+t1 = x ==> 0x0;
+t2 = x >>> t1;
+res1 = max(x, t1);
+
+Fastest checker: explicit
+Fails for (7, 0)
+
+[]
+Fastest checker: genetic
+Evars: 0, 2
+Program 0:
+res1 = 0x0 == x;
+Program 1:
+t1 = 0x1 / 0x0;
+t2 = N << 0x1;
+res1 = t2 - 0x0;
+Program 2:
+res1 = 0x1 / 0x0;
+
+Fastest checker: explicit
+Fails for (0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 3, 6
+Program 0:
+t1 = ~(N);
+t2 = 0x1 != N;
+res1 = t1 == t2;
+Program 1:
+res1 = x & x;
+Program 2:
+t1 = max(0x0, 0x0);
+res1 = 0x0 / N;
+
+Fastest checker: explicit
+Fails for (0, 6)
+
+[]
+Fastest checker: genetic
+Evars: 1, 3
+Program 0:
+t1 = 0x0 == x;
+t2 = 0x1 == x;
+res1 = N ? t2 : t1;
+Program 1:
+t1 = N | 0x1;
+t2 = 0x1 s< 0x1;
+res1 = 0x0 + 0x0;
+Program 2:
+t1 = max(N, x);
+t2 = N - 0x1;
+res1 = x != 0x1;
+
+Fastest checker: explicit
+Fails for (1, 1)
+
+[]
+Fastest checker: genetic
+Evars: 0, 0
+Program 0:
+t1 = x <= 0x0;
+t2 = min(x, 0x1);
+res1 = N < t1;
+Program 1:
+res1 = ~(N);
+Program 2:
+t1 = max(0x1, x);
+t2 = 0x0 + 0x0;
+res1 = t2 != t2;
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 6.59s
+
+Evars: 0, 0
+Program 0:
+t1 = x <= 0x0;
+t2 = min(x, 0x1);
+res1 = N < t1;
+Program 1:
+res1 = ~(N);
+Program 2:
+t1 = max(0x1, x);
+t2 = 0x0 + 0x0;
+res1 = t2 != t2;
+
+
+Perf counters:
+{'genetic': 6, 'cbmc': 1, 'explicit': 6, 'iterations': 6}
+Perf timers:
+verify: 3.91s
+checker: 6.57s
+gcc: 2.95s
+_: 6.59s
+synth: 2.67s

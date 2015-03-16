@@ -1,0 +1,98 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop32.c', '../../tests/loops/danger.c', '-P3', '--evars', '2', '-a2', '--seed=1337', '--varnames', 'x', '-v', '-w16', '--strategy=evolve']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 56931, 43159
+Program 0:
+res1 = a1 + a1;
+Program 1:
+t1 = 0x1 s<= 0x0;
+t2 = t1 >>> t1;
+res1 = t2 ==> a1;
+Program 2:
+t1 = 0x1 < 0x1;
+t2 = 0x1 < t1;
+res1 = 0x1 < a2;
+
+Fastest checker: explicit
+Fails for (2, 0)
+
+[]
+Fastest checker: genetic
+Evars: 37801, 62323
+Program 0:
+res1 = min(0x1, 0x1);
+Program 1:
+t1 = a2 ==> 0x1;
+res1 = -(0x1);
+Program 2:
+t1 = max(a2, a1);
+res1 = 0x0 & 0x1;
+
+Fastest checker: explicit
+Fails for (0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 32133, 34530
+Program 0:
+t1 = 0x0 s< a1;
+res1 = a1 >> a1;
+Program 1:
+res1 = 0x1 & a1;
+Program 2:
+t1 = max(0x0, a1);
+res1 = 0x0 / a1;
+
+Fastest checker: explicit
+Fails for (16, 0)
+
+[]
+Fastest checker: genetic
+Evars: 39129, 37543
+Program 0:
+t1 = a2 << 0x0;
+res1 = a1 s< 0x0;
+Program 1:
+t1 = 0x1 & 0x0;
+t2 = -(a2);
+res1 = ~(t1);
+Program 2:
+t1 = a1 >> 0x1;
+res1 = 0x1 + 0x1;
+
+Fastest checker: explicit
+Fails for (32768, 0)
+
+[]
+Fastest checker: genetic
+Evars: 46497, 27037
+Program 0:
+t1 = a2 >>> 0x0;
+res1 = 0x1 & a1;
+Program 1:
+t1 = a2 - a1;
+t2 = 0x0 >>> 0x1;
+res1 = t1 ^ t2;
+Program 2:
+t1 = min(0x0, 0x0);
+t2 = 0x0 | a1;
+res1 = t2 * a1;
+
+Fastest checker: explicit
+Fails for (257, 0)
+
+[]
+Fastest checker: genetic
+Evars: 60335, 38656
+Program 0:
+res1 = a1 & 0x1;
+Program 1:
+t1 = max(a2, a1);
+t2 = a2 >>> a1;
+res1 = 0x0 & t2;
+Program 2:
+res1 = max(0x0, a1);
+
+Fastest checker: cbmc
+Correct for wordlen=16
