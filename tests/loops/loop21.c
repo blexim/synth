@@ -11,7 +11,7 @@ int main(void) {
   x = 0;
   y = 1;
 
-  while (x < 1000) {
+  while (x < (1000000 & WORDMASK)) {
     x++;
 
     if (nondet()) {
