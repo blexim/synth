@@ -9,7 +9,7 @@ int main(void) {
   unsigned int x, y;
 
   x = 0;
-  y = 0;
+  y = 1;
 
   while (x < (1000003 & WORDMASK)) {
     if (nondet()) {
