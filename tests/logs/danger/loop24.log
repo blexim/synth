@@ -1,275 +1,182 @@
+Running with args: ['./kalashnikov.py', '/tmp/loop24.c', '../../tests/loops/danger.c', '-P3', '--evars', '3', '-a3', '--seed=1337', '--varnames', 'i', 'c', 'a', '-v', '--strategy=evolve']
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 87, 40, 148
+Evars: 4, 7, 3
 Program 0:
-t1 = 0x0 | c;
-t2 = t1 <= t1;
-res1 = 0x1 >> i;
+t1 = 0x1 <= a;
+t2 = 0x0 ==> a;
+res1 = 0x1 >> c;
 Program 1:
-t1 = 0x1 ^ a;
-t2 = i * 0x0;
-res1 = max(c, c);
+t1 = max(a, 0x1);
+t2 = i ? 0x0 : i;
+res1 = c >>> c;
 Program 2:
-t1 = -(a);
-t2 = a >> 0x1;
-res1 = t1 >> c;
+res1 = ~(a);
 
 Fastest checker: explicit
 Fails for (0, 0, 0)
 
 []
 Fastest checker: genetic
-Evars: 904, 220, 628
+Evars: 2, 2, 7
 Program 0:
-res1 = a >> c;
+t1 = ~(a);
+t2 = ~(a);
+res1 = t1 <= 0x1;
 Program 1:
-res1 = c + i;
+res1 = i - a;
 Program 2:
-t1 = 0x0 % c;
-res1 = -(i);
+t1 = 0x0 * i;
+t2 = 0x1 < 0x0;
+res1 = t1 >>> 0x0;
 
 Fastest checker: explicit
-Fails for (0, 0, 1)
+Fails for (0, 0, 6)
 
 []
 Fastest checker: genetic
-Evars: 893, 950, 838
+Evars: 2, 1, 7
 Program 0:
-res1 = c | a;
+res1 = c <= 0x1;
 Program 1:
-t1 = min(0x1, 0x0);
-res1 = i ^ 0x1;
+res1 = 0x1 s<= i;
 Program 2:
-t1 = c * 0x0;
-t2 = max(0x1, t1);
-res1 = t2 - i;
-
-Fastest checker: explicit
-Fails for (1, 1, 0)
-
-[]
-Fastest checker: genetic
-Evars: 450, 926, 193
-Program 0:
-t1 = a << 0x0;
-res1 = a ^ c;
-Program 1:
-t1 = a != 0x0;
-res1 = min(i, i);
-Program 2:
-t1 = 0x1 >>> c;
-t2 = a ==> t1;
-res1 = ~(i);
-
-Fastest checker: explicit
-Fails for (999, 25, 0)
-
-[]
-Fastest checker: genetic
-Evars: 435, 460, 115
-Program 0:
-t1 = a | c;
-t2 = t1 <= a;
-res1 = min(t2, t2);
-Program 1:
-t1 = 0x0 ==> c;
-t2 = 0x0 & i;
-res1 = c ^ 0x1;
-Program 2:
-t1 = max(c, c);
-t2 = c ==> 0x1;
-res1 = t2 ^ i;
+res1 = c == i;
 
 Fastest checker: explicit
 Fails for (1, 0, 0)
 
 []
 Fastest checker: genetic
-Evars: 980, 747, 991
+Evars: 6, 5, 0
 Program 0:
-t1 = a + 0x1;
-res1 = t1 s< i;
+t1 = c != i;
+res1 = c <= 0x1;
 Program 1:
-t1 = a < 0x0;
-res1 = ~(0x0);
+t1 = 0x0 - i;
+res1 = 0x1 ? 0x1 : a;
 Program 2:
-t1 = a >> 0x1;
-t2 = c ? c : t1;
-res1 = 0x1 ? 0x1 : 0x1;
+res1 = ~(i);
 
 Fastest checker: explicit
 Fails for (2, 0, 0)
 
 []
 Fastest checker: genetic
-Evars: 913, 202, 526
+Evars: 5, 2, 7
 Program 0:
-res1 = 0x0 - a;
+t1 = ~(a);
+t2 = i != t1;
+res1 = i == t1;
 Program 1:
-t1 = i s<= 0x0;
-res1 = 0x0 % 0x1;
+res1 = max(0x0, 0x0);
 Program 2:
-t1 = 0x1 - a;
-t2 = a >> i;
-res1 = i >> 0x1;
+t1 = 0x1 >>> 0x1;
+res1 = t1 / i;
 
 Fastest checker: explicit
-Fails for (1, 0, 1)
+Fails for (6, 0, 1)
 
 []
 Fastest checker: genetic
-Evars: 384, 322, 830
+Evars: 5, 1, 3
 Program 0:
-res1 = a * 0x1;
-Program 1:
-t1 = min(i, c);
-t2 = 0x1 != c;
-res1 = i ? t2 : c;
-Program 2:
-res1 = ~(i);
-
-Fastest checker: explicit
-Fails for (1000, 0, 1)
-
-[]
-Fastest checker: genetic
-Evars: 144, 217, 560
-Program 0:
-res1 = a s< 0x0;
-Program 1:
-res1 = max(c, i);
-Program 2:
-res1 = ~(i);
-
-Fastest checker: cbmc
-Fails for (1014, 512, 512)
-
-[]
-Fastest checker: anneal
-Evars: 334, 654, 274
-Program 0:
-res1 = 0x0 s<= i;
-Program 1:
-res1 = i < 0x0;
-Program 2:
-res1 = ~(i);
-
-Fastest checker: explicit
-Fails for (511, 0, 0)
-
-[]
-Fastest checker: genetic
-Evars: 459, 149, 934
-Program 0:
-t1 = c ? 0x0 : a;
-t2 = t1 s< i;
-res1 = t2 * a;
-Program 1:
-res1 = min(0x0, c);
-Program 2:
-res1 = a ==> 0x0;
-
-Fastest checker: explicit
-Fails for (2, 0, 1)
-
-[]
-Fastest checker: genetic
-Evars: 916, 659, 827
-Program 0:
-t1 = 0x0 - c;
-t2 = -(a);
-res1 = a s< t2;
-Program 1:
-t1 = a != 0x0;
-res1 = 0x0 s< 0x1;
-Program 2:
-t1 = a - i;
-res1 = 0x1 << a;
-
-Fastest checker: cbmc
-Fails for (1023, 580, 768)
-
-[]
-Fastest checker: genetic
-Evars: 215, 433, 990
-Program 0:
-res1 = 0x1 >> a;
-Program 1:
-res1 = min(0x0, c);
-Program 2:
-res1 = ~(i);
-
-Fastest checker: cbmc
-Fails for (1021, 4, 590)
-
-[]
-Fastest checker: genetic
-Evars: 215, 14, 446
-Program 0:
-t1 = c <= i;
-t2 = 0x0 == i;
 res1 = 0x1 s< a;
 Program 1:
-t1 = 0x0 != a;
-res1 = 0x0 != a;
+t1 = -(0x0);
+t2 = c | i;
+res1 = 0x0 << 0x0;
 Program 2:
-t1 = 0x0 + 0x0;
-t2 = ~(0x0);
-res1 = -(i);
+t1 = a ? a : c;
+res1 = min(0x1, a);
 
 Fastest checker: explicit
 Fails for (0, 0, 2)
 
 []
 Fastest checker: genetic
-Evars: 459, 149, 934
+Evars: 5, 1, 3
 Program 0:
-t1 = c ? 0x0 : a;
-t2 = t1 s< i;
-res1 = t2 * a;
+t1 = 0x1 s< a;
+t2 = a s<= t1;
+res1 = t1 & t1;
 Program 1:
-res1 = 0x1 + c;
+t1 = 0x1 - 0x0;
+t2 = c + 0x1;
+res1 = i % 0x1;
 Program 2:
-t1 = a / i;
-res1 = -(i);
+t1 = 0x0 == i;
+t2 = min(i, a);
+res1 = i ^ 0x1;
 
 Fastest checker: explicit
-Fails for (511, 0, 1)
+Fails for (1, 0, 2)
 
 []
 Fastest checker: genetic
-Evars: 398, 145, 74
+Evars: 1, 4, 0
 Program 0:
-t1 = i == 0x0;
-t2 = 0x0 == i;
-res1 = 0x1 s< a;
+res1 = a < 0x1;
 Program 1:
-t1 = a & a;
-t2 = 0x0 + 0x0;
+t1 = i < i;
 res1 = 0x0 + 0x0;
 Program 2:
-t1 = i s<= c;
-t2 = c s< 0x0;
+t1 = ~(i);
+t2 = c s< a;
+res1 = c <= a;
+
+Fastest checker: explicit
+Fails for (2, 2, 0)
+
+[]
+Fastest checker: genetic
+Evars: 1, 4, 0
+Program 0:
+res1 = 0x1 >> a;
+Program 1:
+t1 = a << 0x0;
+t2 = a << t1;
+res1 = c * 0x0;
+Program 2:
 res1 = ~(i);
 
 Fastest checker: explicit
-Fails for (1000, 0, 2)
+Fails for (3, 0, 3)
 
 []
 Fastest checker: genetic
-Evars: 410, 718, 0
+Evars: 6, 7, 7
 Program 0:
-res1 = a <= 0x0;
+t1 = i <= 0x0;
+t2 = t1 / 0x1;
+res1 = a & t1;
 Program 1:
-res1 = i != 0x0;
+t1 = 0x0 + 0x0;
+res1 = ~(t1);
 Program 2:
-t1 = c - 0x0;
-t2 = ~(i);
-res1 = 0x0 + 0x0;
+res1 = 0x1 s<= 0x0;
 
-Fastest checker: cbmc
-Correct for wordlen=10
+Fastest checker: explicit
+Fails for (0, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 0, 7, 0
+Program 0:
+t1 = c >> i;
+t2 = i <= 0x1;
+res1 = a < 0x1;
+Program 1:
+t1 = c << a;
+t2 = a ^ a;
+res1 = ~(t2);
+Program 2:
+t1 = ~(i);
+res1 = 0x1 << 0x1;
+
+Fastest checker: explicit
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -279,24 +186,27 @@ Also correct for wordlen=32!
 
 
 
-Finished in 30.92s
+Finished in 8.89s
 
-Evars: 410, 718, 0
+Evars: 0, 7, 0
 Program 0:
-res1 = a <= 0x0;
+t1 = c >> i;
+t2 = i <= 0x1;
+res1 = a < 0x1;
 Program 1:
-res1 = i != 0x0;
+t1 = c << a;
+t2 = a ^ a;
+res1 = ~(t2);
 Program 2:
-t1 = c - 0x0;
-t2 = ~(i);
-res1 = 0x0 + 0x0;
+t1 = ~(i);
+res1 = 0x1 << 0x1;
 
 
 Perf counters:
-{'anneal': 1, 'genetic': 16, 'cbmc': 5, 'explicit': 13, 'iterations': 17}
+{'genetic': 11, 'cbmc': 1, 'explicit': 11, 'iterations': 11}
 Perf timers:
-verify: 23.47s
-checker: 30.80s
-gcc: 6.97s
-_: 30.92s
-synth: 7.45s
+verify: 3.97s
+checker: 8.86s
+gcc: 5.30s
+_: 8.89s
+synth: 4.91s

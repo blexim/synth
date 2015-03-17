@@ -1,8 +1,8 @@
-Running with args: ['./kalashnikov.py', '--nondet=1', '/tmp/loop20.c', '../../tests/loops/danger.c', '-P3', '--evars', '3', '-a3', '--seed=1337', '--varnames', 'nondet0', 'x', 'y', '-v', '-w10', '--strategy=evolve']
+Running with args: ['./kalashnikov.py', '--nondet=1', '/tmp/loop20.c', '../../tests/loops/danger.c', '-P3', '--evars', '3', '-a3', '--seed=1337', '--varnames', 'nondet0', 'x', 'y', '-v', '--strategy=evolve']
 Using seed: 1337
 []
 Fastest checker: genetic
-Evars: 988, 807, 963
+Evars: 4, 7, 3
 Program 0:
 t1 = 0x1 <= y;
 t2 = 0x0 ==> y;
@@ -19,127 +19,62 @@ Fails for (0, 0, 0)
 
 []
 Fastest checker: genetic
-Evars: 978, 242, 145
+Evars: 2, 4, 7
 Program 0:
-t1 = nondet0 ==> x;
-t2 = y != y;
-res1 = x <= x;
+res1 = y == 0x0;
 Program 1:
-res1 = y << 0x0;
+t1 = y ^ nondet0;
+t2 = nondet0 << y;
+res1 = nondet0 < t1;
 Program 2:
-t1 = nondet0 << 0x1;
-t2 = t1 * nondet0;
-res1 = ~(x);
-
-Fastest checker: explicit
-Fails for (0, 1000, 0)
-
-[]
-Fastest checker: genetic
-Evars: 26, 473, 615
-Program 0:
-res1 = x <= 0x1;
-Program 1:
-res1 = 0x1 s<= nondet0;
-Program 2:
-res1 = x == nondet0;
+res1 = 0x1 - x;
 
 Fastest checker: explicit
 Fails for (0, 1, 0)
 
 []
 Fastest checker: genetic
-Evars: 628, 372, 975
+Evars: 7, 5, 7
 Program 0:
-t1 = y | x;
-t2 = t1 <= y;
-res1 = min(t2, t2);
+res1 = x == y;
 Program 1:
-res1 = 0x1 << y;
+res1 = y ==> x;
 Program 2:
-res1 = y <= 0x0;
-
-Fastest checker: explicit
-Fails for (0, 0, 1)
-
-[]
-Fastest checker: genetic
-Evars: 464, 792, 319
-Program 0:
-t1 = nondet0 ==> 0x1;
-t2 = 0x0 <= 0x0;
-res1 = x ? y : 0x1;
-Program 1:
-res1 = max(0x1, y);
-Program 2:
-t1 = ~(x);
-res1 = 0x0 * 0x0;
-
-Fastest checker: cbmc
-Fails for (0, 387, 1023)
-
-[]
-Fastest checker: genetic
-Evars: 704, 144, 218
-Program 0:
-t1 = 0x0 + nondet0;
-res1 = y == x;
-Program 1:
-t1 = x * nondet0;
-res1 = 0x0 | 0x1;
-Program 2:
-t1 = 0x0 + 0x0;
-t2 = 0x0 + 0x0;
-res1 = 0x1 >> x;
+res1 = nondet0 == y;
 
 Fastest checker: explicit
 Fails for (0, 1, 1)
 
 []
 Fastest checker: genetic
-Evars: 374, 657, 178
+Evars: 0, 6, 1
 Program 0:
-res1 = 0x0 s<= x;
+t1 = y < 0x1;
+res1 = t1 ? 0x1 : 0x0;
 Program 1:
-t1 = 0x0 - 0x0;
-res1 = t1 ^ 0x1;
+res1 = nondet0 << nondet0;
 Program 2:
 res1 = ~(x);
 
 Fastest checker: explicit
-Fails for (0, 511, 0)
+Fails for (0, 3, 0)
 
 []
 Fastest checker: genetic
-Evars: 76, 465, 403
+Evars: 2, 4, 1
 Program 0:
-t1 = -(0x1);
-t2 = 0x1 + x;
-res1 = y s< t2;
+t1 = x == y;
+t2 = 0x0 + 0x0;
+res1 = t1 << t2;
 Program 1:
-t1 = y <= x;
-res1 = 0x0 + 0x0;
+res1 = 0x1 << nondet0;
 Program 2:
-res1 = ~(x);
+t1 = ~(x);
+t2 = 0x0 <= 0x0;
+res1 = nondet0 s< 0x1;
 
 Fastest checker: explicit
-Fails for (0, 510, 0)
-
-[]
-Fastest checker: genetic
-Evars: 978, 242, 145
-Program 0:
-t1 = 0x0 + nondet0;
-res1 = y == x;
-Program 1:
-res1 = 0x1 | 0x1;
-Program 2:
-t1 = nondet0 << 0x1;
-t2 = t1 * nondet0;
-res1 = ~(x);
-
-Fastest checker: cbmc
-Correct for wordlen=10
+Correct for wordlen=3
 Fastest checker: cbmc
 Also correct for wordlen=32!
 
@@ -149,25 +84,26 @@ Also correct for wordlen=32!
 
 
 
-Finished in 21.17s
+Finished in 6.64s
 
-Evars: 978, 242, 145
+Evars: 2, 4, 1
 Program 0:
-t1 = 0x0 + nondet0;
-res1 = y == x;
+t1 = x == y;
+t2 = 0x0 + 0x0;
+res1 = t1 << t2;
 Program 1:
-res1 = 0x1 | 0x1;
+res1 = 0x1 << nondet0;
 Program 2:
-t1 = nondet0 << 0x1;
-t2 = t1 * nondet0;
-res1 = ~(x);
+t1 = ~(x);
+t2 = 0x0 <= 0x0;
+res1 = nondet0 s< 0x1;
 
 
 Perf counters:
-{'genetic': 9, 'cbmc': 3, 'explicit': 7, 'iterations': 9}
+{'genetic': 5, 'cbmc': 1, 'explicit': 5, 'iterations': 5}
 Perf timers:
-verify: 17.34s
-checker: 21.10s
-gcc: 4.21s
-_: 21.17s
-synth: 3.83s
+verify: 4.29s
+checker: 6.62s
+gcc: 2.75s
+_: 6.64s
+synth: 2.34s

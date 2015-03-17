@@ -15,7 +15,7 @@ int main(void) {
   i = 0;
   c = 0;
 
-  while (i < 1000) {
+  while (i < (1000003 & WORDMASK)) {
     c = c+i;
     i++;
     
