@@ -1,0 +1,425 @@
+cbmc loop26.c --unwind 100 --no-unwinding-assertions
+
+CBMC version 5.0 64-bit linux
+Parsing loop26.c
+Converting
+Type-checking loop26
+Generating GOTO Program
+Adding CPROVER library
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop main.0 iteration 1 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 2 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 3 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 4 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 5 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 6 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 7 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 8 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 9 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 10 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 11 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 12 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 13 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 14 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 15 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 16 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 17 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 18 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 19 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 20 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 21 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 22 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 23 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 24 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 25 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 26 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 27 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 28 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 29 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 30 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 31 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 32 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 33 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 34 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 35 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 36 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 37 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 38 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 39 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 40 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 41 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 42 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 43 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 44 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 45 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 46 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 47 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 48 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 49 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 50 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 51 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 52 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 53 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 54 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 55 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 56 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 57 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 58 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 59 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 60 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 61 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 62 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 63 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 64 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 65 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 66 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 67 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 68 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 69 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 70 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 71 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 72 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 73 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 74 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 75 (100 max) file loop26.c line 6 function main thread 0
+Unwinding loop main.0 iteration 76 (100 max) file loop26.c line 6 function main thread 0
+size of program expression: 261 steps
+simple slicing removed 4 assignments
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.0 with simplifier
+41 variables, 11 clauses
+SAT checker: negated claim is SATISFIABLE, i.e., does not hold
+Runtime decision procedure: 0s
+Building error trace
+
+Counterexample:
+
+State 17 file loop26.c line 2 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 18 file loop26.c line 4 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 19 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=1 (00000000000000000000000000000001)
+
+State 22 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=2 (00000000000000000000000000000010)
+
+State 25 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=3 (00000000000000000000000000000011)
+
+State 28 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=4 (00000000000000000000000000000100)
+
+State 31 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=5 (00000000000000000000000000000101)
+
+State 34 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=6 (00000000000000000000000000000110)
+
+State 37 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=7 (00000000000000000000000000000111)
+
+State 40 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=8 (00000000000000000000000000001000)
+
+State 43 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=9 (00000000000000000000000000001001)
+
+State 46 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=10 (00000000000000000000000000001010)
+
+State 49 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=11 (00000000000000000000000000001011)
+
+State 52 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=12 (00000000000000000000000000001100)
+
+State 55 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=13 (00000000000000000000000000001101)
+
+State 58 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=14 (00000000000000000000000000001110)
+
+State 61 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=15 (00000000000000000000000000001111)
+
+State 64 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=16 (00000000000000000000000000010000)
+
+State 67 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=17 (00000000000000000000000000010001)
+
+State 70 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=18 (00000000000000000000000000010010)
+
+State 73 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=19 (00000000000000000000000000010011)
+
+State 76 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=20 (00000000000000000000000000010100)
+
+State 79 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=21 (00000000000000000000000000010101)
+
+State 82 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=22 (00000000000000000000000000010110)
+
+State 85 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=23 (00000000000000000000000000010111)
+
+State 88 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=24 (00000000000000000000000000011000)
+
+State 91 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=25 (00000000000000000000000000011001)
+
+State 94 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=26 (00000000000000000000000000011010)
+
+State 97 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=27 (00000000000000000000000000011011)
+
+State 100 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=28 (00000000000000000000000000011100)
+
+State 103 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=29 (00000000000000000000000000011101)
+
+State 106 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=30 (00000000000000000000000000011110)
+
+State 109 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=31 (00000000000000000000000000011111)
+
+State 112 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=32 (00000000000000000000000000100000)
+
+State 115 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=33 (00000000000000000000000000100001)
+
+State 118 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=34 (00000000000000000000000000100010)
+
+State 121 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=35 (00000000000000000000000000100011)
+
+State 124 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=36 (00000000000000000000000000100100)
+
+State 127 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=37 (00000000000000000000000000100101)
+
+State 130 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=38 (00000000000000000000000000100110)
+
+State 133 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=39 (00000000000000000000000000100111)
+
+State 136 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=40 (00000000000000000000000000101000)
+
+State 139 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=41 (00000000000000000000000000101001)
+
+State 142 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=42 (00000000000000000000000000101010)
+
+State 145 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=43 (00000000000000000000000000101011)
+
+State 148 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=44 (00000000000000000000000000101100)
+
+State 151 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=45 (00000000000000000000000000101101)
+
+State 154 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=46 (00000000000000000000000000101110)
+
+State 157 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=47 (00000000000000000000000000101111)
+
+State 160 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=48 (00000000000000000000000000110000)
+
+State 163 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=49 (00000000000000000000000000110001)
+
+State 166 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=50 (00000000000000000000000000110010)
+
+State 169 file loop26.c line 8 function main thread 0
+----------------------------------------------------
+  x=51 (00000000000000000000000000110011)
+
+State 173 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=53 (00000000000000000000000000110101)
+
+State 176 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=55 (00000000000000000000000000110111)
+
+State 179 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=57 (00000000000000000000000000111001)
+
+State 182 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=59 (00000000000000000000000000111011)
+
+State 185 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=61 (00000000000000000000000000111101)
+
+State 188 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=63 (00000000000000000000000000111111)
+
+State 191 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=65 (00000000000000000000000001000001)
+
+State 194 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=67 (00000000000000000000000001000011)
+
+State 197 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=69 (00000000000000000000000001000101)
+
+State 200 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=71 (00000000000000000000000001000111)
+
+State 203 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=73 (00000000000000000000000001001001)
+
+State 206 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=75 (00000000000000000000000001001011)
+
+State 209 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=77 (00000000000000000000000001001101)
+
+State 212 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=79 (00000000000000000000000001001111)
+
+State 215 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=81 (00000000000000000000000001010001)
+
+State 218 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=83 (00000000000000000000000001010011)
+
+State 221 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=85 (00000000000000000000000001010101)
+
+State 224 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=87 (00000000000000000000000001010111)
+
+State 227 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=89 (00000000000000000000000001011001)
+
+State 230 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=91 (00000000000000000000000001011011)
+
+State 233 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=93 (00000000000000000000000001011101)
+
+State 236 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=95 (00000000000000000000000001011111)
+
+State 239 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=97 (00000000000000000000000001100001)
+
+State 242 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=99 (00000000000000000000000001100011)
+
+State 245 file loop26.c line 10 function main thread 0
+----------------------------------------------------
+  x=101 (00000000000000000000000001100101)
+
+Violated property:
+  file loop26.c line 14 function main
+  assertion !(x % (unsigned int)2 != 0u)
+  !(x % (unsigned int)2 != 0u)
+
+VERIFICATION FAILED
+
+
+real	0m0.150s
+user	0m0.132s
+sys	0m0.020s
