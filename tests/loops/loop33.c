@@ -10,8 +10,9 @@
 int main(void) {
   int x;
 
-  __CPROVER_assume(100 <= x && x <= 200);
-  //int x = 1001;
+  if (x < 100 || x > 200) {
+    return 0;
+  }
 
   while (x > 0) {
     x -= 2;
