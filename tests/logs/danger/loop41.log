@@ -1,0 +1,119 @@
+Running with args: ['./kalashnikov.py', '--seed=1337', '--strategy=evolve', '-v', '--nondet=2', '-P3', '--evars', '4', '-a4', '../../tests/loops/danger.c', '/tmp/loop41.c', '--varnames', 'nondet0', 'nondet1', 'x', 'y']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 0, 0, 0, 2
+Program 0:
+t1 = ~(0x0);
+t2 = max(y, x);
+res1 = t2 == nondet1;
+Program 1:
+t1 = 0x1 ? nondet1 : y;
+t2 = nondet1 s< t1;
+res1 = t2 >>> t1;
+Program 2:
+t1 = nondet0 / nondet0;
+t2 = nondet1 + 0x0;
+res1 = 0x1 / x;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 6, 4, 1, 2
+Program 0:
+t1 = 0x1 & 0x0;
+res1 = x == nondet0;
+Program 1:
+t1 = nondet1 <= nondet1;
+t2 = 0x1 ? nondet0 : nondet0;
+res1 = y ? 0x1 : t1;
+Program 2:
+t1 = -(y);
+t2 = y <= x;
+res1 = y s<= nondet0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 3)
+
+[]
+Fastest checker: genetic
+Evars: 2, 7, 0, 3
+Program 0:
+t1 = 0x0 * 0x0;
+res1 = y <= t1;
+Program 1:
+t1 = x < x;
+t2 = 0x1 + y;
+res1 = 0x0 != t1;
+Program 2:
+t1 = min(0x0, y);
+res1 = 0x1 >> x;
+
+Fastest checker: explicit
+Fails for (0, 0, 1, 0)
+
+[]
+Fastest checker: genetic
+Evars: 0, 2, 4, 0
+Program 0:
+t1 = y == nondet0;
+t2 = 0x1 s< y;
+res1 = t2 == nondet0;
+Program 1:
+t1 = min(0x1, 0x1);
+res1 = nondet0 == 0x0;
+Program 2:
+res1 = ~(x);
+
+Fastest checker: explicit
+Fails for (0, 0, 3, 0)
+
+[]
+Fastest checker: genetic
+Evars: 5, 6, 5, 2
+Program 0:
+t1 = x != 0x0;
+res1 = x ==> nondet1;
+Program 1:
+res1 = 0x1 >>> y;
+Program 2:
+t1 = 0x0 + 0x0;
+res1 = ~(y);
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1)
+
+[]
+Fastest checker: genetic
+Evars: 4, 1, 2, 3
+Program 0:
+res1 = x == y;
+Program 1:
+t1 = y == x;
+res1 = ~(nondet1);
+Program 2:
+t1 = 0x1 & y;
+res1 = x ? nondet0 : 0x1;
+
+Fastest checker: explicit
+Fails for (0, 0, 2, 2)
+
+[]
+Fastest checker: genetic
+Evars: 1, 1, 1, 4
+Program 0:
+t1 = 0x1 | 0x1;
+t2 = x <= nondet0;
+res1 = t2 >> nondet1;
+Program 1:
+res1 = nondet1 ^ 0x1;
+Program 2:
+t1 = ~(y);
+t2 = 0x0 + 0x0;
+res1 = 0x1 >>> x;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 7)
+
