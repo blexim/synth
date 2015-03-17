@@ -117,3 +117,55 @@ res1 = 0x1 >>> x;
 Fastest checker: explicit
 Fails for (0, 0, 0, 7)
 
+[]
+Fastest checker: genetic
+Evars: 1, 6, 4, 6
+Program 0:
+t1 = y == x;
+t2 = 0x0 + 0x0;
+res1 = y == x;
+Program 1:
+t1 = ~(nondet1);
+t2 = 0x1 | 0x0;
+res1 = ~(0x1);
+Program 2:
+t1 = y | nondet0;
+t2 = 0x0 & y;
+res1 = ~(y);
+
+Fastest checker: explicit
+Correct for wordlen=3
+Fastest checker: cbmc
+Also correct for wordlen=32!
+
+
+
+
+
+
+
+Finished in 8.59s
+
+Evars: 1, 6, 4, 6
+Program 0:
+t1 = y == x;
+t2 = 0x0 + 0x0;
+res1 = y == x;
+Program 1:
+t1 = ~(nondet1);
+t2 = 0x1 | 0x0;
+res1 = ~(0x1);
+Program 2:
+t1 = y | nondet0;
+t2 = 0x0 & y;
+res1 = ~(y);
+
+
+Perf counters:
+{'genetic': 8, 'cbmc': 1, 'explicit': 8, 'iterations': 8}
+Perf timers:
+verify: 5.06s
+checker: 8.56s
+gcc: 3.95s
+_: 8.59s
+synth: 3.53s

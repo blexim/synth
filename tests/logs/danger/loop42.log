@@ -1,0 +1,37 @@
+Running with args: ['./kalashnikov.py', '--seed=1337', '--strategy=evolve', '-v', '--nondet=2', '-P3', '--evars', '4', '-a4', '../../tests/loops/danger.c', '/tmp/loop42.c', '--varnames', 'nondet0', 'nondet1', 'x', 'y']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 1, 0, 7, 7
+Program 0:
+t1 = ~(nondet1);
+res1 = 0x1 / y;
+Program 1:
+t1 = ~(0x0);
+t2 = y ==> y;
+res1 = t1 s< 0x1;
+Program 2:
+res1 = nondet0 >> 0x1;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 0)
+
+[]
+Fastest checker: genetic
+Evars: 6, 4, 1, 2
+Program 0:
+t1 = 0x1 & 0x0;
+res1 = x == nondet0;
+Program 1:
+t1 = nondet1 <= nondet1;
+t2 = 0x1 ? nondet0 : nondet0;
+res1 = y ? 0x1 : t1;
+Program 2:
+t1 = -(y);
+t2 = y <= x;
+res1 = y s<= nondet0;
+
+Fastest checker: explicit
+Fails for (0, 0, 0, 1)
+
+[]
