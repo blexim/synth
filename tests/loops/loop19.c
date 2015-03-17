@@ -8,7 +8,9 @@
  *  R(x) = x
  */
 int main(void) {
-  int x = 1001;
+  int x;
+  
+  x = (1000003 & WORDMASK);
 
   while (x > 0) {
     x -= 2;
