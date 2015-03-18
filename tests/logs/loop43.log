@@ -1,0 +1,69 @@
+Running with args: ['./kalashnikov.py', '--seed=1337', '--strategy=evolve', '-v', '-P3', '--evars', '1', '-a1', '../../tests/loops/danger.c', '../frontends/loop43.c', '--varnames', 'x', '-w4']
+Using seed: 1337
+[]
+Fastest checker: genetic
+Evars: 0
+Program 0:
+t1 = x <= 0x0;
+t2 = 0x0 + 0x0;
+res1 = t2 == x;
+Program 1:
+t1 = max(0x1, x);
+res1 = t1 s<= 0x0;
+Program 2:
+t1 = 0x1 s<= x;
+res1 = 0x0 s< 0x1;
+
+Fastest checker: explicit
+Fails for (0,)
+
+[]
+Fastest checker: genetic
+Evars: 15
+Program 0:
+t1 = ~(0x0);
+t2 = t1 <= t1;
+res1 = t1 == x;
+Program 1:
+t1 = ~(0x1);
+res1 = 0x1 != x;
+Program 2:
+t1 = 0x0 / x;
+res1 = 0x0 >> t1;
+
+Fastest checker: explicit
+Correct for wordlen=4
+Fastest checker: explicit
+Trying to generalize...
+Fastest checker: cbmc
+
+
+
+
+
+
+
+Finished in 6.97s
+
+Evars: 4294967295
+Program 0:
+t1 = ~(0x0);
+t2 = t1 <= t1;
+res1 = t1 == x;
+Program 1:
+t1 = ~(0x1);
+res1 = 0x1 != x;
+Program 2:
+t1 = 0x0 / x;
+res1 = 0x0 >> t1;
+
+
+Perf counters:
+{'genetic': 2, 'cbmc': 1, 'explicit': 3, 'iterations': 2}
+Perf timers:
+gcc: 0.87s
+verify: 4.10s
+checker: 6.96s
+generalize: 3.75s
+synth: 2.87s
+_: 6.97s
