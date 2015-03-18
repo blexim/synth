@@ -1,0 +1,187 @@
+time cbmc --no-unwinding-assertions --unwind 20 loop39.c > ../logs/danger/loop39.cbmc.log
+
+real	0m0.081s
+user	0m0.069s
+sys	0m0.011s
+
+
+CBMC version 4.9 64-bit linux
+file loop39.c: Parsing
+Converting
+Type-checking loop39
+Generating GOTO Program
+Adding CPROVER library
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop c::main.0 iteration 1 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 2 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 3 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 4 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 5 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 6 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 7 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 8 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 9 (20 max) file loop39.c line 5 function main thread 0
+Unwinding loop c::main.0 iteration 10 (20 max) file loop39.c line 5 function main thread 0
+size of program expression: 64 steps
+simple slicing removed 3 assignments
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.0 with simplifier
+73 variables, 11 clauses
+SAT checker: negated claim is SATISFIABLE, i.e., does not hold
+Runtime decision procedure: 0s
+Building error trace
+
+Counterexample:
+
+State 3 file <built-in-additions> line 58 thread 0
+----------------------------------------------------
+  __CPROVER_rounding_mode=0 (00000000000000000000000000000000)
+
+State 4 file <built-in-additions> line 31 thread 0
+----------------------------------------------------
+  __CPROVER_deallocated=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 5 file <built-in-additions> line 32 thread 0
+----------------------------------------------------
+  __CPROVER_dead_object=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 6 file <built-in-additions> line 33 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_object=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 7 file <built-in-additions> line 34 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_size=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 8 file <built-in-additions> line 35 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_is_new_array=FALSE (0)
+
+State 9 file <built-in-additions> line 36 thread 0
+----------------------------------------------------
+  __CPROVER_memory_leak=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 10 file <built-in-additions> line 79 thread 0
+----------------------------------------------------
+  __CPROVER_pipe_count=0 (00000000000000000000000000000000)
+
+State 11 file <built-in-additions> line 22 thread 0
+----------------------------------------------------
+  __CPROVER_thread_id=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 12 file <built-in-additions> line 23 thread 0
+----------------------------------------------------
+  __CPROVER_threads_exited=__CPROVER_threads_exited#1 (?)
+
+State 13 file <built-in-additions> line 24 thread 0
+----------------------------------------------------
+  __CPROVER_next_thread_id=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 17 file loop39.c line 2 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 18 file loop39.c line 2 function main thread 0
+----------------------------------------------------
+  x=1 (00000000000000000000000000000001)
+
+State 19 file loop39.c line 3 function main thread 0
+----------------------------------------------------
+  y=0 (00000000000000000000000000000000)
+
+State 20 file loop39.c line 3 function main thread 0
+----------------------------------------------------
+  y=0 (00000000000000000000000000000000)
+
+State 21 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 22 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=1 (00000000000000000000000000000001)
+
+State 24 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 25 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=2 (00000000000000000000000000000010)
+
+State 27 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 28 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=3 (00000000000000000000000000000011)
+
+State 30 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 31 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=4 (00000000000000000000000000000100)
+
+State 33 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 34 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=5 (00000000000000000000000000000101)
+
+State 36 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 37 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=6 (00000000000000000000000000000110)
+
+State 39 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 40 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=7 (00000000000000000000000000000111)
+
+State 42 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 43 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=8 (00000000000000000000000000001000)
+
+State 45 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 46 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=9 (00000000000000000000000000001001)
+
+State 48 file loop39.c line 6 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 49 file loop39.c line 7 function main thread 0
+----------------------------------------------------
+  y=10 (00000000000000000000000000001010)
+
+Violated property:
+  file loop39.c line 10 function main
+  assertion x == (unsigned int)1
+  x == (unsigned int)1
+
+VERIFICATION FAILED
