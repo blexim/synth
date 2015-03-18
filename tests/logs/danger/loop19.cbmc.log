@@ -1,0 +1,13 @@
+Violated property:
+  file loop19.c line 19 function main
+  assertion x >= 0
+  x >= 0
+
+VERIFICATION FAILED
+
+real	9m35.692s
+user	0m42.086s
+sys	0m7.720s
+
+[cdavid@dkr10 loops]$ time cbmc --no-unwinding-assertions --unwind 1000005 loop19.c -DWORDMASK=0xffffffff
+
