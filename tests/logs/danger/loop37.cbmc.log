@@ -1,0 +1,393 @@
+time cbmc --no-unwinding-assertions --unwind 100 loop37.c > ../logs/danger/loop37.cbmc.log
+
+real	0m0.286s
+user	0m0.264s
+sys	0m0.020s
+
+
+CBMC version 4.9 64-bit linux
+file loop37.c: Parsing
+Converting
+Type-checking loop37
+Generating GOTO Program
+Adding CPROVER library
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop c::main.0 iteration 1 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 2 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 3 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 4 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 5 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 6 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 7 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 8 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 9 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 10 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 11 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 12 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 13 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 14 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 15 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 16 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 17 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 18 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 19 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 20 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 21 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 22 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 23 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 24 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 25 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 26 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 27 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 28 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 29 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 30 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 31 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 32 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 33 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 34 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 35 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 36 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 37 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 38 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 39 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 40 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 41 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 42 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 43 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 44 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 45 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 46 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 47 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 48 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 49 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 50 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 51 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 52 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 53 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 54 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 55 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 56 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 57 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 58 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 59 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 60 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 61 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 62 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 63 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 64 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 65 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 66 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 67 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 68 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 69 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 70 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 71 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 72 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 73 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 74 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 75 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 76 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 77 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 78 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 79 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 80 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 81 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 82 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 83 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 84 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 85 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 86 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 87 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 88 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 89 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 90 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 91 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 92 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 93 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 94 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 95 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 96 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 97 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 98 (100 max) file loop37.c line 7 function main thread 0
+Unwinding loop c::main.0 iteration 99 (100 max) file loop37.c line 7 function main thread 0
+Not unwinding loop c::main.0 iteration 100 (100 max) file loop37.c line 7 function main thread 0
+size of program expression: 1130 steps
+simple slicing removed 3 assignments
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.0 with simplifier
+21776 variables, 88766 clauses
+SAT checker: negated claim is SATISFIABLE, i.e., does not hold
+Runtime decision procedure: 0.147s
+Building error trace
+
+Counterexample:
+
+State 3 file <built-in-additions> line 58 thread 0
+----------------------------------------------------
+  __CPROVER_rounding_mode=0 (00000000000000000000000000000000)
+
+State 4 file <built-in-additions> line 31 thread 0
+----------------------------------------------------
+  __CPROVER_deallocated=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 5 file <built-in-additions> line 32 thread 0
+----------------------------------------------------
+  __CPROVER_dead_object=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 6 file <built-in-additions> line 33 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_object=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 7 file <built-in-additions> line 34 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_size=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 8 file <built-in-additions> line 35 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_is_new_array=FALSE (0)
+
+State 9 file <built-in-additions> line 36 thread 0
+----------------------------------------------------
+  __CPROVER_memory_leak=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 10 file <built-in-additions> line 79 thread 0
+----------------------------------------------------
+  __CPROVER_pipe_count=0 (00000000000000000000000000000000)
+
+State 11 file <built-in-additions> line 22 thread 0
+----------------------------------------------------
+  __CPROVER_thread_id=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 12 file <built-in-additions> line 23 thread 0
+----------------------------------------------------
+  __CPROVER_threads_exited=__CPROVER_threads_exited#1 (?)
+
+State 13 file <built-in-additions> line 24 thread 0
+----------------------------------------------------
+  __CPROVER_next_thread_id=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 17 file loop37.c line 2 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 18 file loop37.c line 3 function main thread 0
+----------------------------------------------------
+  y=1 (00000000000000000000000000000001)
+
+State 19 file loop37.c line 5 function main thread 0
+----------------------------------------------------
+  x=0 (00000000000000000000000000000000)
+
+State 21 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=2 (00000000000000000000000000000010)
+
+State 25 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=4 (00000000000000000000000000000100)
+
+State 29 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=6 (00000000000000000000000000000110)
+
+State 33 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=8 (00000000000000000000000000001000)
+
+State 37 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=10 (00000000000000000000000000001010)
+
+State 41 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=12 (00000000000000000000000000001100)
+
+State 45 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=14 (00000000000000000000000000001110)
+
+State 49 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=16 (00000000000000000000000000010000)
+
+State 53 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=18 (00000000000000000000000000010010)
+
+State 57 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=20 (00000000000000000000000000010100)
+
+State 61 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=22 (00000000000000000000000000010110)
+
+State 65 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=24 (00000000000000000000000000011000)
+
+State 69 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=26 (00000000000000000000000000011010)
+
+State 73 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=28 (00000000000000000000000000011100)
+
+State 77 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=30 (00000000000000000000000000011110)
+
+State 81 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=32 (00000000000000000000000000100000)
+
+State 85 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=34 (00000000000000000000000000100010)
+
+State 89 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=36 (00000000000000000000000000100100)
+
+State 93 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=38 (00000000000000000000000000100110)
+
+State 97 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=40 (00000000000000000000000000101000)
+
+State 101 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=42 (00000000000000000000000000101010)
+
+State 105 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=44 (00000000000000000000000000101100)
+
+State 109 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=46 (00000000000000000000000000101110)
+
+State 113 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=48 (00000000000000000000000000110000)
+
+State 117 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=50 (00000000000000000000000000110010)
+
+State 121 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=52 (00000000000000000000000000110100)
+
+State 125 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=54 (00000000000000000000000000110110)
+
+State 129 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=56 (00000000000000000000000000111000)
+
+State 133 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=58 (00000000000000000000000000111010)
+
+State 137 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=60 (00000000000000000000000000111100)
+
+State 141 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=62 (00000000000000000000000000111110)
+
+State 145 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=64 (00000000000000000000000001000000)
+
+State 149 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=66 (00000000000000000000000001000010)
+
+State 153 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=68 (00000000000000000000000001000100)
+
+State 157 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=70 (00000000000000000000000001000110)
+
+State 161 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=72 (00000000000000000000000001001000)
+
+State 165 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=74 (00000000000000000000000001001010)
+
+State 169 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=76 (00000000000000000000000001001100)
+
+State 173 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=78 (00000000000000000000000001001110)
+
+State 177 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=80 (00000000000000000000000001010000)
+
+State 181 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=82 (00000000000000000000000001010010)
+
+State 185 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=84 (00000000000000000000000001010100)
+
+State 189 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=86 (00000000000000000000000001010110)
+
+State 193 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=88 (00000000000000000000000001011000)
+
+State 197 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=90 (00000000000000000000000001011010)
+
+State 201 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=92 (00000000000000000000000001011100)
+
+State 205 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=94 (00000000000000000000000001011110)
+
+State 209 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=96 (00000000000000000000000001100000)
+
+State 213 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=98 (00000000000000000000000001100010)
+
+State 217 file loop37.c line 11 function main thread 0
+----------------------------------------------------
+  x=100 (00000000000000000000000001100100)
+
+Violated property:
+  file loop37.c line 15 function main
+  assertion x % (unsigned int)2 == y % (unsigned int)2
+  x % (unsigned int)2 == y % (unsigned int)2
+
+VERIFICATION FAILED
