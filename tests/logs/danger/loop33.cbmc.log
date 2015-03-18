@@ -1,0 +1,465 @@
+time cbmc --no-unwinding-assertions --unwind 100 loop33.c > ../logs/danger/loop33.cbmc.log
+
+real	0m0.171s
+user	0m0.153s
+sys	0m0.014s
+
+
+CBMC version 4.9 64-bit linux
+file loop33.c: Parsing
+Converting
+Type-checking loop33
+Generating GOTO Program
+Adding CPROVER library
+Function Pointer Removal
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop c::main.0 iteration 1 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 2 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 3 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 4 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 5 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 6 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 7 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 8 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 9 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 10 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 11 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 12 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 13 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 14 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 15 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 16 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 17 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 18 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 19 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 20 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 21 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 22 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 23 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 24 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 25 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 26 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 27 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 28 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 29 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 30 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 31 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 32 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 33 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 34 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 35 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 36 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 37 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 38 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 39 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 40 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 41 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 42 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 43 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 44 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 45 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 46 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 47 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 48 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 49 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 50 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 51 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 52 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 53 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 54 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 55 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 56 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 57 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 58 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 59 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 60 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 61 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 62 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 63 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 64 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 65 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 66 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 67 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 68 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 69 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 70 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 71 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 72 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 73 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 74 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 75 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 76 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 77 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 78 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 79 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 80 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 81 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 82 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 83 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 84 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 85 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 86 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 87 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 88 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 89 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 90 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 91 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 92 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 93 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 94 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 95 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 96 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 97 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 98 (100 max) file loop33.c line 17 function main thread 0
+Unwinding loop c::main.0 iteration 99 (100 max) file loop33.c line 17 function main thread 0
+Not unwinding loop c::main.0 iteration 100 (100 max) file loop33.c line 17 function main thread 0
+size of program expression: 538 steps
+simple slicing removed 4 assignments
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.0 with simplifier
+14502 variables, 53420 clauses
+SAT checker: negated claim is SATISFIABLE, i.e., does not hold
+Runtime decision procedure: 0.065s
+Building error trace
+
+Counterexample:
+
+State 3 file <built-in-additions> line 58 thread 0
+----------------------------------------------------
+  __CPROVER_rounding_mode=0 (00000000000000000000000000000000)
+
+State 4 file <built-in-additions> line 31 thread 0
+----------------------------------------------------
+  __CPROVER_deallocated=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 5 file <built-in-additions> line 32 thread 0
+----------------------------------------------------
+  __CPROVER_dead_object=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 6 file <built-in-additions> line 33 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_object=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 7 file <built-in-additions> line 34 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_size=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 8 file <built-in-additions> line 35 thread 0
+----------------------------------------------------
+  __CPROVER_malloc_is_new_array=FALSE (0)
+
+State 9 file <built-in-additions> line 36 thread 0
+----------------------------------------------------
+  __CPROVER_memory_leak=NULL (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 10 file <built-in-additions> line 79 thread 0
+----------------------------------------------------
+  __CPROVER_pipe_count=0 (00000000000000000000000000000000)
+
+State 11 file <built-in-additions> line 22 thread 0
+----------------------------------------------------
+  __CPROVER_thread_id=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 12 file <built-in-additions> line 23 thread 0
+----------------------------------------------------
+  __CPROVER_threads_exited=__CPROVER_threads_exited#1 (?)
+
+State 13 file <built-in-additions> line 24 thread 0
+----------------------------------------------------
+  __CPROVER_next_thread_id=0 (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 17 file loop33.c line 11 function main thread 0
+----------------------------------------------------
+  x=139 (00000000000000000000000010001011)
+
+State 22 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=137 (00000000000000000000000010001001)
+
+State 25 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=135 (00000000000000000000000010000111)
+
+State 28 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=133 (00000000000000000000000010000101)
+
+State 31 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=131 (00000000000000000000000010000011)
+
+State 34 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=129 (00000000000000000000000010000001)
+
+State 37 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=127 (00000000000000000000000001111111)
+
+State 40 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=125 (00000000000000000000000001111101)
+
+State 43 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=123 (00000000000000000000000001111011)
+
+State 46 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=121 (00000000000000000000000001111001)
+
+State 49 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=119 (00000000000000000000000001110111)
+
+State 52 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=117 (00000000000000000000000001110101)
+
+State 55 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=115 (00000000000000000000000001110011)
+
+State 58 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=113 (00000000000000000000000001110001)
+
+State 61 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=111 (00000000000000000000000001101111)
+
+State 64 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=109 (00000000000000000000000001101101)
+
+State 67 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=107 (00000000000000000000000001101011)
+
+State 70 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=105 (00000000000000000000000001101001)
+
+State 73 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=103 (00000000000000000000000001100111)
+
+State 76 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=101 (00000000000000000000000001100101)
+
+State 79 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=99 (00000000000000000000000001100011)
+
+State 82 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=97 (00000000000000000000000001100001)
+
+State 85 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=95 (00000000000000000000000001011111)
+
+State 88 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=93 (00000000000000000000000001011101)
+
+State 91 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=91 (00000000000000000000000001011011)
+
+State 94 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=89 (00000000000000000000000001011001)
+
+State 97 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=87 (00000000000000000000000001010111)
+
+State 100 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=85 (00000000000000000000000001010101)
+
+State 103 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=83 (00000000000000000000000001010011)
+
+State 106 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=81 (00000000000000000000000001010001)
+
+State 109 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=79 (00000000000000000000000001001111)
+
+State 112 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=77 (00000000000000000000000001001101)
+
+State 115 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=75 (00000000000000000000000001001011)
+
+State 118 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=73 (00000000000000000000000001001001)
+
+State 121 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=71 (00000000000000000000000001000111)
+
+State 124 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=69 (00000000000000000000000001000101)
+
+State 127 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=67 (00000000000000000000000001000011)
+
+State 130 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=65 (00000000000000000000000001000001)
+
+State 133 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=63 (00000000000000000000000000111111)
+
+State 136 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=61 (00000000000000000000000000111101)
+
+State 139 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=59 (00000000000000000000000000111011)
+
+State 142 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=57 (00000000000000000000000000111001)
+
+State 145 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=55 (00000000000000000000000000110111)
+
+State 148 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=53 (00000000000000000000000000110101)
+
+State 151 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=51 (00000000000000000000000000110011)
+
+State 154 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=49 (00000000000000000000000000110001)
+
+State 157 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=47 (00000000000000000000000000101111)
+
+State 160 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=45 (00000000000000000000000000101101)
+
+State 163 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=43 (00000000000000000000000000101011)
+
+State 166 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=41 (00000000000000000000000000101001)
+
+State 169 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=39 (00000000000000000000000000100111)
+
+State 172 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=37 (00000000000000000000000000100101)
+
+State 175 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=35 (00000000000000000000000000100011)
+
+State 178 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=33 (00000000000000000000000000100001)
+
+State 181 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=31 (00000000000000000000000000011111)
+
+State 184 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=29 (00000000000000000000000000011101)
+
+State 187 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=27 (00000000000000000000000000011011)
+
+State 190 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=25 (00000000000000000000000000011001)
+
+State 193 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=23 (00000000000000000000000000010111)
+
+State 196 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=21 (00000000000000000000000000010101)
+
+State 199 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=19 (00000000000000000000000000010011)
+
+State 202 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=17 (00000000000000000000000000010001)
+
+State 205 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=15 (00000000000000000000000000001111)
+
+State 208 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=13 (00000000000000000000000000001101)
+
+State 211 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=11 (00000000000000000000000000001011)
+
+State 214 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=9 (00000000000000000000000000001001)
+
+State 217 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=7 (00000000000000000000000000000111)
+
+State 220 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=5 (00000000000000000000000000000101)
+
+State 223 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=3 (00000000000000000000000000000011)
+
+State 226 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=1 (00000000000000000000000000000001)
+
+State 229 file loop33.c line 18 function main thread 0
+----------------------------------------------------
+  x=-1 (11111111111111111111111111111111)
+
+Violated property:
+  file loop33.c line 21 function main
+  assertion x >= 0
+  x >= 0
+
+VERIFICATION FAILED
