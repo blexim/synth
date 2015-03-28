@@ -6,6 +6,8 @@ import copy
 import tempfile
 import splitter
 
+kalashnikov_dir = os.environ["KALASHNIKOVDIR"]
+
 def prove_danger(filename):
   splitfile = tempfile.NamedTemporaryFile(mode='w', suffix='.c', delete=False)
   (id_map, has_nested, nondet) = splitter.split(filename, splitfile)
@@ -16,14 +18,13 @@ def prove_danger(filename):
   splitfile.close()
 
   cmd = (("kalashnikov.py " +
-             "%s ../../tests/loops/danger.c " +
+             "%s %s/tests/loops/danger.c " +
              "-P3 " +
              "--seed=1337 " +
-             "--strategy=evolve -a%d --evars %d --varnames %s --nondet=%d " +
-             "-keepfrac=15 -mutprob=0.25 -newfrac=2 -popsize=500 " +
-             "-recombprob=0.05 -tourneysize=10 -w=3 " +
+             "--strategy=evolve -a%d --evars %d --varnames %s --nondet=%d -w=3 " +
              "%s") % 
               (splitfile.name,
+                kalashnikov_dir,
                 nids,
                 nids,
                 varnames,
