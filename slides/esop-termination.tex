@@ -501,7 +501,7 @@ out the next state for each $\red{S}$-state.
  \exists \green{x_0}, \red{S}, \blue{N} . \forall x . \left ( \begin{array}{rl}
    \red{S}(\green{x_0}) \, \wedge & \\
    \red{S}(x) \Rightarrow & G(x) \, \wedge \\
-   \red{S}(x) \Rightarrow & B(x, \blue{N}(x)) \wedge \red{S}(\blue{N}(x)) 
+   \red{S}(x) \Rightarrow & B(x, \blue{N}(x)) \wedge \red{S}(\blue{N}(x))
    \end{array} \right )
  \]
  \end{block}
@@ -509,13 +509,42 @@ out the next state for each $\red{S}$-state.
  \vspace{1em}
 
 This formula is satisfiable iff there exists a recurrence set $\blue{S}$ containing
-an initial state $\red{x_0}$, with successor function $\green{N}$, i.e. iff the loop
+an initial state $\red{x_0}$, with successor function $\blue{N}$, i.e. iff the loop
 does not terminate for some input $\red{x_0}$.
 \end{frame}
 
-
-
 \subsection{Using Tautologies}
+
+\begin{frame}{The Power of Tautologies}
+ Our second-order solver works by trying to synthesise programs for each of the existentially quantified functions.
+
+ \vspace{1em}
+
+ This problem is NEXPTIME-hard, but in practice is quite fast if there is some short program that satisfies
+ the constraints.
+
+ \vspace{1em}
+
+ However if the constraints are UNSAT, the solver will take a very long time to discover this.
+\end{frame}
+
+\begin{frame}{The Power of Tautologies}
+ For a given loop, the formula \red{[CT]} is satisfiable iff the loop terminates and the formula \blue{[SNT]} is
+ satisfiable iff it does not terminate.  Therefore, the formula
+ \[
+  \red{\text[CT]} \vee \blue{\text[SNT]}
+ \]
+ is satisfiable for \emph{every} loop.
+
+ \vspace{1em}
+
+ Since our solver produces witnesses to show that a formula is satisfiable, it will terminate with enough
+ information to check whether the \red{[CT]} or \blue{[SNT]} disjunct has been satisfied.
+
+ \vspace{1em}
+
+ This allows us to avoid the expensive case of having to check an UNSAT formula.
+\end{frame}
 
 \section{Experiments}
 
