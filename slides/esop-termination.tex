@@ -437,14 +437,82 @@ i.e. iff the loop $(P, G, B)$ terminates.
 \subsection{Recurrence Sets: Proofs of Non-Termination}
 
 \begin{frame}{Recurrence Sets}
- To prove that a loop terminates, we tried to find a ranking function.
- 
+ To prove that a loop $(P, G, B)$ terminates, we tried to find a ranking function.
+
  \vspace{1em}
- 
- In order to prove that a loop does \emph{not} terminate, we will exhibit a \emph{recurrence set}.
- 
- \vspace{1em}
+
+ In order to prove that a loop does \emph{not} terminate, we will exhibit a \emph{recurrence set} --
+ this is a non-empty set of states $S$ that, if entered, will never be left:
+ \begin{align*}
+  \exists x_0 . & S(x_0) \\
+  \forall x . S(x) \Rightarrow & G(x) \\
+  \forall x, x' . S(x) \wedge B(x, x') \Rightarrow & S(x')
+ \end{align*}
+
 \end{frame}
+
+
+\begin{frame}[fragile]{Recurrence Set Example}
+\begin{exampleblock}{Example}
+\begin{center}
+\begin{columns}[c]
+ \column{.3\textwidth}
+  \begin{tabular}{c}
+   \begin{lstlisting}[language=c,basicstyle=\normalsize]
+while (x > 0) {
+  x = x / 2;
+  x = x + 1;
+}
+   \end{lstlisting}
+  \end{tabular}
+ \column{.3\textwidth}
+ \begin{gather*}
+  x_0 = 2 \\
+  S = \{ 2 \}
+ \end{gather*}
+\end{columns}
+\end{center}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{Nondeterminism and Non-Termination}
+ If the loop body contains some nondeterminism, we only require that for each $\red{S}$-state, there is
+ \emph{some} successor that is an $\red{S}$-state, rather than requiring that \emph{every} successor is an
+ $\red{S}$-state:
+  \begin{align*}
+  \exists \green{x_0} . & \red{S}(\green{x_0}) \\
+  \forall x . \red{S}(x) \Rightarrow & G(x) \\
+  \forall x \exists x' . \red{S}(x) \wedge B(x, x') \Rightarrow & \red{S}(x')
+ \end{align*}
+
+ \vspace{1em}
+ 
+ \pause
+ 
+Our syntax does not allow us to existentially quantify over ground terms inside the universal.  To
+get around this, we Skolemise the formula, introducing a successor function $\blue{N}$ which picks
+out the next state for each $\red{S}$-state.
+\end{frame}
+
+\begin{frame}{Second-Order Non-Termination}
+
+\begin{block}{Skolemised Non-Termination Formula [SNT]}
+ \[
+ \exists \green{x_0}, \red{S}, \blue{N} . \forall x . \left ( \begin{array}{rl}
+   \red{S}(\green{x_0}) \, \wedge & \\
+   \red{S}(x) \Rightarrow & G(x) \, \wedge \\
+   \red{S}(x) \Rightarrow & B(x, \blue{N}(x)) \wedge \red{S}(\blue{N}(x)) 
+   \end{array} \right )
+ \]
+ \end{block}
+
+ \vspace{1em}
+
+This formula is satisfiable iff there exists a recurrence set $\blue{S}$ containing
+an initial state $\red{x_0}$, with successor function $\green{N}$, i.e. iff the loop
+does not terminate for some input $\red{x_0}$.
+\end{frame}
+
 
 
 \subsection{Using Tautologies}
