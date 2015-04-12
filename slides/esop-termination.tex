@@ -67,6 +67,8 @@ alternativetitlepage=true,
 % default, serif, structurebold, structureitalicserif, structuresmallcapsserif
 \usefonttheme{structurebold}
 
+
+
 \usepackage{tikz}
 \usepackage{pgf}
 
@@ -95,6 +97,10 @@ alternativetitlepage=true,
 
 \lstset{escapeinside={<@}{@>}}
 
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       PRESENTATION INFO        %
@@ -295,11 +301,132 @@ while (<@\textcolor{green}{G}@>) {
 
  \end{center}
 
+\vspace{1em}
+ 
+In our logical encoding, we model \textcolor{green}{G} as a predicate $\textcolor{green}{G}(x)$. \textcolor{red}{P} and \textcolor{blue}{B} are modelled as transition
+relations $\textcolor{red}{P}(x, x')$ and $\textcolor{blue}{B}(x, x')$.
  
 \end{frame}
 
+\begin{frame}[fragile]{Loop Encoding Example}
+
+\begin{columns}[c]
+ \column{.5\textwidth}
+
+ \begin{center}
+ \begin{tabular}{c}
+
+ \begin{lstlisting}[language=C,basicstyle=\normalsize,mathescape]
+<@\textcolor{red}{x = 0}@>;
+
+while (<@\textcolor{green}{x $<$ 100}@>) {
+  <@\textcolor{blue}{x++}@>;
+}
+ \end{lstlisting}
+ \end{tabular}
+ \end{center}
+
+ \column{.5\textwidth}
+\begin{eqnarray*}
+ \textcolor{red}{P} = & \{ (x, x') \mid x' = 0 \} \\
+ \textcolor{green}{G} = & \{ x \mid x < 100 \} \\
+ \textcolor{blue}{B} = & \{ (x, x') \mid x' = x + 1 \}
+\end{eqnarray*}
+\end{columns}
+
+\end{frame}
+
+
 
 \subsection{Ranking Functions: Proofs of Termination}
+
+\begin{frame}[fragile]{Ranking Functions}
+ To prove that a loop $(P, G, B)$ terminates, we find a \emph{ranking function} $R$ which satisfies the following criteria:
+
+ \begin{eqnarray*}
+  \forall x . G(x) \Rightarrow & R(x) > 0 \\
+  \forall x, x' . G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
+ \end{eqnarray*}
+
+\pause
+
+\begin{exampleblock}{Example}
+\begin{center}
+\begin{columns}[c]
+ \column{.3\textwidth}
+  \begin{tabular}{c}
+   \begin{lstlisting}[language=c,basicstyle=\normalsize]
+while (x < 100) {
+  x++;
+}
+   \end{lstlisting}
+  \end{tabular}
+ \column{.3\textwidth}
+ $R(x) = 100 - x$
+\end{columns}
+\end{center}
+\end{exampleblock}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Conditional Ranking Functions}
+ A loop may not terminate starting in some initial state.  However, the prefix may guarantee
+ that the loop does terminate.
+
+ To prove that such a loop terminates, we must find a \emph{supporting invariant} $I$ along with the
+ ranking function $R$:
+
+ \begin{eqnarray*}
+  \forall x, x' . P(x, x') \Rightarrow & I(x') \\
+  \forall x, x' . I(x) \wedge B(x, x)' \Rightarrow & I(x') \\
+  \forall x . I(x) \wedge G(x) \Rightarrow & R(x) > 0 \\
+  \forall x, x' . I(x) \wedge G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
+ \end{eqnarray*}
+\end{frame}
+
+\begin{frame}[fragile]{Conditional Ranking Function Example}
+\begin{exampleblock}{Example}
+\begin{center}
+\begin{columns}[T]
+ \column{.3\textwidth}
+  \begin{tabular}{c}
+   \begin{lstlisting}[language=c,basicstyle=\normalsize]
+y = 1;
+while (x < 100) {
+  x += y;
+}
+   \end{lstlisting}
+  \end{tabular}
+ \column{.3\textwidth}
+\begin{gather*}
+  I =  \{ (x, y) \mid y = 1 \} \\
+  R(x, y) =  100 - x
+\end{gather*}
+\end{columns}
+\end{center}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Second-Order Termination}
+
+\begin{block}{Conditional Termination Formula [CT]}
+ \[
+ \exists \red{I}, \blue{R} .  \forall x, x' . \left ( \begin{array}{rl}
+   P(x, x') \Rightarrow & \red{I}(x') \, \wedge \\
+   \red{I}(x) \wedge G(x) \Rightarrow & \blue{R}(x) > 0 \, \wedge \\
+   \red{I}(x) \wedge G(x) \wedge B(x, x') \Rightarrow & \blue{R}(x) > \blue{R}(x') \wedge \red{I}(x')
+   \end{array} \right )
+ \]
+ \end{block}
+
+ \vspace{1em}
+
+This formula is satisfiable iff there exists a ranking function $\blue{R}$ and supporting invariant $\red{I}$,
+i.e. iff the loop $(P, G, B)$ terminates.
+ 
+\end{frame}
+
 
 \subsection{Recurrent Sets: Proofs of Non-Termination}
 \subsection{Using Tautologies}
