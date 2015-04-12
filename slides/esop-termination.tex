@@ -327,11 +327,11 @@ while (<@\textcolor{green}{x $<$ 100}@>) {
  \end{center}
 
  \column{.5\textwidth}
-\begin{eqnarray*}
+\begin{align*}
  \textcolor{red}{P} = & \{ (x, x') \mid x' = 0 \} \\
  \textcolor{green}{G} = & \{ x \mid x < 100 \} \\
  \textcolor{blue}{B} = & \{ (x, x') \mid x' = x + 1 \}
-\end{eqnarray*}
+\end{align*}
 \end{columns}
 
 \end{frame}
@@ -341,15 +341,22 @@ while (<@\textcolor{green}{x $<$ 100}@>) {
 \subsection{Ranking Functions: Proofs of Termination}
 
 \begin{frame}[fragile]{Ranking Functions}
- To prove that a loop $(P, G, B)$ terminates, we find a \emph{ranking function} $R$ which satisfies the following criteria:
-
- \begin{eqnarray*}
+ To prove that a loop $(P, G, B)$ terminates, we will try to find a \emph{ranking function} $R$.
+ 
+ \vspace{1em}
+ 
+ A ranking function is some function that decreases on each loop iteration, but which cannot decrease forever.
+ 
+ \vspace{1em}
+ 
+ A function $R$ is a ranking function for the look $(P, G, B)$ iff it satisfies the following criteria:
+ \begin{align*}
   \forall x . G(x) \Rightarrow & R(x) > 0 \\
   \forall x, x' . G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
- \end{eqnarray*}
+ \end{align*}
+\end{frame}
 
-\pause
-
+\begin{frame}[fragile]{Ranking Function Example}
 \begin{exampleblock}{Example}
 \begin{center}
 \begin{columns}[c]
@@ -376,13 +383,12 @@ while (x < 100) {
 
  To prove that such a loop terminates, we must find a \emph{supporting invariant} $I$ along with the
  ranking function $R$:
-
- \begin{eqnarray*}
+ \begin{align*}
   \forall x, x' . P(x, x') \Rightarrow & I(x') \\
   \forall x, x' . I(x) \wedge B(x, x)' \Rightarrow & I(x') \\
   \forall x . I(x) \wedge G(x) \Rightarrow & R(x) > 0 \\
   \forall x, x' . I(x) \wedge G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
- \end{eqnarray*}
+ \end{align*}
 \end{frame}
 
 \begin{frame}[fragile]{Conditional Ranking Function Example}
@@ -428,7 +434,19 @@ i.e. iff the loop $(P, G, B)$ terminates.
 \end{frame}
 
 
-\subsection{Recurrent Sets: Proofs of Non-Termination}
+\subsection{Recurrence Sets: Proofs of Non-Termination}
+
+\begin{frame}{Recurrence Sets}
+ To prove that a loop terminates, we tried to find a ranking function.
+ 
+ \vspace{1em}
+ 
+ In order to prove that a loop does \emph{not} terminate, we will exhibit a \emph{recurrence set}.
+ 
+ \vspace{1em}
+\end{frame}
+
+
 \subsection{Using Tautologies}
 
 \section{Experiments}
