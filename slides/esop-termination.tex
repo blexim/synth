@@ -411,6 +411,44 @@ while (x < 100) {
 
 \end{frame}
 
+\begin{frame}[fragile]{Recurrence Sets}
+ 
+\begin{center}
+\begin{tikzpicture}[>=latex',line join=bevel,scale=0.7,every node/.style={scale=1,fill=blue!20}]
+%%
+  \node (10) at (107.78bp,-21.147bp) [draw,circle] { };
+  \node (1) at (35.474bp,-65.695bp) [draw,circle] { };
+  \node (3) at (-50.576bp,-70.065bp) [draw,circle] {};
+  \node (2) at (61.283bp,-139.93bp) [draw,circle] {};
+  \node (5) at (-1.8136bp,2.9476bp) [draw,circle] {};
+  \node (7) at (20.058bp,79.448bp) [draw,circle] {};
+  \node (9) at (97.672bp,60.723bp) [draw,circle] {};
+  \visible<2->{\node (4) at (-80.797bp,6.0893bp) [draw,circle,fill=red] {};}
+  \only<1>{\node (4a) at (-80.797bp,6.0893bp) [draw,circle] {};}
+  \node (6) at (-60.664bp,86.061bp) [draw,circle,fill=red] {};
+  \only<1>{\node (6a) at (-60.664bp,86.061bp) [draw,circle] {};}
+  \node (8) at (-128.42bp,61.564bp) [draw,circle,fill=red] {};
+  \only<1>{\node (8a) at (-128.42bp,61.564bp) [draw,circle] {};}
+  \draw [->] (4) ..controls (-98.601bp,26.831bp) and (-103.44bp,32.466bp)  .. (8);
+  \draw [->] (10) ..controls (104.25bp,7.41bp) and (102.62bp,20.665bp)  .. (9);
+  \draw [->] (7) ..controls (-12.21bp,82.092bp) and (-17.962bp,82.563bp)  .. (6);
+  \draw [->] (7) ..controls (12.354bp,52.502bp) and (9.0799bp,41.051bp)  .. (5);
+  \draw [->] (2) ..controls (52.135bp,-113.62bp) and (48.405bp,-102.89bp)  .. (1);
+  \draw [->] (10) ..controls (80.351bp,-38.045bp) and (71.978bp,-43.205bp)  .. (1);
+  \draw [->] (4) ..controls (-48.846bp,4.8184bp) and (-43.811bp,4.6181bp)  .. (5);
+  \draw [->] (3) ..controls (-16.455bp,-68.332bp) and (-8.9323bp,-67.95bp)  .. (1);
+  \draw [->] (6) ..controls (-67.773bp,57.823bp) and (-70.987bp,45.055bp)  .. (4);
+  \draw [->] (9) ..controls (66.898bp,68.148bp) and (61.149bp,69.535bp)  .. (7);
+  \draw [->] (5) ..controls (11.585bp,-21.717bp) and (16.624bp,-30.995bp)  .. (1);
+  \draw [->] (4) ..controls (-70.088bp,-20.897bp) and (-65.468bp,-32.538bp)  .. (3);
+  \draw [->] (8) ..controls (-101.04bp,71.461bp) and (-97.613bp,72.701bp)  .. (6);
+%
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+
 
 \begin{frame}[fragile]{Conditional Ranking Functions}
  A loop may not terminate starting in some initial state.  However, the prefix may guarantee
