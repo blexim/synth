@@ -102,10 +102,16 @@ alternativetitlepage=true,
 
 \lstset{escapeinside={<@}{@>}}
 
+\definecolor{tachameleon}{rgb}{0.54118, 0.88627, 0.20392}       % #8ae234
+\definecolor{ta2chameleon}{rgb}{0.45098, 0.82353, 0.086275}     % #73d216
+\definecolor{ta3chameleon}{rgb}{0.30588, 0.60392, 0.023529}     % #4e9a06
+
 
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
-\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\green}[1]{\textcolor{ta3chameleon}{#1}}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       PRESENTATION INFO        %
@@ -181,6 +187,31 @@ while (x > 0) {
 The left one does (x decreases monotonically), but the right one doesn't ($2 \rightarrow 2 \rightarrow \dots$).
 \end{frame}
 
+\begin{frame}[fragile]{Motivation}
+Which of these guys terminates?
+\begin{center}
+\begin{minipage}{0.45\linewidth}
+ \begin{lstlisting}[language=C,basicstyle=\normalsize]
+while (x > 0) {
+  x = x * 2;
+}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\linewidth}
+ \begin{lstlisting}[language=C,basicstyle=\normalsize]
+while (x > 0) {
+  x = x * 3;
+}
+\end{lstlisting}
+\end{minipage}
+\end{center}
+
+\pause
+
+The left one does (the position of the leftmost 1 bit increases up to a bound of 32), but the right one doesn't (if $x$ is odd to begin with, it will be odd forever).
+\end{frame}
+
+
 \begin{frame}{Motivation}
 Proving program termination has been a big deal for a while.
 
@@ -253,14 +284,14 @@ It's still quite hard to do for the programs that people write, which use bitvec
  \begin{center}
  \begin{columns}
   \column{.15\textwidth}
-  $\exists {\textcolor{red} F} . \forall \vec{\textcolor{blue} x} . {\textcolor{green} \phi}({\textcolor{red} F}, \vec{\textcolor{blue} x})$
+  $\exists \red{F} . \forall \vec{\blue{x}} . \green{\phi}(\red{F}, \vec{\blue{x}})$
 
   \column{.4\textwidth}
   \begin{minipage}{\textwidth}
  \begin{itemize}
-  \item[$\textcolor{red} F$] a function.
-  \item[$\textcolor{green} \phi$] a quantifier free formula.
-  \item[$\vec{\textcolor{blue} x}$] the program variables.
+  \item[$\red{F}$] a function.
+  \item[$\green{\phi}$] a quantifier free formula.
+  \item[$\vec{\blue{x}}$] the program variables.
  \end{itemize}
  \end{minipage}
  \end{columns}
@@ -270,7 +301,7 @@ It's still quite hard to do for the programs that people write, which use bitvec
  \vspace{.75em}
 
  These constraints can be solved using an EPR solver (such as the one in Z3), or by using a program
- synthesiser to synthesise $\textcolor{red} F$.
+ synthesiser to synthesise $\red{F}$.
 \end{frame}
 
 
@@ -282,10 +313,10 @@ It's still quite hard to do for the programs that people write, which use bitvec
   \column{.15\textwidth}
   \begin{minipage}{\linewidth}
  \begin{lstlisting}[language=C,basicstyle=\normalsize]
-<@\textcolor{red}{P}@>;
+<@\red{P}@>;
 
-while (<@\textcolor{green}{G}@>) {
-  <@\textcolor{blue}{B}@>;
+while (<@\green{G}@>) {
+  <@\blue{B}@>;
 }
  \end{lstlisting}
  \end{minipage}
@@ -294,9 +325,9 @@ while (<@\textcolor{green}{G}@>) {
 
  \begin{minipage}{\linewidth}
  \begin{itemize}
-  \item[\textcolor{red}{P}] the prefix to the loop.
-  \item[\textcolor{green}{G}] the loop guard.
-  \item[\textcolor{blue}{B}] the loop body.
+  \item[\red{P}] the prefix to the loop.
+  \item[\green{G}] the loop guard.
+  \item[\blue{B}] the loop body.
  \end{itemize}
  \end{minipage}
  \end{columns}
@@ -305,8 +336,8 @@ while (<@\textcolor{green}{G}@>) {
 
 \vspace{1em}
  
-In our logical encoding, we model \textcolor{green}{G} as a predicate $\textcolor{green}{G}(x)$. \textcolor{red}{P} and \textcolor{blue}{B} are modelled as transition
-relations $\textcolor{red}{P}(x, x')$ and $\textcolor{blue}{B}(x, x')$.
+In our logical encoding, we model \green{G} as a predicate $\green{G}(x)$. \red{P} and \blue{B} are modelled as transition
+relations $\red{P}(x, x')$ and $\blue{B}(x, x')$.
  
 \end{frame}
 
@@ -319,10 +350,10 @@ relations $\textcolor{red}{P}(x, x')$ and $\textcolor{blue}{B}(x, x')$.
  \begin{tabular}{c}
 
  \begin{lstlisting}[language=C,basicstyle=\normalsize,mathescape]
-<@\textcolor{red}{x = 0}@>;
+<@\red{x = 0}@>;
 
-while (<@\textcolor{green}{x $<$ 100}@>) {
-  <@\textcolor{blue}{x++}@>;
+while (<@\green{x $>$ 0}@>) {
+  <@\blue{x++}@>;
 }
  \end{lstlisting}
  \end{tabular}
@@ -330,9 +361,9 @@ while (<@\textcolor{green}{x $<$ 100}@>) {
 
  \column{.5\textwidth}
 \begin{align*}
- \textcolor{red}{P} = & \{ (x, x') \mid x' = 0 \} \\
- \textcolor{green}{G} = & \{ x \mid x < 100 \} \\
- \textcolor{blue}{B} = & \{ (x, x') \mid x' = x + 1 \}
+ \red{P} = & \{ (x, x') \mid x' = 0 \} \\
+ \green{G} = & \{ x \mid x > 0 \} \\
+ \blue{B} = & \{ (x, x') \mid x' = x + 1 \}
 \end{align*}
 \end{columns}
 
@@ -349,13 +380,13 @@ while (<@\textcolor{green}{x $<$ 100}@>) {
  
  A ranking function is some function that decreases on each loop iteration, but which cannot decrease forever.
  
- \vspace{1em}
- 
- A function $R$ is a ranking function for the look $(P, G, B)$ iff it satisfies the following criteria:
- \begin{align*}
-  \forall x . G(x) \Rightarrow & R(x) > 0 \\
-  \forall x, x' . G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
- \end{align*}
+%  \vspace{1em}
+%  
+%  A function $R$ is a ranking function for the loop $(P, G, B)$ iff it satisfies the following criteria:
+%  \begin{align*}
+%   \forall x . G(x) \Rightarrow & R(x) > 0 \\
+%   \forall x, x' . G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
+%  \end{align*}
 \end{frame}
 
 \begin{frame}[fragile]{Ranking Functions}
@@ -391,25 +422,142 @@ while (<@\textcolor{green}{x $<$ 100}@>) {
 \end{frame}
 
 
-\begin{frame}[fragile]{Ranking Function Example}
-\begin{exampleblock}{Example}
+\begin{frame}[fragile]{Ranking Function Examples}
+
 \begin{center}
 \begin{columns}[c]
  \column{.3\textwidth}
   \begin{tabular}{c}
    \begin{lstlisting}[language=c,basicstyle=\normalsize]
-while (x < 100) {
+while (x > 0) {
   x++;
 }
    \end{lstlisting}
   \end{tabular}
  \column{.3\textwidth}
- $R(x) = 100 - x$
+ \pause
+ $R(x) = 2^{32} - 1 - x$
 \end{columns}
 \end{center}
-\end{exampleblock}
+
+\pause
+
+\begin{center}
+\begin{columns}[c]
+ \column{.3\textwidth}
+  \begin{tabular}{c}
+   \begin{lstlisting}[language=c,basicstyle=\normalsize]
+while (x > 0) {
+  x = (x - 1) & x;
+}
+   \end{lstlisting}
+  \end{tabular}
+ \column{.3\textwidth}
+ \pause
+ $R(x) = x$
+\end{columns}
+\end{center}
+
+\pause
+
+\begin{center}
+\begin{columns}[c]
+ \column{.3\textwidth}
+  \begin{tabular}{c}
+   \begin{lstlisting}[language=c,basicstyle=\normalsize]
+while (x > 0) {
+  x = x * 2;
+}
+   \end{lstlisting}
+  \end{tabular}
+ \column{.3\textwidth}
+ \pause
+ $R(x) = -x \oplus x$
+\end{columns}
+\end{center}
+
 
 \end{frame}
+
+
+
+% \begin{frame}[fragile]{Conditional Ranking Functions}
+%  A loop may not terminate starting in some initial state.  However, the prefix may guarantee
+%  that the loop does terminate.
+% 
+%  To prove that such a loop terminates, we must find a \emph{supporting invariant} $I$ along with the
+%  ranking function $R$:
+%  \begin{align*}
+%   \forall x, x' . P(x, x') \Rightarrow & I(x') \\
+%   \forall x, x' . I(x) \wedge B(x, x)' \Rightarrow & I(x') \\
+%   \forall x . I(x) \wedge G(x) \Rightarrow & R(x) > 0 \\
+%   \forall x, x' . I(x) \wedge G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
+%  \end{align*}
+% \end{frame}
+% 
+% \begin{frame}[fragile]{Conditional Ranking Function Example}
+% \begin{exampleblock}{Example}
+% \begin{center}
+% \begin{columns}[T]
+%  \column{.3\textwidth}
+%   \begin{tabular}{c}
+%    \begin{lstlisting}[language=c,basicstyle=\normalsize]
+% y = 1;
+% while (x < 100) {
+%   x += y;
+% }
+%    \end{lstlisting}
+%   \end{tabular}
+%  \column{.3\textwidth}
+% \begin{gather*}
+%   I =  \{ (x, y) \mid y = 1 \} \\
+%   R(x, y) =  100 - x
+% \end{gather*}
+% \end{columns}
+% \end{center}
+% \end{exampleblock}
+% \end{frame}
+
+
+
+\begin{frame}{Second-Order Termination}
+
+\begin{block}{Conditional Termination Formula [CT]}
+ \[
+ \exists \red{I}, \blue{R} .  \forall x, x' . \left ( \begin{array}{rl}
+   P(x, x') \Rightarrow & \red{I}(x') \, \wedge \\
+   \red{I}(x) \wedge G(x) \Rightarrow & \blue{R}(x) > 0 \, \wedge \\
+   \red{I}(x) \wedge G(x) \wedge B(x, x') \Rightarrow & \blue{R}(x) > \blue{R}(x') \wedge \red{I}(x')
+   \end{array} \right )
+ \]
+ \end{block}
+
+ \vspace{1em}
+
+This formula is satisfiable iff there exists a ranking function $\blue{R}$ and supporting invariant $\red{I}$,
+i.e. iff the loop $(P, G, B)$ terminates.
+ 
+\end{frame}
+
+
+
+
+
+\subsection{Recurrence Sets: Proofs of Non-Termination}
+
+\begin{frame}{Recurrence Sets}
+ To prove that a loop $(P, G, B)$ terminates, we tried to find a ranking function.
+
+ \vspace{1em}
+
+ In order to prove that a loop does \emph{not} terminate, we will exhibit a \emph{recurrence set}\footnotemark --
+ this is a non-empty set of states $S$ that, if entered, will never be left.
+
+ \footnotetext{Gupta et al. -- \emph{Proving Nontermination}, POPL '08 \vspace{1em} }
+ 
+\end{frame}
+
+
 
 \begin{frame}[fragile]{Recurrence Sets}
  
@@ -449,84 +597,7 @@ while (x < 100) {
 \end{frame}
 
 
-
-\begin{frame}[fragile]{Conditional Ranking Functions}
- A loop may not terminate starting in some initial state.  However, the prefix may guarantee
- that the loop does terminate.
-
- To prove that such a loop terminates, we must find a \emph{supporting invariant} $I$ along with the
- ranking function $R$:
- \begin{align*}
-  \forall x, x' . P(x, x') \Rightarrow & I(x') \\
-  \forall x, x' . I(x) \wedge B(x, x)' \Rightarrow & I(x') \\
-  \forall x . I(x) \wedge G(x) \Rightarrow & R(x) > 0 \\
-  \forall x, x' . I(x) \wedge G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
- \end{align*}
-\end{frame}
-
-\begin{frame}[fragile]{Conditional Ranking Function Example}
-\begin{exampleblock}{Example}
-\begin{center}
-\begin{columns}[T]
- \column{.3\textwidth}
-  \begin{tabular}{c}
-   \begin{lstlisting}[language=c,basicstyle=\normalsize]
-y = 1;
-while (x < 100) {
-  x += y;
-}
-   \end{lstlisting}
-  \end{tabular}
- \column{.3\textwidth}
-\begin{gather*}
-  I =  \{ (x, y) \mid y = 1 \} \\
-  R(x, y) =  100 - x
-\end{gather*}
-\end{columns}
-\end{center}
-\end{exampleblock}
-\end{frame}
-
-\begin{frame}{Second-Order Termination}
-
-\begin{block}{Conditional Termination Formula [CT]}
- \[
- \exists \red{I}, \blue{R} .  \forall x, x' . \left ( \begin{array}{rl}
-   P(x, x') \Rightarrow & \red{I}(x') \, \wedge \\
-   \red{I}(x) \wedge G(x) \Rightarrow & \blue{R}(x) > 0 \, \wedge \\
-   \red{I}(x) \wedge G(x) \wedge B(x, x') \Rightarrow & \blue{R}(x) > \blue{R}(x') \wedge \red{I}(x')
-   \end{array} \right )
- \]
- \end{block}
-
- \vspace{1em}
-
-This formula is satisfiable iff there exists a ranking function $\blue{R}$ and supporting invariant $\red{I}$,
-i.e. iff the loop $(P, G, B)$ terminates.
- 
-\end{frame}
-
-
-\subsection{Recurrence Sets: Proofs of Non-Termination}
-
-\begin{frame}{Recurrence Sets}
- To prove that a loop $(P, G, B)$ terminates, we tried to find a ranking function.
-
- \vspace{1em}
-
- In order to prove that a loop does \emph{not} terminate, we will exhibit a \emph{recurrence set} --
- this is a non-empty set of states $S$ that, if entered, will never be left:
- \begin{align*}
-  \exists x_0 . & S(x_0) \\
-  \forall x . S(x) \Rightarrow & G(x) \\
-  \forall x, x' . S(x) \wedge B(x, x') \Rightarrow & S(x')
- \end{align*}
-
-\end{frame}
-
-
 \begin{frame}[fragile]{Recurrence Set Example}
-\begin{exampleblock}{Example}
 \begin{center}
 \begin{columns}[c]
  \column{.3\textwidth}
@@ -539,33 +610,55 @@ while (x > 0) {
    \end{lstlisting}
   \end{tabular}
  \column{.3\textwidth}
+ \pause
  \begin{gather*}
   x_0 = 2 \\
   S = \{ 2 \}
  \end{gather*}
 \end{columns}
 \end{center}
-\end{exampleblock}
-\end{frame}
 
-\begin{frame}[fragile]{Nondeterminism and Non-Termination}
- If the loop body contains some nondeterminism, we only require that for each $\red{S}$-state, there is
- \emph{some} successor that is an $\red{S}$-state, rather than requiring that \emph{every} successor is an
- $\red{S}$-state:
-  \begin{align*}
-  \exists \green{x_0} . & \red{S}(\green{x_0}) \\
-  \forall x . \red{S}(x) \Rightarrow & G(x) \\
-  \forall x \exists x' . \red{S}(x) \wedge B(x, x') \Rightarrow & \red{S}(x')
- \end{align*}
+\pause
 
- \vspace{1em}
- 
+\begin{center}
+\begin{columns}[c]
+ \column{.3\textwidth}
+  \begin{tabular}{c}
+   \begin{lstlisting}[language=c,basicstyle=\normalsize]
+while (x > 0) {
+  x = x * 3;
+}
+   \end{lstlisting}
+  \end{tabular}
+ \column{.3\textwidth}
  \pause
- 
-Our syntax does not allow us to existentially quantify over ground terms inside the universal.  To
-get around this, we Skolemise the formula, introducing a successor function $\blue{N}$ which picks
-out the next state for each $\red{S}$-state.
+ \begin{gather*}
+  x_0 = 1 \\
+  S = \{ x \mid (x \text{ mod } 2) = 1 \}
+ \end{gather*}
+\end{columns}
+\end{center}
+
 \end{frame}
+% 
+% \begin{frame}[fragile]{Nondeterminism and Non-Termination}
+%  If the loop body contains some nondeterminism, we only require that for each $\red{S}$-state, there is
+%  \emph{some} successor that is an $\red{S}$-state, rather than requiring that \emph{every} successor is an
+%  $\red{S}$-state:
+%   \begin{align*}
+%   \exists \green{x_0} . & \red{S}(\green{x_0}) \\
+%   \forall x . \red{S}(x) \Rightarrow & G(x) \\
+%   \forall x \exists x' . \red{S}(x) \wedge B(x, x') \Rightarrow & \red{S}(x')
+%  \end{align*}
+% 
+%  \vspace{1em}
+%  
+%  \pause
+%  
+% Our syntax does not allow us to existentially quantify over ground terms inside the universal.  To
+% get around this, we Skolemise the formula, introducing a successor function $\blue{N}$ which picks
+% out the next state for each $\red{S}$-state.
+% \end{frame}
 
 \begin{frame}{Second-Order Non-Termination}
 
