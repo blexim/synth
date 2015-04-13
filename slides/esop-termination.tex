@@ -712,6 +712,28 @@ does not terminate for some input $\red{x_0}$.
 \section{Experiments}
 
 \begin{frame}{Experiments}
+We implemented the {\sc Juggernaut} tool, which is slow but unstoppable.
+
+\vspace{1em}
+
+We compared to {\sc ARMC} on a set of 47 benchmarks taken from SVCOMP and our own
+regression tests.
+
+\begin{center}
+ \begin{tabular}{|l||l|l|}
+  \hline
+  & {\sc ARMC} & {\sc Juggernaut} \\
+  \hline
+  \hline
+  Correct & 28 & 35 \\
+  Incorrect for bitvectors & 3 & 0 \\
+  Unknown & 13 & 0 \\
+  Timeout & 3 & 12 \\
+  \hline
+  Median time (s) & 0.09 & 2.2 \\
+  \hline
+ \end{tabular}
+\end{center}
  
 \end{frame}
 
