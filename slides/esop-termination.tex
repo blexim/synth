@@ -139,7 +139,7 @@ alternativetitlepage=true,
   \tableofcontents
 \end{frame}
 
-\section{What's The Problem?}
+\section{What's Our Problem?}
 \begin{frame}[fragile]{Motivation}
 Does this program terminate?
 \begin{center}
@@ -187,29 +187,29 @@ while (x > 0) {
 The left one does (x decreases monotonically), but the right one doesn't ($2 \rightarrow 2 \rightarrow \dots$).
 \end{frame}
 
-\begin{frame}[fragile]{Motivation}
-Which of these guys terminates?
-\begin{center}
-\begin{minipage}{0.45\linewidth}
- \begin{lstlisting}[language=C,basicstyle=\normalsize]
-while (x > 0) {
-  x = x * 2;
-}
-\end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.45\linewidth}
- \begin{lstlisting}[language=C,basicstyle=\normalsize]
-while (x > 0) {
-  x = x * 3;
-}
-\end{lstlisting}
-\end{minipage}
-\end{center}
-
-\pause
-
-The left one does (the position of the leftmost 1 bit increases up to a bound of 32), but the right one doesn't (if $x$ is odd to begin with, it will be odd forever).
-\end{frame}
+% \begin{frame}[fragile]{Motivation}
+% How about these?
+% \begin{center}
+% \begin{minipage}{0.45\linewidth}
+%  \begin{lstlisting}[language=C,basicstyle=\normalsize]
+% while (x > 0) {
+%   x = x * 2;
+% }
+% \end{lstlisting}
+% \end{minipage}
+% \begin{minipage}{0.45\linewidth}
+%  \begin{lstlisting}[language=C,basicstyle=\normalsize]
+% while (x > 0) {
+%   x = x * 3;
+% }
+% \end{lstlisting}
+% \end{minipage}
+% \end{center}
+% 
+% \pause
+% 
+% The left one does (the position of the leftmost 1 bit increases up to a bound of 32), but the right one doesn't (if $x$ is odd to begin with, it will be odd forever).
+% \end{frame}
 
 
 \begin{frame}{Motivation}
@@ -217,7 +217,22 @@ Proving program termination has been a big deal for a while.
 
 \vspace{1em}
 
-It's still quite hard to do for the programs that people write, which use bitvectors and all kinds of nonsense.
+It's still quite hard to do for the programs that people write, which use bitvectors and nonlinear operators and all kinds of nonsense.
+
+\vspace{1em}
+
+\begin{block}{Our Goal}
+ We would like to come up with a fully automatic procedure for proving termination or non-termination of
+ arbitrary programs that make use of bitvector and floating point arithmetic.
+\end{block}
+
+
+% \vspace{1.5em}
+% 
+% \begin{quote}
+%  ``People really don't *think* about termination using bitvector arguments''
+%    \hspace*\fill{\small--- Anonymous Reviewer}
+%    \end{quote}
 \end{frame}
 
 
@@ -254,23 +269,21 @@ It's still quite hard to do for the programs that people write, which use bitvec
  
 \end{frame}
 
+% 
+% \begin{frame}{Bitvector Termination}
+% \begin{quote}
+%  ``People really don't *think* about termination using bitvector arguments''
+%    \hspace*\fill{\small--- Anonymous Reviewer}
+% \end{quote}
+% \end{frame}
 
-\begin{frame}{Bitvector Termination}
-\begin{quote}
- ``People really don't *think* about termination using bitvector arguments''
-   \hspace*\fill{\small--- Anonymous Reviewer}
-\end{quote}
-\end{frame}
-
-
-\subsection{Non-Linearity Is Hard}
 
 
 \section{Our Solution}
 
 \subsection{Existential Second-Order Logic}
 
-\begin{frame}[fragile]{Our Theory}
+\begin{frame}[fragile]{Our Solution}
  We will try to build termination proofs by solving \emph{second-order constraints}.
 
  \vspace{1em}
@@ -368,7 +381,7 @@ while (<@\green{x $>$ 0}@>) {
 
 
 
-\subsection{Ranking Functions: Proofs of Termination}
+\subsection{Proofs of Termination}
 
 \begin{frame}[fragile]{Ranking Functions}
  To prove that a loop $(P, G, B)$ terminates, we will try to find a \emph{ranking function} $R$.
@@ -540,7 +553,7 @@ i.e. iff the loop $(P, G, B)$ terminates.
 
 
 
-\subsection{Recurrence Sets: Proofs of Non-Termination}
+\subsection{Proofs of Non-Termination}
 
 \begin{frame}{Recurrence Sets}
  To prove that a loop $(P, G, B)$ terminates, we tried to find a ranking function.
@@ -737,6 +750,31 @@ regression tests.
  
 \end{frame}
 
+\begin{frame}[fragile]{Oh, And One More Thing}
+Does this terminate?  If so, what's the ranking function?
+
+\begin{columns}[c]
+\column{.4\textwidth}
+\begin{lstlisting}[basicstyle=\normalsize]
+while (x > 0 && y > 0 && z > 0) {
+  if (y > x) {
+    y = z;
+    x = nondet();
+    z = x - 1;
+  } else {
+    z = z - 1;
+    x = nondet();
+    y = x - 1;
+  }
+}
+\end{lstlisting}
+
+\pause
+\column{.45\textwidth}
+$\red{R(x, y, z) = (x < y, z)}$
+
+\end{columns}
+\end{frame}
 
 \begin{frame}[fragile]{Fin}
 
