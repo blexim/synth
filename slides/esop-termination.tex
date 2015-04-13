@@ -71,6 +71,11 @@ alternativetitlepage=true,
 
 \usepackage{tikz}
 \usepackage{pgf}
+\usepackage{dot2texi}
+
+%\usepackage[pdftex]{graphicx}
+\usepackage{graphviz}
+
 
 \pgfdeclareimage[height=6ex]{ou-logo}{images/ou}
 
@@ -87,7 +92,7 @@ alternativetitlepage=true,
 \usepackage{moreverb}
 \usepackage{pgf}
 \usepackage{tikz}
-\usetikzlibrary{arrows, automata, shapes.multipart, chains, positioning, fit}
+\usetikzlibrary{arrows, automata, shapes.multipart, chains, positioning, fit, calc}
 
 \usepackage{pifont}
 \newcommand{\xmark}{\ding{55}}
@@ -185,9 +190,6 @@ It's still quite hard to do for the programs that people write, which use bitvec
 \end{frame}
 
 
-\subsection{Termination Is Hard}
-
-
 \subsection{Bitvectors Are Hard}
 
 \begin{frame}[fragile]{Bitvector Termination}
@@ -225,7 +227,7 @@ It's still quite hard to do for the programs that people write, which use bitvec
 \begin{frame}{Bitvector Termination}
 \begin{quote}
  ``People really don't *think* about termination using bitvector arguments''
-   \hspace*\fill{\small--- Anonymous}
+   \hspace*\fill{\small--- Anonymous Reviewer}
 \end{quote}
 \end{frame}
 
@@ -355,6 +357,39 @@ while (<@\textcolor{green}{x $<$ 100}@>) {
   \forall x, x' . G(x) \wedge B(x, x') \Rightarrow & R(x) > R(x')
  \end{align*}
 \end{frame}
+
+\begin{frame}[fragile]{Ranking Functions}
+
+\begin{center}
+\begin{tikzpicture}[>=latex',line join=bevel,scale=0.7,every node/.style={scale=0.7,fill=blue!20}]
+%%
+\node (10) at (101.07bp,-48.672bp) [draw,circle] {{\visible<2->{10}}};
+  \node (1) at (17.434bp,-73.642bp) [draw,circle] {{\visible<2->{1}}};
+  \node (3) at (-66.239bp,-49.026bp) [draw,circle] {{\visible<2->{3}}};
+  \node (2) at (20.808bp,-151.5bp) [draw,circle] {{\visible<2->{2}}};
+  \node (5) at (31.633bp,-3.8169bp) [draw,circle] {{\visible<2->{5}}};
+  \node (4) at (-95.572bp,28.017bp) [draw,circle] {{\visible<2->{4}}};
+  \node (7) at (37.06bp,71.959bp) [draw,circle] {{\visible<2->{7}}};
+  \node (6) at (-42.367bp,91.656bp) [draw,circle] {{\visible<2->{6}}};
+  \node (9) at (110.2bp,36.985bp) [draw,circle] {{\visible<2->{9}}};
+  \node (8) at (-114.03bp,98.041bp) [draw,circle] {{\visible<2->{8}}};
+  \draw [->] (7) ..controls (35.12bp,44.867bp) and (34.356bp,34.203bp)  .. (5);
+  \draw [->] (10) ..controls (104.22bp,-19.15bp) and (105.8bp,-4.2837bp)  .. (9);
+  \draw [->] (7) ..controls (5.6812bp,79.741bp) and (-0.59388bp,81.297bp)  .. (6);
+  \draw [->] (2) ..controls (19.62bp,-124.08bp) and (19.115bp,-112.42bp)  .. (1);
+  \draw [->] (10) ..controls (68.758bp,-58.319bp) and (60.15bp,-60.889bp)  .. (1);
+  \draw [->] (3) ..controls (-33.537bp,-58.646bp) and (-25.058bp,-61.141bp)  .. (1);
+  \draw [->] (6) ..controls (-61.612bp,68.637bp) and (-68.982bp,59.821bp)  .. (4);
+  \draw [->] (9) ..controls (82.091bp,50.426bp) and (75.265bp,53.69bp)  .. (7);
+  \draw [->] (8) ..controls (-107.32bp,72.6bp) and (-105.02bp,63.854bp)  .. (4);
+  \draw [->] (5) ..controls (26.514bp,-28.991bp) and (24.794bp,-37.448bp)  .. (1);
+  \draw [->] (4) ..controls (-85.267bp,0.9491bp) and (-80.662bp,-11.143bp)  .. (3);
+  \draw [->] (8) ..controls (-84.529bp,95.412bp) and (-82.065bp,95.193bp)  .. (6);
+%
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
 
 \begin{frame}[fragile]{Ranking Function Example}
 \begin{exampleblock}{Example}
