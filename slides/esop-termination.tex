@@ -283,32 +283,38 @@ It's still quite hard to do for the programs that people write, which use bitvec
 
 \begin{frame}[fragile]{Bitvector Termination}
  \begin{columns}[c]
+
   \column{.45\textwidth}
-  \emph{If a program terminates for integers, it terminates for bitvectors.}
+  \emph{If a program terminates for bitvectors, it terminates for integers.}
 
   \uncover<2->{{\centering \color{red} \Huge \xmark
   
   }
   
-  \lstinputlisting[language=C,basicstyle=\normalsize,mathescape]{term1.c}
+  \lstinputlisting[language=C,basicstyle=\normalsize]{term2.c}
   }
-
+  
   \column{.45\textwidth}
-  \emph{If a program terminates for bitvectors, it terminates for integers.}
+  \emph{If a program terminates for integers, it terminates for bitvectors.}
 
   \uncover<3->{{\centering \color{red} \Huge \xmark
   
   }
   
-  \lstinputlisting[language=C,basicstyle=\normalsize]{term2.c}
+  \lstinputlisting[language=C,basicstyle=\normalsize,mathescape]{term1.c}
   }
+  
  \end{columns}
 
+ 
+ 
  \vspace{1.5em}
  
  \uncover<4->{\Large \centering Integer and bitvector termination are incomparable!
  
  }
+ 
+
  
 \end{frame}
 
@@ -841,7 +847,7 @@ $\red{R(x, y, z) = (x < y, z)}$
 \begin{frame}[fragile]{Fin}
 
 \begin{center}
-\includegraphics[width=.7\textwidth]{sloth.jpg}
+\includegraphics[width=.7\textwidth]{sloth-small.jpg}
 
 \Huge
  Thank you!
