@@ -76,6 +76,7 @@ alternativetitlepage=true,
 %\usepackage[pdftex]{graphicx}
 \usepackage{graphviz}
 
+\usepackage{amssymb}
 
 \pgfdeclareimage[height=6ex]{ou-logo}{images/ou}
 
@@ -140,7 +141,9 @@ alternativetitlepage=true,
 \end{frame}
 
 \section{What's Our Problem?}
-\begin{frame}[fragile]{Motivation}
+\subsection{Examples}
+
+\begin{frame}[fragile]{Example}
 Does this program terminate?
 \begin{center}
 \begin{minipage}{0.4\linewidth}
@@ -163,7 +166,7 @@ But it \emph{does} terminate if the program operates on fixed-width words
 
 \end{frame}
 
-\begin{frame}[fragile]{Motivation}
+\begin{frame}[fragile]{Example}
 Which of these guys terminates?
 \begin{center}
 \begin{minipage}{0.45\linewidth}
@@ -187,7 +190,7 @@ while (x > 0) {
 The left one does (x decreases monotonically), but the right one doesn't ($2 \rightarrow 2 \rightarrow \dots$).
 \end{frame}
 
-% \begin{frame}[fragile]{Motivation}
+% \begin{frame}[fragile]{Example}
 % How about these?
 % \begin{center}
 % \begin{minipage}{0.45\linewidth}
@@ -235,8 +238,48 @@ It's still quite hard to do for the programs that people write, which use bitvec
 %    \end{quote}
 \end{frame}
 
+\begin{frame}{Our Contributions}
+ \begin{itemize}
+  \item We present a sound and complete algorithm for finding \emph{non-linear, lexicographic} ranking functions
+   and \emph{non-linear} recurrence sets for bitvector and floating point programs.
+  \item We implemented the algorithm on top of our second order solver.
+ \end{itemize}
+
+\end{frame}
+
+
+
+\subsection{Current Approaches}
+
+\begin{frame}{Current Approaches}
+ Most termination provers make some assumptions, e.g.:
+ 
+ \vspace{1em}
+ 
+ \begin{itemize}
+ \item Program variables are \emph{mathematical integers}.
+ \item Programs only use \emph{linear operations}.
+ \item Most terminating programs have \emph{linear ranking functions}.
+ \end{itemize}
+\end{frame}
+
 
 \subsection{Bitvectors Are Hard}
+
+\begin{frame}{Bitvector Semantics}
+ Programs use fixed width bitvectors for arithmetic.  Arithmetic on a $k-$bit bitvector is performed modulo $2^k$.
+ 
+ \vspace{1em}
+
+ \begin{tabular}{r|ccc}
+  & Integers & Bitvectors & Example \\
+  \hline
+  $x + 1 > x$ & \green{\checkmark} & \red{\xmark} & $(2^{32} - 1) + 1 = 0$ \\
+  $x \neq 0 \wedge y \neq 0 \Rightarrow xy \neq 0$ & \green{\checkmark} & \red{\xmark} & $2^31 \times 2 = 0$ \\
+ \end{tabular}
+
+\end{frame}
+
 
 \begin{frame}[fragile]{Bitvector Termination}
  \begin{columns}[c]
@@ -286,6 +329,8 @@ It's still quite hard to do for the programs that people write, which use bitvec
 \begin{frame}[fragile]{Our Solution}
  We will try to build termination proofs by solving \emph{second-order constraints}.
 
+ \pause
+ 
  \vspace{1em}
 
  Specifically, we will build constraints of the form:
@@ -311,7 +356,7 @@ It's still quite hard to do for the programs that people write, which use bitvec
 
  We solve these constraints by using a program synthesiser to synthesise $\red{F}$\footnotemark.
  
- \footnotetext{David, Kroening, Lewis -- Second-Order Propositional Satisfiability, arXiv \vspace{1em}}
+ \only<2->{\footnotetext{David, Kroening, Lewis -- Second-Order Propositional Satisfiability, arXiv \vspace{1em}}}
 \end{frame}
 
 
@@ -775,6 +820,23 @@ $\red{R(x, y, z) = (x < y, z)}$
 
 \end{columns}
 \end{frame}
+
+
+\begin{frame}{Conclusion}
+\Large
+
+  Bitvector termination is hard and confusing!
+
+  \vspace{2em}
+
+  Specifying it using second-order logic makes it easier.
+
+  \vspace{2em}
+
+  Second-order solvers exist!
+  
+\end{frame}
+
 
 \begin{frame}[fragile]{Fin}
 
