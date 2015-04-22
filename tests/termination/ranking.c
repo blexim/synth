@@ -2,7 +2,7 @@
 
 extern int prefix(word_t in_vars[NARGS], word_t out_vars[NARGS]);
 extern int guard(word_t in_vars[NARGS]);
-extern void body(word_t in_vars[NARGS], word_t out_vars[NARGS]);
+extern int body(word_t in_vars[NARGS], word_t out_vars[NARGS]);
 extern int assertion(word_t args[NARGS]);
 
 #define COND
