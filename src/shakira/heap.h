@@ -59,6 +59,8 @@ typedef struct abstract_heap {
 
 typedef struct heap_facts {
   word_t dists[NPROG][NPROG];
+  word_t cycle[NPROG];
+  word_t stem[NPROG];
 } heap_factst;
 
 
@@ -70,6 +72,10 @@ word_t alias(abstract_heapt *heap,
              ptr_t y);
 word_t is_null(abstract_heapt *heap,
                ptr_t x);
+word_t stem(abstract_heapt *heap,
+            ptr_t x);
+word_t cycle(abstract_heapt *heap,
+             ptr_t x);
 
 #define is_path(h, x, y) (path_len(h, x, y) != INF)
 #define circular(h, x) (!is_path(h, x, null_ptr))
