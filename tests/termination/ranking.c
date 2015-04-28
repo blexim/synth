@@ -83,14 +83,6 @@ int nonzero(word_t rank[NRES]) {
 
 
 /**
- * The generic checking procedure
- */
-
-int check(solution_t *solution, word_t args[NARGS]) {
-  check_temination(solution, args);
-}
-
-/**
  *
  * Check whether a candidate solution is a ranking function
  * for the loop:
@@ -114,7 +106,7 @@ int check(solution_t *solution, word_t args[NARGS]) {
  */
 
 
-int check_temination(solution_t *solution, word_t args[NARGS]) {
+int check_termination(solution_t *solution, word_t args[NARGS]) {
   word_t pre_vars[NARGS], post_vars[NARGS];
   int i;
 
@@ -165,3 +157,11 @@ int check_temination(solution_t *solution, word_t args[NARGS]) {
   return 1;
 }
 
+
+/**
+ * The generic checking procedure
+ */
+
+int check(solution_t *solution, word_t args[NARGS]) {
+  check_termination(solution, args);
+}
