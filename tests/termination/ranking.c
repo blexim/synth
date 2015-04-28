@@ -165,3 +165,4 @@ int check_termination(solution_t *solution, word_t args[NARGS]) {
 int check(solution_t *solution, word_t args[NARGS]) {
   check_termination(solution, args);
 }
+

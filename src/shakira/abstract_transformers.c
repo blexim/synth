@@ -210,6 +210,9 @@ void consequences(abstract_heapt *heap,
   memset(min_dists, INF, NPROG*NABSNODES*sizeof(word_t));
 #else
   for (x = 0; x < NPROG; x++) {
+    facts->cycle[x] = INF;
+    facts->stem[x] = INF;
+
     for (n = 0; n < NABSNODES; n++) {
       min_dists[x][n] = INF;
     }
@@ -226,11 +229,13 @@ void consequences(abstract_heapt *heap,
       curr_dist = s_add(curr_dist, dist(heap, n));
       n = next(heap, n);
 
-#if 1
+#if 0
       min_dists[x][n] = min(min_dists[x][n], curr_dist);
 #else
       if (min_dists[x][n] != INF) {
         // We've hit a cycle.
+        facts->stem[x] = min_dists[x][n];
+        facts->cycle[x] = s_sub(curr_dist, min_dists[x][n]);
         break;
       }
 
@@ -429,4 +434,58 @@ word_t alias(abstract_heapt *heap,
 word_t is_null(abstract_heapt *heap,
                ptr_t x) {
   return deref(heap, x) == null_node;
+}
+
+word_t stem(abstract_heapt *heap,
+            ptr_t x) {
+  word_t dists[NABSNODES];
+  word_t curr_dist = 0;
+  word_t n = deref(heap, x);
+  word_t i;
+
+  for (i = 0; i < NABSNODES; i++) {
+    dists[i] = INF;
+  }
+
+  dists[n] = 0;
+
+  for (i = 0; i < NABSNODES+1; i++) {
+    curr_dist = s_add(curr_dist, dist(heap, n));
+    n = next(heap, n);
+
+    if (dists[n] != INF) {
+      return dists[n];
+    }
+
+    dists[n] = curr_dist;
+  }
+
+  return INF;
+}
+
+word_t cycle(abstract_heapt *heap,
+             ptr_t x) {
+  word_t dists[NABSNODES];
+  word_t curr_dist = 0;
+  word_t n = deref(heap, x);
+  word_t i;
+
+  for (i = 0; i < NABSNODES; i++) {
+    dists[i] = INF;
+  }
+
+  dists[n] = 0;
+
+  for (i = 0; i < NABSNODES+1; i++) {
+    curr_dist = s_add(curr_dist, dist(heap, n));
+    n = next(heap, n);
+
+    if (dists[n] != INF) {
+      return s_sub(curr_dist, dists[n]);
+    }
+
+    dists[n] = curr_dist;
+  }
+
+  return INF;
 }
