@@ -9,14 +9,11 @@
  #define SZ 5
 #endif
 
-#define LEN(prog) (prog->len)
-/*
 #ifdef SEARCH
  #define LEN(prog) (prog->len)
 #else
  #define LEN(prog) SZ
 #endif
-*/
 
 #ifndef WIDTH
  #define WIDTH 32
