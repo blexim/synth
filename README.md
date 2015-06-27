@@ -38,12 +38,12 @@ kalashnikov.py
 Papers
 ------
 
-* [Second-Order Propositional Satisfiability](http://arxiv.org/pdf/1409.4925) Describes the synthesiser
+* [Second-Order Propositional Satisfiability](http://arxiv.org/pdf/1409.4925): describes the synthesiser
 itself, how it works, the problem it solves and the underlying theory.
-* [Unrestricted Termination and Non-Termination Arguments for Bit-Vector Programs](http://arxiv.org/pdf/1410.5089) We used Kalashnikov to prove termination and non-termination for C programs.  The
+* [Unrestricted Termination and Non-Termination Arguments for Bit-Vector Programs](http://arxiv.org/pdf/1410.5089): we used Kalashnikov to prove termination and non-termination for C programs.  The
 tool we built for this paper is [Juggernaut](https://github.com/blexim/synth/blob/master/src/frontends/termination.py), which is slow but unstoppable.
-* [Propositional Reasoning about Safety and Termination of Heap-Manipulating Programs](http://arxiv.org/pdf/1410.5088) This is a logic & associated decision procedure we made in order to use Kalashnikov
+* [Propositional Reasoning about Safety and Termination of Heap-Manipulating Programs](http://arxiv.org/pdf/1410.5088): this is a logic & associated decision procedure we made in order to use Kalashnikov
 for reasoning about programs with linked lists.  The associated tool is [Shakira](https://github.com/blexim/synth/blob/master/src/shakira/shakira.sh), which checks that heaps don't lie.
-* [Danger Invariants](http://arxiv.org/pdf/1503.05445) Kalashnikov can be used for finding very deep
+* [Danger Invariants](http://arxiv.org/pdf/1503.05445): Kalashnikov can be used for finding very deep
 bugs in C programs without false positives by searching for Danger Invariants.  The associated
 tool is [Dangerzone](https://github.com/blexim/synth/blob/master/src/frontends/dangerzone.py).
