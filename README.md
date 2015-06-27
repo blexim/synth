@@ -31,8 +31,8 @@ Currently the only operating system we support is Linux.
 sudo apt-get install cbmc
 git clone https://github.com/blexim/synth ~/kalashnikov
 export KALASHNIKOVDIR=~/kalashnikov
-export PATH=$PATH:$KALASHNIKOVDIR/src
-kalashnikov.py
+export PATH=$PATH:$KALASHNIKOVDIR/src/kalashnikov
+kalashnikov.py --help
 ```
 
 Papers
