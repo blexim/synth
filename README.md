@@ -28,7 +28,7 @@ Currently the only operating system we support is Linux.
 ### Example Installation in Ubuntu:
 
 ```
-sudo apt-get install cbmc
+sudo apt-get install cbmc gcc python
 git clone https://github.com/blexim/synth ~/kalashnikov
 export KALASHNIKOVDIR=~/kalashnikov
 export PATH=$PATH:$KALASHNIKOVDIR/src/kalashnikov
