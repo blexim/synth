@@ -1,6 +1,8 @@
 (set-logic BV)
 
-(declare-var x (BitVec 32))
+(declare-var a (BitVec 32))
+(declare-var c (BitVec 32))
+(declare-var i (BitVec 32))
 
 (define-fun if0 ((x (BitVec 32)) (y (BitVec 32)) (z (BitVec 32))) (BitVec 32) (ite (= x #x00000000) z y))
 
@@ -11,23 +13,30 @@
   (or (not a) b))
 
 
-(define-fun G ((x (BitVec 32)))
+(define-fun G ((i (BitVec 32)))
               Bool
-              (bvsgt x #x00000000))
+              (bvult i #x00010003))
 
-(define-fun B_x ((x (BitVec 32)))
+(define-fun B_c ((c (BitVec 32)) (i (BitVec 32)))
                 (BitVec 32)
-                (bvsub x #x00000002))
+                (bvadd c i))
 
-(define-fun A ((x (BitVec 32)))
+(define-fun B_i ((i (BitVec 32)))
+                (BitVec 32)
+                (bvadd i #x00000001))
+
+
+(define-fun A ((a (BitVec 32)))
               Bool
-              (bvsgt x #xffffffff))
+              (bvugt a #x00000000))
 
 
-(synth-fun D ((x (BitVec 32))) (BitVec 32)
+(synth-fun D ((i (BitVec 32)) (c (BitVec 32)) (a (BitVec 32))) (BitVec 32)
   ((Start (BitVec 32)
    (
-    x
+   i
+   c
+   a
              (bvxor Start Start)
              (bvand Start Start)
              (bvor Start Start)
@@ -58,10 +67,45 @@
              #xFFFFFFFF
              ))))
 
-(synth-fun R ((x (BitVec 32))) (BitVec 32)
+(synth-fun R ((i (BitVec 32)) (c (BitVec 32)) (a (BitVec 32))) (BitVec 32)
   ((Start (BitVec 32)
    (
-    x
+   i
+   c
+   a
+             (bvxor Start Start)
+             (bvand Start Start)
+             (bvor Start Start)
+             (bvnot Start)
+             (bvneg Start)
+             (bvadd Start Start)
+             (bvmul Start Start)
+             (bvudiv Start Start)
+             (bvurem Start Start)
+             (bvlshr Start Start)
+             (bvashr Start Start)
+             (bvshl Start Start)
+             (bvsdiv Start Start)
+             (bvsrem Start Start)
+             (bvsub Start Start)
+             (if0 Start Start Start)
+             (expand (bvule Start Start))
+             (expand (bvult Start Start))
+             (expand (bvuge Start Start))
+             (expand (bvugt Start Start))
+             (expand (bvsle Start Start))
+             (expand (bvslt Start Start))
+             (expand (bvsgt Start Start))
+             (expand (= Start Start))
+             (expand (not (= Start Start)))
+             #x00000001
+             #x00000000
+             #xFFFFFFFF
+             ))))
+
+(synth-fun a0 ((i (BitVec 32)) (c (BitVec 32)) (a (BitVec 32))) (BitVec 32)
+  ((Start (BitVec 32)
+   (
              (bvxor Start Start)
              (bvand Start Start)
              (bvor Start Start)
@@ -93,17 +137,17 @@
              ))))
 
 (constraint (implies
-             (and (not (= (D x) #x00000000)) (G x))
+             (and (not (= (D i c a) #x00000000)) (G i))
              (and
-              (bvugt (R x) #x00000000)
+              (bvugt (R i c a) #x00000000)
               (and
-               (bvugt (R x) (R (B_x x)))
-               (not (= (D (B_x x)) #x00000000))))))
+               (bvugt (R i c a) (R (B_i i) (B_c i c) a))
+               (not (= (D (B_i i) (B_c i c) a) #x00000000))))))
 
 (constraint (implies
-             (and (not (= (D x) #x00000000)) (not (G x)))
-             (not (A x))))
+             (and (not (= (D i c a) #x00000000)) (not (G i)))
+             (not (A a))))
 
-(constraint (not (= (D #x00010003) #x00000000)))
+(constraint (not (= (D #x00000000 #x00000000 (a0 i c a)) #x00000000)))
 
 (check-synth)
