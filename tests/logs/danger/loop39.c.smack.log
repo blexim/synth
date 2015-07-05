@@ -1,0 +1,79 @@
+1.10user 0.14system 0:01.29elapsed 96%CPU (0avgtext+0avgdata 53240maxresident)k
+8inputs+256outputs (0major+38138minor)pagefaults 0swaps
+: {assertsPassed}
+Program has a potential bug: True bug
+../../loops/loop39.c(10,1): error PF5001: This assertion can fail
+
+Execution trace:
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 1)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 2)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 3)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 4)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 5)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 6)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 7)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 8)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 9)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  (x = 0)
+../../loops/loop39.c(7,5): Trace: Thread=1  
+../../loops/loop39.c(7,5): Trace: Thread=1  (y = 10)
+../../loops/loop39.c(8,3): Trace: Thread=1  
+../../loops/loop39.c(5,3): Trace: Thread=1  
+../../loops/loop39.c(10,3): Trace: Thread=1  
+../../loops/loop39.c(10,3): Trace: Thread=1  (CALL __SMACK_dummy)
+/mnt/disk2/src/smack/share/smack/lib/smack.c(31,3): Trace: Thread=1  
+/mnt/disk2/src/smack/share/smack/lib/smack.c(32,1): Trace: Thread=1  
+../../loops/loop39.c(10,3): Trace: Thread=1  (RETURN from __SMACK_dummy )
+../../loops/loop39.c(10,3): Trace: Thread=1  
+../../loops/loop39.c(10,3): Trace: Thread=1  (ASSERTION FAILS assert $p7 != $0.i32;
+ )
+../../loops/loop39.c(10,3): Trace: Thread=1  (Done)
+
+Boogie verification time: 0.38 s
+Time spent reading-writing programs: 0.25 s
+
+Time spent checking a program (1): 0.28 s
+Time spent checking a path (1): 0.10 s
+
+Number of procedures inlined: 16
+Number of variables tracked: 1
+Total Time: 1.056677 s
+Total User CPU time: 0.919951 s
+

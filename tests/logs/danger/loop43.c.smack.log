@@ -1,0 +1,27 @@
+0.90user 0.09system 0:00.97elapsed 103%CPU (0avgtext+0avgdata 57732maxresident)k
+0inputs+256outputs (0major+38681minor)pagefaults 0swaps
+../../loops/loop43.c(10,1): error PF5001: This assertion can fail
+
+Execution trace:
+../../loops/loop43.c(6,4): Trace: Thread=1  
+../../loops/loop43.c(10,4): Trace: Thread=1  
+../../loops/loop43.c(10,4): Trace: Thread=1  (CALL __SMACK_dummy)
+/mnt/disk2/src/smack/share/smack/lib/smack.c(31,3): Trace: Thread=1  
+/mnt/disk2/src/smack/share/smack/lib/smack.c(32,1): Trace: Thread=1  
+../../loops/loop43.c(10,4): Trace: Thread=1  (RETURN from __SMACK_dummy )
+../../loops/loop43.c(10,4): Trace: Thread=1  
+../../loops/loop43.c(10,4): Trace: Thread=1  (ASSERTION FAILS assert $p7 != $0.i32;
+ )
+../../loops/loop43.c(10,4): Trace: Thread=1  (Done)
+
+Boogie verification time: 0.11 s
+Time spent reading-writing programs: 0.22 s
+
+Time spent checking a program (1): 0.09 s
+Time spent checking a path (1): 0.05 s
+
+Number of procedures inlined: 6
+Number of variables tracked: 1
+Total Time: 0.735484 s
+Total User CPU time: 0.781946 s
+

@@ -1,0 +1,7 @@
+Single threaded program detected
+Corral timed out
+
+SMACK encountered an error when invoking corral. Exiting...
+Command exited with non-zero status 1
+136.02user 2.18system 3:03.59elapsed 75%CPU (0avgtext+0avgdata 68292maxresident)k
+0inputs+256outputs (0major+130166minor)pagefaults 0swaps

@@ -1,0 +1,204 @@
+4.69user 0.13system 0:04.85elapsed 99%CPU (0avgtext+0avgdata 69908maxresident)k
+8inputs+304outputs (0major+54239minor)pagefaults 0swaps
+ {assertsPassed}
+Program has a potential bug: True bug
+../../loops/loop38.c(40,1): error PF5001: This assertion can fail
+
+Execution trace:
+../../loops/loop38.c(7,3): Trace: Thread=1  
+../../loops/loop38.c(9,9): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  (x = 1)
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(12,9): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  (x = 3)
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  (x = 5)
+../../loops/loop38.c(18,9): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  (x = 7)
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  (x = 9)
+../../loops/loop38.c(24,9): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  (x = 11)
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(27,9): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  (x = 15)
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  (x = 17)
+../../loops/loop38.c(33,9): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  (x = 19)
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(36,9): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  (x = 21)
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(7,3): Trace: Thread=1  
+../../loops/loop38.c(9,9): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  (x = 22)
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(12,9): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  (x = 24)
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  (x = 26)
+../../loops/loop38.c(18,9): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  (x = 28)
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  (x = 30)
+../../loops/loop38.c(24,9): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  (x = 32)
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(27,9): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  (x = 36)
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  (x = 38)
+../../loops/loop38.c(33,9): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  (x = 40)
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(36,9): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  (x = 42)
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(7,3): Trace: Thread=1  
+../../loops/loop38.c(9,9): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  (x = 43)
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(12,9): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  (x = 45)
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  (x = 47)
+../../loops/loop38.c(18,9): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  (x = 49)
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  (x = 51)
+../../loops/loop38.c(24,9): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  (x = 53)
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(27,9): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  (x = 57)
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  (x = 59)
+../../loops/loop38.c(33,9): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  (x = 61)
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(36,9): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  (x = 63)
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(7,3): Trace: Thread=1  
+../../loops/loop38.c(9,9): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  (x = 64)
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(12,9): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  (x = 66)
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  (x = 68)
+../../loops/loop38.c(18,9): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  (x = 70)
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  (x = 72)
+../../loops/loop38.c(24,9): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  (x = 74)
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(27,9): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  (x = 78)
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  (x = 80)
+../../loops/loop38.c(33,9): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  (x = 82)
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(36,9): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  (x = 84)
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(7,3): Trace: Thread=1  
+../../loops/loop38.c(9,9): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(9,21): Trace: Thread=1  (x = 85)
+../../loops/loop38.c(9,21): Trace: Thread=1  
+../../loops/loop38.c(12,9): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(12,21): Trace: Thread=1  (x = 87)
+../../loops/loop38.c(12,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  
+../../loops/loop38.c(15,21): Trace: Thread=1  (x = 89)
+../../loops/loop38.c(18,9): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(18,21): Trace: Thread=1  (x = 91)
+../../loops/loop38.c(18,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  
+../../loops/loop38.c(21,21): Trace: Thread=1  (x = 93)
+../../loops/loop38.c(24,9): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(24,21): Trace: Thread=1  (x = 95)
+../../loops/loop38.c(24,21): Trace: Thread=1  
+../../loops/loop38.c(27,9): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(28,10): Trace: Thread=1  (x = 99)
+../../loops/loop38.c(28,10): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  
+../../loops/loop38.c(30,21): Trace: Thread=1  (x = 101)
+../../loops/loop38.c(33,9): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(33,21): Trace: Thread=1  (x = 103)
+../../loops/loop38.c(33,21): Trace: Thread=1  
+../../loops/loop38.c(36,9): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(36,21): Trace: Thread=1  (x = 105)
+../../loops/loop38.c(36,21): Trace: Thread=1  
+../../loops/loop38.c(7,3): Trace: Thread=1  
+../../loops/loop38.c(40,3): Trace: Thread=1  
+../../loops/loop38.c(40,3): Trace: Thread=1  (CALL __SMACK_dummy)
+/mnt/disk2/src/smack/share/smack/lib/smack.c(31,3): Trace: Thread=1  
+/mnt/disk2/src/smack/share/smack/lib/smack.c(32,1): Trace: Thread=1  
+../../loops/loop38.c(40,3): Trace: Thread=1  (RETURN from __SMACK_dummy )
+../../loops/loop38.c(40,3): Trace: Thread=1  
+../../loops/loop38.c(40,3): Trace: Thread=1  (ASSERTION FAILS assert $p55 != $0.i32;
+ )
+../../loops/loop38.c(40,3): Trace: Thread=1  (Done)
+
+Boogie verification time: 3.88 s
+Time spent reading-writing programs: 0.29 s
+
+Time spent checking a program (1): 0.80 s
+Time spent checking a path (1): 0.16 s
+
+Number of procedures inlined: 11
+Number of variables tracked: 1
+Total Time: 4.619507 s
+Total User CPU time: 1.139609 s
+

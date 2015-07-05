@@ -1,0 +1,30 @@
+0.96user 0.07system 0:01.02elapsed 101%CPU (0avgtext+0avgdata 59444maxresident)k
+0inputs+272outputs (0major+36206minor)pagefaults 0swaps
+../../loops/loop23.c(24,1): error PF5001: This assertion can fail
+
+Execution trace:
+../../loops/loop23.c(17,3): Trace: Thread=1  
+../../loops/loop23.c(17,3): Trace: Thread=1  (len = -3360)
+../../loops/loop23.c(17,3): Trace: Thread=1  (i = 0)
+../../loops/loop23.c(20,3): Trace: Thread=1  
+../../loops/loop23.c(24,3): Trace: Thread=1  
+../../loops/loop23.c(24,3): Trace: Thread=1  (CALL __SMACK_dummy)
+/mnt/disk2/src/smack/share/smack/lib/smack.c(31,3): Trace: Thread=1  
+/mnt/disk2/src/smack/share/smack/lib/smack.c(32,1): Trace: Thread=1  
+../../loops/loop23.c(24,3): Trace: Thread=1  (RETURN from __SMACK_dummy )
+../../loops/loop23.c(24,3): Trace: Thread=1  
+../../loops/loop23.c(24,3): Trace: Thread=1  (ASSERTION FAILS assert $p19 != $0.i32;
+ )
+../../loops/loop23.c(24,3): Trace: Thread=1  (Done)
+
+Boogie verification time: 0.11 s
+Time spent reading-writing programs: 0.24 s
+
+Time spent checking a program (1): 0.10 s
+Time spent checking a path (1): 0.07 s
+
+Number of procedures inlined: 6
+Number of variables tracked: 1
+Total Time: 0.763199 s
+Total User CPU time: 0.811089 s
+
