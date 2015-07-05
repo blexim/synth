@@ -1,0 +1,12 @@
+
+real	0m0.925s
+user	0m0.911s
+sys	0m0.008s
+ size 3
+Trying expressions of size 4
+Trying expressions of size 5
+Trying expressions of size 6
+Caught Exception:
+Error: Tried to add a duplicate point to the Concrete Evaluator!
+At: /mnt/disk2/src/sygus-comp14/solvers/enumerative/esolver-synth-lib/src/solverutils/ConcreteEvaluator.cpp:169
+

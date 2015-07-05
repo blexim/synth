@@ -1,0 +1,14 @@
+
+real	3m0.840s
+user	2m59.560s
+sys	0m0.472s
+size 2
+Trying expressions of size 3
+Trying expressions of size 4
+Trying expressions of size 5
+Trying expressions of size 6
+Trying expressions of size 7
+Trying expressions of size 8
+Caught Exception:
+Query time limit exceeded
+

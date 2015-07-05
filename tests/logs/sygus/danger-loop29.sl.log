@@ -1,0 +1,23 @@
+
+real	0m0.614s
+user	0m0.606s
+sys	0m0.004s
+ size 2
+Trying expressions of size 3
+Trying expressions of size 4
+Trying expressions of size 5
+Trying expressions of size 6
+Tried 264992 expressions in all.
+265164 were distinguishable.
+Needed 0 Restarts.
+Total Time : 0.607857 seconds.
+Peak Memory: 24.3281 MB.
+Solution 0:
+(define-fun D ((x (BitVec 32))) (BitVec 32)
+    (bvand #x00000001 (bvnot x)))
+
+(define-fun R ((x (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+-----------------------------------------------
+

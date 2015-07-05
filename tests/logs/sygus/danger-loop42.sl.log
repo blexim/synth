@@ -1,0 +1,508 @@
+
+real	0m32.231s
+user	0m32.105s
+sys	0m0.012s
+ize 4
+Trying expressions of size 5
+Trying expressions of size 6
+Trying expressions of size 7
+Tried 2227125 expressions in all.
+2227497 were distinguishable.
+Needed 0 Restarts.
+Total Time : 32.1126 seconds.
+Peak Memory: 28.0117 MB.
+Solution 0:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 1:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 2:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 3:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 4:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 5:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 6:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 7:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 8:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 9:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 10:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 11:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvxor x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 12:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvlshr #xffffffff y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 13:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvlshr #xffffffff y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 14:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl y y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 15:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl y y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 16:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl y y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 17:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl #x00000001 y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 18:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl #x00000001 y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 19:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl #xffffffff y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 20:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvshl #xffffffff y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 21:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 22:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 23:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 24:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 25:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 26:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub y x))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 27:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 28:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 29:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+
+Solution 30:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    y)
+
+-----------------------------------------------
+
+Solution 31:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000001)
+
+-----------------------------------------------
+
+Solution 32:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvsub x y))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #xffffffff)
+
+-----------------------------------------------
+

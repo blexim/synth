@@ -1,0 +1,38 @@
+
+real	0m31.911s
+user	0m31.748s
+sys	0m0.016s
+ize 3
+Trying expressions of size 4
+Trying expressions of size 5
+Trying expressions of size 6
+Trying expressions of size 7
+Tried 5923350 expressions in all.
+5924115 were distinguishable.
+Needed 0 Restarts.
+Total Time : 31.7604 seconds.
+Peak Memory: 31.3555 MB.
+Solution 0:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (expand (= y x)))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot x))
+
+(define-fun S ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
+Solution 1:
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (expand (= y x)))
+
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    (bvnot y))
+
+(define-fun S ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
+    #x00000000)
+
+-----------------------------------------------
+
