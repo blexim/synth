@@ -1,3 +1,8 @@
+
+#ifndef WORDMASK
+ #define WORDMASK 0xffffffff
+#endif
+
 int main(void) {
   unsigned int x = 1;
   unsigned int y = 0;

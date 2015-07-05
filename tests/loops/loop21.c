@@ -1,3 +1,7 @@
+#ifndef WORDMASK
+ #define WORDMASK 0xffffffff
+#endif
+
 /*
  * Danger invariant:
  *  x_0 = y_0 = nondet_0 = 0

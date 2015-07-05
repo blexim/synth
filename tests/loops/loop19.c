@@ -1,3 +1,6 @@
+#ifndef WORDMASK
+ #define WORDMASK 0xffffffff
+#endif
 /*
  * An unsafe loop.
  *

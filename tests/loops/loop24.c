@@ -1,3 +1,8 @@
+
+#ifndef WORDMASK
+ #define WORDMASK 0xffffffff
+#endif
+
 /*
  * Danger invariant:
  * 
