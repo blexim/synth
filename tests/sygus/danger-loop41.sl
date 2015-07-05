@@ -37,7 +37,7 @@
 
 (define-fun A ((x (BitVec 32)) (y (BitVec 32)))
               Bool
-              (= x y))
+              (not (= x y)))
 
 
 (synth-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32)
