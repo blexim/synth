@@ -351,6 +351,10 @@ int is_minimal(abstract_heapt *heap) {
     n = deref(heap, p);
     is_named[n] = 1;
 
+    if (n >= heap->nnodes) {
+      return 0;
+    }
+
     for (i = 0; i < NABSNODES-1; i++) {
       if (!is_reachable[n]) {
         if (n >= heap->nnodes) {
