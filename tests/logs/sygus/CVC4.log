@@ -1,0 +1,49 @@
+real	2m59.967s
+user	2m57.592s
+sys	0m2.494s
+[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop42.sl 
+unsat
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x y))
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
+(define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) #x00000001)
+(define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) y)
+
+real	0m9.932s
+user	0m9.577s
+sys	0m0.360s
+[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop40.sl 
+unsat
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x y))
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
+(define-fun S ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) y)
+
+real	0m21.703s
+user	0m21.046s
+sys	0m0.672s
+[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop29.sl 
+unsat
+(define-fun D ((x (BitVec 32))) (BitVec 32) (bvxor x (bvor x #x00000001)))
+(define-fun R ((x (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
+
+real	1m44.046s
+user	1m42.508s
+sys	0m1.611s
+[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop43.sl 
+unsat
+(define-fun D ((x (BitVec 32))) (BitVec 32) (bvudiv x #xFFFFFFFF))
+(define-fun R ((x (BitVec 32))) (BitVec 32) x)
+(define-fun x0 ((x (BitVec 32))) (BitVec 32) #xFFFFFFFF)
+
+real	0m25.673s
+user	0m24.965s
+sys	0m0.724s
+[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0  ../../synth/tests/sygus/simple.sl 
+unsat
+(define-fun D ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) (bvlshr i n))
+(define-fun R ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) i)
+(define-fun i0 ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) #x00000001)
+(define-fun n0 ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) #x00000000)
+
+real	2m40.077s
+user	2m39.881s
+sys	0m0.309s
