@@ -1,49 +1,152 @@
-real	2m59.967s
-user	2m57.592s
-sys	0m2.494s
-[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop42.sl 
-unsat
+Running ../../synth/tests/sygus/danger-loop19.sl
+
+real	2m59.956s
+user	2m57.193s
+sys	0m2.889s
+Running ../../synth/tests/sygus/danger-loop20.sl
+
+real	2m59.944s
+user	2m57.374s
+sys	0m2.695s
+Running ../../synth/tests/sygus/danger-loop21.sl
+
+real	2m59.938s
+user	2m57.209s
+sys	0m2.854s
+Running ../../synth/tests/sygus/danger-loop23.sl
+
+real	2m59.966s
+user	2m57.430s
+sys	0m2.661s
+Running ../../synth/tests/sygus/danger-loop24.sl
+
+real	2m59.944s
+user	2m57.100s
+sys	0m2.969s
+Running ../../synth/tests/sygus/danger-loop25.sl
+
+real	2m59.929s
+user	2m57.143s
+sys	0m2.912s
+Running ../../synth/tests/sygus/danger-loop27.sl
+
+real	2m59.914s
+user	2m57.679s
+sys	0m2.361s
+Running ../../synth/tests/sygus/danger-loop28.sl
+
+real	2m59.954s
+user	2m57.234s
+sys	0m2.846s
+Running ../../synth/tests/sygus/danger-loop29.sl
+
+real	1m38.822s
+user	1m37.172s
+sys	0m1.718s
+
+(define-fun D ((x (BitVec 32))) (BitVec 32) (bvxor x (bvor x #x00000001)))
+(define-fun R ((x (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
+
+Running ../../synth/tests/sygus/danger-loop30.sl
+
+real	2m59.942s
+user	2m57.274s
+sys	0m2.794s
+Running ../../synth/tests/sygus/danger-loop31.sl
+./runall.sh: line 1: 27283 Aborted                 (core dumped) ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 $f &>>log
+
+real	0m0.034s
+user	0m0.005s
+sys	0m0.005s
+Running ../../synth/tests/sygus/danger-loop33.sl
+
+real	0m0.185s
+user	0m0.175s
+sys	0m0.010s
+Running ../../synth/tests/sygus/danger-loop35.sl
+
+real	2m59.936s
+user	2m57.444s
+sys	0m2.619s
+Running ../../synth/tests/sygus/danger-loop36.sl
+
+real	2m59.929s
+user	2m57.605s
+sys	0m2.450s
+Running ../../synth/tests/sygus/danger-loop37.sl
+
+real	2m59.960s
+user	2m57.049s
+sys	0m3.035s
+Running ../../synth/tests/sygus/danger-loop38.sl
+
+real	2m59.940s
+user	2m57.149s
+sys	0m2.915s
+Running ../../synth/tests/sygus/danger-loop39.sl
+
+real	2m59.933s
+user	2m57.259s
+sys	0m2.799s
+Running ../../synth/tests/sygus/danger-loop40.sl
+
+real	0m20.652s
+user	0m20.062s
+sys	0m0.604s
+
+(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x y))
+(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
+(define-fun S ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) y)
+
+Running ../../synth/tests/sygus/danger-loop41.sl
+
+real	2m59.939s
+user	2m57.558s
+sys	0m2.507s
+Running ../../synth/tests/sygus/danger-loop42.sl
+
+real	0m9.328s
+user	0m8.999s
+sys	0m0.333s
+
 (define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x y))
 (define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
 (define-fun S1 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) #x00000001)
 (define-fun S2 ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) y)
 
-real	0m9.932s
-user	0m9.577s
-sys	0m0.360s
-[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop40.sl 
-unsat
-(define-fun D ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x y))
-(define-fun R ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
-(define-fun S ((x (BitVec 32)) (y (BitVec 32))) (BitVec 32) y)
 
-real	0m21.703s
-user	0m21.046s
-sys	0m0.672s
-[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop29.sl 
-unsat
-(define-fun D ((x (BitVec 32))) (BitVec 32) (bvxor x (bvor x #x00000001)))
-(define-fun R ((x (BitVec 32))) (BitVec 32) (bvxor x #xFFFFFFFF))
+Running ../../synth/tests/sygus/danger-loop43.sl
 
-real	1m44.046s
-user	1m42.508s
-sys	0m1.611s
-[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0 --tlimit=180000 ../../synth/tests/sygus/danger-loop43.sl 
-unsat
+real	0m24.061s
+user	0m23.347s
+sys	0m0.732s
+
+
 (define-fun D ((x (BitVec 32))) (BitVec 32) (bvudiv x #xFFFFFFFF))
 (define-fun R ((x (BitVec 32))) (BitVec 32) x)
 (define-fun x0 ((x (BitVec 32))) (BitVec 32) #xFFFFFFFF)
 
-real	0m25.673s
-user	0m24.965s
-sys	0m0.724s
-[cdavid@dkr10 bin]$ time ./cvc4 --lang=sygus --no-checking --no-interactive --dump-synth --default-dag-thresh=0  ../../synth/tests/sygus/simple.sl 
-unsat
+
+Running ../../synth/tests/sygus/rank-loop1-mod.sl
+
+real	2m59.943s
+user	2m57.469s
+sys	0m2.600s
+Running ../../synth/tests/sygus/rank-svcomp13.sl
+
+real	2m59.933s
+user	2m57.584s
+sys	0m2.474s
+Running ../../synth/tests/sygus/simple.sl
+
+real	2m36.100s
+user	2m33.983s
+sys	0m2.225s
+
 (define-fun D ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) (bvlshr i n))
 (define-fun R ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) i)
 (define-fun i0 ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) #x00000001)
 (define-fun n0 ((i (BitVec 32)) (n (BitVec 32))) (BitVec 32) #x00000000)
 
-real	2m40.077s
-user	2m39.881s
-sys	0m0.309s
+Average:
+61.7926
