@@ -46,7 +46,7 @@ unsigned int main(void) {
 
   // Inner initiation
   assert(!(Co(i, j, ip, jp)) || Di(i, j, ip, jp));
-  // Inner danger invariant re-establishes outer data invariant after the inner loop (i.e.
+  // Inner danger invariant re-establishes outer danger invariant after the inner loop (i.e.
   // outer danger invariant is inductive) and...
   assert(!(Di(i, j, ip, jp) && !Gi(i, j, ip, jp)) || (Do(i, j)));
   // Inner danger invariant establishes that outer ranking function decreases
