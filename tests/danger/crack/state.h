@@ -11,10 +11,10 @@ typedef struct state {
   //char localbuf[BUFFERSIZE];
   char nc;
   char c;
-  int p;
-  int upperlimit;
-  int quotation;
-  int roundquote;
-  int idx;
+  unsigned int p;
+  unsigned int upperlimit;
+  unsigned int quotation;
+  unsigned int roundquote;
+  unsigned int idx;
 } state_t;
 

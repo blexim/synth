@@ -90,7 +90,7 @@ int prefix(state_t *in, state_t *out) {
   //memset(out->localbuf, 0, BUFFERSIZE);
 
   out->c = out->nc;
-  out->p = 1;
+  out->p = 0;
 
   return 1;
 }

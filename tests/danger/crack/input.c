@@ -1,4 +1,4 @@
-#include "state2.h"
+#include "state.h"
 
 extern int prefix(state_t *in, state_t *out);
 extern int guard(state_t *state);
