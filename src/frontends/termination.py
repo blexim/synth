@@ -30,6 +30,7 @@ def prove_terminates(filename):
              "-P%d  " +
              "--seed=1337 -a%d --varnames %s " +
              "--synth-strategy=genetic " +
+             "--fastverif=True " +
              "-c1 " +
              "-newsize=5 " +
              "-replaceprob=0.15 " +
