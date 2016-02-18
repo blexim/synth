@@ -594,7 +594,7 @@ def gentests(wordlen, codelen):
 if __name__ == '__main__':
   import sys
 
-  print "Running with args: %s" % sys.argv
+  #print "Running with args: %s" % sys.argv
 
   args.args = args.argparser.parse_args()
 
